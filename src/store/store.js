@@ -11,14 +11,16 @@ export const store = new Vuex.Store({
             vuex_msgs: [],
             vuex_name: null,
             user_name: "Kumail",
+            vuex_email: null,
+            vuex_password: null,
             db
         },
     mutations: {
-        updateMessage (state, message) {
-            state.vuex_name = message
+        update_vuex_email (state, email) {
+            state.vuex_email = email
             },
-        update_vuex_msgs (state, message) {
-            state.vuex_msgs = message
+        update_vuex_password (state, pass) {
+            state.vuex_password = pass
             }
         }      
 })
