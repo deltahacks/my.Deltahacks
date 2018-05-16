@@ -45,16 +45,19 @@
                 <v-card-text>{{ lorem.slice(0, 100) }}</v-card-text>
                 </v-card>
             </v-flex>
+            <v-flex d-flex xs12 sm12 md12>
+                <DataTable/>
+            </v-flex>
             </v-layout>
         </v-container>
     </v-app>
 </template>
 
 <script>
-import Navbar from './layouts/Navbar'
+import Navbar from './layouts/Navbar'   
 import Footer from './layouts/Footer'
 import Tab from './layouts/Tab'
-
+import DataTable from './layouts/DataTable'
 
 export default {
     name: 'Dashboard',
@@ -67,7 +70,8 @@ export default {
     components: {
         Navbar,
         Footer,
-        Tab
+        Tab,
+        DataTable
     }
 }
 </script>

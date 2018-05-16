@@ -16,10 +16,11 @@
                     :href="source"
                     target="_blank"
                     slot="activator"
+                    to="/signup"
                   >
-                    <v-icon large>code</v-icon>
+                     <v-icon >person_add</v-icon>
                   </v-btn>
-                  <span>Source</span>
+                  <span>Create an account </span>
                 </v-tooltip>
               </v-toolbar>
               <v-card-text>
@@ -29,8 +30,7 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
+                <v-btn class="mx-auto" color="primary">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -47,7 +47,11 @@ export default {
     data: () => ({
         drawer: null
     }),
-
+    methods: {
+      signuppage(){
+        this.$router.push({name : "Signup"})
+      }
+    },
     props: {
         source: String
     }

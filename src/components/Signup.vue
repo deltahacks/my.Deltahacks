@@ -16,10 +16,11 @@
                     :href="source"
                     target="_blank"
                     slot="activator"
+                    to="/login"
                   >
-                    <v-icon large>code</v-icon>
+                    <v-icon>person</v-icon>
                   </v-btn>
-                  <span>Source</span>
+                  <span>Login</span>
                 </v-tooltip>
               </v-toolbar>
               <v-card-text>
@@ -30,8 +31,7 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" @click.prevent="signUpFirebase">Signup</v-btn>
+                <v-btn color="primary" @click.prevent="signUpFirebase" class="mx-auto">Signup</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
