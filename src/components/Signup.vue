@@ -90,7 +90,10 @@ export default {
                         console.log(error);
                     });
                     }).then(() => {
+                        // this.vuex_current_user = firebase.auth().currentUser 
                         console.log("success")
+                        this.$router.push({name : 'Dashboard'})
+
                     }).catch((err) => {
                         this.feedback = err.message;
                     })
@@ -114,6 +117,14 @@ export default {
             },
             set (value) {
                 this.$store.commit('update_vuex_password', value)
+            }
+        },
+        vuex_current_user: {
+            get () {
+                return this.$store.state.vuex_current_user
+            },
+            set (value) {
+                this.$store.commit('update_vuex_current_user', value)
             }
         }
 

@@ -1,7 +1,6 @@
 <template>
     <v-app class="dashboard">
         <Navbar/>
-        <Footer/>
     </v-app>
 </template>
 

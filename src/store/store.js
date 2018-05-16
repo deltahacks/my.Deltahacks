@@ -7,7 +7,9 @@ Vue.use(Vuex)
 
 //export the store 
 export const store = new Vuex.Store({
+    //Vuex state variables appended with vuex in front
     state:{
+            vuex_current_user: null,
             vuex_msgs: [],
             vuex_name: null,
             user_name: "Kumail",
@@ -15,12 +17,16 @@ export const store = new Vuex.Store({
             vuex_password: null,
             db
         },
+    //TODO: Implement Getters and Setters 
     mutations: {
         update_vuex_email (state, email) {
             state.vuex_email = email
             },
         update_vuex_password (state, pass) {
             state.vuex_password = pass
+            },
+        update_vuex_current_user (state, usr) {
+            state.vuex_current_user = usr
             }
         }      
 })
