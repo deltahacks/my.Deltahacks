@@ -1,34 +1,14 @@
 <template>
-    <v-app class="navbar">
-        <v-toolbar dark color="primary">
-            <v-toolbar-side-icon></v-toolbar-side-icon>
-            <v-toolbar-title class="white--text">Dashboard</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon>
-            <v-icon>search</v-icon>
-            </v-btn>
-            <v-btn icon>
-            <v-icon>apps</v-icon>
-            </v-btn>
-            <v-btn icon>
-            <v-icon>refresh</v-icon>
-            </v-btn>
-
-        </v-toolbar>
-        <!-- <nav class="light-blue accent-3">
-            <div class="container">
-                <a href="" class="brand-logo">
-                    FireMap
-                </a>
-                <ul class="right">
-                    <li><a v-if="cuser">{{ cuser.email }}</a></li>
-                    <li><router-link to="/signup">Signup</router-link></li>
-                    <li><router-link to="/login"> Login </router-link></li>
-                    <li><a @click="logout">Logout</a></li>
-                </ul>
-            </div>
-        </nav> -->
-    </v-app>
+  <v-toolbar>
+    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar-title>Your Dashboard</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn flat to="/signup">Signup</v-btn>
+      <v-btn flat to="/login">Login</v-btn>
+      <v-btn flat @click.prevent="logout">Logout</v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 
 <script>
@@ -45,5 +25,9 @@ export default {
 </script>
 
 <style>
-
+    .navbar {
+        border: solid 2px black;
+        padding: 0 0 0 0;
+        margin: 0 0;    
+    }
 </style>
