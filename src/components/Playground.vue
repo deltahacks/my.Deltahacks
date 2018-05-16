@@ -26,7 +26,5 @@ export default {
 </script>
 
 <style>
-    Tab {
-        height: 50%;
-    }
+    
 </style>

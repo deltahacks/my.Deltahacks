@@ -1,7 +1,8 @@
 <template>
-    <div class="dashboard">
-        <Tab/>
-    </div>
+    <v-app class="dashboard">
+        <Navbar/>
+        <Footer/>
+    </v-app>
 </template>
 
 <script>
@@ -26,8 +27,6 @@ export default {
 </script>
 
 <style>
-    Tab {
-        height: 50%;
-        color: green;
-    }
+
+
 </style>

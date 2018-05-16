@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar">
+    <v-app class="navbar">
         <v-toolbar dark color="primary">
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title class="white--text">Dashboard</v-toolbar-title>
@@ -36,7 +36,7 @@
                 </ul>
             </div>
         </nav> -->
-    </div>
+    </v-app>
 </template>
 
 <script>

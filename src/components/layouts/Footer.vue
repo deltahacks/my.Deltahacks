@@ -33,7 +33,7 @@
   }
 </script>
 
-<style <style scoped>
+<style scoped>
     .foot{
         padding: 0 0;
         position: absolute;

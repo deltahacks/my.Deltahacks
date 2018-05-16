@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <v-tabs
       v-model="active"
       color="cyan"
@@ -33,7 +33,7 @@
       </v-card>
       </v-tab-item>
     </v-tabs>
-  </div>
+  </v-app>
 </template>
 
 <script>
