@@ -35,8 +35,10 @@
 
 <style <style scoped>
     .foot{
+        padding: 0 0;
         position: absolute;
         bottom: 0;
         width: 100%;
+        border: solid 2px black;
     }
 </style>

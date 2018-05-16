@@ -1,37 +1,54 @@
 <template>
-  <v-tabs icons-and-text centered dark color="cyan">
-    <v-tabs-slider color="yellow"></v-tabs-slider>
-    <v-tab href="#tab-1">
-      Recents
-      <v-icon>phone</v-icon>
-    </v-tab>
-    <v-tab href="#tab-2">
-      Favorites
-      <v-icon>favorite</v-icon>
-    </v-tab>
-    <v-tab href="#tab-3">
-      Nearby
-      <v-icon>account_box</v-icon>
-    </v-tab>
-    <v-tab-item
-      v-for="i in 3"
-      :key="i"
-      :id="'tab-' + i"
+  <div>
+    <v-tabs
+      v-model="active"
+      color="cyan"
+      dark
+      slider-color="yellow"
     >
-      <v-card flat>
-        <v-card-text>{{ text }}</v-card-text>
+      <v-tab
+        v-for="n in 3"
+        :key="n"
+        ripple
+      >
+        Item {{ n }}
+      </v-tab>
+      <v-tab-item
+        v-for="n in 3"
+        :key="n"
+      >
+      <v-card>
+        <v-card-media src="/static/doc-images/cards/desert.jpg" height="200px">
+        </v-card-media>
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
+            <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
+          </div>
+        </v-card-title>
+        <v-card-actions>
+          <v-btn flat color="orange">Share</v-btn>
+          <v-btn flat color="orange">Explore</v-btn>
+        </v-card-actions>
       </v-card>
-    </v-tab-item>
-  </v-tabs>
+      </v-tab-item>
+    </v-tabs>
+  </div>
 </template>
 
 <script>
-export default {
-    name: 'Tab',
-    data() {
-        return {
-
-        }
+  export default {
+    data () {
+      return {
+        active: null,
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      }
+    },
+    methods: {
+      next () {
+        const active = parseInt(this.active)
+        this.active = (active < 2 ? active + 1 : 0).toString()
+      }
     }
-}
+  }
 </script>

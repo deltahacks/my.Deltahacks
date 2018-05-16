@@ -1,9 +1,6 @@
 <template>
     <div class="dashboard">
-        <Navbar/>
         <Tab/>
-        <h2>Dash</h2>
-        <Footer/>
     </div>
 </template>
 
@@ -31,5 +28,6 @@ export default {
 <style>
     Tab {
         height: 50%;
+        color: green;
     }
 </style>

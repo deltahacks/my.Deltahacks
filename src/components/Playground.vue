@@ -1,9 +1,6 @@
 <template>
     <div class="dashboard">
-        <Navbar/>
         <Tab/>
-        <h2>Dash</h2>
-        <Footer/>
     </div>
 </template>
 
