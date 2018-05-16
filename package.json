@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "faker": "^4.1.0",
     "firebase": "^5.0.2",
     "material-design-icons-iconfont": "^3.0.3",
     "vue": "^2.5.2",

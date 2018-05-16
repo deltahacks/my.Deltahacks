@@ -1,45 +1,53 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
+    :items="fake"
     hide-actions
     item-key="name"
   >
     <template slot="items" slot-scope="props">
       <tr @click="props.expanded = !props.expanded">
         <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">{{ props.item.iron }}</td>
+        <td class="text-xs-right">{{ props.item.email }}</td>
+        <td class="text-xs-right">{{ props.item.country }}</td>
+        <td class="text-xs-right">{{ props.item.applied }}</td>
+        <td class="text-xs-right">{{ props.item.phone }}</td>
+        <td class="text-xs-right">{{ props.item.age }}</td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
       <v-card flat>
-        <v-card-text>Peek-a-boo!</v-card-text>
+        <v-card-text>{{ props.item.story }}</v-card-text>
+        <v-btn @click="f">click</v-btn>
       </v-card>
     </template>
   </v-data-table>
 </template>
 
 <script>
-  export default {
+import fake from '../../faker/fake'
+export default {
     name: 'DataTable',
+    methods: {
+      f(){
+        console.log(fake)
+      }
+    },
     data () {
       return {
+        fake,
         headers: [
           {
-            text: 'Dessert (100g serving)',
+            text: 'Name',
             align: 'left',
             sortable: false,
             value: 'name'
           },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
+          { text: 'Email', value: 'email' },
+          { text: 'Country', value: 'country' },
+          { text: 'Applied', value: 'applied' },
+          { text: 'Phone', value: 'phone' },
+          { text: 'Age', value: 'age' }
         ],
         desserts: [
           {
