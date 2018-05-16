@@ -7,7 +7,7 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title>Create an account</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                   <v-btn
@@ -26,11 +26,12 @@
                 <v-form>
                   <v-text-field  prepend-icon="email" name="email" label="Email" type="email" v-model="vuex_email"></v-text-field>
                   <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="vuex_password"></v-text-field>
+                  <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" v-model="password_repeat"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
+                <v-btn color="primary" @click.prevent="signUpFirebase">Signup</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -42,19 +43,61 @@
 </template>
 
 <script>
-  export default {
+import axios from 'axios'
+import firebase from 'firebase'
+export default {
     name: 'Signup',
     data: () => ({
       drawer: null,
       email: null,
       password: null,
-      password_repeat: null
+      password_repeat: null,
+      feedback: null,
+      ip_address: null,
+      geo: null
     }),
     props: {
       source: String
     },
     methods: {
-
+        tester(){
+            console.log(this.vuex_email)
+        },
+        signUpFirebase(){
+            if(this.vuex_email && this.vuex_password && this.password_repeat){
+                firebase.auth().createUserWithEmailAndPassword(this.vuex_email, this.vuex_password).then(user => {
+                    console.log(user.user.uid, "ID")
+                    console.log(this.$store.state.db, "DB")
+                    axios.get('https://api.ipify.org?format=json')
+                    .then((response) => {
+                        console.log(response.data.ip)
+                        var ipp = response.data.ip;
+                        axios.get(`https://ipapi.co/${ipp}/json/`).then((data) => {
+                            console.log(data.data)
+                                this.geo = data.data
+                                this.$store.state.db.collection('users').doc(this.vuex_email).set({
+                                email: this.vuex_email,
+                                geo: this.geo,
+                                user_id: user.user.uid,
+                                ip: ipp
+                                })
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                        console.log(response.ip);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                    }).then(() => {
+                        console.log("success")
+                    }).catch((err) => {
+                        this.feedback = err.message;
+                    })
+            } else {
+                this.feedback ="You need to enter all the fields"
+            }
+        }
     },
     computed: {
         vuex_email: {
