@@ -4,9 +4,10 @@
     <v-toolbar-title>Your Dashboard</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat to="/signup">Signup</v-btn>
-      <v-btn flat to="/login">Login</v-btn>
-      <v-btn flat @click.prevent="logout">Logout</v-btn>
+    <v-btn flat to="/dashboard" v-if="c_user">{{ c_user.email }}</v-btn>
+      <v-btn flat to="/signup" v-if="!c_user">Signup</v-btn>
+      <v-btn flat to="/login" v-if="!c_user">Login</v-btn>
+      <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -17,7 +18,16 @@ export default {
     name: 'Navbar', 
     data(){
         return{
-            cuser: null
+            c_user: firebase.auth().currentUser
+        }
+    },
+    methods:{
+        logout(){
+            firebase.auth().signOut().then(() => {
+                this.$router.push({name: 'Login'})
+            }, function(error) {
+                console.log(error)
+            });
         }
     }
 

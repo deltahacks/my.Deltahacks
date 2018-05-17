@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 import Navbar from './layouts/Navbar'   
 import Footer from './layouts/Footer'
 import Tab from './layouts/Tab'
@@ -65,6 +66,7 @@ export default {
         return{
             links: ["Home", "About", "Contact"],
             lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`
+            ,c_user: firebase.auth().currentUser
         }
     },
     components: {

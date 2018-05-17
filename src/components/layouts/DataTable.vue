@@ -8,15 +8,16 @@
     <template slot="items" slot-scope="props">
       <tr @click="props.expanded = !props.expanded">
         <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.email }}</td>
-        <td class="text-xs-right">{{ props.item.country }}</td>
-        <td class="text-xs-right">{{ props.item.applied }}</td>
-        <td class="text-xs-right">{{ props.item.phone }}</td>
-        <td class="text-xs-right">{{ props.item.age }}</td>
+        <td class="text-xs-left">{{ props.item.email }}</td>
+        <td class="text-xs-left">{{ props.item.university }}</td>
+        <td class="text-xs-left">{{ props.item.applied }}</td>
+        <td class="text-xs-left">{{ props.item.phone }}</td>
+        <td class="text-xs-left">{{ props.item.age }}</td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
       <v-card flat>
+        <Applicant/>
         <v-card-text>{{ props.item.story }}</v-card-text>
         <v-btn @click="f">click</v-btn>
       </v-card>
@@ -26,12 +27,16 @@
 
 <script>
 import fake from '../../faker/fake'
+import Applicant from './Applicant'
 export default {
     name: 'DataTable',
     methods: {
       f(){
         console.log(fake)
       }
+    },
+    components: {
+      Applicant
     },
     data () {
       return {
@@ -44,7 +49,7 @@ export default {
             value: 'name'
           },
           { text: 'Email', value: 'email' },
-          { text: 'Country', value: 'country' },
+          { text: 'University', value: 'university' },
           { text: 'Applied', value: 'applied' },
           { text: 'Phone', value: 'phone' },
           { text: 'Age', value: 'age' }

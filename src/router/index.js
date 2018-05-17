@@ -4,18 +4,21 @@ import Playground from '@/components/Playground'
 import Dashboard from '@/components/Dashboard'
 import Signup from '@/components/Signup'
 import Login from '@/components/Login'
+import Applicant from '@/components/layouts/Applicant'
+import firebase from 'firebase'
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
       meta:{
         requiresAuth: false,
-        p: "path"
+        p: "path",
+        auth: true
       }
     },
     {
@@ -32,24 +35,29 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/ap',
+      name: 'Applicant',
+      component: Applicant
     }
   ]
 })
 
 //Router guard setup
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(rec => {
-    console.log("router hit", rec.meta.p)
-    return rec.meta.requiresAuth})){
+  if(to.matched.some(rec => rec.meta.auth)){
     console.log('inside guard')
     let user = firebase.auth().currentUser
     if(user){
       console.log(user)
       next()
     }else{
+      console.log("no usr")
       next({name : 'Login'})
     }
   }else{
+    console.log('nininini')
     next()
   }
 })
