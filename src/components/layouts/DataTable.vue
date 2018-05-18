@@ -13,6 +13,7 @@
         <td class="text-xs-left">{{ props.item.applied }}</td>
         <td class="text-xs-left">{{ props.item.phone }}</td>
         <td class="text-xs-left">{{ props.item.age }}</td>
+        <td class="text-xs-left"><star-rating v-on:click.prevent.self='dd' increment=1 star-size=25 inline='true'></star-rating></td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
@@ -28,6 +29,8 @@
 <script>
 import fake from '../../faker/fake'
 import Applicant from './Applicant'
+import StarRating from 'vue-star-rating'
+
 export default {
     name: 'DataTable',
     methods: {
@@ -36,10 +39,12 @@ export default {
       }
     },
     components: {
-      Applicant
+      Applicant,
+      StarRating
     },
     data () {
       return {
+        rating : null,
         fake,
         headers: [
           {
@@ -52,7 +57,8 @@ export default {
           { text: 'University', value: 'university' },
           { text: 'Applied', value: 'applied' },
           { text: 'Phone', value: 'phone' },
-          { text: 'Age', value: 'age' }
+          { text: 'Age', value: 'age' },
+          { text: 'Rate', value: 'rate' }
         ],
         desserts: [
           {

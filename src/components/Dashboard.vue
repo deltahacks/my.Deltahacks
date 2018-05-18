@@ -36,9 +36,7 @@
                 </v-layout>
             </v-flex>
             <v-flex d-flex xs12 sm6 md2 child-flex>
-                <v-card color="green lighten-2" dark>
-                <v-card-text>{{ lorem.slice(0, 90) }}</v-card-text>
-                </v-card>
+                <MapCard/>
             </v-flex>
             <v-flex d-flex xs12 sm6 md3>
                 <v-card color="blue lighten-2" dark>
@@ -59,6 +57,7 @@ import Navbar from './layouts/Navbar'
 import Footer from './layouts/Footer'
 import Tab from './layouts/Tab'
 import DataTable from './layouts/DataTable'
+import MapCard from './layouts/MapCard'
 
 export default {
     name: 'Dashboard',
@@ -73,7 +72,8 @@ export default {
         Navbar,
         Footer,
         Tab,
-        DataTable
+        DataTable,
+        MapCard
     }
 }
 </script>
