@@ -1,8 +1,20 @@
 <template>
   <v-layout>
-    <v-flex xs12 sm6 offset-sm3>
       <v-card>
-            <div class="google-map" id="map"> </div>
+        <GmapMap id="map"
+        :center="{lat:10, lng:10}"
+        :zoom="7"
+        map-type-id="terrain"
+        >
+        <GmapMarker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            :draggable="true"
+            @click="center=m.position"
+        />
+        </GmapMap>
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0">maps</h3>
@@ -11,7 +23,6 @@
         <v-card-actions>
         </v-card-actions>
       </v-card>
-    </v-flex>
   </v-layout>
 </template>
 
@@ -36,11 +47,13 @@ export default {
             }
     },
     mounted(){
-        this.renderMap();
     }
 }
 </script>
 
 <style>
-
+    #map {
+        width: 100%;
+        height: 100%;
+    }
 </style>

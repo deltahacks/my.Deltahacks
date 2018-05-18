@@ -36,7 +36,13 @@
                 </v-layout>
             </v-flex>
             <v-flex d-flex xs12 sm6 md2 child-flex>
-                <MapCard/>
+                <v-card color="blue lighten-2" dark>
+                            <GmapMap id="map"
+                            :center="{lat:10, lng:10}"
+                            :zoom="7"
+                            map-type-id="terrain"
+                            />
+                </v-card>
             </v-flex>
             <v-flex d-flex xs12 sm6 md3>
                 <v-card color="blue lighten-2" dark>
