@@ -1283,9 +1283,9 @@ caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805, caniuse-lite@^1.0.300008
   version "1.0.30000840"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000840.tgz#344513f8f843536cf99694964c09811277eee395"
 
-"canvas-gauges@github:mikhus/canvas-gauges":
+canvas-gauges@Mikhus/canvas-gauges:
   version "2.1.5"
-  resolved "https://codeload.github.com/mikhus/canvas-gauges/tar.gz/8f1a0936951be63f612e16443eb7b2235863679e"
+  resolved "https://codeload.github.com/Mikhus/canvas-gauges/tar.gz/8f1a0936951be63f612e16443eb7b2235863679e"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -5934,6 +5934,10 @@ vue2-google-maps@^0.9.7:
 vue@^2.5.2:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
+
+vuelidate@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.6.2.tgz#b417f5367407b047a2548119b25db56fe2bd5753"
 
 vuetify@^1.0.18:
   version "1.0.18"

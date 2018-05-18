@@ -7,6 +7,7 @@ import Login from '@/components/Login'
 import ForgotPassword from '@/components/ForgotPassword'
 import AdminSignup from '@/components/AdminSignup'
 import Applicant from '@/components/layouts/Applicant'
+import Apply from '@/components/Apply'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -48,6 +49,11 @@ const router = new Router({
       path: '/ap',
       name: 'Applicant',
       component: Applicant
+    },
+    {
+      path: '/apply',
+      name: 'Apply',
+      component: Apply
     },
     ,
     {

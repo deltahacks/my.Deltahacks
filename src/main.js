@@ -9,10 +9,12 @@ import {store} from './store/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import firebase from 'firebase'
 import gmaps_key from './private/gmaps'
+import Vuelidate from 'vuelidate'
+
 console.log(gmaps_key)
 Vue.config.productionTip = false
 Vue.use(Vuetify)
-
+Vue.use(Vuelidate)
 Vue.use(VueGoogleMaps, {
   load: {
     key: gmaps_key,
