@@ -13,7 +13,7 @@
         <td class="text-xs-left">{{ props.item.applied }}</td>
         <td class="text-xs-left">{{ props.item.phone }}</td>
         <td class="text-xs-left">{{ props.item.age }}</td>
-        <td class="text-xs-left"><star-rating v-on:click.prevent.self='dd' increment=1 star-size=25 inline='true'></star-rating></td>
+        <td class="text-xs-left"></td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">

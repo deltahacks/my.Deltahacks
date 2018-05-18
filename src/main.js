@@ -7,14 +7,14 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import {store} from './store/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
-
-
+import gmaps_key from './private/gmaps'
+console.log(gmaps_key)
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyDCS73f798VwdUqB54Zq4gom4DLNLytwdA',
+    key: gmaps_key,
     libraries: 'places', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'

@@ -27,6 +27,12 @@ const router = new Router({
       component: Playground
     },
     {
+      path: '/',
+      name: 'Home',
+      component: Playground,
+      redirect: '/dashboard'
+    },
+    {
       path: '/signup',
       name: 'Signup',
       component: Signup
