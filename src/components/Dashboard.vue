@@ -13,7 +13,6 @@
                 <v-layout row wrap>
                 <v-flex d-flex>
                     <v-card color="indigo" dark>
-                    <v-card-text>{{ lorem.slice(0, 70) }}</v-card-text>
                     </v-card>
                 </v-flex>
                 <v-flex d-flex>
@@ -36,7 +35,7 @@
                 </v-layout>
             </v-flex>
             <v-flex d-flex xs12 sm6 md2 child-flex>
-                <v-card color="blue lighten-2" dark>
+                <v-card color="green lighten-2" dark>
                             <GmapMap id="map"
                             :center="{lat:10, lng:10}"
                             :zoom="7"
@@ -45,7 +44,7 @@
                 </v-card>
             </v-flex>
             <v-flex d-flex xs12 sm6 md3>
-                <v-card color="light-blue lighten-4" dark>
+                <v-card color="white lighten-4" dark>
                     <CommitChart/>
                 </v-card>
             </v-flex>
@@ -66,6 +65,7 @@ import DataTable from './layouts/DataTable'
 import MapCard from './layouts/MapCard'
 import Chart from './layouts/Chart'
 import CommitChart from './layouts/CommitChart'
+
 export default {
     name: 'Dashboard',
     data(){
@@ -83,6 +83,8 @@ export default {
         MapCard,
         Chart,
         CommitChart
+    },
+    mounted(){
     }
 }
 </script>

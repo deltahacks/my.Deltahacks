@@ -8,12 +8,18 @@
     <template slot="items" slot-scope="props">
       <tr @click="props.expanded = !props.expanded">
         <td>{{ props.item.name }}</td>
-        <td class="text-xs-left">{{ props.item.email }}</td>
+        <td class="text-md-left">{{ props.item.email }}</td>
         <td class="text-xs-left">{{ props.item.university }}</td>
         <td class="text-xs-left">{{ props.item.applied }}</td>
         <td class="text-xs-left">{{ props.item.phone }}</td>
         <td class="text-xs-left">{{ props.item.age }}</td>
-        <td class="text-xs-left"></td>
+        <td class="text-md-left fonta">
+          <i class="fab fa-github"></i>
+          <i class="fab fa-linkedin-in"></i>
+          <i class="fas fa-globe"></i>
+          <i class="far fa-file-alt"></i>
+          
+          </td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
@@ -156,3 +162,7 @@ export default {
     }
   }
 </script>
+
+<style>
+
+</style>

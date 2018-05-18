@@ -5,6 +5,9 @@
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
+            <v-alert :value="feedback" type="error">
+              {{ feedback }}
+            </v-alert>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
                 <v-toolbar-title>Login</v-toolbar-title>
@@ -30,7 +33,7 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn class="mx-auto" color="primary" @click.prevent="login">Login</v-btn>
+                <v-btn class="mx-auto" color="primary" v-on:keyup.enter="login" @click.prevent="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -48,7 +51,8 @@ export default {
     data: () => ({
         drawer: null,
         email: null,
-        pass: null
+        pass: null,
+        feedback: null
 
     }),
     methods: {
@@ -59,10 +63,12 @@ export default {
           if(this.email && this.pass){
               firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then(() => {
                 this.$router.push({name: 'Dashboard'})
-              }).catch(function(error) {
+                this.feedback = null;
+              }).catch((error) => {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
+                this.feedback = errorMessage;
                 console.log(errorMessage)
             });
           }
