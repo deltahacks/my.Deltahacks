@@ -7,6 +7,7 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import {store} from './store/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import firebase from 'firebase'
 import gmaps_key from './private/gmaps'
 console.log(gmaps_key)
 Vue.config.productionTip = false
@@ -38,10 +39,17 @@ Vue.use(VueGoogleMaps, {
 })
 
 /* eslint-disable no-new */
-new Vue({
-  store,
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+let app = null;
+
+//Start first time only after firebase is loaded 
+firebase.auth().onAuthStateChanged(() => {
+  if(!app){
+    var app = new Vue({
+      store,
+      el: '#app',
+      router,
+      components: { App },
+      template: '<App/>'
+    })
+  }
 })

@@ -7,7 +7,7 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title>Forgot your password?</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                   <v-btn
@@ -25,12 +25,11 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="Login" type="text" v-model="email"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="pass"></v-text-field>
+                  <v-text-field v-model="email" prepend-icon="person" name="login" label="Login" type="text" @click.prevent='reset'></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn class="mx-auto" color="primary" @click.prevent="login">Login</v-btn>
+                <v-btn class="mx-auto" color="primary">Reset</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -44,28 +43,22 @@
 <script>
 import firebase from 'firebase'
 export default {
-    name: 'Login',
+    name: 'ForgotPassword',
     data: () => ({
         drawer: null,
-        email: null,
-        pass: null
-
+        email: null
     }),
     methods: {
       signuppage(){
         this.$router.push({name : "Signup"})
       },
-      login(){
-          if(this.email && this.pass){
-              firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then(() => {
-                this.$router.push({name: 'Dashboard'})
-              }).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorMessage)
+      reset(){
+          firebase.auth().sendPasswordResetEmail(this.email).then(function() {
+            console.log('Email sent.')
+            this.$router.push({name: 'Login'})
+            }).catch(function(error) {
+            console.log(error)
             });
-          }
       }
     },
     props: {
