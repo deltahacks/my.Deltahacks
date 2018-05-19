@@ -15,8 +15,17 @@ export const store = new Vuex.Store({
             user_name: "Kumail",
             vuex_email: null,
             vuex_password: null,
-            db
+            db,
+            vuex_user_application: null 
         },
+    getters:{
+        get_vuex_email(state){
+            return state.vuex_email;
+        },
+        get_vuex_user_application(state){
+            return state.vuex_user_application
+        }
+    },
     //TODO: Implement Getters and Setters 
     mutations: {
         update_vuex_email (state, email) {

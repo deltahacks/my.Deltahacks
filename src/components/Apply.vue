@@ -65,7 +65,7 @@
         <div class="center ff mx-auto">
                 <v-card color="grey darken-3" flat>
                 <v-card-text>
-                    <v-subheader dark>Dark Theme</v-subheader>
+                    <v-subheader dark>Tell us a</v-subheader>
                     <v-container fluid>
                     <v-layout row>
                         <v-flex xs12>
@@ -133,6 +133,9 @@ export default {
     Tab
   },
   computed: {
+    get_vuex_email(){
+      return this.$store.state.getters.get_vuex_user_application;
+    },
     progress() {
       return Math.min(100, this.story.length / 10);
     },

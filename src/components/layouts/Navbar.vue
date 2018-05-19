@@ -1,6 +1,6 @@
 <template>
   <v-toolbar>
-    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-toolbar-title>Your Dashboard</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
@@ -13,9 +13,13 @@
 </template>
 
 <script>
+import Drawer from './Drawer'
 import firebase from 'firebase'
 export default {
     name: 'Navbar', 
+    components: {
+        Drawer
+    },
     data(){
         return{
             c_user: firebase.auth().currentUser
