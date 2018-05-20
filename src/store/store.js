@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
             user_name: "Kumail",
             vuex_email: null,
             vuex_password: null,
+            vuex_user_has_applied: false,
             db,
             vuex_user_application: null 
         },

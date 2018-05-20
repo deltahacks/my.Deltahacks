@@ -3,7 +3,7 @@
         <Navbar/>
         <form class="ff mx-auto">
         <v-text-field
-        v-model="name"
+        v-model="application.name"
         :error-messages="nameErrors"
         :counter="10"
         label="Name"
@@ -12,22 +12,73 @@
         @blur="$v.name.$touch()"
         ></v-text-field>
         <v-text-field
-        v-model="email"
+        v-model="application.email"
         :error-messages="emailErrors"
         label="E-mail"
         required
         @input="$v.email.$touch()"
         @blur="$v.email.$touch()"
         ></v-text-field>
-        <v-select
-        v-model="select"
-        :items="items"
-        :error-messages="selectErrors"
-        label="Item"
-        required
-        @change="$v.select.$touch()"
-        @blur="$v.select.$touch()"
-        ></v-select>
+          <v-select
+          v-model="application.school_year"
+          :items="items"
+          :error-messages="selectErrors"
+          label="Year"
+          required
+          @change="$v.select.$touch()"
+          @blur="$v.select.$touch()">
+          </v-select>
+          <v-select
+          v-model="application.shirt_size"
+          :items="shirts"
+          :error-messages="selectErrors"
+          label="Shirt size"
+          required
+          @change="$v.select.$touch()"
+          @blur="$v.select.$touch()">
+          </v-select>
+          <v-select
+          v-model="select"
+          :items="food"
+          :error-messages="selectErrors"
+          label="Dietary restrictions"
+          required
+          @change="$v.select.$touch()"
+          @blur="$v.select.$touch()">
+          </v-select>
+          <v-select
+          v-model="select"
+          :items="hackathons"
+          :error-messages="selectErrors"
+          label="How many hackathons have you attended?"
+          required
+          @change="$v.select.$touch()"
+          @blur="$v.select.$touch()">
+          </v-select>
+          <v-text-field
+          name="input-1-3"
+          label="Your Github"
+          single-line
+          v-model="application.github"
+          prepend-icon="fab fa-github">
+          </v-text-field>
+                    <v-text-field
+          name="input-1-3"
+          label="Your Linkedin"
+          single-line
+          v-model="application.linkedin"
+          prepend-icon="fab fa-linkedin">
+          </v-text-field>
+                    <v-text-field
+          name="input-1-3"
+          label="Your Website"
+          single-line
+          v-model="application.website"
+          prepend-icon="fas fa-link">
+          </v-text-field>
+
+          <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"/>
+
                 <v-container d-inline-flex>
                 <v-flex xs6 sm6>
                     <v-text-field
@@ -49,29 +100,14 @@
                 </v-flex>
                 </v-container>
 
-
-        <v-checkbox
-        v-model="checkbox"
-        :error-messages="checkboxErrors"
-        label="Do you agree?"
-        required
-        @change="$v.checkbox.$touch()"
-        @blur="$v.checkbox.$touch()"
-        ></v-checkbox>
-
-        <v-btn @click="submit">submit</v-btn>
-        <v-btn @click="clear">clear</v-btn>
-        </form>
-        <div class="center ff mx-auto">
                 <v-card color="grey darken-3" flat>
                 <v-card-text>
-                    <v-subheader dark>Tell us a</v-subheader>
                     <v-container fluid>
                     <v-layout row>
                         <v-flex xs12>
                         <v-text-field
                             name="input-1"
-                            label="Label Text"
+                            label="Tell us about a project you've worked on recently"
                             textarea
                             dark
                             v-model="story"
@@ -89,26 +125,68 @@
                     </v-container>
                 </v-card-text>
                 </v-card>
+
+        <v-checkbox
+        id="mlh"
+        v-model="checkbox"
+        :error-messages="checkboxErrors"
+        label="Do you agree to MLH terms and conditions?"
+        required
+        @change="$v.checkbox.$touch()"
+        @blur="$v.checkbox.$touch()"
+        ></v-checkbox>
+
+        <div class="mx-auto gg" style="border: solid 2px black">
+                <v-btn @click="submit">submit</v-btn>
+                <v-btn @click="clear" >clear</v-btn>
         </div>
+
+        </form>
+
     </v-app>
 </template>
 
 <script>
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import Tab from "./layouts/Tab";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, email } from "vuelidate/lib/validators";
-
+import { mapGetters } from 'vuex';
 export default {
   mixins: [validationMixin],
   name: "Dashboard",
   data() {
     return {
+      parent: this,
+      dropzoneOptions: {
+          url: 'https://httpbin.org/post',
+          thumbnailWidth: 150,
+          maxFilesize: 0.5,
+          headers: { "My-Awesome-Header": "header value" },
+          addRemoveLinks: true,
+          acceptedFiles: "application/pdf"
+      },
+      application: {
+          name: "",
+          email: "",
+          school_year: null,
+          shirt_size: null,
+          dietry_restrictions: null,
+          hackathons: null,
+          github: "",
+          linkedin: "",
+          website: "",
+          phone: "",
+          emergency_phone: ""
+      },
       links: ["Home", "About", "Contact"],
       story: "",
       custom: true,
       name: "",
+      name2: name,
       email: "",
       select: null,
       items: [
@@ -117,6 +195,27 @@ export default {
         "Third Year",
         "Forth Year",
         "Fifth Year"
+      ],
+      hackathons: [
+        "This is my first one",
+        "2",
+        "3",
+        "5+",
+        "10+"
+      ],
+      food: [
+        "Vegetarian",
+        "Vegan",
+        "Halal",
+        "Gluten Free",
+        "Kosher"
+      ],
+      shirts: [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
       ],
       checkbox: false
     };
@@ -130,9 +229,12 @@ export default {
   components: {
     Navbar,
     Footer,
-    Tab
+    Tab,
+    vueDropzone: vue2Dropzone
   },
   computed: {
+    //Map selected getters in the store to computed properties, then spread the object
+    ...mapGetters(['get_vuex_email', 'get_vuex_user_application']),
     get_vuex_email(){
       return this.$store.state.getters.get_vuex_user_application;
     },
@@ -189,5 +291,13 @@ export default {
 .ff {
   margin-top: 5%;
   width: 70%;
+}
+
+#mlh{
+  margin-top: 10%;
+}
+
+.gg{
+  display: inline-block;
 }
 </style>
