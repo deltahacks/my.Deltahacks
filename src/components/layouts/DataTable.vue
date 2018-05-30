@@ -18,12 +18,11 @@
           <i class="fab fa-linkedin-in"></i>
           <i class="fas fa-globe"></i>
           <i class="far fa-file-alt"></i>
-          
           </td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
-        <Applicant/>
+        <applicant :usrname="props.item.name"/>
     </template>
   </v-data-table>
 </template>
@@ -48,6 +47,7 @@ export default {
       return {
         rating : null,
         fake,
+        test: '423423423',
         headers: [
           {
             text: 'Name',
