@@ -1,58 +1,59 @@
 <template>
-    <v-app class="gg">
- <v-card>
-        <v-container fluid grid-list-md>
-          <v-layout row wrap>
-            <v-flex
-              v-for="card in cards"
-              v-bind="{ [`xs${card.flex}`]: true }"
-              :key="card.title"
-            >
-              <v-card>
-                <v-card-media
-                  v-bind:src="card.src"
-                  height="200px"
-                >
-                  <v-container fill-height fluid>
-                    <v-layout fill-height>
-                      <v-flex xs12 align-end flexbox>
-                        <span class="headline white--text" v-text="card.title"></span>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </v-card-media>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn icon>
-                    <v-icon>favorite</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>bookmark</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>share</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
-    </v-app>
+  <v-container grid-list-md text-xs-center>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <v-card dark color="primary">
+          <v-card-text class="px-0">12</v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex v-for="i in 2" :key="`6${i}`" xs6>
+        <v-card dark color="secondary">
+          <v-card-text class="px-0">6</v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex v-for="i in 3" :key="`4${i}`" xs4>
+        <v-card dark color="primary">
+          <v-card-text class="px-0">4</v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex v-for="i in 4" :key="`3${i}`" xs3>
+        <v-card dark color="secondary">
+          <v-card-text class="px-0">3</v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex v-for="i in 6" :key="`2${i}`" xs2>
+        <v-card dark color="primary">
+          <v-card-text class="px-0">2</v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex v-for="i in 12" :key="`1${i}`" xs1>
+        <v-card dark color="secondary">
+          <v-card-text class="px-0">1</v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
-
 <script>
-  export default {
-    name: 'Applicant',
-    data: () => ({
-      cards: [
-        { title: 'Pre-fab homes', src: require('../../assets/a.jpeg'), flex: 12 },
-        { title: 'Favorite road trips', src: '/static/doc-images/cards/road.jpg', flex: 6 },
-        { title: 'Best airlines', src: '/static/doc-images/cards/plane.jpeg', flex: 6 }
-      ]
-    })
-  }
+export default {
+  name: "Applicant",
+  data: () => ({
+    cards: [
+      { title: "Pre-fab homes", src: require("../../assets/a.jpeg"), flex: 12 },
+      {
+        title: "Favorite road trips",
+        src: "/static/doc-images/cards/road.jpg",
+        flex: 6
+      },
+      {
+        title: "Best airlines",
+        src: "/static/doc-images/cards/plane.jpeg",
+        flex: 6
+      }
+    ]
+  })
+};
 </script>
-<style>
 
+<style>
 </style>

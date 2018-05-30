@@ -23,11 +23,7 @@
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
-      <v-card flat>
         <Applicant/>
-        <v-card-text>{{ props.item.story }}</v-card-text>
-        <v-btn @click="f">click</v-btn>
-      </v-card>
     </template>
   </v-data-table>
 </template>
