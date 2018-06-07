@@ -1,62 +1,27 @@
 <template>
-  <v-app id="app">
-    <transition name="fade">
-      <router-view/>
-    </transition>
-  </v-app>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
-<script>
-import Navbar from '@/components/layouts/Navbar'
-export default {
-  name: 'App',
-  components :{
-    Navbar
-  }
-}
-</script>
-
 <style>
-  .fade-enter-active, .fade-leave-active {
-    transition-property: opacity;
-    transition-duration: .25s;
-  }
-
-  .fade-enter-active {
-    transition-delay: .25s;
-  }
-
-  .fade-enter, .fade-leave-active {
-    opacity: 0
-  }
-
-  #demo {
-  overflow: hidden;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+#nav {
+  padding: 30px;
 }
 
-  .slide-leave-active,
-  .slide-enter-active {
-    transition: 1s;
-  }
-  .slide-enter {
-    transform: translate(100%, 0);
-  }
-  .slide-leave-to {
-    transform: translate(-100%, 0);
-  }
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
 
-  .img-slider{
-    overflow: hidden;
-    position: relative;
-    height: 200px;
-    width: 400px;
-  }
-
-  .img-slider img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right:0;
-  }
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
 </style>
