@@ -4,7 +4,7 @@
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <!-- <applicant-dropdown/> -->
     <!-- <data-table/> -->
-    <signup/>
+    <carousel/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import Dashboard from '@/views/Dashboard.vue';
 import ForgotPassword from '@/views/ForgotPassword.vue';
 import Login from '@/views/Login.vue';
 import Signup from '@/views/Signup.vue';
-
+import Carousel from '@/components/Carousel.vue';
 
 export default {
   name: 'home',
@@ -31,6 +31,7 @@ export default {
     Dashboard,
     Login,
     Signup,
+    Carousel,
   },
 };
 </script>

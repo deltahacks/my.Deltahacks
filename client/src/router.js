@@ -44,6 +44,11 @@ const router = new Router({
       name: 'ForgotPassword',
       component: ForgotPassword,
     },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home,
+    },
   ],
 });
 
