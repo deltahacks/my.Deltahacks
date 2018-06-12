@@ -40,19 +40,19 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => ({
     drawer: null,
     email: null,
     pass: null,
-    feedback: null
+    feedback: null,
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     login() {
       if (this.email && this.pass) {
@@ -60,11 +60,11 @@ export default {
           .auth()
           .signInWithEmailAndPassword(this.email, this.pass)
           .then(() => {
-            this.$router.push({ name: "Dashboard" });
-            console.log("logged in");
+            this.$router.push({ name: 'Dashboard' });
+            console.log('logged in');
             this.feedback = null;
           })
-          .catch(error => {
+          .catch((error) => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -72,20 +72,19 @@ export default {
             console.log(errorMessage);
           });
       }
-    }
+    },
   },
   mounted() {
-    window.addEventListener("keydown", e => {
+    window.addEventListener('keydown', (e) => {
       const key = e.which || e.keyCode;
       if (key === 13) {
-        //alert("ay");
+        // alert("ay");
         this.login();
       }
-      return;
     });
   },
   props: {
-    source: String
-  }
+    source: String,
+  },
 };
 </script>
