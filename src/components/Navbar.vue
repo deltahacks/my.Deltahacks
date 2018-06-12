@@ -1,10 +1,22 @@
 <template>
-  <v-toolbar>
+  <v-toolbar class="toolbar">
     <v-toolbar-side-icon></v-toolbar-side-icon>
-    <v-toolbar-title>Your Dashboard</v-toolbar-title>
+    <v-toolbar-title id="title">Attendee Relations Dashboard</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat to="/apply" v-if="c_user" class="red lighten-1">Apply Now</v-btn>
+    <v-btn>
+    <v-badge right color="red" overlap>
+      <v-icon slot="badge" dark small>fas fa-exclamation</v-icon>
+      <v-icon
+        large
+        color="grey lighten-1" >
+        far fa-bell
+      </v-icon>
+      </v-badge>
+
+    </v-btn>
+
+          <v-btn flat to="/apply" v-if="c_user" class="red lighten-1">Apply Now</v-btn>
       <v-btn flat to="/dashboard" v-if="c_user">{{ c_user.email }}</v-btn>
       <v-btn flat to="/signup" v-if="!c_user">Signup</v-btn>
       <v-btn flat to="/login" v-if="!c_user">Login</v-btn>
@@ -43,5 +55,10 @@ export default {
         border: solid 2px black;
         padding: 0 0 0 0;
         margin: 0 0;
+    }
+
+    #title {
+      font-family: 'Roboto', serif;
+      font-weight: 500;
     }
 </style>

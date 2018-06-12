@@ -48,7 +48,6 @@
                 <v-btn
                 class="mx-auto"
                 color="primary"
-                v-on:keyup.enter="login"
                 @click.prevent="login">Login</v-btn>
               </v-card-actions>
             </v-card>
