@@ -2,9 +2,9 @@
   <v-toolbar class="toolbar">
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-menu offset-y>
-      <v-btn class="bold" slot="activator" color="primary" dark>DH V</v-btn>
+      <v-btn class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
       <v-list>
-        <v-list-tile v-for="(item, index) in dhs" :key="index" @click="">
+        <v-list-tile v-for="(item, index) in dhs" :key="index" @click="current = item">
           <v-list-tile-title class="">{{ item }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
@@ -44,7 +44,8 @@ export default {
   data() {
     return {
       c_user: firebase.auth().currentUser,
-      dhs: ["DH V", "DH IV", "DH III", "DH II"]
+      dhs: ["DH V", "DH IV", "DH III", "DH II"],
+      current: "DH V"
     };
   },
   methods: {
