@@ -5,11 +5,12 @@
             <v-layout row wrap>
                 <v-flex d-flex xs12 sm6 md4>
                     <v-card color="white lighten-4" dark>
-                        <v-card-title primary class="title">Lorem</v-card-title>
-                        <v-card-text>{{ lorem }}</v-card-text>
+                        <GmapMap id="gmap" :center="{lat:43.6532, lng:-79.3832}" :zoom="7" map-type-id="terrain">
+                            <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" :clickable="true" :draggable="true" @click="center=m.position" />
+                        </GmapMap>
                     </v-card>
                 </v-flex>
-                <v-flex d-flex xs12 sm6 md3>
+                <v-flex d-flex xs12 sm6 md2>
                     <v-layout row wrap>
                         <v-flex d-flex>
                             <v-card color="white lighten-4" dark>
@@ -28,8 +29,9 @@
                         </v-flex>
                     </v-layout>
                 </v-flex>
-                <v-flex d-flex xs12 sm6 md2 child-flex>
+                <v-flex d-flex xs12 sm6 md3 child-flex>
                     <v-card color="white lighten-4" dark>
+
                     </v-card>
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3>
@@ -90,5 +92,10 @@ export default {
 
 .ht {
   font-size: 30px;
+}
+
+#gmap {
+  width: 100%;
+  height: 100%;
 }
 </style>
