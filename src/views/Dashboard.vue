@@ -6,7 +6,7 @@
                 <v-flex d-flex xs12 sm6 md4>
                     <v-card color="white lighten-4" dark>
                         <GmapMap id="gmap" :center="{lat:43.6532, lng:-79.3832}" :zoom="7" map-type-id="terrain">
-                            <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" :clickable="true" :draggable="true" @click="center=m.position" />
+                            <GmapMarker :key="index" title="yooo" v-for="(m, index) in positions" :position="m" :clickable="true" :draggable="false" @click="center=m" />
                         </GmapMap>
                     </v-card>
                 </v-flex>
@@ -62,6 +62,7 @@ import DataTable from "@/components/DataTable.vue";
 // import MapCard from '@/components/MapCard'
 // import Chart from '@/components/Chart'
 import CommitChart from "@/components/CommitChart";
+import db from "../private/firebase_init";
 
 export default {
   name: "Dashboard",
@@ -71,7 +72,8 @@ export default {
       links: ["Home", "About", "Contact"],
       lorem:
         "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
-      c_user: firebase.auth().currentUser
+      c_user: firebase.auth().currentUser,
+      positions: []
     };
   },
   components: {
@@ -80,7 +82,22 @@ export default {
     DataTable,
     CommitChart
   },
-  mounted() {},
+  mounted() {
+    db
+      .collection("users")
+      .where("is_admin", "==", false)
+      .get()
+      .then(doc =>
+        doc.docs.forEach(val => {
+          this.positions.push({
+            lat: val.data().geo.latitude,
+            lng: val.data().geo.longitude
+          });
+          console.log(val.data().geo);
+        })
+      )
+      .catch(err => console.log(err));
+  },
   methods: {}
 };
 </script>
