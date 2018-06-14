@@ -9,7 +9,16 @@ import store from './store';
 import gmaps_key from './private/gmaps_init'
 
 import * as VueGoogleMaps from 'vue2-google-maps'
- 
+import VeeValidate from 'vee-validate';
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px'
+})
+Vue.use(VeeValidate);
+
 Vue.use(VueGoogleMaps, {
   load: {
     key: gmaps_key,

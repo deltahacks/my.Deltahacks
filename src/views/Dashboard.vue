@@ -63,6 +63,7 @@ import DataTable from "@/components/DataTable.vue";
 // import Chart from '@/components/Chart'
 import CommitChart from "@/components/CommitChart";
 import db from "../private/firebase_init";
+import { list_of_universities } from "../private/data";
 
 export default {
   name: "Dashboard",
@@ -70,6 +71,7 @@ export default {
     return {
       apps: "245",
       links: ["Home", "About", "Contact"],
+      list_of_universities,
       lorem:
         "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
       c_user: firebase.auth().currentUser,
@@ -81,6 +83,9 @@ export default {
     Footer,
     DataTable,
     CommitChart
+  },
+  created() {
+    this.$Progress.start();
   },
   mounted() {
     db
@@ -94,9 +99,13 @@ export default {
             lng: val.data().geo.longitude
           });
           console.log(val.data().geo);
+          this.$Progress.finish();
         })
       )
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        this.$Progress.fail();
+      });
   },
   methods: {}
 };

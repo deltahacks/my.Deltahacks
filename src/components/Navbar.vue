@@ -36,16 +36,16 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {},
   data() {
     return {
       c_user: firebase.auth().currentUser,
-      dhs: ["DH V", "DH IV", "DH III", "DH II"],
-      current: "DH V"
+      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH V',
     };
   },
   methods: {
@@ -55,14 +55,14 @@ export default {
         .signOut()
         .then(
           () => {
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: 'Login' });
           },
-          error => {
+          (error) => {
             console.log(error);
-          }
+          },
         );
-    }
-  }
+    },
+  },
 };
 </script>
 
