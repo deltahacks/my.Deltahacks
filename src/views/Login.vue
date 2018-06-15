@@ -23,7 +23,7 @@
                   <v-form>
                     <v-text-field prepend-icon="person" name="login" label="Login" type="text" v-model="email">
                     </v-text-field>
-                    <v-text-field @keypress.enter="login(); test();" prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="pass">
+                    <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="pass">
                     </v-text-field>
                   </v-form>
                 </v-card-text>

@@ -14,7 +14,7 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <div id="search">
-      <v-text-field clearable=true id="search" hint='Search for attendees' prepend-icon="search" hide-details single-line></v-text-field>
+      <v-text-field id="search" hint='Search for attendees' prepend-icon="search" hide-details single-line :clearable=true></v-text-field>
     </div>
 
     <v-toolbar-items class="hidden-sm-and-down">
@@ -37,16 +37,16 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {},
   data() {
     return {
       c_user: firebase.auth().currentUser,
-      dhs: ["DH V", "DH IV", "DH III", "DH II"],
-      current: "DH V"
+      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH V',
     };
   },
   methods: {
@@ -56,14 +56,14 @@ export default {
         .signOut()
         .then(
           () => {
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: 'Login' });
           },
-          error => {
+          (error) => {
             console.log(error);
-          }
+          },
         );
-    }
-  }
+    },
+  },
 };
 </script>
 

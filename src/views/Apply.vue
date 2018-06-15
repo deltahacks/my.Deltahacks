@@ -2,17 +2,17 @@
   <v-app class="dashboard">
     <Navbar/>
     <form class="ff mx-auto">
-      <v-text-field v-model="application.name" :error-messages="nameErrors" :counter="10" label="Name" required @input="$v.name.$touch()" @blur="$v.name.$touch()"></v-text-field>
-      <v-text-field v-model="application.email" v-validate="'required|email'" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch()" @blur="$v.email.$touch()"></v-text-field>
-      <v-date-picker reactive=true v-model="date" color="green lighten-1"></v-date-picker>
+      <v-text-field v-model="application.name" :counter="10" label="Name"></v-text-field>
+      <v-text-field v-model="application.email" label="E-mail"></v-text-field>
+      <v-date-picker v-model="date" color="green lighten-1"></v-date-picker>
       <v-select :items="list_of_universities" v-model="university" label="What university do you go to?" autocomplete></v-select>
-      <v-select v-model="application.school_year" :items="items" :error-messages="selectErrors" label="Year" required @change="$v.select.$touch()" @blur="$v.select.$touch()">
+      <v-select v-model="application.school_year" :items="items" label="Year">
       </v-select>
-      <v-select v-model="application.shirt_size" :items="shirts" :error-messages="selectErrors" label="Shirt size" required @change="$v.select.$touch()" @blur="$v.select.$touch()">
+      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size">
       </v-select>
-      <v-select v-model="select" :items="food" :error-messages="selectErrors" label="Dietary restrictions" required @change="$v.select.$touch()" @blur="$v.select.$touch()">
+      <v-select v-model="select" :items="food" label="Dietary restrictions">
       </v-select>
-      <v-select v-model="select" :items="hackathons" :error-messages="selectErrors" label="How many hackathons have you attended?" required @change="$v.select.$touch()" @blur="$v.select.$touch()">
+      <v-select v-model="select" :items="hackathons" label="How many hackathons have you attended?">
       </v-select>
       <v-text-field name="input-1-3" label="Your Github" single-line v-model="application.github" prepend-icon="fab fa-github">
       </v-text-field>
@@ -47,11 +47,11 @@
         </v-card-text>
       </v-card>
 
-      <v-checkbox id="mlh" v-model="checkbox" :error-messages="checkboxErrors" label="Do you agree to MLH terms and conditions?" required @change="$v.checkbox.$touch()" @blur="$v.checkbox.$touch()"></v-checkbox>
+      <v-checkbox id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?"></v-checkbox>
 
       <div class="mx-auto gg" style="border: solid 2px black">
-        <v-btn @click="submit">submit</v-btn>
-        <v-btn @click="clear">clear</v-btn>
+        <v-btn>submit</v-btn>
+        <v-btn>clear</v-btn>
       </div>
 
     </form>
