@@ -26,7 +26,8 @@
           </v-icon>
         </v-badge>
       </v-btn> -->
-      <v-btn flat to="/apply" v-if="c_user" class="red lighten-1">Apply Now</v-btn>
+      <v-btn flat to="/status" v-if="c_user" class="blue lighten-3">Status</v-btn>
+      <v-btn flat to="/apply" v-if="c_user" class="red lighten-3">Apply Now</v-btn>
       <v-btn flat to="/dashboard" v-if="c_user">{{ c_user.email }}</v-btn>
       <v-btn flat to="/signup" v-if="!c_user">Signup</v-btn>
       <v-btn flat to="/login" v-if="!c_user">Login</v-btn>
@@ -36,16 +37,16 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-  name: 'Navbar',
+  name: "Navbar",
   components: {},
   data() {
     return {
       c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
+      dhs: ["DH V", "DH IV", "DH III", "DH II"],
+      current: "DH V"
     };
   },
   methods: {
@@ -55,14 +56,14 @@ export default {
         .signOut()
         .then(
           () => {
-            this.$router.push({ name: 'Login' });
+            this.$router.push({ name: "Login" });
           },
-          (error) => {
+          error => {
             console.log(error);
-          },
+          }
         );
-    },
-  },
+    }
+  }
 };
 </script>
 
