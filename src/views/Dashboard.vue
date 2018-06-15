@@ -53,61 +53,60 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 // import Typed from 'typed.js';
-import Navbar from "@/components/Navbar.vue";
-import Footer from "@/components/Footer.vue";
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 // import Tab from '@/components/Tab'
-import DataTable from "@/components/DataTable.vue";
+import DataTable from '@/components/DataTable.vue';
 // import MapCard from '@/components/MapCard'
 // import Chart from '@/components/Chart'
-import CommitChart from "@/components/CommitChart";
-import db from "../private/firebase_init";
-import { list_of_universities } from "../private/data";
+import CommitChart from '@/components/CommitChart';
+import db from '../private/firebase_init';
+import { list_of_universities } from '../private/data';
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   data() {
     return {
-      apps: "245",
-      links: ["Home", "About", "Contact"],
+      apps: '245',
+      links: ['Home', 'About', 'Contact'],
       list_of_universities,
       lorem:
-        "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
+        'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
       c_user: firebase.auth().currentUser,
-      positions: []
+      positions: [],
     };
   },
   components: {
     Navbar,
     Footer,
     DataTable,
-    CommitChart
+    CommitChart,
   },
   created() {
     this.$Progress.start();
   },
   mounted() {
     db
-      .collection("users")
-      .where("is_admin", "==", false)
+      .collection('users')
+      .where('is_admin', '==', false)
       .get()
       .then(doc =>
-        doc.docs.forEach(val => {
+        doc.docs.forEach((val) => {
           this.positions.push({
             lat: val.data().geo.latitude,
-            lng: val.data().geo.longitude
+            lng: val.data().geo.longitude,
           });
           console.log(val.data().geo);
           this.$Progress.finish();
-        })
-      )
-      .catch(err => {
+        }))
+      .catch((err) => {
         console.log(err);
         this.$Progress.fail();
       });
   },
-  methods: {}
+  methods: {},
 };
 </script>
 

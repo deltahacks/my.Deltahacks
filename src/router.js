@@ -8,6 +8,7 @@ import Signup from './views/Signup.vue';
 import Login from './views/Login.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
+import Status from './views/Status.vue';
 
 Vue.use(Router);
 
@@ -38,6 +39,11 @@ const router = new Router({
       path: '/apply',
       name: 'Apply',
       component: Apply,
+    },
+    {
+      path: '/status',
+      name: 'Status',
+      component: Status,
     },
     {
       path: '/login/forgot',

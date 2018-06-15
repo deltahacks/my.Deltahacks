@@ -132,7 +132,14 @@ export default {
     Footer,
     vueDropzone: vue2Dropzone
   },
-  computed: {},
+  computed: {
+    progress() {
+      return Math.min(100, this.story.length / 5);
+    },
+    color() {
+      return ["error", "warning", "success"][Math.floor(this.progress / 40)];
+    }
+  },
   methods: {}
 };
 </script>

@@ -9,6 +9,47 @@
                 <h3 class="headline mb-0">{{ usrname }}</h3>
               </div>
             </v-card-title>
+            <v-flex xs12>
+              <br>
+              <v-card dark color="primary">
+                <v-card-text class="text-xs-left">
+                  <h2>{{ usrname }}</h2>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <br>
+            <v-card dark color="green lighten-3">
+              <v-card-text class="text-xs-left">
+                <h2>Age</h2>
+              </v-card-text>
+            </v-card>
+            <br>
+            <v-card dark color="green lighten-3">
+              <v-card-text class="text-xs-left">
+                <h2>University / Program / Year </h2>
+              </v-card-text>
+            </v-card>
+            <br>
+            <v-card dark color="green lighten-3">
+              <v-card-text class="text-xs-left">
+                <h2>Number of Hackathons: </h2>
+              </v-card-text>
+            </v-card>
+            <br>
+            <v-card dark color="green lighten-3">
+              <div class="text-xs-center">
+                <i class="fa fa-globe"></i>
+                <i class="fa fa-linkedin"></i>
+                <i class="fab fa-github"></i>
+              </div>
+            </v-card>
+            <br>
+            <br><br>
+
+            <br><br>
+            <br>
+            <h3>A PROJECT I DID:</h3>
+            <br><br>
             <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
             <br><br><br>
             <vue-slider v-model="status" piecewise=true piecewise-label=true step="1" max="5" use-keyboard=true height=20 dot-size=30></vue-slider>
@@ -45,9 +86,38 @@
       </section>
       <section id="right1" xs12 md12 lg12>
         <v-card>
+<div id="wrapper">
+  <v-container grid-list-md text-xs-center>
+  <v-layout>
+      <section id="left">
+      <v-flex xs12>
+        <br>
+        <v-card dark color="primary">
+          <v-card-text class="px-0"><h2>{{ usrname }}</h2></v-card-text>
         </v-card>
-      </section>
-    </v-layout> -->
+      </v-flex>
+      <br>
+    <v-card dark color="green">
+    <v-card-text class="px-0"><h2>AGE</h2></v-card-text></v-card>
+    <br>
+    <v-card dark color="green">
+    <v-card-text class="px-0"><h2>UNIVERSITY AND YEAR </h2></v-card-text>
+    </v-card>
+    <br>
+    <v-card dark color="green">
+    <v-card-text class="px-0"><h2>NO OF HACKATHONS</h2></v-card-text>
+    </v-card>
+    <br>
+  <i class="fa fa-github"><a href="www.github.com"><h2> GITHUB</h2></a></i>
+    <br><br>
+    <i class="fa fa-globe"><a href="www.website.com"><h2> WEBSITE</h2></a></i>
+    <br><br>
+    <i class="fa fa-linkedin"><a href="www.linkedin.com"><h2> LINKEDIN</h2></a></i>
+    <br><br>
+    <br>
+    <h3>A PROJECT I DID:</h3>
+    <br><br> -->
+
   </div>
 </template>
 <script>
@@ -86,7 +156,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #datacard {
   height: 900px;
 }
