@@ -4,19 +4,40 @@
   <v-layout>
       <section id="left">
       <v-flex xs12>
+        <br>
         <v-card dark color="primary">
           <v-card-text class="px-0"><h2>{{ usrname }}</h2></v-card-text>
         </v-card>
       </v-flex>
       <br>
-        <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
-        <br><br><br>
+    <v-card dark color="green">
+    <v-card-text class="px-0"><h2>AGE</h2></v-card-text></v-card>
+    <br>
+    <v-card dark color="green">
+    <v-card-text class="px-0"><h2>UNIVERSITY AND YEAR </h2></v-card-text>
+    </v-card>
+    <br>    
+    <v-card dark color="green">
+    <v-card-text class="px-0"><h2>NO OF HACKATHONS</h2></v-card-text>
+    </v-card>
+    <br>
+  <i class="fa fa-github"><a href="www.github.com"><h2> GITHUB</h2></a></i>
+    <br><br>
+    <i class="fa fa-globe"><a href="www.website.com"><h2> WEBSITE</h2></a></i>
+    <br><br>
+    <i class="fa fa-linkedin"><a href="www.linkedin.com"><h2> LINKEDIN</h2></a></i>
+    <br><br>
+    <br>
+    <h3>A PROJECT I DID:</h3>
+    <br><br>
          <vue-slider v-model="status" piecewise=true piecewise-label=true step="1" max="5" use-keyboard=true height=20 dot-size=30></vue-slider>
       <!-- <vue-slider vmodel="status" step="1" max="5" track-color="red" hint="PLEASE RATE THE APPLICANT FROM 0-5" persistent-hint=true thumb-label=true thumb-color="purple" use-keyboard=true ticks=true tooltip="always"/> -->
-    <h2>The current applicant score is : {{status+status1}} out of 10</h2>
+    <h2>The current applicant score is : {{status+status1}} out of 10</h2><br>
+    <v-btn color="orange" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
     <br>
-    <v-btn color="success" class="button2" v-on:click="status">SUBMIT SCORE</v-btn>
-          </section>
+    <br>
+    <v-btn color="blue" class="button2" v-on:click="status">SUBMIT SCORE</v-btn>
+        </section>
           <section id="right">
   <v-flex>
      <v-card>
