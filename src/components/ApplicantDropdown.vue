@@ -69,38 +69,38 @@
   </div>
 </template>
 <script>
-import vueSlider from "vue-slider-component";
+import vueSlider from 'vue-slider-component';
 
 export default {
-  name: "Applicant",
-  props: ["usrname"],
+  name: 'Applicant',
+  props: ['usrname'],
   data: () => ({
     currentPage: 0,
     pageCount: 0,
     status: 0,
     status1: 0,
     resumeLink:
-      "https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf",
+      'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
     cards: [
       {
-        title: "Pre-fab homes",
-        flex: 12
+        title: 'Pre-fab homes',
+        flex: 12,
       },
       {
-        title: "Favorite road trips",
-        src: "/static/doc-images/cards/road.jpg",
-        flex: 6
+        title: 'Favorite road trips',
+        src: '/static/doc-images/cards/road.jpg',
+        flex: 6,
       },
       {
-        title: "Best airlines",
-        src: "/static/doc-images/cards/plane.jpeg",
-        flex: 6
-      }
-    ]
+        title: 'Best airlines',
+        src: '/static/doc-images/cards/plane.jpeg',
+        flex: 6,
+      },
+    ],
   }),
   components: {
-    vueSlider
-  }
+    vueSlider,
+  },
 };
 </script>
 

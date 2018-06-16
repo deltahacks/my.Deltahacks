@@ -21,11 +21,8 @@
           <td class="text-xs-left">{{ props.item.applied }}</td>
           <td class="text-xs-left">{{ props.item.phone }}</td>
           <td class="text-xs-left">{{ props.item.age }}</td>
-          <td class="text-md-left fonta">
-            <i class="fab fa-github"></i>
-            <i class="fab fa-linkedin-in"></i>
-            <i class="fas fa-globe"></i>
-            <i class="far fa-file-alt"></i>
+          <td class="text-md-left">
+            <status-indicator active pulse></status-indicator>
           </td>
         </tr>
       </template>
@@ -39,6 +36,8 @@
 <script>
 import fake from '@/helpers/fake';
 import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
+import 'vue-status-indicator/styles.css';
+import { StatusIndicator } from 'vue-status-indicator';
 
 export default {
   name: 'DataTable',
@@ -49,6 +48,7 @@ export default {
   },
   components: {
     ApplicantDropdown,
+    StatusIndicator,
   },
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
         { text: 'Applied', value: 'applied' },
         { text: 'Phone', value: 'phone' },
         { text: 'Age', value: 'age' },
-        { text: 'Rate', value: 'rate' },
+        { text: 'Status', value: 'rate' },
       ],
     };
   },
