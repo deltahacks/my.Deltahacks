@@ -31,6 +31,8 @@
           <v-text-field name="input-1-3" label="Emergency contact phone number" single-line prepend-icon="phone"></v-text-field>
         </v-flex>
       </v-container>
+      <file-pond name="test" ref="pond" label-idle="Drop files here..." allow-multiple="true" accepted-file-types="application/pdf" server="/api" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+      <br>
       <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
 
       <v-card color="grey" flat>
@@ -61,86 +63,104 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 
-import Navbar from '@/components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
-import { validationMixin } from 'vuelidate';
-import { required, maxLength, email } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
-import { list_of_universities } from '../private/data';
-import vue2Dropzone from 'vue2-dropzone';
-import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
+
+import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
+import { validationMixin } from "vuelidate";
+import { required, maxLength, email } from "vuelidate/lib/validators";
+import { mapGetters } from "vuex";
+import { list_of_universities } from "../private/data";
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
   mixins: [validationMixin],
-  name: 'Apply',
+  name: "Apply",
   data() {
     return {
+      myFiles: ["cat.jpeg"],
       parent: this,
       picker: null,
-      date: '2000-01-01',
+      date: "2000-01-01",
       university: null,
       list_of_universities,
       dropzoneOptions: {
-        url: 'https://httpbin.org/post',
+        url: "https://httpbin.org/post",
         thumbnailWidth: 150,
         maxFilesize: 0.5,
-        headers: { 'My-Awesome-Header': 'header value' },
+        headers: { "My-Awesome-Header": "header value" },
         addRemoveLinks: true,
-        acceptedFiles: 'application/pdf',
+        acceptedFiles: "application/pdf"
       },
       application: {
-        name: '',
-        email: '',
+        name: "",
+        email: "",
         school_year: null,
         shirt_size: null,
         dietry_restrictions: null,
         hackathons: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        phone: '',
-        emergency_phone: '',
+        github: "",
+        linkedin: "",
+        website: "",
+        phone: "",
+        emergency_phone: ""
       },
-      links: ['Home', 'About', 'Contact'],
-      story: '',
+      links: ["Home", "About", "Contact"],
+      story: "",
       custom: true,
-      name: '',
-      email: '',
+      name: "",
+      email: "",
       select: null,
       items: [
-        'First Year',
-        'Second Year',
-        'Third Year',
-        'Forth Year',
-        'Fifth Year',
+        "First Year",
+        "Second Year",
+        "Third Year",
+        "Forth Year",
+        "Fifth Year"
       ],
-      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-      shirts: ['XS', 'S', 'M', 'L', 'XL'],
-      checkbox: false,
+      hackathons: ["This is my first one", "2", "3", "5+", "10+"],
+      food: ["Vegetarian", "Vegan", "Halal", "Gluten Free", "Kosher"],
+      shirts: ["XS", "S", "M", "L", "XL"],
+      checkbox: false
     };
   },
   validations: {
     name: { required, maxLength: maxLength(10) },
     email: { required, email },
     select: { required },
-    checkbox: { required },
+    checkbox: { required }
   },
   components: {
     Navbar,
     Footer,
-    vueDropzone: vue2Dropzone,
+    FilePond,
+    vueDropzone: vue2Dropzone
   },
   computed: {
     progress() {
       return Math.min(100, this.story.length / 5);
     },
     color() {
-      return ['error', 'warning', 'success'][Math.floor(this.progress / 40)];
-    },
+      return ["error", "warning", "success"][Math.floor(this.progress / 40)];
+    }
   },
-  methods: {},
+  methods: {
+    handleFilePondInit: function() {
+      console.log("FilePond has initialized");
+
+      // FilePond instance methods are available on `this.$refs.pond`
+    }
+  }
 };
 </script>
 
