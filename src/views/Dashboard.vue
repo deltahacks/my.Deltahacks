@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-car.css" />
+<script src="http://github.hubspot.com/odometer/odometer.js"></script>
 <template>
     <v-app class="dashboard">
         <Navbar/>
@@ -15,7 +17,9 @@
                         <v-flex d-flex>
                             <v-card color="white lighten-4" dark>
                                 <v-card-title primary class="title">Total Applicants:</v-card-title>
-                                <v-card-text class="totalapps center"></v-card-text>
+                                <v-card-text class="totalapps center">
+                                    <div id="odometer" class="odometer">123</div>
+                                </v-card-text>
                             </v-card>
                         </v-flex>
                         <v-flex d-flex>
@@ -122,5 +126,9 @@ export default {
 #gmap {
   width: 100%;
   height: 100%;
+}
+
+.odometer {
+    font-size: 150px;
 }
 </style>
