@@ -16,7 +16,7 @@
     "filepond-plugin-image-preview": "^1.0.9",
     "firebase": "^5.0.4",
     "typed.js": "^2.0.7",
-    "vee-validate": "^2.1.0-beta.1",
+    "vee-validate": "^2.1.0-beta.2",
     "vue": "^2.5.16",
     "vue-chartjs": "^3.3.1",
     "vue-filepond": "^2.1.1",

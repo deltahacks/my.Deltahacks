@@ -1,34 +1,54 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
-    <form class="ff mx-auto">
-      <v-text-field v-model="application.name" :counter="10" label="Name"></v-text-field>
-      <v-text-field v-model="application.email" label="E-mail"></v-text-field>
-      <v-date-picker v-model="date" color="green lighten-1"></v-date-picker>
-      <v-select :items="list_of_universities" v-model="university" label="What university do you go to?" autocomplete></v-select>
-      <v-select v-model="application.school_year" :items="items" label="Year">
+    <form class="ff mx-auto" @submit.prevent="validateBeforeSubmit">
+      <v-text-field name="name" v-model="application.name" :counter="40" label="Name"
+                    v-validate="'required|name'" 
+                    :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+                    <!-- find a better way of including this in form -->
+      <v-text-field name="email" v-model="application.email" label="E-mail"
+                    v-validate="'required|email'"
+                    :error-messages="errors.first('email')" data-vv-delay="1000"></v-text-field>
+      <v-date-picker name="date" v-model="date" color="green lighten-1"
+                    v-validate="'required'"></v-date-picker>
+      <v-select name="university" :items="list_of_universities" v-model="university" 
+                  label="What university do you go to?" autocomplete
+                  v-validate="'required'"
+                  :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+      <v-select name="year" v-model="application.school_year" :items="items" label="Year"
+                  v-validate="'required'"
+                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size">
+      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size" 
+                  v-validate="'required'"
+                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="select" :items="food" label="Dietary restrictions">
+      <v-select v-model="application.dietry_restrictions" :items="food" label="Dietary restrictions" 
+                  v-validate="'required'"
+                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="select" :items="hackathons" label="How many hackathons have you attended?">
+      <v-select v-model="application.hackathons" :items="hackathons" label="How many hackathons have you attended?" 
+                  v-validate="'required'"
+                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-text-field name="input-1-3" label="Your Github" single-line v-model="application.github" prepend-icon="fab fa-github">
+      <v-text-field name="github" label="Your Github" single-line
+                    v-model="application.github" prepend-icon="fab fa-github">
       </v-text-field>
-      <v-text-field name="input-1-3" label="Your Linkedin" single-line v-model="application.linkedin" prepend-icon="fab fa-linkedin">
+      <v-text-field name="linkedin" label="Your Linkedin" single-line v-model="application.linkedin" prepend-icon="fab fa-linkedin">
       </v-text-field>
-      <v-text-field name="input-1-3" label="Your Website" single-line v-model="application.website" prepend-icon="fas fa-link">
+      <v-text-field name="website" label="Your Website" single-line v-model="application.website" prepend-icon="fas fa-link">
       </v-text-field>
 
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
-          <v-text-field name="input-1-3" label="Your cell phone number" single-line prepend-icon="phone"></v-text-field>
+          <v-text-field name="phone" label="Your cell phone number" single-line prepend-icon="phone"
+                        v-validate="'required'" :error-messages="errors.first('phone:required')"></v-text-field>
         </v-flex>
         <v-flex xs4>
         </v-flex>
         <v-flex xs6 sm6>
-          <v-text-field name="input-1-3" label="Emergency contact phone number" single-line prepend-icon="phone"></v-text-field>
+          <v-text-field name="emergency phone" label="Emergency contact phone number" single-line prepend-icon="phone"
+                        v-validate="'required'" :error-messages="errors.first('emergency phone:required')"></v-text-field>
         </v-flex>
       </v-container>
       <file-pond name="test" ref="pond" label-idle="Drop files here..." allow-multiple="true" accepted-file-types="application/pdf" server="/api" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
@@ -40,7 +60,10 @@
           <v-container fluid>
             <v-layout row>
               <v-flex xs12>
-                <v-text-field name="input-1" label="Tell us about a project you've worked on recently" textarea dark v-model="story"></v-text-field>
+                <v-text-field
+                 name="input-1" label="Tell us about a project you've worked on recently" 
+                 textarea dark v-model="story">
+                </v-text-field>
               </v-flex>
 
             </v-layout>
@@ -52,7 +75,7 @@
       <v-checkbox id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?"></v-checkbox>
 
       <div class="mx-auto gg" style="border: solid 2px black">
-        <v-btn>submit</v-btn>
+        <v-btn class="button is-primary" type="submit">submit</v-btn>
         <v-btn>clear</v-btn>
       </div>
 
@@ -72,6 +95,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
+import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { list_of_universities } from '../private/data';
@@ -82,7 +106,6 @@ const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview,
 );
-
 export default {
   mixins: [validationMixin],
   name: 'Apply',
@@ -139,6 +162,7 @@ export default {
     email: { required, email },
     select: { required },
     checkbox: { required },
+    university: { in: list_of_universities },
   },
   components: {
     Navbar,
@@ -159,6 +183,9 @@ export default {
       console.log('FilePond has initialized');
 
       // FilePond instance methods are available on `this.$refs.pond`
+    },
+    validateBeforeSubmit() {
+      this.$validator.validateAll();
     },
   },
 };
