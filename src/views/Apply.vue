@@ -3,7 +3,7 @@
     <Navbar/>
     <form class="ff mx-auto" @submit.prevent="validateBeforeSubmit">
       <v-text-field name="name" v-model="application.name" label="Name"
-                    v-validate="'required|name|max:100'" 
+                    v-validate="'required|max:100'" 
                     :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                     <!-- find a better way of including this in form -->
       <v-text-field name="email" v-model="application.email" label="E-mail"
@@ -20,16 +20,16 @@
                   :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
       <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size" 
-                  v-validate="'required'"
-                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
+                  v-validate="'required'" name="shirt size"
+                  :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
       </v-select>
       <v-select v-model="application.dietry_restrictions" :items="food" label="Dietary restrictions" 
-                  v-validate="'required'"
-                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
+                  v-validate="'required'" name="diet"
+                  :error-messages="errors.first('diet:required')" data-vv-delay="1000">
       </v-select>
       <v-select v-model="application.hackathons" :items="hackathons" label="How many hackathons have you attended?" 
-                  v-validate="'required'"
-                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
+                  v-validate="'required'" name="hackathons"
+                  :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
       </v-select>
       <v-text-field name="github" label="Your Github" single-line
                     v-model="application.github" prepend-icon="fab fa-github"
@@ -44,14 +44,14 @@
 
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
-          <v-text-field name="phone" label="Your cell phone number" single-line prepend-icon="phone"
+          <v-text-field name="phone" label="Your cell phone number" single-line prepend-icon="phone" data-vv-delay="1000"
                         v-validate="'required|max:11'" :error-messages="errors.first('phone:required')"></v-text-field>
         </v-flex>
         <v-flex xs4>
         </v-flex>
         <v-flex xs6 sm6>
           <v-text-field name="emergency phone" label="Emergency contact phone number" single-line prepend-icon="phone"
-                        v-validate="'required|max:11'" :error-messages="errors.first('emergency phone:required')"></v-text-field>
+                        v-validate="'required|max:11'" data-vv-delay="1000" :error-messages="errors.first('emergency phone:required')"></v-text-field>
         </v-flex>
       </v-container>
       <file-pond name="test" ref="pond" label-idle="Drop files here..." allow-multiple="true" accepted-file-types="application/pdf" server="/api" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
