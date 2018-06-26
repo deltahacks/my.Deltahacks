@@ -24,7 +24,12 @@
                         </v-flex>
                         <v-flex d-flex>
                             <v-layout row wrap>
-                                <v-flex v-for="n in 2" :key="n" d-flex xs12>
+                                <v-flex d-flex xs12>
+                                    <v-card color="white lighten-4" dark>
+                                        <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
+                                    </v-card>
+                                </v-flex>
+                                <v-flex d-flex xs12>
                                     <v-card color="white lighten-4" dark>
                                         <v-text-field id="testing" name="input-1" label="Label Text" v-model="apps"></v-text-field>
                                     </v-card>
@@ -49,7 +54,7 @@
                 </v-flex>
             </v-layout>
             <div class="text-xs-center">
-                <v-pagination :length="6" v-model="page"></v-pagination>
+                <v-pagination :length="6"></v-pagination>
             </div>
 
         </v-container>
@@ -57,60 +62,75 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 // import Typed from 'typed.js';
-import Navbar from '@/components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
+import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
 // import Tab from '@/components/Tab'
-import DataTable from '@/components/DataTable.vue';
+import DataTable from "@/components/DataTable.vue";
 // import MapCard from '@/components/MapCard'
 // import Chart from '@/components/Chart'
-import CommitChart from '@/components/CommitChart';
-import db from '../private/firebase_init';
-import { list_of_universities } from '../private/data';
+import CommitChart from "@/components/CommitChart";
+import db from "../private/firebase_init";
+import { list_of_universities } from "../private/data";
+import fake from "@/helpers/fake";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   data() {
     return {
-      apps: '245',
-      links: ['Home', 'About', 'Contact'],
+      fake,
+      apps: "245",
+      links: ["Home", "About", "Contact"],
       list_of_universities,
       lorem:
-        'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
+        "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
       c_user: firebase.auth().currentUser,
-      positions: [],
+      positions: []
     };
   },
   components: {
     Navbar,
     Footer,
     DataTable,
-    CommitChart,
+    CommitChart
   },
   created() {
     this.$Progress.start();
   },
   mounted() {
-    db
-      .collection('users')
-      .where('is_admin', '==', false)
+    db //Change to real users later
+      .collection("fake_users")
+      .where("is_admin", "==", false)
       .get()
       .then(doc =>
-        doc.docs.forEach((val) => {
+        doc.docs.forEach(val => {
           this.positions.push({
             lat: val.data().geo.latitude,
-            lng: val.data().geo.longitude,
+            lng: val.data().geo.longitude
           });
           console.log(val.data().geo);
           this.$Progress.finish();
-        }))
-      .catch((err) => {
+        })
+      )
+      .catch(err => {
         console.log(err);
         this.$Progress.fail();
       });
   },
-  methods: {},
+  methods: {
+    fbdata() {
+      for (let j of fake) {
+        db
+          .collection("fake_users")
+          .doc(j.email)
+          .set(j)
+          .then(() => console.log("success"))
+          .catch(err => console.log(err));
+        console.log(j);
+      }
+    }
+  }
 };
 </script>
 
@@ -129,6 +149,7 @@ export default {
 }
 
 .odometer {
-    font-size: 150px;
+  font-size: 150px;
+  color: blue;
 }
 </style>

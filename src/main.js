@@ -7,10 +7,12 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import gmaps_key from './private/gmaps_init'
-
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VeeValidate from 'vee-validate';
 import VueProgressBar from 'vue-progressbar'
+import VueMouseParallax from 'vue-mouse-parallax'
+ 
+Vue.use(VueMouseParallax)
 
 Vue.use(VueProgressBar, {
   color: 'rgb(143, 255, 199)',

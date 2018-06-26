@@ -12,6 +12,11 @@ function p() {
     description: faker.name.jobDescriptor(),
     story: faker.lorem.paragraphs(),
     age: (Math.round(Math.random() * (25 - 16)) + 16),
+    is_admin: false,
+    geo: {
+      latitude: Number(faker.address.latitude()),
+      longitude: Number(faker.address.longitude()),
+    }
   };
 }
 

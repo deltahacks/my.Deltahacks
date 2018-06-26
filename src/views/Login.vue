@@ -3,13 +3,21 @@
     <v-app id="inspire">
       <v-content>
         <v-container fluid fill-height>
+
           <v-layout align-center justify-center>
+            <parallax-container id="logo" class="horizontal-card">
+              <parallax-element class="text-container" :parallaxStrength="-5" :type="'translation'">
+              </parallax-element>
+              <parallax-element class="background-image" :parallaxStrength="-20" :type="'translation'">
+                <img id="logo" src="http://deltahacks.com/img/logolarge.png" alt="">
+              </parallax-element>
+            </parallax-container>
             <v-flex xs12 sm8 md4>
               <v-alert :value="feedback" type="error">
                 {{ feedback }}
               </v-alert>
               <v-card class="elevation-12">
-                <v-toolbar dark color="primary">
+                <v-toolbar dark color="teal lighten-2">
                   <v-toolbar-title>Login</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-tooltip bottom>
@@ -28,7 +36,7 @@
                   </v-form>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn class="mx-auto" color="primary" @click.prevent="login()">Login</v-btn>
+                  <v-btn class="mx-auto" color="yellow lighten-2" @click.prevent="login()">Login</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -40,19 +48,19 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data: () => ({
     drawer: null,
     email: null,
     pass: null,
-    feedback: null,
+    feedback: null
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: 'Signup' });
+      this.$router.push({ name: "Signup" });
     },
     login() {
       if (this.email && this.pass) {
@@ -60,11 +68,11 @@ export default {
           .auth()
           .signInWithEmailAndPassword(this.email, this.pass)
           .then(() => {
-            this.$router.push({ name: 'Dashboard' });
-            console.log('logged in');
+            this.$router.push({ name: "Dashboard" });
+            console.log("logged in");
             this.feedback = null;
           })
-          .catch((error) => {
+          .catch(error => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -77,16 +85,18 @@ export default {
       this.$Progress.start();
 
       this.$http
-        .jsonp('http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz')
+        .jsonp(
+          "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz"
+        )
         .then(
-          (response) => {
+          response => {
             this.$Progress.finish();
           },
-          (response) => {
+          response => {
             this.$Progress.fail();
-          },
+          }
         );
-    },
+    }
   },
   mounted() {
     /*     window.addEventListener('keydown', (e) => {
@@ -98,7 +108,13 @@ export default {
     }); */
   },
   props: {
-    source: String,
-  },
+    source: String
+  }
 };
 </script>
+
+<style scoped>
+#logo {
+  margin-right: 40px;
+}
+</style>

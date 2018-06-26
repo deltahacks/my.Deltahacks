@@ -60,7 +60,9 @@
       </v-flex>
       <v-flex xs12 md6 lg6>
         <v-card color="">
-          <v-card-text class="px-0">Resume</v-card-text>
+          <v-card-text class="text-xs-left">
+            <h2>Resume</h2>
+          </v-card-text>
           <iframe :src="resumeLink" style="width: 100%; height: 900px;"></iframe>
         </v-card>
       </v-flex>
@@ -69,38 +71,38 @@
   </div>
 </template>
 <script>
-import vueSlider from 'vue-slider-component';
+import vueSlider from "vue-slider-component";
 
 export default {
-  name: 'Applicant',
-  props: ['usrname'],
+  name: "Applicant",
+  props: ["usrname"],
   data: () => ({
     currentPage: 0,
     pageCount: 0,
     status: 0,
     status1: 0,
     resumeLink:
-      'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
+      "https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf",
     cards: [
       {
-        title: 'Pre-fab homes',
-        flex: 12,
+        title: "Pre-fab homes",
+        flex: 12
       },
       {
-        title: 'Favorite road trips',
-        src: '/static/doc-images/cards/road.jpg',
-        flex: 6,
+        title: "Favorite road trips",
+        src: "/static/doc-images/cards/road.jpg",
+        flex: 6
       },
       {
-        title: 'Best airlines',
-        src: '/static/doc-images/cards/plane.jpeg',
-        flex: 6,
-      },
-    ],
+        title: "Best airlines",
+        src: "/static/doc-images/cards/plane.jpeg",
+        flex: 6
+      }
+    ]
   }),
   components: {
-    vueSlider,
-  },
+    vueSlider
+  }
 };
 </script>
 

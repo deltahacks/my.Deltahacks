@@ -6967,6 +6967,10 @@ vue-loader@^15.2.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-mouse-parallax@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/vue-mouse-parallax/-/vue-mouse-parallax-0.9.2.tgz#e52bde6c6264b87a209eef67c71dd94fe07015f6"
+
 vue-progressbar@^0.7.5:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/vue-progressbar/-/vue-progressbar-0.7.5.tgz#414730892252b1e45582d4979dec93038e007f79"
