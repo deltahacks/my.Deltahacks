@@ -17,10 +17,10 @@
 
 <script>
 export default {
-  name: "Playground",
+  name: 'Playground',
   data() {
     return {};
-  }
+  },
 };
 </script>
 

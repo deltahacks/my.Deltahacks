@@ -24,7 +24,7 @@
                     <v-flex>
                       <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
                       <h1 class="text-xs-center mb-5">
-                        <h1>DeltaHacks V</h1>
+                        <h1 id="delta">DeltaHacks V</h1>
                         <h2>Login Page</h2>
                       </h1>
                       <v-text-field prepend-icon="person" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
@@ -63,19 +63,19 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => ({
     drawer: null,
     email: null,
     pass: null,
-    feedback: null
+    feedback: null,
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     login() {
       if (this.email && this.pass) {
@@ -83,11 +83,11 @@ export default {
           .auth()
           .signInWithEmailAndPassword(this.email, this.pass)
           .then(() => {
-            this.$router.push({ name: "Dashboard" });
-            console.log("logged in");
+            this.$router.push({ name: 'Dashboard' });
+            console.log('logged in');
             this.feedback = null;
           })
-          .catch(error => {
+          .catch((error) => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -100,18 +100,16 @@ export default {
       this.$Progress.start();
 
       this.$http
-        .jsonp(
-          "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz"
-        )
+        .jsonp('http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz')
         .then(
-          response => {
+          (response) => {
             this.$Progress.finish();
           },
-          response => {
+          (response) => {
             this.$Progress.fail();
-          }
+          },
         );
-    }
+    },
   },
   mounted() {
     /*     window.addEventListener('keydown', (e) => {
@@ -123,13 +121,11 @@ export default {
     }); */
   },
   props: {
-    source: String
-  }
+    source: String,
+  },
 };
 </script>
 
-<style scoped>
-#logo {
-  margin-right: 40px;
-}
+<style scoped lang="scss">
+@import "../assets/css/test.css";
 </style>
