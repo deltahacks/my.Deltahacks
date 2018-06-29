@@ -9,7 +9,7 @@
 					<span class="welcomeheader">
 						<b><u>DeltaHacks V<br>Log In</u></b>
 					</span>
-					<div class="wrap-input100 validate-input" data-validate = "Enter username"><br>
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<v-text-field prepend-icon="person" @keypress.enter="login()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
