@@ -19,10 +19,10 @@
             <v-alert :value="feedback" type="error">
                     {{ feedback }}
                   </v-alert>
-            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup</v-btn>
+            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup<v-icon right>person</v-icon> &nbsp; +</v-btn>
 					</div>
           <div class="container-login100-form-btn">
-						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/">Login <v-icon right>person</v-icon></v-btn>
+						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN<v-icon right>lock_open</v-icon></v-btn>
 					</div>
 				</form>
       </div>

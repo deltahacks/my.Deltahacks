@@ -24,8 +24,7 @@
 						</v-btn>
 					</div>
           <div class="container-login100-form-btn">
-						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/signup">Sign Up
-              </v-btn>
+						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/signup" >Signup <v-icon right>person</v-icon> &nbsp; +</v-btn>
 					</div>
 				</form>
       </div>
