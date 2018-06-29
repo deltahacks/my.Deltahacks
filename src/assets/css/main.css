@@ -245,9 +245,9 @@ font-size: 45px;
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  min-width: 120px;
+  width: 200px;
   height: 50px;
-  border-radius: 25px;
+  border-radius: 35px;
 
   background: #9152f8;
   background: -webkit-linear-gradient(bottom, #48c6ef, #6f86d6);
