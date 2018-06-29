@@ -1,45 +1,33 @@
 <template>
-<div id="app">
-  <v-app id="inspire">
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
-            <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
-                <v-toolbar-title>Create an account</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-tooltip bottom>
-                  <v-btn
-                    icon
-                    large
-                    :href="source"
-                    target="_blank"
-                    slot="activator"
-                    to="/login"
-                  >
-                    <v-icon>person</v-icon>
-                  </v-btn>
-                  <span>Login</span>
-                </v-tooltip>
-              </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field  prepend-icon="email" name="email" label="Email" type="email" v-model="vuex_email"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="vuex_password"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" v-model="password_repeat"></v-text-field>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-btn color="primary" @click.prevent="signUpFirebase" class="mx-auto">Signup</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-  </v-app>
-</div>
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+      <div class="wrap-login100">
+				<form class="login100-form validate-form">
+					<span class="login100-form-logo">
+            <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
+					</span>
+					<span class="welcomeheader">
+						<b><u>DeltaHacks V Sign Up</u></b>
+					</span>
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+					                  <v-text-field  prepend-icon="email" name="email" label="Email" type="email" v-model="vuex_email"></v-text-field></div>
+                 					<div class="wrap-input100 validate-input" data-validate = "Enter password">
+                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="vuex_password"></v-text-field></div>
+                  					<div class="wrap-input100 validate-input" data-validate = "Enter password">
+                  <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" v-model="password_repeat"></v-text-field></div>
+          <div class="container-login100-form-btn">
+            <v-alert :value="feedback" type="error">
+                    {{ feedback }}
+                  </v-alert>
+            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup</v-btn>
+					</div>
+          <div class="container-login100-form-btn">
+						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/">Login <v-icon right>person</v-icon></v-btn>
+					</div>
+				</form>
+      </div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -133,3 +121,6 @@ export default {
   },
 };
 </script>
+<style scoped lang="scss">
+@import "../assets/css/main.css";
+</style>
