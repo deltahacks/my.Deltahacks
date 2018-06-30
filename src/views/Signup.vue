@@ -24,8 +24,9 @@
             <v-alert :value="feedback" type="error">
               {{ feedback }}
             </v-alert>
-            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup
-              <v-icon right>person</v-icon> &nbsp; +</v-btn>
+            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup &nbsp;
+              <i class="fas fa-user-plus" />
+            </v-btn>
           </div>
           <div class="container-login100-form-btn">
             <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN
@@ -39,11 +40,11 @@
 </template>
 
 <script>
-import axios from "axios";
-import firebase from "firebase";
+import axios from 'axios';
+import firebase from 'firebase';
 
 export default {
-  name: "Signup",
+  name: 'Signup',
   data: () => ({
     drawer: null,
     email: null,
@@ -51,10 +52,10 @@ export default {
     password_repeat: null,
     feedback: null,
     ip_address: null,
-    geo: null
+    geo: null,
   }),
   props: {
-    source: String
+    source: String,
   },
   methods: {
     tester() {
@@ -65,51 +66,51 @@ export default {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password)
-          .then(user => {
-            console.log(user.user.uid, "ID");
-            console.log(this.$store.state.db, "DB");
+          .then((user) => {
+            console.log(user.user.uid, 'ID');
+            console.log(this.$store.state.db, 'DB');
             axios
-              .get("https://api.ipify.org?format=json")
-              .then(response => {
+              .get('https://api.ipify.org?format=json')
+              .then((response) => {
                 console.log(response.data.ip);
                 const ipp = response.data.ip;
                 axios
                   .get(`https://ipapi.co/${ipp}/json/`)
-                  .then(data => {
+                  .then((data) => {
                     console.log(data.data);
                     this.geo = data.data;
                     this.$store.state.db
-                      .collection("users")
+                      .collection('users')
                       .doc(this.vuex_email)
                       .set({
                         email: this.vuex_email,
                         geo: this.geo,
                         user_id: user.user.uid,
                         ip: ipp,
-                        is_admin: false
+                        is_admin: false,
                       });
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     console.log(err);
                   });
                 console.log(response.ip);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           })
           .then(() => {
             // this.vuex_current_user = firebase.auth().currentUser
-            console.log("success");
-            this.$router.push({ name: "Dashboard" });
+            console.log('success');
+            this.$router.push({ name: 'Dashboard' });
           })
-          .catch(err => {
+          .catch((err) => {
             this.feedback = err.message;
           });
       } else {
-        this.feedback = "You need to enter all the fields";
+        this.feedback = 'You need to enter all the fields';
       }
-    }
+    },
   },
   computed: {
     vuex_email: {
@@ -117,26 +118,26 @@ export default {
         return this.$store.state.vuex_email;
       },
       set(value) {
-        this.$store.commit("update_vuex_email", value);
-      }
+        this.$store.commit('update_vuex_email', value);
+      },
     },
     vuex_password: {
       get() {
         return this.$store.state.vuex_password;
       },
       set(value) {
-        this.$store.commit("update_vuex_password", value);
-      }
+        this.$store.commit('update_vuex_password', value);
+      },
     },
     vuex_current_user: {
       get() {
         return this.$store.state.vuex_current_user;
       },
       set(value) {
-        this.$store.commit("update_vuex_current_user", value);
-      }
-    }
-  }
+        this.$store.commit('update_vuex_current_user', value);
+      },
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
