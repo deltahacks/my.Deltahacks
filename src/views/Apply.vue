@@ -1,14 +1,14 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
-    <form class="ff mx-auto" @submit="submitApplication" @submit.prevent="validateBeforeSubmit">
+    <form class="ff mx-auto" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
       <v-text-field name="name" v-model="application.name" label="Name"
                     v-validate="'required|max:100'"
                     :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                     <!-- find a better way of including this in form -->
       <v-text-field name="email" v-model="application.email" label="E-mail"
                     v-validate="'required|email|max:100'"
-                    :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field>
+                    :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
       <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required'"></v-date-picker>
       <v-select name="university" :items="list_of_universities" v-model="university"
@@ -55,7 +55,7 @@
         </v-flex>
       </v-container>
       <file-pond name="test" ref="pond" label-idle="Drop files here..." allow-multiple="true" 
-        accepted-file-types="application/pdf" server="/app" v-bind:files="myFiles" v-on:processfile="onAddFile" v-on:init="handleFilePondInit" />
+        accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
       <br>
       <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
 
@@ -66,7 +66,7 @@
               <v-flex xs12>
                 <v-text-field
                  name="story" label="Tell us about a project you've worked on recently"
-                 textarea dark v-model="story">
+                 textarea dark v-model="application.story">
                 </v-text-field>
               </v-flex>
 
@@ -142,6 +142,7 @@ export default {
         website: '',
         phone: '',
         emergency_phone: '',
+        story:''
       },
       links: ['Home', 'About', 'Contact'],
       story: '',
@@ -177,38 +178,41 @@ export default {
   },
   computed: {
     progress() {
-      return Math.min(100, this.story.length / 5);
+      return Math.min(100, this.application.story.length / 5);
     },
     color() {
       return ['error', 'warning', 'success'][Math.floor(this.progress / 40)];
     },
+    currentUser() {
+      return firebase.auth().currentUser;
+    },
   },
   methods: {
     handleFilePondInit() {
+        
+      console.log(this.currentUser) 
       console.log('FilePond has initialized');
       // FilePond instance methods are available on `this.$refs.pond`
     },
     validateBeforeSubmit() {
       this.$validator.validateAll();
     },
-    onAddFile(e) {
-      // operating based on docs verify it works.   
-      console.log(e); 
+    submitApplication() {
+      // operating based on docs verify it works. 
       const storeRef = firebase.storage().ref();      
-      const name = e.detail.id
-      const file = e.detail.file;
-      storeRef.child(`images/${name}`).put(file).then(snapshot => {
+      const files = this.$refs.pond.getFiles();
+      const name = files[0].filename;
+      const file = files[0].file
+      storeRef.child(`users/${firebase.auth().currentUser.email}/${name}`).put(file).then(snapshot => {
         console.log(`Uploaded ${snapshot.totalBytes} bytes`);
         console.log(`File metadata ${snapshot.metadata}`)
       }).catch(err => {
         console.error(`Upload failed: ${err}`);
-      })      
-    },
-    submitApplication() {
+      }) 
       this.$store.state.db.collection('applications')
         .doc('DH6')
         .collection('all')
-        .doc(this.application.email)
+        .doc(firebase.auth().currentUser.email)
         .set(this.application)
         .then(() => this.$router.push({ name: 'Dashboard' }))
         .catch(err => alert(err));
