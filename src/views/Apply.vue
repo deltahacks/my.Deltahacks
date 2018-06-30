@@ -142,7 +142,7 @@ export default {
         website: '',
         phone: '',
         emergency_phone: '',
-        story:''
+        story: '',
       },
       links: ['Home', 'About', 'Contact'],
       story: '',
@@ -189,8 +189,6 @@ export default {
   },
   methods: {
     handleFilePondInit() {
-        
-      console.log(this.currentUser) 
       console.log('FilePond has initialized');
       // FilePond instance methods are available on `this.$refs.pond`
     },
@@ -198,24 +196,22 @@ export default {
       this.$validator.validateAll();
     },
     submitApplication() {
-      // operating based on docs verify it works. 
-      const storeRef = firebase.storage().ref();      
+      // operating based on docs verify it works.
+      const storeRef = firebase.storage().ref();   
       const files = this.$refs.pond.getFiles();
-      const name = files[0].filename;
-      const file = files[0].file
-      storeRef.child(`users/${firebase.auth().currentUser.email}/${name}`).put(file).then(snapshot => {
+      const { filename, file } = files[0];
+      storeRef.child(`users/${firebase.auth().currentUser.email}/${filename}`).put(file).then((snapshot) => {
         console.log(`Uploaded ${snapshot.totalBytes} bytes`);
-        console.log(`File metadata ${snapshot.metadata}`)
-      }).catch(err => {
-        console.error(`Upload failed: ${err}`);
-      }) 
+        console.log(`File metadata ${snapshot.metadata}`);
+      }).catch(err => console.error(`Upload failed: ${err}`));
+
       this.$store.state.db.collection('applications')
         .doc('DH6')
         .collection('all')
         .doc(firebase.auth().currentUser.email)
         .set(this.application)
         .then(() => this.$router.push({ name: 'Dashboard' }))
-        .catch(err => alert(err));
+        .catch(err => console.log(err));
     },
   },
 };
