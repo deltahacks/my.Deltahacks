@@ -1,5 +1,8 @@
 <template>
 	<div class="limiter">
+    <head>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+      </head>
 		<div class="container-login100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
       <div class="wrap-login100">
 				<form class="login100-form validate-form">
@@ -24,7 +27,7 @@
 						</v-btn>
 					</div>
           <div class="container-login100-form-btn">
-						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/signup" >Signup <v-icon right>person</v-icon> &nbsp; +</v-btn>
+						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/signup" >Signup &nbsp;<i class="fas fa-user-plus"/></v-btn>
 					</div>
 				</form>
       </div>

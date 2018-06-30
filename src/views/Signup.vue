@@ -19,7 +19,7 @@
             <v-alert :value="feedback" type="error">
                     {{ feedback }}
                   </v-alert>
-            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup<v-icon right>person</v-icon> &nbsp; +</v-btn>
+            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup &nbsp;<i class="fas fa-user-plus"/></v-btn>
 					</div>
           <div class="container-login100-form-btn">
 						 <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN<v-icon right>lock_open</v-icon></v-btn>
