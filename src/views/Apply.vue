@@ -1,14 +1,14 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
-    <form class="ff mx-auto" @submit.prevent="validateBeforeSubmit">
+    <form class="ff mx-auto" @submit="submitApplication" @submit.prevent="validateBeforeSubmit">
       <v-text-field name="name" v-model="application.name" label="Name"
                     v-validate="'required|max:100'" 
                     :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                     <!-- find a better way of including this in form -->
       <v-text-field name="email" v-model="application.email" label="E-mail"
                     v-validate="'required|email|max:100'"
-                    :error-messages="errors.first('email')" data-vv-delay="1000"></v-text-field>
+                    :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field>
       <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required'"></v-date-picker>
       <v-select name="university" :items="list_of_universities" v-model="university" 
@@ -44,17 +44,18 @@
 
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
-          <v-text-field name="phone" label="Your cell phone number" single-line prepend-icon="phone" data-vv-delay="1000"
+          <v-text-field name="phone" label="Your cell phone number" v-model="application.phone" single-line prepend-icon="phone" data-vv-delay="1000"
                         v-validate="'required|max:11'" :error-messages="errors.first('phone:required')"></v-text-field>
         </v-flex>
         <v-flex xs4>
         </v-flex>
         <v-flex xs6 sm6>
-          <v-text-field name="emergency phone" label="Emergency contact phone number" single-line prepend-icon="phone"
+          <v-text-field name="emergency phone" label="Emergency contact phone number" v-model="application.emergency_phone" single-line prepend-icon="phone"
                         v-validate="'required|max:11'" data-vv-delay="1000" :error-messages="errors.first('emergency phone:required')"></v-text-field>
         </v-flex>
       </v-container>
-      <file-pond name="test" ref="pond" label-idle="Drop files here..." allow-multiple="true" accepted-file-types="application/pdf" server="/api" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+      <file-pond name="test" ref="pond" label-idle="Drop files here..." allow-multiple="true" 
+        accepted-file-types="application/pdf" server="/app" v-bind:files="myFiles" v-on:processfile="onAddFile" v-on:init="handleFilePondInit" />
       <br>
       <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
 
@@ -89,6 +90,7 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
+import firebase from 'firebase';
 import vueFilePond from 'vue-filepond';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
@@ -184,11 +186,32 @@ export default {
   methods: {
     handleFilePondInit() {
       console.log('FilePond has initialized');
-
       // FilePond instance methods are available on `this.$refs.pond`
     },
     validateBeforeSubmit() {
       this.$validator.validateAll();
+    },
+    onAddFile(e) {
+      // operating based on docs verify it works.   
+      console.log(e); 
+      const storeRef = firebase.storage().ref();      
+      const name = e.detail.id
+      const file = e.detail.file;
+      storeRef.child(`images/${name}`).put(file).then(snapshot => {
+        console.log(`Uploaded ${snapshot.totalBytes} bytes`);
+        console.log(`File metadata ${snapshot.metadata}`)
+      }).catch(err => {
+        console.error(`Upload failed: ${err}`);
+      })      
+    },
+    submitApplication() {
+      this.$store.state.db.collection('applications')
+        .doc('DH6')
+        .collection('all')
+        .doc(this.application.email)
+        .set(this.application)
+        .then(() => this.$router.push({ name: 'Dashboard' }))
+        .catch(err => alert(err));
     },
   },
 };
