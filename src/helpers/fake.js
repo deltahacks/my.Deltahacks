@@ -16,7 +16,7 @@ function p() {
     geo: {
       latitude: Number(faker.address.latitude()),
       longitude: Number(faker.address.longitude()),
-    }
+    },
   };
 }
 

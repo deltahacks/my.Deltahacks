@@ -3,7 +3,7 @@
     <Navbar/>
     <form class="ff mx-auto" @submit="submitApplication" @submit.prevent="validateBeforeSubmit">
       <v-text-field name="name" v-model="application.name" label="Name"
-                    v-validate="'required|max:100'" 
+                    v-validate="'required|max:100'"
                     :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                     <!-- find a better way of including this in form -->
       <v-text-field name="email" v-model="application.email" label="E-mail"
@@ -11,7 +11,7 @@
                     :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field>
       <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required'"></v-date-picker>
-      <v-select name="university" :items="list_of_universities" v-model="university" 
+      <v-select name="university" :items="list_of_universities" v-model="university"
                   label="What university do you go to?" autocomplete
                   v-validate="'required'"
                   :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
@@ -19,15 +19,15 @@
                   v-validate="'required'"
                   :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size" 
+      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size"
                   v-validate="'required'" name="shirt size"
                   :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.dietry_restrictions" :items="food" label="Dietary restrictions" 
+      <v-select v-model="application.dietry_restrictions" :items="food" label="Dietary restrictions"
                   v-validate="'required'" name="diet"
                   :error-messages="errors.first('diet:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.hackathons" :items="hackathons" label="How many hackathons have you attended?" 
+      <v-select v-model="application.hackathons" :items="hackathons" label="How many hackathons have you attended?"
                   v-validate="'required'" name="hackathons"
                   :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
       </v-select>
@@ -65,7 +65,7 @@
             <v-layout row>
               <v-flex xs12>
                 <v-text-field
-                 name="story" label="Tell us about a project you've worked on recently" 
+                 name="story" label="Tell us about a project you've worked on recently"
                  textarea dark v-model="story">
                 </v-text-field>
               </v-flex>
