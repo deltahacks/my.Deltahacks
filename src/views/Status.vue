@@ -1,10 +1,9 @@
 <template>
-  <v-app class="dashboard">
+    <v-app class="dashboard">
     <Navbar/>
-    <v-container fluid class="ff mx-auto">
-      <v-layout row>
-        <v-flex xs12 order-lg2>
-          <h1>This application is still under review</h1>
+  <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+        <div class="wrap-status100">
+         <h1>This application is still under review</h1>
           <v-card-text></v-card-text>
           <v-stepper alt-labels>
             <v-stepper-header>
@@ -17,9 +16,8 @@
               <v-stepper-step step="4">Decision</v-stepper-step>
             </v-stepper-header>
           </v-stepper>
-        </v-flex>
-      </v-layout>
-    </v-container>
+          </div>
+  </div>
   </v-app>
 </template>
 
