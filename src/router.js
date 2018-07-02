@@ -11,6 +11,7 @@ import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
 import Status from './views/Status.vue';
 import Playground from './views/Playground.vue';
+import v404 from './views/404.vue';
 
 
 Vue.use(Router);
@@ -57,6 +58,11 @@ const router = new Router({
       path: '/playground',
       name: 'Playground',
       component: Playground,
+    },
+    {
+      path: '/404',
+      name: 'v404',
+      component: v404,
     },
   ],
 });
