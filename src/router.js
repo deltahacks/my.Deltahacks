@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import Vue from 'vue';
 import Router from 'vue-router';
 import Firebase from 'firebase';

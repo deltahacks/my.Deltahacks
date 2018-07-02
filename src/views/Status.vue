@@ -23,9 +23,6 @@
   </v-app>
 </template>
 
-    </v-app>
-</template>
-
 <script>
 /* eslint-disable no-unused-expressions */
 
