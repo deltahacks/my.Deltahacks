@@ -1,32 +1,12 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
-<<<<<<< HEAD
-    <!-- <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');"> -->
-    <div class="container-status100" style="background-image: url('https://hdqwalls.com/download/minimalism-plane-ot-3840x2160.jpg');">
+    <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
       <div class="wrap-status100">
         <h1>This application is still under review</h1>
         <v-card-text></v-card-text>
         <v-stepper alt-labels>
-          <v-stepper-header>
-            <v-stepper-step step="1" complete>Applied</v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step step="2" complete>Received</v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step step="3">Processing</v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step step="4">Decision</v-stepper-step>
-          </v-stepper-header>
-        </v-stepper>
-      </div>
-    </div>
-=======
-  <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-        <div class="wrap-status100">
-         <h1>This application is still under review</h1>
-          <v-card-text></v-card-text>
-          <v-stepper alt-labels>
-           <div class="wrap-status200">
+          <div class="wrap-status200">
             <v-stepper-header>
               <v-stepper-step step="1" complete>Applied</v-stepper-step>
               <v-divider></v-divider>
@@ -36,11 +16,10 @@
               <v-divider></v-divider>
               <v-stepper-step step="4">Decision</v-stepper-step>
             </v-stepper-header>
-           </div>
-          </v-stepper>
           </div>
-  </div>
->>>>>>> 36e27cf56069d7e415103057833e7e5a4b4accfc
+        </v-stepper>
+      </div>
+    </div>
   </v-app>
 </template>
 
