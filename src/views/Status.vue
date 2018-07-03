@@ -1,6 +1,7 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
+<<<<<<< HEAD
     <!-- <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');"> -->
     <div class="container-status100" style="background-image: url('https://hdqwalls.com/download/minimalism-plane-ot-3840x2160.jpg');">
       <div class="wrap-status100">
@@ -19,6 +20,27 @@
         </v-stepper>
       </div>
     </div>
+=======
+  <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+        <div class="wrap-status100">
+         <h1>This application is still under review</h1>
+          <v-card-text></v-card-text>
+          <v-stepper alt-labels>
+           <div class="wrap-status200">
+            <v-stepper-header>
+              <v-stepper-step step="1" complete>Applied</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="2" complete>Received</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="3">Processing</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="4">Decision</v-stepper-step>
+            </v-stepper-header>
+           </div>
+          </v-stepper>
+          </div>
+  </div>
+>>>>>>> 36e27cf56069d7e415103057833e7e5a4b4accfc
   </v-app>
 </template>
 
@@ -96,18 +118,6 @@ export default {
   methods: {}
 };
 </script>
-
-<style scoped>
-.ff {
-  margin-top: 5%;
-  width: 70%;
-}
-
-#mlh {
-  margin-top: 10%;
-}
-
-.gg {
-  display: inline-block;
-}
+<style scoped lang="scss">
+@import "../assets/css/status.css";
 </style>

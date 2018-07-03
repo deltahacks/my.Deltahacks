@@ -1,9 +1,9 @@
 <template>
   <div class="limiter">
-    <div class="container-login100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-      <div class="wrap-login100">
-        <form class="login100-form validate-form">
-          <span class="login100-form-logo">
+    <div class="container-signup100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+      <div class="wrap-signup100">
+        <form class="signup100-form validate-form">
+          <span class="signup100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
           <span class="welcomeheader">
@@ -20,16 +20,16 @@
           <div class="wrap-input100 validate-input" data-validate="Enter password">
             <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" v-model="password_repeat"></v-text-field>
           </div>
-          <div class="container-login100-form-btn">
+          <div class="container-signup100-form-btn">
             <v-alert :value="feedback" type="error">
               {{ feedback }}
             </v-alert>
-            <v-btn class="login100-form-btn" @click.prevent="signUpFirebase">Signup &nbsp;
+            <v-btn class="signup100-form-btn" @click.prevent="signUpFirebase">Signup &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
-          <div class="container-login100-form-btn">
-            <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN
+          <div class="container-signup100-form-btn">
+            <v-btn class="signup100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
@@ -141,5 +141,5 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import "../assets/css/main.css";
+@import "../assets/css/signup.css";
 </style>
