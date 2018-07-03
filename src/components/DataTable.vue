@@ -21,7 +21,10 @@
           <td class="text-xs-left">{{ props.item.applied }}</td>
           <td class="text-xs-left">{{ props.item.phone }}</td>
           <td class="text-xs-left">{{ props.item.age }}</td>
-          <td class="text-md-left">
+          <td class="text-xs-left">
+            Placeholder
+          </td>
+          <td class="text-xs-right">
             <status-indicator active pulse></status-indicator>
           </td>
         </tr>
@@ -34,46 +37,47 @@
 </template>
 
 <script>
-import fake from '@/helpers/fake';
-import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
-import 'vue-status-indicator/styles.css';
-import { StatusIndicator } from 'vue-status-indicator';
+import fake from "@/helpers/fake";
+import ApplicantDropdown from "@/components/ApplicantDropdown.vue";
+import "vue-status-indicator/styles.css";
+import { StatusIndicator } from "vue-status-indicator";
 
 export default {
-  name: 'DataTable',
+  name: "DataTable",
   methods: {
     f() {
       console.log(fake);
-    },
+    }
   },
   components: {
     ApplicantDropdown,
-    StatusIndicator,
+    StatusIndicator
   },
   data() {
     return {
-      current: 'All Applicants',
-      items: ['All Applicants', 'Accepted Applicants', 'Unaccepted Applicants'],
-      search: '',
+      current: "All Applicants",
+      items: ["All Applicants", "Accepted Applicants", "Unaccepted Applicants"],
+      search: "",
       rating: null,
       fake,
-      test: '423423423',
+      test: "423423423",
       headers: [
         {
-          text: 'Name',
-          align: 'left',
+          text: "Name",
+          align: "left",
           sortable: false,
-          value: 'name',
+          value: "name"
         },
-        { text: 'Email', value: 'email' },
-        { text: 'University', value: 'university' },
-        { text: 'Applied', value: 'applied' },
-        { text: 'Phone', value: 'phone' },
-        { text: 'Age', value: 'age' },
-        { text: 'Status', value: 'rate' },
-      ],
+        { text: "Email", value: "email" },
+        { text: "University", value: "university" },
+        { text: "Applied", value: "applied" },
+        { text: "Phone", value: "phone" },
+        { text: "Age", value: "age" },
+        { text: "Status", value: "rate" },
+        { text: "", value: "rate" }
+      ]
     };
-  },
+  }
 };
 </script>
 
