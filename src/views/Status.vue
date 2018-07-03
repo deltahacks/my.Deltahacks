@@ -6,6 +6,7 @@
          <h1>This application is still under review</h1>
           <v-card-text></v-card-text>
           <v-stepper alt-labels>
+           <div class="wrap-status200">
             <v-stepper-header>
               <v-stepper-step step="1" complete>Applied</v-stepper-step>
               <v-divider></v-divider>
@@ -15,6 +16,7 @@
               <v-divider></v-divider>
               <v-stepper-step step="4">Decision</v-stepper-step>
             </v-stepper-header>
+           </div>
           </v-stepper>
           </div>
   </div>
@@ -95,18 +97,6 @@ export default {
   methods: {},
 };
 </script>
-
-<style scoped>
-.ff {
-  margin-top: 5%;
-  width: 70%;
-}
-
-#mlh {
-  margin-top: 10%;
-}
-
-.gg {
-  display: inline-block;
-}
+<style scoped lang="scss">
+@import "../assets/css/status.css";
 </style>
