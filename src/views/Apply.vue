@@ -62,66 +62,66 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
-import firebase from "firebase";
-import vueFilePond from "vue-filepond";
-import "filepond/dist/filepond.min.css";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import Navbar from "@/components/Navbar.vue";
-import Footer from "@/components/Footer.vue";
-import { validationMixin } from "vuelidate";
-import { Validator } from "vee-validate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
-import { mapGetters } from "vuex";
-import { list_of_universities } from "../private/data";
+import firebase from 'firebase';
+import vueFilePond from 'vue-filepond';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
+import { validationMixin } from 'vuelidate';
+import { Validator } from 'vee-validate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import { list_of_universities } from '../private/data';
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
-  FilePondPluginImagePreview
+  FilePondPluginImagePreview,
 );
 export default {
   mixins: [validationMixin],
-  name: "Apply",
+  name: 'Apply',
   data() {
     return {
       myFiles: [],
       parent: this,
       picker: null,
-      date: "2000-01-01",
+      date: '2000-01-01',
       university: null,
       list_of_universities,
       application: {
-        name: "",
-        email: "",
+        name: '',
+        email: '',
         school_year: null,
         shirt_size: null,
         dietry_restrictions: null,
         hackathons: null,
-        github: "",
-        linkedin: "",
-        website: "",
-        phone: "",
-        emergency_phone: "",
-        story: ""
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
+        story: '',
       },
-      links: ["Home", "About", "Contact"],
-      story: "",
+      links: ['Home', 'About', 'Contact'],
+      story: '',
       custom: true,
-      name: "",
-      email: "",
+      name: '',
+      email: '',
       select: null,
       items: [
-        "First Year",
-        "Second Year",
-        "Third Year",
-        "Forth Year",
-        "Fifth Year"
+        'First Year',
+        'Second Year',
+        'Third Year',
+        'Forth Year',
+        'Fifth Year',
       ],
-      hackathons: ["This is my first one", "2", "3", "5+", "10+"],
-      food: ["None", "Vegetarian", "Vegan", "Halal", "Gluten Free", "Kosher"],
-      shirts: ["XS", "S", "M", "L", "XL"],
-      checkbox: false
+      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+      food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+      shirts: ['XS', 'S', 'M', 'L', 'XL'],
+      checkbox: false,
     };
   },
   validations: {
@@ -129,27 +129,27 @@ export default {
     email: { required, email },
     select: { required },
     checkbox: { required },
-    university: { in: list_of_universities }
+    university: { in: list_of_universities },
   },
   components: {
     Navbar,
     Footer,
-    FilePond
+    FilePond,
   },
   computed: {
     progress() {
       return Math.min(100, this.application.story.length / 5);
     },
     color() {
-      return ["error", "warning", "success"][Math.floor(this.progress / 40)];
+      return ['error', 'warning', 'success'][Math.floor(this.progress / 40)];
     },
     currentUser() {
       return firebase.auth().currentUser;
-    }
+    },
   },
   methods: {
     handleFilePondInit() {
-      console.log("FilePond has initialized");
+      console.log('FilePond has initialized');
       // FilePond instance methods are available on `this.$refs.pond`
     },
     validateBeforeSubmit() {
@@ -163,22 +163,22 @@ export default {
       storeRef
         .child(`users/${firebase.auth().currentUser.email}/${filename}`)
         .put(file)
-        .then(snapshot => {
+        .then((snapshot) => {
           console.log(`Uploaded ${snapshot.totalBytes} bytes`);
           console.log(`File metadata ${snapshot.metadata}`);
         })
         .catch(err => console.error(`Upload failed: ${err}`));
 
       this.$store.state.db
-        .collection("applications")
-        .doc("DH6")
-        .collection("all")
+        .collection('applications')
+        .doc('DH6')
+        .collection('all')
         .doc(firebase.auth().currentUser.email)
         .set(this.application)
-        .then(() => this.$router.push({ name: "Dashboard" }))
+        .then(() => this.$router.push({ name: 'Dashboard' }))
         .catch(err => console.log(err));
-    }
-  }
+    },
+  },
 };
 </script>
 

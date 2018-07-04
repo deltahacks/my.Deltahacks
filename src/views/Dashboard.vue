@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-car.css" />       
+<link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-car.css" />
 <script src="http://github.hubspot.com/odometer/odometer.js"></script>
 <template>
     <v-app class="dashboard">
@@ -62,52 +62,52 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 // import Typed from 'typed.js';
-import Navbar from "@/components/Navbar.vue";
-import Footer from "@/components/Footer.vue";
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 // import Tab from '@/components/Tab'
-import DataTable from "@/components/DataTable.vue";
+import DataTable from '@/components/DataTable.vue';
 // import MapCard from '@/components/MapCard'
 // import Chart from '@/components/Chart'
-import CommitChart from "@/components/CommitChart";
-import db from "../private/firebase_init";
-import { list_of_universities } from "../private/data";
-import fake from "@/helpers/fake";
+import CommitChart from '@/components/CommitChart';
+import db from '../private/firebase_init';
+import { list_of_universities } from '../private/data';
+import fake from '@/helpers/fake';
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   data() {
     return {
       fake,
-      apps: "245",
-      links: ["Home", "About", "Contact"],
+      apps: '245',
+      links: ['Home', 'About', 'Contact'],
       list_of_universities,
       lorem:
-        "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
+        'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
       c_user: firebase.auth().currentUser,
-      positions: []
+      positions: [],
     };
   },
   components: {
     Navbar,
     Footer,
     DataTable,
-    CommitChart
+    CommitChart,
   },
   created() {
     this.$Progress.start();
   },
   mounted() {
     db //Change to real users later
-      .collection("fake_users")
-      .where("is_admin", "==", false)
+      .collection('fake_users')
+      .where('is_admin', '==', false)
       .get()
       .then(doc =>
         doc.docs.forEach(val => {
           this.positions.push({
             lat: val.data().geo.latitude,
-            lng: val.data().geo.longitude
+            lng: val.data().geo.longitude,
           });
           console.log(val.data().geo);
           this.$Progress.finish();
@@ -121,17 +121,27 @@ export default {
   methods: {
     fbdata() {
       for (let j of fake) {
+        let { application, ...j2 } = j;
         db
-          .collection("fake_users")
+          .collection('fake_users')
           .doc(j.email)
-          .set(j)
-          .then(() => console.log("success"))
+          .set(j2)
+          .then(() => {
+            db
+              .collection('applications')
+              .doc('DH5_Test')
+              .collection('all')
+              .doc(j.email)
+              .set(application)
+              .then(() => console.log('Successfully written'))
+              .catch(err => console.log(err));
+          })
           .catch(err => console.log(err));
         console.log(j);
       }
     },
-    fake_apps() {}
-  }
+    fake_apps() {},
+  },
 };
 </script>
 
