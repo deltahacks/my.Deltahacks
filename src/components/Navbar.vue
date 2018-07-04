@@ -66,5 +66,25 @@ export default {
   },
 };
 </script>
-<style scoped src='../assets/css/navbar.css'>
+<style>
+
+.navbar {
+  border: solid 2px black;
+  padding: 0 0 0 0;
+  margin: 0 0;
+}
+
+#title {
+  font-family: "Roboto", serif;
+  font-weight: 500;
+}
+
+#search {
+  width: 300px;
+  margin-right: 15px;
+}
+
+.bold {
+  font-weight: 600;
+}
 </style>

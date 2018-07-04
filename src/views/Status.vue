@@ -1,32 +1,38 @@
 <template>
-  <v-app class="dashboard">
-    <Navbarstatus/>
-    <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-      <div class="wrap-status100">
-        <h1>This application is still under review</h1>
-        <v-card-text></v-card-text>
-        <v-stepper alt-labels>
-          <div class="wrap-status200">
-            <v-stepper-header>
-              <v-stepper-step step="1" complete>Applied</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="2" complete>Received</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="3">Processing</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="4">Decision</v-stepper-step>
-            </v-stepper-header>
-          </div>
-        </v-stepper>
-      </div>
-    </div>
-  </v-app>
+	<v-app class="dashboard">
+		<div class="topnav">
+			<a href="/dashboard">Applicant Dashboard</a>
+			<a href="/">Logout</a>
+			<a href="/apply">Apply</a>
+			<a class="active" href="/status">Status</a>
+			<h1>Status Page </h1>
+		</div>
+		<div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+			<div class="wrap-status100">
+				<h1>This application is still under review</h1>
+				<v-card-text></v-card-text>
+				<v-stepper alt-labels>
+					<div class="wrap-status200">
+						<v-stepper-header>
+							<v-stepper-step step="1" complete>Applied</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="2" complete>Received</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="3">Processing</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="4">Decision</v-stepper-step>
+						</v-stepper-header>
+					</div>
+				</v-stepper>
+			</div>
+		</div>
+	</v-app>
 </template>
 
 <script>
 /* eslint-disable no-unused-expressions */
 
-import Navbarstatus from '@/components/Navbarstatus.vue';
+import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';

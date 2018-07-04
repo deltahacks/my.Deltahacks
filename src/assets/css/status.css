@@ -1,6 +1,6 @@
 html {
 	height: 100%;
-	font-family: Verdana , sans-serif, Agency FB;
+	font-family: Verdana , sans-serif, Agency FB, Roboto;
 }
 
 /*---------------------------------------------*/
@@ -136,6 +136,49 @@ overflow: hidden;
   background: -o-linear-gradient(bottom, #a1c4fd , #c2e9fb);
   background: -moz-linear-gradient(bottom, #a1c4fd , #c2e9fb);
   background: linear-gradient(bottom, #a1c4fd , #c2e9fb);
+}
+
+/*------------------------------------------------------------------
+[ Navbar ]*/
+
+/* Add a black background color to the top navigation */
+.topnav {
+	background-color: #48c6ef;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: right;
+    color: #000;
+    text-align: center;
+    padding: 18px 16px;
+	text-decoration: none;
+    font-size: 20px;
+	line-height:30px;
+	font-family: "Roboto";
+}
+.topnav h1 {
+    float: right;
+    color: #000;
+    text-align: center;
+    padding: 18px 16px;
+	text-decoration: none;
+    font-size: 20px;
+	line-height:30px;
+	font-family: "Roboto";
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #6f86d6;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
 }
 
 /*------------------------------------------------------------------
