@@ -129,7 +129,8 @@ export default {
           .catch(err => console.log(err));
         console.log(j);
       }
-    }
+    },
+    fake_apps() {}
   }
 };
 </script>
