@@ -34,13 +34,13 @@ export default {
           () => {
             this.$router.push({ name: 'Login' });
           },
-          (error) => {
+          error => {
             console.log(error);
-          },
+          }
         );
     },
   },
 };
 </script>
-<style scoped src='../assets/css/navbar.css'>
+<style scoped >
 </style>

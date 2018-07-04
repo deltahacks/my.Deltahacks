@@ -18,7 +18,7 @@
           <td class="text-md-left">{{ props.item.name }}</td>
           <td class="text-md-left">{{ props.item.email }}</td>
           <td class="text-xs-left">{{ props.item.university }}</td>
-          <td class="text-xs-left">{{ props.item.applied }}</td>
+          <td class="text-xs-left">{{ props.item.application.time.applied_initially }}</td>
           <td class="text-xs-left">{{ props.item.phone }}</td>
           <td class="text-xs-left">{{ props.item.age }}</td>
           <td class="text-xs-left">

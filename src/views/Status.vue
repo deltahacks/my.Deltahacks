@@ -34,6 +34,7 @@
 
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import Navbarstatus from '@/components/Navbarstatus.vue';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
