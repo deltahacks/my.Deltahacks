@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-car.css" />       
+<link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-car.css" />
 <script src="http://github.hubspot.com/odometer/odometer.js"></script>
 <template>
     <v-app class="dashboard">
