@@ -1,6 +1,6 @@
 <template>
   <v-app class="dashboard">
-    <Navbar/>
+    <Navbarstatus/>
     <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
       <div class="wrap-status100">
         <h1>This application is still under review</h1>
@@ -26,7 +26,7 @@
 <script>
 /* eslint-disable no-unused-expressions */
 
-import Navbar from "@/components/Navbar.vue";
+import Navbarstatus from "@/components/Navbarstatus.vue";
 import Footer from "@/components/Footer.vue";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, email } from "vuelidate/lib/validators";
@@ -90,13 +90,12 @@ export default {
     checkbox: { required }
   },
   components: {
-    Navbar,
+    Navbarstatus,
     Footer
   },
   computed: {},
   methods: {}
 };
 </script>
-<style scoped lang="scss">
-@import "../assets/css/status.css";
+<style scoped src='../assets/css/status.css'>
 </style>

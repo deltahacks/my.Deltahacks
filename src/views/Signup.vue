@@ -140,6 +140,5 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
-@import "../assets/css/signup.css";
+<style scoped src='../assets/css/signup.css'>
 </style>

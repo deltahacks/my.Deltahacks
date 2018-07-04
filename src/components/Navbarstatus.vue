@@ -1,32 +1,8 @@
 <template>
   <v-toolbar class="toolbar">
-    <v-toolbar-side-icon></v-toolbar-side-icon>
-    <v-menu offset-y>
-      <v-btn class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
-      <v-list>
-        <v-list-tile v-for="(item, index) in dhs" :key="index" @click="current = item">
-          <v-list-tile-title class="">{{ item }}</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-menu>
-    <v-toolbar-title id="title">Attendee Relations Dashboard</v-toolbar-title>
+    <v-toolbar-title id="title">STATUS</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
-    <div id="search">
-      <v-text-field id="search" hint='Search for attendees' prepend-icon="search" hide-details single-line :clearable=true></v-text-field>
-    </div>
-
     <v-toolbar-items class="hidden-sm-and-down">
-      <!-- <v-btn>
-        <v-badge right color="red" overlap>
-          <v-icon slot="badge" dark small>fas fa-exclamation</v-icon>
-          <v-icon large color="grey lighten-1">
-            far fa-bell
-          </v-icon>
-        </v-badge>
-      </v-btn> -->
-      <v-btn flat to="/status" v-if="c_user" class="blue lighten-3">Status</v-btn>
       <v-btn flat to="/apply" v-if="c_user" class="red lighten-3">Apply Now</v-btn>
       <v-btn flat to="/dashboard" v-if="c_user">{{ c_user.email }}</v-btn>
       <v-btn flat to="/signup" v-if="!c_user">Signup</v-btn>

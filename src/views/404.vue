@@ -1,21 +1,20 @@
 <template>
-  <div>
-    <div id="clouds">
-      <div class="cloud x1"></div>
-      <div class="cloud x1_5"></div>
-      <div class="cloud x2"></div>
-      <div class="cloud x3"></div>
-      <div class="cloud x4"></div>
-      <div class="cloud x5"></div>
-    </div>
-    <div class='c'>
-      <div class='_404'>404</div>
-      <hr>
-      <div class='_1'>THE PAGE</div>
-      <div class='_2'>WAS NOT FOUND</div>
-      <a class='btn' href='#'>BACK TO MARS</a>
-    </div>
-  </div>
+  <html lang="en">
+    <head>
+    <title>Page Not Found :(</title>
+	 </head>
+      <body>  
+    <div class="unicorn"></div>
+    <div class="container">
+        <div class="four-oh-four"><h1>404 Error</h1></div>
+        <div class="warning">            
+            <h2>Are You Lost??</h2>
+            <h2>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h2>
+            <a href="javascript:history.back()">Please go back to the previous page</a>
+        </div>
+    </div>                    
+    </body>
+</html>
 </template>
 
 <script>
@@ -25,7 +24,5 @@ export default {
   }
 };
 </script>
-
-
 <style scoped src="../assets/css/error.css">
 </style>
