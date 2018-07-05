@@ -1,9 +1,29 @@
 import { Line } from 'vue-chartjs';
+import firebase from 'firebase';
+import db from '../private/firebase_init';
 
 export default {
   extends: Line,
   mounted() {
+    const now = new Date();
+    const today = new Date(`${now.getMonth() + 1}/${now.getDate() + 1}/${now.getFullYear}`);
+    const yesterday = new Date(`${now.getMonth() + 1}/${now.getDate() - 3}/${now.getFullYear}`);
     // Overwriting base render method with actual data.
+    db
+      .collection('applications')
+      .doc('DH5_test')
+      .collection('all')
+      .where('time.applied_initially_unix', '<=', today.getTime())
+      .where('time.applied_initially_unix', '>=', yesterday.getTime())
+      .get()
+      .then((snap) => {
+        console.log("SNAP!", snap)
+        snap.forEach((doc) => {
+          console.log('Data21', doc.data());
+        });
+      })
+      .catch(err => console.log('ERROR19', err));
+
     this.renderChart({
       labels: ['10', '11', '12', '13', '14', '15', '16'],
       datasets: [{
