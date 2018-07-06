@@ -109,7 +109,7 @@ export default {
             lat: val.data().geo.latitude,
             lng: val.data().geo.longitude,
           });
-          console.log(val.data().geo);
+          //console.log(val.data().geo);
           this.$Progress.finish();
         })
       )
