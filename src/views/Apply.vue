@@ -204,12 +204,12 @@ export default {
         this.application.last_modified = {
           unix: unixts,
           date: new Date().toString(),
-        }
+        };
       } else {
         this.application.first_submitted = {
           unix: unixts,
           date: new Date().toString(),
-        }
+        };
       }
     },
     setApplication() {
@@ -226,7 +226,7 @@ export default {
       const { filename, file, id } = doc;
       const storeRef = firebase.storage().ref();
       return new Promise((resolve, reject) => {
-        storeRef.child(`users/${firebase.auth().currentUser.email}/${filename}`).put(file).then(async (snapshot) => {
+        storeRef.child(`users/${firebase.auth().currentUser.email}/${filename}`).put(file).then((snapshot) => {
           snapshot.ref.getDownloadURL().then((url) => {
             resolve({
               download_link: url,
@@ -234,7 +234,7 @@ export default {
               filename,
             });
           });
-        }).catch(err => reject(`Upload failed: ${err}`));
+        }).catch(err => reject(err));
       });
     },
     async submitApplication() { // consider async.js / async-each alternatives
@@ -247,7 +247,7 @@ export default {
       const results = [];
       for (const doc of files) {
         if (doc.fileExtension === 'pdf') {
-          results.push(this.storeFileAndGetInfo(doc))
+          results.push(this.storeFileAndGetInfo(doc));
         }
       }
       this.application.documents = await Promise.all(results);
