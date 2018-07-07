@@ -250,7 +250,7 @@ export default {
           results.push(this.storeFileAndGetInfo(doc));
         }
       }
-      this.application.documents = await Promise.all(results);
+      this.application.documents = await Promise.all(results).catch(err => console.log(`Upload Failed: ${err}`));
       console.log(this.application.documents);
       this.setApplication();
     },
