@@ -26,25 +26,6 @@ a:hover {
 }
 
 /*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
-}
-
-p {
-	font-family: Verdana ;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-}
-
-ul, li {
-	margin: 0px;
-	list-style-type: none;
-}
-
-
-/*---------------------------------------------*/
 input {
 	outline: none;
 	border: none;
@@ -78,11 +59,6 @@ textarea::-webkit-input-placeholder { color: #fff;}
 textarea:-moz-placeholder { color: #fff;}
 textarea::-moz-placeholder { color: #fff;}
 textarea:-ms-input-placeholder { color: #fff;}
-
-label {
-  margin: 0;
-  display: block;
-}
 
 /*---------------------------------------------*/
 button {
@@ -144,10 +120,11 @@ font-size: 45px;
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255,255,255,0.8);
 }
 
 .wrap-login100 {
+  min-height: 630px;
   width: 500px;
   border-radius: 10px;
   overflow: hidden;

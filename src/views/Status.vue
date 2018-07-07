@@ -1,29 +1,32 @@
 <template>
-  <v-app class="dashboard">
-    <Navbar/>
-    <v-container fluid class="ff mx-auto">
-      <v-layout row>
-        <v-flex xs12 order-lg2>
-          <h1>This application is still under review</h1>
-          <v-card-text></v-card-text>
-          <v-stepper alt-labels>
-            <v-stepper-header>
-              <v-stepper-step step="1" complete>Applied</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="2" complete>Received</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="3">Processing</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="4">Decision</v-stepper-step>
-            </v-stepper-header>
-          </v-stepper>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-app>
-</template>
-
-    </v-app>
+	<v-app class="dashboard">
+		<div class="topnav">
+			<a href="/dashboard">Applicant Dashboard</a>
+			<a href="/">Logout</a>
+			<a href="/apply">Apply</a>
+			<a class="active" href="/status">Status</a>
+			<h1>Status Page </h1>
+		</div>
+		<div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+			<div class="wrap-status100">
+				<h1>This application is still under review</h1>
+				<v-card-text></v-card-text>
+				<v-stepper alt-labels>
+					<div class="wrap-status200">
+						<v-stepper-header>
+							<v-stepper-step step="1" complete>Applied</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="2" complete>Received</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="3">Processing</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="4">Decision</v-stepper-step>
+						</v-stepper-header>
+					</div>
+				</v-stepper>
+			</div>
+		</div>
+	</v-app>
 </template>
 
 <script>
@@ -73,13 +76,7 @@ export default {
       name: '',
       email: '',
       select: null,
-      items: [
-        'First Year',
-        'Second Year',
-        'Third Year',
-        'Fourth Year',
-        'Fifth Year',
-      ],
+      items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
       hackathons: ['This is my first one', '2', '3', '5+', '10+'],
       food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
       shirts: ['XS', 'S', 'M', 'L', 'XL'],
@@ -100,18 +97,5 @@ export default {
   methods: {},
 };
 </script>
-
-<style scoped>
-.ff {
-  margin-top: 5%;
-  width: 70%;
-}
-
-#mlh {
-  margin-top: 10%;
-}
-
-.gg {
-  display: inline-block;
-}
+<style scoped src='../assets/css/status.css'>
 </style>

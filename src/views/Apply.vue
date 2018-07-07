@@ -13,6 +13,7 @@
                     v-validate="'required:true'"></v-date-picker> -->
       <v-text-field name="date" v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy"
                     v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+      <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
       <v-select name="university" :items="list_of_universities" v-model="application.university"
                   label="What university do you go to?" autocomplete
                   v-validate="{required: true}"
@@ -45,7 +46,6 @@
                     v-model="application.website" prepend-icon="fas fa-link"
                     v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
       </v-text-field>
-
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
           <v-text-field mask="phone" name="phone" label="Your cell phone number" v-model="application.phone" single-line prepend-icon="phone" data-vv-delay="1000"
@@ -58,7 +58,7 @@
                         v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
         </v-flex>
       </v-container>
-      <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true" 
+      <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true"
         accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
       <br>
 
@@ -68,7 +68,7 @@
             <v-layout row>
               <v-flex xs12>
                 <v-text-field box multi-line outline
-                 name="story" placeholder="Tell us about a project you've worked on recently..."
+                 name="story" placeholder="Tell us about a project you've worked on recently... (STILL WORKING ON SOLUTION FOR THIS TEXTAREA ITS HARD TO SEE RIGHT NOW)"
                  v-model="application.story" auto-grow
                  v-validate="{required:true, max:500}" counter=500>
                 </v-text-field>
@@ -79,12 +79,12 @@
           </v-container>
         </v-card-text>
       </v-card>
-      <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox"  
+      <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox"
       label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
 
-      <div class="mx-auto gg" style="border: solid 2px black">
-        <v-btn class="button is-primary" type="submit">submit</v-btn>
-        <v-btn>clear</v-btn>
+      <div class="mx-auto gg">
+        <v-btn color="info" outline class="button is-primary" type="submit">submit</v-btn>
+        <v-btn color="error" outline >clear</v-btn>
       </div>
 
     </form>
@@ -100,7 +100,6 @@ import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import { each } from 'async-each';
 
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
@@ -140,8 +139,8 @@ export default {
         phone: '',
         emergency_phone: '',
         story: '',
-        date:'',
-        documents:[],
+        date: '',
+        documents: [],
       },
       links: ['Home', 'About', 'Contact'],
       story: '',
@@ -157,7 +156,7 @@ export default {
         'Fifth Year',
       ],
       hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+      food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
       shirts: ['XS', 'S', 'M', 'L', 'XL'],
       checkbox: false,
     };
@@ -194,7 +193,6 @@ export default {
       this.checkError = undefined;
     },
     validateBeforeSubmit() {
-      return true;
       this.$validator.validateAll();
     },
     setApplication() {
@@ -211,41 +209,44 @@ export default {
         this.checkError = 'Please accept the terms and conditions to continue.';
         return;
       }
-      const storeRef = firebase.storage().ref();   
+      const storeRef = firebase.storage().ref();
       const files = this.$refs.pond.getFiles();
-      for(const doc of files) {        
+      // TODO: add current date information to application.
+      // TODO: refactor the await statements out and use Promise.all() instead
+      for (const doc of files) {
         const { filename, file, id, fileExtension } = doc;
-        console.log('fileExtension');
+        console.log(fileExtension);
         if (fileExtension !== 'pdf') continue;
+
         await storeRef.child(`users/${firebase.auth().currentUser.email}/${filename}`).put(file).then(async (snapshot) => {
           await snapshot.ref.getDownloadURL().then((url) => {
             this.application.documents.push({
               download_link: url,
               id,
               filename,
-            })  
-          })              
-        }).catch(err => console.error(`Upload failed: ${err}`));             
-      }  
+            });
+          });
+        }).catch(err => console.error(`Upload failed: ${err}`));
+      }
       console.log('Setting data...');
       this.setApplication();
     },
   },
   beforeMount() {
     this.$store.state.db.collection('applications')
-        .doc('DH6')
-        .collection('all')
-        .doc(firebase.auth().currentUser.email)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            console.log(doc.data());
-            this.application = doc.data();
-          } else {
-            console.log('Document not found!');
-          }
-        })
-  }
+      .doc('DH6')
+      .collection('all')
+      .doc(firebase.auth().currentUser.email)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log(doc.data());
+          this.application = doc.data();
+        } else {
+          console.log('Document not found!');
+        }
+      });
+  },
 };
 </script>
 

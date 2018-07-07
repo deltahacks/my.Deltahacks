@@ -3196,6 +3196,10 @@ filepond@^1.7.0:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/filepond/-/filepond-1.7.2.tgz#9ce7b388cb2ad0f4ffe0357fb222ec5b8539d2da"
 
+filepond@^1.8.5:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/filepond/-/filepond-1.8.5.tgz#8c4d54f40af4595b8e1782025eaaa21e996acaee"
+
 fill-range@^2.1.0:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-2.2.4.tgz#eb1e773abb056dcd8df2bfdf6af59b8b3a936565"

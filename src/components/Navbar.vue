@@ -66,8 +66,8 @@ export default {
   },
 };
 </script>
-
 <style>
+
 .navbar {
   border: solid 2px black;
   padding: 0 0 0 0;
