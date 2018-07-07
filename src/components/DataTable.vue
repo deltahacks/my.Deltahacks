@@ -118,15 +118,15 @@ export default {
     };
   },
   mounted() {
-    let parent = this;
+    const parent = this;
     db
       .collection('applications')
       .doc('DH5_Test')
       .collection('all')
       .get()
-      .then(function(querySnapshot) {
+      .then((querySnapshot) => {
         parent.applications = [];
-        querySnapshot.forEach(function(doc) {
+        querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           parent.applications.push(doc.data());
           console.log(doc.id, ' => ', doc.data());

@@ -1,20 +1,24 @@
 <template>
-  <html lang="en">
-    <head>
-    <title>Page Not Found :(</title>
-	 </head>
-      <body>
-    <div class="unicorn"></div>
-    <div class="container">
-        <div class="four-oh-four"><h1>404 Error</h1></div>
-        <div class="warning">
-            <h2>Are You Lost??</h2>
-            <h2>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h2>
-            <a href="javascript:history.back()">Please go back to the previous page</a>
-        </div>
-    </div>
-    </body>
-</html>
+<div class="container-error100" style="background-image: url('http://static.simpledesktops.com/uploads/desktops/2012/01/19/Spectrum.png');">
+<section class="error-container">
+  <div class="topnav">
+			<a href="/dashboard">Applicant Dashboard</a>
+			<a href="/">Logout</a>
+			<a href="/apply">Apply</a>
+			<a href="/status">Status</a>
+			<h1>Error 404</h1>
+		</div>
+  <span>4</span>
+	<span>0</span>
+	<span>4</span>
+    <section class="wrap">
+  <p>Page Not Found<p>
+  <p>The page you're looking for appears to have moved,deleted or doesn't exist!!</p>  <section class="wrap2">
+  <a href="javascript:history.back()">Go Back To The Previous Page</a></section>
+  <section class="wrap2">
+  <a href="/">Go Home</a></section>
+  <h2><br>DeltaHacks V</h2></section>
+</section></div>
 </template>
 
 <script>
@@ -24,5 +28,6 @@ export default {
   },
 };
 </script>
+
 <style scoped src="../assets/css/error.css">
 </style>

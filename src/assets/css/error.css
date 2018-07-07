@@ -1,102 +1,187 @@
-        @import url(https://fonts.googleapis.com/css?family=Arvo);
+.container-error100 {
+  min-height: 100vh;
+	justify-content: center;
+	align-items: center;
+  overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	position: relative;
+	z-index: 0;  
+  }
 
+.error-container {
+  height:100vh;
+  text-align: center;
+  font-family: 'Roboto';
+  color: #fff;
+  font-weight: 700;
+  font-size: 200px;
+}
+.error-container > span {
+  display: inline;
+  position: relative;
+  color: #FFB485;
+  vertical-align: middle;
+}
 
-        /* SELECTED TEXT */
-        ::selection { background: #ff5e99; color: #FFFFFF; text-shadow: 0; }
-        ::-moz-selection { background: #ff5e99; color: #FFFFFF; }
-    
-        html {
-            font-size: 18px;
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;                          
-            }
-    
-        html, input { font-family: "arvo", "Helvetica Neue", Helvetica, Arial, sans-serif; }
-    
-    
-    
-        body {                
-            background: #4A575A;
-            color: #fff;
-            }
-    
-    
-        a {
-        	-webkit-transition: all 200ms ease;
-        	-moz-transition: all 200ms ease;
-        	-ms-transition: all 200ms ease;
-        	-o-transition: all 200ms ease;
-        	transition: all 200ms ease; 
-        
-        	-webkit-transform: translate3d(0, 0, 0);
-        	-webkit-backface-visibility: hidden;
-        	
-        	opacity: 1;
-        	}
-        
-            a:hover {
-        	    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
-        	    filter: alpha(opacity=50); /* IE7 */
-        	    opacity: 0.6;
-                }
+.error-container > span:nth-of-type(1) {
+  color: #D1F2A5;
+  animation: colordancing 4s infinite;
+}
+.error-container > span:nth-of-type(2) {
+  color: rgb(51, 129, 218);
+  animation: colordancing2 4s infinite;
+}
+.error-container > span:nth-of-type(3) {
+	color: rgb(202, 34, 76);
+	animation: colordancing3 4s infinite;
+  }
 
-                a, a:visited, a:active {
-                    color: #fff;
-                    text-decoration: none;
-                    }
+@keyframes colordancing {
+  0% {
+    color: #D1F2A5;
+  }
+  25% {
+    color: rgb(62, 219, 167);
+  }
+  50% {
+    color: rgb(51, 129, 218);
+  }
+  75% {
+    color: rgb(115, 33, 209);
+  }
+  100% {
+    color: #D1F2A5;
+  }
+}
+@keyframes colordancing2 {
+  0% {
+    color: rgb(51, 129, 218);
+  }
+  25% {
+    color: rgb(115, 33, 209);
+  }
+  50% {
+    color: rgb(202, 34, 76);
+  }
+  75% {
+    color: rgb(224, 60, 31);
+  }
+  100% {
+    color: rgb(51, 129, 218);
+  }
+}
+@keyframes colordancing3 {
+  0% {
+    color: rgb(202, 34, 76);
+  }
+  25% {
+    color: rgb(224, 60, 31);
+  }
+  50% {
+    color: rgb(115, 233, 37);
+  }
+  75% {
+    color: rgb(6, 245, 45);
+  }
+  100% {
+    color: rgb(202, 34, 76);
+  }
+  }
+ 
+html, button, input, select, textarea {
+    font-family: 'Montserrat', Helvetica, sans-serif;
+	color: #0010ec;
+}
 
-            .unicorn {
-                max-width: 100%;
-                height: 400px;   
-                }
-                  
-            .container {
-                max-width: 400px;
-                _width: 400px;
-                text-align: center;
-                }
-            
-            h1 {
-                margin: 0;
-                }
+.wrap p{
+	text-align: center;
+	font-size: 25px;
+}
+.wrap h2{
+	text-align: center;
+	font-size: 30px;
+}
 
-            h2 {
-                font-size: 18px;
-                margin: 0;
-                padding: 4px 0 10px;
-                }
+.wrap2{
+  padding: 5px;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-            h3 {
-                margin: 20px 0 8px;
-                text-align: center;
-                font-size: 20px;
-                font-weight: 500;
-                line-height: 1.4;
-                padding: 0 30px;
-                }    
-          
-            .warning {
-                margin: 0px 0 30px 0;
-                padding: 0px 20px 8px;
-                }
-                .warning p {
-                    font-size: 12px;font-size: 0.75rem;
-                }
-     
-                .warning a { 
-                    display: block;
-                    margin-top: 30px;
-                    padding: 20px;
-                    background: #16A085; 
-                    }
-           
+.wrap2 a{
+  font-family: 'Roboto' ;
+  font-size: 25px;
+  color: #555555;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+	text-decoration: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px;
+  width: 400px;
+  border-radius: 35px;
+  background: #1ac994;
+}
 
-            /* SVG */
-            .unicorn {
-              max-width: 100%;
-              height: 400px;   
-            
-              background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUwNS43NiA1NDkuMzgiPgo8cG9seWdvbiBmaWxsPSJub25lIiBzdHJva2U9IiNGMUYyRjIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludHM9Ijg2LjgsMTQyIDE0LjIsMTgyLjQgMTUsMTM1LjIgODEuMSw4NCIvPgo8cG9seWdvbiBmaWxsPSJub25lIiBzdHJva2U9IiNGMUYyRjIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludHM9IjcuMSw4LjEgNjIuMSw5NCA4MS4yLDc5LjciLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSI4NC4yLDgxLjcgOTAuNywxNDIuMyA3OC45LDMwMS45IDEzNi4yLDI3MS4zIDE2Mi44LDE3Mi45IDEyNC45LDk4LjciLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIxNjksMjUyLjMgMTM5LjYsMjY5LjEgMTY1LjQsMTc0LjMgMjAyLjMsMTc3LjciLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIxNjUuOCwyNTguNyA3OC45LDMwNy43IDExNS45LDMyNi40IDM2LjMsNTQyIDIwMC4zLDM3OS43IDE2OC42LDM4Mi40Ii8+Cjxwb2x5Z29uIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0YxRjJGMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50cz0iMTc0LjQsMzc3LjggMTg5LjksMzYzIDIwMS43LDM3NS44Ii8+Cjxwb2x5Z29uIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0YxRjJGMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50cz0iMTY5LjksMjU5LjMgMTcyLjQsMzc0IDIyMS4yLDMyOS4zIi8+Cjxwb2x5Z29uIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0YxRjJGMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50cz0iMTcxLjQsMjU1LjUgMjA0LjQsMjI3LjUgMjIxLjIsMzIzLjgiLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIyMDcuOSwyMjkgMjIxLjcsMzAzLjkgMjU1LjIsMjc5LjUiLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIyMjIuNCwzMDcuNSAyMjYuMiwzMjkuMyAxOTMuMiwzNjAuMyAxOTYuNiwzNjQgMjM0LjcsMzM2LjggMzYzLjQsMzI5LjkgMjQ4LjIsMjY2LjUgMjYwLjQsMjc5LjgiLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIxOTguMywzNjYgMjA1LjIsMzc0LjMgMzUyLjQsMzMzLjcgMjM1LjksMzM5LjgiLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIyMjYuMiwyNDMuOCAyNDAuOSwyNTkuMyAzNjMuNCwzMjYuOSAyNDguNywyMzQiLz4KPHBvbHlnb24gZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjFGMkYyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIyNzkuMSwyNTQuNSAzNTkuNCwzMjAuMyAzMTIuNywyNTQuNSIvPgo8cG9seWdvbiBmaWxsPSJub25lIiBzdHJva2U9IiNGMUYyRjIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludHM9IjMxNi45LDI1NC41IDM3MS42LDMzMi40IDI3MC45LDM1OS43IDMxMC4zLDQxNy43IDM4My42LDQwMi40IDM3Ny42LDM1NC40IDUwMC45LDM5OCAzNzAuNiwyNjIuNyIvPgo8cG9seWdvbiBmaWxsPSJub25lIiBzdHJva2U9IiNGMUYyRjIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludHM9IjMxNi42LDQxOS43IDM5OC4zLDU0MiAzODIuMyw0MDYuNCIvPgo8L3N2Zz4K) no-repeat center center;
-            }
-            
-  
+.wrap2 a:hover {
+  background-color: #6f86d6;
+  color: white;
+}
+
+/* Add a color to the active/current link */
+.wrap2 a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav {
+	background-color: #333232;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: right;
+    color: #000;
+    text-align: center;
+    padding: 18px 16px;
+	text-decoration: none;
+    font-size: 20px;
+    border-radius: 30px;
+	line-height:30px;
+	font-family: "Roboto";
+}
+.topnav h1 {
+  float: right;
+    color: #000;
+    text-align: center;
+    padding: 18px 16px;
+	text-decoration: none;
+    font-size: 20px;
+	line-height:30px;
+	font-family: "Roboto";
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #6f86d6;
+    color: white;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+}

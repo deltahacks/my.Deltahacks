@@ -17,7 +17,7 @@ export default {
       .where('time.applied_initially_unix', '>=', yesterday.getTime())
       .get()
       .then((snap) => {
-        console.log("SNAP!", snap)
+        console.log('SNAP!', snap);
         snap.forEach((doc) => {
           console.log('Data21', doc.data());
         });
