@@ -119,6 +119,7 @@ export default {
   data() {
     return {
       myFiles: [],
+      existing_doc: undefined,
       checkError: undefined,
       parent: this,
       picker: null,
@@ -128,6 +129,8 @@ export default {
       application: {
         name: '',
         email: '',
+        last_modified: undefined,
+        first_submitted: undefined,
         school_year: null,
         shirt_size: null,
         dietry_restrictions: null,
@@ -195,7 +198,22 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll();
     },
+    setDateInformation() {
+      const unixts = Math.round((new Date()).getTime() / 1000);
+      if (this.existing_doc) {
+        this.application.last_modified = {
+          unix: unixts,
+          date: new Date().toString(),
+        }
+      } else {
+        this.application.first_submitted = {
+          unix: unixts,
+          date: new Date().toString(),
+        }
+      }
+    },
     setApplication() {
+      this.setDateInformation();
       this.$store.state.db.collection('applications')
         .doc('DH6')
         .collection('all')
@@ -204,31 +222,36 @@ export default {
         .then(() => this.$router.push({ name: 'Dashboard' }))
         .catch(err => console.log(err));
     },
-    async submitApplication() { // consider async.js / async-each alternatives
-      if (!this.checkbox) {
-        this.checkError = 'Please accept the terms and conditions to continue.';
-        return;
-      }
+    storeFileAndGetInfo(doc) {
+      const { filename, file, id } = doc;
       const storeRef = firebase.storage().ref();
-      const files = this.$refs.pond.getFiles();
-      // TODO: add current date information to application.
-      // TODO: refactor the await statements out and use Promise.all() instead
-      for (const doc of files) {
-        const { filename, file, id, fileExtension } = doc;
-        console.log(fileExtension);
-        if (fileExtension !== 'pdf') continue;
-
-        await storeRef.child(`users/${firebase.auth().currentUser.email}/${filename}`).put(file).then(async (snapshot) => {
-          await snapshot.ref.getDownloadURL().then((url) => {
-            this.application.documents.push({
+      return new Promise((resolve, reject) => {
+        storeRef.child(`users/${firebase.auth().currentUser.email}/${filename}`).put(file).then(async (snapshot) => {
+          snapshot.ref.getDownloadURL().then((url) => {
+            resolve({
               download_link: url,
               id,
               filename,
             });
           });
-        }).catch(err => console.error(`Upload failed: ${err}`));
+        }).catch(err => reject(`Upload failed: ${err}`));
+      });
+    },
+    async submitApplication() { // consider async.js / async-each alternatives
+      if (!this.checkbox) {
+        this.checkError = 'Please accept the terms and conditions to continue.';
+        return;
       }
-      console.log('Setting data...');
+
+      const files = this.$refs.pond.getFiles();
+      const results = [];
+      for (const doc of files) {
+        if (doc.fileExtension === 'pdf') {
+          results.push(this.storeFileAndGetInfo(doc))
+        }
+      }
+      this.application.documents = await Promise.all(results);
+      console.log(this.application.documents);
       this.setApplication();
     },
   },
@@ -240,7 +263,7 @@ export default {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log(doc.data());
+          this.existing_doc = doc;
           this.application = doc.data();
         } else {
           console.log('Document not found!');
