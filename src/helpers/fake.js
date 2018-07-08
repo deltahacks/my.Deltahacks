@@ -34,16 +34,18 @@ function generateApp(email, emergencyPhone, name, story, university) {
     website: 'google.com',
     documents: [
       {
-        download_link: 'https://firebasestorage.googleapis.com/v0/b/mydeltahacks.appspot.com/o/users%2Ftest5%40test.ca%2FGeneral%20Expectations.docx.pdf?alt=media&token=7dcf28a5-2215-4824-8600-583df46399ba',
+        download_link: 'https://firebasestorage.googleapis.com/v0/b/mydeltahacks.appspot.com/o/users%2Ftest5%40test.ca%2FGeneral%20Expectations.docx.pdf?alt=media&token=ce1464d9-8942-49d1-8cf4-2e8dbcbab702',
         filename: 'General Expectations.docx.pdf',
         id: '3ln3opja2',
       },
     ],
-    time: {
-      applied_initially: applicationDate,
-      applied_initially_unix: applicationDate.getTime(),
-      updated: applicationDate,
-      updated_unix: applicationDate.getTime(),
+    last_modified: {
+      date: applicationDate,
+      unix: applicationDate.getTime(),
+    },
+    first_submitted: {
+      date: applicationDate,
+      unix: applicationDate.getTime(),
     },
   };
 }

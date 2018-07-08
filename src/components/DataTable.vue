@@ -18,7 +18,7 @@
           <td class="text-md-left">{{ props.item.name }}</td>
           <td class="text-md-left">{{ props.item.email }}</td>
           <td class="text-xs-left">{{ props.item.university }}</td>
-          <td class="text-xs-left">{{ props.item.time.applied_initially.seconds }}</td>
+          <td class="text-xs-left">{{ props.item.first_submitted.unix }}</td>
           <td class="text-xs-left">{{ props.item.phone }}</td>
           <td class="text-xs-left">{{ props.item.age }}</td>
           <td class="text-xs-left">
@@ -91,11 +91,13 @@ export default {
               id: '3ln3opja2',
             },
           ],
-          time: {
-            applied_initially: 'applicationDate',
-            applied_initially_unix: 'applicationDate',
-            updated: 'applicationDate',
-            updated_unix: 'applicationDate',
+          last_modified: {
+            date: 'applicationDate',
+            unix: 'applicationDate',
+          },
+          first_submitted: {
+            date: 'applicationDate',
+            unix: 'applicationDate',
           },
         },
       ],
@@ -118,18 +120,18 @@ export default {
     };
   },
   mounted() {
-    let parent = this;
+    const parent = this;
     db
       .collection('applications')
       .doc('DH5_Test')
       .collection('all')
       .get()
-      .then(function(querySnapshot) {
+      .then((querySnapshot) => {
         parent.applications = [];
-        querySnapshot.forEach(function(doc) {
+        querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           parent.applications.push(doc.data());
-          console.log(doc.id, ' => ', doc.data());
+          // console.log(doc.id, ' => ', doc.data());
         });
       });
   },

@@ -13,11 +13,10 @@ export default {
       .collection('applications')
       .doc('DH5_test')
       .collection('all')
-      .where('time.applied_initially_unix', '<=', today.getTime())
-      .where('time.applied_initially_unix', '>=', yesterday.getTime())
+      .orderBy('last_modified.unix')
       .get()
       .then((snap) => {
-        console.log("SNAP!", snap)
+        console.log('SNAP!', snap);
         snap.forEach((doc) => {
           console.log('Data21', doc.data());
         });
