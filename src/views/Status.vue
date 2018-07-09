@@ -1,11 +1,12 @@
 <template>
 	<v-app class="dashboard">
 		<div class="topnav">
-			<a href="/dashboard">Applicant Dashboard</a>
-			<a href="/">Logout</a>
-			<a href="/apply">Apply</a>
-			<a class="active" href="/status">Status</a>
-			<h1>Status Page </h1>
+<div class="w3-bar">
+  <a href="/status" class="w3-bar-item w3-button w3-hover-none w3-border-black w3-bottombar w3-hover-border-blue w3-hover-text-blue">Link 3</a>
+  <a href="/dashboard" class="w3-bar-item w3-button w3-border-white w3-bottombar w3-hover-border-blue w3-hover-text-red">Link 1</a>
+  <a href="/" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-blue w3-hover-text-blue">Link 2</a>
+  <a href="/apply" class="w3-bar-item w3-button w3-border-white w3-bottombar w3-hover-border-color w3-hover-text-red">Link 3</a>
+</div>
 		</div>
 		<div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
 			<div class="wrap-status100">
