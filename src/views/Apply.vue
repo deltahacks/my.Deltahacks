@@ -1,7 +1,7 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
-    <form class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
+    <form class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit">
       <v-text-field name="name" v-model="application.name" label="Name"
                     v-validate="{required:true, max:100}"
                     :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
@@ -11,7 +11,7 @@
                     :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
       <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-      <v-text-field name="date" v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy"
+      <v-text-field name="date" return-masked-value v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy"
                     v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
       <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
       <v-select name="university" :items="list_of_universities" v-model="application.university"
@@ -48,14 +48,14 @@
       </v-text-field>
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="phone" label="Your cell phone number" v-model="application.phone" single-line prepend-icon="phone" data-vv-delay="1000"
-                        v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+          <v-text-field mask="phone" return-masked-value name="phone" label="Your cell phone number" v-model="application.phone" single-line prepend-icon="phone" data-vv-delay="1000"
+                        v-validate="{required:true, max: 18, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
         </v-flex>
         <v-flex xs4>
         </v-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="emergency phone" label="Emergency contact phone number" v-model="application.emergency_phone" single-line prepend-icon="phone"
-                        v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+          <v-text-field mask="phone" return-masked-value name="emergency phone" label="Emergency contact phone number" v-model="application.emergency_phone" single-line prepend-icon="phone"
+                        v-validate="{required:true, max: 18, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
         </v-flex>
       </v-container>
       <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true"
@@ -88,7 +88,25 @@
       </div>
 
     </form>
-
+    <v-dialog
+      v-model="loading"
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          Submitting Application Info...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -120,6 +138,7 @@ export default {
     return {
       myFiles: [],
       existing_doc: undefined,
+      loading: false,
       checkError: undefined,
       parent: this,
       picker: null,
@@ -196,7 +215,11 @@ export default {
       this.checkError = undefined;
     },
     validateBeforeSubmit() {
-      this.$validator.validateAll();
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.submitApplication();
+        }
+      });
     },
     setDateInformation() {
       const unixts = Math.round((new Date()).getTime() / 1000);
@@ -242,14 +265,15 @@ export default {
         this.checkError = 'Please accept the terms and conditions to continue.';
         return;
       }
-
+      this.loading = true;
       const files = this.$refs.pond.getFiles();
       const results = [];
-      for (const doc of files) {
+      files.forEach((doc) => {
         if (doc.fileExtension === 'pdf') {
           results.push(this.storeFileAndGetInfo(doc));
         }
-      }
+      });
+      // TODO: verify failure behaviour
       this.application.documents = await Promise.all(results).catch(err => console.log(`Upload Failed: ${err}`));
       console.log(this.application.documents);
       this.setApplication();
