@@ -2,75 +2,47 @@
   <v-app class="dashboard">
     <Navbar/>
     <form class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
-      <v-text-field name="name" v-model="application.name" label="Name"
-                    v-validate="{required:true, max:100}"
-                    :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
-                    <!-- find a better way of including this in form -->
-      <v-text-field name="email" v-model="application.email" label="E-mail"
-                    v-validate="{required:true, email:true, max:100}"
-                    :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
+      <v-text-field name="name" v-model="application.name" label="Name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+      <!-- find a better way of including this in form -->
+      <v-text-field name="email" v-model="application.email" label="E-mail" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
       <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-      <v-text-field name="date" v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy"
-                    v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+      <v-text-field name="date" v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
       <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
-      <v-select name="university" :items="list_of_universities" v-model="application.university"
-                  label="What university do you go to?" autocomplete
-                  v-validate="{required: true}"
-                  :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
-      <v-select name="year" v-model="application.school_year" :items="items" label="Year"
-                  v-validate="{required:true}"
-                  :error-messages="errors.first('year:required')" data-vv-delay="1000">
+      <v-select name="university" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+      <v-select name="year" v-model="application.school_year" :items="items" label="Year" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size"
-                  v-validate="{required:true}" name="shirt size"
-                  :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
+      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.dietry_restrictions" :items="food" label="Dietary restrictions"
-                  v-validate="{required:true}" name="diet"
-                  :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+      <v-select v-model="application.dietry_restrictions" :items="food" label="Dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.hackathons" :items="hackathons" label="How many hackathons have you attended?"
-                  v-validate="{required:true}" name="hackathons"
-                  :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
+      <v-select v-model="application.hackathons" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
       </v-select>
-      <v-text-field name="github" label="Your Github" single-line data-vv-delay="4000"
-                    v-model="application.github" prepend-icon="fab fa-github"
-                    v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
+      <v-text-field name="github" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
       </v-text-field>
-      <v-text-field name="linkedin" label="Your Linkedin" single-line data-vv-delay="4000"
-                    v-model="application.linkedin" prepend-icon="fab fa-linkedin"
-                    v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
+      <v-text-field name="linkedin" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
       </v-text-field>
-      <v-text-field name="website" label="Your Website" single-line data-vv-delay="4000"
-                    v-model="application.website" prepend-icon="fas fa-link"
-                    v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
+      <v-text-field name="website" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
       </v-text-field>
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="phone" label="Your cell phone number" v-model="application.phone" single-line prepend-icon="phone" data-vv-delay="1000"
-                        v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+          <v-text-field mask="phone" name="phone" label="Your cell phone number" v-model="application.phone" single-line prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
         </v-flex>
         <v-flex xs4>
         </v-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="emergency phone" label="Emergency contact phone number" v-model="application.emergency_phone" single-line prepend-icon="phone"
-                        v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+          <v-text-field mask="phone" name="emergency phone" label="Emergency contact phone number" v-model="application.emergency_phone" single-line prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
         </v-flex>
       </v-container>
-      <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true"
-        accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+      <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
       <br>
 
-      <v-card flat >
+      <v-card flat>
         <v-card-text>
           <v-container fluid>
             <v-layout row>
               <v-flex xs12>
-                <v-text-field box multi-line outline
-                 name="story" placeholder="Tell us about a project you've worked on recently... (STILL WORKING ON SOLUTION FOR THIS TEXTAREA ITS HARD TO SEE RIGHT NOW)"
-                 v-model="application.story" auto-grow
-                 v-validate="{required:true, max:500}" counter=500>
+                <v-text-field box multi-line outline name="story" placeholder="Tell us about a project you've worked on recently... (STILL WORKING ON SOLUTION FOR THIS TEXTAREA ITS HARD TO SEE RIGHT NOW)" v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
                 </v-text-field>
               </v-flex>
 
@@ -79,12 +51,11 @@
           </v-container>
         </v-card-text>
       </v-card>
-      <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox"
-      label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
+      <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
 
       <div class="mx-auto gg">
         <v-btn color="info" outline class="button is-primary" type="submit">submit</v-btn>
-        <v-btn color="error" outline >clear</v-btn>
+        <v-btn color="error" outline>clear</v-btn>
       </div>
 
     </form>
@@ -109,10 +80,7 @@ import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { list_of_universities } from '../private/data';
 
-const FilePond = vueFilePond(
-  FilePondPluginFileValidateType,
-  FilePondPluginImagePreview,
-);
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 export default {
   mixins: [validationMixin],
   name: 'Apply',
@@ -151,13 +119,7 @@ export default {
       name: '',
       email: '',
       select: null,
-      items: [
-        'First Year',
-        'Second Year',
-        'Third Year',
-        'Forth Year',
-        'Fifth Year',
-      ],
+      items: ['First Year', 'Second Year', 'Third Year', 'Forth Year', 'Fifth Year'],
       hackathons: ['This is my first one', '2', '3', '5+', '10+'],
       food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
       shirts: ['XS', 'S', 'M', 'L', 'XL'],
@@ -199,7 +161,7 @@ export default {
       this.$validator.validateAll();
     },
     setDateInformation() {
-      const unixts = Math.round((new Date()).getTime() / 1000);
+      const unixts = Math.round(new Date().getTime() / 1000);
       if (this.existing_doc) {
         this.application.last_modified = {
           unix: unixts,
@@ -214,7 +176,8 @@ export default {
     },
     setApplication() {
       this.setDateInformation();
-      this.$store.state.db.collection('applications')
+      this.$store.state.db
+        .collection('applications')
         .doc('DH6')
         .collection('all')
         .doc(firebase.auth().currentUser.email)
@@ -226,18 +189,23 @@ export default {
       const { filename, file, id } = doc;
       const storeRef = firebase.storage().ref();
       return new Promise((resolve, reject) => {
-        storeRef.child(`users/${firebase.auth().currentUser.email}/${filename}`).put(file).then((snapshot) => {
-          snapshot.ref.getDownloadURL().then((url) => {
-            resolve({
-              download_link: url,
-              id,
-              filename,
+        storeRef
+          .child(`users/${firebase.auth().currentUser.email}/${filename}`)
+          .put(file)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              resolve({
+                download_link: url,
+                id,
+                filename,
+              });
             });
-          });
-        }).catch(err => reject(err));
+          })
+          .catch(err => reject(err));
       });
     },
-    async submitApplication() { // consider async.js / async-each alternatives
+    async submitApplication() {
+      // consider async.js / async-each alternatives
       if (!this.checkbox) {
         this.checkError = 'Please accept the terms and conditions to continue.';
         return;
@@ -250,13 +218,15 @@ export default {
           results.push(this.storeFileAndGetInfo(doc));
         }
       }
-      this.application.documents = await Promise.all(results).catch(err => console.log(`Upload Failed: ${err}`));
+      this.application.documents = await Promise.all(results).catch(err =>
+        console.log(`Upload Failed: ${err}`));
       console.log(this.application.documents);
       this.setApplication();
     },
   },
   beforeMount() {
-    this.$store.state.db.collection('applications')
+    this.$store.state.db
+      .collection('applications')
       .doc('DH6')
       .collection('all')
       .doc(firebase.auth().currentUser.email)
