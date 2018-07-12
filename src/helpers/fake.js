@@ -39,11 +39,13 @@ function generateApp(email, emergencyPhone, name, story, university) {
         id: '3ln3opja2',
       },
     ],
-    time: {
-      applied_initially: applicationDate,
-      applied_initially_unix: applicationDate.getTime(),
-      updated: applicationDate,
-      updated_unix: applicationDate.getTime(),
+    first_submitted: {
+      date: applicationDate,
+      unix: applicationDate.getTime(),
+    },
+    last_modified: {
+      date: applicationDate,
+      unix: applicationDate.getTime(),
     },
   };
 }
