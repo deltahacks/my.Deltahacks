@@ -122,7 +122,7 @@ export default {
   methods: {
     selectRow(e, props) {
       props.expanded = !props.expanded;
-      // TODO: adjust number or make percent if the expand element varies in height
+      // update this if you change the size of expands
       window.scrollTo(0,e.target.offsetTop + 620);
     }
   },
