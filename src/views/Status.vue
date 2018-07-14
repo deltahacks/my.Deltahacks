@@ -6,7 +6,7 @@
   <a href="/dashboard" class="w3-bar-item w3-button w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Dashboard</a>
   <a href="/" class="w3-bar-item w3-button w3-hover-none w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Logout</a>
   <a href="/apply" class="w3-bar-item w3-button w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Apply</a>
-<a href="/" class="w3-right w3-button"><img src="@/assets/logo.png" height=52px alt="DeltaHacks Logo" /></a>
+<a href="/" class="w3-right w3-button"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
 </div>
 		</div>
 		<div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
