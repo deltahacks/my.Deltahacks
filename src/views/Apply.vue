@@ -56,7 +56,25 @@
       </div>
 
     </form>
-
+    <v-dialog
+      v-model="loading"
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          Submitting Application...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -84,6 +102,7 @@ export default {
   data() {
     return {
       myFiles: [],
+      loading: false,
       existing_doc: undefined,
       checkError: undefined,
       parent: this,
@@ -179,8 +198,10 @@ export default {
         .collection('all')
         .doc(firebase.auth().currentUser.email)
         .set(this.application)
-        .then(() => this.$router.push({ name: 'Dashboard' }))
-        .catch(err => console.log(err));
+        .then(() => {
+          this.$router.push({ name: 'Dashboard' });
+          this.loading = false;
+        }).catch(err => console.log(err));
     },
     storeFileAndGetInfo(doc) {
       const { filename, file, id } = doc;
@@ -207,7 +228,7 @@ export default {
         this.checkError = 'Please accept the terms and conditions to continue.';
         return;
       }
-
+      this.loading = true;
       const files = this.$refs.pond.getFiles();
       const results = [];
       for (const doc of files) {
