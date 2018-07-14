@@ -152,34 +152,13 @@ overflow: hidden;
     float: right;
     color: #000;
     text-align: center;
-    padding: 18px 16px;
+    padding: 17px 16px;
 	text-decoration: none;
     font-size: 20px;
-	line-height:30px;
-	font-family: "Roboto";
-}
-.topnav h1 {
-    float: right;
-    color: #000;
-    text-align: center;
-    padding: 18px 16px;
-	text-decoration: none;
-    font-size: 20px;
-	line-height:30px;
+	line-height:57px;
 	font-family: "Roboto";
 }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-    background-color: #6f86d6;
-    color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-    background-color: #4CAF50;
-    color: white;
-}
 
 /*------------------------------------------------------------------
 [ Misc ]*/
@@ -205,9 +184,10 @@ overflow: hidden;
 .w3-bar-block .w3-bar-item{width:100%;display:block;padding:8px 16px;text-align:left;border:none;white-space:normal;float:none;outline:0}
 .w3-bar-block .w3-center .w3-bar-item{text-align:center}.w3-block{display:block;width:100%}
 .w3-bottombar{border-bottom:6px solid #ccc!important}
-.w3-button:hover{color:#000!important;background-color:#ccc!important}
-.w3-text-blue,.w3-hover-text-blue:hover{color:#2196F3!important}
-.w3-text-blue-grey,.w3-hover-text-blue-grey:hover,.w3-text-blue-gray,.w3-hover-text-blue-gray:hover{color:#607d8b!important}
-.w3-border-blue,.w3-hover-border-blue:hover{border-color:#2196F3!important}
-.w3-border-blue-grey,.w3-hover-border-blue-grey:hover,.w3-border-blue-gray,.w3-hover-border-blue-gray:hover{border-color:#607d8b!important}
-.w3-border-color,.w3-hover-border-color:hover{border-color:#000!important}
+.w3-button:hover{color:#000!important;background-color:#6f86d6!important}
+.w3-text-color,.w3-hover-text-color:hover{color:#FFF!important}
+.w3-border-color{border-color:rgb(255, 255, 255)!important}
+.w3-hover-border-color:hover{border-color:rgb(255, 8, 8)!important;transition: 1.5s;;} 
+.w3-right{float: right;
+margin-top: -10px;
+margin-bottom: -10px;}

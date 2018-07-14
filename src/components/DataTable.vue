@@ -18,7 +18,7 @@
           <td class="text-md-left">{{ props.item.name }}</td>
           <td class="text-md-left">{{ props.item.email }}</td>
           <td class="text-xs-left">{{ props.item.university }}</td>
-          <td class="text-xs-left">{{ props.item.first_submitted.date }}</td>
+          <td class="text-xs-left">{{ props.item.first_submitted.unix }}</td>
           <td class="text-xs-left">{{ props.item.phone }}</td>
           <td class="text-xs-left">{{ props.item.age }}</td>
           <td class="text-xs-left">
@@ -68,6 +68,7 @@ export default {
       search: '',
       rating: null,
       fake,
+      expanded: {},
       applications: [
         {
           dietry_restrictions: 'None',
@@ -91,13 +92,13 @@ export default {
               id: '3ln3opja2',
             },
           ],
-          first_submitted: {
-            date: 'APP_DATE',
-            unix: 'APP_DATE_UNIX'
-          },
           last_modified: {
-            date: 'MODIFIED_DATE',
-            unix: 'MODIFIED_UNIX',
+            date: 'applicationDate',
+            unix: 'applicationDate',
+          },
+          first_submitted: {
+            date: 'applicationDate',
+            unix: 'applicationDate',
           },
         },
       ],
@@ -122,7 +123,7 @@ export default {
   methods: {
     selectRow(e, props) {
       props.expanded = !props.expanded;
-      // update this if you change the size of expands
+      // update this if you change the size of expand to a %
       window.scrollTo(0,e.target.offsetTop + 620);
     }
   },

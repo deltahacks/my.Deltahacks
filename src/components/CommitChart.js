@@ -1,20 +1,19 @@
 import { Line } from 'vue-chartjs';
-import firebase from 'firebase';
+// import firebase from 'firebase';
 import db from '../private/firebase_init';
 
 export default {
   extends: Line,
   mounted() {
-    const now = new Date();
-    const today = new Date(`${now.getMonth() + 1}/${now.getDate() + 1}/${now.getFullYear}`);
-    const yesterday = new Date(`${now.getMonth() + 1}/${now.getDate() - 3}/${now.getFullYear}`);
+    // const now = new Date();
+    // const today = new Date(`${now.getMonth() + 1}/${now.getDate() + 1}/${now.getFullYear}`);
+    // const yesterday = new Date(`${now.getMonth() + 1}/${now.getDate() - 3}/${now.getFullYear}`);
     // Overwriting base render method with actual data.
     db
       .collection('applications')
       .doc('DH5_test')
       .collection('all')
-      .where('time.applied_initially_unix', '<=', today.getTime())
-      .where('time.applied_initially_unix', '>=', yesterday.getTime())
+      .orderBy('last_modified.unix')
       .get()
       .then((snap) => {
         console.log('SNAP!', snap);
