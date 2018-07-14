@@ -124,8 +124,8 @@ export default {
     selectRow(e, props) {
       props.expanded = !props.expanded;
       // update this if you change the size of expand to a %
-      window.scrollTo(0,e.target.offsetTop + 620);
-    }
+      window.scrollTo(0, e.target.offsetTop + 620);
+    },
   },
   mounted() {
     const parent = this;
