@@ -201,7 +201,10 @@ export default {
         .then(() => {
           this.$router.push({ name: 'Dashboard' });
           this.loading = false;
-        }).catch(err => console.log(err));
+        }).catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
     },
     storeFileAndGetInfo(doc) {
       const { filename, file, id } = doc;
@@ -236,8 +239,10 @@ export default {
           results.push(this.storeFileAndGetInfo(doc));
         }
       }
-      this.application.documents = await Promise.all(results).catch(err =>
-        console.log(`Upload Failed: ${err}`));
+      this.application.documents = await Promise.all(results).catch((err) => {
+        console.log(`Upload Failed: ${err}`);
+        this.loading = false;
+      });
       console.log(this.application.documents);
       this.setApplication();
     },
