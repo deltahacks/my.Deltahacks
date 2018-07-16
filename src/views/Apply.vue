@@ -201,7 +201,8 @@ export default {
         .then(() => {
           this.$router.push({ name: 'Dashboard' });
           this.loading = false;
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.log(err);
           this.loading = false;
         });

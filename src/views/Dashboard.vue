@@ -40,7 +40,7 @@
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3 child-flex>
                     <v-card color="white lighten-4" dark>
-
+                        <pie-chart></pie-chart>
                     </v-card>
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3>
@@ -64,6 +64,7 @@
 <script>
 import firebase from 'firebase';
 // import Typed from 'typed.js';
+import PieChart from '@/components/PieChart';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 // import Tab from '@/components/Tab'
@@ -94,6 +95,7 @@ export default {
     Footer,
     DataTable,
     CommitChart,
+    PieChart,
   },
   created() {
     this.$Progress.start();
