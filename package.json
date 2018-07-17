@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "fix": ".\\node_modules\\.bin/eslint --fix . --ext .js,.vue src"
+    "fix": ".\\node_modules\\.bin/eslint --fix . --ext .js,.vue src",
+    "fun-up": "firebase deploy --only functions"
   },
   "dependencies": {
     "axios": "^0.18.0",
