@@ -31,7 +31,7 @@
                                 </v-flex>
                                 <v-flex d-flex xs12>
                                     <v-card color="white lighten-4" dark>
-                                        <v-text-field id="testing" name="input-1" label="Label Text" v-model="apps"></v-text-field>
+                                        <v-btn @click="fnctn()" class="bold" color="orange" dark>Call Function</v-btn>
                                     </v-card>
                                 </v-flex>
                             </v-layout>
@@ -75,7 +75,7 @@ import CommitChart from '@/components/CommitChart';
 import db from '../private/firebase_init';
 import { list_of_universities } from '../private/data';
 import fake from '@/helpers/fake';
-
+import functions from 'firebase/functions';
 export default {
   name: 'Dashboard',
   data() {
@@ -121,6 +121,11 @@ export default {
       });
   },
   methods: {
+    async fnctn() {
+      let func = firebase.functions().httpsCallable('hello');
+      let res = await func({ hello: 'hi' });
+      console.log(res);
+    },
     fbdata() {
       for (let j of fake) {
         let { application, ...j2 } = j;
