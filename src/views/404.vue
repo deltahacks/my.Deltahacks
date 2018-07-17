@@ -1,5 +1,8 @@
 <template>
-<div class="container-error100" style="background-image: url('http://static.simpledesktops.com/uploads/desktops/2012/01/19/Spectrum.png');">
+<html>
+        <div class="stars"></div>
+      <div class="twinkling"></div>
+<div class="container-error100">
 <section class="error-container">
   <div class="topnav">
 			<a href="/dashboard">Applicant Dashboard</a>
@@ -18,8 +21,9 @@
   <section class="wrap2">
   <a href="/">Go Home</a></section>
   <h2><br>DeltaHacks V</h2></section>
-</section></div>
-</template>
+</section>
+</div></html>
+ </template>
 
 <script>
 export default {
