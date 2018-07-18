@@ -16,9 +16,9 @@ export default {
       .orderBy('last_modified.unix')
       .get()
       .then((snap) => {
-        console.log('SNAP!', snap);
+        // console.log('SNAP!', snap);
         snap.forEach((doc) => {
-          console.log('Data21', doc.data());
+          // console.log('Data21', doc.data());
         });
       })
       .catch(err => console.log('ERROR19', err));

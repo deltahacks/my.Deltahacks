@@ -122,6 +122,18 @@ export default {
   },
   methods: {
     async fnctn() {
+      try {
+        let f = await firebase.functions().httpsCallable('createAdminUser')({
+          email: 'admin1@google.com',
+          phoneNumber: '6473338767',
+          password: 'password1',
+        });
+        console.log(f);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async f2() {
       let func = firebase.functions().httpsCallable('newHello');
       try {
         let res = await func({ hello: 'hi' });

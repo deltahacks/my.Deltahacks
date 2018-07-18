@@ -141,7 +141,7 @@ export default {
           const app = doc.data();
           if (app.first_submitted) {
             parent.applications.push(doc.data());
-            //console.log(doc.id, ' => ', doc.data());
+            // console.log(doc.id, ' => ', doc.data());
           }
         });
       });
