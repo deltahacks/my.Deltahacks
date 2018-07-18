@@ -122,9 +122,13 @@ export default {
   },
   methods: {
     async fnctn() {
-      let func = firebase.functions().httpsCallable('hello');
-      let res = await func({ hello: 'hi' });
-      console.log(res);
+      let func = firebase.functions().httpsCallable('newHello');
+      try {
+        let res = await func({ hello: 'hi' });
+        console.log(res);
+      } catch (err) {
+        console.log('l129', err);
+      }
     },
     fbdata() {
       for (let j of fake) {

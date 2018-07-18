@@ -1,43 +1,44 @@
 <template>
-  <v-app class="dashboard">
-    <div class="topnav">
-      <div class="w3-bar">
-        <a href="/status" class="w3-bar-item w3-button w3-hover-none w3-border-black w3-bottombar w3-hover-border-blue w3-hover-text-blue">Link 3</a>
-        <a href="/dashboard" class="w3-bar-item w3-button w3-border-white w3-bottombar w3-hover-border-blue w3-hover-text-red">Link 1</a>
-        <a href="/" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-blue w3-hover-text-blue">Link 2</a>
-        <a href="/apply" class="w3-bar-item w3-button w3-border-white w3-bottombar w3-hover-border-color w3-hover-text-red">Link 3</a>
-      </div>
-    </div>
-    <div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-      <div class="wrap-status100">
-        <h1>This application is still under review</h1>
-        <v-card-text></v-card-text>
-        <v-stepper alt-labels>
-          <div class="wrap-status200">
-            <v-stepper-header>
-              <v-stepper-step step="1" complete>Applied</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="2" complete>Received</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="3">Processing</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="4">Decision</v-stepper-step>
-            </v-stepper-header>
-          </div>
-        </v-stepper>
-      </div>
-    </div>
-  </v-app>
+	<v-app class="dashboard">
+		<div class="topnav">
+<div class="w3-bar">
+  <a href="/status" class="w3-bar-item w3-button w3-hover-none w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Status</a>
+  <a href="/dashboard" class="w3-bar-item w3-button w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Dashboard</a>
+  <a href="/" class="w3-bar-item w3-button w3-hover-none w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Logout</a>
+  <a href="/apply" class="w3-bar-item w3-button w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Apply</a>
+<a href="/" class="w3-right w3-button"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
+</div>
+		</div>
+		<div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+			<div class="wrap-status100">
+				<h1>This application is still under review</h1>
+				<v-card-text></v-card-text>
+				<v-stepper alt-labels>
+					<div class="wrap-status200">
+						<v-stepper-header>
+							<v-stepper-step step="1" complete>Applied</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="2" complete>Received</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="3">Processing</v-stepper-step>
+							<v-divider></v-divider>
+							<v-stepper-step step="4">Decision</v-stepper-step>
+						</v-stepper-header>
+					</div>
+				</v-stepper>
+			</div>
+		</div>
+	</v-app>
 </template>
 
 <script>
+/* eslint-disable no-unused-expressions */
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { list_of_universities } from '../private/data';
-
 export default {
   mixins: [validationMixin],
   name: 'Status',
