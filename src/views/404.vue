@@ -16,7 +16,7 @@
 	<span>4</span>
     <section class="wrap">
   <p>Page Not Found<p>
-  <p>The page you're looking for appears to have moved,deleted or doesn't exist!!</p>  <section class="wrap2">
+  <p>The page you're looking for appears to have been moved,deleted or doesn't exist!!</p>  <section class="wrap2">
   <a href="javascript:history.back()">Go Back To The Previous Page</a></section>
   <section class="wrap2">
   <a href="/">Go Home</a></section>

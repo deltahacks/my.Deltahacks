@@ -166,6 +166,8 @@ html, button, input, select, textarea {
 
 /* Style the links inside the navigation bar */
 .topnav a {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
     float: right;
     color: #48c6ef;
     text-align: center;
