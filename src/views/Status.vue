@@ -33,7 +33,6 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
-
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';

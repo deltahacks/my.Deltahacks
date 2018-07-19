@@ -12,6 +12,7 @@ import Apply from './views/Apply.vue';
 import Status from './views/Status.vue';
 import Playground from './views/Playground.vue';
 import v404 from './views/404.vue';
+import AdminSignup from './views/AdminSignup.vue';
 
 
 Vue.use(Router);
@@ -24,8 +25,6 @@ const router = new Router({
       name: 'Dashboard',
       component: Dashboard,
       meta: {
-        requiresAuth: false,
-        p: 'path',
         auth: true,
       },
     },
@@ -64,26 +63,32 @@ const router = new Router({
       name: 'v404',
       component: v404,
     },
+    {
+      path: '/admin',
+      name: 'AdminSignup',
+      component: AdminSignup,
+    },
   ],
 });
 
 // Router guard setup
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
-    console.log('inside guard');
-    const user = Firebase.auth().currentUser;
+    console.log('Protected route detected');
+    Firebase.auth().onAuthStateChanged((user) => {
     // If user is logged in
-    if (user) {
+      if (user) {
       // Proceed to next page
-      console.log(user);
-      next();
-    } else {
+        console.log('Authorized user: ', user);
+        next();
+      } else {
       // Otherwise redirect to login
-      console.log('no usr');
-      next({ name: 'Login' });
-    }
+        console.log('Not authorized');
+        next({ name: 'Login' });
+      }
+    });
   } else {
-    console.log('nininini');
+    console.log('No route guard');
     next();
   }
 });

@@ -126,10 +126,9 @@ font-size: 45px;
 .wrap-login100 {
   min-height: 630px;
   width: 500px;
-  border-radius: 10px;
   overflow: hidden;
   padding: 55px 55px 37px 55px;
-
+  border-radius: 10px;
   background: #9152f8;
   background: -webkit-linear-gradient(top, #48c6ef, #6f86d6);
   background: -o-linear-gradient(top, #48c6ef, #6f86d6);
