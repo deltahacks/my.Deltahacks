@@ -90,6 +90,13 @@ export default {
             mode: 'index',
             intersect: false,
           },
+          scales: {
+            xAxes: [{
+              ticks: {
+                stepSize: 2, //adjust this to change interval with label
+              },
+            }]
+          },
         });
       });
   },
