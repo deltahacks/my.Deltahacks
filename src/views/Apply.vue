@@ -188,6 +188,10 @@ export default {
           unix: unixts,
           date: new Date().toString(),
         };
+        this.application.last_modified = {
+          unix: unixts,
+          date: new Date().toString(),
+        };
       }
     },
     setApplication() {

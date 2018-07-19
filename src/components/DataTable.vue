@@ -14,7 +14,7 @@
     </v-card-title>
     <v-data-table :dark=false :search="search" :headers="headers" :items="applications" hide-actions item-key="name">
       <template slot="items" slot-scope="props">
-        <tr @click="selectRow($event, props)">
+        <tr @click="selectRow($event, props)" >
           <td class="text-md-left">{{ props.item.name }}</td>
           <td class="text-md-left">{{ props.item.email }}</td>
           <td class="text-xs-left">{{ props.item.university }}</td>
@@ -30,7 +30,7 @@
         </tr>
       </template>
       <template slot="expand" slot-scope="props">
-        <applicant-dropdown :usrname="props.item.name" />
+        <applicant-dropdown :usrname="props.item.name"/>
       </template>
     </v-data-table>
   </v-card>
@@ -68,6 +68,7 @@ export default {
       search: '',
       rating: null,
       fake,
+      current_props: null,
       expanded: {},
       applications: [
         {
@@ -123,8 +124,13 @@ export default {
   methods: {
     selectRow(e, props) {
       props.expanded = !props.expanded;
+      this.current_props = props;
+      console.log(this.$slots);
       // update this if you change the size of expand to a %
       window.scrollTo(0, e.target.offsetTop + 620);
+    },
+    test2() {
+      console.log('test');
     },
   },
   mounted() {
