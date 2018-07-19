@@ -33,12 +33,16 @@ export default {
       out.setMonth(out.getMonth() - 1);
       return out;
     },
+    /**
+     * Use this method if you want to populate every single day
+     * @param {Date} startDate date one month ago.
+     */
     populateDateLabels(startDate) {
       const outMap = {};
       const today = new Date();
       const current = startDate;
       while (current < today) {
-        outMap[current] = 0;
+        outMap[current.toDateString()] = 0;
         current.setDate(current.getDate() + 1);
         console.log(current);
       }
@@ -46,12 +50,9 @@ export default {
     },
   },
   mounted() {
-    // const now = new Date();
-    // const today = new Date(`${now.getMonth() + 1}/${now.getDate() + 1}/${now.getFullYear}`);
-    // const yesterday = new Date(`${now.getMonth() + 1}/${now.getDate() - 3}/${now.getFullYear}`);
     // Overwriting base render method with actual data.
     const startFrom = this.setStartDate(); // currently 1 month ago
-    const track = {};
+    const track = this.populateDateLabels(startFrom);
     db
       .collection('applications')
       .doc('DH5_Test')
@@ -93,9 +94,9 @@ export default {
           scales: {
             xAxes: [{
               ticks: {
-                stepSize: 2, //adjust this to change interval with label
+                stepSize: 5, // adjust this to change interval with label
               },
-            }]
+            }],
           },
         });
       });
