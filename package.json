@@ -24,6 +24,7 @@
     "vue-chartjs": "^3.3.1",
     "vue-filepond": "^2.1.1",
     "vue-mouse-parallax": "^0.9.2",
+    "vue-paginate": "^3.6.0",
     "vue-progressbar": "^0.7.5",
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.7.1",

@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
-    <v-data-table :dark=false :search="search" :headers="headers" :items="applications" hide-actions item-key="name">
+    <v-data-table v-bind:pagination.sync="pagination" v-bind:peeps="peeps" :dark=false :search="search" :headers="headers" :items="applications" hide-actions item-key="name">
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)" >
           <td class="text-md-left">{{ props.item.name }}</td>
@@ -33,92 +33,102 @@
         <applicant-dropdown :usrname="props.item.name"/>
       </template>
     </v-data-table>
+    <div class="text-xs-center">
+      <v-pagination v-model="pagination.page" :length="3" circle></v-pagination>
+    </div>
   </v-card>
+
 </template>
 
 <script>
-import fake from '@/helpers/fake';
-import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
-import 'vue-status-indicator/styles.css';
-import { StatusIndicator } from 'vue-status-indicator';
-import db from '../private/firebase_init';
+import fake from "@/helpers/fake";
+import ApplicantDropdown from "@/components/ApplicantDropdown.vue";
+import "vue-status-indicator/styles.css";
+import { StatusIndicator } from "vue-status-indicator";
+import db from "../private/firebase_init";
 
 export default {
-  name: 'DataTable',
+  name: "DataTable",
   methods: {
     f() {
       console.log(fake);
     },
     async fb() {
       db
-        .collection('applications')
-        .doc('DH5_Test')
-        .collection('all')
+        .collection("applications")
+        .doc("DH5_Test")
+        .collection("all")
         .get();
-    },
+    }
   },
   components: {
     ApplicantDropdown,
-    StatusIndicator,
+    StatusIndicator
   },
   data() {
     return {
-      current: 'All Applicants',
-      items: ['All Applicants', 'Accepted Applicants', 'Unaccepted Applicants'],
-      search: '',
+      pagination: {
+        page: 1,
+        rowsPerPage: 10
+      },
+      selected: [],
+      peeps: [fake],
+      current: "All Applicants",
+      items: ["All Applicants", "Accepted Applicants", "Unaccepted Applicants"],
+      search: "",
       rating: null,
       fake,
       current_props: null,
       expanded: {},
       applications: [
         {
-          dietry_restrictions: 'None',
-          email: 'Loading@gmail.com',
-          emergency_phone: 'Loading',
-          github: 'https://github.com/johndoe',
-          hackathons: 'None',
-          linkedin: 'https://linkedin.com/johndoe',
-          name: 'Loading',
-          phone: 'Loading',
-          school_year: 'NaN',
-          shirt_size: 'NaN',
-          story: 'NONE',
-          university: 'NONE',
-          website: 'google.com',
+          dietry_restrictions: "None",
+          email: "Loading@gmail.com",
+          emergency_phone: "Loading",
+          github: "https://github.com/johndoe",
+          hackathons: "None",
+          linkedin: "https://linkedin.com/johndoe",
+          name: "Loading",
+          phone: "Loading",
+          school_year: "NaN",
+          shirt_size: "NaN",
+          story: "NONE",
+          university: "NONE",
+          website: "google.com",
           documents: [
             {
               download_link:
-                'https://firebasestorage.googleapis.com/v0/b/mydeltahacks.appspot.com/o/users%2Ftest5%40test.ca%2FGeneral%20Expectations.docx.pdf?alt=media&token=7dcf28a5-2215-4824-8600-583df46399ba',
-              filename: 'General Expectations.docx.pdf',
-              id: '3ln3opja2',
-            },
+                "https://firebasestorage.googleapis.com/v0/b/mydeltahacks.appspot.com/o/users%2Ftest5%40test.ca%2FGeneral%20Expectations.docx.pdf?alt=media&token=7dcf28a5-2215-4824-8600-583df46399ba",
+              filename: "General Expectations.docx.pdf",
+              id: "3ln3opja2"
+            }
           ],
           last_modified: {
-            date: 'applicationDate',
-            unix: 'applicationDate',
+            date: "applicationDate",
+            unix: "applicationDate"
           },
           first_submitted: {
-            date: 'applicationDate',
-            unix: 'applicationDate',
-          },
-        },
+            date: "applicationDate",
+            unix: "applicationDate"
+          }
+        }
       ],
-      test: '423423423',
+      test: "423423423",
       headers: [
         {
-          text: 'Name',
-          align: 'left',
+          text: "Name",
+          align: "left",
           sortable: false,
-          value: 'name',
+          value: "name"
         },
-        { text: 'Email', value: 'email' },
-        { text: 'University', value: 'university' },
-        { text: 'Applied (seconds)', value: 'applied' },
-        { text: 'Phone', value: 'phone' },
-        { text: 'Age', value: 'age' },
-        { text: 'Status', value: 'rate' },
-        { text: '', value: 'rate' },
-      ],
+        { text: "Email", value: "email" },
+        { text: "University", value: "university" },
+        { text: "Applied (seconds)", value: "applied" },
+        { text: "Phone", value: "phone" },
+        { text: "Age", value: "age" },
+        { text: "Status", value: "rate" },
+        { text: "", value: "rate" }
+      ]
     };
   },
   methods: {
@@ -128,21 +138,18 @@ export default {
       console.log(this.$slots);
       // update this if you change the size of expand to a %
       window.scrollTo(0, e.target.offsetTop + 620);
-    },
-    test2() {
-      console.log('test');
-    },
+    }
   },
   mounted() {
     const parent = this;
     db
-      .collection('applications')
-      .doc('DH5_Test')
-      .collection('test')
+      .collection("applications")
+      .doc("DH5_Test")
+      .collection("test")
       .get()
-      .then((querySnapshot) => {
+      .then(querySnapshot => {
         parent.applications = [];
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
           const app = doc.data();
           if (app.first_submitted) {
@@ -151,7 +158,7 @@ export default {
           }
         });
       });
-  },
+  }
 };
 </script>
 

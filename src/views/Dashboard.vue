@@ -53,13 +53,12 @@
                     <DataTable/>
                 </v-flex>
             </v-layout>
-            <div class="text-xs-center">
-                <v-pagination :length="6"></v-pagination>
-            </div>
-
         </v-container>
     </v-app>
 </template>
+
+
+<script src="https://rawgit.com/TahaSh/vue-paginate/master/dist/vue-paginate.js"></script>
 
 <script>
 import firebase from 'firebase';
@@ -80,7 +79,7 @@ export default {
   name: 'Dashboard',
   data() {
     return {
-      fake,
+      page: 3,
       apps: '245',
       links: ['Home', 'About', 'Contact'],
       list_of_universities,
@@ -187,3 +186,4 @@ export default {
   color: blue;
 }
 </style>
+
