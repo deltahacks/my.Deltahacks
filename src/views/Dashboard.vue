@@ -1,60 +1,60 @@
 <link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-car.css" />
 <script src="http://github.hubspot.com/odometer/odometer.js"></script>
 <template>
-    <v-app class="dashboard">
-        <Navbar/>
-        <v-container fluid grid-list-md>
-            <v-layout row wrap>
-                <v-flex d-flex xs12 sm6 md4>
-                    <v-card color="white lighten-4" dark>
-                        <GmapMap id="gmap" :center="{lat:43.6532, lng:-79.3832}" :zoom="7" map-type-id="terrain">
-                            <GmapMarker :key="index" title="yooo" v-for="(m, index) in positions" :position="m" :clickable="true" :draggable="false" @click="center=m" />
-                        </GmapMap>
-                    </v-card>
+  <v-app class="dashboard">
+    <Navbar/>
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm6 md4>
+          <v-card color="white lighten-4" dark>
+            <GmapMap id="gmap" :center="{lat:43.6532, lng:-79.3832}" :zoom="7" map-type-id="terrain">
+              <GmapMarker :key="index" title="yooo" v-for="(m, index) in positions" :position="m" :clickable="true" :draggable="false" @click="center=m" />
+            </GmapMap>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-layout row wrap>
+            <v-flex d-flex>
+              <v-card color="white lighten-4" dark>
+                <v-card-title primary class="title">Total Applicants:</v-card-title>
+                <v-card-text class="totalapps center">
+                  <div id="odometer" class="odometer">{{ applicationCount }}</div>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex d-flex>
+              <v-layout row wrap>
+                <v-flex d-flex xs12>
+                  <v-card color="white lighten-4" dark>
+                    <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
+                  </v-card>
                 </v-flex>
-                <v-flex d-flex xs12 sm6 md2>
-                    <v-layout row wrap>
-                        <v-flex d-flex>
-                            <v-card color="white lighten-4" dark>
-                                <v-card-title primary class="title">Total Applicants:</v-card-title>
-                                <v-card-text class="totalapps center">
-                                    <div id="odometer" class="odometer">123</div>
-                                </v-card-text>
-                            </v-card>
-                        </v-flex>
-                        <v-flex d-flex>
-                            <v-layout row wrap>
-                                <v-flex d-flex xs12>
-                                    <v-card color="white lighten-4" dark>
-                                        <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
-                                    </v-card>
-                                </v-flex>
-                                <v-flex d-flex xs12>
-                                    <v-card color="white lighten-4" dark>
-                                        <v-btn @click="fnctn()" class="bold" color="orange" dark>Call Function</v-btn>
-                                    </v-card>
-                                </v-flex>
-                            </v-layout>
-                        </v-flex>
-                    </v-layout>
+                <v-flex d-flex xs12>
+                  <v-card color="white lighten-4" dark>
+                    <v-btn @click="fnctn()" class="bold" color="orange" dark>Call Function</v-btn>
+                  </v-card>
                 </v-flex>
-                <v-flex d-flex xs12 sm6 md3 child-flex>
-                    <v-card color="white lighten-4" dark>
-                        <pie-chart></pie-chart>
-                    </v-card>
-                </v-flex>
-                <v-flex d-flex xs12 sm6 md3>
-                    <v-card color="white lighten-4" dark>
-                        <commit-chart/>
-                    </v-card>
-                </v-flex>
-                <!-- <v-subheader class="ht">Applicants</v-subheader> -->
-                <v-flex d-flex xs12 sm12 md12>
-                    <DataTable/>
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </v-app>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3 child-flex>
+          <v-card color="white lighten-4" dark>
+            <pie-chart></pie-chart>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color="white lighten-4" dark>
+            <commit-chart/>
+          </v-card>
+        </v-flex>
+        <!-- <v-subheader class="ht">Applicants</v-subheader> -->
+        <v-flex d-flex xs12 sm12 md12>
+          <DataTable/>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-app>
 </template>
 
 
@@ -79,6 +79,7 @@ export default {
   name: 'Dashboard',
   data() {
     return {
+      applicationCount: '?',
       page: 3,
       apps: '245',
       links: ['Home', 'About', 'Contact'],
@@ -117,6 +118,13 @@ export default {
       .catch(err => {
         console.log(err);
         this.$Progress.fail();
+      });
+
+    db
+      .collection('statistics')
+      .doc('DH5')
+      .onSnapshot(doc => {
+        this.applicationCount = doc.data().applications;
       });
   },
   methods: {
@@ -163,6 +171,16 @@ export default {
       }
     },
     fake_apps() {},
+    async getApplicationCount() {
+      try {
+        let allStatistics = await db
+          .collection('statistics')
+          .doc('DH5')
+          .get();
+      } catch (err) {
+        console.log('An error occured: ', err);
+      }
+    },
   },
 };
 </script>
