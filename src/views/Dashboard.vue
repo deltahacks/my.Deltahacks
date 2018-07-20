@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-car.css" />
-<script src="http://github.hubspot.com/odometer/odometer.js"></script>
 <template>
   <v-app class="dashboard">
     <Navbar/>
@@ -18,7 +16,7 @@
               <v-card color="white lighten-4" dark>
                 <v-card-title primary class="title">Total Applicants:</v-card-title>
                 <v-card-text class="totalapps center">
-                  <div id="odometer" class="odometer">{{ applicationCount }}</div>
+                  <IOdometer class="iOdometer" :value="applicationCount" />
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -70,6 +68,8 @@ import Footer from '@/components/Footer.vue';
 import DataTable from '@/components/DataTable.vue';
 // import MapCard from '@/components/MapCard'
 // import Chart from '@/components/Chart'
+import IOdometer from 'vue-odometer';
+import 'odometer/themes/odometer-theme-default.css';
 import CommitChart from '@/components/CommitChart';
 import db from '../private/firebase_init';
 import { list_of_universities } from '../private/data';
@@ -96,6 +96,7 @@ export default {
     DataTable,
     CommitChart,
     PieChart,
+    IOdometer,
   },
   created() {
     this.$Progress.start();
@@ -199,9 +200,10 @@ export default {
   height: 100%;
 }
 
-.odometer {
-  font-size: 150px;
-  color: blue;
+.iOdometer {
+  font-size: 3em;
+  margin: 0;
+  color: #00ced1;
 }
 </style>
 
