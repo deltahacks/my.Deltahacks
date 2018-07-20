@@ -102,17 +102,17 @@ export default {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password)
-          .then(user => {
+          .then((user) => {
             console.log(user.user.uid, 'ID');
             console.log(this.$store.state.db, 'DB');
             axios
               .get('https://api.ipify.org?format=json')
-              .then(response => {
+              .then((response) => {
                 console.log(response.data.ip);
                 const ipp = response.data.ip;
                 axios
                   .get(`https://ipapi.co/${ipp}/json/`)
-                  .then(data => {
+                  .then((data) => {
                     console.log(data.data);
                     this.geo = data.data;
                     this.$store.state.db
@@ -126,12 +126,12 @@ export default {
                         is_admin: false,
                       });
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     console.log(err);
                   });
                 console.log(response.ip);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           })
@@ -140,7 +140,7 @@ export default {
             console.log('success');
             this.$router.push({ name: 'Dashboard' });
           })
-          .catch(err => {
+          .catch((err) => {
             this.feedback = err.message;
           });
       } else {

@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "fix": ".\\node_modules\\.bin/eslint --fix . --ext .js,.vue src",
-    "fun-up": "firebase deploy --only functions"
+    "fun-up": "firebase deploy --only functions",
+    "backup": "Firestore-export -a ./src/private/key.json -b ./src/private/backup/master.json"
   },
   "dependencies": {
     "axios": "^0.18.0",

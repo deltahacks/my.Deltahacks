@@ -24,12 +24,18 @@
               <v-layout row wrap>
                 <v-flex d-flex xs12>
                   <v-card color="white lighten-4" dark>
-                    <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
+                    <div class="tooltip">
+                      <span class="tooltiptext">Click only if you know what you're doing</span>
+                      <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
+                    </div>
                   </v-card>
                 </v-flex>
                 <v-flex d-flex xs12>
                   <v-card color="white lighten-4" dark>
-                    <v-btn @click="fnctn()" class="bold" color="orange" dark>Call Function</v-btn>
+                    <div class="tooltip">
+                      <span class="tooltiptext">Click only if you know what you're doing</span>
+                      <v-btn @click="fnctn()" class="bold" color="orange" dark>Call Function</v-btn>
+                    </div>
                   </v-card>
                 </v-flex>
               </v-layout>
@@ -204,6 +210,33 @@ export default {
   font-size: 3em;
   margin: 0;
   color: #00ced1;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 </style>
 
