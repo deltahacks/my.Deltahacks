@@ -147,9 +147,9 @@ export default {
       .doc('DH5_Test')
       .collection('test')
       .get()
-      .then(querySnapshot => {
+      .then((querySnapshot) => {
         parent.applications = [];
-        querySnapshot.forEach(doc => {
+        querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           const app = doc.data();
           if (app.first_submitted) {
