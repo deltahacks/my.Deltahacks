@@ -1,15 +1,26 @@
 <template>
-
-</template>
+<div class="wrapper">
+    <div class="modal">
+        <div class="modal-top">
+            <img class="modal-icon" src="https://dl.dropboxusercontent.com/s/e1t2hhowjcrs7f5/100daysui_100icon.png" alt="Trophy" />
+            <div class="modal-header">Congratulations</div>
+            <div class="modal-subheader">You have been accepted to DeltaHacks V</div>
+        </div>
+        <div>
+            <a class="modal-bottom1" href="/">I'll not be able to make it :(</a>
+            <a class="modal-bottom2" href="/">I'll be there</a>
+        </div>
+    </div>
+</div>
+ </template>
 
 <script>
 export default {
-  name: 'Accepted',
   data() {
     return {};
   },
 };
 </script>
 
-<style scoped>
+<style scoped src="../assets/css/accepted.css">
 </style>
