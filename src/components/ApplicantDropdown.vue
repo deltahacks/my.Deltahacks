@@ -1,62 +1,40 @@
 <template>
   <div id="">
     <v-layout row wrap>
-      <v-flex xs12 md6 lg6 xl6>
-        <v-card color="" height="100%">
-          <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">{{ usrname }}</h3>
-            </div>
-          </v-card-title>
-          <v-flex xs12>
-            <br>
-            <v-card dark color="primary">
-              <v-card-text class="text-xs-left">
-                <h2>{{ usrname }}</h2>
+      <v-flex>
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">{{ usrname }}</h3>
+          </div>
+        </v-card-title>
+        <v-layout row wrap>
+          <v-flex row wrap xs6>
+            <v-card id="topcard" dark color="white">
+              <v-card-text class="px-0 name">
+                {{ applicant.name }}
               </v-card-text>
             </v-card>
           </v-flex>
-          <br>
-          <v-card dark color="green lighten-3">
-            <v-card-text class="text-xs-left">
-              <h2>Age</h2>
-            </v-card-text>
-          </v-card>
-          <br>
-          <v-card dark color="green lighten-3">
-            <v-card-text class="text-xs-left">
-              <h2>University / Program / Year </h2>
-            </v-card-text>
-          </v-card>
-          <br>
-          <v-card dark color="green lighten-3">
-            <v-card-text class="text-xs-left">
-              <h2>Number of Hackathons: </h2>
-            </v-card-text>
-          </v-card>
-          <br>
-          <v-card dark color="green lighten-3">
-            <div class="text-xs-center">
-              <v-icon>fab fa-chrome</v-icon>
-              <v-icon>fab fa-linkedin</v-icon>
-              <v-icon>fab fa-github</v-icon>
-            </div>
-          </v-card>
-          <br>
-          <br><br>
-
-          <br><br>
-          <br>
-          <h3>A PROJECT I DID:</h3>
-          <br><br>
-          <br><br><br>
-          <vue-slider v-model="status" piecewise=true piecewise-label=true step=1 max=10 use-keyboard=true height=20 dot-size=30></vue-slider>
-          <!-- <vue-slider v-model="status" step="1" max="10" track-color="red" hint="PLEASE RATE THE APPLICANT FROM 0-5" persistent-hint=true thumb-label=true thumb-color="purple" use-keyboard=true ticks=true piecewise=true piecewise-label=true height=20 dot-size=30></vue-slider> -->
-          <h2>The current applicant score is : {{status}} out of 10</h2>
-          <br>
-          <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
-          <v-btn color="success" class="button2" v-on:click="status">SUBMIT SCORE</v-btn>
-        </v-card>
+          <v-flex row wrap xs6>
+            <v-card id="topcard" dark color="primary">
+              <v-card-text class="px-0 name">{{ applicant.university }}</v-card-text>
+            </v-card>
+          </v-flex>
+          <v-flex v-for="i in 3" :key="`4${i}`" xs4>
+            <v-card dark color="primary">
+              <v-card-text class="px-0">4</v-card-text>
+            </v-card>
+          </v-flex>
+          <v-flex v-for="i in 4" :key="`3${i}`" xs3>
+            <v-card dark color="secondary">
+              <v-card-text class="px-0">3</v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+        <vue-slider id="slider" v-model="status" piecewise=true piecewise-label=false step=1 max=10 use-keyboard=false height=20 dot-size=30></vue-slider>
+        <h2>The current applicant score is : {{status}} out of 10</h2>
+        <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
+        <v-btn color="success" class="button2" v-on:click="status">SUBMIT SCORE</v-btn>
       </v-flex>
       <v-flex xs12 md6 lg6>
         <v-card color="">
@@ -75,7 +53,7 @@ import vueSlider from 'vue-slider-component';
 
 export default {
   name: 'Applicant',
-  props: ['usrname'],
+  props: ['usrname', 'applicant'],
   data: () => ({
     currentPage: 0,
     pageCount: 0,
@@ -123,5 +101,19 @@ i {
   border: solid 2px blue;
   width: 100%;
   height: 100%;
+}
+
+#slider {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.name {
+  font-size: 2em;
+  color: black;
+}
+
+#topcard {
+  height: 200px;
 }
 </style>

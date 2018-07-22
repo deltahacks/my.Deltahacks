@@ -37,10 +37,15 @@ function shade(col, light) {
 
   return color(r, g, b);
 }
-
+// doc.data()['U Toronto']
 export default {
   extends: Pie,
   mixins: [reactiveProp],
+  data() {
+    return {
+      uft: 22,
+    };
+  },
   mounted() {
     db
       .collection('statistics')
@@ -52,7 +57,7 @@ export default {
             {
               label: 'Applications by University',
               backgroundColor: [`${shade('#002F65', 0.2)}`, `${shade('#83002C', 0.2)}`, `${shade('#FDD54F', 0.2)}`, `${shade('#4F2682', 0.2)}`, `${shade('#004C9B', 0.2)}`, `${shade('#E31836', 0.2)}`],
-              data: [doc.data()['U Toronto'], doc.data().McMaster, doc.data().Waterloo, doc.data().Western, doc.data().Ryerson, doc.data()['York U']],
+              data: [this.uft, doc.data().McMaster, doc.data().Waterloo, doc.data().Western, doc.data().Ryerson, doc.data()['York U']],
             },
           ],
         });

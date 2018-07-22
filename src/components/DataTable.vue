@@ -14,7 +14,7 @@
     </v-card-title>
     <v-data-table v-bind:pagination.sync="pagination" v-bind:peeps="peeps" :dark=false :search="search" :headers="headers" :items="applications" hide-actions item-key="name">
       <template slot="items" slot-scope="props">
-        <tr @click="selectRow($event, props)" >
+        <tr @click="selectRow($event, props)">
           <td class="text-md-left">{{ props.item.name }}</td>
           <td class="text-md-left">{{ props.item.email }}</td>
           <td class="text-xs-left">{{ props.item.university }}</td>
@@ -30,7 +30,7 @@
         </tr>
       </template>
       <template slot="expand" slot-scope="props">
-        <applicant-dropdown :usrname="props.item.name"/>
+        <applicant-dropdown :usrname="props.item.name" :applicant='props.item' />
       </template>
     </v-data-table>
     <div class="text-xs-center">
@@ -147,9 +147,9 @@ export default {
       .doc('DH5_Test')
       .collection('test')
       .get()
-      .then((querySnapshot) => {
+      .then(querySnapshot => {
         parent.applications = [];
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
           const app = doc.data();
           if (app.first_submitted) {
