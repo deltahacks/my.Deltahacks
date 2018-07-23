@@ -46,6 +46,7 @@ import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
 import { StatusIndicator } from 'vue-status-indicator';
 import db from '../private/firebase_init';
+import { functions } from 'firebase';
 
 export default {
   name: 'DataTable',
@@ -140,24 +141,10 @@ export default {
       window.scrollTo(0, e.target.offsetTop + 620);
     },
   },
-  mounted() {
+  async mounted() {
     const parent = this;
-    db
-      .collection('applications')
-      .doc('DH5_Test')
-      .collection('test')
-      .get()
-      .then((querySnapshot) => {
-        parent.applications = [];
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          const app = doc.data();
-          if (app.first_submitted) {
-            parent.applications.push(doc.data());
-            // console.log(doc.id, ' => ', doc.data());
-          }
-        });
-      });
+    const result = await functions().httpsCallable('getNextPageInTable')({ step: 10, start: 0});
+    this.applications = result.data.docs;
   },
 };
 </script>

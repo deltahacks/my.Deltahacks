@@ -1,32 +1,11 @@
+
 import { Line } from 'vue-chartjs';
 // import firebase from 'firebase';
+import { functions } from 'firebase';
 import db from '../private/firebase_init';
 
 export default {
   extends: Line,
-  data() {
-    return {
-      datacollection: {
-        labels: [],
-        datasets: [],
-        borderColor: '#f87979',
-        backgroundColor: '#f87979',
-        data: [10, 13, 22, 8, 11, 9, 17],
-        fill: false,
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-        },
-        tooltips: {
-          position: 'average',
-          mode: 'index',
-          intersect: false,
-        },
-      },
-    };
-  },
   methods: {
     setStartDate() {
       const out = new Date();
@@ -53,6 +32,7 @@ export default {
     // Overwriting base render method with actual data.
     const startFrom = this.setStartDate(); // currently 1 month ago
     const track = this.populateDateLabels(startFrom);
+    const test = new Date();
     db
       .collection('applications')
       .doc('DH5_Test')
