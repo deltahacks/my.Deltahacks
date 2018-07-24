@@ -34,7 +34,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-center">
-      <v-pagination v-model="pagination.page" :length="3" circle></v-pagination>
+      <v-pagination v-model="pagination.page" :length="3" circle @next="nextPage($event)"></v-pagination>
     </div>
   </v-card>
 
@@ -78,6 +78,7 @@ export default {
       items: ['All Applicants', 'Accepted Applicants', 'Unaccepted Applicants'],
       search: '',
       rating: null,
+      pageStart: 0,
       fake,
       current_props: null,
       expanded: {},
@@ -136,15 +137,19 @@ export default {
     selectRow(e, props) {
       props.expanded = !props.expanded;
       this.current_props = props;
-      console.log(this.$slots);
       // update this if you change the size of expand to a %
       window.scrollTo(0, e.target.offsetTop + 620);
+    },
+    nextPage() {
+      // seems to only pick up next arrow click not page click
     },
   },
   async mounted() {
     const parent = this;
     const result = await functions().httpsCallable('getNextPageInTable')({ step: 10, start: 0});
     this.applications = result.data.docs;
+    // use this value to track where to cut queries
+    this.pageStart = this.applications[this.applications.length - 1];
   },
 };
 </script>
