@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
-    <v-data-table v-bind:pagination.sync="pagination" v-bind:peeps="peeps" :dark=false :search="search" :headers="headers" :items="applications" hide-actions item-key="name">
+    <v-data-table v-bind:peeps="peeps" :dark=false :search="search" :headers="headers" :items="applications" hide-actions item-key="name">
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
           <td class="text-md-left">{{ props.item.name }}</td>
@@ -34,7 +34,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-center">
-      <v-pagination v-model="pagination.page" :length="3" circle @next="nextPage($event)"></v-pagination>
+      <v-pagination v-model="pagination.page" :length="3" circle @input="nextPage"></v-pagination>
     </div>
   </v-card>
 
@@ -78,7 +78,6 @@ export default {
       items: ['All Applicants', 'Accepted Applicants', 'Unaccepted Applicants'],
       search: '',
       rating: null,
-      pageStart: 0,
       fake,
       current_props: null,
       expanded: {},
@@ -140,16 +139,18 @@ export default {
       // update this if you change the size of expand to a %
       window.scrollTo(0, e.target.offsetTop + 620);
     },
-    nextPage() {
+    async nextPage() {
       // seems to only pick up next arrow click not page click
+      const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: this.pagination.page});
+      this.applications = result.data.docs;
     },
   },
   async mounted() {
     const parent = this;
-    const result = await functions().httpsCallable('getNextPageInTable')({ step: 10, start: 0});
+    const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: 1});
     this.applications = result.data.docs;
     // use this value to track where to cut queries
-    this.pageStart = this.applications[this.applications.length - 1];
+    this.pageStart = this.applications[this.applications.length - 1].first_submitted.unix;
   },
 };
 </script>
