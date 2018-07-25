@@ -43,7 +43,6 @@ export default {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const item = doc.data();
-          console.log(doc.data());
           const date = new Date(item.last_modified.date.toDate());
           const dateString = date.toDateString();
           if (!track[dateString]) {

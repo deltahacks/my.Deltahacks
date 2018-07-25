@@ -44,8 +44,8 @@
 import fake from '@/helpers/fake';
 import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
-import { StatusIndicator } from 'vue-status-indicator';
 import db from '../private/firebase_init';
+import { StatusIndicator } from 'vue-status-indicator';
 import { functions } from 'firebase';
 
 export default {
@@ -60,6 +60,17 @@ export default {
         .doc('DH5_Test')
         .collection('all')
         .get();
+    },
+    selectRow(e, props) {
+      props.expanded = !props.expanded;
+      this.current_props = props;
+      // update this if you change the size of expand to a %
+      window.scrollTo(0, e.target.offsetTop + 620);
+    },
+    async nextPage() {
+      // seems to only pick up next arrow click not page click
+      const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: this.pagination.page });
+      this.applications = result.data.docs;
     },
   },
   components: {
@@ -105,12 +116,12 @@ export default {
             },
           ],
           last_modified: {
-            date: 'applicationDate',
-            unix: 'applicationDate',
+            date: 'Loading...',
+            unix: 'Loading...',
           },
           first_submitted: {
-            date: 'applicationDate',
-            unix: 'applicationDate',
+            date: 'Loading...',
+            unix: 'Loading...',
           },
         },
       ],
@@ -132,22 +143,9 @@ export default {
       ],
     };
   },
-  methods: {
-    selectRow(e, props) {
-      props.expanded = !props.expanded;
-      this.current_props = props;
-      // update this if you change the size of expand to a %
-      window.scrollTo(0, e.target.offsetTop + 620);
-    },
-    async nextPage() {
-      // seems to only pick up next arrow click not page click
-      const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: this.pagination.page});
-      this.applications = result.data.docs;
-    },
-  },
   async mounted() {
     const parent = this;
-    const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: 1});
+    const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: 1 });
     this.applications = result.data.docs;
     // use this value to track where to cut queries
     this.pageStart = this.applications[this.applications.length - 1].first_submitted.unix;
