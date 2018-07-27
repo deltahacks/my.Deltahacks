@@ -80,6 +80,7 @@
       top="true"
       color="success"
       right="true"
+      timeout=3000
     >
       Application progress saved.
       <v-btn
@@ -120,7 +121,7 @@ export default {
     return {
       myFiles: [],
       loading: false,
-      feedback: true,
+      feedback: false,
       existing_doc: undefined,
       checkError: undefined,
       parent: this,
@@ -213,6 +214,7 @@ export default {
         .set(this.application)
         .then(() => {
           console.log('saving...');
+          this.feedback = true;
         })
         .catch((err) => {
           console.log(err);
