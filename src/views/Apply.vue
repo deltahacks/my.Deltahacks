@@ -1,7 +1,7 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
-    <form class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
+    <form @keyup="formChange" @change="formChange" class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
       <v-text-field name="name" v-model="application.name" label="Name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
       <!-- find a better way of including this in form -->
       <v-text-field name="email" v-model="application.email" label="E-mail" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
@@ -75,6 +75,21 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-snackbar
+      v-model="feedback"
+      top="true"
+      color="success"
+      right="true"
+    >
+      Application progress saved.
+      <v-btn
+        color="white"
+        flat
+        @click="feedback = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -86,6 +101,7 @@ import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import debounce from 'debounce';
 
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
@@ -94,6 +110,7 @@ import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { list_of_universities } from '../private/data';
+// import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 export default {
@@ -103,12 +120,14 @@ export default {
     return {
       myFiles: [],
       loading: false,
+      feedback: true,
       existing_doc: undefined,
       checkError: undefined,
       parent: this,
       picker: null,
       date: '2000-01-01',
       university: null,
+      timeout: null,
       list_of_universities,
       application: {
         name: '',
@@ -176,6 +195,30 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll();
     },
+    formChange() {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+      this.timeout = setTimeout(() => {
+        this.setApplicationInProgress();
+      }, 2000);
+    },
+    setApplicationInProgress() {
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('in progress')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          console.log('saving...');
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
     setDateInformation() {
       const unixts = Math.round(new Date().getTime() / 1000);
       if (this.existing_doc) {
@@ -198,8 +241,8 @@ export default {
       this.setDateInformation();
       this.$store.state.db
         .collection('applications')
-        .doc('DH6')
-        .collection('all')
+        .doc('DH5_Test')
+        .collection('submitted')
         .doc(firebase.auth().currentUser.email)
         .set(this.application)
         .then(() => {
