@@ -156,25 +156,31 @@ export default {
         console.log('l129', err);
       }
     },
-    fbdata() {
+    async fbdata() {
       for (let j of fake) {
         let { application, ...j2 } = j;
-        db
-          .collection('fake_users')
-          .doc(j.email)
-          .set(j2)
-          .then(() => {
-            db
-              .collection('applications')
-              .doc('DH5_Test')
-              .collection('all')
-              .doc(j.email)
-              .set(application)
-              .then(() => console.log('Successfully written'))
-              .catch(err => console.log(err));
-          })
-          .catch(err => console.log(err));
-        console.log(j);
+        try {
+          let ind = await firebase.functions().httpsCallable('returnIndex')({});
+          console.log('Index data: ', ind.data.index);
+          db
+            .collection('fake_users')
+            .doc(j.email)
+            .set({ ...j2, index: ind.data.index })
+            .then(() => {
+              db
+                .collection('applications')
+                .doc('DH5_Test')
+                .collection('all')
+                .doc(j.email)
+                .set(application)
+                .then(() => console.log('Successfully written'))
+                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+          console.log(j);
+        } catch (err) {
+          console.log('Error getting index: ', err);
+        }
       }
     },
     fake_apps() {},
