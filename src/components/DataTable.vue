@@ -63,12 +63,10 @@ export default {
     },
     selectRow(e, props) {
       props.expanded = !props.expanded;
-      this.current_props = props;
       // update this if you change the size of expand to a %
       window.scrollTo(0, e.target.offsetTop + 620);
     },
     async nextPage() {
-      // seems to only pick up next arrow click not page click
       const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: this.pagination.page });
       this.applications = result.data.docs;
     },
@@ -90,7 +88,6 @@ export default {
       search: '',
       rating: null,
       fake,
-      current_props: null,
       expanded: {},
       applications: [
         {
@@ -147,8 +144,6 @@ export default {
     const parent = this;
     const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: 1 });
     this.applications = result.data.docs;
-    // use this value to track where to cut queries
-    this.pageStart = this.applications[this.applications.length - 1].first_submitted.unix;
   },
 };
 </script>

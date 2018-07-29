@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "chart.js": "^2.7.2",
+    "debounce": "^1.1.0",
     "faker": "^4.1.0",
     "filepond": "^1.8.5",
     "filepond-plugin-file-validate-type": "^1.1.0",
