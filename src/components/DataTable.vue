@@ -67,8 +67,16 @@ export default {
       window.scrollTo(0, e.target.offsetTop + 620);
     },
     async nextPage() {
-      const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: this.pagination.page });
-      this.applications = result.data.docs;
+      const result = await db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('all')
+        .orderBy('index')
+        .limit(20)
+        .startAt(this.lastVisible)
+        .get();
+      this.lastVisible = result.docs[result.docs.length - 1];
+      this.applications = result.docs.map(a => a.data());
     },
   },
   components: {
@@ -77,6 +85,8 @@ export default {
   },
   data() {
     return {
+      rowsPerPage: 20,
+      lastVisible: null,
       pagination: {
         page: 1,
         rowsPerPage: 10,
@@ -142,8 +152,19 @@ export default {
   },
   async mounted() {
     const parent = this;
-    const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: 1 });
-    this.applications = result.data.docs;
+    const rrr = await functions().httpsCallable('getPageInTable')({ step: 10, page: 1 });
+    console.log('RR', rrr.data.docs);
+    const result = await db
+      .collection('applications')
+      .doc('DH5_Test')
+      .collection('all')
+      .orderBy('index')
+      .limit(20)
+      .get();
+    this.lastVisible = result.docs[result.docs.length - 1];
+    console.log('last', this.lastVisible);
+    console.log('R2', result.docs);
+    this.applications = result.docs.map(a => a.data());
   },
 };
 </script>

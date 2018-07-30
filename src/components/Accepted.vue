@@ -63,7 +63,7 @@ export default {
       this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
       this.tiltAngle = 0;
 
-      this.draw = function() {
+      this.draw = function () {
         context.beginPath();
         context.lineWidth = this.r / 2;
         context.strokeStyle = this.color;
@@ -110,17 +110,17 @@ export default {
 
     window.addEventListener(
       'resize',
-      function() {
+      () => {
         W = window.innerWidth;
         H = window.innerHeight;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       },
-      false
+      false,
     );
 
     // Push new confetti objects to `particles[]`
-    for (var i = 0; i < maxConfettis; i++) {
+    for (let i = 0; i < maxConfettis; i++) {
       particles.push(new confettiParticle());
     }
 

@@ -240,7 +240,7 @@ export default {
           this.$router.push({ name: 'Dashboard' });
           this.loading = false;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           this.loading = false;
         });
@@ -252,8 +252,8 @@ export default {
         storeRef
           .child(`users/${firebase.auth().currentUser.email}/${filename}`)
           .put(file)
-          .then(snapshot => {
-            snapshot.ref.getDownloadURL().then(url => {
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
               resolve({
                 download_link: url,
                 id,
@@ -278,7 +278,7 @@ export default {
           results.push(this.storeFileAndGetInfo(doc));
         }
       }
-      this.application.documents = await Promise.all(results).catch(err => {
+      this.application.documents = await Promise.all(results).catch((err) => {
         console.log(`Upload Failed: ${err}`);
         this.loading = false;
       });
@@ -293,7 +293,7 @@ export default {
       .collection('all')
       .doc(firebase.auth().currentUser.email)
       .get()
-      .then(doc => {
+      .then((doc) => {
         if (doc.exists) {
           this.existing_doc = doc;
           this.application = doc.data();
