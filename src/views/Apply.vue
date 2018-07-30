@@ -1,7 +1,7 @@
 <template>
   <v-app class="dashboard">
     <Navbar/>
-    <form @keyup="formChange" @change="formChange" class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
+    <form @keyup="formChange" class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
       <v-text-field name="name" v-model="application.name" label="Name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
       <!-- find a better way of including this in form -->
       <v-text-field name="email" v-model="application.email" label="E-mail" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
@@ -9,14 +9,14 @@
                     v-validate="'required:true'"></v-date-picker> -->
       <v-text-field name="date" v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
       <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
-      <v-select name="university" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
-      <v-select name="year" v-model="application.school_year" :items="items" label="Year" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
+      <v-select name="university" @change="formChange" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+      <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="Year" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
+      <v-select v-model="application.shirt_size" @change="formChange" :items="shirts" label="Shirt size" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.dietry_restrictions" :items="food" label="Dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+      <v-select v-model="application.dietry_restrictions" @change="formChange" :items="food" label="Dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.hackathons" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
+      <v-select v-model="application.hackathons" @change="formChange" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
       </v-select>
       <v-text-field name="github" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
       </v-text-field>
@@ -26,12 +26,12 @@
       </v-text-field>
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="phone" label="Your cell phone number" v-model="application.phone" single-line prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+          <v-text-field mask="phone" name="phone" label="You cell phone number" v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
         </v-flex>
         <v-flex xs4>
         </v-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="emergency phone" label="Emergency contact phone number" v-model="application.emergency_phone" single-line prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+          <v-text-field mask="phone" name="emergency phone" label="Emergency contact" v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
         </v-flex>
       </v-container>
       <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
@@ -41,7 +41,7 @@
           <v-container fluid>
             <v-layout row>
               <v-flex xs12>
-                <v-text-field box multi-line outline name="story" placeholder="Tell us about a project you've worked on recently... (STILL WORKING ON SOLUTION FOR THIS TEXTAREA ITS HARD TO SEE RIGHT NOW)" v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+                <v-text-field box multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
                 </v-text-field>
               </v-flex>
             </v-layout>
@@ -78,11 +78,11 @@
     <v-snackbar
       v-model="feedback"
       top="true"
-      color="success"
+      :color="bannerColor"
       right="true"
       timeout=3000
     >
-      Application progress saved.
+      {{bannerMessage}}
       <v-btn
         color="white"
         flat
@@ -124,6 +124,9 @@ export default {
       feedback: false,
       existing_doc: undefined,
       checkError: undefined,
+      pondError: undefined,
+      bannerColor: "success",
+      bannerMessage: "Complete!",
       parent: this,
       picker: null,
       date: '2000-01-01',
@@ -190,6 +193,12 @@ export default {
       console.log('FilePond has initialized');
       // FilePond instance methods are available on `this.$refs.pond`
     },
+    softValidation() {
+      const { email, name, } = this.application;
+
+      if (email && name) return true;
+      else return false;
+    },
     toggleCheck() {
       this.checkError = undefined;
     },
@@ -205,8 +214,19 @@ export default {
         this.setApplicationInProgress();
       }, 2000);
     },
+    showInfoMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = "success";
+      this.feedback = true;
+    },
+    showErrorMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = "error";
+      this.feedback = true;
+    },
     setApplicationInProgress() {
-      this.$store.state.db
+      if (this.softValidation()) {
+        this.$store.state.db
         .collection('applications')
         .doc('DH5_Test')
         .collection('in progress')
@@ -214,12 +234,13 @@ export default {
         .set(this.application)
         .then(() => {
           console.log('saving...');
-          this.feedback = true;
+          this.showInfoMessage("Application progress saved!")
         })
         .catch((err) => {
           console.log(err);
           this.loading = false;
         });
+      }
     },
     setDateInformation() {
       const unixts = Math.round(new Date().getTime() / 1000);
@@ -281,8 +302,12 @@ export default {
         this.checkError = 'Please accept the terms and conditions to continue.';
         return;
       }
-      this.loading = true;
       const files = this.$refs.pond.getFiles();
+      if (files.length > 3) {
+        this.showErrorMessage('Applications are limited to three files!');
+        return;
+      }
+      this.loading = true;
       const results = [];
       for (const doc of files) {
         if (doc.fileExtension === 'pdf') {
@@ -293,15 +318,14 @@ export default {
         console.log(`Upload Failed: ${err}`);
         this.loading = false;
       });
-      console.log(this.application.documents);
       this.setApplication();
     },
   },
   beforeMount() {
     this.$store.state.db
       .collection('applications')
-      .doc('DH6')
-      .collection('all')
+      .doc('DH5_Test')
+      .collection('in progress')
       .doc(firebase.auth().currentUser.email)
       .get()
       .then((doc) => {
@@ -316,10 +340,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .ff {
   margin-top: 5%;
-  width: 70%;
+  width: 30%;
 }
 
 #mlh {
@@ -328,4 +352,9 @@ export default {
 .gg {
   display: inline-block;
 }
+.section.split {
+  margin-top:3%;
+  margin-bottom: 3%;
+}
+
 </style>
