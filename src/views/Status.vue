@@ -16,13 +16,13 @@
 				<v-stepper alt-labels>
 					<div class="wrap-status200">
 						<v-stepper-header>
-							<v-stepper-step step="1" complete>Applied</v-stepper-step>
+							<v-stepper-step step="1" :complete="step > 0">In Progress</v-stepper-step>
 							<v-divider></v-divider>
-							<v-stepper-step step="2" complete>Received</v-stepper-step>
+              <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
 							<v-divider></v-divider>
-							<v-stepper-step step="3">Processing</v-stepper-step>
+							<v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
 							<v-divider></v-divider>
-							<v-stepper-step step="4">Decision</v-stepper-step>
+							<v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
 						</v-stepper-header>
 					</div>
 				</v-stepper>
@@ -39,6 +39,7 @@ import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { list_of_universities } from '../private/data';
+import { auth } from 'firebase';
 
 export default {
   mixins: [validationMixin],
@@ -75,6 +76,7 @@ export default {
       story: '',
       custom: true,
       name: '',
+      step: 0,
       email: '',
       select: null,
       items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
@@ -96,6 +98,37 @@ export default {
   },
   computed: {},
   methods: {},
+  mounted() {
+    console.log(auth().currentUser.email)
+    const email = auth().currentUser.email;
+    this.$store.state.db
+      .collection('users')
+      .doc(email)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          switch(doc.data().status) {
+            case 'in progress':
+              this.step = 1;
+              break;
+            case 'submitted':
+              this.step = 2;
+              break;
+            case 'processing':
+              this.step = 3;
+              break;
+            case 'decided':
+              this.step = 4;
+              break;
+            default:
+              this.step = 0;
+          }
+          console.log(this.step);
+        } else {
+          console.log('Document not found!');
+        }
+      });
+  },
 };
 </script>
 <style scoped src='../assets/css/status.css'>
