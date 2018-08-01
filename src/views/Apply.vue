@@ -1,23 +1,34 @@
 <template>
-  <v-app class="dashboard">
-    <Navbar/>
-    <form @keyup="formChange" class="ff mx-auto" ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
-      <v-text-field name="name" v-model="application.name" label="Name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+  <v-app class="dashboard ">
+		<Navigation/>
+    <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
+      <v-subheader class="large">About You</v-subheader>
+      <v-divider></v-divider>
+      <br>
+      <v-text-field name="name" autocomplete="off" v-model="application.name" label="What is your full name?" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
       <!-- find a better way of including this in form -->
-      <v-text-field name="email" v-model="application.email" label="E-mail" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
+      <v-text-field name="email" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
       <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-      <v-text-field name="date" v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+      <v-text-field name="date" v-model="application.date" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
       <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
       <v-select name="university" @change="formChange" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
-      <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="Year" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
+      <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.shirt_size" @change="formChange" :items="shirts" label="Shirt size" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
+      <br>
+      <v-subheader class="large">Hackathon Info</v-subheader>
+      <v-divider></v-divider>
+      <br>
+      <v-select v-model="application.shirt_size" @change="formChange" :items="shirts" label="What's your shirt size?" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.dietry_restrictions" @change="formChange" :items="food" label="Dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+      <v-select v-model="application.dietry_restrictions" @change="formChange" :items="food" label="Any dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
       </v-select>
       <v-select v-model="application.hackathons" @change="formChange" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
       </v-select>
+      <br>
+      <v-subheader class="large">Portfolio & Contact</v-subheader>
+      <v-divider></v-divider>
+      <br>
       <v-text-field name="github" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
       </v-text-field>
       <v-text-field name="linkedin" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
@@ -36,19 +47,18 @@
       </v-container>
       <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
       <br>
-      <v-card flat>
-        <v-card-text>
-          <v-container fluid>
+      <br>
+      <v-divider></v-divider>
+      <br>
+      <v-container fluid>
             <v-layout row>
               <v-flex xs12>
-                <v-text-field box multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+                <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
                 </v-text-field>
               </v-flex>
             </v-layout>
             <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
           </v-container>
-        </v-card-text>
-      </v-card>
       <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
       <div class="mx-auto gg">
         <v-btn color="info" outline class="button is-primary" type="submit">submit</v-btn>
@@ -77,10 +87,10 @@
     </v-dialog>
     <v-snackbar
       v-model="feedback"
-      top="true"
+      top
       :color="bannerColor"
-      right="true"
-      timeout=3000
+      right
+      :timeout="bannerTimeout"
     >
       {{bannerMessage}}
       <v-btn
@@ -91,6 +101,7 @@
         Close
       </v-btn>
     </v-snackbar>
+    <!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg" alt="Major League Hacking 2019 Hackathon Season" style="width:100%"></a> -->
   </v-app>
 </template>
 
@@ -105,6 +116,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import debounce from 'debounce';
 
 import Navbar from '@/components/Navbar.vue';
+import Navigation from '@/components/Navigation.vue';
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
@@ -127,6 +139,7 @@ export default {
       pondError: undefined,
       bannerColor: "success",
       bannerMessage: "Complete!",
+      bannerTimeout:3000,
       parent: this,
       picker: null,
       date: '2000-01-01',
@@ -176,6 +189,7 @@ export default {
     Navbar,
     Footer,
     FilePond,
+    Navigation,
   },
   computed: {
     progress() {
@@ -355,6 +369,13 @@ export default {
 .section.split {
   margin-top:3%;
   margin-bottom: 3%;
+}
+.gradient {
+    background: rgb(0,21,36);
+background: linear-gradient(90deg, rgba(0,21,36,0.5494572829131652) 0%, rgba(93,162,198,0.896796218487395) 0%);
+}
+.large {
+  font-size: 1.3em !important;
 }
 
 </style>

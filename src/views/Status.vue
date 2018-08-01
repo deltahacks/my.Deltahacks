@@ -1,14 +1,6 @@
 <template>
 	<v-app class="dashboard">
-		<div class="topnav">
-<div class="w3-bar">
-  <a href="/status" class="w3-bar-item w3-button w3-hover-none w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Status</a>
-  <a href="/dashboard" class="w3-bar-item w3-button w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Dashboard</a>
-  <a href="/" class="w3-bar-item w3-button w3-hover-none w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Logout</a>
-  <a href="/apply" class="w3-bar-item w3-button w3-border-color w3-bottombar w3-hover-border-color w3-hover-text-color">Apply</a>
-<a href="/" class="w3-right w3-button"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
-</div>
-		</div>
+		<Navigation/>
 		<div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
 			<div class="wrap-status100">
 				<h1>This application is still under review</h1>
@@ -34,6 +26,7 @@
 <script>
 /* eslint-disable no-unused-expressions */
 import Navbar from '@/components/Navbar.vue';
+import Navigation from '@/components/Navigation.vue';
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
@@ -95,6 +88,7 @@ export default {
   components: {
     Navbar,
     Footer,
+    Navigation,
   },
   computed: {},
   methods: {},
