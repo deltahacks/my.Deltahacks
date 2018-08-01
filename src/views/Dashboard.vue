@@ -16,7 +16,7 @@
               <v-card color="white lighten-4" dark>
                 <v-card-title primary class="title">Total Applicants:</v-card-title>
                 <v-card-text class="totalapps center">
-                  <IOdometer class="iOdometer" :value="applicationCount" />
+                  <IOdometer class="iOdometer" :value=applicationCount />
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -85,7 +85,7 @@ export default {
   name: 'Dashboard',
   data() {
     return {
-      applicationCount: '?',
+      applicationCount: 0,
       page: 3,
       apps: '245',
       links: ['Home', 'About', 'Contact'],
