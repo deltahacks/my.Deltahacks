@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
-    <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[page]" hide-actions item-key="name">
+    <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[`${page}`]" hide-actions item-key="name">
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
           <td class="text-md-left">{{ props.item.name }}</td>
@@ -63,12 +63,12 @@ export default {
     },
     selectRow(e, props) {
       props.expanded = !props.expanded;
-      // update this if you change the size of expand to a %
+      // update this if you change the size of expand to a % //
       window.scrollTo(0, e.target.offsetTop + 620);
     },
     async nextPage() {
       console.log('Page is: ', this.page);
-      if (!this.applications[this.page]) {
+      if (!this.applications[`${this.page}`]) {
         console.log('Getting next page');
         const result = await db
           .collection('applications')
@@ -79,7 +79,7 @@ export default {
           .startAfter(this.lastVisible)
           .get();
         this.lastVisible = result.docs[result.docs.length - 1];
-        this.applications[this.page] = result.docs.map(a => a.data());
+        this.applications[`${this.page}`] = result.docs.map(a => a.data());
       }
     },
   },
@@ -97,7 +97,7 @@ export default {
         page: 1,
         rowsPerPage: 10,
       },
-      applications: [],
+      applications: {},
       selected: [],
       peeps: [fake],
       current: 'All Applicants',
@@ -124,8 +124,8 @@ export default {
     };
   },
   async mounted() {
-    const parent = this;
-    if (!this.applications[this.page]) {
+    console.log('Status: ', this.applications[this.page] == null);
+    if (!this.applications[`$this.page}`]) {
       console.log('In mount fill');
       const result = await db
         .collection('applications')
@@ -135,12 +135,15 @@ export default {
         .limit(20)
         .get();
       this.lastVisible = result.docs[result.docs.length - 1];
-      this.applications[this.page] = result.docs.map(a => a.data());
+      this.applications[`${this.page}`] = result.docs.map(a => a.data());
     }
   },
   watch: {
-    applications(newApp) {
-      console.log('app changed', newApp);
+    applications: {
+      handler: function(val, oldVal) {
+        console.log('app changed');
+      },
+      deep: true,
     },
     page(newPage) {
       console.log('Newpage', newPage);
