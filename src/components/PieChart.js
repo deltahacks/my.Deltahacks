@@ -40,7 +40,6 @@ function shade(col, light) {
 // doc.data()['U Toronto']
 export default {
   extends: Pie,
-  mixins: [reactiveProp],
   data() {
     return {
       uft: 22,

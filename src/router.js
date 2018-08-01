@@ -13,7 +13,8 @@ import Status from './views/Status.vue';
 import Playground from './views/Playground.vue';
 import v404 from './views/404.vue';
 import AdminSignup from './views/AdminSignup.vue';
-
+import Accepted from './components/Accepted.vue';
+import Rejected from './components/Rejected.vue';
 
 Vue.use(Router);
 
@@ -67,6 +68,16 @@ const router = new Router({
       path: '/admin',
       name: 'AdminSignup',
       component: AdminSignup,
+    },
+    {
+      path: '/accepted',
+      name: 'Accepted',
+      component: Accepted,
+    },
+    {
+      path: '/rejected',
+      name: 'Rejected',
+      component: Rejected,
     },
   ],
 });

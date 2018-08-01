@@ -23,7 +23,7 @@ export default {
       while (current < today) {
         outMap[current.toDateString()] = 0;
         current.setDate(current.getDate() + 1);
-        console.log(current);
+        // console.log(current);
       }
       return outMap;
     },

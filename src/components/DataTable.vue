@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
-    <v-data-table v-bind:peeps="peeps" :dark=false :search="search" :headers="headers" :items="applications" hide-actions item-key="name">
+    <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[page]" hide-actions item-key="name">
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
           <td class="text-md-left">{{ props.item.name }}</td>
@@ -34,7 +34,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-center">
-      <v-pagination v-model="pagination.page" :length="3" circle @input="nextPage"></v-pagination>
+      <v-pagination v-model="page" :length="3" circle @input="nextPage"></v-pagination>
     </div>
   </v-card>
 
@@ -67,8 +67,20 @@ export default {
       window.scrollTo(0, e.target.offsetTop + 620);
     },
     async nextPage() {
-      const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: this.pagination.page });
-      this.applications = result.data.docs;
+      console.log('Page is: ', this.page);
+      if (!this.applications[this.page]) {
+        console.log('Getting next page');
+        const result = await db
+          .collection('applications')
+          .doc('DH5_Test')
+          .collection('all')
+          .orderBy('index')
+          .limit(20)
+          .startAfter(this.lastVisible)
+          .get();
+        this.lastVisible = result.docs[result.docs.length - 1];
+        this.applications[this.page] = result.docs.map(a => a.data());
+      }
     },
   },
   components: {
@@ -77,10 +89,15 @@ export default {
   },
   data() {
     return {
+      rowsPerPage: 20,
+      lastVisible: null,
+      testApps: [],
+      page: 1,
       pagination: {
         page: 1,
         rowsPerPage: 10,
       },
+      applications: [],
       selected: [],
       peeps: [fake],
       current: 'All Applicants',
@@ -89,40 +106,6 @@ export default {
       rating: null,
       fake,
       expanded: {},
-      applications: [
-        {
-          dietry_restrictions: 'None',
-          email: 'Loading@gmail.com',
-          emergency_phone: 'Loading',
-          github: 'https://github.com/johndoe',
-          hackathons: 'None',
-          linkedin: 'https://linkedin.com/johndoe',
-          name: 'Loading',
-          phone: 'Loading',
-          school_year: 'NaN',
-          shirt_size: 'NaN',
-          story: 'NONE',
-          university: 'NONE',
-          website: 'google.com',
-          documents: [
-            {
-              download_link:
-                'https://firebasestorage.googleapis.com/v0/b/mydeltahacks.appspot.com/o/users%2Ftest5%40test.ca%2FGeneral%20Expectations.docx.pdf?alt=media&token=7dcf28a5-2215-4824-8600-583df46399ba',
-              filename: 'General Expectations.docx.pdf',
-              id: '3ln3opja2',
-            },
-          ],
-          last_modified: {
-            date: 'Loading...',
-            unix: 'Loading...',
-          },
-          first_submitted: {
-            date: 'Loading...',
-            unix: 'Loading...',
-          },
-        },
-      ],
-      test: '423423423',
       headers: [
         {
           text: 'Name',
@@ -142,8 +125,26 @@ export default {
   },
   async mounted() {
     const parent = this;
-    const result = await functions().httpsCallable('getPageInTable')({ step: 10, page: 1 });
-    this.applications = result.data.docs;
+    if (!this.applications[this.page]) {
+      console.log('In mount fill');
+      const result = await db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('all')
+        .orderBy('index')
+        .limit(20)
+        .get();
+      this.lastVisible = result.docs[result.docs.length - 1];
+      this.applications[this.page] = result.docs.map(a => a.data());
+    }
+  },
+  watch: {
+    applications(newApp) {
+      console.log('app changed', newApp);
+    },
+    page(newPage) {
+      console.log('Newpage', newPage);
+    },
   },
 };
 </script>
