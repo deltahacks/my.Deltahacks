@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
-    <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[page]" hide-actions item-key="name">
+    <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[page - 1]" hide-actions item-key="name">
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
           <td class="text-md-left">{{ props.item.name }}</td>
@@ -45,6 +45,7 @@ import fake from '@/helpers/fake';
 import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
 import db from '../private/firebase_init';
+import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
 import { functions } from 'firebase';
 
@@ -76,10 +77,10 @@ export default {
           .collection('all')
           .orderBy('index')
           .limit(20)
-          .startAfter(this.lastVisible)
+          .startAfter((this.page - 1) * 20)
           .get();
         this.lastVisible = result.docs[result.docs.length - 1];
-        this.applications[this.page] = result.docs.map(a => a.data());
+        Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
       }
     },
   },
@@ -125,7 +126,7 @@ export default {
   },
   async mounted() {
     const parent = this;
-    if (!this.applications[this.page]) {
+    if (!this.applications[this.page - 1]) {
       console.log('In mount fill');
       const result = await db
         .collection('applications')
@@ -135,7 +136,9 @@ export default {
         .limit(20)
         .get();
       this.lastVisible = result.docs[result.docs.length - 1];
-      this.applications[this.page] = result.docs.map(a => a.data());
+      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+      // this.applications[this.page - 1] = result.docs.map(a => a.data());
+      console.log(this.applications[this.page-1]);
     }
   },
   watch: {

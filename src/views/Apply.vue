@@ -2,9 +2,9 @@
   <v-app class="dashboard ">
 		<Navigation/>
     <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
-      <v-subheader class="large">About You</v-subheader>
+      <!-- <v-subheader class="large">About You</v-subheader>
       <v-divider></v-divider>
-      <br>
+      <br> -->
       <v-text-field name="name" autocomplete="off" v-model="application.name" label="What is your full name?" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
       <!-- find a better way of including this in form -->
       <v-text-field name="email" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
@@ -15,20 +15,20 @@
       <v-select name="university" @change="formChange" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
       <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
-      <br>
+      <!-- <br>
       <v-subheader class="large">Hackathon Info</v-subheader>
       <v-divider></v-divider>
-      <br>
+      <br> -->
       <v-select v-model="application.shirt_size" @change="formChange" :items="shirts" label="What's your shirt size?" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
       </v-select>
       <v-select v-model="application.dietry_restrictions" @change="formChange" :items="food" label="Any dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
       </v-select>
       <v-select v-model="application.hackathons" @change="formChange" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
       </v-select>
-      <br>
+      <!-- <br>
       <v-subheader class="large">Portfolio & Contact</v-subheader>
       <v-divider></v-divider>
-      <br>
+      <br> -->
       <v-text-field name="github" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
       </v-text-field>
       <v-text-field name="linkedin" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
@@ -64,13 +64,23 @@
         <v-btn color="info" outline class="button is-primary" type="submit">submit</v-btn>
         <v-btn color="error" outline>clear</v-btn>
       </div>
-
     </form>
-    <v-dialog v-model="loading" persistent width="300">
-      <v-card color="primary" dark>
+    <v-dialog
+      v-model="loading"
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
         <v-card-text>
           Submitting Application...
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
