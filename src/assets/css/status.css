@@ -83,6 +83,18 @@ overflow:hidden;
 
 /*------------------------------------------------------------------
 [ Status ]*/
+.background{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+   background-color: rgba(255,255,255,0.8);
+  }
+
+.navbar1 {
+  z-index: 0;
+  background-color: rgba(255,255,255,0.8);
+}
 
 .container-status100 {
   width: 100%;  
@@ -96,6 +108,7 @@ height: 100%;
   justify-content: center;
   align-items: center;
   padding: 15px;
+  padding-bottom: 0px;
 overflow: hidden;
   background-repeat: no-repeat;
   background-position: center;
@@ -119,10 +132,8 @@ overflow: hidden;
 .wrap-status100 {
   height: 335px;
   width: 650px;
-  border-radius: 10px;
   overflow: hidden;
   padding: 55px 55px 35px 55px;
-
   background: #9152f8;
   background: -webkit-linear-gradient(top, #48c6ef, #6f86d6);
   background: -o-linear-gradient(top, #48c6ef, #6f86d6);
