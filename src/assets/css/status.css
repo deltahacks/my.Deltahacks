@@ -83,6 +83,14 @@ overflow:hidden;
 
 /*------------------------------------------------------------------
 [ Status ]*/
+.background{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  z-index: -1;
+   background-color: rgba(255,255,255,0.8);
+  }
 
 .container-status100 {
   width: 100%;  
@@ -96,6 +104,7 @@ height: 100%;
   justify-content: center;
   align-items: center;
   padding: 15px;
+  padding-bottom: 0px;
 overflow: hidden;
   background-repeat: no-repeat;
   background-position: center;

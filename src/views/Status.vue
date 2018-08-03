@@ -1,8 +1,9 @@
 <template>
-	<v-app class="dashboard">
-		<Navigation/>
-		<div class="container-status100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-			<div class="wrap-status100">
+	<v-app class="dashboard background" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+		<!-- <Navigation/> -->
+    <Navbar2/>
+    <div class="container-status100">
+      <div class="wrap-status100">
 				<h1>This application is still under review</h1>
 				<v-card-text></v-card-text>
 				<v-stepper alt-labels>
@@ -26,6 +27,7 @@
 <script>
 /* eslint-disable no-unused-expressions */
 import Navbar from '@/components/Navbar.vue';
+import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
@@ -89,6 +91,7 @@ export default {
     Navbar,
     Footer,
     Navigation,
+    Navbar2,
   },
   computed: {},
   methods: {},
