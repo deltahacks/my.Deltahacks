@@ -61,8 +61,8 @@
           </v-container>
       <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
       <div class="mx-auto gg">
-        <v-btn color="info" outline class="button is-primary" type="submit">submit</v-btn>
-        <v-btn color="error" outline>clear</v-btn>
+        <a href="#" class="button1">Submit</a>&ensp;
+        <a href="#" class="button2">Clear</a>
       </div>
     </form>
     <v-dialog
@@ -136,9 +136,9 @@ export default {
       existing_doc: undefined,
       checkError: undefined,
       pondError: undefined,
-      bannerColor: "success",
-      bannerMessage: "Complete!",
-      bannerTimeout:3000,
+      bannerColor: 'success',
+      bannerMessage: 'Complete!',
+      bannerTimeout: 3000,
       parent: this,
       picker: null,
       date: '2000-01-01',
@@ -207,10 +207,10 @@ export default {
       // FilePond instance methods are available on `this.$refs.pond`
     },
     softValidation() {
-      const { email, name, } = this.application;
+      const { email, name } = this.application;
 
       if (email && name) return true;
-      else return false;
+      return false;
     },
     toggleCheck() {
       this.checkError = undefined;
@@ -229,30 +229,30 @@ export default {
     },
     showInfoMessage(msg) {
       this.bannerMessage = msg;
-      this.bannerColor = "success";
+      this.bannerColor = 'success';
       this.feedback = true;
     },
     showErrorMessage(msg) {
       this.bannerMessage = msg;
-      this.bannerColor = "error";
+      this.bannerColor = 'error';
       this.feedback = true;
     },
     setApplicationInProgress() {
       if (this.softValidation()) {
         this.$store.state.db
-        .collection('applications')
-        .doc('DH5_Test')
-        .collection('in progress')
-        .doc(firebase.auth().currentUser.email)
-        .set(this.application)
-        .then(() => {
-          console.log('saving...');
-          this.showInfoMessage("Application progress saved!")
-        })
-        .catch((err) => {
-          console.log(err);
-          this.loading = false;
-        });
+          .collection('applications')
+          .doc('DH5_Test')
+          .collection('in progress')
+          .doc(firebase.auth().currentUser.email)
+          .set(this.application)
+          .then(() => {
+            console.log('saving...');
+            this.showInfoMessage('Application progress saved!');
+          })
+          .catch((err) => {
+            console.log(err);
+            this.loading = false;
+          });
       }
     },
     setDateInformation() {
@@ -376,5 +376,66 @@ background: linear-gradient(90deg, rgba(0,21,36,0.5494572829131652) 0%, rgba(93,
 .large {
   font-size: 1.3em !important;
 }
+.button1 {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    background-color: transparent;
+    font-family: sans-serif;
+		border: 1;
+		border-radius: 0;
+		box-shadow: inset 0 0 0 2px #14ffd8;
+		color: #16d0ff;
+		cursor: pointer;
+		display: inline-block;
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 52px;
+		padding: 0 1.75em;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+	.button1:hover,
+		.button1:active {
+      box-shadow: inset 0 0 0 2px #017ef2;
+			color: #017ef2;
+			background-color: #22ffda;
 
+		}
+.button2 {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    background-color: transparent;
+    font-family: sans-serif;
+		border: 1;
+		border-radius: 0;
+		box-shadow: inset 0 0 0 2px #ff3c00b7;
+		color: #ff3c00;
+		cursor: pointer;
+		display: inline-block;
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 52px;
+		padding: 0 1.75em;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+	.button2:hover,
+		.button2:active {
+      box-shadow: inset 0 0 0 2px #ff0000;
+			color: #ff0000;
+			background-color: #ff7c4080;
+
+		}
 </style>

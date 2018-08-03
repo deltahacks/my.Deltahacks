@@ -93,7 +93,7 @@ export default {
   computed: {},
   methods: {},
   mounted() {
-    console.log(auth().currentUser.email)
+    console.log(auth().currentUser.email);
     const email = auth().currentUser.email;
     this.$store.state.db
       .collection('users')
@@ -101,7 +101,7 @@ export default {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          switch(doc.data().status) {
+          switch (doc.data().status) {
             case 'in progress':
               this.step = 1;
               break;

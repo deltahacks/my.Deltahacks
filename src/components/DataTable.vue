@@ -138,7 +138,7 @@ export default {
       this.lastVisible = result.docs[result.docs.length - 1];
       Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
       // this.applications[this.page - 1] = result.docs.map(a => a.data());
-      console.log(this.applications[this.page-1]);
+      console.log(this.applications[this.page - 1]);
     }
   },
   watch: {
