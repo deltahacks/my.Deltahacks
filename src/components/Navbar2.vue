@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar class="toolbar transparent">
+  <v-toolbar class="toolbar">
     <v-spacer></v-spacer>
     <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
     <v-toolbar-title id="title">

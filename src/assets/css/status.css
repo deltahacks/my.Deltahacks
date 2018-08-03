@@ -87,10 +87,14 @@ overflow:hidden;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  display: flex;
-  z-index: -1;
+  z-index: 0;
    background-color: rgba(255,255,255,0.8);
   }
+
+.navbar1 {
+  z-index: 0;
+  background-color: rgba(255,255,255,0.8);
+}
 
 .container-status100 {
   width: 100%;  

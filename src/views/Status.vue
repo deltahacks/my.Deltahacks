@@ -1,7 +1,7 @@
 <template>
 	<v-app class="dashboard background" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
 		<!-- <Navigation/> -->
-    <Navbar2/>
+    <Navbar2 class="navbar1"/>
     <div class="container-status100">
       <div class="wrap-status100">
 				<h1>This application is still under review</h1>
