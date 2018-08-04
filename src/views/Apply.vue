@@ -10,8 +10,7 @@
       <v-text-field name="email" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
       <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-      <v-text-field name="date" v-model="application.date" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
-      <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
+      <v-text-field name="date" v-model="application.birthday" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
       <v-select name="university" @change="formChange" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
       <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
@@ -60,9 +59,10 @@
             <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
           </v-container>
       <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
+      <!-- careful with modifying these buttons, submit must to be of type submit. -->
       <div class="mx-auto gg">
-        <a href="#" class="button1">Submit</a>&ensp;
-        <a href="#" class="button2">Clear</a>
+        <v-btn type="submit" outline color="blue">Submit</v-btn>
+        <v-btn outline color="red">Clear</v-btn>
       </div>
     </form>
     <v-dialog
@@ -161,7 +161,7 @@ export default {
         phone: '',
         emergency_phone: '',
         story: '',
-        date: '',
+        birthday: '',
         documents: [],
       },
       links: ['Home', 'About', 'Contact'],
@@ -356,7 +356,7 @@ export default {
 <style scoped>
 .ff {
   margin-top: 5%;
-  width: 30%;
+  width: 40%;
 }
 
 #mlh {
@@ -376,66 +376,4 @@ background: linear-gradient(90deg, rgba(0,21,36,0.5494572829131652) 0%, rgba(93,
 .large {
   font-size: 1.3em !important;
 }
-.button1 {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    background-color: transparent;
-    font-family: sans-serif;
-		border: 1;
-		border-radius: 0;
-		box-shadow: inset 0 0 0 2px #14ffd8;
-		color: #16d0ff;
-		cursor: pointer;
-		display: inline-block;
-		font-size: 15px;
-		font-weight: 600;
-		line-height: 52px;
-		padding: 0 1.75em;
-		text-align: center;
-		text-decoration: none;
-		text-transform: uppercase;
-	}
-	.button1:hover,
-		.button1:active {
-      box-shadow: inset 0 0 0 2px #017ef2;
-			color: #017ef2;
-			background-color: #22ffda;
-
-		}
-.button2 {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    background-color: transparent;
-    font-family: sans-serif;
-		border: 1;
-		border-radius: 0;
-		box-shadow: inset 0 0 0 2px #ff3c00b7;
-		color: #ff3c00;
-		cursor: pointer;
-		display: inline-block;
-		font-size: 15px;
-		font-weight: 600;
-		line-height: 52px;
-		padding: 0 1.75em;
-		text-align: center;
-		text-decoration: none;
-		text-transform: uppercase;
-	}
-	.button2:hover,
-		.button2:active {
-      box-shadow: inset 0 0 0 2px #ff0000;
-			color: #ff0000;
-			background-color: #ff7c4080;
-
-		}
 </style>
