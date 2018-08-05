@@ -82,9 +82,9 @@ overflow:hidden;
 [ Welcome Header ]*/
 .welcomeheader {
 	font-family:'Open Sans' ;
-font-size: 61px;
+font-size: 3em;
 font-weight: 600;
-line-height: 70px;
+line-height: 3em;
 text-decoration: none;
 }
 /*//////////////////////////////////////////////////////////////////

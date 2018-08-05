@@ -31,7 +31,7 @@
             </v-card>
           </v-flex>
         </v-layout>
-        <vue-slider id="slider" v-model="status" :piecewise=true :piecewise-label=false step=1 max=10 use-keyboard=false height=20 dot-size=30></vue-slider>
+        <vue-slider id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
         <h2>The current applicant score is : {{status}} out of 10</h2>
         <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
         <v-btn color="success" class="button2" @click="updateApplicationScore">SUBMIT SCORE</v-btn>
@@ -49,14 +49,15 @@
 </template>
 <script>
 import vueSlider from 'vue-slider-component';
-
 export default {
   name: 'Applicant',
   props: ['usrname', 'applicant'],
   data: () => ({
     currentPage: 0,
+    currentUser1: 'yee',
     pageCount: 0,
     status: 0,
+    score: 0,
     resumeLink:
       'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
     cards: [
@@ -81,7 +82,7 @@ export default {
   },
   methods: {
     async updateApplicationScore() {
-      console.log('Updating score');
+      console.log('Updating score', this.$store.state.test);
       try {
         let userApplication = await this.$store.state.db
           .collection('decisions')
@@ -89,10 +90,26 @@ export default {
           .collection('pending')
           .doc(this.applicant.email)
           .get();
-        /*         let uploadScore     = await this.$store.state.db.collection('decisions').doc('DH5').collection('pending').doc(applicant.email).update({
 
-        }); */
-        console.log(userApplication.data(), userApplication);
+        let aaa = this.$store.state.test;
+        console.log(
+          aaa,
+          this.$store.state.firebase.auth().currentUser.email,
+          userApplication.data().reviewers
+        );
+
+        let reviews = userApplication.data().reviews + 1;
+        let reviewers = userApplication.data().reviewers;
+        reviewers.push({
+          score: this.score,
+          reviewer: this.$store.state.firebase.auth().currentUser.email,
+        });
+        let uploadScore = await this.$store.state.db
+          .collection('decisions')
+          .doc('DH5')
+          .collection('pending')
+          .doc(this.applicant.email)
+          .update({ reviews, reviewers });
       } catch (err) {
         console.log('Error getting user app: ', err);
       }

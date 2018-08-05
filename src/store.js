@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import firebase from 'firebase';
 import db from './private/firebase_init';
 
 // Use vuex with Vue
@@ -17,6 +18,8 @@ export default new Vuex.Store({
     vuex_password: null,
     vuex_user_has_applied: false,
     db,
+    firebase,
+    test: 'test1',
     vuex_user_application: null,
     DataTable: {
       lastVisible: null,
