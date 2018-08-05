@@ -10,9 +10,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
           <span class="welcomeheader">
-            <b>
-              <u>DeltaHacks V<br>Log In</u>
-            </b>
+          DeltaHacks V<br>Log In
           </span>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,600italic');
 html {
 	height: 100%;
 	font-family: Verdana , sans-serif, Agency FB;
@@ -80,8 +81,11 @@ overflow:hidden;
 /*//////////////////////////////////////////////////////////////////
 [ Welcome Header ]*/
 .welcomeheader {
-	font-family:Agency FB ;
-font-size: 45px;
+	font-family:'Open Sans' ;
+font-size: 61px;
+font-weight: 600;
+line-height: 70px;
+text-decoration: none;
 }
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
