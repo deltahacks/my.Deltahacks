@@ -1,6 +1,6 @@
 <template>
   <v-app class="dashboard ">
-		<Navigation/>
+    <Navigation/>
     <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
       <!-- <v-subheader class="large">About You</v-subheader>
       <v-divider></v-divider>
@@ -12,7 +12,7 @@
                     v-validate="'required:true'"></v-date-picker> -->
       <v-text-field name="date" v-model="application.date" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
       <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
-      <v-select name="university" @change="formChange" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+      <v-select name="university" @change="formChange" :items="allUniversities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
       <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
       <!-- <br>
@@ -51,52 +51,31 @@
       <v-divider></v-divider>
       <br>
       <v-container fluid>
-            <v-layout row>
-              <v-flex xs12>
-                <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
-                </v-text-field>
-              </v-flex>
-            </v-layout>
-            <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
-          </v-container>
+        <v-layout row>
+          <v-flex xs12>
+            <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            </v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
+      </v-container>
       <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
       <div class="mx-auto gg">
         <a href="#" class="button1">Submit</a>&ensp;
         <a href="#" class="button2">Clear</a>
       </div>
     </form>
-    <v-dialog
-      v-model="loading"
-      persistent
-      width="300"
-    >
-      <v-card
-        color="primary"
-        dark
-      >
+    <v-dialog v-model="loading" persistent width="300">
+      <v-card color="primary" dark>
         <v-card-text>
           Submitting Application...
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-snackbar
-      v-model="feedback"
-      top
-      :color="bannerColor"
-      right
-      :timeout="bannerTimeout"
-    >
+    <v-snackbar v-model="feedback" top :color="bannerColor" right :timeout="bannerTimeout">
       {{bannerMessage}}
-      <v-btn
-        color="white"
-        flat
-        @click="feedback = false"
-      >
+      <v-btn color="white" flat @click="feedback = false">
         Close
       </v-btn>
     </v-snackbar>
@@ -121,7 +100,7 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { list_of_universities } from '../private/data';
+import { allUniversities } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
@@ -144,7 +123,7 @@ export default {
       date: '2000-01-01',
       university: null,
       timeout: null,
-      list_of_universities,
+      allUniversities,
       application: {
         name: '',
         email: '',
@@ -182,7 +161,7 @@ export default {
     email: { required, email },
     select: { required },
     checkbox: { required },
-    university: { in: list_of_universities },
+    university: { in: allUniversities },
   },
   components: {
     Navbar,
@@ -366,76 +345,84 @@ export default {
   display: inline-block;
 }
 .section.split {
-  margin-top:3%;
+  margin-top: 3%;
   margin-bottom: 3%;
 }
 .gradient {
-    background: rgb(0,21,36);
-background: linear-gradient(90deg, rgba(0,21,36,0.5494572829131652) 0%, rgba(93,162,198,0.896796218487395) 0%);
+  background: rgb(0, 21, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 21, 36, 0.5494572829131652) 0%,
+    rgba(93, 162, 198, 0.896796218487395) 0%
+  );
 }
 .large {
   font-size: 1.3em !important;
 }
 .button1 {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    background-color: transparent;
-    font-family: sans-serif;
-		border: 1;
-		border-radius: 0;
-		box-shadow: inset 0 0 0 2px #14ffd8;
-		color: #16d0ff;
-		cursor: pointer;
-		display: inline-block;
-		font-size: 15px;
-		font-weight: 600;
-		line-height: 52px;
-		padding: 0 1.75em;
-		text-align: center;
-		text-decoration: none;
-		text-transform: uppercase;
-	}
-	.button1:hover,
-		.button1:active {
-      box-shadow: inset 0 0 0 2px #017ef2;
-			color: #017ef2;
-			background-color: #22ffda;
-
-		}
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px #14ffd8;
+  color: #16d0ff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.button1:hover,
+.button1:active {
+  box-shadow: inset 0 0 0 2px #017ef2;
+  color: #017ef2;
+  background-color: #22ffda;
+}
 .button2 {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    background-color: transparent;
-    font-family: sans-serif;
-		border: 1;
-		border-radius: 0;
-		box-shadow: inset 0 0 0 2px #ff3c00b7;
-		color: #ff3c00;
-		cursor: pointer;
-		display: inline-block;
-		font-size: 15px;
-		font-weight: 600;
-		line-height: 52px;
-		padding: 0 1.75em;
-		text-align: center;
-		text-decoration: none;
-		text-transform: uppercase;
-	}
-	.button2:hover,
-		.button2:active {
-      box-shadow: inset 0 0 0 2px #ff0000;
-			color: #ff0000;
-			background-color: #ff7c4080;
-
-		}
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px #ff3c00b7;
+  color: #ff3c00;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.button2:hover,
+.button2:active {
+  box-shadow: inset 0 0 0 2px #ff0000;
+  color: #ff0000;
+  background-color: #ff7c4080;
+}
 </style>

@@ -78,7 +78,7 @@ import IOdometer from 'vue-odometer';
 import 'odometer/themes/odometer-theme-default.css';
 import CommitChart from '@/components/CommitChart';
 import db from '../private/firebase_init';
-import { list_of_universities } from '../private/data';
+import { allUniversities } from '../private/data';
 import fake from '@/helpers/fake';
 import functions from 'firebase/functions';
 export default {
@@ -89,7 +89,7 @@ export default {
       page: 3,
       apps: '245',
       links: ['Home', 'About', 'Contact'],
-      list_of_universities,
+      allUniversities,
       lorem:
         'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
       c_user: firebase.auth().currentUser,

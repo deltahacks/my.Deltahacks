@@ -1,27 +1,27 @@
 <template>
-	<v-app class="dashboard background" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-		<!-- <Navigation/> -->
-    <Navbar2 class="navbar1"/>
+  <v-app class="dashboard background" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+    <!-- <Navigation/> -->
+    <Navbar2 class="navbar1" />
     <div class="container-status100">
       <div class="wrap-status100">
-				<h1>This application is still under review</h1>
-				<v-card-text></v-card-text>
-				<v-stepper alt-labels>
-					<div class="wrap-status200">
-						<v-stepper-header>
-							<v-stepper-step step="1" :complete="step > 0">In Progress</v-stepper-step>
-							<v-divider></v-divider>
+        <h1>This application is still under review</h1>
+        <v-card-text></v-card-text>
+        <v-stepper alt-labels>
+          <div class="wrap-status200">
+            <v-stepper-header>
+              <v-stepper-step step="1" :complete="step > 0">In Progress</v-stepper-step>
+              <v-divider></v-divider>
               <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
-							<v-divider></v-divider>
-							<v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
-							<v-divider></v-divider>
-							<v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
-						</v-stepper-header>
-					</div>
-				</v-stepper>
-			</div>
-		</div>
-	</v-app>
+              <v-divider></v-divider>
+              <v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
+            </v-stepper-header>
+          </div>
+        </v-stepper>
+      </div>
+    </div>
+  </v-app>
 </template>
 
 <script>
@@ -33,7 +33,7 @@ import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { list_of_universities } from '../private/data';
+import { allUniversities } from '../private/data';
 import { auth } from 'firebase';
 
 export default {
@@ -45,7 +45,7 @@ export default {
       picker: null,
       date: '2000-01-01',
       university: null,
-      list_of_universities,
+      allUniversities,
       dropzoneOptions: {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 150,

@@ -48,10 +48,12 @@ import db from '../private/firebase_init';
 import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
 import { functions } from 'firebase';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'DataTable',
   methods: {
+    ...mapMutations(['update_DataTable_lastVisible']),
     f() {
       console.log(fake);
     },
@@ -79,7 +81,7 @@ export default {
           .limit(20)
           .startAfter((this.page - 1) * 20)
           .get();
-        this.lastVisible = result.docs[result.docs.length - 1];
+        this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
         Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
       }
     },
@@ -90,16 +92,13 @@ export default {
   },
   data() {
     return {
-      rowsPerPage: 20,
-      lastVisible: null,
-      testApps: [],
+      // lastVisible: null,
       page: 1,
       pagination: {
         page: 1,
         rowsPerPage: 10,
       },
       applications: {},
-      selected: [],
       peeps: [fake],
       current: 'All Applicants',
       items: ['All Applicants', 'Accepted Applicants', 'Unaccepted Applicants'],
@@ -135,22 +134,12 @@ export default {
         .orderBy('index')
         .limit(20)
         .get();
-      this.lastVisible = result.docs[result.docs.length - 1];
+      this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
       Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
-      // this.applications[this.page - 1] = result.docs.map(a => a.data());
-      console.log(this.applications[this.page - 1]);
     }
   },
-  watch: {
-    applications: {
-      handler: function(val, oldVal) {
-        console.log('app changed');
-      },
-      deep: true,
-    },
-    page(newPage) {
-      console.log('Newpage', newPage);
-    },
+  computed: {
+    lastVisible: 'DataTable.lastVisible',
   },
 };
 </script>

@@ -9,7 +9,7 @@
                     v-validate="'required:true'"></v-date-picker> -->
       <v-text-field name="date" v-model="application.date" mask="date" label="Date of Birth" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
       <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
-      <v-select name="university" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+      <v-select name="university" :items="allUniversities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
       <v-select name="year" v-model="application.school_year" :items="items" label="Year" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
       <v-select v-model="application.shirt_size" :items="shirts" label="Shirt size" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
@@ -75,7 +75,7 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { list_of_universities } from '../private/data';
+import { allUniversities } from '../private/data';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 export default {
@@ -90,7 +90,7 @@ export default {
       picker: null,
       date: '2000-01-01',
       university: null,
-      list_of_universities,
+      allUniversities,
       application: {
         name: '',
         email: '',
@@ -128,7 +128,7 @@ export default {
     email: { required, email },
     select: { required },
     checkbox: { required },
-    university: { in: list_of_universities },
+    university: { in: allUniversities },
   },
   components: {
     Navbar,

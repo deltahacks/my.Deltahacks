@@ -76,7 +76,7 @@ export default {
         this.admin_password &&
         this.admin_secret
       ) {
-        if (this.admin_password_repeat != this.admin_password) {
+        if (this.admin_password_repeat !== this.admin_password) {
           this.feedback = 'Both passwords need to be identical';
           return;
         }

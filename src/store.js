@@ -18,6 +18,9 @@ export default new Vuex.Store({
     vuex_user_has_applied: false,
     db,
     vuex_user_application: null,
+    DataTable: {
+      lastVisible: null,
+    },
   },
   getters: {
     get_vuex_email(state) {
@@ -37,6 +40,9 @@ export default new Vuex.Store({
     },
     update_vuex_current_user(state, usr) {
       state.vuex_current_user = usr;
+    },
+    update_DataTable_lastVisible(state, change) {
+      state.DataTable.lastVisible = change;
     },
   },
 });
