@@ -10,9 +10,8 @@
       <v-text-field name="email" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
       <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-      <v-text-field name="date" v-model="application.date" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
-      <!-- TODO: add more options to select for None of the above cases (mainly food and hackathon stuff) -->
-      <v-select name="university" @change="formChange" :items="allUniversities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+      <v-text-field name="date" v-model="application.birthday" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+      <v-select name="university" @change="formChange" :items="list_of_universities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
       <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
       <!-- <br>
@@ -60,9 +59,10 @@
         <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
       </v-container>
       <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
+      <!-- careful with modifying these buttons, submit must to be of type submit. -->
       <div class="mx-auto gg">
-        <a href="#" class="button1">Submit</a>&ensp;
-        <a href="#" class="button2">Clear</a>
+        <v-btn type="submit" outline color="blue">Submit</v-btn>
+        <v-btn outline color="red">Clear</v-btn>
       </div>
     </form>
     <v-dialog v-model="loading" persistent width="300">
@@ -140,7 +140,7 @@ export default {
         phone: '',
         emergency_phone: '',
         story: '',
-        date: '',
+        birthday: '',
         documents: [],
       },
       links: ['Home', 'About', 'Contact'],
@@ -228,7 +228,7 @@ export default {
             console.log('saving...');
             this.showInfoMessage('Application progress saved!');
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
             this.loading = false;
           });
@@ -264,7 +264,7 @@ export default {
           this.$router.push({ name: 'Dashboard' });
           this.loading = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           this.loading = false;
         });
@@ -276,8 +276,8 @@ export default {
         storeRef
           .child(`users/${firebase.auth().currentUser.email}/${filename}`)
           .put(file)
-          .then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((url) => {
+          .then(snapshot => {
+            snapshot.ref.getDownloadURL().then(url => {
               resolve({
                 download_link: url,
                 id,
@@ -306,7 +306,7 @@ export default {
           results.push(this.storeFileAndGetInfo(doc));
         }
       }
-      this.application.documents = await Promise.all(results).catch((err) => {
+      this.application.documents = await Promise.all(results).catch(err => {
         console.log(`Upload Failed: ${err}`);
         this.loading = false;
       });
@@ -320,7 +320,7 @@ export default {
       .collection('in progress')
       .doc(firebase.auth().currentUser.email)
       .get()
-      .then((doc) => {
+      .then(doc => {
         if (doc.exists) {
           this.existing_doc = doc;
           this.application = doc.data();
@@ -335,7 +335,7 @@ export default {
 <style scoped>
 .ff {
   margin-top: 5%;
-  width: 30%;
+  width: 40%;
 }
 
 #mlh {
@@ -358,71 +358,5 @@ export default {
 }
 .large {
   font-size: 1.3em !important;
-}
-.button1 {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  background-color: transparent;
-  font-family: sans-serif;
-  border: 1;
-  border-radius: 0;
-  box-shadow: inset 0 0 0 2px #14ffd8;
-  color: #16d0ff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 52px;
-  padding: 0 1.75em;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-.button1:hover,
-.button1:active {
-  box-shadow: inset 0 0 0 2px #017ef2;
-  color: #017ef2;
-  background-color: #22ffda;
-}
-.button2 {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  background-color: transparent;
-  font-family: sans-serif;
-  border: 1;
-  border-radius: 0;
-  box-shadow: inset 0 0 0 2px #ff3c00b7;
-  color: #ff3c00;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 52px;
-  padding: 0 1.75em;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-.button2:hover,
-.button2:active {
-  box-shadow: inset 0 0 0 2px #ff0000;
-  color: #ff0000;
-  background-color: #ff7c4080;
 }
 </style>

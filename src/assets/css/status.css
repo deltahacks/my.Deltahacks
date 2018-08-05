@@ -135,10 +135,10 @@ overflow: hidden;
   overflow: hidden;
   padding: 55px 55px 35px 55px;
   background: #9152f8;
-  background: -webkit-linear-gradient(top, #48c6ef, #6f86d6);
-  background: -o-linear-gradient(top, #48c6ef, #6f86d6);
-  background: -moz-linear-gradient(top, #48c6ef, #6f86d6);
-  background: linear-gradient(top, #48c6ef, #6f86d6);
+  background: -webkit-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
+  background: -o-linear-gradient(top, rgba(72,198,239,0.6),rgba(111,134,214,0.6));
+  background: -moz-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
+  background: linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
 }
 
 .wrap-status200 {

@@ -1,11 +1,8 @@
 <template>
   <v-toolbar class="toolbar">
-    <v-spacer></v-spacer>
-    <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
     <v-toolbar-title id="title">
     </v-toolbar-title>
 
-    <v-spacer></v-spacer>
     <!-- <v-btn>
         <v-badge right color="red" overlap>
           <v-icon slot="badge" dark small>fas fa-exclamation</v-icon>
@@ -22,16 +19,20 @@
     <a href="#" class="button">Contact</a>&ensp;
     <a href="#" class="button">FAQ</a>&ensp;
     <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
     <v-chip color="white" text-color="black" class="clickable">
       <v-avatar>
         <v-icon>account_circle</v-icon>
       </v-avatar>
       {{c_user.email}}
-    </v-chip>
+    </v-chip>&ensp; &ensp;
+    <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
     <!-- <v-chip  class="clickable" @click.prevent="logout" v-if="c_user">
         Logout
       </v-chip> -->
-    <v-spacer></v-spacer>
+    <p>&ensp; &ensp; &ensp;</p>
   </v-toolbar>
 </template>
 
@@ -57,16 +58,19 @@ export default {
           () => {
             this.$router.push({ name: 'Login' });
           },
-          (error) => {
+          error => {
             console.log(error);
-          },
+          }
         );
     },
   },
 };
 </script>
+<<<<<<< HEAD
 <style>
-#title {
+=======
+<style scoped>
+>>>>>>>e3b74737b61b883bd0dbf56b4f9f9315c5a42691 #title {
   font-family: 'Roboto', serif;
   font-weight: 500;
 }
