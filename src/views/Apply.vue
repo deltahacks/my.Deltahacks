@@ -75,7 +75,7 @@
         dark
       >
         <v-card-text>
-          Submitting Application...
+          {{loadingMessage}}
           <v-progress-linear
             indeterminate
             color="white"
@@ -139,6 +139,7 @@ export default {
       bannerColor: 'success',
       bannerMessage: 'Complete!',
       bannerTimeout: 3000,
+      loadingMessage: 'Loading...',
       parent: this,
       picker: null,
       date: '2000-01-01',
@@ -205,6 +206,10 @@ export default {
     handleFilePondInit() {
       console.log('FilePond has initialized');
       // FilePond instance methods are available on `this.$refs.pond`
+    },
+    activateModal(msg) {
+      this.loading = true;
+      this.loadingMessage = msg;
     },
     softValidation() {
       const { email, name } = this.application;
@@ -320,7 +325,7 @@ export default {
         this.showErrorMessage('Applications are limited to three files!');
         return;
       }
-      this.loading = true;
+      this.activateModal('Submitting application...');
       const results = [];
       for (const doc of files) {
         if (doc.fileExtension === 'pdf') {
@@ -335,6 +340,7 @@ export default {
     },
   },
   beforeMount() {
+    this.activateModal('Retrieving user info...');
     this.$store.state.db
       .collection('applications')
       .doc('DH5_Test')
@@ -345,9 +351,15 @@ export default {
         if (doc.exists) {
           this.existing_doc = doc;
           this.application = doc.data();
+          this.loading = false;
         } else {
           console.log('Document not found!');
+          this.loading = false;
         }
+      })
+      .catch((err) => {
+        console.log('User app query failed.');
+        this.loading = false;
       });
   },
 };
