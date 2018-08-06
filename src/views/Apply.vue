@@ -1,6 +1,6 @@
 <template>
   <v-app class="dashboard ">
-		<Navigation/>
+    <Navigation/>
     <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
       <!-- <v-subheader class="large">About You</v-subheader>
       <v-divider></v-divider>
@@ -50,14 +50,14 @@
       <v-divider></v-divider>
       <br>
       <v-container fluid>
-            <v-layout row>
-              <v-flex xs12>
-                <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
-                </v-text-field>
-              </v-flex>
-            </v-layout>
-            <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
-          </v-container>
+        <v-layout row>
+          <v-flex xs12>
+            <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            </v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
+      </v-container>
       <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
       <!-- careful with modifying these buttons, submit must to be of type submit. -->
       <div class="mx-auto gg">
@@ -65,38 +65,26 @@
         <v-btn outline color="red">Clear</v-btn>
       </div>
     </form>
-    <v-dialog
-      v-model="loading"
-      persistent
-      width="300"
-    >
-      <v-card
-        color="primary"
-        dark
-      >
+    <v-dialog v-model="loading" persistent width="300">
+      <v-card color="primary" dark>
         <v-card-text>
+<<<<<<< HEAD
           {{loadingMessage}}
           <v-progress-linear
             indeterminate
             color="white"
             class="mb-0"
           ></v-progress-linear>
+=======
+          Submitting Application...
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+>>>>>>> ddee8fbe7b0c35cb6f5b1432906b83c0a3fb3db6
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-snackbar
-      v-model="feedback"
-      top
-      :color="bannerColor"
-      right
-      :timeout="bannerTimeout"
-    >
+    <v-snackbar v-model="feedback" top :color="bannerColor" right :timeout="bannerTimeout">
       {{bannerMessage}}
-      <v-btn
-        color="white"
-        flat
-        @click="feedback = false"
-      >
+      <v-btn color="white" flat @click="feedback = false">
         Close
       </v-btn>
     </v-snackbar>
@@ -121,7 +109,7 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { list_of_universities } from '../private/data';
+import { allUniversities } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
@@ -145,7 +133,7 @@ export default {
       date: '2000-01-01',
       university: null,
       timeout: null,
-      list_of_universities,
+      allUniversities,
       application: {
         name: '',
         email: '',
@@ -183,7 +171,7 @@ export default {
     email: { required, email },
     select: { required },
     checkbox: { required },
-    university: { in: list_of_universities },
+    university: { in: allUniversities },
   },
   components: {
     Navbar,
@@ -254,7 +242,7 @@ export default {
             console.log('saving...');
             this.showInfoMessage('Application progress saved!');
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
             this.loading = false;
           });
@@ -290,7 +278,7 @@ export default {
           this.$router.push({ name: 'Dashboard' });
           this.loading = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           this.loading = false;
         });
@@ -302,8 +290,8 @@ export default {
         storeRef
           .child(`users/${firebase.auth().currentUser.email}/${filename}`)
           .put(file)
-          .then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((url) => {
+          .then(snapshot => {
+            snapshot.ref.getDownloadURL().then(url => {
               resolve({
                 download_link: url,
                 id,
@@ -332,7 +320,7 @@ export default {
           results.push(this.storeFileAndGetInfo(doc));
         }
       }
-      this.application.documents = await Promise.all(results).catch((err) => {
+      this.application.documents = await Promise.all(results).catch(err => {
         console.log(`Upload Failed: ${err}`);
         this.loading = false;
       });
@@ -347,7 +335,7 @@ export default {
       .collection('in progress')
       .doc(firebase.auth().currentUser.email)
       .get()
-      .then((doc) => {
+      .then(doc => {
         if (doc.exists) {
           this.existing_doc = doc;
           this.application = doc.data();
@@ -378,12 +366,16 @@ export default {
   display: inline-block;
 }
 .section.split {
-  margin-top:3%;
+  margin-top: 3%;
   margin-bottom: 3%;
 }
 .gradient {
-    background: rgb(0,21,36);
-background: linear-gradient(90deg, rgba(0,21,36,0.5494572829131652) 0%, rgba(93,162,198,0.896796218487395) 0%);
+  background: rgb(0, 21, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 21, 36, 0.5494572829131652) 0%,
+    rgba(93, 162, 198, 0.896796218487395) 0%
+  );
 }
 .large {
   font-size: 1.3em !important;

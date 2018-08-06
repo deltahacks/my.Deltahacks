@@ -1,5 +1,6 @@
 <template>
   <div class="limiter">
+
     <head>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     </head>
@@ -10,9 +11,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
           <span class="welcomeheader">
-            <b>
-              <u>DeltaHacks V<br>Log In</u>
-            </b>
+            DeltaHacks
           </span>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
@@ -29,6 +28,7 @@
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
+          <div><br></div>
           <div class="container-login100-form-btn">
             <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/signup">Signup &nbsp;
               <i class="fas fa-user-plus" />
@@ -64,7 +64,7 @@ export default {
             console.log('logged in');
             this.feedback = null;
           })
-          .catch((error) => {
+          .catch(error => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -77,14 +77,16 @@ export default {
       this.$Progress.start();
 
       this.$http
-        .jsonp('http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz')
+        .jsonp(
+          'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz'
+        )
         .then(
-          (response) => {
+          response => {
             this.$Progress.finish();
           },
-          (response) => {
+          response => {
             this.$Progress.fail();
-          },
+          }
         );
     },
   },
