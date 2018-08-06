@@ -67,7 +67,16 @@ export default {
     selectRow(e, props) {
       props.expanded = !props.expanded;
       // update this if you change the size of expand to a % //
-      window.scrollTo(0, e.target.offsetTop + 620);
+      var body = document.body,
+          html = document.documentElement;
+
+      var height = Math.max( body.scrollHeight, body.offsetHeight,
+                            html.clientHeight, html.scrollHeight, html.offsetHeight );
+      if (e.pageY + 620 > height) {
+        window.scrollTo(0, e.pageY + ((e.pageY + 620) - height));
+      } else {
+        window.scrollTo(0, e.pageY + 620);
+      }
     },
     async nextPage() {
       console.log('Page is: ', this.page);

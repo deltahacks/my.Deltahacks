@@ -66,11 +66,8 @@ export default {
   },
 };
 </script>
-<<<<<<< HEAD
-<style>
-=======
 <style scoped>
->>>>>>>e3b74737b61b883bd0dbf56b4f9f9315c5a42691 #title {
+#title{
   font-family: 'Roboto', serif;
   font-weight: 500;
 }

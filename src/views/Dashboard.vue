@@ -58,6 +58,25 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-dialog
+      v-model="loading"
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          {{loadingMessage}}
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -94,6 +113,8 @@ export default {
         'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
       c_user: firebase.auth().currentUser,
       positions: [],
+      loading: false,
+      loadingMessage: 'Loading...',
     };
   },
   components: {
@@ -108,11 +129,12 @@ export default {
     this.$Progress.start();
   },
   mounted() {
+    this.activateModal('Loading hackathon data...');
     db //Change to real users later
       .collection('fake_users')
       .where('is_admin', '==', false)
       .get()
-      .then(doc =>
+      .then(doc => {
         doc.docs.forEach(val => {
           this.positions.push({
             lat: val.data().geo.latitude,
@@ -120,11 +142,13 @@ export default {
           });
           //console.log(val.data().geo);
           this.$Progress.finish();
-        })
-      )
+        });
+        this.loading = false;
+      })
       .catch(err => {
         console.log(err);
         this.$Progress.fail();
+        this.loading = false;
       });
 
     db
@@ -193,6 +217,10 @@ export default {
       } catch (err) {
         console.log('An error occured: ', err);
       }
+    },
+    activateModal(msg = 'Loading...') {
+      this.loading = true;
+      this.loadingMessage = msg;
     },
   },
 };
