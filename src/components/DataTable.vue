@@ -72,10 +72,13 @@ export default {
 
       var height = Math.max( body.scrollHeight, body.offsetHeight,
                             html.clientHeight, html.scrollHeight, html.offsetHeight );
+        console.log(height);
+        console.log(e.pageY);
+        console.log(e.pageY - height);
       if (e.pageY + 620 > height) {
-        window.scrollTo(0, e.pageY + ((e.pageY + 620) - height));
+        window.scrollTo(0, e.pageY + ((e.pageY) - height));
       } else {
-        window.scrollTo(0, e.pageY + 620);
+        window.scrollTo(0, e.pageY);
       }
     },
     async nextPage() {
