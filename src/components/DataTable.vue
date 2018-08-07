@@ -67,14 +67,14 @@ export default {
     selectRow(e, props) {
       props.expanded = !props.expanded;
       // update this if you change the size of expand to a % //
-      var body = document.body,
+      const body = document.body,
           html = document.documentElement;
 
-      var height = Math.max( body.scrollHeight, body.offsetHeight,
+      const height = Math.max( body.scrollHeight, body.offsetHeight,
                             html.clientHeight, html.scrollHeight, html.offsetHeight );
-        console.log(height);
-        console.log(e.pageY);
-        console.log(e.pageY - height);
+      console.log(height);
+      console.log(e.pageY);
+      console.log(e.pageY - height);
       if (e.pageY + 620 > height) {
         window.scrollTo(0, e.pageY + ((e.pageY) - height));
       } else {
@@ -93,6 +93,11 @@ export default {
           .limit(20)
           .startAfter((this.page - 1) * 20)
           .get();
+        // const decisionData = await db
+        //   .collection('decisions')
+        //   .doc('DH5_Test')
+        //   .collection('pending')
+        //   .orderBy()
         this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
         Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
       }

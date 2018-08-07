@@ -44,7 +44,7 @@
           <v-text-field mask="phone" name="emergency phone" label="Emergency contact" v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
         </v-flex>
       </v-container>
-      <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="true" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+      <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
       <br>
       <br>
       <v-divider></v-divider>
@@ -68,17 +68,12 @@
     <v-dialog v-model="loading" persistent width="300">
       <v-card color="primary" dark>
         <v-card-text>
-<<<<<<< HEAD
           {{loadingMessage}}
           <v-progress-linear
             indeterminate
             color="white"
             class="mb-0"
           ></v-progress-linear>
-=======
-          Submitting Application...
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
->>>>>>> ddee8fbe7b0c35cb6f5b1432906b83c0a3fb3db6
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -108,7 +103,7 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { allUniversities } from '../private/data';
+import { list_of_universities } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
@@ -132,7 +127,7 @@ export default {
       date: '2000-01-01',
       university: null,
       timeout: null,
-      allUniversities,
+      list_of_universities,
       application: {
         name: '',
         email: '',
@@ -229,6 +224,9 @@ export default {
       this.bannerColor = 'error';
       this.feedback = true;
     },
+    submitFileInfoOnDrop () {
+
+    },
     setApplicationInProgress() {
       if (this.softValidation()) {
         this.$store.state.db
@@ -314,11 +312,7 @@ export default {
       }
       this.activateModal('Submitting application...');
       const results = [];
-      for (const doc of files) {
-        if (doc.fileExtension === 'pdf') {
-          results.push(this.storeFileAndGetInfo(doc));
-        }
-      }
+      results.push(this.storeFileAndGetInfo(files[0]));
       this.application.documents = await Promise.all(results).catch(err => {
         console.log(`Upload Failed: ${err}`);
         this.loading = false;
