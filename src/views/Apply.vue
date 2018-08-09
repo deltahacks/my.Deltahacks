@@ -44,7 +44,7 @@
           <v-text-field mask="phone" name="emergency phone" label="Emergency contact" v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
         </v-flex>
       </v-container>
-      <file-pond name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+      <file-pond @addfile="submitFileInfoOnDrop" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
       <br>
       <br>
       <v-divider></v-divider>
@@ -103,7 +103,7 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { list_of_universities } from '../private/data';
+import { list_of_universities as allUniversities } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
@@ -127,7 +127,7 @@ export default {
       date: '2000-01-01',
       university: null,
       timeout: null,
-      list_of_universities,
+      allUniversities,
       application: {
         name: '',
         email: '',
@@ -224,8 +224,15 @@ export default {
       this.bannerColor = 'error';
       this.feedback = true;
     },
-    submitFileInfoOnDrop () {
-
+    async submitFileInfoOnDrop () {
+      const files = this.$refs.pond.getFiles();
+      try {
+        const info = await this.storeFileAndGetInfo(files[0])
+        this.application.documents = info;
+        this.setApplicationInProgress();
+      } catch (err) {
+        console.log(err);
+      }
     },
     setApplicationInProgress() {
       if (this.softValidation()) {
@@ -319,9 +326,14 @@ export default {
       });
       this.setApplication();
     },
+    insertUserFileData(doc) {
+      return new Promise((resolve, reject) => {
+        this.$refs.pond.addFile(doc.download_link);
+      });
+    }
   },
   beforeMount() {
-    this.activateModal('Retrieving user info...');
+    this.activateModal('Loading...');
     this.$store.state.db
       .collection('applications')
       .doc('DH5_Test')
@@ -332,6 +344,7 @@ export default {
         if (doc.exists) {
           this.existing_doc = doc;
           this.application = doc.data();
+          // this.insertUserFileData(this.application.documents);
           this.loading = false;
         } else {
           console.log('Document not found!');
