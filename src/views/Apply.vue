@@ -68,17 +68,8 @@
     <v-dialog v-model="loading" persistent width="300">
       <v-card color="primary" dark>
         <v-card-text>
-<<<<<<< HEAD
-          {{loadingMessage}}
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
-=======
           Submitting Application...
           <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
->>>>>>> ddee8fbe7b0c35cb6f5b1432906b83c0a3fb3db6
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -351,11 +342,21 @@ export default {
   },
 };
 </script>
+<style>
 
+</style>
 <style scoped>
-.ff {
-  margin-top: 5%;
-  width: 40%;
+@media screen and (max-width: 500px) {
+  .ff {
+    margin-top: 5%;
+    width: 90%;
+  }
+}
+@media screen and (max-width: 4000px;) {
+  .ff {
+    margin-top: 5%;
+    width: 40%;
+  }
 }
 
 #mlh {
@@ -377,6 +378,7 @@ export default {
   );
 }
 .large {
-  font-size: 1.3em !important;
+  font-size: 10.3em !important;
 }
+
 </style>
