@@ -64,22 +64,10 @@ export default {
         .collection('all')
         .get();
     },
-    selectRow(e, props) {
+    selectRow(e, props) { // this is still kinda janky but seems to work
       props.expanded = !props.expanded;
-      // update this if you change the size of expand to a % //
-      const body = document.body,
-          html = document.documentElement;
-
-      const height = Math.max( body.scrollHeight, body.offsetHeight,
-                            html.clientHeight, html.scrollHeight, html.offsetHeight );
-      console.log(height);
-      console.log(e.pageY);
-      console.log(e.pageY - height);
-      if (e.pageY + 620 > height) {
-        window.scrollTo(0, e.pageY + ((e.pageY) - height));
-      } else {
-        window.scrollTo(0, e.pageY);
-      }
+      const offset = 50 * (props.index - 1);
+      scrollTo(0, screen.height/2 + offset);
     },
     async nextPage() {
       console.log('Page is: ', this.page);

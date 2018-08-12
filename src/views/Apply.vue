@@ -123,6 +123,7 @@ export default {
       bannerTimeout: 3000,
       loadingMessage: 'Loading...',
       parent: this,
+      url: '',
       picker: null,
       date: '2000-01-01',
       university: null,
@@ -327,9 +328,7 @@ export default {
       this.setApplication();
     },
     insertUserFileData(doc) {
-      return new Promise((resolve, reject) => {
-        this.$refs.pond.addFile(doc.download_link);
-      });
+      this.$refs.pond.addFile(doc.download_link);
     }
   },
   beforeMount() {
@@ -353,6 +352,7 @@ export default {
       })
       .catch((err) => {
         console.log('User app query failed.');
+        console.log(err);
         this.loading = false;
       });
   },
