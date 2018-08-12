@@ -66,8 +66,8 @@ export default {
     },
     selectRow(e, props) { // this is still kinda janky but seems to work
       props.expanded = !props.expanded;
-      const offset = 50 * (props.index - 1);
-      scrollTo(0, screen.height/2 + offset);
+      const offset = 50 * (props.index);
+      window.scrollTo(0, (window.screen.height / 2) + offset);
     },
     async nextPage() {
       console.log('Page is: ', this.page);

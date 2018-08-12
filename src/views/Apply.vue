@@ -195,9 +195,9 @@ export default {
       this.loadingMessage = msg;
     },
     softValidation() {
-      const { email, name } = this.application;
+      const { inputEmail, name } = this.application;
 
-      if (email && name) return true;
+      if (inputEmail && name) return true;
       return false;
     },
     toggleCheck() {
@@ -225,10 +225,10 @@ export default {
       this.bannerColor = 'error';
       this.feedback = true;
     },
-    async submitFileInfoOnDrop () {
+    async submitFileInfoOnDrop() {
       const files = this.$refs.pond.getFiles();
       try {
-        const info = await this.storeFileAndGetInfo(files[0])
+        const info = await this.storeFileAndGetInfo(files[0]);
         this.application.documents = info;
         this.setApplicationInProgress();
       } catch (err) {
@@ -247,7 +247,7 @@ export default {
             console.log('saving...');
             this.showInfoMessage('Application progress saved!');
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
             this.loading = false;
           });
@@ -283,7 +283,7 @@ export default {
           this.$router.push({ name: 'Dashboard' });
           this.loading = false;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           this.loading = false;
         });
@@ -295,8 +295,8 @@ export default {
         storeRef
           .child(`users/${firebase.auth().currentUser.email}/${filename}`)
           .put(file)
-          .then(snapshot => {
-            snapshot.ref.getDownloadURL().then(url => {
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
               resolve({
                 download_link: url,
                 id,
@@ -321,7 +321,7 @@ export default {
       this.activateModal('Submitting application...');
       const results = [];
       results.push(this.storeFileAndGetInfo(files[0]));
-      this.application.documents = await Promise.all(results).catch(err => {
+      this.application.documents = await Promise.all(results).catch((err) => {
         console.log(`Upload Failed: ${err}`);
         this.loading = false;
       });
@@ -329,7 +329,7 @@ export default {
     },
     insertUserFileData(doc) {
       this.$refs.pond.addFile(doc.download_link);
-    }
+    },
   },
   beforeMount() {
     this.activateModal('Loading...');
@@ -339,7 +339,7 @@ export default {
       .collection('in progress')
       .doc(firebase.auth().currentUser.email)
       .get()
-      .then(doc => {
+      .then((doc) => {
         if (doc.exists) {
           this.existing_doc = doc;
           this.application = doc.data();
