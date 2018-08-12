@@ -153,4 +153,5 @@ export default {
 .card_title {
   font-weight: 500;
 }
+
 </style>
