@@ -7,9 +7,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
           <span class="welcomeheader">
-            <b>
-              <h2> DeltaHacks V Admin Sign Up</h2>
-            </b>
+              DeltaHacks V Admin Sign Up
           </span>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="admin_email"></v-text-field>
