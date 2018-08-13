@@ -359,10 +359,17 @@ export default {
 </script>
 
 <style scoped>
-@media only screen and (max-width: 4000px) {
+@media only screen and (min-width: 1280px) and (max-width: 4000px) {
     .ff {
     margin-top: 5%;
     width: 40%;
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 1280px) {
+    .ff {
+    margin-top: 5%;
+    width: 70%;
     }
 }
 
