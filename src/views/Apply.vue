@@ -45,6 +45,9 @@
         </v-flex>
       </v-container>
       <file-pond @addfile="submitFileInfoOnDrop" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+      <v-chip class="no border" v-if="editing" outline small color="gray">
+        <!-- <v-icon left>info</v-icon>Submitting another file will replace {{application.documents.filename}} -->
+      </v-chip>
       <br>
       <br>
       <v-divider></v-divider>
@@ -115,6 +118,7 @@ export default {
       myFiles: [],
       loading: false,
       feedback: false,
+      editing: false,
       existing_doc: undefined,
       checkError: undefined,
       pondError: undefined,
@@ -194,12 +198,6 @@ export default {
       this.loading = true;
       this.loadingMessage = msg;
     },
-    softValidation() {
-      const { inputEmail, name } = this.application;
-
-      if (inputEmail && name) return true;
-      return false;
-    },
     toggleCheck() {
       this.checkError = undefined;
     },
@@ -236,40 +234,40 @@ export default {
       }
     },
     setApplicationInProgress() {
-      if (this.softValidation()) {
-        this.$store.state.db
-          .collection('applications')
-          .doc('DH5_Test')
-          .collection('in progress')
-          .doc(firebase.auth().currentUser.email)
-          .set(this.application)
-          .then(() => {
-            console.log('saving...');
-            this.showInfoMessage('Application progress saved!');
-          })
-          .catch((err) => {
-            console.log(err);
-            this.loading = false;
-          });
+      const unixts = Math.round(new Date().getTime() / 1000);
+      this.application.last_modified = {
+          unix: unixts,
+          date: new Date().toString(),
       }
+      this.application.first_submitted = {
+        unix: 0,
+        date: "",
+      }
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('in progress')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          console.log('saving...');
+          this.showInfoMessage('Application progress saved!');
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
     },
     setDateInformation() {
       const unixts = Math.round(new Date().getTime() / 1000);
-      if (this.existing_doc) {
-        this.application.last_modified = {
-          unix: unixts,
-          date: new Date().toString(),
-        };
-      } else {
-        this.application.first_submitted = {
-          unix: unixts,
-          date: new Date().toString(),
-        };
-        this.application.last_modified = {
-          unix: unixts,
-          date: new Date().toString(),
-        };
-      }
+      this.application.first_submitted = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+      this.application.last_modified = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
     },
     setApplication() {
       this.setDateInformation();
@@ -289,6 +287,7 @@ export default {
         });
     },
     storeFileAndGetInfo(doc) {
+      if (!doc) return;
       const { filename, file, id } = doc;
       const storeRef = firebase.storage().ref();
       return new Promise((resolve, reject) => {
@@ -314,17 +313,16 @@ export default {
         return;
       }
       const files = this.$refs.pond.getFiles();
-      if (files.length > 3) {
-        this.showErrorMessage('Applications are limited to three files!');
-        return;
-      }
       this.activateModal('Submitting application...');
+      const resume = files[0];
       const results = [];
-      results.push(this.storeFileAndGetInfo(files[0]));
-      this.application.documents = await Promise.all(results).catch((err) => {
-        console.log(`Upload Failed: ${err}`);
-        this.loading = false;
-      });
+      if (resume) {
+        results.push(this.storeFileAndGetInfo(files[0]));
+        this.application.documents = await Promise.all(results).catch((err) => {
+          console.log(`Upload Failed: ${err}`);
+          this.loading = false;
+        });
+      }
       this.setApplication();
     },
     insertUserFileData(doc) {
@@ -341,12 +339,13 @@ export default {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          this.existing_doc = doc;
+          this.editing = true;
           this.application = doc.data();
           // this.insertUserFileData(this.application.documents);
           this.loading = false;
         } else {
           console.log('Document not found!');
+          this.editing = false;
           this.loading = false;
         }
       })
@@ -385,5 +384,8 @@ export default {
 }
 .large {
   font-size: 1.3em !important;
+}
+.no.border {
+  border: none;
 }
 </style>
