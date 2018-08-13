@@ -1,34 +1,55 @@
 <template>
   <div id="">
     <v-layout row wrap>
-      <v-flex>
+      <v-flex xs12 md6 lg6>
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0">{{ usrname }}</h3>
           </div>
         </v-card-title>
         <v-layout row wrap>
-          <v-flex row wrap xs6>
-            <v-card id="topcard" dark color="white">
-              <v-card-text class="px-0 name">
-                {{ applicant.name }}
-              </v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex row wrap xs6>
-            <v-card id="topcard" dark color="primary">
-              <v-card-text class="px-0 name">{{ applicant.university }}</v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex v-for="i in 3" :key="`4${i}`" xs4>
-            <v-card dark color="primary">
-              <v-card-text class="px-0">4</v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex v-for="i in 4" :key="`3${i}`" xs3>
-            <v-card dark color="secondary">
-              <v-card-text class="px-0">3</v-card-text>
-            </v-card>
+          <v-flex xs12 lg10 mb-3>
+            <v-expansion-panel id="panel" popout>
+              <v-expansion-panel-content>
+                <div slot="header">Basic Info</div>
+                <v-card>
+                  <v-layout row wrap>
+                    <v-flex xs12 md6 lg6>
+                      <v-card-text> Name: </v-card-text>
+                      <v-card-text> Place of study: </v-card-text>
+                      <v-card-text> Year: </v-card-text>
+                      <v-card-text> # of Previous Hackathons: </v-card-text>
+                      <v-card-text> Git Repo: </v-card-text>
+                      <v-card-text> LinkedIn: </v-card-text>
+                      <v-card-text> Website: </v-card-text>
+                      <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <v-card-text>{{ applicant.name }}</v-card-text>
+                      <v-card-text>{{ applicant.university }}</v-card-text>
+                      <v-card-text>{{ applicant.school_year }}</v-card-text>
+                      <v-card-text>{{ applicant.hackathons }}</v-card-text>
+                      <v-card-text><a v-bind:href="applicant.github" target="_blank"> {{ applicant.github }} </a> </v-card-text>
+                      <v-card-text><a v-bind:href="applicant.linkedin" target="_blank"> {{ applicant.linkedin }} </a> </v-card-text>
+                      <v-card-text><a v-bind:href="applicant.website" target="_blank"> {{ applicant.website }} </a> </v-card-text>
+                      <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
+                    </v-flex>
+                  </v-layout>
+                </v-card>
+              </v-expansion-panel-content>
+              <v-expansion-panel-content>
+                <div slot="header">Personal Story</div>
+                <v-card>
+                  <v-card-text>{{ applicant.story }}</v-card-text>
+                </v-card>
+              </v-expansion-panel-content>
+              <v-expansion-panel-content>
+                <div slot="header">Other Content?</div>
+                <v-card>
+                  <v-card-text>{{ applicant.story }}</v-card-text>
+                </v-card>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
           </v-flex>
         </v-layout>
         <vue-slider id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
@@ -136,6 +157,11 @@ i {
   border: solid 2px blue;
   width: 100%;
   height: 100%;
+}
+
+#panel{
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 #slider {

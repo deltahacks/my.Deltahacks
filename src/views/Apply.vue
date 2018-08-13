@@ -359,9 +359,18 @@ export default {
 </script>
 
 <style scoped>
-.ff {
-  margin-top: 5%;
-  width: 40%;
+@media only screen and (max-width: 4000px) {
+    .ff {
+    margin-top: 5%;
+    width: 40%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .ff {
+    margin-top: 5%;
+    width: 90%;
+    }
 }
 
 #mlh {
