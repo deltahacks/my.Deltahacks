@@ -2,7 +2,7 @@
   <v-toolbar dark class="toolbar">
     <div class="text-xs-center, hide">
       <v-menu offset-y>
-        <v-btn slot="activator" color="primary" dark>Menu</v-btn>
+        <v-btn slot="activator" color="grey darken-3" dark open-on-hover="True">Menu</v-btn>
 
         <v-list>
           <v-list-tile to="/status">
