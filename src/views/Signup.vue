@@ -7,9 +7,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
           <span class="welcomeheader">
-            <b>
-              <u>DeltaHacks V Sign Up</u>
-            </b>
+              DeltaHacks V<br> Sign Up
           </span>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="vuex_email"></v-text-field>
