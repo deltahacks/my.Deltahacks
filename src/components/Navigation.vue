@@ -1,6 +1,32 @@
 <template>
   <v-toolbar dark class="toolbar">
+    <div class="text-xs-center, hide">
+      <v-menu offset-y>
+        <v-btn slot="activator" color="primary" dark>Menu</v-btn>
+
+        <v-list>
+          <v-list-tile to="/status">
+            <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/apply">
+            <v-list-tile-title v-if="c_user">Apply Now</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/">
+            <v-list-tile-title>Contact</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/">
+            <v-list-tile-title>FAQ</v-list-tile-title>
+          </v-list-tile>
+
+        </v-list>
+      </v-menu>
+    </div>
+
     <v-spacer></v-spacer>
+
     <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
     <v-toolbar-title id="title">
     </v-toolbar-title>
@@ -23,7 +49,7 @@
       <v-btn flat to="/">FAQ</v-btn>
       <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
     </v-toolbar-items>
-      <v-chip color="white" text-color="black" class="clickable">
+      <v-chip color="white" text-color="black" class="clickable" style="margin: 0px 40px">
         <v-avatar><v-icon>account_circle</v-icon></v-avatar>
         {{c_user.email}}
       </v-chip>
@@ -45,6 +71,11 @@ export default {
       c_user: firebase.auth().currentUser,
       dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
       current: 'DH V',
+      drawer: null,
+      items: [
+        { title: 'Status' },
+        { title: 'Apply Now'}
+      ]
     };
   },
   methods: {
@@ -86,4 +117,10 @@ export default {
 .clickable {
   cursor: pointer;
 }
+@media only screen and (min-width: 700px) {
+  .hide {
+  display: none;
+  }
+}
+
 </style>
