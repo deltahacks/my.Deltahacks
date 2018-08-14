@@ -117,7 +117,7 @@ export default {
 .clickable {
   cursor: pointer;
 }
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 960px) {
   .hide {
   display: none;
   }
