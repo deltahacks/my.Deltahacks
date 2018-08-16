@@ -206,13 +206,13 @@ overflow: hidden;
 .gg {
   display: inline-block;
 }
-@media only screen and (max-width:900px) {
+@media only screen and (max-width:960px) {
   .hide {
     display:none;
   }
 }
 
-@media only screen and (min-width:900px) {
+@media only screen and (min-width:961px) {
   .mobile {
     display:none;
   }
