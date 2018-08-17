@@ -53,13 +53,26 @@
       <v-divider></v-divider>
       <br>
       <v-container fluid>
-        <v-layout row>
+        <v-layout row wrap>
           <v-flex xs12>
+            <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?</p>
             <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            </v-text-field>
+            <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
+          </v-flex>
+          <v-flex xs12>
+            <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
+            <v-text-field multi-line outline name="story2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            </v-text-field>
+            <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
+          </v-flex>
+          <v-divider></v-divider>
+          <v-flex xs12>
+            <p class="text-lg-left">If you could invent a new programming language what would you name it</p>
+            <v-text-field outline name="story2" placeholder="New language name..." v-model="application.story" auto-grow v-validate="{required:true, max:100}" counter=100>
             </v-text-field>
           </v-flex>
         </v-layout>
-        <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
       </v-container>
       <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
       <!-- careful with modifying these buttons, submit must to be of type submit. -->
