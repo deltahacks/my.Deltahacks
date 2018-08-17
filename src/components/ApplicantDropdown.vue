@@ -10,18 +10,18 @@
         <v-layout row wrap>
           <v-flex xs12 lg10 mb-3>
             <v-expansion-panel id="panel" popout>
-              <v-expansion-panel-content>
-                <div slot="header">Basic Info</div>
+              <v-expansion-panel-content v-model="topcard">
+                <div slot="header" class="headline mb-0">Basic Info</div>
                 <v-card>
                   <v-layout row wrap>
                     <v-flex xs12 md6 lg6>
-                      <v-card-text> Name: </v-card-text>
-                      <v-card-text> Place of study: </v-card-text>
-                      <v-card-text> Year: </v-card-text>
-                      <v-card-text> # of Previous Hackathons: </v-card-text>
-                      <v-card-text> Git Repo: </v-card-text>
-                      <v-card-text> LinkedIn: </v-card-text>
-                      <v-card-text> Website: </v-card-text>
+                      <v-card-text><b> Name: </b></v-card-text>
+                      <v-card-text><b> Place of study: </b></v-card-text>
+                      <v-card-text><b> Year: </b></v-card-text>
+                      <v-card-text><b> # of Previous Hackathons: </b></v-card-text>
+                      <v-card-text><b> Git Repo: </b></v-card-text>
+                      <v-card-text><b> LinkedIn: </b></v-card-text>
+                      <v-card-text><b> Website: </b></v-card-text>
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
                     </v-flex>
                     <v-flex xs12 md6 lg6>
@@ -38,13 +38,13 @@
                 </v-card>
               </v-expansion-panel-content>
               <v-expansion-panel-content>
-                <div slot="header">Personal Story</div>
+                <div slot="header" class="headline mb-0">Personal Story</div>
                 <v-card>
                   <v-card-text>{{ applicant.story }}</v-card-text>
                 </v-card>
               </v-expansion-panel-content>
               <v-expansion-panel-content>
-                <div slot="header">Other Content?</div>
+                <div slot="header" class="headline mb-0">Other Content?</div>
                 <v-card>
                   <v-card-text>{{ applicant.story }}</v-card-text>
                 </v-card>
@@ -76,6 +76,7 @@ export default {
   data: () => ({
     currentPage: 0,
     currentUser1: 'yee',
+    topcard: true,
     pageCount: 0,
     status: 0,
     score: 0,
@@ -160,8 +161,8 @@ i {
 }
 
 #panel{
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 #slider {
