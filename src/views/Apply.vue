@@ -66,10 +66,14 @@
             </v-text-field>
             <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
           </v-flex>
-          <v-divider></v-divider>
           <v-flex xs12>
             <p class="text-lg-left">If you could invent a new programming language what would you name it</p>
             <v-text-field outline name="story2" placeholder="New language name..." v-model="application.story" auto-grow v-validate="{required:true, max:100}" counter=100>
+            </v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <p class="text-lg-left">Is there something else you'd like us to know?</p>
+            <v-text-field outline name="story2" placeholder="Is there something else you'd like us to know?" v-model="application.story" auto-grow v-validate="{required:true, max:300}" counter=300>
             </v-text-field>
           </v-flex>
         </v-layout>
