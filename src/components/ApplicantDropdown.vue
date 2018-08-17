@@ -29,9 +29,15 @@
                       <v-card-text>{{ applicant.university }}</v-card-text>
                       <v-card-text>{{ applicant.school_year }}</v-card-text>
                       <v-card-text>{{ applicant.hackathons }}</v-card-text>
-                      <v-card-text><a v-bind:href="applicant.github" target="_blank"> {{ applicant.github }} </a> </v-card-text>
-                      <v-card-text><a v-bind:href="applicant.linkedin" target="_blank"> {{ applicant.linkedin }} </a> </v-card-text>
-                      <v-card-text><a v-bind:href="applicant.website" target="_blank"> {{ applicant.website }} </a> </v-card-text>
+                      <v-card-text>
+                        <a v-bind:href="applicant.github" target="_blank"> {{ applicant.github }} </a>
+                      </v-card-text>
+                      <v-card-text>
+                        <a v-bind:href="applicant.linkedin" target="_blank"> {{ applicant.linkedin }} </a>
+                      </v-card-text>
+                      <v-card-text>
+                        <a v-bind:href="applicant.website" target="_blank"> {{ applicant.website }} </a>
+                      </v-card-text>
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
                     </v-flex>
                   </v-layout>
@@ -62,7 +68,8 @@
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-          <iframe :src="resumeLink" style="width: 100%; height: 900px;"></iframe>
+          <iframe v-if="applicant.documents.download_link" :src="applicant.documents.download_link" style="width: 100%; height: 900px;"></iframe>
+          <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
     </v-layout>
@@ -71,110 +78,110 @@
 <script>
 import vueSlider from 'vue-slider-component';
 export default {
-  name: 'Applicant',
-  props: ['usrname', 'applicant'],
-  data: () => ({
-    currentPage: 0,
-    currentUser1: 'yee',
-    pageCount: 0,
-    status: 0,
-    score: 0,
-    resumeLink:
-      'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
-    cards: [
-      {
-        title: 'Pre-fab homes',
-        flex: 12,
-      },
-      {
-        title: 'Favorite road trips',
-        src: '/static/doc-images/cards/road.jpg',
-        flex: 6,
-      },
-      {
-        title: 'Best airlines',
-        src: '/static/doc-images/cards/plane.jpeg',
-        flex: 6,
-      },
-    ],
-  }),
-  components: {
-    vueSlider,
-  },
-  methods: {
-    async updateApplicationScore() {
-      console.log('Updating score', this.$store.state.test);
-      try {
-        let userApplication = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
-          .get();
-
-        let aaa = this.$store.state.test;
-        console.log(
-          aaa,
-          this.$store.state.firebase.auth().currentUser.email,
-          userApplication.data().reviewers
-        );
-
-        let reviews = userApplication.data().reviews + 1;
-        let reviewers = userApplication.data().reviewers;
-        reviewers.push({
-          score: this.score,
-          reviewer: this.$store.state.firebase.auth().currentUser.email,
-        });
-        let uploadScore = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
-          .update({ reviews, reviewers });
-      } catch (err) {
-        console.log('Error getting user app: ', err);
-      }
+    name: 'Applicant',
+    props: ['usrname', 'applicant'],
+    data: () => ({
+        currentPage: 0,
+        currentUser1: 'yee',
+        pageCount: 0,
+        status: 0,
+        score: 0,
+        resumeLink:
+            'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
+        cards: [
+            {
+                title: 'Pre-fab homes',
+                flex: 12,
+            },
+            {
+                title: 'Favorite road trips',
+                src: '/static/doc-images/cards/road.jpg',
+                flex: 6,
+            },
+            {
+                title: 'Best airlines',
+                src: '/static/doc-images/cards/plane.jpeg',
+                flex: 6,
+            },
+        ],
+    }),
+    components: {
+        vueSlider,
     },
-  },
+    methods: {
+        async updateApplicationScore() {
+            console.log('Updating score', this.$store.state.test);
+            try {
+                let userApplication = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(this.applicant.email)
+                    .get();
+
+                let aaa = this.$store.state.test;
+                console.log(
+                    aaa,
+                    this.$store.state.firebase.auth().currentUser.email,
+                    userApplication.data().reviewers
+                );
+
+                let reviews = userApplication.data().reviews + 1;
+                let reviewers = userApplication.data().reviewers;
+                reviewers.push({
+                    score: this.score,
+                    reviewer: this.$store.state.firebase.auth().currentUser.email,
+                });
+                let uploadScore = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(this.applicant.email)
+                    .update({ reviews, reviewers });
+            } catch (err) {
+                console.log('Error getting user app: ', err);
+            }
+        },
+    },
 };
 </script>
 
 <style scoped>
 i {
-  font-size: 3em;
-  margin: 10px 20px;
+    font-size: 3em;
+    margin: 10px 20px;
 }
 
 #datacard {
-  height: 900px;
+    height: 900px;
 }
 
 #maind {
-  border: solid 2px black;
+    border: solid 2px black;
 }
 
 #contain {
-  border: solid 2px blue;
-  width: 100%;
-  height: 100%;
+    border: solid 2px blue;
+    width: 100%;
+    height: 100%;
 }
 
-#panel{
-  margin-left: 5%;
-  margin-right: 5%;
+#panel {
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 #slider {
-  margin-left: 5%;
-  margin-right: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .name {
-  font-size: 2em;
-  color: black;
+    font-size: 2em;
+    color: black;
 }
 
 #topcard {
-  height: 200px;
+    height: 200px;
 }
 </style>
