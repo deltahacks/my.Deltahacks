@@ -275,13 +275,13 @@ export default {
     setApplicationInProgress() {
       const unixts = Math.round(new Date().getTime() / 1000);
       this.application.last_modified = {
-          unix: unixts,
-          date: new Date().toString(),
-      }
+        unix: unixts,
+        date: new Date().toString(),
+      };
       this.application.first_submitted = {
         unix: 0,
-        date: "",
-      }
+        date: '',
+      };
       this.$store.state.db
         .collection('applications')
         .doc('DH5_Test')
@@ -375,13 +375,13 @@ export default {
       ref.q3 = ref.q3 ? ref.q3 : '';
       ref.q4 = ref.q4 ? ref.q4 : '';
     },
-    getUserAppStatus(email) {
+    getUserAppStatus(userEmail) {
       return new Promise((resolve, reject) => {
         this.$store.state.db
           .collection('applications')
           .doc('DH5_Test')
           .collection('submitted')
-          .doc(email)
+          .doc(userEmail)
           .get()
           .then((doc) => {
             resolve(doc.exists);
@@ -392,15 +392,15 @@ export default {
   },
   beforeMount() {
     this.activateModal('Loading...');
-    const email = firebase.auth().currentUser.email;
+    const userEmail = firebase.auth().currentUser.email;
     this.$store.state.db
       .collection('applications')
       .doc('DH5_Test')
       .collection('in progress')
-      .doc(email)
+      .doc(userEmail)
       .get()
       .then(async (doc) => {
-        const submitted = await this.getUserAppStatus(email);
+        const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
           this.submitted = true;
