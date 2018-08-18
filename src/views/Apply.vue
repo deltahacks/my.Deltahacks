@@ -5,49 +5,51 @@
       <!-- <v-subheader class="large">About You</v-subheader>
       <v-divider></v-divider>
       <br> -->
-      <v-text-field name="name" autocomplete="off" v-model="application.name" label="What is your full name?" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+      <v-text-field name="name" :disabled="submitted" autocomplete="off" v-model="application.name" label="What is your full name?" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
       <!-- find a better way of including this in form -->
-      <v-text-field name="email" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="8000"></v-text-field>
+      <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field>
       <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-      <v-text-field name="date" v-model="application.birthday" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
-      <v-select name="university" @change="formChange" :items="allUniversities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
-      <v-select name="year" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
+      <v-text-field name="date" :disabled="submitted" v-model="application.birthday" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+      <v-select name="university" :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+      <v-select name="year" :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
       </v-select>
       <!-- <br>
       <v-subheader class="large">Hackathon Info</v-subheader>
       <v-divider></v-divider>
       <br> -->
-      <v-select v-model="application.shirt_size" @change="formChange" :items="shirts" label="What's your shirt size?" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
+      <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" label="What's your shirt size?" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.dietry_restrictions" @change="formChange" :items="food" label="Any dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+      <v-select v-model="application.dietry_restrictions" :disabled="submitted" @change="formChange" :items="food" label="Any dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
       </v-select>
-      <v-select v-model="application.hackathons" @change="formChange" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
+      <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
       </v-select>
       <!-- <br>
       <v-subheader class="large">Portfolio & Contact</v-subheader>
       <v-divider></v-divider>
       <br> -->
-      <v-text-field name="github" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
+      <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
       </v-text-field>
-      <v-text-field name="linkedin" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
+      <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
       </v-text-field>
-      <v-text-field name="website" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
+      <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
       </v-text-field>
       <v-container d-inline-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="phone" label="You cell phone number" v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+          <v-text-field mask="phone" :disabled="submitted" name="phone" label="You cell phone number" v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
         </v-flex>
         <v-flex xs4>
         </v-flex>
         <v-flex xs6 sm6>
-          <v-text-field mask="phone" name="emergency phone" label="Emergency contact" v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+          <v-text-field mask="phone" :disabled="submitted" name="emergency phone" label="Emergency contact" v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
         </v-flex>
       </v-container>
-      <file-pond @addfile="submitFileInfoOnDrop" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
-      <v-chip class="no border" v-if="editing" outline small color="gray">
-        <!-- <v-icon left>info</v-icon>Submitting another file will replace {{application.documents.filename}} -->
-      </v-chip>
+      <div id="filePondContainer">
+        <file-pond @addfile="submitFileInfoOnDrop" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+        <v-chip class="no border" v-if="editing" outline small color="gray">
+          <v-icon left>info</v-icon>We've got your file "{{application.documents.filename}}"
+        </v-chip>
+      </div>
       <br>
       <br>
       <v-divider></v-divider>
@@ -55,17 +57,17 @@
       <v-container fluid>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            <v-text-field multi-line outline name="story" :disabled="submitted" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
             </v-text-field>
           </v-flex>
         </v-layout>
         <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
       </v-container>
-      <v-checkbox name="agreement" @click="toggleCheck" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
+      <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
       <!-- careful with modifying these buttons, submit must to be of type submit. -->
       <div class="mx-auto gg">
-        <v-btn type="submit" outline color="blue">Submit</v-btn>
-        <v-btn outline color="red">Clear</v-btn>
+        <v-btn type="submit" outline color="blue" :disabled="submitted">Submit</v-btn>
+        <v-btn outline color="red" :disabled="submitted">Clear</v-btn>
       </div>
     </form>
     <v-dialog v-model="loading" persistent width="300">
@@ -129,13 +131,14 @@ export default {
       parent: this,
       url: '',
       picker: null,
+      submitted: false,
       date: '2000-01-01',
       university: null,
       timeout: null,
       allUniversities,
       application: {
         name: '',
-        email: '',
+        email: firebase.auth().currentUser.email,
         last_modified: undefined,
         first_submitted: undefined,
         school_year: null,
@@ -226,6 +229,10 @@ export default {
     async submitFileInfoOnDrop() {
       const files = this.$refs.pond.getFiles();
       try {
+        if (this.submitted) {
+          this.$refs.pond.removeFile(0);
+          return;
+        }
         const info = await this.storeFileAndGetInfo(files[0]);
         this.application.documents = info;
         this.setApplicationInProgress();
@@ -312,6 +319,7 @@ export default {
         this.checkError = 'Please accept the terms and conditions to continue.';
         return;
       }
+
       const files = this.$refs.pond.getFiles();
       this.activateModal('Submitting application...');
       const resume = files[0];
@@ -328,17 +336,38 @@ export default {
     insertUserFileData(doc) {
       this.$refs.pond.addFile(doc.download_link);
     },
+    getUserAppStatus(email) {
+      return new Promise((resolve, reject) => {
+        this.$store.state.db
+          .collection('applications')
+          .doc('DH5_Test')
+          .collection('submitted')
+          .doc(email)
+          .get()
+          .then((doc) => {
+            resolve(doc.exists);
+          })
+          .catch(err => reject(err));
+      });
+    },
   },
   beforeMount() {
     this.activateModal('Loading...');
+    const email = firebase.auth().currentUser.email;
     this.$store.state.db
       .collection('applications')
       .doc('DH5_Test')
       .collection('in progress')
-      .doc(firebase.auth().currentUser.email)
+      .doc(email)
       .get()
-      .then((doc) => {
-        if (doc.exists) {
+      .then(async (doc) => {
+        const submitted = await this.getUserAppStatus(email);
+        if (submitted) {
+          this.editing = true;
+          this.submitted = true;
+          this.application = doc.data();
+          this.loading = false;
+        } else if (doc.exists) {
           this.editing = true;
           this.application = doc.data();
           // this.insertUserFileData(this.application.documents);
