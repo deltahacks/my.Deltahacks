@@ -45,9 +45,9 @@
         </v-flex>
       </v-container>
       <div id="filePondContainer">
-        <file-pond @addfile="submitFileInfoOnDrop" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
-        <v-chip class="no border" v-if="editing" outline small color="gray">
-          <v-icon left>info</v-icon>We've got your file "{{application.documents.filename}}"
+        <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+        <v-chip class="no border" style="float:left" v-if="haveFile" outline small color="gray">
+          <v-icon left>info</v-icon>We've got your file "<a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
         </v-chip>
       </div>
       <br>
@@ -55,13 +55,30 @@
       <v-divider></v-divider>
       <br>
       <v-container fluid>
-        <v-layout row>
+        <v-layout row wrap>
           <v-flex xs12>
-            <v-text-field multi-line outline name="story" :disabled="submitted" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?</p>
+            <v-text-field multi-line outline :disabled="submitted" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+            </v-text-field>
+            <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="14"></v-progress-linear>
+          </v-flex>
+          <v-flex xs12>
+            <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
+            <v-text-field :disabled="submitted" multi-line outline name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
+            </v-text-field>
+            <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="14"></v-progress-linear>
+          </v-flex>
+          <v-flex xs12>
+            <p class="text-lg-left">If you could invent a new programming language what would you name it</p>
+            <v-text-field :disabled="submitted" outline name="q3" placeholder="New language name..." v-model="application.q3" auto-grow v-validate="{required:true, max:100}" counter=100>
+            </v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <p class="text-lg-left">Is there something else you'd like us to know?</p>
+            <v-text-field :disabled="submitted" outline name="q4" placeholder="Is there something else you'd like us to know?" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300>
             </v-text-field>
           </v-flex>
         </v-layout>
-        <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
       </v-container>
       <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
       <!-- careful with modifying these buttons, submit must to be of type submit. -->
@@ -151,12 +168,18 @@ export default {
         website: '',
         phone: '',
         emergency_phone: '',
-        story: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
         birthday: '',
         documents: [],
       },
       links: ['Home', 'About', 'Contact'],
-      story: '',
+      q1: '',
+      q2: '',
+      q3: '',
+      q4: '',
       custom: true,
       name: '',
       email: '',
@@ -182,14 +205,23 @@ export default {
     Navigation,
   },
   computed: {
-    progress() {
-      return Math.min(100, this.application.story.length / 5);
+    q1Progress() {
+      return Math.min(100, this.application.q1.length / 5);
     },
-    color() {
-      return ['error', 'warning', 'success'][Math.floor(this.progress / 40)];
+    q2Progress() {
+      return Math.min(100, this.application.q2.length / 5);
+    },
+    q1Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
+    },
+    q2Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
     },
     currentUser() {
       return firebase.auth().currentUser;
+    },
+    haveFile() {
+      return this.editing && this.application.documents.filename;
     },
   },
   methods: {
@@ -336,6 +368,13 @@ export default {
     insertUserFileData(doc) {
       this.$refs.pond.addFile(doc.download_link);
     },
+    fillApplicationFields() {
+      const ref = this.application;
+      ref.q1 = ref.q1 ? ref.q1 : '';
+      ref.q2 = ref.q2 ? ref.q2 : '';
+      ref.q3 = ref.q3 ? ref.q3 : '';
+      ref.q4 = ref.q4 ? ref.q4 : '';
+    },
     getUserAppStatus(email) {
       return new Promise((resolve, reject) => {
         this.$store.state.db
@@ -365,11 +404,14 @@ export default {
         if (submitted) {
           this.editing = true;
           this.submitted = true;
+          console.log(doc.data());
           this.application = doc.data();
+          this.fillApplicationFields();
           this.loading = false;
         } else if (doc.exists) {
           this.editing = true;
           this.application = doc.data();
+          this.fillApplicationFields();
           // this.insertUserFileData(this.application.documents);
           this.loading = false;
         } else {
@@ -388,10 +430,17 @@ export default {
 </script>
 
 <style scoped>
-@media only screen and (max-width: 4000px) {
+@media only screen and (min-width: 1280px) and (max-width: 4000px) {
     .ff {
     margin-top: 5%;
     width: 40%;
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 1280px) {
+    .ff {
+    margin-top: 5%;
+    width: 70%;
     }
 }
 
