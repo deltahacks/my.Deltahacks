@@ -56,24 +56,24 @@
         <v-layout row wrap>
           <v-flex xs12>
             <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?</p>
-            <v-text-field multi-line outline name="story" placeholder="Tell us about a project you've worked on recently..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            <v-text-field multi-line outline name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
             </v-text-field>
             <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
           </v-flex>
           <v-flex xs12>
             <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
-            <v-text-field multi-line outline name="story2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.story" auto-grow v-validate="{required:true, max:500}" counter=500>
+            <v-text-field multi-line outline name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
             </v-text-field>
             <v-progress-linear v-if="custom" slot="progress" :value="progress" :color="color" height="14"></v-progress-linear>
           </v-flex>
           <v-flex xs12>
             <p class="text-lg-left">If you could invent a new programming language what would you name it</p>
-            <v-text-field outline name="story2" placeholder="New language name..." v-model="application.story" auto-grow v-validate="{required:true, max:100}" counter=100>
+            <v-text-field outline name="q3" placeholder="New language name..." v-model="application.q3" auto-grow v-validate="{required:true, max:100}" counter=100>
             </v-text-field>
           </v-flex>
           <v-flex xs12>
             <p class="text-lg-left">Is there something else you'd like us to know?</p>
-            <v-text-field outline name="story2" placeholder="Is there something else you'd like us to know?" v-model="application.story" auto-grow v-validate="{required:true, max:300}" counter=300>
+            <v-text-field outline name="q4" placeholder="Is there something else you'd like us to know?" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300>
             </v-text-field>
           </v-flex>
         </v-layout>
@@ -165,12 +165,18 @@ export default {
         website: '',
         phone: '',
         emergency_phone: '',
-        story: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
         birthday: '',
         documents: [],
       },
       links: ['Home', 'About', 'Contact'],
-      story: '',
+      q1: '',
+      q2: '',
+      q3: '',
+      q4: '',
       custom: true,
       name: '',
       email: '',
@@ -197,7 +203,7 @@ export default {
   },
   computed: {
     progress() {
-      return Math.min(100, this.application.story.length / 5);
+      return Math.min(100, this.application.q1.length / 5);
     },
     color() {
       return ['error', 'warning', 'success'][Math.floor(this.progress / 40)];
