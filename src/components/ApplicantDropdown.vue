@@ -60,13 +60,13 @@
               <v-expansion-panel-content>
                 <div slot="header" class="headline mb-0">Personal Story</div>
                 <v-card>
-                  <v-card-text>{{ applicant.story }}</v-card-text>
+                  <v-card-text>{{ applicant.q1 }}</v-card-text>
                 </v-card>
               </v-expansion-panel-content>
               <v-expansion-panel-content>
                 <div slot="header" class="headline mb-0">Other Content?</div>
                 <v-card>
-                  <v-card-text>{{ applicant.story }}</v-card-text>
+                  <v-card-text>{{ applicant.q2 }}</v-card-text>
                 </v-card>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -91,6 +91,7 @@
 </template>
 <script>
 import vueSlider from 'vue-slider-component';
+
 export default {
     name: 'Applicant',
     props: ['usrname', 'applicant'],
@@ -127,32 +128,36 @@ export default {
         async updateApplicationScore() {
             console.log('Updating score', this.$store.state.test);
             try {
-                let userApplication = await this.$store.state.db
+                const userApplication = await this.$store.state.db
                     .collection('decisions')
                     .doc('DH5')
                     .collection('pending')
                     .doc(this.applicant.email)
                     .get();
 
-                let aaa = this.$store.state.test;
+                const aaa = this.$store.state.test;
                 console.log(
                     aaa,
                     this.$store.state.firebase.auth().currentUser.email,
-                    userApplication.data().reviewers
+                    userApplication.data().decision
                 );
-
-                let reviews = userApplication.data().reviews + 1;
-                let reviewers = userApplication.data().reviewers;
+                const decision = { ...userApplication.data().decision };
+                const reviews = userApplication.data().decision.reviews + 1;
+                const reviewers = userApplication.data().decision.reviewers;
                 reviewers.push({
                     score: this.score,
                     reviewer: this.$store.state.firebase.auth().currentUser.email,
                 });
-                let uploadScore = await this.$store.state.db
+                decision.reviews = reviews;
+                decision.reviewers = reviewers;
+                console.log('decision', decision);
+                const uploadScore = await this.$store.state.db
                     .collection('decisions')
                     .doc('DH5')
                     .collection('pending')
                     .doc(this.applicant.email)
-                    .update({ reviews, reviewers });
+                    .update({ decision });
+                console.log('Review sent: ', uploadScore);
             } catch (err) {
                 console.log('Error getting user app: ', err);
             }

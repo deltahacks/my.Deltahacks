@@ -58,9 +58,9 @@ export default {
           () => {
             this.$router.push({ name: 'Login' });
           },
-          error => {
+          (error) => {
             console.log(error);
-          }
+          },
         );
     },
   },

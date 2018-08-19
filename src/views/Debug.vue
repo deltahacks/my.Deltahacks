@@ -12,15 +12,15 @@ import firebase from 'firebase';
 import functions from 'firebase/functions';
 
 export default {
-    name: 'Signup',
-    data: () => ({
-        drawer: null,
-    }),
-    methods: {
-        tester() {
-            console.log(this.vuex_email);
-        },
+  name: 'Signup',
+  data: () => ({
+    drawer: null,
+  }),
+  methods: {
+    tester() {
+      console.log(this.vuex_email);
     },
+  },
 };
 </script>
 <style scoped>
