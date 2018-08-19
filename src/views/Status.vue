@@ -41,7 +41,6 @@
           </v-stepper>
         </div>
       </div>
-      
     </div>
   </v-app>
 </template>
@@ -118,11 +117,10 @@ export default {
   computed: {},
   methods: {},
   mounted() {
-    console.log(auth().currentUser.email);
-    const email = auth().currentUser.email;
+    const appEmail = auth().currentUser.email;
     this.$store.state.db
       .collection('users')
-      .doc(email)
+      .doc(appEmail)
       .get()
       .then((doc) => {
         if (doc.exists) {
