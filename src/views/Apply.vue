@@ -7,7 +7,7 @@
       <br> -->
       <v-text-field name="name" :disabled="submitted" autocomplete="off" v-model="application.name" label="What is your full name?" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
       <!-- find a better way of including this in form -->
-      <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field>
+      <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
       <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
       <v-text-field name="date" :disabled="submitted" v-model="application.birthday" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
