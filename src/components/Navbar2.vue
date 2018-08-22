@@ -11,18 +11,40 @@
           </v-icon>
         </v-badge>
       </v-btn> -->
-    <a href="/status" class="button">Status</a>&ensp;
-    <a href="/apply" class="button">Apply Now</a>&ensp;
-    <!-- <v-btn flat to="/status" v-if="c_user" >Status</v-btn> -->
-    <a href="/signup" class="button">Signup</a>&ensp;
-    <!-- <v-btn flat to="/login" v-if="!c_user">Login</v-btn> -->
-    <a href="#" class="button">Contact</a>&ensp;
-    <a href="#" class="button">FAQ</a>&ensp;
-    <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
+      <v-btn flat to="/status" v-if="c_user" class="button hide">Status</v-btn>
+      <v-btn flat to="/apply" v-if="c_user" class="button hide">Apply Now</v-btn>
+      <v-btn flat to="/signup" v-if="!c_user" class="button hide">Signup</v-btn>
+      <v-btn flat to="/login" v-if="!c_user" class="button hide">Login</v-btn>
+      <v-btn flat to="/" class="button hide">Contact</v-btn>
+      <v-btn flat to="/" class="button hide">FAQ</v-btn>
+    <div class="text-xs-center, mobile">
+      <v-menu offset-y>
+        <v-btn flat slot="activator" class="button">Menus</v-btn>&ensp;
+
+        <v-list>
+          <v-list-tile to="/status">
+            <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/apply">
+            <v-list-tile-title v-if="c_user">Apply Now</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/">
+            <v-list-tile-title>Contact</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/">
+            <v-list-tile-title>FAQ</v-list-tile-title>
+          </v-list-tile>
+
+        </v-list>
+      </v-menu>
+    </div>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-chip color="white" text-color="black" class="clickable">
+    <v-chip color="white" text-color="black" class="clickable hide">
       <v-avatar>
         <v-icon>account_circle</v-icon>
       </v-avatar>
@@ -83,6 +105,29 @@ export default {
 .smaller.delta {
   width: 2%;
   height: auto;
+  position: relative;
+  margin-right: 50px
+
+}
+
+@media only screen and (max-width:960px) {
+  .smaller.delta {
+  width: 2%;
+  height: auto;
+  position: relative;
+  margin-right: 140px
+
+}
+}
+
+@media only screen and (max-width:630px) {
+  .smaller.delta {
+  width: 2%;
+  height: auto;
+  position: relative;
+  margin-right: 80px
+
+}
 }
 .clickable {
   cursor: pointer;
@@ -103,23 +148,36 @@ export default {
   background-color: transparent;
   font-family: sans-serif;
   border: 1;
-  border-radius: 0;
+  border-radius: 200px;
   box-shadow: inset 0 0 0 2px #fff;
   color: #fff;
   cursor: pointer;
   /* display: inline-block; */
   font-size: 15px;
   font-weight: 600;
-  line-height: 52px;
-  padding: 0 1.75em;
+  line-height: 42px;
+  padding: 0 1.25em;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  border-bottom: 10px
 }
 .button:hover,
 .button:active {
-  box-shadow: inset 0 0 0 2px #017ef2;
+  box-shadow:  0 0 0 2px #017ef2;
   color: #017ef2;
   background-color: transparent;
+}
+
+@media only screen and (max-width:960px) {
+  .hide {
+    display:none;
+  }
+}
+
+@media only screen and (min-width:961px) {
+  .mobile {
+    display:none;
+  }
 }
 </style>
