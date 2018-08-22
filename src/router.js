@@ -15,7 +15,6 @@ import v404 from './views/404.vue';
 import AdminSignup from './views/AdminSignup.vue';
 import Accepted from './components/Accepted.vue';
 import Rejected from './components/Rejected.vue';
-import Debug from './views/Debug.vue';
 
 Vue.use(Router);
 
@@ -59,11 +58,6 @@ const router = new Router({
       path: '/playground',
       name: 'Playground',
       component: Playground,
-    },
-    {
-      path: '/debug',
-      name: 'Debug',
-      component: Debug,
     },
     {
       path: '/404',
