@@ -1,6 +1,7 @@
 <template>
-  <v-app class="dashboard ">
-    <Navigation/>
+  <v-app class="dashboard background" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+    <Navbar2 class="navbar1" />
+    <div class='container-status100'>
     <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
       <!-- <v-subheader class="large">About You</v-subheader>
       <v-divider></v-divider>
@@ -102,6 +103,7 @@
         Close
       </v-btn>
     </v-snackbar>
+    </div>
     <!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg" alt="Major League Hacking 2019 Hackathon Season" style="width:100%"></a> -->
   </v-app>
 </template>
@@ -117,6 +119,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import debounce from 'debounce';
 import Navbar from '@/components/Navbar.vue';
 import Navigation from '@/components/Navigation.vue';
+import Navbar2 from '@/components/Navbar2.vue'
 import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
@@ -197,6 +200,7 @@ export default {
         Footer,
         FilePond,
         Navigation,
+        Navbar2
     },
     computed: {
         q1Progress() {
@@ -468,5 +472,49 @@ export default {
 }
 .no.border {
     border: none;
+}
+
+.background{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+   background-color: rgba(255,255,255,0.8);
+  }
+  .navbar1 {
+  z-index: 0;
+  background-color: rgba(255,255,255,0.8);
+}
+.container-status100 {
+  width: 100%;  
+height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  padding-bottom: 0px;
+overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 1;  
+}
+
+.container-status100::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255,255,255,0.8);
 }
 </style>
