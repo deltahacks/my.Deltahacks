@@ -15,6 +15,7 @@ import v404 from './views/404.vue';
 import AdminSignup from './views/AdminSignup.vue';
 import Accepted from './components/Accepted.vue';
 import Rejected from './components/Rejected.vue';
+import FAQ from './views/FAQ.vue';
 
 Vue.use(Router);
 
@@ -78,6 +79,11 @@ const router = new Router({
       path: '/rejected',
       name: 'Rejected',
       component: Rejected,
+    },
+    {
+      path: '/FAQ',
+      name: 'FAQ',
+      component: FAQ,
     },
   ],
 });
