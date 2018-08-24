@@ -27,14 +27,15 @@
 
 <script>
 
-    import Navbar2 from '@/components/Navbar2.vue'
+import Navbar2 from '@/components/Navbar2.vue';
+
 export default {
 
-    components: {
-        Navbar2
-    },
-    
-}
+  components: {
+    Navbar2,
+  },
+
+};
 
 </script>
 
@@ -44,7 +45,7 @@ export default {
     margin: 0 auto;
     margin-top: -25%;
     width: 70%;
-    
+
 }
 .question {
     font-weight: bold;
@@ -63,7 +64,7 @@ export default {
   background-color: rgba(255,255,255,0.8);
 }
 .container-status100 {
-  width: 100%;  
+  width: 100%;
 height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -80,7 +81,7 @@ overflow: hidden;
   background-position: center;
   background-size: cover;
   position: relative;
-  z-index: 1;  
+  z-index: 1;
 }
 
 .container-status100::before {
@@ -93,7 +94,7 @@ overflow: hidden;
   top: 0;
   left: 0;
   background-color: rgba(255,255,255,0.8);
-} 
+}
 .panel {
     background-color: rgba(255,255,255,0.8);
 }
