@@ -18,11 +18,11 @@
       <v-btn flat to="/login" v-if="!c_user" class="button hide">Login</v-btn>
       <v-btn flat to="/" class="button hide">Contact</v-btn>
       <v-btn flat to="/FAQ" class="button hide">FAQ</v-btn>
-    <div class="text-xs-center mobile menu" >
+    <div class="text-xs-center mobile"  >
       <v-menu offset-y>
-        <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
+        <v-btn flat slot="activator" class="button menu" right>Menu</v-btn>&ensp;
 
-        <v-list>
+        <v-list style='background:transparent'>
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
           </v-list-tile>
@@ -107,7 +107,7 @@ export default {
   width: 2%;
   height: auto;
   position: relative;
-  margin-right: 500px
+  margin-right: 50px
 
 }
 
@@ -115,18 +115,20 @@ export default {
   .smaller.delta {
   width: 2%;
   height: auto;
-  position: relative;
-  margin-right: 140px
+/*   position: relative;
+  margin-right: 140px;
+  margin-left: -60px;
+  padding-right: 80%; */
 
 }
 }
 
-@media only screen and (max-width:630px) {
+@media only screen and (max-width:640px) {
   .smaller.delta {
   width: 2%;
   height: auto;
-  position: relative;
-  margin-right: 120px
+  /* position: relative;
+  margin-right: 120px */
 
 }
 }
@@ -186,7 +188,9 @@ export default {
 }
 
 .menu {
-  color: red;
-  left: 1%;
+  position: absolute;
+  float: right;
+  margin-top: -10px;
+  margin-left: 80%;
 }
 </style>
