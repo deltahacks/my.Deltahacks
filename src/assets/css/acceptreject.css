@@ -69,8 +69,8 @@ h2{color: white;
     margin: 20px;
     overflow: hidden;
     box-shadow: 0 60px 80px 0 rgba(0,0,0,.4);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    /* border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; */
 }
 .modal-top {
   overflow: hidden;
@@ -80,8 +80,8 @@ h2{color: white;
   background: -moz-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
     padding: 30px 30px 20px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    /* border-top-left-radius: 10px;
+    border-top-right-radius: 10px; */
 }
 .modal-icon {
     display: block;
