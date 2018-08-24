@@ -11,15 +11,16 @@
           </v-icon>
         </v-badge>
       </v-btn> -->
+          <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
       <v-btn flat to="/status" v-if="c_user" class="button hide">Status</v-btn>
       <v-btn flat to="/apply" v-if="c_user" class="button hide">Apply Now</v-btn>
       <v-btn flat to="/signup" v-if="!c_user" class="button hide">Signup</v-btn>
       <v-btn flat to="/login" v-if="!c_user" class="button hide">Login</v-btn>
       <v-btn flat to="/" class="button hide">Contact</v-btn>
-      <v-btn flat to="/" class="button hide">FAQ</v-btn>
-    <div class="text-xs-center, mobile">
+      <v-btn flat to="/FAQ" class="button hide">FAQ</v-btn>
+    <div class="text-xs-center mobile menu" >
       <v-menu offset-y>
-        <v-btn flat slot="activator" class="button">Menus</v-btn>&ensp;
+        <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
 
         <v-list>
           <v-list-tile to="/status">
@@ -50,7 +51,7 @@
       </v-avatar>
       {{c_user.email}}
     </v-chip>&ensp; &ensp;
-    <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
+
     <!-- <v-chip  class="clickable" @click.prevent="logout" v-if="c_user">
         Logout
       </v-chip> -->
@@ -106,7 +107,7 @@ export default {
   width: 2%;
   height: auto;
   position: relative;
-  margin-right: 50px
+  margin-right: 500px
 
 }
 
@@ -125,7 +126,7 @@ export default {
   width: 2%;
   height: auto;
   position: relative;
-  margin-right: 80px
+  margin-right: 120px
 
 }
 }
@@ -152,7 +153,6 @@ export default {
   box-shadow: inset 0 0 0 2px #fff;
   color: #fff;
   cursor: pointer;
-  /* display: inline-block; */
   font-size: 15px;
   font-weight: 600;
   line-height: 42px;
@@ -161,13 +161,17 @@ export default {
   text-decoration: none;
   text-transform: uppercase;
   border-bottom: 10px
+
 }
-.button:hover,
+ .button:hover,
 .button:active {
   box-shadow:  0 0 0 2px #017ef2;
   color: #017ef2;
   background-color: transparent;
-}
+  transition: 0.02s;
+} 
+
+
 
 @media only screen and (max-width:960px) {
   .hide {
@@ -179,5 +183,10 @@ export default {
   .mobile {
     display:none;
   }
+}
+
+.menu {
+  color: red;
+  left: 1%;
 }
 </style>
