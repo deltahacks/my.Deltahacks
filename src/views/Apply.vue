@@ -391,6 +391,16 @@ export default {
     },
   },
   beforeMount() {
+    this.$store.state.db
+      .collection('applications')
+      .doc('DH5_Test')
+      .collection('in progress')
+      .orderBy('eqwrqewr')
+      .get()
+      .then((result) => {
+        console.log(result.docs.length);
+      })
+      .catch(err => console.log(err));
     this.activateModal('Loading...');
     const userEmail = firebase.auth().currentUser.email;
     this.$store.state.db
@@ -403,8 +413,7 @@ export default {
         const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
-          this.submitted = true;
-          console.log(doc.data());
+          // this.submitted = true;
           this.application = doc.data();
           this.fillApplicationFields();
           this.loading = false;
