@@ -20,6 +20,7 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </div>
+        </div>
     </v-app>
 </template>
 
