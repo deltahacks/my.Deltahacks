@@ -45,12 +45,13 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-chip color="white" text-color="black" class="clickable hide">
-      <v-avatar>
+    <!-- <v-chip color="white" text-color="black" class="clickable hide"> -->
+      
+      <div class='button' style='background-color:transparent;'>
+        <v-avatar>
         <v-icon>account_circle</v-icon>
-      </v-avatar>
-      {{c_user.email}}
-    </v-chip>&ensp; &ensp;
+      </v-avatar>{{c_user.email}} </div>
+    <!-- </v-chip>&ensp; &ensp; -->
 
     <!-- <v-chip  class="clickable" @click.prevent="logout" v-if="c_user">
         Logout
@@ -137,24 +138,14 @@ export default {
 }
 
 .button {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+
   float: left;
-  background-color: transparent;
+  background-color: #fff;
   font-family: sans-serif;
   border: 1;
   border-radius: 200px;
   box-shadow: inset 0 0 0 2px #fff;
-  color: #fff;
-  cursor: pointer;
+  color: #111;
   font-size: 15px;
   font-weight: 600;
   line-height: 42px;
@@ -170,7 +161,7 @@ export default {
   box-shadow:  0 0 0 2px #017ef2;
   color: #017ef2;
   background-color: transparent;
-  transition: 0.02s;
+  transition: 0.002ms;
 } 
 
 
