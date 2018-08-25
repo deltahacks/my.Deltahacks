@@ -6,6 +6,8 @@
       <!-- <v-subheader class="large">About You</v-subheader>
       <v-divider></v-divider>
       <br> -->
+      <h1 class='text-xs-left'>Application Form</h1>
+      <p class='text-xs-left'>Please fill out this application form to the best of your abilities. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
       <v-text-field name="name" :disabled="submitted" autocomplete="off" v-model="application.name" label="What is your full name?" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
       <!-- find a better way of including this in form -->
       <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
@@ -428,23 +430,28 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+    margin-bottom: 2%;
+    margin-top: 5%; 
+
+}
 @media only screen and (min-width: 1280px) and (max-width: 4000px) {
     .ff {
-        margin-top: 5%;
         width: 40%;
+        margin-bottom: 10%;
     }
 }
 
 @media only screen and (min-width: 500px) and (max-width: 1280px) {
     .ff {
-        margin-top: 5%;
+        margin-bottom: 10%;
         width: 70%;
     }
 }
 
 @media only screen and (max-width: 500px) {
     .ff {
-        margin-top: 5%;
+        margin-bottom: 10%;
         width: 90%;
     }
 }
