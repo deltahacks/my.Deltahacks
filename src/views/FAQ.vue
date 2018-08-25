@@ -1,9 +1,9 @@
 <template>
-    <v-app class="dashboard background back" >
+    <v-app class="dashboard back" >
     <Navbar2 class='navbar1'/>
     <div class='container-status100'>
         <div class='question-popout'>
-            <h1 display-5>Frequently Asked Questions</h1>
+            <h1 display-5 style="margin:50px;">Frequently Asked Questions</h1>
             <v-expansion-panel popout class=''>
                 <v-expansion-panel-content style='background-color: transparent;'>
                 <div slot="header" class='bold'>What is DeltaHacks V?</div>
@@ -51,13 +51,7 @@ export default {
 }
 
 
- .background{
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 0;
-   background-color: rgba(255,255,255,0.8);
-  }
+
   .navbar1 {
   z-index: 0;
   background-color: rgba(255,255,255,0.4);
