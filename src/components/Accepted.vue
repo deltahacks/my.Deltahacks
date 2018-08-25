@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper" id="canvas-wrap">
-        <canvas> </canvas>
+        <!-- <canvas> </canvas> -->
         <!-- <div id="overlay"> -->
             <div class="modal">
                 <div class="modal-top">

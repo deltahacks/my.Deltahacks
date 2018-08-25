@@ -1,26 +1,25 @@
 <template>
-    <v-app class="dashboard background back">
-        <Navbar2/>
+    <v-app class="dashboard back">
+        <Navbar2 class='navbar1' />
         <div class='container-status100'>
             <div class='question-popout'>
-                <h1>Tere maa</h1>
-                <v-expansion-panel popout>
-                    <v-expansion-panel-content class="panel">
+                <h1 display-5 style="margin:50px;">Frequently Asked Questions</h1>
+                <v-expansion-panel popout class=''>
+                    <v-expansion-panel-content style='background-color: transparent;'>
                         <div slot="header" class='bold'>What is DeltaHacks V?</div>
-                        <v-card>
+                        <v-card style='background-color: transparent;'>
                             <v-card-text>Bruh how you get here without knowing</v-card-text>
                         </v-card>
                     </v-expansion-panel-content>
 
-                    <v-expansion-panel-content>
-                        <div slot="header">What is DeltaHacks V?</div>
-                        <v-card>
-                            <v-card-text>Bitch how u get to this page w/o knowing what this shit is</v-card-text>
+                    <v-expansion-panel-content style='background-color: transparent;'>
+                        <div slot="header" class='bold'>What is DeltaHacks V?</div>
+                        <v-card style='background-color: transparent;'>
+                            <v-card-text>Bruh how you get here without knowing</v-card-text>
                         </v-card>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </div>
-        </div>
     </v-app>
 </template>
 
@@ -46,16 +45,9 @@ export default {
     font-weight: bold;
 }
 
-.background {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    z-index: 0;
-    background-color: rgba(255, 255, 255, 0.8);
-}
 .navbar1 {
     z-index: 0;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.4);
 }
 .container-status100 {
     width: 100%;
@@ -87,22 +79,22 @@ export default {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.6);
 }
 .panel {
     background-color: rgba(255, 255, 255, 0.8);
+    padding: 0px;
 }
 .back {
-    background: #5c258d; /* fallback for old browsers */
-    background: -webkit-linear-gradient(
-        to bottom,
-        #4389a2,
-        #5c258d
-    ); /* Chrome 10-25, Safari 5.1-6 */
+    /* background: #5C258D; 
+background: -webkit-linear-gradient(to bottom, #4389A2, #5C258D);  
+background: linear-gradient(to bottom, #4389A2, #5C258D);  */
+    background: #4776e6; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #8e54e9, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(
-        to bottom,
-        #4389a2,
-        #5c258d
+        to top,
+        #8e54e9,
+        #4776e6
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 </style>
