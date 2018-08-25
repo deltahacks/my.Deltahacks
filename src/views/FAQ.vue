@@ -29,9 +29,9 @@
 import Navbar2 from '@/components/Navbar2.vue';
 
 export default {
-    components: {
-        Navbar2,
-    },
+  components: {
+    Navbar2,
+  },
 };
 </script>
 
@@ -87,8 +87,8 @@ export default {
     padding: 0px;
 }
 .back {
-    /* background: #5C258D; 
-background: -webkit-linear-gradient(to bottom, #4389A2, #5C258D);  
+    /* background: #5C258D;
+background: -webkit-linear-gradient(to bottom, #4389A2, #5C258D);
 background: linear-gradient(to bottom, #4389A2, #5C258D);  */
     background: #4776e6; /* fallback for old browsers */
     background: -webkit-linear-gradient(to top, #8e54e9, #4776e6); /* Chrome 10-25, Safari 5.1-6 */

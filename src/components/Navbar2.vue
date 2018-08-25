@@ -166,8 +166,7 @@ export default {
   color: #017ef2;
   background-color: transparent;
   transition: 0.002ms;
-} 
-
+}
 
 
 @media only screen and (max-width:960px) {
