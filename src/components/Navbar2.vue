@@ -39,6 +39,10 @@
             <v-list-tile-title>FAQ</v-list-tile-title>
           </v-list-tile>
 
+          <v-list-tile @click.prevent="logout" v-if="c_user">
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile>
+
         </v-list>
       </v-menu>
     </div>
@@ -46,8 +50,8 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <!-- <v-chip color="white" text-color="black" class="clickable hide"> -->
-      
-      <div class='button' style='background-color:transparent;'>
+            <v-btn flat @click.prevent="logout" v-if="c_user" class="button hide" style="float:right">Logout</v-btn>
+      <div class='button hide' style='background-color:transparent;'>
         <v-avatar>
         <v-icon>account_circle</v-icon>
       </v-avatar>{{c_user.email}} </div>
