@@ -10,24 +10,31 @@
         <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
         <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
         <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
-        <v-text-field name="name" :disabled="submitted" autocomplete="off" v-model="application.name" label="What is your full name?" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+        <label for="name" style='float:left'><strong>What is your full name?</strong></label>
+        <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
         <!-- find a better way of including this in form -->
         <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
         <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-        <v-text-field name="date" :disabled="submitted" v-model="application.birthday" mask="date" label="What's your birthday?" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
-        <v-select name="university" :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" label="What university do you go to?" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
-        <v-select name="year" :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" label="What year of school are you in?" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
+        <label for="date" style='float:left'><strong>When is your birthday?</strong></label>
+        <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+        <label for="university" style='float:left'><strong>What university do you go to?</strong></label>
+        <v-select name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university"  autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+        <label for="year" style='float:left'><strong>What year of school are you in?</strong></label>
+        <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
         </v-select>
         <!-- <br>
       <v-subheader class="large">Hackathon Info</v-subheader>
       <v-divider></v-divider>
       <br> -->
-        <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" label="What's your shirt size?" v-validate="{required:true}" name="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
+        <label for="shirt size" style='float:left'><strong>What's your shirt size?</strong></label>
+        <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts"  v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000"> 
         </v-select>
-        <v-select v-model="application.dietry_restrictions" :disabled="submitted" @change="formChange" :items="food" label="Any dietary restrictions" v-validate="{required:true}" name="diet" :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+       <label for="diet" style='float:left'><strong>Any dietary restrictions?</strong></label>
+        <v-select v-model="application.dietry_restrictions" :disabled="submitted" @change="formChange" :items="food"  v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
         </v-select>
-        <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" label="How many hackathons have you attended?" v-validate="{required:true}" name="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
+        <label for="hackathons" style='float:left'><strong>How many hackathons have you attended?</strong></label>
+        <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
         </v-select>
         <!-- <br>
       <v-subheader class="large">Portfolio & Contact</v-subheader>
@@ -41,18 +48,20 @@
         </v-text-field>
         <v-container d-inline-flex>
           <v-flex xs6 sm6>
-            <v-text-field mask="phone" :disabled="submitted" name="phone" label="You cell phone number" v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+              <label for="phone" style='float:left'><strong>Your cell phone number</strong></label>
+            <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
           </v-flex>
           <v-flex xs4>
           </v-flex>
           <v-flex xs6 sm6>
-            <v-text-field mask="phone" :disabled="submitted" name="emergency phone" label="Emergency contact" v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+              <label for="emergency phone" style='float:left'><strong>Emergency contact</strong></label>
+            <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
           </v-flex>
         </v-container>
         <div id="filePondContainer">
           <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
           <v-chip class="no border" style="float:left" v-if="haveFile" outline small color="gray">
-            <v-icon left>info</v-icon>We've got your file "
+            <v-icon left>info</v-icon><strong>We've got your file "</strong>
             <a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
           </v-chip>
         </div>
@@ -436,6 +445,12 @@ h1 {
     margin-bottom: 2%;
     margin-top: 5%;
 }
+
+p {
+    font-weight: bold;
+    align: left;
+}
+
 @media only screen and (min-width: 1280px) and (max-width: 4000px) {
     .ff {
         width: 40%;
