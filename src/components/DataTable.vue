@@ -31,7 +31,7 @@
         </tr>
       </template>
       <template slot="expand" slot-scope="props">
-        <applicant-dropdown :usrname="props.item.name" :applicant='props.item' />
+        <applicant-dropdown :usrname="props.item.name" :applicant='props.item' :isReviewed='props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)' :random='3' />
       </template>
     </v-data-table>
     <div class="text-xs-center">

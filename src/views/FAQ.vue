@@ -11,6 +11,32 @@
                             <v-card-text>Bruh how you get here without knowing</v-card-text>
                         </v-card>
                     </v-expansion-panel-content>
+                    <v-expansion-panel-content style='background-color: transparent;'>
+                        <div slot="header" class='bold'>How does the application judging process work?</div>
+                        <v-card style='background-color: transparent;'>
+                            <v-card-text>Bruh how you get here without knowing</v-card-text>
+                        </v-card>
+                    </v-expansion-panel-content>
+                    <v-expansion-panel-content style='background-color: transparent;'>
+                        <div slot="header" class='bold'>How long will it take to judge my application?</div>
+                        <v-card style='background-color: transparent;'>
+                            <v-card-text>Bruh how you get here without knowing</v-card-text>
+                        </v-card>
+                    </v-expansion-panel-content>
+
+                    <v-expansion-panel-content style='background-color: transparent;'>
+                        <div slot="header" class='bold'>Can I recieve travel reimbursement?</div>
+                        <v-card style='background-color: transparent;'>
+                            <v-card-text>Bruh how you get here without knowing</v-card-text>
+                        </v-card>
+                    </v-expansion-panel-content>
+
+                    <v-expansion-panel-content style='background-color: transparent;'>
+                        <div slot="header" class='bold'>I've submitted my application and want to make a change...</div>
+                        <v-card style='background-color: transparent;'>
+                            <v-card-text>Bruh how you get here without knowing</v-card-text>
+                        </v-card>
+                    </v-expansion-panel-content>
 
                     <v-expansion-panel-content style='background-color: transparent;'>
                         <div slot="header" class='bold'>What is DeltaHacks V?</div>

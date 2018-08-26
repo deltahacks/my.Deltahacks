@@ -72,10 +72,8 @@
             </v-expansion-panel>
           </v-flex>
         </v-layout>
-        <vue-slider id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
-        <h2>The current applicant score is : {{status}} out of 10</h2>
-        <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
-        <v-btn color="success" class="button2" @click="updateApplicationScore">SUBMIT SCORE</v-btn>
+        <vue-slider :disabled='isReviewed' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
+        <v-btn color="success" class="button2" :disabled='isReviewed' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
       </v-flex>
       <v-flex xs12 md6 lg6>
         <v-card color="">
@@ -94,7 +92,7 @@ import vueSlider from 'vue-slider-component';
 
 export default {
   name: 'Applicant',
-  props: ['usrname', 'applicant'],
+  props: ['usrname', 'applicant', 'isReviewed'],
   data: () => ({
     currentPage: 0,
     currentUser1: 'yee',
@@ -123,6 +121,10 @@ export default {
   }),
   components: {
     vueSlider,
+  },
+  mounted() {
+    console.log('Sub', this.isReviewed, this.applicant, this.random);
+    this.score = this.applicant.decision.reviewers.find(obj => obj.reviewer == this.$store.state.firebase.auth().currentUser.email).score;
   },
   methods: {
     async updateApplicationScore() {
