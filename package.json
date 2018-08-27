@@ -19,7 +19,7 @@
     "filepond": "^1.8.5",
     "filepond-plugin-file-validate-type": "^1.1.0",
     "filepond-plugin-image-preview": "^1.0.9",
-    "firebase": "^5.0.4",
+    "firebase": "^5.4.0",
     "firebase-admin": "^5.12.1",
     "nodemailer": "^4.6.8",
     "npm": "^6.4.0",
