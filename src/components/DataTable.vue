@@ -25,13 +25,13 @@
             {{ props.item.decision.reviewers.length }}/3
           </td>
           <td class="text-xs-right">
-            <status-indicator v-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)" positive></status-indicator>
-            <status-indicator v-else active pulse></status-indicator>
+            <status-indicator v-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)" active></status-indicator>
+            <status-indicator v-else positive pulse></status-indicator>
           </td>
         </tr>
       </template>
       <template slot="expand" slot-scope="props">
-        <applicant-dropdown :usrname="props.item.name" :applicant='props.item' :isReviewed='props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)' :random='3' />
+        <applicant-dropdown id='dropdown' :usrname="props.item.name" :applicant='props.item' :isReviewed='props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)' :random='3' />
       </template>
     </v-data-table>
     <div class="text-xs-center">
@@ -185,5 +185,9 @@ export default {
 <style>
 .card_title {
     font-weight: 500;
+}
+
+#dropdown {
+    width: 100%;
 }
 </style>
