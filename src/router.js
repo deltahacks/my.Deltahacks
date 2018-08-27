@@ -16,6 +16,7 @@ import AdminSignup from './views/AdminSignup.vue';
 import Accepted from './components/Accepted.vue';
 import Rejected from './components/Rejected.vue';
 import FAQ from './views/FAQ.vue';
+import Stats from './views/Stats.vue';
 import Checkin from './views/Checkin.vue';
 import db from './private/firebase_init';
 
@@ -81,6 +82,11 @@ const router = new Router({
       path: '/rejected',
       name: 'Rejected',
       component: Rejected,
+    },
+    {
+      path: '/stats',
+      name: 'Stats',
+      component: Stats,
     },
     {
       path: '/FAQ',
