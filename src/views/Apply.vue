@@ -28,7 +28,7 @@
       <v-divider></v-divider>
       <br> -->
         <label for="shirt size" style='float:left'><strong>What's your shirt size?</strong></label>
-        <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts"  v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000"> 
+        <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts"  v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
         </v-select>
        <label for="diet" style='float:left'><strong>Any dietary restrictions?</strong></label>
         <v-select v-model="application.dietry_restrictions" :disabled="submitted" @change="formChange" :items="food"  v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
