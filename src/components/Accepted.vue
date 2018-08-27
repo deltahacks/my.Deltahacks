@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper" id="canvas-wrap">
         <canvas> </canvas>
-        <div id="overlay">
+        <!-- <div id="overlay"> -->
             <div class="modal">
                 <div class="modal-top">
                     <span class="logocss">
@@ -12,12 +12,12 @@
                     <div class="modal-subheader">You have been accepted to DeltaHacks V</div>
                 </div>
                 <div>
-                    <a class="modal-bottom1" href="/">I'll not be able to make it :(</a>
-                    <a class="modal-bottom2" href="/">I'll be there</a>
+                    <a class="modal-bottom1" href="/">I will not be able to make it 😞</a>
+                    <a class="modal-bottom2" href="/">I will be there</a>
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </template>
 
 <script>
@@ -139,7 +139,7 @@ export default {
   height: 600px;
 }
 #canvas-wrap canvas {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 0;

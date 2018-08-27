@@ -15,7 +15,7 @@ import v404 from './views/404.vue';
 import AdminSignup from './views/AdminSignup.vue';
 import Accepted from './components/Accepted.vue';
 import Rejected from './components/Rejected.vue';
-import Debug from './views/Debug.vue';
+import FAQ from './views/FAQ.vue';
 import Stats from './views/Stats.vue';
 
 Vue.use(Router);
@@ -62,11 +62,6 @@ const router = new Router({
       component: Playground,
     },
     {
-      path: '/debug',
-      name: 'Debug',
-      component: Debug,
-    },
-    {
       path: '/404',
       name: 'v404',
       component: v404,
@@ -90,6 +85,11 @@ const router = new Router({
       path: '/stats',
       name: 'Stats',
       component: Stats,
+    },
+    {
+      path: '/FAQ',
+      name: 'FAQ',
+      component: FAQ,
     },
   ],
 });

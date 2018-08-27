@@ -8,7 +8,6 @@
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    
 
 
     <v-toolbar-items class="hidden-sm-and-down">
@@ -61,7 +60,7 @@
         </v-list>
       </v-menu>
     </div>
-    
+
   </v-toolbar>
 </template>
 
@@ -79,8 +78,8 @@ export default {
       drawer: null,
       items: [
         { title: 'Status' },
-        { title: 'Apply Now'}
-      ]
+        { title: 'Apply Now' },
+      ],
     };
   },
   methods: {

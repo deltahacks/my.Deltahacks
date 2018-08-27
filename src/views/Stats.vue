@@ -180,7 +180,9 @@ export default {
     methods: {
       changeData() {
         this.data.datasets.data = [1,49,25,25]
-      }
+      },
+      getApplicationDistribution() {
+      },
     },
 };
 </script>

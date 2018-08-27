@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,600italic');
 /* Global 
 ====================== */
 html {
@@ -65,7 +65,7 @@ h2{color: white;
   }
 .modal {
     width: 100%;
-    max-width: 530px;
+    max-width: 550px;
     margin: 20px;
     overflow: hidden;
     box-shadow: 0 60px 80px 0 rgba(0,0,0,.4);
@@ -75,10 +75,10 @@ h2{color: white;
 .modal-top {
   overflow: hidden;
   background: #9152f8;
-  background: -webkit-linear-gradient(top, #48c6ef, #6f86d6);
-  background: -o-linear-gradient(top, #48c6ef, #6f86d6);
-  background: -moz-linear-gradient(top, #48c6ef, #6f86d6);
-  background: linear-gradient(top, #48c6ef, #6f86d6);
+  background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: -o-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: -moz-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
     padding: 30px 30px 20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -86,13 +86,14 @@ h2{color: white;
 .modal-icon {
     display: block;
     max-width: 207px;
-    margin: 0 auto 65px;
+    margin: 0 auto 20px;
 }
 .modal-header {
-    margin-bottom: 10px;
-    font-size: 25.5px;
-    letter-spacing: 2px;
-    text-align: center;
+
+	font-family:'Open Sans' ;
+font-size: 3em;
+font-weight: 600;
+text-decoration: none;
 }
 .modal-subheader {
     max-width: 450px;
@@ -110,11 +111,11 @@ h2{color: white;
     display: flex;
     font-size: 15px;
     flex-wrap: wrap;
-    padding: 22px;
+    padding: 20px;
     text-decoration: none;
     display: table-cell;
     vertical-align: middle;
-    background: rgb(236, 65, 65);
+    background: rgba(236, 65, 65,0.8);
 }
 .modal-bottom2 {
     font-family: Verdana;
@@ -123,23 +124,18 @@ h2{color: white;
     display: flex;
     font-size: 15px;
     flex-wrap: wrap;
-    padding: 22px;
+    padding: 21px;
     text-decoration: none;
     display: table-cell;
     vertical-align: middle;
-    background: #69ca5c;
+    background: rgba(105,202,92,0.8);
 }
-.modal-bottom1:hover {
-    background: -webkit-linear-gradient(bottom, #48c6ef, #6f86d6);
-  background: -o-linear-gradient(bottom, #48c6ef, #6f86d6);
-  background: -moz-linear-gradient(bottom, #48c6ef, #6f86d6);
-  background: linear-gradient(bottom, #48c6ef, #6f86d6);
-  }
-  .modal-bottom2:hover {
-    background: -webkit-linear-gradient(bottom, #48c6ef, #6f86d6);
-  background: -o-linear-gradient(bottom, #48c6ef, #6f86d6);
-  background: -moz-linear-gradient(bottom, #48c6ef, #6f86d6);
-  background: linear-gradient(bottom, #48c6ef, #6f86d6);
+.modal-bottom1:hover,
+.modal-bottom2:hover {
+    background: -webkit-linear-gradient(bottom, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: -o-linear-gradient(bottom, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: -moz-linear-gradient(bottom, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: linear-gradient(bottom, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   }
   
 
