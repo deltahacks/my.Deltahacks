@@ -12,7 +12,7 @@
         </v-badge>
       </v-btn> -->
           <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
-      <v-btn flat to="/status" v-if="c_user" class="button hide">Status</v-btn>
+      <button round flat outline onclick="/status" v-if="c_user" class="button hide">Status</button>
       <v-btn flat to="/apply" v-if="c_user" class="button hide">Apply Now</v-btn>
       <v-btn flat to="/signup" v-if="!c_user" class="button hide">Signup</v-btn>
       <v-btn flat to="/login" v-if="!c_user" class="button hide">Login</v-btn>
@@ -141,14 +141,14 @@ export default {
   cursor: pointer;
 }
 
-.button {
+/* .button {
 
   float: left;
-  background-color: #fff;
+  background-color: transparent;
   font-family: sans-serif;
-  border: 1;
+  border: 1px;
   border-radius: 200px;
-  box-shadow: inset 0 0 0 2px #fff;
+  box-shadow: inset 0 0 0 2px ;
   color: #111;
   font-size: 15px;
   font-weight: 600;
@@ -157,16 +157,16 @@ export default {
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  border-bottom: 10px
+  border-bottom: 10px 
 
 }
- .button:hover,
+  .button:hover,
 .button:active {
   box-shadow:  0 0 0 2px #017ef2;
   color: #017ef2;
   background-color: transparent;
-  transition: 0.002ms;
-}
+  transition: 10000ms;
+} */ 
 
 
 @media only screen and (max-width:960px) {
