@@ -76,11 +76,11 @@
         <v-btn color="success" class="button2" :disabled='isReviewed' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
       </v-flex>
       <v-flex xs12 md6 lg6>
-        <v-card color="">
+        <v-card color="" id='docCard'>
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-          <iframe v-if="applicant.documents.download_link" :src="applicant.documents.download_link" style="width: 100%; height: 900px;"></iframe>
+          <iframe id='resume' v-if="applicant.documents.download_link" :src="applicant.documents.download_link"></iframe>
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
@@ -205,5 +205,14 @@ i {
 
 #topcard {
     height: 200px;
+}
+
+#resume {
+    width: 100%;
+    height: 900px;
+}
+
+#docCard {
+    width: 100%;
 }
 </style>
