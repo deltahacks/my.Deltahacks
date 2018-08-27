@@ -17,6 +17,8 @@ import Accepted from './components/Accepted.vue';
 import Rejected from './components/Rejected.vue';
 import FAQ from './views/FAQ.vue';
 import Stats from './views/Stats.vue';
+import Checkin from './views/Checkin.vue';
+import db from './private/firebase_init';
 
 Vue.use(Router);
 
@@ -91,6 +93,14 @@ const router = new Router({
       name: 'FAQ',
       component: FAQ,
     },
+    {
+      path: '/checkin/:id',
+      name: 'Checkin',
+      component: Checkin,
+      meta: {
+        adminAuth: true,
+      },
+    },
   ],
 });
 
@@ -110,10 +120,73 @@ router.beforeEach((to, from, next) => {
         next({ name: 'Login' });
       }
     });
+  } else if (to.matched.some(rec => rec.meta.adminAuth)) {
+    console.log('Protected route detected');
+    Firebase.auth().onAuthStateChanged((user) => {
+    // If user is logged in
+      if (user) {
+      // Proceed to next page
+        console.log('Authorized user2: ', user);
+
+        db.collection('admins').doc(user.email.toLocaleLowerCase()).get().then((doc) => {
+          if (doc.exists) {
+            console.log('Document data:', doc.data());
+            next();
+          } else {
+            console.log('Not an admin user!');
+            next({ name: 'Login' });
+          }
+        })
+          .catch((error) => {
+            console.log('Not an admin user!');
+            next({ name: 'Login' });
+          });
+      } else {
+      // Otherwise redirect to login
+        console.log('Not authorized');
+        next({ name: 'Login' });
+      }
+    });
   } else {
     console.log('No route guard');
     next();
   }
 });
+
+/* // Check if admin only auth is required
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(rec => rec.meta.adminAuth)) {
+    console.log('Protected route detected');
+    Firebase.auth().onAuthStateChanged((user) => {
+    // If user is logged in
+      if (user) {
+      // Proceed to next page
+        console.log('Authorized user2: ', user);
+
+        db.collection('admins').doc(user.email.toLocaleLowerCase()).get().then((doc) => {
+          if (doc.exists) {
+            console.log('Document data:', doc.data());
+            next();
+          } else {
+            console.log('Not an admin user!');
+            next({ name: 'Login' });
+          }
+        })
+          .catch((error) => {
+            console.log('Not an admin user!');
+            next({ name: 'Login' });
+          });
+      } else {
+      // Otherwise redirect to login
+        console.log('Not authorized');
+        next({ name: 'Login' });
+      }
+    });
+  } else {
+    console.log('No route guard');
+    next();
+  }
+}); */
+
 
 export default router;

@@ -72,17 +72,15 @@
             </v-expansion-panel>
           </v-flex>
         </v-layout>
-        <vue-slider id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
-        <h2>The current applicant score is : {{status}} out of 10</h2>
-        <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
-        <v-btn color="success" class="button2" @click="updateApplicationScore">SUBMIT SCORE</v-btn>
+        <vue-slider :disabled='isReviewed' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
+        <v-btn color="success" class="button2" :disabled='isReviewed' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
       </v-flex>
       <v-flex xs12 md6 lg6>
-        <v-card color="">
+        <v-card color="" id='docCard'>
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-          <iframe v-if="applicant.documents.download_link" :src="applicant.documents.download_link" style="width: 100%; height: 900px;"></iframe>
+          <iframe id='resume' v-if="applicant.documents.download_link" :src="applicant.documents.download_link"></iframe>
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
@@ -93,76 +91,80 @@
 import vueSlider from 'vue-slider-component';
 
 export default {
-    name: 'Applicant',
-    props: ['usrname', 'applicant'],
-    data: () => ({
-        currentPage: 0,
-        currentUser1: 'yee',
-        topcard: true,
-        pageCount: 0,
-        status: 0,
-        score: 0,
-        resumeLink:
+  name: 'Applicant',
+  props: ['usrname', 'applicant', 'isReviewed'],
+  data: () => ({
+    currentPage: 0,
+    currentUser1: 'yee',
+    topcard: true,
+    pageCount: 0,
+    status: 0,
+    score: 0,
+    resumeLink:
             'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
-        cards: [
-            {
-                title: 'Pre-fab homes',
-                flex: 12,
-            },
-            {
-                title: 'Favorite road trips',
-                src: '/static/doc-images/cards/road.jpg',
-                flex: 6,
-            },
-            {
-                title: 'Best airlines',
-                src: '/static/doc-images/cards/plane.jpeg',
-                flex: 6,
-            },
-        ],
-    }),
-    components: {
-        vueSlider,
-    },
-    methods: {
-        async updateApplicationScore() {
-            console.log('Updating score', this.$store.state.test);
-            try {
-                const userApplication = await this.$store.state.db
-                    .collection('decisions')
-                    .doc('DH5')
-                    .collection('pending')
-                    .doc(this.applicant.email)
-                    .get();
+    cards: [
+      {
+        title: 'Pre-fab homes',
+        flex: 12,
+      },
+      {
+        title: 'Favorite road trips',
+        src: '/static/doc-images/cards/road.jpg',
+        flex: 6,
+      },
+      {
+        title: 'Best airlines',
+        src: '/static/doc-images/cards/plane.jpeg',
+        flex: 6,
+      },
+    ],
+  }),
+  components: {
+    vueSlider,
+  },
+  mounted() {
+    console.log('Sub', this.isReviewed, this.applicant, this.random);
+    this.score = this.applicant.decision.reviewers.find(obj => obj.reviewer == this.$store.state.firebase.auth().currentUser.email).score;
+  },
+  methods: {
+    async updateApplicationScore() {
+      console.log('Updating score', this.$store.state.test);
+      try {
+        const userApplication = await this.$store.state.db
+          .collection('decisions')
+          .doc('DH5')
+          .collection('pending')
+          .doc(this.applicant.email)
+          .get();
 
-                const aaa = this.$store.state.test;
-                console.log(
-                    aaa,
-                    this.$store.state.firebase.auth().currentUser.email,
-                    userApplication.data().decision
-                );
-                const decision = { ...userApplication.data().decision };
-                const reviews = userApplication.data().decision.reviews + 1;
-                const reviewers = userApplication.data().decision.reviewers;
-                reviewers.push({
-                    score: this.score,
-                    reviewer: this.$store.state.firebase.auth().currentUser.email,
-                });
-                decision.reviews = reviews;
-                decision.reviewers = reviewers;
-                console.log('decision', decision);
-                const uploadScore = await this.$store.state.db
-                    .collection('decisions')
-                    .doc('DH5')
-                    .collection('pending')
-                    .doc(this.applicant.email)
-                    .update({ decision });
-                console.log('Review sent: ', uploadScore);
-            } catch (err) {
-                console.log('Error getting user app: ', err);
-            }
-        },
+        const aaa = this.$store.state.test;
+        console.log(
+          aaa,
+          this.$store.state.firebase.auth().currentUser.email,
+          userApplication.data().decision,
+        );
+        const decision = { ...userApplication.data().decision };
+        const reviews = userApplication.data().decision.reviews + 1;
+        const reviewers = userApplication.data().decision.reviewers;
+        reviewers.push({
+          score: this.score,
+          reviewer: this.$store.state.firebase.auth().currentUser.email,
+        });
+        decision.reviews = reviews;
+        decision.reviewers = reviewers;
+        console.log('decision', decision);
+        const uploadScore = await this.$store.state.db
+          .collection('decisions')
+          .doc('DH5')
+          .collection('pending')
+          .doc(this.applicant.email)
+          .update({ decision });
+        console.log('Review sent: ', uploadScore);
+      } catch (err) {
+        console.log('Error getting user app: ', err);
+      }
     },
+  },
 };
 </script>
 
@@ -203,5 +205,14 @@ i {
 
 #topcard {
     height: 200px;
+}
+
+#resume {
+    width: 100%;
+    height: 900px;
+}
+
+#docCard {
+    width: 100%;
 }
 </style>

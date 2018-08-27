@@ -11,17 +11,18 @@
           </v-icon>
         </v-badge>
       </v-btn> -->
+          <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
       <v-btn flat to="/status" v-if="c_user" class="button hide">Status</v-btn>
       <v-btn flat to="/apply" v-if="c_user" class="button hide">Apply Now</v-btn>
       <v-btn flat to="/signup" v-if="!c_user" class="button hide">Signup</v-btn>
       <v-btn flat to="/login" v-if="!c_user" class="button hide">Login</v-btn>
       <v-btn flat to="/" class="button hide">Contact</v-btn>
-      <v-btn flat to="/" class="button hide">FAQ</v-btn>
-    <div class="text-xs-center, mobile">
+      <v-btn flat to="/FAQ" class="button hide">FAQ</v-btn>
+    <div class="text-xs-center mobile"  >
       <v-menu offset-y>
-        <v-btn flat slot="activator" class="button">Menus</v-btn>&ensp;
+        <v-btn flat slot="activator" class="button menu" right>Menu</v-btn>&ensp;
 
-        <v-list>
+        <v-list style='background:transparent'>
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
           </v-list-tile>
@@ -38,19 +39,24 @@
             <v-list-tile-title>FAQ</v-list-tile-title>
           </v-list-tile>
 
+          <v-list-tile @click.prevent="logout" v-if="c_user">
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile>
+
         </v-list>
       </v-menu>
     </div>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-chip color="white" text-color="black" class="clickable hide">
-      <v-avatar>
+    <!-- <v-chip color="white" text-color="black" class="clickable hide"> -->
+            <v-btn flat @click.prevent="logout" v-if="c_user" class="button hide" style="float:right">Logout</v-btn>
+      <div class='button hide' style='background-color:transparent;'>
+        <v-avatar>
         <v-icon>account_circle</v-icon>
-      </v-avatar>
-      {{c_user.email}}
-    </v-chip>&ensp; &ensp;
-    <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
+      </v-avatar>{{c_user.email}} </div>
+    <!-- </v-chip>&ensp; &ensp; -->
+
     <!-- <v-chip  class="clickable" @click.prevent="logout" v-if="c_user">
         Logout
       </v-chip> -->
@@ -114,18 +120,20 @@ export default {
   .smaller.delta {
   width: 2%;
   height: auto;
-  position: relative;
-  margin-right: 140px
+/*   position: relative;
+  margin-right: 140px;
+  margin-left: -60px;
+  padding-right: 80%; */
 
 }
 }
 
-@media only screen and (max-width:630px) {
+@media only screen and (max-width:640px) {
   .smaller.delta {
   width: 2%;
   height: auto;
-  position: relative;
-  margin-right: 80px
+  /* position: relative;
+  margin-right: 120px */
 
 }
 }
@@ -134,25 +142,14 @@ export default {
 }
 
 .button {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+
   float: left;
-  background-color: transparent;
+  background-color: #fff;
   font-family: sans-serif;
   border: 1;
   border-radius: 200px;
   box-shadow: inset 0 0 0 2px #fff;
-  color: #fff;
-  cursor: pointer;
-  /* display: inline-block; */
+  color: #111;
   font-size: 15px;
   font-weight: 600;
   line-height: 42px;
@@ -161,13 +158,16 @@ export default {
   text-decoration: none;
   text-transform: uppercase;
   border-bottom: 10px
+
 }
-.button:hover,
+ .button:hover,
 .button:active {
   box-shadow:  0 0 0 2px #017ef2;
   color: #017ef2;
   background-color: transparent;
+  transition: 0.002ms;
 }
+
 
 @media only screen and (max-width:960px) {
   .hide {
@@ -179,5 +179,12 @@ export default {
   .mobile {
     display:none;
   }
+}
+
+.menu {
+  position: absolute;
+  float: right;
+  margin-top: -10px;
+  margin-left: 80%;
 }
 </style>

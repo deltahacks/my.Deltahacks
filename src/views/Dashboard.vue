@@ -1,80 +1,81 @@
 <template>
-    <v-app class="dashboard">
-        <Navbar/>
-        <v-container fluid grid-list-md>
-            <v-layout row wrap>
-                <v-flex d-flex xs12 sm6 md4>
-                    <v-card color="white lighten-4" dark>
-                        <GmapMap id="gmap" :center="{lat:43.6532, lng:-79.3832}" :zoom="7" map-type-id="terrain">
-                            <GmapMarker :key="index" title="yooo" v-for="(m, index) in positions" :position="m" :clickable="true" :draggable="false" @click="center=m" />
-                        </GmapMap>
-                    </v-card>
-                </v-flex>
-                <v-flex d-flex xs12 sm6 md2>
-                    <v-layout row wrap>
-                        <v-flex d-flex>
-                            <v-card color="white lighten-4" dark>
-                                <v-card-title primary class="title">Total Applicants:</v-card-title>
-                                <v-card-text class="totalapps center">
-                                    <IOdometer class="iOdometer" :value=applicationCount />
-                                </v-card-text>
-                            </v-card>
-                        </v-flex>
-                        <v-flex d-flex>
-                            <v-layout row wrap>
-                                <v-flex d-flex xs12>
-                                    <v-card color="white lighten-4" dark>
-                                        <div class="tooltip">
-                                            <span class="tooltiptext">Click only if you know what you're doing</span>
-                                            <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
-                                        </div>
-                                    </v-card>
-                                </v-flex>
-                                <v-flex d-flex xs12>
-                                    <v-card color="white lighten-4" dark>
-                                        <v-menu offset-y>
-                                            <v-btn slot="activator" color="error" depressed large dark id="debugger">
-                                                Debug
-                                                <v-icon right dark>cloud_upload</v-icon>
-
-                                            </v-btn>
-                                            <v-list>
-                                                <v-list-tile v-for="(func, index) in debugFunctions" :key="index" @click="func.execute">
-                                                    <v-list-tile-title>{{ func.title }}</v-list-tile-title>
-                                                </v-list-tile>
-                                            </v-list>
-                                        </v-menu>
-                                    </v-card>
-                                </v-flex>
-                            </v-layout>
-                        </v-flex>
-                    </v-layout>
-                </v-flex>
-                <v-flex d-flex xs12 sm6 md3 child-flex>
-                    <v-card color="white lighten-4" dark>
-                        <pie-chart></pie-chart>
-                    </v-card>
-                </v-flex>
-                <v-flex d-flex xs12 sm6 md3>
-                    <v-card color="white lighten-4" dark>
-                        <commit-chart/>
-                    </v-card>
-                </v-flex>
-                <!-- <v-subheader class="ht">Applicants</v-subheader> -->
-                <v-flex d-flex xs12 sm12 md12>
-                    <DataTable/>
-                </v-flex>
-            </v-layout>
-        </v-container>
-        <v-dialog v-model="loading" persistent width="300">
-            <v-card color="primary" dark>
-                <v-card-text>
-                    {{loadingMessage}}
-                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+  <v-app class="dashboard">
+    <Navbar/>
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm6 md4>
+          <v-card color="white lighten-4" dark>
+            <GmapMap id="gmap" :center="{lat:43.6532, lng:-79.3832}" :zoom="7" map-type-id="terrain">
+              <GmapMarker :key="index" title="yooo" v-for="(m, index) in positions" :position="m" :clickable="true" :draggable="false" @click="center=m" />
+            </GmapMap>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-layout row wrap>
+            <v-flex d-flex>
+              <v-card color="white lighten-4" dark>
+                <v-card-title primary class="title">Total Applicants:</v-card-title>
+                <v-card-text class="totalapps center">
+                  <IOdometer class="iOdometer" :value=applicationCount />
                 </v-card-text>
-            </v-card>
-        </v-dialog>
-    </v-app>
+              </v-card>
+            </v-flex>
+            <v-flex d-flex>
+              <v-layout row wrap>
+                <v-flex d-flex xs12>
+                  <v-card color="white lighten-4" dark>
+                    <div class="tooltip">
+                      <span class="tooltiptext">Click only if you know what you're doing</span>
+                      <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
+                      <v-btn @click="fbdata()" class="bold" color="blue" dark>Send Mail</v-btn>
+                    </div>
+                  </v-card>
+                </v-flex>
+                <v-flex d-flex xs12>
+                  <v-card color="white lighten-4" dark>
+                    <v-menu offset-y>
+                      <v-btn slot="activator" color="error" depressed large dark id="debugger">
+                        Debug
+                        <v-icon right dark>cloud_upload</v-icon>
+
+                      </v-btn>
+                      <v-list>
+                        <v-list-tile v-for="(func, index) in debugFunctions" :key="index" @click="func.execute">
+                          <v-list-tile-title>{{ func.title }}</v-list-tile-title>
+                        </v-list-tile>
+                      </v-list>
+                    </v-menu>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3 child-flex>
+          <v-card color="white lighten-4" dark>
+            <pie-chart></pie-chart>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color="white lighten-4" dark>
+            <commit-chart/>
+          </v-card>
+        </v-flex>
+        <!-- <v-subheader class="ht">Applicants</v-subheader> -->
+        <v-flex d-flex xs12 sm12 md12>
+          <DataTable id='dataTable' />
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-dialog v-model="loading" persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          {{loadingMessage}}
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </v-app>
 </template>
 
 
@@ -97,6 +98,7 @@ import db from '../private/firebase_init';
 import { allUniversities } from '../private/data';
 import fake from '@/helpers/fake';
 import functions from 'firebase/functions';
+
 export default {
     name: 'Dashboard',
     data() {
@@ -315,6 +317,10 @@ export default {
 
 #debugger {
     font-size: 2em;
+}
+
+#dataTable {
+    width: 100%;
 }
 </style>
 
