@@ -221,4 +221,7 @@ export default {
 .checkinButtons {
     height: 10%;
 }
+input {
+    text-align: center;
+}
 </style>
