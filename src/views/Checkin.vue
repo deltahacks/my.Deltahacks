@@ -225,4 +225,8 @@ export default {
 #id {
     margin-top: 5%;
 }
+
+input {
+    text-align: center;
+}
 </style>

@@ -166,6 +166,7 @@ import { majors } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+
 export default {
     mixins: [validationMixin],
     name: 'Apply',
@@ -174,6 +175,8 @@ export default {
             myFiles: [],
             loading: false,
             feedback: false,
+            confirm: false,
+            confirmClear: false,
             editing: false,
             existing_doc: undefined,
             checkError: undefined,
@@ -183,7 +186,6 @@ export default {
             bannerTimeout: 3000,
             loadingMessage: 'Loading...',
             parent: this,
-            majors,
             url: '',
             picker: null,
             submitted: false,
@@ -220,7 +222,7 @@ export default {
             name: '',
             email: '',
             select: null,
-            items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
+            items: ['First Year', 'Second Year', 'Third Year', 'Forth Year', 'Fifth Year'],
             hackathons: ['This is my first one', '2', '3', '5+', '10+'],
             food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
             shirts: ['XS', 'S', 'M', 'L', 'XL'],
@@ -265,6 +267,35 @@ export default {
         handleFilePondInit() {
             console.log('FilePond has initialized');
             // FilePond instance methods are available on `this.$refs.pond`
+        },
+        getEmptyApplication() {
+            return {
+                name: '',
+                email: firebase.auth().currentUser.email,
+                last_modified: undefined,
+                first_submitted: undefined,
+                school_year: null,
+                shirt_size: null,
+                dietry_restrictions: null,
+                hackathons: null,
+                university: null,
+                github: '',
+                linkedin: '',
+                website: '',
+                phone: '',
+                emergency_phone: '',
+                q1: '',
+                q2: '',
+                q3: '',
+                q4: '',
+                major: '',
+                birthday: '',
+                documents: [],
+            };
+        },
+        clearForm() {
+            this.confirmClear = false;
+            this.application = this.getEmptyApplication();
         },
         activateModal(msg) {
             this.loading = true;
@@ -383,7 +414,7 @@ export default {
             });
         },
         async submitApplication() {
-            // consider async.js / async-each alternatives
+            this.confirm = false;
             if (!this.checkbox) {
                 this.checkError = 'Please accept the terms and conditions to continue.';
                 return;
@@ -441,7 +472,7 @@ export default {
                 if (submitted) {
                     this.editing = true;
                     this.submitted = true;
-                    console.log(doc.data());
+                    this.checkbox = true;
                     this.application = doc.data();
                     this.fillApplicationFields();
                     this.loading = false;
