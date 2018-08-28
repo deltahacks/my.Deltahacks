@@ -155,7 +155,7 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import allUniversities from '../private/data';
+import { list_of_universities as allUniversities } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
@@ -234,24 +234,6 @@ export default {
     Navbar2,
   },
   computed: {
-    q1Progress() {
-      return Math.min(100, this.application.q1.length / 5);
-    },
-    validations: {
-        name: { required, maxLength: maxLength(10) },
-        email: { required, email },
-        select: { required },
-        checkbox: { required },
-        university: { in: allUniversities },
-    },
-    components: {
-        Navbar,
-        Footer,
-        FilePond,
-        Navigation,
-        Navbar2,
-    },
-    computed: {
         q1Progress() {
             return Math.min(100, this.application.q1.length / 5);
         },
@@ -473,44 +455,7 @@ export default {
                 this.loading = false;
             });
     },
-  },
-    beforeMount() {
-        this.activateModal('Loading...');
-        const userEmail = firebase.auth().currentUser.email;
-        this.$store.state.db
-            .collection('applications')
-            .doc('DH5_Test')
-            .collection('in progress')
-            .doc(userEmail)
-            .get()
-            .then(async doc => {
-                const submitted = await this.getUserAppStatus(userEmail);
-                if (submitted) {
-                    this.editing = true;
-                    this.submitted = true;
-                    console.log(doc.data());
-                    this.application = doc.data();
-                    this.fillApplicationFields();
-                    this.loading = false;
-                } else if (doc.exists) {
-                    this.editing = true;
-                    this.application = doc.data();
-                    this.fillApplicationFields();
-                    // this.insertUserFileData(this.application.documents);
-                    this.loading = false;
-                } else {
-                    console.log('Document not found!');
-                    this.editing = false;
-                    this.loading = false;
-                }
-            })
-            .catch(err => {
-                console.log('User app query failed.');
-                console.log(err);
-                this.loading = false;
-            });
-    },
-}
+  }
 </script>
 
 <style scoped>
