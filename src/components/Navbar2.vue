@@ -11,14 +11,14 @@
           </v-icon>
         </v-badge>
       </v-btn> -->
-          <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
-      <button round flat outline onclick="/status" v-if="c_user" class="button hide">Status</button>
-      <v-btn flat to="/apply" v-if="c_user" class="button hide">Apply Now</v-btn>
-      <v-btn flat to="/signup" v-if="!c_user" class="button hide">Signup</v-btn>
-      <v-btn flat to="/login" v-if="!c_user" class="button hide">Login</v-btn>
-      <v-btn flat to="/" class="button hide">Contact</v-btn>
-      <v-btn flat to="/FAQ" class="button hide">FAQ</v-btn>
-    <div class="text-xs-center mobile"  >
+    <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
+    <v-btn round flat onclick="/status" v-if="c_user" class="button hide">Status</v-btn>
+    <v-btn round flat to="/apply" v-if="c_user" class="button hide">Apply Now</v-btn>
+    <v-btn round flat to="/signup" v-if="!c_user" class="button hide">Signup</v-btn>
+    <v-btn round flat to="/login" v-if="!c_user" class="button hide">Login</v-btn>
+    <v-btn round flat to="/" class="button hide">Contact</v-btn>
+    <v-btn round flat to="/FAQ" class="button hide">FAQ</v-btn>
+    <div class="text-xs-center mobile">
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button menu" right>Menu</v-btn>&ensp;
 
@@ -50,9 +50,9 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <!-- <v-chip color="white" text-color="black" class="clickable hide"> -->
-            <v-btn flat @click.prevent="logout" v-if="c_user" class="button hide" style="float:right">Logout</v-btn>
-      <div class='button hide' style='background-color:transparent;'>
-        <v-avatar>
+    <v-btn flat rounded @click.prevent="logout" v-if="c_user" style="float:right">Logout</v-btn>
+    <div class='button hide' style='background-color:transparent;'>
+      <v-avatar>
         <v-icon>account_circle</v-icon>
       </v-avatar>{{c_user.email}} </div>
     <!-- </v-chip>&ensp; &ensp; -->
@@ -68,77 +68,74 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Navbar',
-  components: {},
-  data() {
-    return {
-      c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
-    };
-  },
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
+    name: 'Navbar',
+    components: {},
+    data() {
+        return {
+            c_user: firebase.auth().currentUser,
+            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+            current: 'DH V',
+        };
     },
-  },
+    methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(
+                    () => {
+                        this.$router.push({ name: 'Login' });
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        },
+    },
 };
 </script>
 <style scoped>
-#title{
-  font-family: 'Roboto', serif;
-  font-weight: 500;
+#title {
+    font-family: 'Roboto', serif;
+    font-weight: 500;
 }
 
 #search {
-  width: 300px;
-  margin-right: 15px;
+    width: 300px;
+    margin-right: 15px;
 }
 
 .bold {
-  font-weight: 600;
+    font-weight: 600;
 }
 .smaller.delta {
-  width: 2%;
-  height: auto;
-  position: relative;
-  margin-right: 50px
-
+    width: 2%;
+    height: auto;
+    position: relative;
+    margin-right: 50px;
 }
 
-@media only screen and (max-width:960px) {
-  .smaller.delta {
-  width: 2%;
-  height: auto;
-/*   position: relative;
+@media only screen and (max-width: 960px) {
+    .smaller.delta {
+        width: 2%;
+        height: auto;
+        /*   position: relative;
   margin-right: 140px;
   margin-left: -60px;
   padding-right: 80%; */
-
+    }
 }
-}
 
-@media only screen and (max-width:640px) {
-  .smaller.delta {
-  width: 2%;
-  height: auto;
-  /* position: relative;
+@media only screen and (max-width: 640px) {
+    .smaller.delta {
+        width: 2%;
+        height: auto;
+        /* position: relative;
   margin-right: 120px */
-
-}
+    }
 }
 .clickable {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /* .button {
@@ -166,25 +163,24 @@ export default {
   color: #017ef2;
   background-color: transparent;
   transition: 10000ms;
-} */ 
+} */
 
-
-@media only screen and (max-width:960px) {
-  .hide {
-    display:none;
-  }
+@media only screen and (max-width: 960px) {
+    .hide {
+        display: none;
+    }
 }
 
-@media only screen and (min-width:961px) {
-  .mobile {
-    display:none;
-  }
+@media only screen and (min-width: 961px) {
+    .mobile {
+        display: none;
+    }
 }
 
 .menu {
-  position: absolute;
-  float: right;
-  margin-top: -10px;
-  margin-left: 80%;
+    position: absolute;
+    float: right;
+    margin-top: -10px;
+    margin-left: 80%;
 }
 </style>

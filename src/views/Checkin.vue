@@ -7,7 +7,7 @@
                 Close
             </v-btn>
         </v-snackbar>
-        <h2>{{$route.params.id}}</h2>
+        <h1 id="id">{{$route.params.id}}</h1>
         <h2> Last status: {{ lastStatus }}</h2>
         <v-btn @click="checkin" class="checkinButtons" :disabled="alreadyCheckedIn">Check in</v-btn>
         <v-btn class="checkinButtons" :disabled="!alreadyCheckedIn">Add meal</v-btn>
@@ -220,5 +220,9 @@ export default {
 <style scoped>
 .checkinButtons {
     height: 10%;
+}
+
+#id {
+    margin-top: 5%;
 }
 </style>
