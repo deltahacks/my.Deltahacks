@@ -20,6 +20,8 @@
         <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
         <label for="university" style='float:left'><strong>What university do you go to?</strong></label>
         <v-select name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university"  autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+        <label for="major" style='float:left'><strong>What do you study?</strong></label>
+        <v-text-field name="major" id='major' :disabled="submitted" autocomplete="off" v-model="application.major" v-validate="{required:false, max:100}" :error-messages="errors.first('major')" data-vv-delay="1000"></v-text-field>
         <label for="year" style='float:left'><strong>What year of school are you in?</strong></label>
         <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
         </v-select>
@@ -185,6 +187,7 @@ export default {
         q2: '',
         q3: '',
         q4: '',
+        major: '',
         birthday: '',
         documents: [],
       },
@@ -385,6 +388,7 @@ export default {
       ref.q2 = ref.q2 ? ref.q2 : '';
       ref.q3 = ref.q3 ? ref.q3 : '';
       ref.q4 = ref.q4 ? ref.q4 : '';
+      ref.major = ref.major ? ref.major : '';
     },
     getUserAppStatus(userEmail) {
       return new Promise((resolve, reject) => {
@@ -400,7 +404,43 @@ export default {
           .catch(err => reject(err));
       });
     },
-  }
+  },
+    beforeMount() {
+        this.activateModal('Loading...');
+        const userEmail = firebase.auth().currentUser.email;
+        this.$store.state.db
+            .collection('applications')
+            .doc('DH5_Test')
+            .collection('in progress')
+            .doc(userEmail)
+            .get()
+            .then(async doc => {
+                const submitted = await this.getUserAppStatus(userEmail);
+                if (submitted) {
+                    this.editing = true;
+                    this.submitted = true;
+                    console.log(doc.data());
+                    this.application = doc.data();
+                    this.fillApplicationFields();
+                    this.loading = false;
+                } else if (doc.exists) {
+                    this.editing = true;
+                    this.application = doc.data();
+                    this.fillApplicationFields();
+                    // this.insertUserFileData(this.application.documents);
+                    this.loading = false;
+                } else {
+                    console.log('Document not found!');
+                    this.editing = false;
+                    this.loading = false;
+                }
+            })
+            .catch(err => {
+                console.log('User app query failed.');
+                console.log(err);
+                this.loading = false;
+            });
+    },
 }
 </script>
 

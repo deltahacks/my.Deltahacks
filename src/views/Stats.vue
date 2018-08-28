@@ -122,6 +122,7 @@ export default {
     data() {
         return {
           test: [50,25,25],
+          statistics: null,
           data: {
             labels: ['Accepted', 'Rejected', 'Pending'],
             datasets: [
@@ -175,13 +176,19 @@ export default {
     created() {
 
     },
-    mounted() {
+    async mounted() {
+        this.statistics = await this.getStatistics();
     },
     methods: {
       changeData() {
         this.data.datasets.data = [1,49,25,25]
       },
-      getApplicationDistribution() {
+      getStatistics() {
+        const ref = db.collection('statistics').doc('DH5');
+        return new Promise(async (resolve, reject) => {
+            const snap = await ref.get().catch(err => reject(err));
+            resolve(snap.data());
+        });
       },
     },
 };
