@@ -37,6 +37,7 @@ export default {
             attendeeData: null,
             lastStatus: null,
             alreadyCheckedIn: false,
+            exists: false,
         };
     },
     components: {
@@ -53,12 +54,22 @@ export default {
                     checkedIn: true,
                     time: new Date(),
                     by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
-                    whereabouts: [{ building: 'ETB' }],
+                    whereabouts: [
+                        {
+                            initialCheckin: true,
+                            building: 'ETB',
+                            time: new Date(),
+                            by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
+                            type: 'incoming',
+                        },
+                    ],
                 })
                 .then(() => {
                     this.feedback = true;
+                    this.alreadyCheckedIn = true;
                     this.bannerMessage = 'Successfully checked in';
                     console.log('Successfully written');
+                    this.attachListener();
                 })
                 .catch(err => console.log(err));
         },
@@ -110,6 +121,37 @@ export default {
                     .catch(err => console.log(err));
             });
         },
+        attachListener() {
+            db
+                .collection('hackathon')
+                .doc('DHV')
+                .collection('checked in')
+                .doc(this.$route.params.id.toLowerCase())
+                .onSnapshot(doc => {
+                    this.attendeeData = doc.data();
+                    if (
+                        this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                            .type == 'incoming'
+                    ) {
+                        this.lastStatus = `Checked into ${
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .building
+                        } at ${new Date(
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .time.seconds * 1000
+                        )}`;
+                    } else {
+                        this.lastStatus = `Left ${
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .building
+                        } at ${new Date(
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .time.seconds * 1000
+                        )}`;
+                    }
+                    console.log('Current data: ', doc.data());
+                });
+        },
         addMeal() {
             const mealNum = document.getElementById('meals');
             if (mealNum.value < 5) {
@@ -132,6 +174,7 @@ export default {
             .get()
             .then(doc => {
                 if (doc.exists) {
+                    this.exists = true;
                     this.alreadyCheckedIn = true;
                     this.attendeeData = doc.data();
                     if (
@@ -166,6 +209,10 @@ export default {
             .catch(function(error) {
                 console.log('Error getting document:', error);
             });
+
+        if (this.exists) {
+            this.attachListener();
+        }
     },
 };
 </script>
