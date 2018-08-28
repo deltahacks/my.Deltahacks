@@ -113,12 +113,37 @@
           </v-layout>
         </v-container>
         <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
-        <!-- careful with modifying these buttons, submit must to be of type submit. -->
+        <!-- submission and clearn btns + confirmation dialog -->
         <div class="mx-auto gg">
-          <v-btn type="submit" outline color="blue" :disabled="submitted">Submit</v-btn>
-          <v-btn outline color="red" :disabled="submitted">Clear</v-btn>
+          <!-- <v-btn type="submit" outline color="blue" :disabled="submitted">Submit</v-btn> -->
+          <v-dialog v-model="confirm" persistent max-width="400">
+            <v-btn slot="activator" outline color="blue" :disabled="submitted">Submit</v-btn>
+            <v-card>
+                <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
+                <v-card-text>You will no longer be able to edit your application once you have submitted.</v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
+                <v-btn color="green darken-1" @click.prevent="validateBeforeSubmit" @click="submitApplication" flat>Yes</v-btn>
+                </v-card-actions>
+            </v-card>
+            </v-dialog>
+          <!-- <v-btn outline color="red" :disabled="submitted">Clear</v-btn> -->
+          <v-dialog v-model="confirmClear" persistent max-width="400">
+            <v-btn slot="activator" outline color="red" :disabled="submitted">Clear</v-btn>
+            <v-card>
+                <v-card-title class="headline">Are you sure you'd like to clear?</v-card-title>
+                <v-card-text>Saved progress will be lost on next save.</v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
+                <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
+                </v-card-actions>
+            </v-card>
+            </v-dialog>
         </div>
       </form>
+      <!-- loading dialog -->
       <v-dialog v-model="loading" persistent width="300">
         <v-card color="primary" dark>
           <v-card-text>
@@ -127,6 +152,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
+      <!-- saved notification -->
       <v-snackbar v-model="feedback" top :color="bannerColor" right :timeout="bannerTimeout">
         {{bannerMessage}}
         <v-btn color="white" flat @click="feedback = false">
@@ -159,6 +185,7 @@ import { list_of_universities as allUniversities } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+
 export default {
   mixins: [validationMixin],
   name: 'Apply',
@@ -167,6 +194,8 @@ export default {
       myFiles: [],
       loading: false,
       feedback: false,
+      confirm: false,
+      confirmClear: false,
       editing: false,
       existing_doc: undefined,
       checkError: undefined,
@@ -257,6 +286,35 @@ export default {
         handleFilePondInit() {
             console.log('FilePond has initialized');
             // FilePond instance methods are available on `this.$refs.pond`
+        },
+        getEmptyApplication() {
+            return {
+                name: '',
+                email: firebase.auth().currentUser.email,
+                last_modified: undefined,
+                first_submitted: undefined,
+                school_year: null,
+                shirt_size: null,
+                dietry_restrictions: null,
+                hackathons: null,
+                university: null,
+                github: '',
+                linkedin: '',
+                website: '',
+                phone: '',
+                emergency_phone: '',
+                q1: '',
+                q2: '',
+                q3: '',
+                q4: '',
+                major: '',
+                birthday: '',
+                documents: [],
+            }
+        },
+        clearForm() {
+            this.confirmClear = false;
+            this.application = this.getEmptyApplication();
         },
         activateModal(msg) {
             this.loading = true;
@@ -375,7 +433,7 @@ export default {
             });
         },
         async submitApplication() {
-            // consider async.js / async-each alternatives
+            this.confirm = false;
             if (!this.checkbox) {
                 this.checkError = 'Please accept the terms and conditions to continue.';
                 return;
@@ -433,7 +491,7 @@ export default {
                 if (submitted) {
                     this.editing = true;
                     this.submitted = true;
-                    console.log(doc.data());
+                    this.checkbox = true;
                     this.application = doc.data();
                     this.fillApplicationFields();
                     this.loading = false;
