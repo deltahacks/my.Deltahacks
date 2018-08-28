@@ -1,12 +1,18 @@
 <template>
     <v-app>
         <Navbar/>
+        <v-snackbar v-model="feedback" top :color="bannerColor" :timeout="bannerTimeout">
+            {{bannerMessage}}
+            <v-btn color="white" flat @click="feedback = false">
+                Close
+            </v-btn>
+        </v-snackbar>
         <h2>{{$route.params.id}}</h2>
-        <h2> Last status: </h2>
-        <v-btn class="checkinButtons">Add meal</v-btn>
-        <v-btn @click="checkin" class="checkinButtons">Check in</v-btn>
-        <v-btn @click="signin" class="checkinButtons">Sign in building</v-btn>
-        <v-btn @click="signout" class="checkinButtons">Sign out building</v-btn>
+        <h2> Last status: {{ lastStatus }}</h2>
+        <v-btn @click="checkin" class="checkinButtons" :disabled="alreadyCheckedIn">Check in</v-btn>
+        <v-btn class="checkinButtons" :disabled="!alreadyCheckedIn">Add meal</v-btn>
+        <v-btn @click="signin" class="checkinButtons" :disabled="!alreadyCheckedIn">Sign in building</v-btn>
+        <v-btn @click="signout" class="checkinButtons" :disabled="!alreadyCheckedIn">Sign out building</v-btn>
         <div class="input-prepend-append">
             <button type="button" class="btn btn-prepend" v-on:click='removeMeal()'> - </button>
             <input type="number" min="0" max="5" id="meals" name='f' value="0">
@@ -21,8 +27,18 @@ import Navbar from '@/components/Navbar.vue';
 
 export default {
     data() {
-        return { d: 'l' };
-        meals: 0;
+        return {
+            d: 'l',
+            meals: 0,
+            feedback: null,
+            bannerMessage: 'Success',
+            bannerTimeout: 2000,
+            bannerColor: 'success',
+            attendeeData: null,
+            lastStatus: null,
+            alreadyCheckedIn: false,
+            exists: false,
+        };
     },
     components: {
         Navbar,
@@ -38,9 +54,23 @@ export default {
                     checkedIn: true,
                     time: new Date(),
                     by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
-                    whereabouts: [{ building: 'ETB' }],
+                    whereabouts: [
+                        {
+                            initialCheckin: true,
+                            building: 'ETB',
+                            time: new Date(),
+                            by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
+                            type: 'incoming',
+                        },
+                    ],
                 })
-                .then(() => console.log('Successfully written'))
+                .then(() => {
+                    this.feedback = true;
+                    this.alreadyCheckedIn = true;
+                    this.bannerMessage = 'Successfully checked in';
+                    console.log('Successfully written');
+                    this.attachListener();
+                })
                 .catch(err => console.log(err));
         },
         signin() {
@@ -59,7 +89,11 @@ export default {
                             type: 'incoming',
                         }),
                     })
-                    .then(() => console.log('Successfully written'))
+                    .then(() => {
+                        this.feedback = true;
+                        this.bannerMessage = 'Successfully signed in building';
+                        console.log('Successfully written');
+                    })
                     .catch(err => console.log(err));
             });
         },
@@ -79,9 +113,44 @@ export default {
                             type: 'outgoing',
                         }),
                     })
-                    .then(() => console.log('Successfully written'))
+                    .then(() => {
+                        this.feedback = true;
+                        this.bannerMessage = 'Successfully signed out building';
+                        console.log('Successfully written');
+                    })
                     .catch(err => console.log(err));
             });
+        },
+        attachListener() {
+            db
+                .collection('hackathon')
+                .doc('DHV')
+                .collection('checked in')
+                .doc(this.$route.params.id.toLowerCase())
+                .onSnapshot(doc => {
+                    this.attendeeData = doc.data();
+                    if (
+                        this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                            .type == 'incoming'
+                    ) {
+                        this.lastStatus = `Checked into ${
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .building
+                        } at ${new Date(
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .time.seconds * 1000
+                        )}`;
+                    } else {
+                        this.lastStatus = `Left ${
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .building
+                        } at ${new Date(
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .time.seconds * 1000
+                        )}`;
+                    }
+                    console.log('Current data: ', doc.data());
+                });
         },
         addMeal() {
             const mealNum = document.getElementById('meals');
@@ -96,7 +165,55 @@ export default {
             }
         },
     },
-    mounted() {},
+    mounted() {
+        db
+            .collection('hackathon')
+            .doc('DHV')
+            .collection('checked in')
+            .doc(this.$route.params.id.toLowerCase())
+            .get()
+            .then(doc => {
+                if (doc.exists) {
+                    this.exists = true;
+                    this.alreadyCheckedIn = true;
+                    this.attendeeData = doc.data();
+                    if (
+                        this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                            .type == 'incoming'
+                    ) {
+                        this.lastStatus = `Checked into ${
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .building
+                        } at ${new Date(
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .time.seconds * 1000
+                        )}`;
+                    } else {
+                        this.lastStatus = `Left ${
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .building
+                        } at ${new Date(
+                            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
+                                .time.seconds * 1000
+                        )}`;
+                    }
+                    console.log('Document data:', doc.data());
+                    return true;
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log('No such document!');
+                    this.lastStatus = 'Not checked in';
+                    return false;
+                }
+            })
+            .catch(function(error) {
+                console.log('Error getting document:', error);
+            });
+
+        if (this.exists) {
+            this.attachListener();
+        }
+    },
 };
 </script>
 
