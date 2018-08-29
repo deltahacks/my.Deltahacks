@@ -81,18 +81,18 @@ export default {
 
       context.clearRect(0, 0, W, window.innerHeight);
 
-      for (var i = 0; i < maxConfettis; i++) {
+      for (let i = 0; i < maxConfettis; i++) {
         results.push(particles[i].draw());
       }
 
       let particle = {};
       let remainingFlakes = 0;
-      for (var i = 0; i < maxConfettis; i++) {
-        particle = particles[i];
+      for (let j = 0; j < maxConfettis; j += 1) {
+        particle = particles[j];
 
         particle.tiltAngle += particle.tiltAngleIncremental;
         particle.y += (Math.cos(particle.d) + 3 + (particle.r / 2)) / 2;
-        particle.tilt = Math.sin(particle.tiltAngle - (i / 3)) * 15;
+        particle.tilt = Math.sin(particle.tiltAngle - (j / 3)) * 15;
 
         if (particle.y <= H) remainingFlakes += 1;
 
