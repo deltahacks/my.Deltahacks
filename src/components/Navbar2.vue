@@ -1,8 +1,8 @@
 <template>
   <v-toolbar class="toolbar">
-    <v-toolbar-title id="title">
+   <v-toolbar-title id="title">
+            <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
     </v-toolbar-title>
-
       <!-- <v-btn>
         <v-badge right color="red" overlap>
           <v-icon slot="badge" dark small>fas fa-exclamation</v-icon>
@@ -11,23 +11,22 @@
           </v-icon>
         </v-badge>
       </v-btn> -->
-      <a href="/status" class="button">Status</a>&ensp;
-      <a href="/apply" class="button">Apply Now</a>&ensp;
+      <a href="/status" class="button">STATUS</a>&ensp;
+      <a href="/apply" class="button">APPLY NOW</a>&ensp;
       <!-- <v-btn flat to="/status" v-if="c_user" >Status</v-btn> -->
-      <a href="/signup" class="button">Signup</a>&ensp;
-      <a href="/login" class="button">Login</a>&ensp;
+      <a href="/signup" class="button">SIGNUP</a>&ensp;
+      <a href="/login" class="button">LOGIN</a>&ensp;
       <!-- <v-btn flat to="/login" v-if="!c_user">Login</v-btn> -->
-      <a href="#" class="button">Contact</a>&ensp;
+      <a href="#" class="button">CONTACT</a>&ensp;
       <a href="/faq" class="button">FAQ</a>&ensp;
       <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <v-chip color="white" text-color="black" class="clickable">
+      <v-chip class="button">
         <v-avatar><v-icon>account_circle</v-icon></v-avatar>
         {{c_user.email}}
-      </v-chip>&ensp; &ensp;
-      <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>
+      </v-chip>
       <!-- <v-chip  class="clickable" @click.prevent="logout" v-if="c_user">
         Logout
       </v-chip> -->

@@ -39,7 +39,7 @@
 		padding: 0 1.75em;
 		text-align: center;
 		text-decoration: none;
-		text-transform: uppercase;
+		/* text-transform: uppercase; */
 	}
 	.button:hover,
 		.button:active {
