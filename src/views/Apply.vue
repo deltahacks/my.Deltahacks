@@ -122,8 +122,32 @@
                 <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
                 <!-- careful with modifying these buttons, submit must to be of type submit. -->
                 <div class="mx-auto gg">
-                    <v-btn class="button1" type="submit" :disabled="submitted">Submit</v-btn>
-                    <v-btn class="button2" :disabled="submitted">Clear</v-btn>
+                    <!-- <v-btn class="button1" type="submit" :disabled="submitted">Submit</v-btn> -->
+                    <v-dialog v-model="confirm" persistent max-width="400">
+                        <v-btn slot="activator" :disabled="submitted" color="blue" dark>Submit</v-btn>
+                        <v-card>
+                            <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
+                            <v-card-text>You cannot edit your applicaiton once you've submitted.</v-card-text>
+                            <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
+                            <v-btn color="green darken-1" flat @click.prevent="validateBeforeSubmit" @click="submitApplication">Yes</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                    <!-- <v-btn class="button2" :disabled="submitted">Clear</v-btn> -->
+                    <v-dialog v-model="confirmClear" persistent max-width="400">
+                        <v-btn slot="activator" :disabled="submitted" color="red" dark>Clear</v-btn>
+                        <v-card>
+                            <v-card-title class="headline">Are you sure you'd like to clear the form?</v-card-title>
+                            <v-card-text>This will overwrite perviously saved data.</v-card-text>
+                            <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
+                            <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                 </div>
             </form>
             <v-dialog v-model="loading" persistent width="300">
@@ -472,7 +496,7 @@ export default {
         const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
-          this.submitted = true;
+        //   this.submitted = true;
           this.checkbox = true;
           this.application = doc.data();
           this.fillApplicationFields();
