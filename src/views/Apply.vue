@@ -1,5 +1,6 @@
 <template>
-    <v-app class="dashboard background" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+    <v-app class="dashboard background">
+      <!-- style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
         <Navbar2 class="navbar1" />
         <div class='container-status100'>
             <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
@@ -559,7 +560,11 @@ p {
     background-position: center;
     background-size: cover;
     z-index: 0;
-    background-color: rgba(255, 255, 255, 0.8);
+     background: #9152f8;
+  background: -webkit-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -o-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -moz-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
 }
 .navbar1 {
     z-index: 0;
