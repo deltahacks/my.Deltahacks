@@ -26,9 +26,9 @@ function shade(col, light) {
   let b = parseInt(col.substr(5, 2), 16);
 
   if (light < 0) {
-    r = (1 + light) * r;
-    g = (1 + light) * g;
-    b = (1 + light) * b;
+    r *= (1 + light);
+    g *= (1 + light);
+    b *= (1 + light);
   } else {
     r = ((1 - light) * r) + (light * 255);
     g = ((1 - light) * g) + (light * 255);
