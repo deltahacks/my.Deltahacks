@@ -121,8 +121,8 @@
                 <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
                 <!-- careful with modifying these buttons, submit must to be of type submit. -->
                 <div class="mx-auto gg">
-                    <v-btn type="submit" outline color="blue" :disabled="submitted">Submit</v-btn>
-                    <v-btn outline color="red" :disabled="submitted">Clear</v-btn>
+                    <v-btn class="button1" type="submit" :disabled="submitted">Submit</v-btn>
+                    <v-btn class="button2" :disabled="submitted">Clear</v-btn>
                 </div>
             </form>
             <v-dialog v-model="loading" persistent width="300">
@@ -596,5 +596,55 @@ p {
     top: 0;
     left: 0;
     background-color: rgba(255, 255, 255, 0.8);
+}
+.button1{
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    float: left;
+    background-color: transparent;
+    font-family: sans-serif;
+		border: 1;
+		/* border-radius: 30px; */
+		box-shadow: inset 0 0 0 2px #2196f3;
+		color: #2196f3;
+		cursor: pointer;
+		/* display: inline-block; */
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 52px;
+		padding: 0 1.75em;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+}
+.button2{
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    float: left;
+    background-color: transparent;
+    font-family: sans-serif;
+		border: 1;
+		/* border-radius: 30px; */
+		box-shadow: inset 0 0 0 2px #f44336;
+		color: #f44336;
+		cursor: pointer;
+		/* display: inline-block; */
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 52px;
+		padding: 0 1.75em;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
 }
 </style>
