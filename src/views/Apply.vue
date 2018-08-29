@@ -571,24 +571,24 @@ p {
     background-color: rgba(255, 255, 255, 0.8);
 }
 .container-status100 {
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    padding-bottom: 0px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  padding-bottom: 0px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
 }
 
 .container-status100::before {
@@ -603,53 +603,53 @@ p {
     background-color: rgba(255, 255, 255, 0.8);
 }
 .button1{
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-		border: 1;
-		border-radius: 40px;
-		box-shadow: inset 0 0 0 2px #2196f3;
-		color: #2196f3;
-		cursor: pointer;
-		/* display: inline-block; */
-		font-size: 15px;
-		font-weight: 600;
-		line-height: 52px;
-		padding: 0 1.75em;
-		text-align: center;
-		text-decoration: none;
-		text-transform: uppercase;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  float: left;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 40px;
+  box-shadow: inset 0 0 0 2px #2196f3;
+  color: #2196f3;
+  cursor: pointer;
+  /* display: inline-block; */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 .button2{
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-		border: 1;
-		border-radius: 40px;
-		box-shadow: inset 0 0 0 2px #f44336;
-		color: #f44336;
-		cursor: pointer;
-		/* display: inline-block; */
-		font-size: 15px;
-		font-weight: 600;
-		line-height: 52px;
-		padding: 0 1.75em;
-		text-align: center;
-		text-decoration: none;
-		text-transform: uppercase;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  float: left;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 40px;
+  box-shadow: inset 0 0 0 2px #f44336;
+  color: #f44336;
+  cursor: pointer;
+  /* display: inline-block; */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 </style>
