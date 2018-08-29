@@ -109,13 +109,13 @@
 import firebase from 'firebase';
 import IOdometer from 'vue-odometer';
 import functions from 'firebase/functions';
+import fake from '@/helpers/fake';
 // import Typed from 'typed.js';
 import PieChart from '@/components/PieChartGen';
 import BarChart from '@/components/BarChart';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import db from '../private/firebase_init';
-import fake from '@/helpers/fake';
 import { allUniversities } from '../private/data';
 
 export default {

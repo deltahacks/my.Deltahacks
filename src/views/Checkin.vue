@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import db from '../private/firebase_init';
 import Navbar from '@/components/Navbar.vue';
+import db from '../private/firebase_init';
 
 export default {
   data() {

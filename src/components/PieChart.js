@@ -30,9 +30,9 @@ function shade(col, light) {
     g = (1 + light) * g;
     b = (1 + light) * b;
   } else {
-    r = (1 - light) * r + light * 255;
-    g = (1 - light) * g + light * 255;
-    b = (1 - light) * b + light * 255;
+    r = ((1 - light) * r) + (light * 255);
+    g = ((1 - light) * g) + (light * 255);
+    b = ((1 - light) * b) + (light * 255);
   }
 
   return color(r, g, b);

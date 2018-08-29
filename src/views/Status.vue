@@ -47,6 +47,7 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
+import { auth } from 'firebase';
 import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
@@ -55,7 +56,7 @@ import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { allUniversities } from '../private/data';
-import { auth } from 'firebase';
+
 
 export default {
   mixins: [validationMixin],
