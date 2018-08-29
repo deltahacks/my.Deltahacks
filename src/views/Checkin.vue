@@ -151,13 +151,13 @@ export default {
     addMeal() {
       const mealNum = document.getElementById('meals');
       if (mealNum.value < 5) {
-        mealNum.value = parseInt(mealNum.value) + 1;
+        mealNum.value = parseInt(mealNum.value, 10) + 1;
       }
     },
     removeMeal() {
       const mealNum = document.getElementById('meals');
       if (mealNum.value > 0) {
-        mealNum.value = parseInt(mealNum.value) - 1;
+        mealNum.value = parseInt(mealNum.value, 10) - 1;
       }
     },
   },

@@ -124,7 +124,7 @@ export default {
   },
   mounted() {
     console.log('Sub', this.isReviewed, this.applicant, this.random);
-    this.score = this.applicant.decision.reviewers.find(obj => obj.reviewer == this.$store.state.firebase.auth().currentUser.email).score;
+    this.score = this.applicant.decision.reviewers.find(obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email).score;
   },
   methods: {
     async updateApplicationScore() {

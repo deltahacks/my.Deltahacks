@@ -50,25 +50,25 @@ export default {
     ];
 
     function randomFromTo(from, to) {
-      return Math.floor(Math.random() * (to - from + 1) + from);
+      return Math.floor((Math.random() * ((to - from) + 1)) + from);
     }
 
-    function confettiParticle() {
+    function ConfettiParticle() {
       this.x = Math.random() * W; // x
-      this.y = Math.random() * H - H; // y
+      this.y = (Math.random() * H) - H; // y
       this.r = randomFromTo(11, 33); // radius
-      this.d = Math.random() * maxConfettis + 11;
+      this.d = (Math.random() * maxConfettis) + 11;
       this.color = possibleColors[Math.floor(Math.random() * possibleColors.length)];
       this.tilt = Math.floor(Math.random() * 33) - 11;
-      this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
+      this.tiltAngleIncremental = (Math.random() * 0.07) + 0.05;
       this.tiltAngle = 0;
 
       this.draw = function () {
         context.beginPath();
         context.lineWidth = this.r / 2;
         context.strokeStyle = this.color;
-        context.moveTo(this.x + this.tilt + this.r / 3, this.y);
-        context.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 5);
+        context.moveTo(this.x + this.tilt + (this.r / 3), this.y);
+        context.lineTo(this.x + this.tilt, this.y + this.tilt + (this.r / 5));
         return context.stroke();
       };
     }
@@ -81,20 +81,20 @@ export default {
 
       context.clearRect(0, 0, W, window.innerHeight);
 
-      for (var i = 0; i < maxConfettis; i++) {
+      for (let i = 0; i < maxConfettis; i += 1) {
         results.push(particles[i].draw());
       }
 
       let particle = {};
       let remainingFlakes = 0;
-      for (var i = 0; i < maxConfettis; i++) {
-        particle = particles[i];
+      for (let j = 0; j < maxConfettis; j += 1) {
+        particle = particles[j];
 
         particle.tiltAngle += particle.tiltAngleIncremental;
-        particle.y += (Math.cos(particle.d) + 3 + particle.r / 2) / 2;
-        particle.tilt = Math.sin(particle.tiltAngle - i / 3) * 15;
+        particle.y += (Math.cos(particle.d) + 3 + (particle.r / 2)) / 2;
+        particle.tilt = Math.sin(particle.tiltAngle - (j / 3)) * 15;
 
-        if (particle.y <= H) remainingFlakes++;
+        if (particle.y <= H) remainingFlakes += 1;
 
         // If a confetti has fluttered out of view,
         // bring it back to above the viewport and let if re-fall.
@@ -120,8 +120,8 @@ export default {
     );
 
     // Push new confetti objects to `particles[]`
-    for (let i = 0; i < maxConfettis; i++) {
-      particles.push(new confettiParticle());
+    for (let i = 0; i < maxConfettis; i += 1) {
+      particles.push(new ConfettiParticle());
     }
 
     // Initialize
