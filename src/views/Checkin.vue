@@ -131,7 +131,7 @@ export default {
           this.attendeeData = doc.data();
           if (
             this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .type == 'incoming'
+              .type === 'incoming'
           ) {
             this.lastStatus = `Checked into ${
               this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
@@ -175,7 +175,7 @@ export default {
           this.attendeeData = doc.data();
           if (
             this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .type == 'incoming'
+              .type === 'incoming'
           ) {
             this.lastStatus = `Checked into ${
               this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]

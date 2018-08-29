@@ -161,7 +161,7 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { list_of_universities as allUniversities } from '../private/data';
+import { listOfUniversities as allUniversities } from '../private/data';
 import { majors } from '../private/data';
 // import { setTimeout } from 'timers';
 
