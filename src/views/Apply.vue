@@ -168,332 +168,332 @@ import { majors } from '../private/data';
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 export default {
-    mixins: [validationMixin],
-    name: 'Apply',
-    data() {
-        return {
-            myFiles: [],
-            loading: false,
-            feedback: false,
-            confirm: false,
-            confirmClear: false,
-            editing: false,
-            existing_doc: undefined,
-            checkError: undefined,
-            pondError: undefined,
-            bannerColor: 'success',
-            bannerMessage: 'Complete!',
-            bannerTimeout: 3000,
-            loadingMessage: 'Loading...',
-            parent: this,
-            url: '',
-            picker: null,
-            submitted: false,
-            date: '2000-01-01',
-            university: null,
-            timeout: null,
-            allUniversities,
-            application: {
-                name: '',
-                email: firebase.auth().currentUser.email,
-                last_modified: undefined,
-                first_submitted: undefined,
-                school_year: null,
-                shirt_size: null,
-                dietry_restrictions: null,
-                hackathons: null,
-                university: null,
-                github: '',
-                linkedin: '',
-                website: '',
-                phone: '',
-                emergency_phone: '',
-                q1: '',
-                q2: '',
-                q3: '',
-                q4: '',
-                major: '',
-                birthday: '',
-                documents: [],
-            },
-            links: ['Home', 'About', 'Contact'],
-            q1: '',
-            custom: true,
-            name: '',
-            email: '',
-            select: null,
-            items: ['First Year', 'Second Year', 'Third Year', 'Forth Year', 'Fifth Year'],
-            hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-            food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-            shirts: ['XS', 'S', 'M', 'L', 'XL'],
-            checkbox: false,
-        };
+  mixins: [validationMixin],
+  name: 'Apply',
+  data() {
+    return {
+      myFiles: [],
+      loading: false,
+      feedback: false,
+      confirm: false,
+      confirmClear: false,
+      editing: false,
+      existing_doc: undefined,
+      checkError: undefined,
+      pondError: undefined,
+      bannerColor: 'success',
+      bannerMessage: 'Complete!',
+      bannerTimeout: 3000,
+      loadingMessage: 'Loading...',
+      parent: this,
+      url: '',
+      picker: null,
+      submitted: false,
+      date: '2000-01-01',
+      university: null,
+      timeout: null,
+      allUniversities,
+      application: {
+        name: '',
+        email: firebase.auth().currentUser.email,
+        last_modified: undefined,
+        first_submitted: undefined,
+        school_year: null,
+        shirt_size: null,
+        dietry_restrictions: null,
+        hackathons: null,
+        university: null,
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
+        major: '',
+        birthday: '',
+        documents: [],
+      },
+      links: ['Home', 'About', 'Contact'],
+      q1: '',
+      custom: true,
+      name: '',
+      email: '',
+      select: null,
+      items: ['First Year', 'Second Year', 'Third Year', 'Forth Year', 'Fifth Year'],
+      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+      food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+      shirts: ['XS', 'S', 'M', 'L', 'XL'],
+      checkbox: false,
+    };
+  },
+  validations: {
+    name: { required, maxLength: maxLength(10) },
+    email: { required, email },
+    select: { required },
+    checkbox: { required },
+    university: { in: allUniversities },
+  },
+  components: {
+    Navbar,
+    Footer,
+    FilePond,
+    Navigation,
+    Navbar2,
+  },
+  computed: {
+    q1Progress() {
+      return Math.min(100, this.application.q1.length / 5);
     },
-    validations: {
-        name: { required, maxLength: maxLength(10) },
-        email: { required, email },
-        select: { required },
-        checkbox: { required },
-        university: { in: allUniversities },
+    q2Progress() {
+      return Math.min(100, this.application.q2.length / 5);
     },
-    components: {
-        Navbar,
-        Footer,
-        FilePond,
-        Navigation,
-        Navbar2,
+    q1Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
     },
-    computed: {
-        q1Progress() {
-            return Math.min(100, this.application.q1.length / 5);
-        },
-        q2Progress() {
-            return Math.min(100, this.application.q2.length / 5);
-        },
-        q1Color() {
-            return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
-        },
-        q2Color() {
-            return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
-        },
-        currentUser() {
-            return firebase.auth().currentUser;
-        },
-        haveFile() {
-            return this.editing && this.application.documents.filename;
-        },
+    q2Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
     },
-    methods: {
-        handleFilePondInit() {
-            console.log('FilePond has initialized');
-            // FilePond instance methods are available on `this.$refs.pond`
-        },
-        getEmptyApplication() {
-            return {
-                name: '',
-                email: firebase.auth().currentUser.email,
-                last_modified: undefined,
-                first_submitted: undefined,
-                school_year: null,
-                shirt_size: null,
-                dietry_restrictions: null,
-                hackathons: null,
-                university: null,
-                github: '',
-                linkedin: '',
-                website: '',
-                phone: '',
-                emergency_phone: '',
-                q1: '',
-                q2: '',
-                q3: '',
-                q4: '',
-                major: '',
-                birthday: '',
-                documents: [],
-            };
-        },
-        clearForm() {
-            this.confirmClear = false;
-            this.application = this.getEmptyApplication();
-        },
-        activateModal(msg) {
-            this.loading = true;
-            this.loadingMessage = msg;
-        },
-        toggleCheck() {
-            this.checkError = undefined;
-        },
-        validateBeforeSubmit() {
-            this.$validator.validateAll();
-        },
-        formChange() {
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-                this.timeout = null;
-            }
-            this.timeout = setTimeout(() => {
-                this.setApplicationInProgress();
-            }, 2000);
-        },
-        showInfoMessage(msg) {
-            this.bannerMessage = msg;
-            this.bannerColor = 'success';
-            this.feedback = true;
-        },
-        showErrorMessage(msg) {
-            this.bannerMessage = msg;
-            this.bannerColor = 'error';
-            this.feedback = true;
-        },
-        async submitFileInfoOnDrop() {
-            const files = this.$refs.pond.getFiles();
-            try {
-                if (this.submitted) {
-                    this.$refs.pond.removeFile(0);
-                    return;
-                }
-                const info = await this.storeFileAndGetInfo(files[0]);
-                this.application.documents = info;
-                this.setApplicationInProgress();
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        setApplicationInProgress() {
-            const unixts = Math.round(new Date().getTime() / 1000);
-            this.application.last_modified = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-            this.application.first_submitted = {
-                unix: 0,
-                date: '',
-            };
-            this.$store.state.db
-                .collection('applications')
-                .doc('DH5_Test')
-                .collection('in progress')
-                .doc(firebase.auth().currentUser.email)
-                .set(this.application)
-                .then(() => {
-                    console.log('saving...');
-                    this.showInfoMessage('Application progress saved!');
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                });
-        },
-        setDateInformation() {
-            const unixts = Math.round(new Date().getTime() / 1000);
-            this.application.first_submitted = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-            this.application.last_modified = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-        },
-        setApplication() {
-            this.setDateInformation();
-            this.$store.state.db
-                .collection('applications')
-                .doc('DH5_Test')
-                .collection('submitted')
-                .doc(firebase.auth().currentUser.email)
-                .set(this.application)
-                .then(() => {
-                    this.$router.push({ name: 'Dashboard' });
-                    this.loading = false;
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                });
-        },
-        storeFileAndGetInfo(doc) {
-            if (!doc) return;
-            const { filename, file, id } = doc;
-            const storeRef = firebase.storage().ref();
-            return new Promise((resolve, reject) => {
-                storeRef
-                    .child(`users/${firebase.auth().currentUser.email}/${filename}`)
-                    .put(file)
-                    .then(snapshot => {
-                        snapshot.ref.getDownloadURL().then(url => {
-                            resolve({
-                                download_link: url,
-                                id,
-                                filename,
-                            });
-                        });
-                    })
-                    .catch(err => reject(err));
+    currentUser() {
+      return firebase.auth().currentUser;
+    },
+    haveFile() {
+      return this.editing && this.application.documents.filename;
+    },
+  },
+  methods: {
+    handleFilePondInit() {
+      console.log('FilePond has initialized');
+      // FilePond instance methods are available on `this.$refs.pond`
+    },
+    getEmptyApplication() {
+      return {
+        name: '',
+        email: firebase.auth().currentUser.email,
+        last_modified: undefined,
+        first_submitted: undefined,
+        school_year: null,
+        shirt_size: null,
+        dietry_restrictions: null,
+        hackathons: null,
+        university: null,
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
+        major: '',
+        birthday: '',
+        documents: [],
+      };
+    },
+    clearForm() {
+      this.confirmClear = false;
+      this.application = this.getEmptyApplication();
+    },
+    activateModal(msg) {
+      this.loading = true;
+      this.loadingMessage = msg;
+    },
+    toggleCheck() {
+      this.checkError = undefined;
+    },
+    validateBeforeSubmit() {
+      this.$validator.validateAll();
+    },
+    formChange() {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+      this.timeout = setTimeout(() => {
+        this.setApplicationInProgress();
+      }, 2000);
+    },
+    showInfoMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = 'success';
+      this.feedback = true;
+    },
+    showErrorMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = 'error';
+      this.feedback = true;
+    },
+    async submitFileInfoOnDrop() {
+      const files = this.$refs.pond.getFiles();
+      try {
+        if (this.submitted) {
+          this.$refs.pond.removeFile(0);
+          return;
+        }
+        const info = await this.storeFileAndGetInfo(files[0]);
+        this.application.documents = info;
+        this.setApplicationInProgress();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    setApplicationInProgress() {
+      const unixts = Math.round(new Date().getTime() / 1000);
+      this.application.last_modified = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+      this.application.first_submitted = {
+        unix: 0,
+        date: '',
+      };
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('in progress')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          console.log('saving...');
+          this.showInfoMessage('Application progress saved!');
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    setDateInformation() {
+      const unixts = Math.round(new Date().getTime() / 1000);
+      this.application.first_submitted = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+      this.application.last_modified = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+    },
+    setApplication() {
+      this.setDateInformation();
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('submitted')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          this.$router.push({ name: 'Dashboard' });
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    storeFileAndGetInfo(doc) {
+      if (!doc) return;
+      const { filename, file, id } = doc;
+      const storeRef = firebase.storage().ref();
+      return new Promise((resolve, reject) => {
+        storeRef
+          .child(`users/${firebase.auth().currentUser.email}/${filename}`)
+          .put(file)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              resolve({
+                download_link: url,
+                id,
+                filename,
+              });
             });
-        },
-        async submitApplication() {
-            this.confirm = false;
-            if (!this.checkbox) {
-                this.checkError = 'Please accept the terms and conditions to continue.';
-                return;
-            }
+          })
+          .catch(err => reject(err));
+      });
+    },
+    async submitApplication() {
+      this.confirm = false;
+      if (!this.checkbox) {
+        this.checkError = 'Please accept the terms and conditions to continue.';
+        return;
+      }
 
-            const files = this.$refs.pond.getFiles();
-            this.activateModal('Submitting application...');
-            const resume = files[0];
-            const results = [];
-            if (resume) {
-                results.push(this.storeFileAndGetInfo(files[0]));
-                this.application.documents = await Promise.all(results).catch(err => {
-                    console.log(`Upload Failed: ${err}`);
-                    this.loading = false;
-                });
-            }
-            this.setApplication();
-        },
-        insertUserFileData(doc) {
-            this.$refs.pond.addFile(doc.download_link);
-        },
-        fillApplicationFields() {
-            const ref = this.application;
-            ref.q1 = ref.q1 ? ref.q1 : '';
-            ref.q2 = ref.q2 ? ref.q2 : '';
-            ref.q3 = ref.q3 ? ref.q3 : '';
-            ref.q4 = ref.q4 ? ref.q4 : '';
-        },
-        getUserAppStatus(userEmail) {
-            return new Promise((resolve, reject) => {
-                this.$store.state.db
-                    .collection('applications')
-                    .doc('DH5_Test')
-                    .collection('submitted')
-                    .doc(userEmail)
-                    .get()
-                    .then(doc => {
-                        resolve(doc.exists);
-                    })
-                    .catch(err => reject(err));
-            });
-        },
+      const files = this.$refs.pond.getFiles();
+      this.activateModal('Submitting application...');
+      const resume = files[0];
+      const results = [];
+      if (resume) {
+        results.push(this.storeFileAndGetInfo(files[0]));
+        this.application.documents = await Promise.all(results).catch((err) => {
+          console.log(`Upload Failed: ${err}`);
+          this.loading = false;
+        });
+      }
+      this.setApplication();
     },
-    beforeMount() {
-        this.activateModal('Loading...');
-        const userEmail = firebase.auth().currentUser.email;
+    insertUserFileData(doc) {
+      this.$refs.pond.addFile(doc.download_link);
+    },
+    fillApplicationFields() {
+      const ref = this.application;
+      ref.q1 = ref.q1 ? ref.q1 : '';
+      ref.q2 = ref.q2 ? ref.q2 : '';
+      ref.q3 = ref.q3 ? ref.q3 : '';
+      ref.q4 = ref.q4 ? ref.q4 : '';
+    },
+    getUserAppStatus(userEmail) {
+      return new Promise((resolve, reject) => {
         this.$store.state.db
-            .collection('applications')
-            .doc('DH5_Test')
-            .collection('in progress')
-            .doc(userEmail)
-            .get()
-            .then(async doc => {
-                const submitted = await this.getUserAppStatus(userEmail);
-                if (submitted) {
-                    this.editing = true;
-                    this.submitted = true;
-                    this.checkbox = true;
-                    this.application = doc.data();
-                    this.fillApplicationFields();
-                    this.loading = false;
-                } else if (doc.exists) {
-                    this.editing = true;
-                    this.application = doc.data();
-                    this.fillApplicationFields();
-                    // this.insertUserFileData(this.application.documents);
-                    this.loading = false;
-                } else {
-                    console.log('Document not found!');
-                    this.editing = false;
-                    this.loading = false;
-                }
-            })
-            .catch(err => {
-                console.log('User app query failed.');
-                console.log(err);
-                this.loading = false;
-            });
+          .collection('applications')
+          .doc('DH5_Test')
+          .collection('submitted')
+          .doc(userEmail)
+          .get()
+          .then((doc) => {
+            resolve(doc.exists);
+          })
+          .catch(err => reject(err));
+      });
     },
+  },
+  beforeMount() {
+    this.activateModal('Loading...');
+    const userEmail = firebase.auth().currentUser.email;
+    this.$store.state.db
+      .collection('applications')
+      .doc('DH5_Test')
+      .collection('in progress')
+      .doc(userEmail)
+      .get()
+      .then(async (doc) => {
+        const submitted = await this.getUserAppStatus(userEmail);
+        if (submitted) {
+          this.editing = true;
+          this.submitted = true;
+          this.checkbox = true;
+          this.application = doc.data();
+          this.fillApplicationFields();
+          this.loading = false;
+        } else if (doc.exists) {
+          this.editing = true;
+          this.application = doc.data();
+          this.fillApplicationFields();
+          // this.insertUserFileData(this.application.documents);
+          this.loading = false;
+        } else {
+          console.log('Document not found!');
+          this.editing = false;
+          this.loading = false;
+        }
+      })
+      .catch((err) => {
+        console.log('User app query failed.');
+        console.log(err);
+        this.loading = false;
+      });
+  },
 };
 </script>
 
