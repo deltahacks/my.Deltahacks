@@ -53,7 +53,7 @@ export default {
       return Math.floor(Math.random() * (to - from + 1) + from);
     }
 
-    function confettiParticle() {
+    function ConfettiParticle() {
       this.x = Math.random() * W; // x
       this.y = Math.random() * H - H; // y
       this.r = randomFromTo(11, 33); // radius
@@ -91,10 +91,10 @@ export default {
         particle = particles[i];
 
         particle.tiltAngle += particle.tiltAngleIncremental;
-        particle.y += (Math.cos(particle.d) + 3 + particle.r / 2) / 2;
-        particle.tilt = Math.sin(particle.tiltAngle - i / 3) * 15;
+        particle.y += (Math.cos(particle.d) + 3 + (particle.r / 2)) / 2;
+        particle.tilt = Math.sin(particle.tiltAngle - (i / 3)) * 15;
 
-        if (particle.y <= H) remainingFlakes++;
+        if (particle.y <= H) remainingFlakes += 1;
 
         // If a confetti has fluttered out of view,
         // bring it back to above the viewport and let if re-fall.
@@ -120,8 +120,8 @@ export default {
     );
 
     // Push new confetti objects to `particles[]`
-    for (let i = 0; i < maxConfettis; i++) {
-      particles.push(new confettiParticle());
+    for (let i = 0; i < maxConfettis; i += 1) {
+      particles.push(new ConfettiParticle());
     }
 
     // Initialize

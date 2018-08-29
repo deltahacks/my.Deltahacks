@@ -42,14 +42,15 @@
 </template>
 
 <script>
-import fake from '@/helpers/fake';
-import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
-import 'vue-status-indicator/styles.css';
-import db from '../private/firebase_init';
 import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
 import { functions } from 'firebase';
 import { mapState, mapMutations } from 'vuex';
+import fake from '@/helpers/fake';
+import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
+import 'vue-status-indicator/styles.css';
+import db from '../private/firebase_init';
+
 
 export default {
   name: 'DataTable',
@@ -62,7 +63,7 @@ export default {
           val.reviewer,
           this.$store.state.firebase.auth().currentUser.email,
         );
-        if (val.reviewer == this.$store.state.firebase.auth().currentUser.email) {
+        if (val.reviewer === this.$store.state.firebase.auth().currentUser.email) {
           console.log('NIBBA');
           return true;
         }
