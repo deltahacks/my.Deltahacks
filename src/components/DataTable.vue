@@ -84,7 +84,7 @@ export default {
       // this is still kinda janky but seems to work
       props.expanded = !props.expanded;
       const offset = 50 * props.index;
-      window.scrollTo(0, window.screen.height / 2 + offset);
+      window.scrollTo(0, (window.screen.height / 2) + offset);
     },
     async nextPage() {
       console.log('Page is: ', this.page);
