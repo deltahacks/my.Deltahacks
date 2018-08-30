@@ -4,7 +4,6 @@
     <Navbar2 class="navbar1" />
     <div class="container-status100">
 
-
       <div class="hide">
         <div class="wrap-status100">
           <h1>This application is still under review</h1>
@@ -57,96 +56,95 @@ import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { allUniversities } from '../private/data';
 
-
 export default {
-  mixins: [validationMixin],
-  name: 'Status',
-  data() {
-    return {
-      parent: this,
-      picker: null,
-      date: '2000-01-01',
-      university: null,
-      allUniversities,
-      dropzoneOptions: {
-        url: 'https://httpbin.org/post',
-        thumbnailWidth: 150,
-        maxFilesize: 0.5,
-        headers: { 'My-Awesome-Header': 'header value' },
-        addRemoveLinks: true,
-        acceptedFiles: 'application/pdf',
-      },
-      application: {
-        name: '',
-        email: '',
-        school_year: null,
-        shirt_size: null,
-        dietry_restrictions: null,
-        hackathons: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        phone: '',
-        emergency_phone: '',
-      },
-      links: ['Home', 'About', 'Contact'],
-      story: '',
-      custom: true,
-      name: '',
-      step: 0,
-      email: '',
-      select: null,
-      items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
-      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-      shirts: ['XS', 'S', 'M', 'L', 'XL'],
-      checkbox: false,
-    };
-  },
-  validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    select: { required },
-    checkbox: { required },
-  },
-  components: {
-    Navbar,
-    Footer,
-    Navigation,
-    Navbar2,
-  },
-  computed: {},
-  methods: {},
-  mounted() {
-    const appEmail = auth().currentUser.email;
-    this.$store.state.db
-      .collection('users')
-      .doc(appEmail)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          switch (doc.data().status) {
-            case 'in progress':
-              this.step = 1;
-              break;
-            case 'submitted':
-              this.step = 2;
-              break;
-            case 'processing':
-              this.step = 3;
-              break;
-            case 'decided':
-              this.step = 4;
-              break;
-            default:
-              this.step = 0;
-          }
-          console.log(this.step);
-        } else {
-          console.log('Document not found!');
-        }
-      });
-  },
+    mixins: [validationMixin],
+    name: 'Status',
+    data() {
+        return {
+            parent: this,
+            picker: null,
+            date: '2000-01-01',
+            university: null,
+            allUniversities,
+            dropzoneOptions: {
+                url: 'https://httpbin.org/post',
+                thumbnailWidth: 150,
+                maxFilesize: 0.5,
+                headers: { 'My-Awesome-Header': 'header value' },
+                addRemoveLinks: true,
+                acceptedFiles: 'application/pdf',
+            },
+            application: {
+                name: '',
+                email: '',
+                school_year: null,
+                shirt_size: null,
+                dietary_restrictions: null,
+                hackathons: null,
+                github: '',
+                linkedin: '',
+                website: '',
+                phone: '',
+                emergency_phone: '',
+            },
+            links: ['Home', 'About', 'Contact'],
+            story: '',
+            custom: true,
+            name: '',
+            step: 0,
+            email: '',
+            select: null,
+            items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
+            hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+            food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+            shirts: ['XS', 'S', 'M', 'L', 'XL'],
+            checkbox: false,
+        };
+    },
+    validations: {
+        name: { required, maxLength: maxLength(10) },
+        email: { required, email },
+        select: { required },
+        checkbox: { required },
+    },
+    components: {
+        Navbar,
+        Footer,
+        Navigation,
+        Navbar2,
+    },
+    computed: {},
+    methods: {},
+    mounted() {
+        const appEmail = auth().currentUser.email;
+        this.$store.state.db
+            .collection('users')
+            .doc(appEmail)
+            .get()
+            .then(doc => {
+                if (doc.exists) {
+                    switch (doc.data().status) {
+                        case 'in progress':
+                            this.step = 1;
+                            break;
+                        case 'submitted':
+                            this.step = 2;
+                            break;
+                        case 'processing':
+                            this.step = 3;
+                            break;
+                        case 'decided':
+                            this.step = 4;
+                            break;
+                        default:
+                            this.step = 0;
+                    }
+                    console.log(this.step);
+                } else {
+                    console.log('Document not found!');
+                }
+            });
+    },
 };
 </script>
 <style scoped src='../assets/css/status.css'>
