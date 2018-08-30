@@ -496,7 +496,7 @@ export default {
         const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
-        //   this.submitted = true;
+          //   this.submitted = true;
           this.checkbox = true;
           this.application = doc.data();
           this.fillApplicationFields();
