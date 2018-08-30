@@ -45,6 +45,11 @@ export default {
       c_user: firebase.auth().currentUser,
       dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
       current: 'DH V',
+      drawer: null,
+      items: [
+        { title: 'Home', icon: 'dashboard' },
+        { title: 'About', icon: 'question_answer' },
+      ],
     };
   },
   methods: {

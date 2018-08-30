@@ -19,13 +19,16 @@
                         <b> Name: </b>
                       </v-card-text>
                       <v-card-text>
-                        <b> Place of study: </b>
+                        <b> University: </b>
                       </v-card-text>
                       <v-card-text>
                         <b> Year: </b>
                       </v-card-text>
                       <v-card-text>
                         <b> # of Previous Hackathons: </b>
+                      </v-card-text>
+                      <v-card-text>
+                        <b> Major: </b>
                       </v-card-text>
                       <v-card-text>
                         <b> Git Repo: </b>
@@ -36,6 +39,18 @@
                       <v-card-text>
                         <b> Website: </b>
                       </v-card-text>
+                      <v-card-text>
+                        <b> Dietary restrictions: </b>
+                      </v-card-text>
+                      <v-card-text>
+                        <b> Shirt size: </b>
+                      </v-card-text>
+                      <v-card-text>
+                        <b> Creative question: </b>
+                      </v-card-text>
+                      <v-card-text>
+                        <b> Anything else: </b>
+                      </v-card-text>
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
                     </v-flex>
                     <v-flex xs12 md6 lg6>
@@ -43,6 +58,7 @@
                       <v-card-text>{{ applicant.university }}</v-card-text>
                       <v-card-text>{{ applicant.school_year }}</v-card-text>
                       <v-card-text>{{ applicant.hackathons }}</v-card-text>
+                      <v-card-text>{{ applicant.major }}</v-card-text>
                       <v-card-text>
                         <a v-bind:href="applicant.github" target="_blank"> {{ applicant.github }} </a>
                       </v-card-text>
@@ -52,19 +68,24 @@
                       <v-card-text>
                         <a v-bind:href="applicant.website" target="_blank"> {{ applicant.website }} </a>
                       </v-card-text>
+                      <v-card-text>{{ applicant.dietary_restrictions }}</v-card-text>
+                      <v-card-text>{{ applicant.shirt_size }}</v-card-text>
+                      <v-card-text>{{ applicant.q3 }}</v-card-text>
+                      <v-card-text>{{ applicant.q4 }}</v-card-text>
+
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
                     </v-flex>
                   </v-layout>
                 </v-card>
               </v-expansion-panel-content>
               <v-expansion-panel-content>
-                <div slot="header" class="headline mb-0">Personal Story</div>
+                <div slot="header" class="headline mb-0">Question One</div>
                 <v-card>
                   <v-card-text>{{ applicant.q1 }}</v-card-text>
                 </v-card>
               </v-expansion-panel-content>
               <v-expansion-panel-content>
-                <div slot="header" class="headline mb-0">Other Content?</div>
+                <div slot="header" class="headline mb-0">Question Two</div>
                 <v-card>
                   <v-card-text>{{ applicant.q2 }}</v-card-text>
                 </v-card>
@@ -80,7 +101,7 @@
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-          <iframe id='resume' v-if="applicant.documents.download_link" :src="applicant.documents.download_link"></iframe>
+          <iframe id='resume' v-if="applicant.documents[0].download_link" :src="applicant.documents[0].download_link"></iframe>
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>

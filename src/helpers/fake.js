@@ -8,7 +8,7 @@ const {
     'First Year',
     'Second Year',
     'Third Year',
-    'Forth Year',
+    'Fourth Year',
     'Fifth Year',
   ],
   hackathons: ['This is my first one', '2', '3', '5+', '10+'],
@@ -19,7 +19,7 @@ const {
 function generateApp(email, emergencyPhone, name, story, university) {
   const applicationDate = faker.date.recent();
   return {
-    dietry_restrictions: food[Math.floor(Math.random() * items.length)],
+    dietary_restrictions: food[Math.floor(Math.random() * items.length)],
     email,
     emergency_phone: emergencyPhone,
     github: 'https://github.com/johndoe',

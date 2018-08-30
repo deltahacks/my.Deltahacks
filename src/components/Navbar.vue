@@ -13,9 +13,35 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <div id="search">
-      <v-text-field id="search" hint='Search for attendees' prepend-icon="search" hide-details single-line :clearable=true></v-text-field>
+    <div class="text-xs-center mobile"  >
+      <v-menu offset-y>
+        <v-btn flat slot="activator"  right>Menu</v-btn>&ensp;
+
+        <v-list>
+          <v-list-tile to="/status">
+            <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/apply">
+            <v-list-tile-title v-if="c_user">Apply Now</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/">
+            <v-list-tile-title>Contact</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/">
+            <v-list-tile-title>FAQ</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile @click.prevent="logout" v-if="c_user">
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile>
+
+        </v-list>
+      </v-menu>
     </div>
+
 
     <v-toolbar-items class="hidden-sm-and-down">
       <!-- <v-btn>
@@ -78,11 +104,19 @@ export default {
   font-family: "Roboto", serif;
   font-weight: 500;
 }
-
-#search {
-  width: 300px;
-  margin-right: 15px;
+/* @media only screen and (max-width: 1227px) {
+  #title {
+      font-family: "Roboto", serif;
+      font-weight: 500;
+      display: none;
+  }
+} */
+@media only screen and (min-width:961px) {
+  .mobile {
+    display:none;
+  }
 }
+
 
 .bold {
   font-weight: 600;

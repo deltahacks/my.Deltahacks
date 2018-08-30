@@ -1,6 +1,6 @@
 <template>
     <v-app class="dashboard background">
-        <!-- style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
+      <!-- style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
         <Navbar2 class="navbar1" />
         <div class='container-status100'>
             <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
@@ -48,7 +48,7 @@
                 <label for="diet" style='float:left'>
                     <strong>Any dietary restrictions?</strong>
                 </label>
-                <v-select v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+                <v-select v-model="application.dietry_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                 </v-select>
                 <label for="hackathons" style='float:left'>
                     <strong>How many hackathons have you attended?</strong>
@@ -122,27 +122,29 @@
                 <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
                 <!-- careful with modifying these buttons, submit must to be of type submit. -->
                 <div class="mx-auto gg">
+                    <!-- <v-btn class="button1" type="submit" :disabled="submitted">Submit</v-btn> -->
                     <v-dialog v-model="confirm" persistent max-width="400">
                         <v-btn slot="activator" :disabled="submitted" color="blue" dark>Submit</v-btn>
                         <v-card>
                             <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
                             <v-card-text>You cannot edit your applicaiton once you've submitted.</v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click.prevent="validateBeforeSubmit" @click="submitApplication">Yes</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
+                            <v-btn color="green darken-1" flat @click.prevent="validateBeforeSubmit" @click="submitApplication">Yes</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
+                    <!-- <v-btn class="button2" :disabled="submitted">Clear</v-btn> -->
                     <v-dialog v-model="confirmClear" persistent max-width="400">
                         <v-btn slot="activator" :disabled="submitted" color="red" dark>Clear</v-btn>
                         <v-card>
                             <v-card-title class="headline">Are you sure you'd like to clear the form?</v-card-title>
                             <v-card-text>This will overwrite perviously saved data.</v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
+                            <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -184,7 +186,8 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { majors, allUniversities } from '../private/data';
+import { listOfUniversities as allUniversities } from '../private/data';
+import { majors } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
@@ -215,7 +218,6 @@ export default {
       university: null,
       timeout: null,
       allUniversities,
-      majors,
       application: {
         name: '',
         email: firebase.auth().currentUser.email,
@@ -223,7 +225,7 @@ export default {
         first_submitted: undefined,
         school_year: null,
         shirt_size: null,
-        dietary_restrictions: null,
+        dietry_restrictions: null,
         hackathons: null,
         university: null,
         github: '',
@@ -245,7 +247,7 @@ export default {
       name: '',
       email: '',
       select: null,
-      items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
+      items: ['First Year', 'Second Year', 'Third Year', 'Forth Year', 'Fifth Year'],
       hackathons: ['This is my first one', '2', '3', '5+', '10+'],
       food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
       shirts: ['XS', 'S', 'M', 'L', 'XL'],
@@ -299,7 +301,7 @@ export default {
         first_submitted: undefined,
         school_year: null,
         shirt_size: null,
-        dietary_restrictions: null,
+        dietry_restrictions: null,
         hackathons: null,
         university: null,
         github: '',
@@ -494,7 +496,7 @@ export default {
         const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
-          this.submitted = true;
+          //   this.submitted = true;
           this.checkbox = true;
           this.application = doc.data();
           this.fillApplicationFields();
@@ -528,12 +530,13 @@ h1 {
 
 p {
     font-weight: bold;
+    align: left;
 }
 
 @media only screen and (min-width: 1280px) and (max-width: 4000px) {
     .ff {
         width: 40%;
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 }
 
@@ -581,35 +584,35 @@ p {
     background-position: center;
     background-size: cover;
     z-index: 0;
-    background: #9152f8;
-    background: -webkit-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -o-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -moz-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
+     background: #9152f8;
+  background: -webkit-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -o-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -moz-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
 }
 .navbar1 {
     z-index: 0;
     background-color: rgba(255, 255, 255, 0.8);
 }
 .container-status100 {
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    padding-bottom: 0px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  padding-bottom: 0px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
 }
 
 .container-status100::before {
@@ -623,62 +626,54 @@ p {
     left: 0;
     background-color: rgba(255, 255, 255, 0.8);
 }
-.button1 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-    border: 1;
-    border-radius: 40px;
-    box-shadow: inset 0 0 0 2px #2196f3;
-    color: #2196f3;
-    cursor: pointer;
-    /* display: inline-block; */
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 52px;
-    padding: 0 1.75em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
+.button1{
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  float: left;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 40px;
+  box-shadow: inset 0 0 0 2px #2196f3;
+  color: #2196f3;
+  cursor: pointer;
+  /* display: inline-block; */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
 }
-.button2 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-    border: 1;
-    border-radius: 40px;
-    box-shadow: inset 0 0 0 2px #f44336;
-    color: #f44336;
-    cursor: pointer;
-    /* display: inline-block; */
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 52px;
-    padding: 0 1.75em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
+.button2{
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  float: left;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 40px;
+  box-shadow: inset 0 0 0 2px #f44336;
+  color: #f44336;
+  cursor: pointer;
+  /* display: inline-block; */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 </style>

@@ -4,12 +4,11 @@
     <Navbar2 class="navbar1" />
     <div class="container-status100">
 
-
       <div class="hide">
         <div class="wrap-status100">
           <h1>This application is still under review</h1>
           <v-card-text></v-card-text>
-          <v-stepper alt-labels>
+          <v-stepper alt-labels style="border-radius:25px">
             <div class="wrap-status200">
               <v-stepper-header>
                 <v-stepper-step step="1" :complete="step > 0">In Progress</v-stepper-step>
@@ -29,16 +28,14 @@
         <div class="wrap-status101">
           <h1>This application is still under review</h1>
           <v-card-text></v-card-text>
-          <v-stepper vertical alt-labels>
-            <div class="wrap-status201">
-              <v-stepper-header>
-                <v-stepper-step :complete="step > 0" step="1">In Progress</v-stepper-step>
+
+          <v-stepper v-model="e6" vertical class="wrap-status201">
+            <v-stepper-step :complete="step > 0" step="1">In Progress</v-stepper-step>
                 <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
                 <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
                 <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
-              </v-stepper-header>
-            </div>
           </v-stepper>
+          
         </div>
       </div>
     </div>
@@ -56,7 +53,6 @@ import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { allUniversities } from '../private/data';
-
 
 export default {
   mixins: [validationMixin],
@@ -81,7 +77,7 @@ export default {
         email: '',
         school_year: null,
         shirt_size: null,
-        dietry_restrictions: null,
+        dietary_restrictions: null,
         hackathons: null,
         github: '',
         linkedin: '',
