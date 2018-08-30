@@ -422,7 +422,7 @@ export default {
       const storeRef = firebase.storage().ref();
       return new Promise((resolve, reject) => {
         storeRef
-          .child(`users/${firebase.auth().currentUser.email}/${filename}`)
+          .child(`hackathon/DH5/users/${firebase.auth().currentUser.email}/${filename}`)
           .put(file)
           .then((snapshot) => {
             snapshot.ref.getDownloadURL().then((url) => {

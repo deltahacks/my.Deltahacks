@@ -49,7 +49,7 @@ export default {
   props: ['data', 'options'],
   mounted() {
     this.dataset = this.data;
-    this.renderChart(this.dataset, this.options);
+    // this.renderChart(this.dataset, this.options);
   },
   methods: {
     changeData(data) {

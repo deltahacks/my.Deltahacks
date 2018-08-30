@@ -93,7 +93,32 @@
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3>
                     <v-card color='white lighten-4' dark>
-                        <bar-chart ref="hackathons" :data='busData' :options='options'/>
+                        <bar-chart ref="hackathons" :options='options'/>
+                    </v-card>
+                </v-flex>
+                <v-flex d-flex xs12 sm6 md3>
+                    <v-card color='white lighten-4' dark>
+                        <bar-chart ref="majors" :options='options'/>
+                    </v-card>
+                </v-flex>
+                <v-flex d-flex xs12 sm6 md3>
+                    <v-card color='white lighten-4' dark>
+                        <bar-chart ref="schoolYears" :options='options'/>
+                    </v-card>
+                </v-flex>
+                <v-flex d-flex xs12 sm6 md3>
+                    <v-card color='white lighten-4' dark>
+                        <bar-chart ref="shirt_sizes" :options='options'/>
+                    </v-card>
+                </v-flex>
+                <v-flex d-flex xs12 sm6 md3>
+                    <v-card color='white lighten-4' dark>
+                        <bar-chart ref="universities" :options='options'/>
+                    </v-card>
+                </v-flex>
+                <v-flex d-flex xs12 sm6 md3>
+                    <v-card color='white lighten-4' dark>
+                        <bar-chart ref="diets" :options='options'/>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -215,7 +240,7 @@ export default {
     this.setDecisionPanels();
     // this.setAgePanels();
     this.setCheckedInGraph();
-    this.setHackathonTable();
+    this.setMiscStatistics();
   },
   computed: {
     total() {
@@ -224,9 +249,6 @@ export default {
     },
   },
   methods: {
-    changeData(chart, data) {
-      chart.data.datasets = data;
-    },
     setCheckedInGraph() {
       this.$refs.checkedIn.changeData({
         labels: ['Checked In', 'Not Checked In'],
@@ -290,19 +312,31 @@ export default {
         resolve(snap.data());
       });
     },
-    setHackathonTable() {
+    setMiscStatistics() {
       this.$refs.hackathons.changeData(
-        this.processField(this.statistics.applicationStats.hackathons, 'Hackathons')
+        this.processField(this.statistics.applicationStats.hackathons, 'Hackathons'),
+      );
+      this.$refs.majors.changeData(
+        this.processField(this.statistics.applicationStats.majors, 'Majors'),
+      );
+      this.$refs.schoolYears.changeData(
+        this.processField(this.statistics.applicationStats.schoolYears, 'School Years'),
+      );
+      this.$refs.shirt_sizes.changeData(
+        this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'),
+      );
+      this.$refs.universities.changeData(
+        this.processField(this.statistics.applicationStats.universities, 'Universities'),
       );
     },
     processField(field, label) {
       const val = Object.values(field)
       return {
         labels: Object.keys(field),
-        backgroundColor: this.colors.slice(0, val.length),
         datasets: [
           {
             label,
+            backgroundColor: this.colors,
             data: val,
           },
         ],

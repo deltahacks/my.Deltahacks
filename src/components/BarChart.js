@@ -12,11 +12,14 @@ export default {
   },
   props: ['data', 'options'],
   mounted() {
-    this.renderChart(this.data, this.options);
+    if (this.data) {
+      this.renderChart(this.data, this.options);
+    }
   },
   methods: {
     changeData(data) {
       if (!data) return;
+      console.log(data);
       this.renderChart(data, this.options);
     },
   },
