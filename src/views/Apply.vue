@@ -122,7 +122,6 @@
                 <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
                 <!-- careful with modifying these buttons, submit must to be of type submit. -->
                 <div class="mx-auto gg">
-                    <!-- <v-btn class="button1" type="submit" :disabled="submitted">Submit</v-btn> -->
                     <v-dialog v-model="confirm" persistent max-width="400">
                         <v-btn slot="activator" :disabled="submitted" color="blue" dark>Submit</v-btn>
                         <v-card>
@@ -135,7 +134,6 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <!-- <v-btn class="button2" :disabled="submitted">Clear</v-btn> -->
                     <v-dialog v-model="confirmClear" persistent max-width="400">
                         <v-btn slot="activator" :disabled="submitted" color="red" dark>Clear</v-btn>
                         <v-card>
@@ -496,7 +494,7 @@ export default {
         const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
-        //   this.submitted = true;
+          this.submitted = true;
           this.checkbox = true;
           this.application = doc.data();
           this.fillApplicationFields();

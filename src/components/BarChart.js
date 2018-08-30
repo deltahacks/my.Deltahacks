@@ -14,4 +14,10 @@ export default {
   mounted() {
     this.renderChart(this.data, this.options);
   },
+  methods: {
+    changeData(data) {
+      if (!data) return;
+      this.renderChart(data, this.options);
+    },
+  },
 };

@@ -43,10 +43,18 @@ export default {
   data() {
     return {
       uft: 22,
+      dataset: null,
     };
   },
   props: ['data', 'options'],
   mounted() {
-    this.renderChart(this.data, this.options);
+    this.dataset = this.data;
+    this.renderChart(this.dataset, this.options);
+  },
+  methods: {
+    changeData(data) {
+      if (!data) return;
+      this.renderChart(data, this.options);
+    },
   },
 };
