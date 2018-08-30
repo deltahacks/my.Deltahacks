@@ -7,6 +7,9 @@
                 Close
             </v-btn>
         </v-snackbar>
+        <div id="search">
+      <v-text-field id="search" hint='Search for attendees' prepend-icon="search" hide-details single-line :clearable=true></v-text-field>
+    </div>
         <h1 id="id">{{$route.params.id}}</h1>
         <h2> Last status: {{ lastStatus }}</h2>
         <v-btn @click="checkin" class="checkinButtons" :disabled="alreadyCheckedIn">Check in</v-btn>
@@ -219,5 +222,11 @@ export default {
 
 input {
     text-align: center;
+}
+#search {
+  width: 90%;
+  margin: 0 auto;
+  
+
 }
 </style>
