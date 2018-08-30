@@ -1,6 +1,6 @@
 <template>
     <v-app class="dashboard background">
-        <!-- style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
+      <!-- style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
         <Navbar2 class="navbar1" />
         <div class='container-status100'>
             <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
@@ -48,7 +48,7 @@
                 <label for="diet" style='float:left'>
                     <strong>Any dietary restrictions?</strong>
                 </label>
-                <v-select v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+                <v-select v-model="application.dietry_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                 </v-select>
                 <label for="hackathons" style='float:left'>
                     <strong>How many hackathons have you attended?</strong>
@@ -129,9 +129,9 @@
                             <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
                             <v-card-text>You cannot edit your applicaiton once you've submitted.</v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click.prevent="validateBeforeSubmit" @click="submitApplication">Yes</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
+                            <v-btn color="green darken-1" flat @click.prevent="validateBeforeSubmit" @click="submitApplication">Yes</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -142,9 +142,9 @@
                             <v-card-title class="headline">Are you sure you'd like to clear the form?</v-card-title>
                             <v-card-text>This will overwrite perviously saved data.</v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
+                            <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -186,339 +186,339 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { majors, allUniversities } from '../private/data';
+import { listOfUniversities as allUniversities } from '../private/data';
+import { majors } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 export default {
-    mixins: [validationMixin],
-    name: 'Apply',
-    data() {
-        return {
-            myFiles: [],
-            loading: false,
-            feedback: false,
-            confirm: false,
-            confirmClear: false,
-            editing: false,
-            existing_doc: undefined,
-            checkError: undefined,
-            pondError: undefined,
-            bannerColor: 'success',
-            bannerMessage: 'Complete!',
-            bannerTimeout: 3000,
-            loadingMessage: 'Loading...',
-            parent: this,
-            url: '',
-            picker: null,
-            submitted: false,
-            date: '2000-01-01',
-            university: null,
-            timeout: null,
-            allUniversities,
-            majors,
-            application: {
-                name: '',
-                email: firebase.auth().currentUser.email,
-                last_modified: undefined,
-                first_submitted: undefined,
-                school_year: null,
-                shirt_size: null,
-                dietary_restrictions: null,
-                hackathons: null,
-                university: null,
-                github: '',
-                linkedin: '',
-                website: '',
-                phone: '',
-                emergency_phone: '',
-                q1: '',
-                q2: '',
-                q3: '',
-                q4: '',
-                major: '',
-                birthday: '',
-                documents: [],
-            },
-            links: ['Home', 'About', 'Contact'],
-            q1: '',
-            custom: true,
-            name: '',
-            email: '',
-            select: null,
-            items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
-            hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-            food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-            shirts: ['XS', 'S', 'M', 'L', 'XL'],
-            checkbox: false,
-        };
+  mixins: [validationMixin],
+  name: 'Apply',
+  data() {
+    return {
+      myFiles: [],
+      loading: false,
+      feedback: false,
+      confirm: false,
+      confirmClear: false,
+      editing: false,
+      existing_doc: undefined,
+      checkError: undefined,
+      pondError: undefined,
+      bannerColor: 'success',
+      bannerMessage: 'Complete!',
+      bannerTimeout: 3000,
+      loadingMessage: 'Loading...',
+      parent: this,
+      url: '',
+      picker: null,
+      submitted: false,
+      date: '2000-01-01',
+      university: null,
+      timeout: null,
+      allUniversities,
+      application: {
+        name: '',
+        email: firebase.auth().currentUser.email,
+        last_modified: undefined,
+        first_submitted: undefined,
+        school_year: null,
+        shirt_size: null,
+        dietry_restrictions: null,
+        hackathons: null,
+        university: null,
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
+        major: '',
+        birthday: '',
+        documents: [],
+      },
+      links: ['Home', 'About', 'Contact'],
+      q1: '',
+      custom: true,
+      name: '',
+      email: '',
+      select: null,
+      items: ['First Year', 'Second Year', 'Third Year', 'Forth Year', 'Fifth Year'],
+      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+      food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+      shirts: ['XS', 'S', 'M', 'L', 'XL'],
+      checkbox: false,
+    };
+  },
+  validations: {
+    name: { required, maxLength: maxLength(10) },
+    email: { required, email },
+    select: { required },
+    checkbox: { required },
+    university: { in: allUniversities },
+  },
+  components: {
+    Navbar,
+    Footer,
+    FilePond,
+    Navigation,
+    Navbar2,
+  },
+  computed: {
+    q1Progress() {
+      return Math.min(100, this.application.q1.length / 5);
     },
-    validations: {
-        name: { required, maxLength: maxLength(10) },
-        email: { required, email },
-        select: { required },
-        checkbox: { required },
-        university: { in: allUniversities },
+    q2Progress() {
+      return Math.min(100, this.application.q2.length / 5);
     },
-    components: {
-        Navbar,
-        Footer,
-        FilePond,
-        Navigation,
-        Navbar2,
+    q1Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
     },
-    computed: {
-        q1Progress() {
-            return Math.min(100, this.application.q1.length / 5);
-        },
-        q2Progress() {
-            return Math.min(100, this.application.q2.length / 5);
-        },
-        q1Color() {
-            return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
-        },
-        q2Color() {
-            return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
-        },
-        currentUser() {
-            return firebase.auth().currentUser;
-        },
-        haveFile() {
-            return this.editing && this.application.documents.filename;
-        },
+    q2Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
     },
-    methods: {
-        handleFilePondInit() {
-            console.log('FilePond has initialized');
-            // FilePond instance methods are available on `this.$refs.pond`
-        },
-        getEmptyApplication() {
-            return {
-                name: '',
-                email: firebase.auth().currentUser.email,
-                last_modified: undefined,
-                first_submitted: undefined,
-                school_year: null,
-                shirt_size: null,
-                dietary_restrictions: null,
-                hackathons: null,
-                university: null,
-                github: '',
-                linkedin: '',
-                website: '',
-                phone: '',
-                emergency_phone: '',
-                q1: '',
-                q2: '',
-                q3: '',
-                q4: '',
-                major: '',
-                birthday: '',
-                documents: [],
-            };
-        },
-        clearForm() {
-            this.confirmClear = false;
-            this.application = this.getEmptyApplication();
-        },
-        activateModal(msg) {
-            this.loading = true;
-            this.loadingMessage = msg;
-        },
-        toggleCheck() {
-            this.checkError = undefined;
-        },
-        validateBeforeSubmit() {
-            this.$validator.validateAll();
-        },
-        formChange() {
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-                this.timeout = null;
-            }
-            this.timeout = setTimeout(() => {
-                this.setApplicationInProgress();
-            }, 2000);
-        },
-        showInfoMessage(msg) {
-            this.bannerMessage = msg;
-            this.bannerColor = 'success';
-            this.feedback = true;
-        },
-        showErrorMessage(msg) {
-            this.bannerMessage = msg;
-            this.bannerColor = 'error';
-            this.feedback = true;
-        },
-        async submitFileInfoOnDrop() {
-            const files = this.$refs.pond.getFiles();
-            try {
-                if (this.submitted) {
-                    this.$refs.pond.removeFile(0);
-                    return;
-                }
-                const info = await this.storeFileAndGetInfo(files[0]);
-                this.application.documents = info;
-                this.setApplicationInProgress();
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        setApplicationInProgress() {
-            const unixts = Math.round(new Date().getTime() / 1000);
-            this.application.last_modified = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-            this.application.first_submitted = {
-                unix: 0,
-                date: '',
-            };
-            this.$store.state.db
-                .collection('applications')
-                .doc('DH5_Test')
-                .collection('in progress')
-                .doc(firebase.auth().currentUser.email)
-                .set(this.application)
-                .then(() => {
-                    console.log('saving...');
-                    this.showInfoMessage('Application progress saved!');
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                });
-        },
-        setDateInformation() {
-            const unixts = Math.round(new Date().getTime() / 1000);
-            this.application.first_submitted = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-            this.application.last_modified = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-        },
-        setApplication() {
-            this.setDateInformation();
-            this.$store.state.db
-                .collection('applications')
-                .doc('DH5_Test')
-                .collection('submitted')
-                .doc(firebase.auth().currentUser.email)
-                .set(this.application)
-                .then(() => {
-                    this.$router.push({ name: 'Dashboard' });
-                    this.loading = false;
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                });
-        },
-        storeFileAndGetInfo(doc) {
-            if (!doc) return;
-            const { filename, file, id } = doc;
-            const storeRef = firebase.storage().ref();
-            return new Promise((resolve, reject) => {
-                storeRef
-                    .child(`users/${firebase.auth().currentUser.email}/${filename}`)
-                    .put(file)
-                    .then(snapshot => {
-                        snapshot.ref.getDownloadURL().then(url => {
-                            resolve({
-                                download_link: url,
-                                id,
-                                filename,
-                            });
-                        });
-                    })
-                    .catch(err => reject(err));
+    currentUser() {
+      return firebase.auth().currentUser;
+    },
+    haveFile() {
+      return this.editing && this.application.documents.filename;
+    },
+  },
+  methods: {
+    handleFilePondInit() {
+      console.log('FilePond has initialized');
+      // FilePond instance methods are available on `this.$refs.pond`
+    },
+    getEmptyApplication() {
+      return {
+        name: '',
+        email: firebase.auth().currentUser.email,
+        last_modified: undefined,
+        first_submitted: undefined,
+        school_year: null,
+        shirt_size: null,
+        dietry_restrictions: null,
+        hackathons: null,
+        university: null,
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
+        major: '',
+        birthday: '',
+        documents: [],
+      };
+    },
+    clearForm() {
+      this.confirmClear = false;
+      this.application = this.getEmptyApplication();
+    },
+    activateModal(msg) {
+      this.loading = true;
+      this.loadingMessage = msg;
+    },
+    toggleCheck() {
+      this.checkError = undefined;
+    },
+    validateBeforeSubmit() {
+      this.$validator.validateAll();
+    },
+    formChange() {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+      this.timeout = setTimeout(() => {
+        this.setApplicationInProgress();
+      }, 2000);
+    },
+    showInfoMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = 'success';
+      this.feedback = true;
+    },
+    showErrorMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = 'error';
+      this.feedback = true;
+    },
+    async submitFileInfoOnDrop() {
+      const files = this.$refs.pond.getFiles();
+      try {
+        if (this.submitted) {
+          this.$refs.pond.removeFile(0);
+          return;
+        }
+        const info = await this.storeFileAndGetInfo(files[0]);
+        this.application.documents = info;
+        this.setApplicationInProgress();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    setApplicationInProgress() {
+      const unixts = Math.round(new Date().getTime() / 1000);
+      this.application.last_modified = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+      this.application.first_submitted = {
+        unix: 0,
+        date: '',
+      };
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('in progress')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          console.log('saving...');
+          this.showInfoMessage('Application progress saved!');
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    setDateInformation() {
+      const unixts = Math.round(new Date().getTime() / 1000);
+      this.application.first_submitted = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+      this.application.last_modified = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+    },
+    setApplication() {
+      this.setDateInformation();
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5_Test')
+        .collection('submitted')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          this.$router.push({ name: 'Dashboard' });
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    storeFileAndGetInfo(doc) {
+      if (!doc) return;
+      const { filename, file, id } = doc;
+      const storeRef = firebase.storage().ref();
+      return new Promise((resolve, reject) => {
+        storeRef
+          .child(`users/${firebase.auth().currentUser.email}/${filename}`)
+          .put(file)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              resolve({
+                download_link: url,
+                id,
+                filename,
+              });
             });
-        },
-        async submitApplication() {
-            this.confirm = false;
-            if (!this.checkbox) {
-                this.checkError = 'Please accept the terms and conditions to continue.';
-                return;
-            }
+          })
+          .catch(err => reject(err));
+      });
+    },
+    async submitApplication() {
+      this.confirm = false;
+      if (!this.checkbox) {
+        this.checkError = 'Please accept the terms and conditions to continue.';
+        return;
+      }
 
-            const files = this.$refs.pond.getFiles();
-            this.activateModal('Submitting application...');
-            const resume = files[0];
-            const results = [];
-            if (resume) {
-                results.push(this.storeFileAndGetInfo(files[0]));
-                this.application.documents = await Promise.all(results).catch(err => {
-                    console.log(`Upload Failed: ${err}`);
-                    this.loading = false;
-                });
-            }
-            this.setApplication();
-        },
-        insertUserFileData(doc) {
-            this.$refs.pond.addFile(doc.download_link);
-        },
-        fillApplicationFields() {
-            const ref = this.application;
-            ref.q1 = ref.q1 ? ref.q1 : '';
-            ref.q2 = ref.q2 ? ref.q2 : '';
-            ref.q3 = ref.q3 ? ref.q3 : '';
-            ref.q4 = ref.q4 ? ref.q4 : '';
-        },
-        getUserAppStatus(userEmail) {
-            return new Promise((resolve, reject) => {
-                this.$store.state.db
-                    .collection('applications')
-                    .doc('DH5_Test')
-                    .collection('submitted')
-                    .doc(userEmail)
-                    .get()
-                    .then(doc => {
-                        resolve(doc.exists);
-                    })
-                    .catch(err => reject(err));
-            });
-        },
+      const files = this.$refs.pond.getFiles();
+      this.activateModal('Submitting application...');
+      const resume = files[0];
+      const results = [];
+      if (resume) {
+        results.push(this.storeFileAndGetInfo(files[0]));
+        this.application.documents = await Promise.all(results).catch((err) => {
+          console.log(`Upload Failed: ${err}`);
+          this.loading = false;
+        });
+      }
+      this.setApplication();
     },
-    beforeMount() {
-        this.activateModal('Loading...');
-        const userEmail = firebase.auth().currentUser.email;
+    insertUserFileData(doc) {
+      this.$refs.pond.addFile(doc.download_link);
+    },
+    fillApplicationFields() {
+      const ref = this.application;
+      ref.q1 = ref.q1 ? ref.q1 : '';
+      ref.q2 = ref.q2 ? ref.q2 : '';
+      ref.q3 = ref.q3 ? ref.q3 : '';
+      ref.q4 = ref.q4 ? ref.q4 : '';
+    },
+    getUserAppStatus(userEmail) {
+      return new Promise((resolve, reject) => {
         this.$store.state.db
-            .collection('applications')
-            .doc('DH5_Test')
-            .collection('in progress')
-            .doc(userEmail)
-            .get()
-            .then(async doc => {
-                const submitted = await this.getUserAppStatus(userEmail);
-                if (submitted) {
-                    this.editing = true;
-                    this.submitted = true;
-                    this.checkbox = true;
-                    this.application = doc.data();
-                    this.fillApplicationFields();
-                    this.loading = false;
-                } else if (doc.exists) {
-                    this.editing = true;
-                    this.application = doc.data();
-                    this.fillApplicationFields();
-                    // this.insertUserFileData(this.application.documents);
-                    this.loading = false;
-                } else {
-                    console.log('Document not found!');
-                    this.editing = false;
-                    this.loading = false;
-                }
-            })
-            .catch(err => {
-                console.log('User app query failed.');
-                console.log(err);
-                this.loading = false;
-            });
+          .collection('applications')
+          .doc('DH5_Test')
+          .collection('submitted')
+          .doc(userEmail)
+          .get()
+          .then((doc) => {
+            resolve(doc.exists);
+          })
+          .catch(err => reject(err));
+      });
     },
+  },
+  beforeMount() {
+    this.activateModal('Loading...');
+    const userEmail = firebase.auth().currentUser.email;
+    this.$store.state.db
+      .collection('applications')
+      .doc('DH5_Test')
+      .collection('in progress')
+      .doc(userEmail)
+      .get()
+      .then(async (doc) => {
+        const submitted = await this.getUserAppStatus(userEmail);
+        if (submitted) {
+          this.editing = true;
+        //   this.submitted = true;
+          this.checkbox = true;
+          this.application = doc.data();
+          this.fillApplicationFields();
+          this.loading = false;
+        } else if (doc.exists) {
+          this.editing = true;
+          this.application = doc.data();
+          this.fillApplicationFields();
+          // this.insertUserFileData(this.application.documents);
+          this.loading = false;
+        } else {
+          console.log('Document not found!');
+          this.editing = false;
+          this.loading = false;
+        }
+      })
+      .catch((err) => {
+        console.log('User app query failed.');
+        console.log(err);
+        this.loading = false;
+      });
+  },
 };
 </script>
 
@@ -530,12 +530,13 @@ h1 {
 
 p {
     font-weight: bold;
+    align: left;
 }
 
 @media only screen and (min-width: 1280px) and (max-width: 4000px) {
     .ff {
         width: 40%;
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 }
 
@@ -583,35 +584,35 @@ p {
     background-position: center;
     background-size: cover;
     z-index: 0;
-    background: #9152f8;
-    background: -webkit-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -o-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -moz-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
+     background: #9152f8;
+  background: -webkit-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -o-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -moz-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
 }
 .navbar1 {
     z-index: 0;
     background-color: rgba(255, 255, 255, 0.8);
 }
 .container-status100 {
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    padding-bottom: 0px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  padding-bottom: 0px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
 }
 
 .container-status100::before {
@@ -625,62 +626,54 @@ p {
     left: 0;
     background-color: rgba(255, 255, 255, 0.8);
 }
-.button1 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-    border: 1;
-    border-radius: 40px;
-    box-shadow: inset 0 0 0 2px #2196f3;
-    color: #2196f3;
-    cursor: pointer;
-    /* display: inline-block; */
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 52px;
-    padding: 0 1.75em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
+.button1{
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  float: left;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 40px;
+  box-shadow: inset 0 0 0 2px #2196f3;
+  color: #2196f3;
+  cursor: pointer;
+  /* display: inline-block; */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
 }
-.button2 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-    border: 1;
-    border-radius: 40px;
-    box-shadow: inset 0 0 0 2px #f44336;
-    color: #f44336;
-    cursor: pointer;
-    /* display: inline-block; */
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 52px;
-    padding: 0 1.75em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
+.button2{
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  float: left;
+  background-color: transparent;
+  font-family: sans-serif;
+  border: 1;
+  border-radius: 40px;
+  box-shadow: inset 0 0 0 2px #f44336;
+  color: #f44336;
+  cursor: pointer;
+  /* display: inline-block; */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 52px;
+  padding: 0 1.75em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 </style>

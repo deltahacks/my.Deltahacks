@@ -530,6 +530,7 @@ h1 {
 
 p {
     font-weight: bold;
+    align: left;
 }
 
 @media only screen and (min-width: 1280px) and (max-width: 4000px) {
