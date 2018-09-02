@@ -1,2 +1,4 @@
 node_modules
 client/src/private
+admin/node_modules
+admin/dist
