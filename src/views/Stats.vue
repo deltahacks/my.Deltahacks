@@ -217,14 +217,14 @@ export default {
         ],
       },
       colors: [
-              '#E31836',
-              '#83002C',
-              '#004C9B',
-              '#FDD54F',
-              '#4F2682',
-              '#63a832',
-              '#e0932f'
-            ],
+        '#E31836',
+        '#83002C',
+        '#004C9B',
+        '#FDD54F',
+        '#4F2682',
+        '#63a832',
+        '#e0932f',
+      ],
       options: {},
     };
   },
@@ -263,14 +263,16 @@ export default {
     },
     getAgeData() {
       return db.collection('applications').doc('DH5_Test').collection('submitted').get()
-      .then((snap) => {
-        const ages = {'18-': 0, '19': 0, '20': 0, '21': 0, '22': 0, '23': 0, '24+': 0};
-        snap.docs.forEach((doc) => {
+        .then((snap) => {
+          const ages = {
+            '18-': 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0, '24+': 0,
+          };
+          snap.docs.forEach((doc) => {
 
-        });
-        return { data: ages };
-      })
-      .catch(err => console.log(err));
+          });
+          return { data: ages };
+        })
+        .catch(err => console.log(err));
     },
     async setAgePanels() {
       const ages = await this.getAgeData();
@@ -313,24 +315,14 @@ export default {
       });
     },
     setMiscStatistics() {
-      this.$refs.hackathons.changeData(
-        this.processField(this.statistics.applicationStats.hackathons, 'Hackathons'),
-      );
-      this.$refs.majors.changeData(
-        this.processField(this.statistics.applicationStats.majors, 'Majors'),
-      );
-      this.$refs.schoolYears.changeData(
-        this.processField(this.statistics.applicationStats.schoolYears, 'School Years'),
-      );
-      this.$refs.shirt_sizes.changeData(
-        this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'),
-      );
-      this.$refs.universities.changeData(
-        this.processField(this.statistics.applicationStats.universities, 'Universities'),
-      );
+      this.$refs.hackathons.changeData(this.processField(this.statistics.applicationStats.hackathons, 'Hackathons'));
+      this.$refs.majors.changeData(this.processField(this.statistics.applicationStats.majors, 'Majors'));
+      this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears, 'School Years'));
+      this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'));
+      this.$refs.universities.changeData(this.processField(this.statistics.applicationStats.universities, 'Universities'));
     },
     processField(field, label) {
-      const val = Object.values(field)
+      const val = Object.values(field);
       return {
         labels: Object.keys(field),
         datasets: [
@@ -340,8 +332,8 @@ export default {
             data: val,
           },
         ],
-      }
-    }
+      };
+    },
   },
 };
 </script>

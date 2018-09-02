@@ -28,14 +28,12 @@
         <div class="wrap-status101">
           <h1>This application is still under review</h1>
           <v-card-text></v-card-text>
-
           <v-stepper v-model="e6" vertical class="wrap-status201">
             <v-stepper-step :complete="step > 0" step="1">In Progress</v-stepper-step>
                 <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
                 <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
                 <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
           </v-stepper>
-          
         </div>
       </div>
     </div>

@@ -13,11 +13,16 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <div class="text-xs-center mobile"  >
+    <div class="text-xs-center mobile">
       <v-menu offset-y>
-        <v-btn flat slot="activator"  right>Menu</v-btn>&ensp;
+        <v-btn flat slot="activator" right>Menu</v-btn>&ensp;
 
         <v-list>
+
+          <v-list-tile to="/stats">
+            <v-list-tile-title v-if="c_user">Statistics</v-list-tile-title>
+          </v-list-tile>
+
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
           </v-list-tile>
@@ -42,7 +47,6 @@
       </v-menu>
     </div>
 
-
     <v-toolbar-items class="hidden-sm-and-down">
       <!-- <v-btn>
         <v-badge right color="red" overlap>
@@ -52,6 +56,7 @@
           </v-icon>
         </v-badge>
       </v-btn> -->
+      <v-btn flat to="/stats" v-if="c_user" class="green lighten-2">Statistics</v-btn>
       <v-btn flat to="/status" v-if="c_user" class="blue lighten-3">Status</v-btn>
       <v-btn flat to="/apply" v-if="c_user" class="red lighten-3">Apply Now</v-btn>
       <v-btn flat to="/dashboard" v-if="c_user">{{ c_user.email }}</v-btn>
@@ -66,43 +71,42 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Navbar',
-  components: {},
-  data() {
-    return {
-      c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
-    };
-  },
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
+    name: 'Navbar',
+    components: {},
+    data() {
+        return {
+            c_user: firebase.auth().currentUser,
+            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+            current: 'DH V',
+        };
     },
-  },
+    methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(
+                    () => {
+                        this.$router.push({ name: 'Login' });
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        },
+    },
 };
 </script>
 <style>
-
 .navbar {
-  border: solid 2px black;
-  padding: 0 0 0 0;
-  margin: 0 0;
+    border: solid 2px black;
+    padding: 0 0 0 0;
+    margin: 0 0;
 }
 
 #title {
-  font-family: "Roboto", serif;
-  font-weight: 500;
+    font-family: 'Roboto', serif;
+    font-weight: 500;
 }
 /* @media only screen and (max-width: 1227px) {
   #title {
@@ -111,14 +115,13 @@ export default {
       display: none;
   }
 } */
-@media only screen and (min-width:961px) {
-  .mobile {
-    display:none;
-  }
+@media only screen and (min-width: 961px) {
+    .mobile {
+        display: none;
+    }
 }
 
-
 .bold {
-  font-weight: 600;
+    font-weight: 600;
 }
 </style>

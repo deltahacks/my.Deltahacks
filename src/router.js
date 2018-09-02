@@ -42,6 +42,9 @@ const router = new Router({
       path: '/',
       name: 'Login',
       component: Login,
+      meta: {
+        loginRedir: true,
+      },
     },
     {
       path: '/apply',
@@ -145,6 +148,17 @@ router.beforeEach((to, from, next) => {
       // Otherwise redirect to login
         console.log('Not authorized');
         next({ name: 'Login' });
+      }
+    });
+  } else if (to.matched.some(rec => rec.meta.loginRedir)) {
+    Firebase.auth().onAuthStateChanged((user) => {
+    // If user is logged in
+      if (user) {
+        next({ name: 'Dashboard' });
+      } else {
+      // Otherwise redirect to login
+        console.log('Not authorized');
+        next();
       }
     });
   } else {
