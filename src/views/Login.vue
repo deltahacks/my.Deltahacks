@@ -4,7 +4,8 @@
     <head>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     </head>
-    <div class="container-login100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+    <div class="container-login100 background">
+      <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <div class="wrap-login100">
         <form class="login100-form validate-form">
           <span class="login100-form-logo">

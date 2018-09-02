@@ -1,5 +1,5 @@
 <template>
-  <v-app class="dashboard background" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+  <v-app class="dashboard background">
     <!-- <Navigation class="mobile"/> -->
     <Navbar2 class="navbar1" />
     <div class="container-status100">

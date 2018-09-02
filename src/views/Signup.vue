@@ -1,6 +1,6 @@
 <template>
   <div class="limiter">
-    <div class="container-signup100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+    <div class="container-signup100 background">
       <div class="wrap-signup100">
         <form class="signup100-form validate-form">
           <span class="signup100-form-logo">

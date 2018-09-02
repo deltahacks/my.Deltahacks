@@ -123,7 +123,7 @@
                 <!-- careful with modifying these buttons, submit must to be of type submit. -->
                 <div class="mx-auto gg">
                     <v-dialog v-model="confirm" persistent max-width="400">
-                        <v-btn slot="activator" :disabled="submitted" color="blue" dark>Submit</v-btn>
+                        <v-btn slot="activator" :disabled="submitted" class="button1">Submit</v-btn>
                         <v-card>
                             <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
                             <v-card-text>You cannot edit your applicaiton once you've submitted.</v-card-text>
@@ -135,7 +135,7 @@
                         </v-card>
                     </v-dialog>
                     <v-dialog v-model="confirmClear" persistent max-width="400">
-                        <v-btn slot="activator" :disabled="submitted" color="red" dark>Clear</v-btn>
+                        <v-btn slot="activator" :disabled="submitted" class="button2">Clear</v-btn>
                         <v-card>
                             <v-card-title class="headline">Are you sure you'd like to clear the form?</v-card-title>
                             <v-card-text>This will overwrite perviously saved data.</v-card-text>
@@ -581,15 +581,15 @@ p {
     background-position: center;
     background-size: cover;
     z-index: 0;
-    background: #9152f8;
-    background: -webkit-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -o-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -moz-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
+  background: #8fd3f4;
+  background: -webkit-linear-gradient(top, #84fab0 ,#8fd3f4);
+  background: -o-linear-gradient(top, #84fab0 ,#8fd3f4);
+  background: -moz-linear-gradient(top, #84fab0 ,#8fd3f4);
+  background: linear-gradient(top, #84fab0 ,#8fd3f4);
 }
 .navbar1 {
     z-index: 0;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: transparent;
 }
 .container-status100 {
     width: 100%;
@@ -621,7 +621,7 @@ p {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
 }
 .button1 {
     -moz-appearance: none;
@@ -643,7 +643,7 @@ p {
     box-shadow: inset 0 0 0 2px #2196f3;
     color: #2196f3;
     cursor: pointer;
-    /* display: inline-block; */
+    display: inline-block;
     font-size: 15px;
     font-weight: 600;
     line-height: 52px;

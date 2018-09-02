@@ -74,7 +74,7 @@ export default {
 
 .navbar1 {
     z-index: 0;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color:transparent;
 }
 .container-status100 {
     width: 100%;
@@ -106,23 +106,18 @@ export default {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.6);
+    /* background-color: rgba(255, 255, 255, 0.6); */
 }
 .panel {
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
     padding: 0px;
 }
-.back {
-    /* background: #5C258D;
-background: -webkit-linear-gradient(to bottom, #4389A2, #5C258D);
-background: linear-gradient(to bottom, #4389A2, #5C258D);  */
-    background: #4776e6; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #8e54e9, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(
-        to top,
-        #8e54e9,
-        #4776e6
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.back{
+      background: #8fd3f4;
+  background: -webkit-linear-gradient(top, #84fab0 ,#8fd3f4);
+  background: -o-linear-gradient(top, #84fab0 ,#8fd3f4);
+  background: -moz-linear-gradient(top, #84fab0 ,#8fd3f4);
+  background: linear-gradient(top, #84fab0 ,#8fd3f4);
 }
 </style>
 
