@@ -127,11 +127,12 @@ text-decoration: none;
   /* background-color: rgba(255,255,255,0.8); */
 }
 .background{
-  background: #8fd3f4;
-  background: -webkit-linear-gradient(top, #84fab0 ,#8fd3f4);
-  background: -o-linear-gradient(top, #84fab0 ,#8fd3f4);
-  background: -moz-linear-gradient(top, #84fab0 ,#8fd3f4);
-  background: linear-gradient(top, #84fab0 ,#8fd3f4);
+  background-image: linear-gradient(bottom, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
+  /* background-image: linear-gradient(top, #92fe9d 0%, #00c9ff 100%); */
+  /* background-image: linear-gradient(to top, #4fb576 0%, #44c489 30%, #28a9ae 46%, #28a2b7 59%, #4c7788 71%, #6c4f63 86%, #432c39 100%); */
+  /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
+  /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
+  /* https://webgradients.com/ */
 }
 
 .wrap-login100 {
