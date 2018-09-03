@@ -1,0 +1,67 @@
+    <v-container grid-list-xs text-xs-center id="contain">
+      <v-layout row wrap>
+        <v-flex xs12 md6 lg6 xl6>
+          <v-card color="">
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline mb-0">{{ usrname }}</h3>
+              </div>
+            </v-card-title>
+            <v-flex xs12>
+              <br>
+              <v-card dark color="primary">
+                <v-card-text class="text-xs-left">
+                  <h2>{{ usrname }}</h2>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <br>
+            <v-card dark color="green lighten-3">
+              <v-card-text class="text-xs-left">
+                <h2>Age</h2>
+              </v-card-text>
+            </v-card>
+            <br>
+            <v-card dark color="green lighten-3">
+              <v-card-text class="text-xs-left">
+                <h2>University / Program / Year </h2>
+              </v-card-text>
+            </v-card>
+            <br>
+            <v-card dark color="green lighten-3">
+              <v-card-text class="text-xs-left">
+                <h2>Number of Hackathons: </h2>
+              </v-card-text>
+            </v-card>
+            <br>
+            <v-card dark color="green lighten-3">
+              <div class="text-xs-center">
+                <i class="fa fa-globe"></i>
+                <i class="fa fa-linkedin"></i>
+                <i class="fab fa-github"></i>
+              </div>
+            </v-card>
+            <br>
+            <br><br>
+
+            <br><br>
+            <br>
+            <h3>A PROJECT I DID:</h3>
+            <br><br>
+            <v-btn color="info" class="button1" v-on:click="status=0">RESET SCORE</v-btn>
+            <br><br><br>
+            <vue-slider v-model="status" piecewise=true piecewise-label=true step="1" max="5" use-keyboard=true height=20 dot-size=30></vue-slider>
+            <!-- <vue-slider vmodel="status" step="1" max="5" track-color="red" hint="PLEASE RATE THE APPLICANT FROM 0-5" persistent-hint=true thumb-label=true thumb-color="purple" use-keyboard=true ticks=true tooltip="always"/> -->
+            <h2>The current applicant score is : {{status+status1}} out of 10</h2>
+            <br>
+            <v-btn color="success" class="button2" v-on:click="status">SUBMIT SCORE</v-btn>
+          </v-card>
+        </v-flex>
+        <v-flex xs12 md6 lg6>
+          <v-card color="">
+            <v-card-text class="px-0">Resume</v-card-text>
+            <iframe :src="resumeLink" style="width: 100%; height: 100%;"></iframe>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
