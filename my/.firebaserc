@@ -1,5 +1,16 @@
 {
   "projects": {
-    "default": "mydeltahacks"
+    "admin": "mydeltahacks",
+    "default": "mydeltahacks",
+    "my": "mydeltahacks"
+  },
+  "targets": {
+    "mydeltahacks": {
+      "hosting": {
+        "my": [
+          "mydeltahacks"
+        ]
+      }
+    }
   }
 }
