@@ -43,7 +43,7 @@ const router = new Router({
       component: v404,
     },
     {
-      path: '/admin',
+      path: '/signup',
       name: 'AdminSignup',
       component: AdminSignup,
     },
@@ -51,6 +51,9 @@ const router = new Router({
       path: '/stats',
       name: 'Stats',
       component: Stats,
+      meta: {
+        adminAuth: true,
+      },
     },
     {
       path: '/checkin/:id',
