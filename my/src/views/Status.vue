@@ -30,9 +30,9 @@
           <v-card-text></v-card-text>
           <v-stepper v-model="e6" vertical class="wrap-status201">
             <v-stepper-step :complete="step > 0" step="1">In Progress</v-stepper-step>
-                <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
-                <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
-                <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
+            <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
+            <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
+            <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
           </v-stepper>
         </div>
       </div>
@@ -46,7 +46,6 @@ import { auth } from 'firebase';
 import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
-import Footer from '@/components/Footer.vue';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
@@ -105,7 +104,6 @@ export default {
   },
   components: {
     Navbar,
-    Footer,
     Navigation,
     Navbar2,
   },

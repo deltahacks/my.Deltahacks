@@ -61,7 +61,7 @@ export default {
           .auth()
           .signInWithEmailAndPassword(this.email, this.pass)
           .then(() => {
-            this.$router.push({ name: 'Dashboard' });
+            this.$router.push({ name: 'Status' });
             console.log('logged in');
             this.feedback = null;
           })

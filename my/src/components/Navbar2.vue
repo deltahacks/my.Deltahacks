@@ -3,33 +3,21 @@
     <v-toolbar-title id="title">
       <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
     </v-toolbar-title>
-    <!-- <v-btn>
-        <v-badge right color="red" overlap>
-          <v-icon slot="badge" dark small>fas fa-exclamation</v-icon>
-          <v-icon large color="grey lighten-1">
-            far fa-bell
-          </v-icon>
-        </v-badge>
-      </v-btn> -->
     <a href="/status" class="button button-hide">STATUS</a>&ensp;
-    <a href="/apply" class="button button-hide">APPLY NOW</a>&ensp;
-    <!-- <v-btn flat to="/status" v-if="c_user" >Status</v-btn> -->
-    <a href="/signup" class="button button-hide">SIGNUP</a>&ensp;
-    <a href="/" class="button button-hide">LOGIN</a>&ensp;
-    <!-- <v-btn flat to="/login" v-if="!c_user">Login</v-btn> -->
+    <a href="/apply" class="button button-hide">APPLY</a>&ensp;
     <a href="#" class="button button-hide">CONTACT</a>&ensp;
     <a href="/faq" class="button button-hide">FAQ</a>&ensp;
     <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <a href="/" class="button button-hide">LOGOUT</a>&ensp;
     <v-chip class="button hide-chip">
       <v-avatar>
         <v-icon>account_circle</v-icon>
       </v-avatar>
       {{c_user.email}}
     </v-chip>
+    <a @click.prevent='logout' class="button button-hide">LOGOUT</a>&ensp;
     <div class="text-xs-center mobile" style="margin-right:-60px;">
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
@@ -59,9 +47,6 @@
         </v-list>
       </v-menu>
     </div>
-    <!-- <v-chip  class="clickable" @click.prevent="logout" v-if="c_user">
-        Logout
-      </v-chip> -->
     <p>&ensp; &ensp; &ensp;</p>
   </v-toolbar>
 </template>
@@ -85,15 +70,21 @@ export default {
         };
     },
     methods: {
+        tst() {
+            console.log('FUUUUUUUUUUUCK');
+        },
         logout() {
+            console.log('logging out');
             firebase
                 .auth()
                 .signOut()
                 .then(
                     () => {
+                        console.log('Logout successful');
                         this.$router.push({ name: 'Login' });
                     },
                     error => {
+                        console.log('Logout unsuccessful');
                         console.log(error);
                     }
                 );

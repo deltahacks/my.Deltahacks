@@ -28,7 +28,7 @@
           </v-list-tile>
 
           <v-list-tile to="/apply">
-            <v-list-tile-title v-if="c_user">Apply Now</v-list-tile-title>
+            <v-list-tile-title v-if="c_user">Apply</v-list-tile-title>
           </v-list-tile>
 
           <v-list-tile to="/">
@@ -46,16 +46,7 @@
         </v-list>
       </v-menu>
     </div>
-
     <v-toolbar-items class="hidden-sm-and-down">
-      <!-- <v-btn>
-        <v-badge right color="red" overlap>
-          <v-icon slot="badge" dark small>fas fa-exclamation</v-icon>
-          <v-icon large color="grey lighten-1">
-            far fa-bell
-          </v-icon>
-        </v-badge>
-      </v-btn> -->
       <v-btn flat to="/stats" v-if="c_user" class="green lighten-2">Statistics</v-btn>
       <v-btn flat to="/status" v-if="c_user" class="blue lighten-3">Status</v-btn>
       <v-btn flat to="/apply" v-if="c_user" class="red lighten-3">Apply Now</v-btn>
@@ -71,30 +62,31 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Navbar',
-  components: {},
-  data() {
-    return {
-      c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
-    };
-  },
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
+    name: 'Navbar',
+    components: {},
+    data() {
+        return {
+            c_user: firebase.auth().currentUser,
+            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+            current: 'DH V',
+        };
     },
-  },
+    methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(
+                    () => {
+                        console.log('Successfully logged out');
+                        this.$router.push({ name: 'Login' });
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        },
+    },
 };
 </script>
 <style>
