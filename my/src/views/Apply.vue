@@ -10,7 +10,7 @@
                 <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                 <label for="name" style='float:left'>
                     <strong>What is your full name?</strong>
-                </label>
+                </label><br>
                 <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                 <!-- find a better way of including this in form -->
                 <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
@@ -18,34 +18,34 @@
                     v-validate="'required:true'"></v-date-picker> -->
                 <label for="date" style='float:left'>
                     <strong>When is your birthday?</strong>
-                </label>
+                </label><br>
                 <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
                 <label for="university" style='float:left'>
                     <strong>What university do you go to?</strong>
-                </label>
+                </label><br>
                 <v-select name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
                 <label for="major" style='float:left'>
                     <strong>What do you study?</strong>
-                </label>
+                </label><br>
                 <v-select name="major" id='major' :disabled="submitted" :items='majors' v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000"></v-select>
                 <label for="year" style='float:left'>
                     <strong>What year of school are you in?</strong>
-                </label>
+                </label><br>
                 <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
                 </v-select>
                 <label for="shirt size" style='float:left'>
                     <strong>What's your shirt size?</strong>
-                </label>
+                </label><br>
                 <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
                 </v-select>
                 <label for="diet" style='float:left'>
                     <strong>Any dietary restrictions?</strong>
-                </label>
+                </label><br>
                 <v-select v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                 </v-select>
                 <label for="hackathons" style='float:left'>
                     <strong>How many hackathons have you attended?</strong>
-                </label>
+                </label><br>
                 <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                 </v-select>
                 <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
@@ -58,7 +58,7 @@
                     <v-flex xs6 sm6>
                         <label for="phone" style=''>
                             <strong>Your cell phone number</strong>
-                        </label>
+                        </label><br>
                         <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
                     </v-flex>
                     <v-flex xs4>
@@ -66,7 +66,7 @@
                     <v-flex xs6 sm6>
                         <label for="emergency phone" style=''>
                             <strong>Emergency contact</strong>
-                        </label>
+                        </label><br>
                         <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
                     </v-flex>
                 </v-container>
