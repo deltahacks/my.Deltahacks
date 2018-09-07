@@ -131,11 +131,11 @@ text-decoration: none;
   /* background-color: rgba(255,255,255,0.8); */
 }
 .background{
-  background: #8fd3f4;
-  background: -webkit-linear-gradient(top, #84fab0 ,#8fd3f4);
-  background: -o-linear-gradient(top, #84fab0 ,#8fd3f4);
-  background: -moz-linear-gradient(top, #84fab0 ,#8fd3f4);
-  background: linear-gradient(top, #84fab0 ,#8fd3f4);
+  background: #9152f8;
+  background: -webkit-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
+  background: -o-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
+  background: -moz-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
+  background: linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
 }
 
 
@@ -231,22 +231,22 @@ text-decoration: none;
   -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
   -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  background-color: transparent;
+  background-color: transparent !important;
   font-family: sans-serif;
   border: 0;
   border-radius: 35px;
-  box-shadow: inset 0 0 0 2px #fff;
-  color: #fff;
+  box-shadow: inset 0 0 0 2px #fff !important;
+  color: #fff !important;
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
-  line-height: 52px;
+  /* line-height: 52px; */
   padding: 0 1.75em;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
 }
 .signup100-form-btn:hover{
-    box-shadow: inset 0 0 0 2px #017ef2;
-    color: #017ef2;
-    background: transparent;}
+    box-shadow: inset 0 0 0 2px #017ef2 !important;
+    color: #017ef2 !important;
+    background: transparent ;}

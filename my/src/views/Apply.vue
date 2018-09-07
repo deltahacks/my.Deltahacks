@@ -568,11 +568,16 @@ p {
     background-position: center;
     background-size: cover;
     z-index: 0;
-    background: #8fd3f4;
+         background: #9152f8;
+  background: -webkit-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -o-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: -moz-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+  background: linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+    /* background: #8fd3f4;
     background: -webkit-linear-gradient(top, #84fab0, #8fd3f4);
     background: -o-linear-gradient(top, #84fab0, #8fd3f4);
     background: -moz-linear-gradient(top, #84fab0, #8fd3f4);
-    background: linear-gradient(top, #84fab0, #8fd3f4);
+    background: linear-gradient(top, #84fab0, #8fd3f4); */
 }
 .navbar1 {
     z-index: 0;
@@ -627,13 +632,13 @@ p {
     font-family: sans-serif;
     border: 1;
     border-radius: 40px;
-    box-shadow: inset 0 0 0 2px #2196f3;
+    /* box-shadow: inset 0 0 0 2px #2196f3; */
     color: #2196f3;
     cursor: pointer;
     display: inline-block;
     font-size: 15px;
     font-weight: 600;
-    line-height: 52px;
+    /* line-height: 52px; */
     padding: 0 1.75em;
     text-align: center;
     text-decoration: none;
@@ -662,7 +667,7 @@ p {
     /* display: inline-block; */
     font-size: 15px;
     font-weight: 600;
-    line-height: 52px;
+    /* line-height: 52px; */
     padding: 0 1.75em;
     text-align: center;
     text-decoration: none;
