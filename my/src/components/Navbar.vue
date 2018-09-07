@@ -1,6 +1,5 @@
 <template>
   <v-toolbar class="toolbar">
-    <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-menu offset-y>
       <v-btn class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
       <v-list>
