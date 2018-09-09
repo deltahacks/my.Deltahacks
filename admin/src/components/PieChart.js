@@ -55,7 +55,7 @@ export default {
           datasets: [
             {
               label: 'Applications by University',
-              backgroundColor: [`${shade('#002F65', 0.2)}`, `${shade('#83002C', 0.2)}`, `${shade('#FDD54F', 0.2)}`, `${shade('#4F2682', 0.2)}`, `${shade('#004C9B', 0.2)}`, `${shade('#E31836', 0.2)}`],
+              backgroundColor: [`${shade('#002F65', 0.2)}`, `${shade('#83002C', 0.1)}`, `${shade('#FDD54F', 0.1)}`, `${shade('#4F2682', 0.1)}`, `${shade('#004C9B', 0.1)}`, `${shade('#E31836', 0.1)}`],
               data: [this.uft, doc.data().McMaster, doc.data().Waterloo, doc.data().Western, doc.data().Ryerson, doc.data()['York U']],
             },
           ],
