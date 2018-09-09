@@ -28,6 +28,10 @@
                     <strong>What do you study?</strong>
                 </label><br>
                 <v-select name="major" id='major' :disabled="submitted" :items='majors' v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000"></v-select>
+                <label for="major" style='float:left'>
+                    <strong>What degree are you currently pursuing?</strong>
+                </label><br>
+                <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
                 <label for="year" style='float:left'>
                     <strong>What year of school are you in?</strong>
                 </label><br>
@@ -54,7 +58,7 @@
                 </v-text-field>
                 <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
                 </v-text-field>
-                <v-container d-inline-flex>
+                <!-- <v-container d-inline-flex>
                     <v-flex xs6 sm6>
                         <label for="phone" style=''>
                             <strong>Your cell phone number</strong>
@@ -68,6 +72,30 @@
                             <strong>Emergency contact</strong>
                         </label><br>
                         <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+                    </v-flex>
+                </v-container> -->
+                <label for="phone" style='float:left'>
+                    <strong>Your cell phone number</strong>
+                </label><br>
+                <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+                <label for="emergency phone" style='float:left'>
+                    <strong>Emergency contact number</strong>
+                </label><br>
+                <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+                <v-container d-inline-flex>
+                    <v-flex xs6 sm6>
+                        <label for="emergency name" style='float:left'>
+                            <strong>Emergency contact name</strong>
+                        </label><br>
+                        <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
+                    </v-flex>
+                    <v-flex xs4>
+                    </v-flex>
+                    <v-flex xs6 sm6>
+                        <label for="emergency relationship" style=''>
+                            <strong>Emergency contact relationship</strong>
+                        </label><br>
+                        <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                     </v-flex>
                 </v-container>
                 <div id="filePondContainer">
@@ -108,7 +136,7 @@
                         </v-flex>
                     </v-layout>
                 </v-container>
-                <v-checkbox name="agreement" @click="toggleCheck" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
+                <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
                 <!-- careful with modifying these buttons, submit must to be of type submit. -->
                 <div class="mx-auto gg">
                     <v-dialog v-model="confirm" persistent max-width="400">
@@ -219,11 +247,13 @@ export default {
                 website: '',
                 phone: '',
                 emergency_phone: '',
+                emergency_name: '',
                 q1: '',
                 q2: '',
                 q3: '',
                 q4: '',
                 major: '',
+                degree: '',
                 birthday: '',
                 documents: [],
             },
@@ -237,6 +267,8 @@ export default {
             hackathons: ['This is my first one', '2', '3', '5+', '10+'],
             food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
             shirts: ['XS', 'S', 'M', 'L', 'XL'],
+            degrees: ['Bachelors', 'Masters', 'PhD'],
+            relations: ['Parent', 'Grandparent', 'Sibling', 'Partner', 'Friend', 'Other'],
             checkbox: false,
         };
     },
@@ -312,7 +344,7 @@ export default {
             this.loadingMessage = msg;
         },
         toggleCheck() {
-            this.checkError = undefined;
+            this.checkbox = !this.checkbox;
         },
         validateBeforeSubmit() {
             this.$validator.validateAll();
