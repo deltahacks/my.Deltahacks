@@ -167,7 +167,7 @@ export default {
                 datasets: [
                     {
                         label: 'Applicant Distribution',
-                        backgroundColor: ['#E31836', '#83002C', '#004C9B'],
+                        backgroundColor: this.colors,
                         data: [20, 30, 60],
                     },
                 ],
@@ -177,7 +177,7 @@ export default {
                 datasets: [
                     {
                         label: 'Applicant Distribution',
-                        backgroundColor: ['#004C9B', '#83002C'],
+                        backgroundColor: this.colors,
                         data: [40, 60],
                     },
                 ],
@@ -187,14 +187,7 @@ export default {
                 datasets: [
                     {
                         label: 'Age Distribution',
-                        backgroundColor: [
-                            '#E31836',
-                            '#83002C',
-                            '#004C9B',
-                            '#FDD54F',
-                            '#4F2682',
-                            '#41cdf4',
-                        ],
+                        backgroundColor: this.colors,
                         data: [70, 160, 200, 125, 90, 50],
                     },
                 ],
@@ -204,7 +197,7 @@ export default {
                 datasets: [
                     {
                         label: 'Number of Students Per Bus',
-                        backgroundColor: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682'],
+                        backgroundColor: this.colors,
                         data: [60, 120, 25, 34, 200],
                     },
                 ],
@@ -225,6 +218,8 @@ export default {
         // this.setAgePanels();
         this.setCheckedInGraph();
         this.setMiscStatistics();
+        // this.parseDateNum('21121998');
+        this.getAgeData();
     },
     computed: {
         total() {
@@ -239,11 +234,38 @@ export default {
                 datasets: [
                     {
                         label: 'Applicant Distribution',
-                        backgroundColor: ['#004C9B', '#83002C'],
+                        backgroundColor: this.colors,
                         data: [this.statistics.checkedIn, this.total - this.statistics.checkedIn],
                     },
                 ],
             });
+        },
+        parseDateField(date) {
+          const day = date.slice(0,2);
+          const month = date.slice(2,4);
+          const year = date.slice(4, date.length);
+          const parsed = `${month}/${day}/${year}`;
+          return new Date(parsed);
+        },
+        getAgeFromDate(bday) {
+          const current = new Date();
+          const reducedDate = () => current.getFullYear() - 1;
+          switch (bday) {
+            case bday > current.setFullYear(current.getFullYear() - 18): // verify
+              return '18-';
+            case bday > current.setFullYear(reducedDate()):
+              return '19';
+            case bday > current.setFullYear(reducedDate()):
+              return '20';
+            case bday > current.setFullYear(reducedDate()):
+              return '21';
+            case bday > current.setFullYear(reducedDate()):
+              return '22';
+            case bday > current.setFullYear(reducedDate()):
+              return '23';
+            default:
+              return '24+';
+          }
         },
         getAgeData() {
             return db
@@ -254,14 +276,18 @@ export default {
                 .then(snap => {
                     const ages = {
                         '18-': 0,
-                        19: 0,
-                        20: 0,
-                        21: 0,
-                        22: 0,
-                        23: 0,
+                        '19': 0,
+                        '20': 0,
+                        '21': 0,
+                        '22': 0,
+                        '23': 0,
                         '24+': 0,
                     };
-                    snap.docs.forEach(doc => {});
+                    snap.docs.forEach((doc) => {
+                      const data = doc.data();
+                      const birthday = this.parseDateField(data.birthday);
+                      console.log(this.getAgeFromDate(birthday));
+                    });
                     return { data: ages };
                 })
                 .catch(err => console.log(err));
@@ -274,14 +300,7 @@ export default {
                 datasets: [
                     {
                         label: 'Age Distribution',
-                        backgroundColor: [
-                            '#E31836',
-                            '#83002C',
-                            '#004C9B',
-                            '#FDD54F',
-                            '#4F2682',
-                            '#41cdf4',
-                        ],
+                        backgroundColor: this.colors,
                         data: [70, 160, 200, 125, 90, 50],
                     },
                 ],
@@ -293,7 +312,7 @@ export default {
                 datasets: [
                     {
                         label: 'Applicant Distribution',
-                        backgroundColor: ['#E31836', '#83002C', '#004C9B'],
+                        backgroundColor: this.colors,
                         data: [
                             this.statistics.decisions.accepted,
                             this.statistics.decisions.rejected,
