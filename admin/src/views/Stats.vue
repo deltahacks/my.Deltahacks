@@ -219,7 +219,7 @@ export default {
         this.setCheckedInGraph();
         this.setMiscStatistics();
         // this.parseDateNum('21121998');
-        this.getAgeData();
+        this.setAgePanels();
     },
     computed: {
         total() {
@@ -247,24 +247,26 @@ export default {
           const parsed = `${month}/${day}/${year}`;
           return new Date(parsed);
         },
+        createDate(current, year) {
+          const out = new Date(current.setFullYear(year));
+          return out;
+        },
         getAgeFromDate(bday) {
           const current = new Date();
-          const reducedDate = () => current.getFullYear() - 1;
-          switch (bday) {
-            case bday > current.setFullYear(current.getFullYear() - 18): // verify
-              return '18-';
-            case bday > current.setFullYear(reducedDate()):
-              return '19';
-            case bday > current.setFullYear(reducedDate()):
-              return '20';
-            case bday > current.setFullYear(reducedDate()):
-              return '21';
-            case bday > current.setFullYear(reducedDate()):
-              return '22';
-            case bday > current.setFullYear(reducedDate()):
-              return '23';
-            default:
-              return '24+';
+          if (bday > this.createDate(current, current.getFullYear() - 18)){
+            return '18-';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '19';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '20';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '21';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '22';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '23';
+          } else {
+            return '24+';
           }
         },
         getAgeData() {
@@ -286,22 +288,21 @@ export default {
                     snap.docs.forEach((doc) => {
                       const data = doc.data();
                       const birthday = this.parseDateField(data.birthday);
-                      console.log(this.getAgeFromDate(birthday));
+                      ages[this.getAgeFromDate(birthday)] += 1;
                     });
                     return { data: ages };
                 })
                 .catch(err => console.log(err));
         },
         async setAgePanels() {
-            const ages = await this.getAgeData();
-            console.log(ages);
+            const { data } = await this.getAgeData();
             this.$refs.ages.changeData({
                 labels: ['18', '19', '20', '21', '22', '23+'],
                 datasets: [
                     {
                         label: 'Age Distribution',
                         backgroundColor: this.colors,
-                        data: [70, 160, 200, 125, 90, 50],
+                        data: Object.values(data),
                     },
                 ],
             });
