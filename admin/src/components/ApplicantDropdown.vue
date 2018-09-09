@@ -101,7 +101,7 @@
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-          <iframe id='resume' v-if="test" :src="test"></iframe>
+          <iframe id='resume' v-if="applicant.documents[0].download_link" :src="applicant.documents[0].download_link"></iframe>
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
@@ -110,7 +110,6 @@
 </template>
 <script>
 import vueSlider from 'vue-slider-component';
-import firebase from 'firebase';
 
 export default {
   name: 'Applicant',
@@ -120,7 +119,6 @@ export default {
     currentUser1: 'yee',
     topcard: true,
     pageCount: 0,
-    test: undefined,
     status: 0,
     score: 0,
     resumeLink:
@@ -145,14 +143,8 @@ export default {
   components: {
     vueSlider,
   },
-  async mounted() {
+  mounted() {
     console.log('Sub', this.isReviewed, this.applicant, this.random);
-    console.log('Ping');
-    const storage = firebase.storage().ref();
-    const resumeRef = storage.child('hackathon/DH5/users/college@abhayraj.net/Resume - Abhayraj Jain.pdf');
-    console.log(resumeRef);
-    this.test = await resumeRef.getDownloadURL();
-    console.log(this.test)
     this.score = this.applicant.decision.reviewers.find(obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email).score;
   },
   methods: {
