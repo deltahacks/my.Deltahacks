@@ -31,7 +31,7 @@
           </div>
           <div><br></div>
           <div class="container-login100-form-btn">
-            <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" to="/signup">Signup &nbsp;
+            <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
@@ -44,63 +44,65 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Login',
-  data: () => ({
-    drawer: null,
-    email: null,
-    pass: null,
-    feedback: null,
-  }),
-  methods: {
-    signuppage() {
-      this.$router.push({ name: 'Signup' });
-    },
-    login() {
-      if (this.email && this.pass) {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(this.email, this.pass)
-          .then(() => {
-            this.$router.push({ name: 'Status' });
-            console.log('logged in');
-            this.feedback = null;
-          })
-          .catch((error) => {
-            // Handle Errors here.
-            //   const errorCode = error.code;
-            const errorMessage = error.message;
-            this.feedback = errorMessage;
-            console.log(errorMessage);
-          });
-      }
-    },
-    htest() {
-      this.$Progress.start();
+    name: 'Login',
+    data: () => ({
+        drawer: null,
+        email: null,
+        pass: null,
+        feedback: null,
+    }),
+    methods: {
+        signuppage() {
+            this.$router.push({ name: 'Signup' });
+        },
+        login() {
+            if (this.email && this.pass) {
+                firebase
+                    .auth()
+                    .signInWithEmailAndPassword(this.email, this.pass)
+                    .then(() => {
+                        this.$router.push({ name: 'Status' });
+                        console.log('logged in');
+                        this.feedback = null;
+                    })
+                    .catch(error => {
+                        // Handle Errors here.
+                        //   const errorCode = error.code;
+                        const errorMessage = error.message;
+                        this.feedback = errorMessage;
+                        console.log(errorMessage);
+                    });
+            }
+        },
+        htest() {
+            this.$Progress.start();
 
-      this.$http
-        .jsonp('http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz')
-        .then(
-          (response) => {
-            this.$Progress.finish();
-          },
-          (response) => {
-            this.$Progress.fail();
-          },
-        );
+            this.$http
+                .jsonp(
+                    'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz'
+                )
+                .then(
+                    response => {
+                        this.$Progress.finish();
+                    },
+                    response => {
+                        this.$Progress.fail();
+                    }
+                );
+        },
     },
-  },
-  mounted() {
-    /*     window.addEventListener('keydown', (e) => {
+    mounted() {
+        /*     window.addEventListener('keydown', (e) => {
       const key = e.which || e.keyCode;
       if (key === 13) {
         // alert("ay");
         this.login();
       }
     }); */
-  },
-  props: {
-    source: String,
-  },
+    },
+    props: {
+        source: String,
+    },
 };
 </script>
 <style scoped src='../assets/css/login.css'>

@@ -1,40 +1,40 @@
 <template>
-  <div class="limiter">
-    <div class="container-signup100 background">
-      <div class="wrap-signup100">
-        <form class="signup100-form validate-form">
-          <span class="signup100-form-logo">
-            <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
-          </span>
-          <span class="welcomeheader">
-            DeltaHacks<br> Sign Up
-          </span>
-          <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="vuex_email"></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" @keypress.enter="signUpFirebase" v-model="vuex_password"></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" @keypress.enter="signUpFirebase" v-model="password_repeat"></v-text-field>
-          </div>
-          <div class="container-signup100-form-btn">
-            <v-alert :value="feedback" type="error">
-              {{ feedback }}
-            </v-alert>
-            <v-btn class="signup100-form-btn" @click.prevent="signUpFirebase">Signup &nbsp;
-              <i class="fas fa-user-plus" />
-            </v-btn>
-          </div>
-          <div class="container-signup100-form-btn">
-            <v-btn class="signup100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN
-              <v-icon right>lock_open</v-icon>
-            </v-btn>
-          </div>
-        </form>
-      </div>
+    <div class="limiter">
+        <div class="container-signup100 background">
+            <div class="wrap-signup100">
+                <form class="signup100-form validate-form">
+                    <span class="signup100-form-logo">
+                        <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
+                    </span>
+                    <span class="welcomeheader">
+                        DeltaHacks<br> Sign Up
+                    </span>
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                        <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="vuex_email"></v-text-field>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" @keypress.enter="signUpFirebase" v-model="vuex_password"></v-text-field>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" @keypress.enter="signUpFirebase" v-model="password_repeat"></v-text-field>
+                    </div>
+                    <div class="container-signup100-form-btn">
+                        <v-alert :value="feedback" type="error">
+                            {{ feedback }}
+                        </v-alert>
+                        <v-btn class="signup100-form-btn" @click.prevent="signUpFirebase">Signup &nbsp;
+                            <i class="fas fa-user-plus" />
+                        </v-btn>
+                    </div>
+                    <div class="container-signup100-form-btn">
+                        <v-btn class="signup100-form-btn" :href="source" slot="activator" to="/">LOGIN
+                            <v-icon right>lock_open</v-icon>
+                        </v-btn>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
