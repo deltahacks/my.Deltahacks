@@ -395,7 +395,7 @@ export default {
                 .doc(firebase.auth().currentUser.email)
                 .set(this.application)
                 .then(() => {
-                    this.$router.push({ name: 'Apply' });
+                    this.$router.push({ name: 'Status' });
                     this.loading = false;
                 })
                 .catch(err => {
@@ -568,11 +568,11 @@ p {
     background-position: center;
     background-size: cover;
     z-index: 0;
-         background: #9152f8;
-  background: -webkit-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
-  background: -o-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
-  background: -moz-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
-  background: linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
+    background: #9152f8;
+    background: -webkit-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
+    background: -o-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
+    background: -moz-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
+    background: linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
     /* background: #8fd3f4;
     background: -webkit-linear-gradient(top, #84fab0, #8fd3f4);
     background: -o-linear-gradient(top, #84fab0, #8fd3f4);
