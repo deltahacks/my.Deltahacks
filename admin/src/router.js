@@ -28,6 +28,7 @@ const router = new Router({
       path: '/',
       name: 'Login',
       component: Login,
+      props: true,
       meta: {
         loginRedir: true,
       },
