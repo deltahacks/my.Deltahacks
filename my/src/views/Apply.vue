@@ -119,13 +119,13 @@
                             <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
-                            <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
+                            <p class="text-lg-left">Why do you want to come to DeltaHacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
                             <v-text-field :disabled="submitted" multi-line outline name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
                             </v-text-field>
                             <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
-                            <p class="text-lg-left">If you could invent a new programming language what would you name it</p>
+                            <p class="text-lg-left">If you could invent a new programming language what would you name it?</p>
                             <v-text-field :disabled="submitted" name="q3" placeholder="New language name..." v-model="application.q3" auto-grow v-validate="{required:true, max:100}" counter=100>
                             </v-text-field>
                         </v-flex>
@@ -271,7 +271,7 @@ export default {
                 'Fifth Year',
                 'Sixth Year',
             ],
-            hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+            hackathons: ['This is my first one', '2', '3', '4', '5-9', '10+'],
             food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
             shirts: ['XS', 'S', 'M', 'L', 'XL'],
             degrees: ['Bachelors', 'Masters', 'PhD'],
