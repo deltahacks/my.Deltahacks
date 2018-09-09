@@ -23,7 +23,7 @@
                 <label for="university" style='float:left'>
                     <strong>What university do you go to?</strong>
                 </label><br>
-                <v-select name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" autocomplete v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-select>
+                <v-autocomplete name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-autocomplete>
                 <label for="major" style='float:left'>
                     <strong>What do you study?</strong>
                 </label><br>
@@ -114,14 +114,14 @@
                     <v-layout row wrap>
                         <v-flex xs12>
                             <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?</p>
-                            <v-text-field multi-line outline :disabled="submitted" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
-                            </v-text-field>
+                            <v-textarea outline :disabled="submitted" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+                            </v-textarea>
                             <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
                             <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
-                            <v-text-field :disabled="submitted" multi-line outline name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
-                            </v-text-field>
+                            <v-textarea :disabled="submitted" outline name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
+                            </v-textarea>
                             <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
