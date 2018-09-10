@@ -4,7 +4,7 @@
             <v-menu offset-y>
                 <v-btn style="width: 250px;" class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
                 <v-list>
-                    <v-list-tile v-for="(item, index) in items" :key="index" @click="current = item">
+                    <v-list-tile v-for="(item, index) in items" :key="index" @click="onChangeBucket(item)">
                         <v-list-tile-title class="">{{ item }}</v-list-tile-title>
                     </v-list-tile>
                 </v-list>
@@ -36,7 +36,7 @@
             </template>
         </v-data-table>
         <div class="text-xs-center">
-            <v-pagination v-model="page" :length="numApplicants" circle @input="nextPage"></v-pagination>
+            <v-pagination id="pageButton" v-model="page" :length="numApplicants" circle @input="nextPage"></v-pagination>
         </div>
     </v-card>
 </template>
@@ -55,6 +55,23 @@ export default {
     name: 'DataTable',
     methods: {
         ...mapMutations(['update_DataTable_lastVisible']),
+        onChangeBucket(item) {
+            this.current = item;
+            switch (item) {
+                case 'Assigned to Me':
+                    this.restriction = [
+                        'decision.assignedTo',
+                        'array-contains',
+                        this.$store.state.firebase.auth().currentUser.email,
+                    ];
+                    this.refetchCurrentPage();
+                    break;
+                case 'All Applicants':
+                    this.restriction = this.defaultRestriction;
+                    this.refetchCurrentPage();
+                    break;
+            }
+        },
         async fb() {
             db
                 .collection('applications')
@@ -77,12 +94,26 @@ export default {
                     .doc(this.hackathon)
                     .collection(this.bucket)
                     .orderBy('index')
+                    .where(...this.restriction)
                     .limit(this.rowsPerPage)
                     .startAfter((this.page - 1) * 20)
                     .get();
                 this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
                 Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
             }
+        },
+        async refetchCurrentPage() {
+            console.log('In mount fill');
+            const result = await db
+                .collection(this.collection)
+                .doc(this.hackathon)
+                .collection(this.bucket)
+                .orderBy('index')
+                .where(...this.restriction)
+                .limit(this.rowsPerPage)
+                .get();
+            this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+            Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
         },
         async applicantCount() {
             let size = 0;
@@ -110,10 +141,17 @@ export default {
             applications: {},
             peeps: [fake],
             current: 'All Applicants',
-            items: ['All Applicants', 'Accepted Applicants', 'Unaccepted Applicants'],
+            items: [
+                'All Applicants',
+                'Assigned to Me',
+                'Accepted Applicants',
+                'Unaccepted Applicants',
+            ],
             collection: 'decisions',
             hackathon: 'DH5',
             bucket: 'pending',
+            restriction: ['index', '>=', 0],
+            defaultRestriction: ['index', '>=', 0],
             buckets: [
                 {
                     title: 'Pending Applications',
@@ -173,6 +211,7 @@ export default {
                 .doc(this.hackathon)
                 .collection(this.bucket)
                 .orderBy('index')
+                .where(...this.restriction)
                 .limit(this.rowsPerPage)
                 .get();
             this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
@@ -192,5 +231,10 @@ export default {
 
 #dropdown {
     width: 100%;
+}
+
+#pageButton {
+    outline: 0;
+    border: none;
 }
 </style>

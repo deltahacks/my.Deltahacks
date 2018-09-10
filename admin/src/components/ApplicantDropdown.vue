@@ -31,6 +31,9 @@
                         <b> Major: </b>
                       </v-card-text>
                       <v-card-text>
+                        <b> Degree: </b>
+                      </v-card-text>
+                      <v-card-text>
                         <b> Git Repo: </b>
                       </v-card-text>
                       <v-card-text>
@@ -59,6 +62,7 @@
                       <v-card-text>{{ applicant.school_year }}</v-card-text>
                       <v-card-text>{{ applicant.hackathons }}</v-card-text>
                       <v-card-text>{{ applicant.major }}</v-card-text>
+                      <v-card-text>{{ applicant.degree }}</v-card-text>
                       <v-card-text>
                         <a v-bind:href="applicant.github" target="_blank"> {{ applicant.github }} </a>
                       </v-card-text>
@@ -72,7 +76,6 @@
                       <v-card-text>{{ applicant.shirt_size }}</v-card-text>
                       <v-card-text>{{ applicant.q3 }}</v-card-text>
                       <v-card-text>{{ applicant.q4 }}</v-card-text>
-
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
                     </v-flex>
                   </v-layout>
@@ -112,80 +115,82 @@
 import vueSlider from 'vue-slider-component';
 
 export default {
-  name: 'Applicant',
-  props: ['usrname', 'applicant', 'isReviewed'],
-  data: () => ({
-    currentPage: 0,
-    currentUser1: 'yee',
-    topcard: true,
-    pageCount: 0,
-    status: 0,
-    score: 0,
-    resumeLink:
+    name: 'Applicant',
+    props: ['usrname', 'applicant', 'isReviewed'],
+    data: () => ({
+        currentPage: 0,
+        currentUser1: 'yee',
+        topcard: true,
+        pageCount: 0,
+        status: 0,
+        score: 0,
+        resumeLink:
             'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
-    cards: [
-      {
-        title: 'Pre-fab homes',
-        flex: 12,
-      },
-      {
-        title: 'Favorite road trips',
-        src: '/static/doc-images/cards/road.jpg',
-        flex: 6,
-      },
-      {
-        title: 'Best airlines',
-        src: '/static/doc-images/cards/plane.jpeg',
-        flex: 6,
-      },
-    ],
-  }),
-  components: {
-    vueSlider,
-  },
-  mounted() {
-    console.log('Sub', this.isReviewed, this.applicant, this.random);
-    this.score = this.applicant.decision.reviewers.find(obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email).score;
-  },
-  methods: {
-    async updateApplicationScore() {
-      console.log('Updating score', this.$store.state.test);
-      try {
-        const userApplication = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
-          .get();
-
-        const aaa = this.$store.state.test;
-        console.log(
-          aaa,
-          this.$store.state.firebase.auth().currentUser.email,
-          userApplication.data().decision,
-        );
-        const decision = { ...userApplication.data().decision };
-        const reviews = userApplication.data().decision.reviews + 1;
-        const reviewers = userApplication.data().decision.reviewers;
-        reviewers.push({
-          score: this.score,
-          reviewer: this.$store.state.firebase.auth().currentUser.email,
-        });
-        decision.reviews = reviews;
-        decision.reviewers = reviewers;
-        console.log('decision', decision);
-        const uploadScore = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
-          .update({ decision });
-        console.log('Review sent: ', uploadScore);
-      } catch (err) {
-        console.log('Error getting user app: ', err);
-      }
+        cards: [
+            {
+                title: 'Pre-fab homes',
+                flex: 12,
+            },
+            {
+                title: 'Favorite road trips',
+                src: '/static/doc-images/cards/road.jpg',
+                flex: 6,
+            },
+            {
+                title: 'Best airlines',
+                src: '/static/doc-images/cards/plane.jpeg',
+                flex: 6,
+            },
+        ],
+    }),
+    components: {
+        vueSlider,
     },
-  },
+    mounted() {
+        console.log('Sub', this.isReviewed, this.applicant, this.random);
+        this.score = this.applicant.decision.reviewers.find(
+            obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email
+        ).score;
+    },
+    methods: {
+        async updateApplicationScore() {
+            console.log('Updating score', this.$store.state.test);
+            try {
+                const userApplication = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(this.applicant.email)
+                    .get();
+
+                const aaa = this.$store.state.test;
+                console.log(
+                    aaa,
+                    this.$store.state.firebase.auth().currentUser.email,
+                    userApplication.data().decision
+                );
+                const decision = { ...userApplication.data().decision };
+                const reviews = userApplication.data().decision.reviews + 1;
+                const reviewers = userApplication.data().decision.reviewers;
+                reviewers.push({
+                    score: this.score,
+                    reviewer: this.$store.state.firebase.auth().currentUser.email,
+                });
+                decision.reviews = reviews;
+                decision.reviewers = reviewers;
+                console.log('decision', decision);
+                const uploadScore = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(this.applicant.email)
+                    .update({ decision });
+                console.log('Review sent: ', uploadScore);
+            } catch (err) {
+                console.log('Error getting user app: ', err);
+            }
+        },
+    },
 };
 </script>
 
