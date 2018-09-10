@@ -42,7 +42,7 @@ export default {
   extends: Pie,
   data() {
     return {
-      uft: 22,
+      uft: 2,
     };
   },
   mounted() {
@@ -56,7 +56,7 @@ export default {
             {
               label: 'Applications by University',
               backgroundColor: [`${shade('#002F65', 0.2)}`, `${shade('#83002C', 0.1)}`, `${shade('#FDD54F', 0.1)}`, `${shade('#4F2682', 0.1)}`, `${shade('#004C9B', 0.1)}`, `${shade('#E31836', 0.1)}`],
-              data: [this.uft, doc.data().McMaster, doc.data().Waterloo, doc.data().Western, doc.data().Ryerson, doc.data()['York U']],
+              data: [this.uft, doc.data().applicationStats.universities['McMaster University'], doc.data().applicationStats.universities['University of Waterloo'], doc.data().applicationStats.universities['University of Western Ontario'], doc.data().applicationStats.universities['Ryerson University'], doc.data()['York U']],
             },
           ],
         });
