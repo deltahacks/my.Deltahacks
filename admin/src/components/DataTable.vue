@@ -39,7 +39,6 @@
             <v-pagination v-model="page" :length="numApplicants" circle @input="nextPage"></v-pagination>
         </div>
     </v-card>
-
 </template>
 
 <script>
@@ -55,25 +54,7 @@ import db from '../private/firebase_init';
 export default {
     name: 'DataTable',
     methods: {
-        isMarked(app) {
-            console.log('IM', app.name, app);
-            app.decision.reviewers.forEach((val, ind) => {
-                console.log(
-                    'VALUU',
-                    val.reviewer,
-                    this.$store.state.firebase.auth().currentUser.email
-                );
-                if (val.reviewer === this.$store.state.firebase.auth().currentUser.email) {
-                    console.log('NIBBA');
-                    return true;
-                }
-            });
-            return false;
-        },
         ...mapMutations(['update_DataTable_lastVisible']),
-        f() {
-            console.log(fake);
-        },
         async fb() {
             db
                 .collection('applications')
