@@ -6,12 +6,13 @@
 
       <div class="hide">
         <div class="wrap-status100">
-          <h1>This application is still under review</h1>
+          <h1 v-show="step === 0">You haven't started yet! Go <a href="/apply" style="text-decoration: none;font:inherit;" class="">here</a> to begin.</h1>
+          <h1 v-show="step > 0">{{currentHeader}}</h1>
           <v-card-text></v-card-text>
           <v-stepper alt-labels style="border-radius:25px">
             <div class="wrap-status200">
               <v-stepper-header>
-                <v-stepper-step step="1" :complete="step > 0">In Progress</v-stepper-step>
+                <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
                 <v-divider></v-divider>
                 <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
                 <v-divider></v-divider>
@@ -28,7 +29,7 @@
         <div class="wrap-status101">
           <h1>This application is still under review</h1>
           <v-card-text></v-card-text>
-          <v-stepper v-model="e6" vertical class="wrap-status201">
+          <v-stepper vertical class="wrap-status201">
             <v-stepper-step :complete="step > 0" step="1">In Progress</v-stepper-step>
             <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
             <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
@@ -69,6 +70,13 @@ export default {
         addRemoveLinks: true,
         acceptedFiles: 'application/pdf',
       },
+      subheaders: [
+        'You haven\'t yet submitted your application.',
+        'You\'ve submitted your application, stay tuned for updates.',
+        'This application is under review.',
+        'Congratulations, you\'ve been accepted!',
+        'Unfortunately we cannot offer you an invitation this time.',
+      ],
       application: {
         name: '',
         email: '',
@@ -107,7 +115,19 @@ export default {
     Navigation,
     Navbar2,
   },
-  computed: {},
+  computed: {
+    baseStep() {
+      console.log(this.step === 0);
+      if (this.step === 0) {
+        return 'Not Started';
+      } else {
+        return 'In Progress';
+      }
+    },
+    currentHeader() {
+      return this.subheaders[this.step];
+    }
+  },
   methods: {},
   mounted() {
     const appEmail = auth().currentUser.email;
@@ -142,4 +162,8 @@ export default {
 };
 </script>
 <style scoped src='../assets/css/status.css'>
+.regular {
+  text-decoration: none;
+  color: inherit;
+}
 </style>
