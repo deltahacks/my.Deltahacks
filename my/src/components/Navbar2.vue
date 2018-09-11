@@ -11,7 +11,7 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-chip class="button hide-chip">
+    <v-chip class="button hide-chip" style="height:42px">
       <v-avatar>
         <v-icon>account_circle</v-icon>
       </v-avatar>

@@ -40,7 +40,8 @@
     "vue2-google-maps": "^0.9.7",
     "vuelidate": "^0.7.4",
     "vuetify": "^1.0.19",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yarn": "^1.9.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
