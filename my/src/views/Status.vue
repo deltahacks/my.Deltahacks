@@ -44,6 +44,7 @@
 <script>
 /* eslint-disable no-unused-expressions */
 import { auth } from 'firebase';
+import db from '../private/firebase_init';
 import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
@@ -128,36 +129,44 @@ export default {
       return this.subheaders[this.step - 1];
     }
   },
-  methods: {},
-  mounted() {
-    const appEmail = auth().currentUser.email;
-    this.$store.state.db
-      .collection('users')
-      .doc(appEmail)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          switch (doc.data().status) {
-            case 'in progress':
-              this.step = 1;
-              break;
-            case 'submitted':
-              this.step = 2;
-              break;
-            case 'processing':
-              this.step = 3;
-              break;
-            case 'decided':
-              this.step = 4;
-              break;
-            default:
-              this.step = 0;
-          }
-          console.log(this.step);
-        } else {
-          console.log('Document not found!');
+  methods: {
+    updateStep(doc) {
+      if (doc.exists) {
+        switch (doc.data().status) {
+          case 'in progress':
+            this.step = 1;
+            break;
+          case 'submitted':
+            this.step = 2;
+            break;
+          case 'processing':
+            this.step = 3;
+            break;
+          case 'decided':
+            this.step = 4;
+            break;
+          default:
+            this.step = 0;
         }
-      });
+        console.log(this.step);
+      } else {
+        console.log('Document not found!');
+      }
+    }
+  },
+  mounted() {
+    console.log('mounted');
+    const appEmail = auth().currentUser.email;
+    // this.$store.state.db
+    //   .collection('users')
+    //   .doc(appEmail)
+    //   .get()
+    //   .then((doc) => {
+    //     this.updateStep(doc);
+    //   });
+    db.collection('users').doc(appEmail).onSnapshot((snap) => {
+      this.updateStep(snap);
+    });
   },
 };
 </script>

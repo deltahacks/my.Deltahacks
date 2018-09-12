@@ -357,7 +357,6 @@ export default {
             this.$validator.validateAll();
         },
         formChange() {
-            if (this.submitted) return;
             if (this.timeout) {
                 clearTimeout(this.timeout);
                 this.timeout = null;
@@ -391,6 +390,7 @@ export default {
             }
         },
         setApplicationInProgress() {
+            if (this.submitted) return;
             const unixts = Math.round(new Date().getTime() / 1000);
             this.application.last_modified = {
                 unix: unixts,
