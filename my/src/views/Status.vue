@@ -125,7 +125,7 @@ export default {
       }
     },
     currentHeader() {
-      return this.subheaders[this.step];
+      return this.subheaders[this.step - 1];
     }
   },
   methods: {},
