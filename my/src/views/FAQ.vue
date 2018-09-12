@@ -2,9 +2,13 @@
     <v-app class="dashboard back">
         <Navbar2 class='navbar1' />
         <div class='container-status100'>
-            <div class='question-popout'>
-                <h1 display-5 style="margin:50px;">Frequently Asked Questions</h1>
-                <v-expansion-panel popout class=''>
+            <v-container grid-list-md text-xs-center>
+                <v-layout row wrap>
+                <v-flex xs12>
+                <h1 display-5 style="margin:10px; margin-top:-8%;">Frequently Asked Questions</h1>
+                </v-flex>
+                <v-flex xs12>
+                <v-expansion-panel class="question-popout">
                     <v-expansion-panel-content style='background-color: transparent;'>
                         <div slot="header" class='bold'>What is DeltaHacks V?</div>
                         <v-card style='background-color: transparent;'>
@@ -45,7 +49,9 @@
                         </v-card>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
-            </div>
+                </v-flex>
+                </v-layout>
+            </v-container>
         </div>
     </v-app>
 </template>
@@ -65,7 +71,6 @@ export default {
 <style scoped>
 .question-popout {
     margin: 0 auto;
-    margin-top: -25%;
     width: 70%;
 }
 .question {

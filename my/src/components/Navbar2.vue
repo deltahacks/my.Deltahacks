@@ -11,18 +11,34 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-chip class="button hide-chip" style="height:42px">
+    <div class="text-xs-center">
+      <v-menu offset-y>
+        <v-chip class="button hide-chip" slot="activator" style="height:42px">
       <v-avatar>
         <v-icon>account_circle</v-icon>
       </v-avatar>
       {{c_user.email}}
     </v-chip>
+
+        <v-list style="background-color:#85F8B5;">
+
+          <v-list-tile to="/">
+            <v-list-tile-title v-if="c_user">Change Password</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile to="/login/forgot">
+            <v-list-tile-title v-if="c_user">Forgot Password</v-list-tile-title>
+          </v-list-tile>
+
+        </v-list>
+      </v-menu>
+    </div>  
     <a @click.prevent='logout' class="button button-hide">LOGOUT</a>&ensp;
     <div class="text-xs-center mobile" style="margin-right:-60px;">
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
 
-        <v-list>
+        <v-list style="background-color:#85F8B5;">
 
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
