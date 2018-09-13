@@ -214,12 +214,15 @@ export default {
     },
     async beforeMount() {
         this.statistics = await this.getStatistics();
-        this.setDecisionPanels();
-        // this.setAgePanels();
-        this.setCheckedInGraph();
-        this.setMiscStatistics();
-        // this.parseDateNum('21121998');
-        this.setAgePanels();
+        db.collection('statistics').doc('DH5').onSnapshot((doc) => {
+          if (doc.exists) {
+            this.statistics = doc.data();
+            this.updateCharts();
+          }
+        });
+        db.collection('applications').doc('DH5_Test').collection('submitted').onSnapshot((doc) => {
+          this.updateAgeData(doc);
+        });
     },
     computed: {
         total() {
@@ -228,6 +231,14 @@ export default {
         },
     },
     methods: {
+      updateCharts() {
+        this.setDecisionPanels();
+        // this.setAgePanels();
+        this.setCheckedInGraph();
+        this.setMiscStatistics();
+        // this.parseDateNum('21121998');
+        this.setAgePanels();
+      },
         setCheckedInGraph() {
             this.$refs.checkedIn.changeData({
                 labels: ['Checked In', 'Not Checked In'],
@@ -269,33 +280,25 @@ export default {
             return '24+';
           }
         },
-        getAgeData() {
-            return db
-                .collection('applications')
-                .doc('DH5_Test')
-                .collection('submitted')
-                .get()
-                .then(snap => {
-                    const ages = {
-                        '18-': 0,
-                        '19': 0,
-                        '20': 0,
-                        '21': 0,
-                        '22': 0,
-                        '23': 0,
-                        '24+': 0,
-                    };
-                    snap.docs.forEach((doc) => {
-                      const data = doc.data();
-                      const birthday = this.parseDateField(data.birthday);
-                      ages[this.getAgeFromDate(birthday)] += 1;
-                    });
-                    return { data: ages };
-                })
-                .catch(err => console.log(err));
+        updateAgeData(snap) {
+          const ages = {
+            '18-': 0,
+            '19': 0,
+            '20': 0,
+            '21': 0,
+            '22': 0,
+            '23': 0,
+            '24+': 0,
+          };
+          snap.docs.forEach((doc) => {
+            const data = doc.data();
+            const birthday = this.parseDateField(data.birthday);
+            ages[this.getAgeFromDate(birthday)] += 1;
+          });
+          this.setAgePanels(ages);
         },
-        async setAgePanels() {
-            const { data } = await this.getAgeData();
+        async setAgePanels(data) {
+            // const { data } = await this.getAgeData();
             this.$refs.ages.changeData({
                 labels: ['18', '19', '20', '21', '22', '23+'],
                 datasets: [
