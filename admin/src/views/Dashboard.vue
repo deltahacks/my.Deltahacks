@@ -171,8 +171,7 @@ export default {
     mounted() {
         this.activateModal('Loading hackathon data...');
         db //Change to real users later
-            .collection('fake_users')
-            .where('is_admin', '==', false)
+            .collection('users')
             .get()
             .then(doc => {
                 doc.docs.forEach(val => {
