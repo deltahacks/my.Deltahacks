@@ -139,6 +139,9 @@ export default {
           case 'submitted':
             this.step = 2;
             break;
+          case 'pending':
+            this.step = 2;
+            break;
           case 'processing':
             this.step = 3;
             break;
@@ -157,13 +160,6 @@ export default {
   mounted() {
     console.log('mounted');
     const appEmail = auth().currentUser.email;
-    // this.$store.state.db
-    //   .collection('users')
-    //   .doc(appEmail)
-    //   .get()
-    //   .then((doc) => {
-    //     this.updateStep(doc);
-    //   });
     db.collection('users').doc(appEmail).onSnapshot((snap) => {
       this.updateStep(snap);
     });

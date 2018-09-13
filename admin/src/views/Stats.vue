@@ -83,7 +83,7 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
-            <bar-chart ref="ages" :data='ageData' :options='options' />
+            <bar-chart ref="ages" :options='options' />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>

@@ -27,11 +27,11 @@
                 <label for="major" style='float:left'>
                     <strong>What do you study?</strong>
                 </label><br>
-                <v-select name="major" id='major' :disabled="submitted" :items='majors' v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000"></v-select>
+                <v-select name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000"></v-select>
                 <label for="major" style='float:left'>
                     <strong>What degree are you currently pursuing?</strong>
                 </label><br>
-                <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
+                <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
                 <label for="year" style='float:left'>
                     <strong>What year of school are you in?</strong>
                 </label><br>
@@ -357,6 +357,7 @@ export default {
             this.$validator.validateAll();
         },
         formChange() {
+            console.log('Change detected')
             if (this.timeout) {
                 clearTimeout(this.timeout);
                 this.timeout = null;
@@ -521,7 +522,7 @@ export default {
                 const submitted = await this.getUserAppStatus(userEmail);
                 if (submitted) {
                     this.editing = true;
-                    this.submitted = true;
+                    // this.submitted = true;
                     this.checkbox = true;
                     this.application = doc.data();
                     this.fillApplicationFields();
