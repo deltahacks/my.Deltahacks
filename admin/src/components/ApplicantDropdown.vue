@@ -1,5 +1,11 @@
 <template>
   <div id="">
+    <v-snackbar v-model="feedback" top :color="bannerColor" :timeout="bannerTimeout">
+      {{bannerMessage}}
+      <v-btn color="white" flat @click="feedback = false">
+        Close
+      </v-btn>
+    </v-snackbar>
     <v-layout row wrap>
       <v-flex xs12 md6 lg6>
         <v-card-title primary-title>
@@ -98,13 +104,30 @@
         </v-layout>
         <vue-slider :disabled='isReviewed' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
         <v-btn color="success" class="button2" :disabled='isReviewed' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
+        <v-dialog v-model="dialog" width="500">
+          <v-btn slot="activator" class="bold" color="red" dark>Delete</v-btn>
+          <v-card>
+            <v-card-title class="headline grey lighten-2" primary-title> Are you sure?</v-card-title>
+            <v-card-text>This will delete the selected applicant and cannot be undone.</v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="bold" color="red" flat @click="deleteApplicant(applicant.email)">Yes</v-btn>
+              <v-btn color="primary" flat @click="dialog = false">No</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-flex>
       <v-flex xs12 md6 lg6>
         <v-card color="" id='docCard'>
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
+<<<<<<< HEAD
           <iframe id='resume' v-if="hasResume" :src="applicant.documents[0].download_link"></iframe>
+=======
+          <iframe id='resume' v-if="applicant.documents[0]" :src="applicant.documents[0] ? applicant.documents[0].download_link : 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'"></iframe>
+>>>>>>> 658c3c043e12da84e373df34033aec449a752c41
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
@@ -118,7 +141,12 @@ export default {
     name: 'Applicant',
     props: ['usrname', 'applicant', 'isReviewed'],
     data: () => ({
+        dialog: false,
         currentPage: 0,
+        bannerColor: 'success',
+        bannerTimeout: 2000,
+        bannerMessage: 'Successfully Deleted!',
+        feedback: false,
         currentUser1: 'yee',
         topcard: true,
         pageCount: 0,
@@ -197,6 +225,29 @@ export default {
             } catch (err) {
                 console.log('Error getting user app: ', err);
             }
+        },
+        async deleteApplicant(applicant) {
+            try {
+                let applicationDelete = await this.$store.state.db
+                    .collection('applications')
+                    .doc('DH5_Test')
+                    .collection('in progress')
+                    .doc(applicant)
+                    .delete();
+
+                let decisionDelete = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(applicant)
+                    .delete();
+                this.usrname = `(DELETED) ${this.usrname}`;
+                this.feedback = true;
+                console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
+            } catch (err) {
+                console.log('Error deleting application: ', err);
+            }
+            this.dialog = false;
         },
     },
 };
