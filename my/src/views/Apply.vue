@@ -135,6 +135,11 @@
                             <v-text-field :disabled="submitted" name="q4" placeholder="Is there something else you'd like us to know?" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300>
                             </v-text-field>
                         </v-flex>
+                        <v-flex xs12>
+                            <p class="text-lg-left">What's your favourite meme lately?</p>
+                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link, name, description, etc." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100>
+                            </v-text-field>
+                        </v-flex>
                     </v-layout>
                 </v-container>
                 <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" label="Do you agree to MLH terms and conditions?" :error-messages="checkError"></v-checkbox>
@@ -253,6 +258,7 @@ export default {
                 q2: '',
                 q3: '',
                 q4: '',
+                meme: '',
                 major: '',
                 degree: '',
                 birthday: '',
@@ -344,6 +350,7 @@ export default {
                 q2: '',
                 q3: '',
                 q4: '',
+                meme: '',
                 major: '',
                 birthday: '',
                 documents: [],
@@ -500,6 +507,7 @@ export default {
             ref.q2 = ref.q2 ? ref.q2 : '';
             ref.q3 = ref.q3 ? ref.q3 : '';
             ref.q4 = ref.q4 ? ref.q4 : '';
+            ref.meme = ref.meme ? ref.meme : '';
         },
         getUserAppStatus(userEmail) {
             return new Promise((resolve, reject) => {
