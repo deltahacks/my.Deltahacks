@@ -104,7 +104,7 @@
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-          <iframe id='resume' v-if="applicant.documents[0].download_link" :src="applicant.documents[0].download_link"></iframe>
+          <iframe id='resume' v-if="hasResume" :src="applicant.documents[0].download_link"></iframe>
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
@@ -145,6 +145,14 @@ export default {
     }),
     components: {
         vueSlider,
+    },
+    computed: {
+      hasResume() {
+        console.log(this.applicant);
+        const app = this.applicant;
+        return app.documents &&
+          (app.documents.length !== 0)
+      },
     },
     mounted() {
         console.log('Sub', this.isReviewed, this.applicant, this.random);

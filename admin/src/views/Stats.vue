@@ -83,7 +83,7 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
-            <bar-chart ref='ages' :data='ageData' :options='options' />
+            <bar-chart ref="ages" :options='options' />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -270,9 +270,17 @@ export default {
       const parsed = `${month}/${day}/${year}`;
       return new Date(parsed);
     },
-    createDate(current, year) {
-      const out = new Date(current.setFullYear(year));
-      return out;
+    async beforeMount() {
+        this.statistics = await this.getStatistics();
+        db.collection('statistics').doc('DH5').onSnapshot((doc) => {
+          if (doc.exists) {
+            this.statistics = doc.data();
+            this.updateCharts();
+          }
+        });
+        db.collection('applications').doc('DH5_Test').collection('submitted').onSnapshot((doc) => {
+          this.updateAgeData(doc);
+        });
     },
     getAgeFromDate(bday) {
       const current = new Date();
@@ -292,13 +300,57 @@ export default {
         return '24+';
       }
     },
-    getAgeData() {
-      return db
-        .collection('applications')
-        .doc('DH5_Test')
-        .collection('submitted')
-        .get()
-        .then(snap => {
+    methods: {
+      updateCharts() {
+        this.setDecisionPanels();
+        // this.setAgePanels();
+        this.setCheckedInGraph();
+        this.setMiscStatistics();
+        // this.parseDateNum('21121998');
+        this.setAgePanels();
+      },
+        setCheckedInGraph() {
+            this.$refs.checkedIn.changeData({
+                labels: ['Checked In', 'Not Checked In'],
+                datasets: [
+                    {
+                        label: 'Applicant Distribution',
+                        backgroundColor: this.colors,
+                        data: [this.statistics.checkedIn, this.total - this.statistics.checkedIn],
+                    },
+                ],
+            });
+        },
+        parseDateField(date) {
+          const day = date.slice(0,2);
+          const month = date.slice(2,4);
+          const year = date.slice(4, date.length);
+          const parsed = `${month}/${day}/${year}`;
+          return new Date(parsed);
+        },
+        createDate(current, year) {
+          const out = new Date(current.setFullYear(year));
+          return out;
+        },
+        getAgeFromDate(bday) {
+          const current = new Date();
+          if (bday > this.createDate(current, current.getFullYear() - 18)){
+            return '18-';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '19';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '20';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '21';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '22';
+          } else if (bday > this.createDate(current,current.getFullYear() - 1)) {
+            return '23';
+          } else {
+            return '24+';
+          }
+        },
+        updateAgeData(snap) {
           const ages = {
             '18-': 0,
             '19': 0,
@@ -306,45 +358,81 @@ export default {
             '21': 0,
             '22': 0,
             '23': 0,
-            '24+': 0
+            '24+': 0,
           };
-          snap.docs.forEach(doc => {
+          snap.docs.forEach((doc) => {
             const data = doc.data();
             const birthday = this.parseDateField(data.birthday);
             ages[this.getAgeFromDate(birthday)] += 1;
           });
-          return { data: ages };
-        })
-        .catch(err => console.log(err));
-    },
-    async setAgePanels() {
-      const { data } = await this.getAgeData();
-      this.$refs.ages.changeData({
-        labels: ['18', '19', '20', '21', '22', '23+'],
-        datasets: [
-          {
-            label: 'Age Distribution',
-            backgroundColor: this.colors,
-            data: Object.values(data)
-          }
-        ]
-      });
-    },
-    setDecisionPanels() {
-      this.$refs.decisions.changeData({
-        labels: ['Accepted', 'Rejected', 'Pending'],
-        datasets: [
-          {
-            label: 'Applicant Distribution',
-            backgroundColor: this.colors,
-            data: [
-              this.statistics.decisions.accepted,
-              this.statistics.decisions.rejected,
-              this.statistics.decisions.pending
-            ]
-          }
-        ]
-      });
+          this.setAgePanels(ages);
+        },
+        async setAgePanels(data) {
+            // const { data } = await this.getAgeData();
+            this.$refs.ages.changeData({
+                labels: ['18', '19', '20', '21', '22', '23+'],
+                datasets: [
+                    {
+                        label: 'Age Distribution',
+                        backgroundColor: this.colors,
+                        data: Object.values(data),
+                    },
+                ],
+            });
+        },
+        setDecisionPanels() {
+            this.$refs.decisions.changeData({
+                labels: ['Accepted', 'Rejected', 'Pending'],
+                datasets: [
+                    {
+                        label: 'Applicant Distribution',
+                        backgroundColor: this.colors,
+                        data: [
+                            this.statistics.decisions.accepted,
+                            this.statistics.decisions.rejected,
+                            this.statistics.decisions.pending,
+                        ],
+                    },
+                ],
+            });
+        },
+        getStatistics() {
+            const ref = db.collection('statistics').doc('DH5');
+            return new Promise(async (resolve, reject) => {
+                const snap = await ref.get().catch(err => reject(err));
+                resolve(snap.data());
+            });
+        },
+        setMiscStatistics() {
+            this.$refs.hackathons.changeData(
+                this.processField(this.statistics.applicationStats.hackathons, 'Hackathons')
+            );
+            this.$refs.majors.changeData(
+                this.processField(this.statistics.applicationStats.majors, 'Majors')
+            );
+            this.$refs.schoolYears.changeData(
+                this.processField(this.statistics.applicationStats.schoolYears, 'School Years')
+            );
+            this.$refs.shirt_sizes.changeData(
+                this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size')
+            );
+            this.$refs.universities.changeData(
+                this.processField(this.statistics.applicationStats.universities, 'Universities')
+            );
+        },
+        processField(field, label) {
+            const val = Object.values(field);
+            return {
+                labels: Object.keys(field),
+                datasets: [
+                    {
+                        label,
+                        backgroundColor: this.colors,
+                        data: val,
+                    },
+                ],
+            };
+        },
     },
     getStatistics() {
       const ref = db.collection('statistics').doc('DH5');
