@@ -157,7 +157,7 @@ export default {
       }
     }
   },
-  mounted() {
+  beforeMount() {
     console.log('mounted');
     const appEmail = auth().currentUser.email;
     db.collection('users').doc(appEmail).onSnapshot((snap) => {
