@@ -21,9 +21,10 @@
                     <td class="text-xs-left">{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
                     <td class="text-xs-left">{{ props.item.phone }}</td>
                     <td class="text-xs-left">{{ props.item.age }}</td>
-                    <td class="text-xs-left">
+                    <td class="text-xs-left" id="numRevs" :title="props.item.decision.assignedTo ? props.item.decision.assignedTo : 'unassigned'">
                         {{ props.item.decision.reviewers.length }}/3
                     </td>
+
                     <td class="text-xs-right">
                         <status-indicator v-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)" active></status-indicator>
                         <status-indicator v-else-if="props.item.decision.assignedTo && props.item.decision.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())" intermediary></status-indicator>
@@ -46,6 +47,7 @@ import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
 import { functions } from 'firebase';
 import { mapState, mapMutations } from 'vuex';
+import tippy from 'tippy.js';
 import fake from '@/helpers/fake';
 import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
@@ -175,12 +177,7 @@ export default {
             fake,
             expanded: {},
             headers: [
-                {
-                    text: 'Name',
-                    align: 'left',
-                    sortable: false,
-                    value: 'name',
-                },
+                { text: 'Name', align: 'left', value: 'name' },
                 { text: 'Email', value: 'email' },
                 { text: 'University', value: 'university' },
                 { text: 'Applied (seconds)', value: 'applied' },
@@ -192,15 +189,15 @@ export default {
         };
     },
     async mounted() {
+        tippy('[title]');
         const parent = this;
         await db
-            .collection(this.collection)
+            .collection('statistics')
             .doc(this.hackathon)
-            .collection(this.bucket)
             .get()
             .then(snap => {
                 console.log(snap.size);
-                this.numApplicants = Math.ceil(snap.size / this.rowsPerPage);
+                this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
                 console.log('Number apps: ', this.numApplicants);
             });
 
