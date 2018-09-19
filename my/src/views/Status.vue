@@ -23,6 +23,23 @@
             </div>
           </v-stepper>
         </div>
+        <br><br><br><br>
+        <v-divider></v-divider>
+        <div>
+            <v-layout row wrap>
+            <v-flex d-flex md3
+              :key="media" v-for="media in social">
+            <v-btn
+              class="mx-3"
+              dark
+              icon
+              :href="media.link"
+            >
+              <v-icon size="24px">{{ media.icon }}</v-icon>
+            </v-btn>
+            </v-flex>
+          </v-layout>
+        </div>
       </div>
 
       <div class="mobile">
@@ -58,6 +75,24 @@ export default {
   name: 'Status',
   data() {
     return {
+      social: [
+        {
+          link: 'https://twitter.com/deltahacks',
+          icon: 'fab fa-twitter',
+        },
+        {
+          link: 'https://www.facebook.com/thedeltahacks/',
+          icon: 'fab fa-facebook',
+        },
+        {
+          link: 'https://www.instagram.com/deltahacks/',
+          icon: 'fab fa-instagram',
+        },
+        {
+          link: 'https://www.linkedin.com/company/deltahacks/',
+          icon: 'fab fa-linkedin',
+        },
+      ],
       parent: this,
       picker: null,
       date: '2000-01-01',
@@ -170,5 +205,11 @@ export default {
 .regular {
   text-decoration: none;
   color: inherit;
+}
+#footertext {
+  font-family:'Avenir', Helvetica, Arial, sans-serif;
+  font-weight:bold;
+  font-size: 1.3em;
+  float: left;
 }
 </style>
