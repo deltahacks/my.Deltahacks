@@ -28,7 +28,17 @@
                 <label for="major" style='float:left'>
                     <strong>What do you study?</strong>
                 </label><br>
-                <v-select name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000"></v-select>
+                <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
+                    <template slot="no-data">
+                    <v-list-tile>
+                        <v-list-tile-content>
+                        <v-list-tile-title>
+                            No results found. Press <kbd>enter</kbd> to enter a custom option.
+                        </v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                    </template>
+                </v-combobox>
                 <label for="major" style='float:left'>
                     <strong>What degree are you currently pursuing?</strong>
                 </label><br>
@@ -47,8 +57,17 @@
                 <label for="diet" style='float:left'>
                     <strong>Any dietary restrictions?</strong>
                 </label><br>
-                <v-select v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
-                </v-select>
+                <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+                    <template slot="no-data">
+                    <v-list-tile>
+                        <v-list-tile-content>
+                        <v-list-tile-title>
+                            No results found. Press <kbd>enter</kbd> to enter a custom option.
+                        </v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                    </template>
+                </v-combobox>
                 <label for="hackathons" style='float:left'>
                     <strong>How many hackathons have you attended?</strong>
                 </label><br>
