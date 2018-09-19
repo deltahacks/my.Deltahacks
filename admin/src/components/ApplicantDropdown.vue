@@ -123,11 +123,7 @@
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-<<<<<<< HEAD
-          <iframe id='resume' v-if="hasResume" :src="applicant.documents[0].download_link"></iframe>
-=======
           <iframe id='resume' v-if="applicant.documents[0]" :src="applicant.documents[0] ? applicant.documents[0].download_link : 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'"></iframe>
->>>>>>> 658c3c043e12da84e373df34033aec449a752c41
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
