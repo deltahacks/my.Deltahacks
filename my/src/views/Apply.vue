@@ -73,6 +73,18 @@
                 </label><br>
                 <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                 </v-select>
+                <label for="hackathons" style='float:left'>
+                    <strong>What workshops would you be interested in attending?</strong>
+                </label><br>
+                <v-combobox
+                    v-model="application.workshops"
+                    :items="workshops"
+                    hide-selected
+                    multiple
+                    persistent-hint
+                    small-chips
+                >
+                </v-combobox>
                 <div class="section divider"></div>
                 <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
                 </v-text-field>
@@ -276,6 +288,7 @@ export default {
                 q4: '',
                 meme: '',
                 major: '',
+                workshops: [],
                 degree: '',
                 birthday: '',
                 documents: [],
@@ -293,6 +306,14 @@ export default {
                 'Fourth Year',
                 'Fifth Year',
                 'Sixth Year',
+            ],
+            workshops: [
+                'Node.js API',
+                'Ruby on Rails',
+                'Vue.js with Firebase',
+                'Blockchain',
+                'Machine Learning',
+                'Buzzwords',
             ],
             hackathons: ['This is my first one', '2', '3', '4', '5-9', '10+'],
             food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
@@ -532,6 +553,7 @@ export default {
             ref.q3 = ref.q3 ? ref.q3 : '';
             ref.q4 = ref.q4 ? ref.q4 : '';
             ref.meme = ref.meme ? ref.meme : '';
+            ref.workshops = ref.workshops ? ref.workshops : [];
         },
         getUserAppStatus(userEmail) {
             return new Promise((resolve, reject) => {
