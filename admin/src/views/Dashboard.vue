@@ -168,7 +168,7 @@ export default {
     created() {
         this.$Progress.start();
     },
-    mounted() {
+    async mounted() {
         this.activateModal('Loading hackathon data...');
         db //Change to real users later
             .collection('users')
@@ -196,6 +196,14 @@ export default {
             .onSnapshot(doc => {
                 this.applicationCount = doc.data().applications;
             });
+
+        let authRes = await db
+            .collection('admins')
+            .doc(this.$store.state.firebase.auth().currentUser.email)
+            .get();
+
+        this.$store.state.currentUserIsAuthorizedReviewer = authRes.data().authorizedReviewer;
+        console.log('auth res: ', authRes.data());
     },
     methods: {
         async fnctn() {

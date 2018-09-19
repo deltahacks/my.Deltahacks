@@ -1,43 +1,47 @@
 <template>
-  <div class="limiter">
-    <div class="container-signup100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-      <div class="wrap-signup100">
-        <form class="signup100-form validate-form">
-          <span class="signup100-form-logo">
-            <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
-          </span>
-          <span class="welcomeheader">
-            DeltaHacks V Admin Sign Up
-          </span>
-          <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="admin_email"></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="admin_password"></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" v-model="admin_password_repeat"></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter secret">
-            <v-text-field prepend-icon="lock" name="secret" label="Enter Secret" id="secret" type="text" v-model="admin_secret"></v-text-field>
-          </div>
-          <div class="container-signup100-form-btn">
-            <v-alert :value="feedback" type="error">
-              {{ feedback }}
-            </v-alert>
-            <v-btn class="signup100-form-btn" @click.prevent="adminsignup">Signup &nbsp;
-              <i class="fas fa-user-plus" />
-            </v-btn>
-          </div>
-          <div class="container-signup100-form-btn">
-            <v-btn class="signup100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN
-              <v-icon right>lock_open</v-icon>
-            </v-btn>
-          </div>
-        </form>
-      </div>
+    <div class="limiter">
+        <div class="container-signup100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
+            <div class="wrap-signup100">
+                <form class="signup100-form validate-form">
+                    <span class="signup100-form-logo">
+                        <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
+                    </span>
+                    <span class="welcomeheader">
+                        DeltaHacks V Admin Sign Up
+                    </span>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                        <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="admin_email"></v-text-field>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="admin_password"></v-text-field>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <v-text-field prepend-icon="lock" name="password2" label="Retype password" id="password2" type="password" v-model="admin_password_repeat"></v-text-field>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter secret">
+                        <v-text-field prepend-icon="lock" name="secret" label="Enter team secret" id="secret" type="text" v-model="admin_secret"></v-text-field>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter name">
+                        <v-text-field prepend-icon="person" name="name" label="Enter full name" id="name" type="text" v-model="admin_name"></v-text-field>
+                    </div>
+                    <div class="container-signup100-form-btn">
+                        <v-alert :value="feedback" type="error">
+                            {{ feedback }}
+                        </v-alert>
+                        <v-btn class="signup100-form-btn" @click.prevent="adminsignup">Signup &nbsp;
+                            <i class="fas fa-user-plus" />
+                        </v-btn>
+                    </div>
+                    <div class="container-signup100-form-btn">
+                        <v-btn class="signup100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN
+                            <v-icon right>lock_open</v-icon>
+                        </v-btn>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -55,6 +59,7 @@ export default {
         feedback: null,
         ip_address: null,
         geo: null,
+        admin_name: null,
         admin_email: null,
         admin_password: null,
         admin_secret: null,
@@ -87,6 +92,7 @@ export default {
                         email: this.admin_email,
                         password: this.admin_password,
                         secret: this.admin_secret,
+                        name: this.admin_name,
                     });
                     console.log('RESPONSE: ', adminSignupResponse.data);
                     this.successFeedback = true;
