@@ -14,31 +14,18 @@
           <span class="welcomeheader">
             DeltaHacks
           </span>
+          <p>Please enter your email and a link will be sent to it.</p>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field @keypress.enter="loginf()" prepend-icon="lock" name="password" label="Password" id="password" v-model="pass" type="password" required></v-text-field>
           </div>
           <v-alert :value="feedback" type="error">
             {{ feedback }}
           </v-alert>
-          <div class="container-login100-form-btn">
-            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">
-              LOGIN
-              <v-icon right>lock_open</v-icon>
-            </v-btn>
-          </div>
           <div><br></div>
           <div class="container-login100-form-btn">
-            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
-              <i class="fas fa-user-plus" />
-            </v-btn>
-          </div>
-          <div class="container-login100-form-btn">
-            <v-divider></v-divider>
-            <v-btn flat large color="white" :loading="loadingSignup" :disabled="loadingSignup" :href="source" target="_blank" slot="activator" @click="forgotpage">
-              Forgot Pass?
+            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="forgotPass()">
+              Submit
+              <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
         </form>
@@ -63,21 +50,18 @@ export default {
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: "Signup" });
-    },
-    forgotpage() {
       this.$router.push({ name: "Forgot" });
     },
-    login() {
+    forgotPass() {
       this.loader = "loading";
       let parent = this;
-      if (this.email && this.pass) {
+      if (this.email) {
         firebase
           .auth()
-          .signInWithEmailAndPassword(this.email, this.pass)
+          .sendPasswordResetEmail(this.email)
           .then(() => {
-            this.$router.push({ name: "Status" });
-            console.log("logged in");
+            this.$router.push({ name: "Login" });
+            console.log("email sent");
             this.feedback = null;
           })
           .catch(error => {
