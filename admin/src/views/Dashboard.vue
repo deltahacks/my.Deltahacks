@@ -26,8 +26,8 @@
                                     <v-card color="white lighten-4" dark>
                                         <div class="tooltip">
                                             <span class="tooltiptext">Click only if you know what you're doing</span>
-                                            <v-btn @click="fbdata()" class="bold" color="orange" dark>Fake Firebase</v-btn>
-                                            <v-btn @click="fbdata()" class="bold" color="blue" dark>Send Mail</v-btn>
+                                            <v-btn @click="null" class="bold" color="orange" dark>Fake Firebase</v-btn>
+                                            <v-btn @click="null" class="bold" color="blue" dark>Send Mail</v-btn>
                                         </div>
                                     </v-card>
                                 </v-flex>
@@ -169,7 +169,17 @@ export default {
         this.$Progress.start();
     },
     async mounted() {
-        this.activateModal('Loading hackathon data...');
+        let nameRes = await db
+            .collection('admins')
+            .doc(this.$store.state.firebase.auth().currentUser.email)
+            .get();
+        this.$store.state.currentAdminUserName = nameRes.data().name;
+        //console.log('NAMERES', nameRes.data());
+        this.activateModal(
+            `Welcome back ${
+                this.$store.state.currentAdminUserName.trim().split(/\s+/)[0]
+            }!, Loading hackathon data...`
+        );
         db //Change to real users later
             .collection('users')
             .get()

@@ -8,7 +8,7 @@
                 </v-list-tile>
             </v-list>
         </v-menu>
-        <v-toolbar-title id="title">Attendee Relations Dashboard</v-toolbar-title>
+        <v-toolbar-title id="title">{{ this.$store.state.currentAdminUserName.trim().split(/\s+/)[0] }}'s Dashboard</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>

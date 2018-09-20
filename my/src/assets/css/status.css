@@ -121,6 +121,9 @@ overflow: hidden;
   left: 0;
   /* background-color: rgba(0,0,0,0.8); */
 }
+.transp{
+  background: transparent !important;
+}
 .background{
   background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
   /* background: #9152f8;

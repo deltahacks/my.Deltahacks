@@ -49,82 +49,80 @@
 import firebase from 'firebase';
 
 export default {
-    name: 'Login',
-    data: () => ({
-        drawer: null,
-        email: null,
-        pass: null,
-        feedback: null,
-        color: 'success',
-        bannerColor: 'success',
-        loader: null,
-        loading: false,
-        loading2: false,
-    }),
-    methods: {
-        signuppage() {
-            this.$router.push({ name: 'Signup' });
-        },
-        login() {
-            this.loader = 'loading';
-            if (this.email && this.pass) {
-                firebase
-                    .auth()
-                    .signInWithEmailAndPassword(this.email, this.pass)
-                    .then(() => {
-                        this.$router.push({ name: 'Dashboard' });
-                        console.log('logged in');
-                        this.feedback = null;
-                    })
-                    .catch(error => {
-                        // Handle Errors here.
-                        //   const errorCode = error.code;
-                        const errorMessage = error.message;
-                        this.feedback = errorMessage;
-                        console.log(errorMessage);
-                    });
-            }
-        },
-        htest() {
-            this.$Progress.start();
-
-            this.$http
-                .jsonp(
-                    'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz'
-                )
-                .then(
-                    response => {
-                        this.$Progress.finish();
-                    },
-                    response => {
-                        this.$Progress.fail();
-                    }
-                );
-        },
+  name: 'Login',
+  data: () => ({
+    drawer: null,
+    email: null,
+    pass: null,
+    feedback: null,
+    color: 'success',
+    bannerColor: 'success',
+    loader: null,
+    loading: false,
+    loading2: false,
+  }),
+  methods: {
+    signuppage() {
+      this.$router.push({ name: 'Signup' });
     },
-    mounted() {
-        /*     window.addEventListener('keydown', (e) => {
+    login() {
+      this.loader = 'loading';
+      if (this.email && this.pass) {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.pass)
+          .then(() => {
+            this.$router.push({ name: 'Dashboard' });
+            console.log('logged in');
+            this.feedback = null;
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            //   const errorCode = error.code;
+            const errorMessage = error.message;
+            this.feedback = errorMessage;
+            console.log(errorMessage);
+          });
+      }
+    },
+    htest() {
+      this.$Progress.start();
+
+      this.$http
+        .jsonp('http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz')
+        .then(
+          (response) => {
+            this.$Progress.finish();
+          },
+          (response) => {
+            this.$Progress.fail();
+          },
+        );
+    },
+  },
+  mounted() {
+    /*     window.addEventListener('keydown', (e) => {
       const key = e.which || e.keyCode;
       if (key === 13) {
         // alert("ay");
         this.login();
       }
     }); */
-    },
-    props: {
-        source: String,
-        successFeedback: null,
-    },
-    watch: {
-        loader() {
-            const l = this.loader;
-            this[l] = !this[l];
+  },
+  props: {
+    source: String,
+    successFeedback: null,
+  },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
-            setTimeout(() => (this[l] = false), 3000);
+      setTimeout(() => (this[l] = false), 3000);
 
-            this.loader = null;
-        },
+      this.loader = null;
     },
+  },
 };
 </script>
 <style scoped src='../assets/css/login.css'>
