@@ -736,7 +736,7 @@ p {
     background-color: transparent;
     font-family: sans-serif;
     border: 1;
-    border-radius: 40px;
+    /* border-radius: 40px; */
     /* box-shadow: inset 0 0 0 2px #2196f3; */
     color: #2196f3;
     cursor: pointer;
@@ -765,7 +765,7 @@ p {
     background-color: transparent;
     font-family: sans-serif;
     border: 1;
-    border-radius: 40px;
+    /* border-radius: 40px; */
     box-shadow: inset 0 0 0 2px #f44336;
     color: #f44336;
     cursor: pointer;
