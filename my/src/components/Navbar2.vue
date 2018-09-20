@@ -11,7 +11,7 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-icon>person</v-icon>
+    <v-icon class="button-hide">person</v-icon>
     <a href="/status" class="button button-hide">
       {{c_user.email.toUpperCase()}}</a>
     <div class="text-xs-center">
@@ -38,7 +38,7 @@
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
 
-        <v-list style="background-color:#85F8B5;">
+        <v-list style="background-color:transparent;">
 
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
