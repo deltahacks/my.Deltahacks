@@ -177,7 +177,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click.prevent="validateBeforeSubmit" @click="submitApplication">Yes</v-btn>
+                                <v-btn color="green darken-1" flat @click="submitApplication">Yes</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -410,7 +410,7 @@ export default {
             this.checkbox = !this.checkbox;
         },
         validateBeforeSubmit() {
-            this.$validator.validateAll();
+            return this.$validator.validateAll();
         },
         formChange() {
             console.log('Change detected')
@@ -522,7 +522,9 @@ export default {
         },
         async submitApplication() {
             this.confirm = false;
-            if (!this.checkbox) {
+            if (!(await this.validateBeforeSubmit())) {
+                return;
+            } else if (!this.checkbox) {
                 this.checkError = 'Please accept the terms and conditions to continue.';
                 return;
             } else if (!this.share) {
@@ -583,7 +585,7 @@ export default {
                 const submitted = await this.getUserAppStatus(userEmail);
                 if (submitted) {
                     this.editing = true;
-                    this.submitted = true;
+                    // this.submitted = true;
                     this.checkbox = true;
                     this.share = true;
                     this.application = doc.data();
