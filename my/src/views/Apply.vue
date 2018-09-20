@@ -9,6 +9,8 @@
                 <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
                 <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                 <br><br>
+                <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
+                <br><br>
                 <label for="name" style='float:left'>
                     <strong>What is your full name?</strong>
                 </label><br>
@@ -18,74 +20,73 @@
                 <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
                 <label for="date" style='float:left'>
-                    <strong>When is your birthday?</strong>
+                    <strong>When is your birthday? *</strong>
                 </label><br>
                 <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
                 <label for="university" style='float:left'>
-                    <strong>What university do you go to?</strong>
+                    <strong>What university do you go to?*</strong>
                 </label><br>
                 <v-autocomplete name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-autocomplete>
                 <label for="major" style='float:left'>
-                    <strong>What do you study?</strong>
+                    <strong>What do you study?*</strong>
                 </label><br>
                 <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
                     <template slot="no-data">
-                    <v-list-tile>
-                        <v-list-tile-content>
-                        <v-list-tile-title>
-                            No results found. Press <kbd>enter</kbd> to enter a custom option.
-                        </v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    No results found. Press
+                                    <kbd>enter</kbd> to enter a custom option.
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
                     </template>
                 </v-combobox>
                 <label for="major" style='float:left'>
-                    <strong>What degree are you currently pursuing?</strong>
+                    <strong>What degree are you currently pursuing?*</strong>
                 </label><br>
                 <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
                 <label for="year" style='float:left'>
-                    <strong>What year of school are you in?</strong>
+                    <strong>What year of school are you in?*</strong>
                 </label><br>
                 <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
                 </v-select>
                 <div class="section divider"></div>
+                <h2 style="float:left">{{subsectionLabels[1]}}</h2>
+                <br><br>
                 <label for="shirt size" style='float:left'>
-                    <strong>What's your shirt size?</strong>
+                    <strong>What's your shirt size?*</strong>
                 </label><br>
                 <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
                 </v-select>
                 <label for="diet" style='float:left'>
-                    <strong>Any dietary restrictions?</strong>
+                    <strong>Any dietary restrictions?*</strong>
                 </label><br>
                 <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                     <template slot="no-data">
-                    <v-list-tile>
-                        <v-list-tile-content>
-                        <v-list-tile-title>
-                            No results found. Press <kbd>enter</kbd> to enter a custom option.
-                        </v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    We don't know that one. Press
+                                    <kbd>tab</kbd> to create it.
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
                     </template>
                 </v-combobox>
                 <label for="hackathons" style='float:left'>
-                    <strong>How many hackathons have you attended?</strong>
+                    <strong>How many hackathons have you attended?*</strong>
                 </label><br>
                 <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                 </v-select>
                 <label for="hackathons" style='float:left'>
                     <strong>What workshops would you be interested in attending?</strong>
                 </label><br>
-                <v-combobox
-                    v-model="application.workshops"
-                    :items="workshops"
-                    hide-selected
-                    multiple
-                    persistent-hint
-                    small-chips
-                >
+                <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
                 </v-combobox>
                 <div class="section divider"></div>
+                <h2 style="float:left">{{subsectionLabels[2]}}</h2>
+                <br><br>
                 <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
                 </v-text-field>
                 <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
@@ -101,18 +102,20 @@
                     </v-chip>
                 </div>
                 <div class="section divider"></div>
+                <h2 style="float:left">{{subsectionLabels[3]}}</h2>
+                <br><br>
                 <label for="phone" style='float:left'>
-                    <strong>Your cell phone number</strong>
+                    <strong>Your cell phone number*</strong>
                 </label><br>
                 <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
                 <label for="emergency phone" style='float:left'>
-                    <strong>Emergency contact number</strong>
+                    <strong>Emergency contact number*</strong>
                 </label><br>
                 <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
                 <v-container d-inline-flex>
                     <v-flex xs6 sm6>
                         <label for="emergency name" style='float:left'>
-                            <strong>Emergency contact name</strong>
+                            <strong>Emergency contact name*</strong>
                         </label><br>
                         <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
                     </v-flex>
@@ -120,50 +123,49 @@
                     </v-flex>
                     <v-flex xs6 sm6>
                         <label for="emergency relationship" style=''>
-                            <strong>Emergency contact relationship</strong>
+                            <strong>Emergency contact relationship*</strong>
                         </label><br>
                         <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                     </v-flex>
                 </v-container>
                 <div class="section divider"></div>
-                <!-- <v-divider></v-divider> -->
-                <br>
+                <h2 style="float:left; padding-left:26px;">{{subsectionLabels[4]}}</h2>
+                <br><br>
                 <v-container fluid>
                     <v-layout row wrap>
                         <v-flex xs12>
-                            <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?</p>
-                            <v-textarea  :disabled="submitted" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+                            <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
+                            <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
                             </v-textarea>
                             <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                         </v-flex>
+                        <div class="section divider"></div>
                         <v-flex xs12>
-                            <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
-                            <v-textarea :disabled="submitted"  name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
-                            </v-textarea>
+                            <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?*</p>
+                            <v-textarea box :disabled="submitted" name="q2" autocomplete="nope" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500 />
                             <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                         </v-flex>
+                        <div class="section divider"></div>
                         <v-flex xs12>
-                            <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?</p>
-                            <v-textarea :disabled="submitted" name="q3" placeholder="Answer here..." v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500>
-                            </v-textarea>
+                            <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
+                            <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500 />
                             <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
-                            <p class="text-lg-left">Is there something else you'd like us to know?</p>
-                            <v-text-field :disabled="submitted" name="q4" placeholder="Is there something else you'd like us to know?" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300>
-                            </v-text-field>
+                            <p class="text-lg-left">Anything else you'd like to tell us?</p>
+                            <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
                         </v-flex>
+                        <div class="section divider"></div>
                         <v-flex xs12>
-                            <p class="text-lg-left">What's your favourite meme lately?</p>
-                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link, name, description, etc." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100>
-                            </v-text-field>
+                            <p class="text-lg-left">What's your funniest meme?</p>
+                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100 />
                         </v-flex>
                     </v-layout>
                 </v-container><br>
                 <div class="small font">
-                <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
-                <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
-                <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
+                    <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
+                    <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
+                    <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
 
                 </div>
                 <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
@@ -255,10 +257,19 @@ export default {
             bannerTimeout: 3000,
             loadingMessage: 'Loading...',
             parent: this,
+            subsectionLabels: [
+                'Personal Information',
+                'Logistical stuff',
+                'Your profiles',
+                'Emergency info',
+                'Application questions',
+            ],
             url: '',
-            MLH: 'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.',
-            SHARE: 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
-            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
+            MLH:
+                'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*',
+            SHARE:
+                'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
+            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.*',
             picker: null,
             submitted: false,
             date: '2000-01-01',
@@ -354,7 +365,7 @@ export default {
         q2Color() {
             return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
         },
-        q3Color(){
+        q3Color() {
             return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
         },
         currentUser() {
@@ -413,7 +424,7 @@ export default {
             return this.$validator.validateAll();
         },
         formChange() {
-            console.log('Change detected')
+            console.log('Change detected');
             if (this.timeout) {
                 clearTimeout(this.timeout);
                 this.timeout = null;
@@ -671,7 +682,7 @@ p {
     font-size: 0.3em !important;
 }
 .section.divider {
-    padding: 3.0em;
+    padding: 2em;
 }
 .background {
     background-repeat: no-repeat;
@@ -741,7 +752,7 @@ p {
     background-color: transparent;
     font-family: sans-serif;
     border: 1;
-    border-radius: 40px;
+    /* border-radius: 40px; */
     /* box-shadow: inset 0 0 0 2px #2196f3; */
     color: #2196f3;
     cursor: pointer;
@@ -770,7 +781,7 @@ p {
     background-color: transparent;
     font-family: sans-serif;
     border: 1;
-    border-radius: 40px;
+    /* border-radius: 40px; */
     box-shadow: inset 0 0 0 2px #f44336;
     color: #f44336;
     cursor: pointer;

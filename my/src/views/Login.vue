@@ -24,14 +24,14 @@
             {{ feedback }}
           </v-alert>
           <div class="container-login100-form-btn">
-            <v-btn class="login100-form-btn" type="submit" @click.prevent="login()">
+            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">
               LOGIN
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
           <div><br></div>
           <div class="container-login100-form-btn">
-            <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
+            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
@@ -50,12 +50,18 @@ export default {
         email: null,
         pass: null,
         feedback: null,
+        loader: null,
+        loading: false,
+        loaderSignup: null,
+        loadingSignup: false,
     }),
     methods: {
         signuppage() {
             this.$router.push({ name: 'Signup' });
         },
         login() {
+            this.loader = 'loading';
+            let parent = this;
             if (this.email && this.pass) {
                 firebase
                     .auth()
@@ -74,34 +80,19 @@ export default {
                     });
             }
         },
-        htest() {
-            this.$Progress.start();
-
-            this.$http
-                .jsonp(
-                    'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz'
-                )
-                .then(
-                    response => {
-                        this.$Progress.finish();
-                    },
-                    response => {
-                        this.$Progress.fail();
-                    }
-                );
-        },
     },
-    mounted() {
-        /*     window.addEventListener('keydown', (e) => {
-      const key = e.which || e.keyCode;
-      if (key === 13) {
-        // alert("ay");
-        this.login();
-      }
-    }); */
-    },
+    mounted() {},
     props: {
         source: String,
+    },
+    watch: {
+        loader() {
+            const l = this.loader;
+            this[l] = !this[l];
+
+            setTimeout(() => (this[l] = false), 3000);
+            this.loader = null;
+        },
     },
 };
 </script>
