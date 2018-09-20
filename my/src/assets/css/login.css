@@ -127,17 +127,19 @@ text-decoration: none;
   /* background-color: rgba(255,255,255,0.8); */
 }
 .background{
-  background: #9152f8;
+  background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/next/my/src/assets/Backgimg.jpg?raw=true");
+  /* background: #9152f8;
   background: -webkit-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
   background: -o-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
   background: -moz-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
-  background: linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
+  background: linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214)); */
   /* background-image: linear-gradient(bottom, #69EACB 0%, #EACCF8 48%, #6654F1 100%); */
   /* background-image: linear-gradient(top, #92fe9d 0%, #00c9ff 100%); */
   /* background-image: linear-gradient(to top, #4fb576 0%, #44c489 30%, #28a9ae 46%, #28a2b7 59%, #4c7788 71%, #6c4f63 86%, #432c39 100%); */
   /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
   /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
   /* https://webgradients.com/ */
+
 }
 
 .wrap-login100 {
@@ -147,10 +149,10 @@ text-decoration: none;
   padding: 55px 55px 37px 55px;
   /* border-radius: 25px; */
   background: #9152f8;
-  background: -webkit-linear-gradient(top, rgba(72,198,239,0.4), rgba(111,134,214,0.4));
-  background: -o-linear-gradient(top, rgba(72,198,239,0.4), rgba(111,134,214,0.4));
-  background: -moz-linear-gradient(top, rgba(72,198,239,0.4), rgba(111,134,214,0.4));
-  background: linear-gradient(top, rgba(72,198,239,0.4), rgba(111,134,214,0.4));
+  background: -webkit-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
+  background: -o-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
+  background: -moz-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
+  background: linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
 }
 
 
