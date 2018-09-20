@@ -29,7 +29,7 @@
                         <v-alert :value="feedback" type="error">
                             {{ feedback }}
                         </v-alert>
-                        <v-btn class="signup100-form-btn" @click.prevent="adminsignup">Signup &nbsp;
+                        <v-btn class="signup100-form-btn" :loading="loading" :disabled="loading" @click.prevent="adminsignup">Signup &nbsp;
                             <i class="fas fa-user-plus" />
                         </v-btn>
                     </div>
@@ -66,6 +66,9 @@ export default {
         admin_password_repeat: null,
         successFeedback: null,
         color: 'success',
+        loader: null,
+        loading: false,
+        loading2: false,
     }),
     props: {
         source: String,
@@ -75,6 +78,7 @@ export default {
             console.log(this.vuex_email);
         },
         async adminsignup() {
+            this.loader = 'loading';
             if (
                 this.admin_email &&
                 this.admin_password_repeat &&
@@ -182,6 +186,16 @@ export default {
             set(value) {
                 this.$store.commit('update_vuex_current_user', value);
             },
+        },
+    },
+    watch: {
+        loader() {
+            const l = this.loader;
+            this[l] = !this[l];
+
+            setTimeout(() => (this[l] = false), 3000);
+
+            this.loader = null;
         },
     },
 };

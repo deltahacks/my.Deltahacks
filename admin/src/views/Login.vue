@@ -29,7 +29,7 @@
             {{ feedback }}
           </v-alert>
           <div class="container-login100-form-btn">
-            <v-btn class="login100-form-btn" type="submit" @click.prevent="login()">
+            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">
               LOGIN
               <v-icon right>lock_open</v-icon>
             </v-btn>
@@ -57,12 +57,16 @@ export default {
         feedback: null,
         color: 'success',
         bannerColor: 'success',
+        loader: null,
+        loading: false,
+        loading2: false,
     }),
     methods: {
         signuppage() {
             this.$router.push({ name: 'Signup' });
         },
         login() {
+            this.loader = 'loading';
             if (this.email && this.pass) {
                 firebase
                     .auth()
@@ -110,6 +114,16 @@ export default {
     props: {
         source: String,
         successFeedback: null,
+    },
+    watch: {
+        loader() {
+            const l = this.loader;
+            this[l] = !this[l];
+
+            setTimeout(() => (this[l] = false), 3000);
+
+            this.loader = null;
+        },
     },
 };
 </script>
