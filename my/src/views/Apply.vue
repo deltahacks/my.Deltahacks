@@ -736,8 +736,10 @@ p {
     background-color: transparent;
 }
 .background {
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: inset 1px 4000px rgba(208, 208, 208, 0.6);
 }
 .container-status100 {
     width: 100%;
