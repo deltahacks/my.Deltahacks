@@ -59,7 +59,6 @@
 
 <script>
 import firebase from 'firebase';
-
 export default {
     name: 'Navbar',
     components: {},
@@ -94,7 +93,6 @@ export default {
     padding: 0 0 0 0;
     margin: 0 0;
 }
-
 #title {
     font-family: 'Roboto', serif;
     font-weight: 500;
@@ -111,7 +109,6 @@ export default {
         display: none;
     }
 }
-
 .bold {
     font-weight: 600;
 }

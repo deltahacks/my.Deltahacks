@@ -26,7 +26,18 @@
                 <label for="university" style='float:left'>
                     <strong>What university do you go to?*</strong>
                 </label><br>
-                <v-autocomplete name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-autocomplete>
+                <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
+                    <template slot="no-data">
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    No results found. Press
+                                    <kbd>enter</kbd> to enter a custom option.
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </template>
+                </v-combobox>
                 <label for="major" style='float:left'>
                     <strong>What do you study?*</strong>
                 </label><br>
@@ -179,7 +190,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click.prevent="validateBeforeSubmit" @click="submitApplication">Yes</v-btn>
+                                <v-btn color="green darken-1" flat @click="submitApplication">Yes</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -269,7 +280,7 @@ export default {
                 'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*',
             SHARE:
                 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
-            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.*',
+            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
             picker: null,
             submitted: false,
             date: '2000-01-01',
@@ -421,7 +432,7 @@ export default {
             this.checkbox = !this.checkbox;
         },
         validateBeforeSubmit() {
-            this.$validator.validateAll();
+            return this.$validator.validateAll();
         },
         formChange() {
             console.log('Change detected');
@@ -533,7 +544,9 @@ export default {
         },
         async submitApplication() {
             this.confirm = false;
-            if (!this.checkbox) {
+            if (!(await this.validateBeforeSubmit())) {
+                return;
+            } else if (!this.checkbox) {
                 this.checkError = 'Please accept the terms and conditions to continue.';
                 return;
             } else if (!this.share) {
