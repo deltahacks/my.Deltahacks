@@ -176,7 +176,7 @@ overflow: hidden;
   background: -o-linear-gradient(bottom, #a1c4fd , #c2e9fb);
   background: -moz-linear-gradient(bottom, #a1c4fd , #c2e9fb);
   background: linear-gradient(bottom, #a1c4fd , #c2e9fb);
-  border-radius: 25px;
+  /* border-radius: 25px; */
 }
 
 /*------------------------------------------------------------------
@@ -184,7 +184,7 @@ overflow: hidden;
 
 /* Add a black background color to the top navigation */
 .topnav {
-	background-color: #48c6ef;
+	/* background-color: #48c6ef; */
     overflow: hidden;
 }
 

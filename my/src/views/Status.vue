@@ -9,7 +9,7 @@
           <h1 v-show="step === 0">You haven't started yet! Go <a href="/apply" style="text-decoration: none;font:inherit;" class="">here</a> to begin.</h1>
           <h1 v-show="step > 0">{{currentHeader}}</h1>
           <v-card-text></v-card-text>
-          <v-stepper alt-labels style="border-radius:25px">
+          <v-stepper alt-labels>
             <div class="wrap-status200">
               <v-stepper-header>
                 <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
