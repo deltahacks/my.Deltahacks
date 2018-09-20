@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Firebase from 'firebase';
 import Signup from './views/Signup.vue';
 import Login from './views/Login.vue';
+import Forgot from './views/Forgot.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
 import Status from './views/Status.vue';
@@ -22,6 +23,11 @@ const router = new Router({
       path: '/signup',
       name: 'Signup',
       component: Signup,
+    },
+    {
+      path: '/forgot',
+      name: 'Forgot',
+      component: Forgot,
     },
     {
       path: '/',
