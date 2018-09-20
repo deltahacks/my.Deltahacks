@@ -107,7 +107,7 @@ text-decoration: none;
   justify-content: center;
   align-items: center;
   padding: 15px;
-
+  color: white;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -149,7 +149,7 @@ text-decoration: none;
   padding: 55px 55px 37px 55px;
   /* border-radius: 25px; */
     background: #C9CCD3;
-    background: linear-gradient(-180deg, rgba(255,255,255,0.50) 50%, rgba(0,0,0,0.50) 100%);
+    background: linear-gradient(-180deg, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.1) 100%);
     background: lighten;
     /* background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -o-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
@@ -229,6 +229,8 @@ text-decoration: none;
 }
 
 .login100-form-btn {
+  width: 220px;
+  height: 38px;
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;

@@ -6,7 +6,7 @@
 
       <div class="hide">
         <div class="wrap-status100">
-          <h1 v-show="step === 0">You haven't started yet! Go <a href="/apply" style="text-decoration: none;font:inherit;" class="">here</a> to begin.</h1>
+          <h1 v-show="step === 0">You haven't started yet! Go <a href="/apply" style="text-decoration: none;font:inherit; color: #a1c4fd;" class=""">here</a> to begin.</h1>
           <h1 v-show="step > 0">{{currentHeader}}</h1>
           <v-stepper alt-labels class="transp">
               <v-stepper-header>
