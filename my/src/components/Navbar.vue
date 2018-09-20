@@ -59,32 +59,33 @@
 
 <script>
 import firebase from 'firebase';
+
 export default {
-    name: 'Navbar',
-    components: {},
-    data() {
-        return {
-            c_user: firebase.auth().currentUser,
-            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-            current: 'DH V',
-        };
+  name: 'Navbar',
+  components: {},
+  data() {
+    return {
+      c_user: firebase.auth().currentUser,
+      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH V',
+    };
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            console.log('Successfully logged out');
+            this.$router.push({ name: 'Login' });
+          },
+          (error) => {
+            console.log(error);
+          },
+        );
     },
-    methods: {
-        logout() {
-            firebase
-                .auth()
-                .signOut()
-                .then(
-                    () => {
-                        console.log('Successfully logged out');
-                        this.$router.push({ name: 'Login' });
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-        },
-    },
+  },
 };
 </script>
 <style>

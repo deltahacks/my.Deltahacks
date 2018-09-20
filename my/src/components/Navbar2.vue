@@ -71,41 +71,41 @@
 import firebase from 'firebase';
 
 export default {
-    name: 'Navbar',
-    components: {},
-    data() {
-        return {
-            c_user: firebase.auth().currentUser,
-            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-            current: 'DH V',
-            drawer: null,
-            items: [
-                { title: 'Home', icon: 'dashboard' },
-                { title: 'About', icon: 'question_answer' },
-            ],
-        };
+  name: 'Navbar',
+  components: {},
+  data() {
+    return {
+      c_user: firebase.auth().currentUser,
+      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH V',
+      drawer: null,
+      items: [
+        { title: 'Home', icon: 'dashboard' },
+        { title: 'About', icon: 'question_answer' },
+      ],
+    };
+  },
+  methods: {
+    tst() {
+      console.log('FUUUUUUUUUUUCK');
     },
-    methods: {
-        tst() {
-            console.log('FUUUUUUUUUUUCK');
-        },
-        logout() {
-            console.log('logging out');
-            firebase
-                .auth()
-                .signOut()
-                .then(
-                    () => {
-                        console.log('Logout successful');
-                        this.$router.push({ name: 'Login' });
-                    },
-                    error => {
-                        console.log('Logout unsuccessful');
-                        console.log(error);
-                    }
-                );
-        },
+    logout() {
+      console.log('logging out');
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            console.log('Logout successful');
+            this.$router.push({ name: 'Login' });
+          },
+          (error) => {
+            console.log('Logout unsuccessful');
+            console.log(error);
+          },
+        );
     },
+  },
 };
 </script>
 <style scoped src='../assets/css/navbar.css'>

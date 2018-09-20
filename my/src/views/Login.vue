@@ -49,59 +49,59 @@
 import firebase from 'firebase';
 
 export default {
-    name: 'Login',
-    data: () => ({
-        drawer: null,
-        email: null,
-        pass: null,
-        feedback: null,
-        loader: null,
-        loading: false,
-        loaderSignup: null,
-        loadingSignup: false,
-    }),
-    methods: {
-        signuppage() {
-            this.$router.push({ name: 'Signup' });
-        },
-        forgotpage() {
-            this.$router.push({ name: 'Forgot' });
-        },
-        login() {
-            this.loader = 'loading';
-            let parent = this;
-            if (this.email && this.pass) {
-                firebase
-                    .auth()
-                    .signInWithEmailAndPassword(this.email, this.pass)
-                    .then(() => {
-                        this.$router.push({ name: 'Status' });
-                        console.log('logged in');
-                        this.feedback = null;
-                    })
-                    .catch(error => {
-                        // Handle Errors here.
-                        //   const errorCode = error.code;
-                        const errorMessage = error.message;
-                        this.feedback = errorMessage;
-                        console.log(errorMessage);
-                    });
-            }
-        },
+  name: 'Login',
+  data: () => ({
+    drawer: null,
+    email: null,
+    pass: null,
+    feedback: null,
+    loader: null,
+    loading: false,
+    loaderSignup: null,
+    loadingSignup: false,
+  }),
+  methods: {
+    signuppage() {
+      this.$router.push({ name: 'Signup' });
     },
-    mounted() {},
-    props: {
-        source: String,
+    forgotpage() {
+      this.$router.push({ name: 'Forgot' });
     },
-    watch: {
-        loader() {
-            const l = this.loader;
-            this[l] = !this[l];
+    login() {
+      this.loader = 'loading';
+      const parent = this;
+      if (this.email && this.pass) {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.pass)
+          .then(() => {
+            this.$router.push({ name: 'Status' });
+            console.log('logged in');
+            this.feedback = null;
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            //   const errorCode = error.code;
+            const errorMessage = error.message;
+            this.feedback = errorMessage;
+            console.log(errorMessage);
+          });
+      }
+    },
+  },
+  mounted() {},
+  props: {
+    source: String,
+  },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
-            setTimeout(() => (this[l] = false), 3000);
-            this.loader = null;
-        },
+      setTimeout(() => (this[l] = false), 3000);
+      this.loader = null;
     },
+  },
 };
 </script>
 <style scoped src='../assets/css/login.css'>

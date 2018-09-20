@@ -37,56 +37,56 @@
 import firebase from 'firebase';
 
 export default {
-    name: 'Login',
-    data: () => ({
-        drawer: null,
-        email: null,
-        pass: null,
-        feedback: null,
-        loader: null,
-        loading: false,
-        loaderSignup: null,
-        loadingSignup: false,
-    }),
-    methods: {
-        signuppage() {
-            this.$router.push({ name: 'Forgot' });
-        },
-        forgotPass() {
-            this.loader = 'loading';
-            let parent = this;
-            if (this.email) {
-                firebase
-                    .auth()
-                    .sendPasswordResetEmail(this.email)
-                    .then(() => {
-                        this.$router.push({ name: 'Login' });
-                        console.log('email sent');
-                        this.feedback = null;
-                    })
-                    .catch(error => {
-                        // Handle Errors here.
-                        //   const errorCode = error.code;
-                        const errorMessage = error.message;
-                        this.feedback = errorMessage;
-                        console.log(errorMessage);
-                    });
-            }
-        },
+  name: 'Login',
+  data: () => ({
+    drawer: null,
+    email: null,
+    pass: null,
+    feedback: null,
+    loader: null,
+    loading: false,
+    loaderSignup: null,
+    loadingSignup: false,
+  }),
+  methods: {
+    signuppage() {
+      this.$router.push({ name: 'Forgot' });
     },
-    mounted() {},
-    props: {
-        source: String,
+    forgotPass() {
+      this.loader = 'loading';
+      const parent = this;
+      if (this.email) {
+        firebase
+          .auth()
+          .sendPasswordResetEmail(this.email)
+          .then(() => {
+            this.$router.push({ name: 'Login' });
+            console.log('email sent');
+            this.feedback = null;
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            //   const errorCode = error.code;
+            const errorMessage = error.message;
+            this.feedback = errorMessage;
+            console.log(errorMessage);
+          });
+      }
     },
-    watch: {
-        loader() {
-            const l = this.loader;
-            this[l] = !this[l];
+  },
+  mounted() {},
+  props: {
+    source: String,
+  },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
-            setTimeout(() => (this[l] = false), 3000);
-            this.loader = null;
-        },
+      setTimeout(() => (this[l] = false), 3000);
+      this.loader = null;
     },
+  },
 };
 </script>
 <style scoped src='../assets/css/login.css'>
