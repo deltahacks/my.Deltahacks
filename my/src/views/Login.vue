@@ -36,8 +36,8 @@
           </div>
           <div class="container-login100-form-btn">
             <v-divider></v-divider>
-            <v-btn flat large color="white" :loading="loadingSignup" :disabled="loadingSignup" :href="source" target="_blank" slot="activator" @click="forgotpage">
-              Forgot Pass?
+            <v-btn flat large class="login100-form-btn" :loading="loadingSignup" :disabled="loadingSignup" :href="source" target="_blank" slot="activator" @click="forgotpage">
+              Forgot Password?
             </v-btn>
           </div>
         </form>
