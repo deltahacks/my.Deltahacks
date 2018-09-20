@@ -12,9 +12,13 @@
                 <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
                 <br><br>
                 <label for="name" style='float:left'>
-                    <strong>What is your full name?</strong>
+                    <strong>What is your first name?</strong>
                 </label><br>
                 <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+                <label for="name" style='float:left'>
+                    <strong>What is your last name?</strong>
+                </label><br>
+                <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.lastname" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
                 <!-- find a better way of including this in form -->
                 <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
                 <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
@@ -95,6 +99,21 @@
                 </label><br>
                 <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
                 </v-combobox>
+                <label for="location" style='float:left'>
+                    <strong>Where are you coming from?*</strong>
+                </label><br>
+                <v-combobox name="location" v-model="application.location" :items="cities" :disabled="submitted" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('location:required')" data-vv-delay="1000">
+                    <template slot="no-data">
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    We don't know that one. Press
+                                    <kbd>tab</kbd> to create it.
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </template>
+                </v-combobox>
                 <div class="section divider"></div>
                 <h2 style="float:left">{{subsectionLabels[2]}}</h2>
                 <br><br>
@@ -103,9 +122,11 @@
                 <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
                 </v-text-field>
                 <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
+                </v-text-field>
+                <v-text-field name="devpost" :disabled="submitted" label="Your Devpost" single-line data-vv-delay="4000" v-model="application.devpost" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('devpost')">
                 </v-text-field><br>
                 <div id="filePondContainer">
-                    <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." allow-multiple="false" accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+                    <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
                     <v-chip class="no border" style="float:left" v-if="haveFile" outline small color="gray">
                         <v-icon left>info</v-icon>
                         <strong>We've got your file "</strong>
@@ -180,7 +201,6 @@
 
                 </div>
                 <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
-                <!-- careful with modifying these buttons, submit must to be of type submit. -->
                 <div class="mx-auto gg">
                     <v-dialog v-model="confirm" persistent max-width="400">
                         <v-btn slot="activator" :disabled="submitted" class="button1">Submit</v-btn>
@@ -275,6 +295,15 @@ export default {
                 'Emergency info',
                 'Application questions',
             ],
+            cities: [
+                'Toronto',
+                'Waterloo',
+                'London',
+                'Montreal',
+                'Ottawa',
+                'Mississauga',
+                'Guelph',
+            ],
             url: '',
             MLH:
                 'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*',
@@ -290,6 +319,7 @@ export default {
             majors,
             application: {
                 name: '',
+                lastname: '',
                 email: firebase.auth().currentUser.email,
                 last_modified: undefined,
                 first_submitted: undefined,
@@ -301,6 +331,7 @@ export default {
                 github: '',
                 linkedin: '',
                 website: '',
+                devpost: '',
                 phone: '',
                 emergency_phone: '',
                 emergency_name: '',
@@ -310,6 +341,7 @@ export default {
                 q4: '',
                 meme: '',
                 major: '',
+                location: '',
                 workshops: [],
                 degree: '',
                 birthday: '',
@@ -403,6 +435,7 @@ export default {
         getEmptyApplication() {
             return {
                 name: '',
+                lastname: '',
                 email: firebase.auth().currentUser.email,
                 last_modified: undefined,
                 first_submitted: undefined,
@@ -414,6 +447,7 @@ export default {
                 github: '',
                 linkedin: '',
                 website: '',
+                devpost: '',
                 phone: '',
                 emergency_phone: '',
                 q1: '',
@@ -422,6 +456,7 @@ export default {
                 q4: '',
                 meme: '',
                 major: '',
+                location: '',
                 birthday: '',
                 documents: [],
             };
@@ -584,6 +619,9 @@ export default {
             ref.q4 = ref.q4 ? ref.q4 : '';
             ref.meme = ref.meme ? ref.meme : '';
             ref.workshops = ref.workshops ? ref.workshops : [];
+            ref.devpost = ref.devpost ? ref.devpost : '';
+            ref.lastname = ref.lastname ? ref.lastname : '';
+            ref.location = ref.location ? ref.location : '';
         },
         getUserAppStatus(userEmail) {
             return new Promise((resolve, reject) => {
