@@ -26,7 +26,18 @@
                 <label for="university" style='float:left'>
                     <strong>What university do you go to?*</strong>
                 </label><br>
-                <v-autocomplete name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000"></v-autocomplete>
+                <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
+                    <template slot="no-data">
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    No results found. Press
+                                    <kbd>enter</kbd> to enter a custom option.
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </template>
+                </v-combobox>
                 <label for="major" style='float:left'>
                     <strong>What do you study?*</strong>
                 </label><br>
@@ -596,7 +607,7 @@ export default {
                 const submitted = await this.getUserAppStatus(userEmail);
                 if (submitted) {
                     this.editing = true;
-                    // this.submitted = true;
+                    this.submitted = true;
                     this.checkbox = true;
                     this.share = true;
                     this.application = doc.data();
