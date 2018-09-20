@@ -9,6 +9,8 @@
                 <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
                 <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                 <br><br>
+                <h2 style="float:left">Personal Information</h2>
+                <br><br>
                 <label for="name" style='float:left'>
                     <strong>What is your full name?</strong>
                 </label><br>
@@ -50,6 +52,8 @@
                 <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
                 </v-select>
                 <div class="section divider"></div>
+                <h2 style="float:left">Logistics</h2>
+                <br><br>
                 <label for="shirt size" style='float:left'>
                     <strong>What's your shirt size?*</strong>
                 </label><br>
@@ -81,6 +85,8 @@
                 <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
                 </v-combobox>
                 <div class="section divider"></div>
+                <h2 style="float:left">Links</h2>
+                <br><br>
                 <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
                 </v-text-field>
                 <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
@@ -96,6 +102,8 @@
                     </v-chip>
                 </div>
                 <div class="section divider"></div>
+                <h2 style="float:left">Emergency Information</h2>
+                <br><br>
                 <label for="phone" style='float:left'>
                     <strong>Your cell phone number*</strong>
                 </label><br>
@@ -123,6 +131,8 @@
                 <div class="section divider"></div>
                 <!-- <v-divider></v-divider> -->
                 <br>
+                <h2 style="float:left; padding-left:26px;">Application Questions</h2>
+                <br><br>
                 <v-container fluid>
                     <v-layout row wrap>
                         <v-flex xs12>
