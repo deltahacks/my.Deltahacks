@@ -269,7 +269,7 @@ export default {
                 'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*',
             SHARE:
                 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
-            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.*',
+            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
             picker: null,
             submitted: false,
             date: '2000-01-01',
