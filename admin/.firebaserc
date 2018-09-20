@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "admin": "mydeltahacks",
+    "default": "mydeltahacks"
+  },
+  "targets": {
+    "mydeltahacks": {
+      "hosting": {
+        "admin": [
+          "deltahacksadmin"
+        ]
+      }
+    }
+  }
+}

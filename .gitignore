@@ -1,9 +1,17 @@
-.DS_Store
 node_modules
+admin/src/private
+admin/node_modules
+admin/dist
+my/src/private
+my/node_modules
+my/dist
+.DS_Store
 /dist
 /src/private
 /client
 /functions
+admin/functions
+my/functions
 # local env files
 .env.local
 .env.*.local
