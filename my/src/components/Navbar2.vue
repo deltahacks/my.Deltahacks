@@ -11,7 +11,7 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-icon>person</v-icon>
+    <v-icon class="button-hide">person</v-icon>
     <a href="/status" class="button button-hide">
       {{c_user.email.toUpperCase()}}</a>
     <div class="text-xs-center">
