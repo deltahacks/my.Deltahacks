@@ -1,6 +1,5 @@
 <template>
-    <v-app class="dashboard background">
-        <!-- style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
+    <v-app class="dashboard background" style="background-image: url('https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true');">
         <Navbar2 class="navbar1" />
         <div class='container-status100'>
             <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
@@ -713,14 +712,7 @@ p {
     margin-top: 3%;
     margin-bottom: 3%;
 }
-.gradient {
-    background: rgb(0, 21, 36);
-    background: linear-gradient(
-        90deg,
-        rgba(0, 21, 36, 0.5494572829131652) 0%,
-        rgba(93, 162, 198, 0.896796218487395) 0%
-    );
-}
+
 .large {
     font-size: 1.3em !important;
 }
@@ -733,25 +725,13 @@ p {
 .section.divider {
     padding: 2em;
 }
-.background {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    z-index: 0;
-    background: #9152f8;
-    background: -webkit-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -o-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -moz-linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: linear-gradient(top, rgb(72, 198, 239), rgb(111, 134, 214));
-    /* background: #8fd3f4;
-    background: -webkit-linear-gradient(top, #84fab0, #8fd3f4);
-    background: -o-linear-gradient(top, #84fab0, #8fd3f4);
-    background: -moz-linear-gradient(top, #84fab0, #8fd3f4);
-    background: linear-gradient(top, #84fab0, #8fd3f4); */
-}
 .navbar1 {
     z-index: 0;
     background-color: transparent;
+}
+.background{
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 .container-status100 {
     width: 100%;
@@ -797,22 +777,22 @@ p {
         color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
         color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-    border: 1;
+    float: left !important;
+    background-color: transparent !important;
+    font-family: sans-serif !important;
+    border: 1 !important;
     /* border-radius: 40px; */
-    /* box-shadow: inset 0 0 0 2px #2196f3; */
-    color: #2196f3;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 600;
+    box-shadow: inset 0 0 0 2px #2196f3 !important;
+    color: #2196f3 !important;
+    cursor: pointer !important;
+    /* display: inline-block !important; */
+    font-size: 15px !important;
+    font-weight: 600 !important;
     /* line-height: 52px; */
-    padding: 0 1.75em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
+    padding: 0 1.75em !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
 }
 .button2 {
     -moz-appearance: none;
@@ -827,20 +807,20 @@ p {
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
         color 0.2s ease-in-out;
     float: left;
-    background-color: transparent;
-    font-family: sans-serif;
-    border: 1;
+    background-color: transparent !important;
+    font-family: sans-serif !important;
+    border: 1 !important;
     /* border-radius: 40px; */
-    box-shadow: inset 0 0 0 2px #f44336;
-    color: #f44336;
-    cursor: pointer;
+    box-shadow: inset 0 0 0 2px #f44336 !important;
+    color: #f44336 !important;
+    cursor: pointer !important;
     /* display: inline-block; */
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 15px !important;
+    font-weight: 600 !important;
     /* line-height: 52px; */
-    padding: 0 1.75em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
+    padding: 0 1.75em !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
 }
 </style>

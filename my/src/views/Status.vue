@@ -8,9 +8,7 @@
         <div class="wrap-status100">
           <h1 v-show="step === 0">You haven't started yet! Go <a href="/apply" style="text-decoration: none;font:inherit;" class="">here</a> to begin.</h1>
           <h1 v-show="step > 0">{{currentHeader}}</h1>
-          <v-card-text></v-card-text>
-          <v-stepper alt-labels>
-            <div class="wrap-status200">
+          <v-stepper alt-labels class="transp">
               <v-stepper-header>
                 <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
                 <v-divider></v-divider>
@@ -20,7 +18,6 @@
                 <v-divider></v-divider>
                 <v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
               </v-stepper-header>
-            </div>
           </v-stepper>
         </div>
         <br><br><br><br>
