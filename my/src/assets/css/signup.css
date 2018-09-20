@@ -146,11 +146,14 @@ text-decoration: none;
   /* border-radius: 25px; */
   overflow: hidden;
   padding: 55px 55px 37px 55px;
-  background: #9152f8;
+  background: #C9CCD3;
+  background: linear-gradient(-180deg, rgba(255,255,255,0.50) 50%, rgba(0,0,0,0.50) 100%);
+  background: lighten;
+  /* background: #9152f8;
   background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -o-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -moz-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
-  background: linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8)); */
 }
 
 
@@ -249,4 +252,4 @@ text-decoration: none;
 .signup100-form-btn:hover{
     box-shadow: inset 0 0 0 2px #017ef2 !important;
     color: #017ef2 !important;
-    background: transparent ;}
+    background: black !important;}
