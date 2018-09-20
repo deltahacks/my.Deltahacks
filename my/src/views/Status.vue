@@ -29,14 +29,16 @@
             <v-layout row wrap>
             <v-flex d-flex md3
               :key="media" v-for="media in social">
-            <v-btn
-              class="mx-3"
-              dark
-              icon
-              :href="media.link"
-            >
-              <v-icon size="24px">{{ media.icon }}</v-icon>
-            </v-btn>
+              <div>
+              <v-btn
+                class="mx-3"
+                dark
+                icon
+                :href="media.link"
+              >
+                <v-icon size="24px">{{ media.icon }}</v-icon>
+              </v-btn>
+              </div>
             </v-flex>
           </v-layout>
         </div>
