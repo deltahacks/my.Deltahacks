@@ -113,11 +113,14 @@ export default {
     padding: 0px;
 }
 .back {
-    background: #8fd3f4;
+      background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
+          background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* background: #8fd3f4;
     background: -webkit-linear-gradient(top, #84fab0, #8fd3f4);
     background: -o-linear-gradient(top, #84fab0, #8fd3f4);
     background: -moz-linear-gradient(top, #84fab0, #8fd3f4);
-    background: linear-gradient(top, #84fab0, #8fd3f4);
+    background: linear-gradient(top, #84fab0, #8fd3f4); */
 }
 </style>
 
