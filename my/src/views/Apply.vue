@@ -330,12 +330,18 @@ export default {
                 'Sixth Year',
             ],
             workshops: [
-                'Node.js API',
-                'Ruby on Rails',
-                'Vue.js with Firebase',
+                'NodeJs',
+                'ReactJs/VueJs',
                 'Blockchain',
                 'Machine Learning',
                 'Buzzwords',
+                'Android development',
+                'iOS development',
+                'Web Development',
+                'Intro to AR/VR',
+                'Blockchain',
+                'Hardware hacking',
+                'Computer Vision with OpenCV',
             ],
             hackathons: ['This is my first one', '2', '3', '4', '5-9', '10+'],
             food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
@@ -544,7 +550,7 @@ export default {
         },
         async submitApplication() {
             this.confirm = false;
-            if (!(await this.validateBeforeSubmit())) {
+            if (!await this.validateBeforeSubmit()) {
                 return;
             } else if (!this.checkbox) {
                 this.checkError = 'Please accept the terms and conditions to continue.';
