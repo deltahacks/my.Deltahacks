@@ -9,7 +9,7 @@
                 <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
                 <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                 <br><br>
-                <h2 style="float:left">Personal Information</h2>
+                <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
                 <br><br>
                 <label for="name" style='float:left'>
                     <strong>What is your full name?</strong>
@@ -52,7 +52,7 @@
                 <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
                 </v-select>
                 <div class="section divider"></div>
-                <h2 style="float:left">Logistics</h2>
+                <h2 style="float:left">{{subsectionLabels[1]}}</h2>
                 <br><br>
                 <label for="shirt size" style='float:left'>
                     <strong>What's your shirt size?*</strong>
@@ -85,7 +85,7 @@
                 <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
                 </v-combobox>
                 <div class="section divider"></div>
-                <h2 style="float:left">Links</h2>
+                <h2 style="float:left">{{subsectionLabels[2]}}</h2>
                 <br><br>
                 <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
                 </v-text-field>
@@ -102,7 +102,7 @@
                     </v-chip>
                 </div>
                 <div class="section divider"></div>
-                <h2 style="float:left">Emergency Information</h2>
+                <h2 style="float:left">{{subsectionLabels[3]}}</h2>
                 <br><br>
                 <label for="phone" style='float:left'>
                     <strong>Your cell phone number*</strong>
@@ -129,39 +129,36 @@
                     </v-flex>
                 </v-container>
                 <div class="section divider"></div>
-                <!-- <v-divider></v-divider> -->
-                <br>
-                <h2 style="float:left; padding-left:26px;">Application Questions</h2>
+                <h2 style="float:left; padding-left:26px;">{{subsectionLabels[4]}}</h2>
                 <br><br>
                 <v-container fluid>
                     <v-layout row wrap>
                         <v-flex xs12>
                             <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
-                            <v-textarea :disabled="submitted" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+                            <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
                             </v-textarea>
                             <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                         </v-flex>
+                        <div class="section divider"></div>
                         <v-flex xs12>
                             <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?*</p>
-                            <v-textarea :disabled="submitted" name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
-                            </v-textarea>
+                            <v-textarea box :disabled="submitted" name="q2" autocomplete="nope" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500 />
                             <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                         </v-flex>
+                        <div class="section divider"></div>
                         <v-flex xs12>
                             <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
-                            <v-textarea :disabled="submitted" name="q3" placeholder="Answer here..." v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500>
-                            </v-textarea>
+                            <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500 />
                             <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
                             <p class="text-lg-left">Anything else you'd like to tell us?</p>
-                            <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300>
-                            </v-text-field>
+                            <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
                         </v-flex>
+                        <div class="section divider"></div>
                         <v-flex xs12>
                             <p class="text-lg-left">What's your funniest meme?</p>
-                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100>
-                            </v-text-field>
+                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100 />
                         </v-flex>
                     </v-layout>
                 </v-container><br>
@@ -260,6 +257,13 @@ export default {
             bannerTimeout: 3000,
             loadingMessage: 'Loading...',
             parent: this,
+            subsectionLabels: [
+                'Personal Information',
+                'Logistical stuff',
+                'Your profiles',
+                'Emergency info',
+                'Application questions',
+            ],
             url: '',
             MLH:
                 'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*',
@@ -676,7 +680,7 @@ p {
     font-size: 0.3em !important;
 }
 .section.divider {
-    padding: 3em;
+    padding: 2em;
 }
 .background {
     background-repeat: no-repeat;
