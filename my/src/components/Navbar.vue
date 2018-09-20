@@ -30,9 +30,9 @@
             <v-list-tile-title v-if="c_user">Apply</v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile to="/">
+          <!-- <v-list-tile to="/">
             <v-list-tile-title>Contact</v-list-tile-title>
-          </v-list-tile>
+          </v-list-tile> -->
 
           <v-list-tile to="/">
             <v-list-tile-title>FAQ</v-list-tile-title>

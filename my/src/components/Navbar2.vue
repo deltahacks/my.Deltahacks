@@ -5,20 +5,20 @@
     </v-toolbar-title>
     <a href="/status" class="button button-hide">STATUS</a>&ensp;
     <a href="/apply" class="button button-hide">APPLY</a>&ensp;
-    <a href="#" class="button button-hide">CONTACT</a>&ensp;
+    <!-- <a href="#" class="button button-hide">CONTACT</a>&ensp; -->
     <a href="/faq" class="button button-hide">FAQ</a>&ensp;
     <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
+    <v-icon>person</v-icon>
+    <a href="/status" class="button button-hide">
+      {{c_user.email.toUpperCase()}}</a>
     <div class="text-xs-center">
       <v-menu offset-y>
-        <v-chip class="button hide-chip" slot="activator" style="height:42px">
-      <v-avatar>
-        <v-icon>account_circle</v-icon>
-      </v-avatar>
-      {{c_user.email}}
-    </v-chip>
+        <v-avatar>
+          <v-icon>account_circle</v-icon>
+        </v-avatar>
 
         <v-list style="background-color:#85F8B5;">
 
@@ -32,7 +32,7 @@
 
         </v-list>
       </v-menu>
-    </div>  
+    </div>
     <a @click.prevent='logout' class="button button-hide">LOGOUT</a>&ensp;
     <div class="text-xs-center mobile" style="margin-right:-60px;">
       <v-menu offset-y>
