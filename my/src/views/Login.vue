@@ -31,7 +31,7 @@
           </div>
           <div><br></div>
           <div class="container-login100-form-btn">
-            <v-btn class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
+            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
@@ -52,6 +52,8 @@ export default {
         feedback: null,
         loader: null,
         loading: false,
+        loaderSignup: null,
+        loadingSignup: false,
     }),
     methods: {
         signuppage() {
