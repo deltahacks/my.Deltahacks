@@ -150,7 +150,6 @@ export default {
                             });
                     })
                     .then(() => {
-                        // this.vuex_current_user = firebase.auth().currentUser
                         console.log('success');
                         this.$router.push({ name: 'Dashboard' });
                     })
