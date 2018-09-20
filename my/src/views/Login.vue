@@ -29,7 +29,6 @@
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
-          <div><br></div>
           <div class="container-login100-form-btn">
             <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
               <i class="fas fa-user-plus" />
