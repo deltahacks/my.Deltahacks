@@ -69,32 +69,32 @@
 import firebase from 'firebase';
 
 export default {
-    name: 'Navbar',
-    components: {},
-    data() {
-        return {
-            c_user: firebase.auth().currentUser,
-            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-            current: 'DH V',
-            drawer: null,
-            items: [{ title: 'Status' }, { title: 'Apply Now' }],
-        };
+  name: 'Navbar',
+  components: {},
+  data() {
+    return {
+      c_user: firebase.auth().currentUser,
+      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH V',
+      drawer: null,
+      items: [{ title: 'Status' }, { title: 'Apply Now' }],
+    };
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            this.$router.push({ name: 'Login' });
+          },
+          (error) => {
+            console.log(error);
+          },
+        );
     },
-    methods: {
-        logout() {
-            firebase
-                .auth()
-                .signOut()
-                .then(
-                    () => {
-                        this.$router.push({ name: 'Login' });
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-        },
-    },
+  },
 };
 </script>
 <style>
