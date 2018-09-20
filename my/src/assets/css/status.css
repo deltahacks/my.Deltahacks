@@ -145,7 +145,7 @@ overflow: hidden;
   background: -o-linear-gradient(top, rgba(72,198,239,0.6),rgba(111,134,214,0.6));
   background: -moz-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
   background: linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
-  border-radius: 25px;
+  /* border-radius: 25px; */
 }
 
 .wrap-status200 {
@@ -167,7 +167,7 @@ overflow: hidden;
   background: -o-linear-gradient(top, rgba(72,198,239,0.6),rgba(111,134,214,0.6));
   background: -moz-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
   background: linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
-  border-radius: 25px;
+  /* border-radius: 25px; */
 }
 
 .wrap-status201 {
