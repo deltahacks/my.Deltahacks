@@ -11,8 +11,7 @@
 }
 .smaller.delta {
   width: 2%;
-	height: auto;
-	position: relative;
+  height: auto;
 }
 .clickable {
   cursor: pointer;
@@ -36,7 +35,7 @@
 		/* display: inline-block; */
 		font-size: 15px;
 		font-weight: 600;
-		line-height: 42px;
+		line-height: 52px;
 		padding: 0 1.75em;
 		text-align: center;
 		text-decoration: none;
@@ -47,14 +46,3 @@
       box-shadow: inset 0 0 0 2px #017ef2;
 			color: #017ef2;
 			background-color: transparent;}
-@media only screen and (max-width: 1169px) {
-	.hide-chip {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 960px) {
-	.button-hide {
-		display: none;
-	}
-}

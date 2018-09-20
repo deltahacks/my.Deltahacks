@@ -131,7 +131,7 @@
   </div>
 </template>
 <script>
-import vueSlider from 'vue-slider-component';
+import vueSlider from "vue-slider-component";
 
 export default {
   name: 'Applicant',
@@ -241,49 +241,49 @@ export default {
 
 <style scoped>
 i {
-    font-size: 3em;
-    margin: 10px 20px;
+  font-size: 3em;
+  margin: 10px 20px;
 }
 
 #datacard {
-    height: 900px;
+  height: 900px;
 }
 
 #maind {
-    border: solid 2px black;
+  border: solid 2px black;
 }
 
 #contain {
-    border: solid 2px blue;
-    width: 100%;
-    height: 100%;
+  border: solid 2px blue;
+  width: 100%;
+  height: 100%;
 }
 
 #panel {
-    margin-left: 10%;
-    margin-right: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 #slider {
-    margin-left: 5%;
-    margin-right: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .name {
-    font-size: 2em;
-    color: black;
+  font-size: 2em;
+  color: black;
 }
 
 #topcard {
-    height: 200px;
+  height: 200px;
 }
 
 #resume {
-    width: 100%;
-    height: 900px;
+  width: 100%;
+  height: 900px;
 }
 
 #docCard {
-    width: 100%;
+  width: 100%;
 }
 </style>

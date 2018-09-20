@@ -124,15 +124,7 @@ text-decoration: none;
   height: 100%;
   top: 0;
   left: 0;
-  /* background-color: rgba(255,255,255,0.8); */
-}
-.background{
-  background-image: linear-gradient(bottom, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
-  /* background-image: linear-gradient(top, #92fe9d 0%, #00c9ff 100%); */
-  /* background-image: linear-gradient(to top, #4fb576 0%, #44c489 30%, #28a9ae 46%, #28a2b7 59%, #4c7788 71%, #6c4f63 86%, #432c39 100%); */
-  /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
-  /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
-  /* https://webgradients.com/ */
+  background-color: rgba(255,255,255,0.8);
 }
 
 .wrap-login100 {
@@ -140,7 +132,7 @@ text-decoration: none;
   width: 500px;
   overflow: hidden;
   padding: 55px 55px 37px 55px;
-  border-radius: 25px;
+  /* border-radius: 10px; */
   background: #9152f8;
   background: -webkit-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
   background: -o-linear-gradient(top, rgba(72,198,239,0.6), rgba(111,134,214,0.6));
@@ -230,7 +222,7 @@ text-decoration: none;
   background-color: transparent;
   font-family: sans-serif;
   border: 0;
-  border-radius: 35px;
+  border-radius: 0;
   box-shadow: inset 0 0 0 2px #fff;
   color: #fff;
   cursor: pointer;
