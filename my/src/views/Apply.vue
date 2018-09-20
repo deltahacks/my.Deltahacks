@@ -30,13 +30,14 @@
                 </label><br>
                 <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
                     <template slot="no-data">
-                    <v-list-tile>
-                        <v-list-tile-content>
-                        <v-list-tile-title>
-                            No results found. Press <kbd>enter</kbd> to enter a custom option.
-                        </v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    No results found. Press
+                                    <kbd>enter</kbd> to enter a custom option.
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
                     </template>
                 </v-combobox>
                 <label for="major" style='float:left'>
@@ -59,13 +60,14 @@
                 </label><br>
                 <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                     <template slot="no-data">
-                    <v-list-tile>
-                        <v-list-tile-content>
-                        <v-list-tile-title>
-                            No results found. Press <kbd>enter</kbd> to enter a custom option.
-                        </v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    No results found. Press
+                                    <kbd>enter</kbd> to enter a custom option.
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
                     </template>
                 </v-combobox>
                 <label for="hackathons" style='float:left'>
@@ -76,14 +78,7 @@
                 <label for="hackathons" style='float:left'>
                     <strong>What workshops would you be interested in attending?</strong>
                 </label><br>
-                <v-combobox
-                    v-model="application.workshops"
-                    :items="workshops"
-                    hide-selected
-                    multiple
-                    persistent-hint
-                    small-chips
-                >
+                <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
                 </v-combobox>
                 <div class="section divider"></div>
                 <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
@@ -132,13 +127,13 @@
                     <v-layout row wrap>
                         <v-flex xs12>
                             <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?</p>
-                            <v-textarea  :disabled="submitted" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+                            <v-textarea :disabled="submitted" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
                             </v-textarea>
                             <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
                             <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?</p>
-                            <v-textarea :disabled="submitted"  name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
+                            <v-textarea :disabled="submitted" name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
                             </v-textarea>
                             <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                         </v-flex>
@@ -149,21 +144,21 @@
                             <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
                         </v-flex>
                         <v-flex xs12>
-                            <p class="text-lg-left">Is there something else you'd like us to know?</p>
-                            <v-text-field :disabled="submitted" name="q4" placeholder="Is there something else you'd like us to know?" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300>
+                            <p class="text-lg-left">Anything else you'd like to tell us?</p>
+                            <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300>
                             </v-text-field>
                         </v-flex>
                         <v-flex xs12>
-                            <p class="text-lg-left">What's your favourite meme lately?</p>
-                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link, name, description, etc." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100>
+                            <p class="text-lg-left">What's your funniest meme?</p>
+                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100>
                             </v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-container><br>
                 <div class="small font">
-                <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
-                <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
-                <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
+                    <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
+                    <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
+                    <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
 
                 </div>
                 <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
@@ -256,8 +251,10 @@ export default {
             loadingMessage: 'Loading...',
             parent: this,
             url: '',
-            MLH: 'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.',
-            SHARE: 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
+            MLH:
+                'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.',
+            SHARE:
+                'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
             MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
             picker: null,
             submitted: false,
@@ -354,7 +351,7 @@ export default {
         q2Color() {
             return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
         },
-        q3Color(){
+        q3Color() {
             return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
         },
         currentUser() {
@@ -413,7 +410,7 @@ export default {
             this.$validator.validateAll();
         },
         formChange() {
-            console.log('Change detected')
+            console.log('Change detected');
             if (this.timeout) {
                 clearTimeout(this.timeout);
                 this.timeout = null;
@@ -669,7 +666,7 @@ p {
     font-size: 0.3em !important;
 }
 .section.divider {
-    padding: 3.0em;
+    padding: 3em;
 }
 .background {
     background-repeat: no-repeat;
