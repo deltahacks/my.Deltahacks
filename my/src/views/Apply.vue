@@ -1,5 +1,5 @@
 <template>
-    <v-app class="dashboard background" style="background-image: url('https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true');">
+    <v-app class="dashboard background" style="background-image: url('https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg2.jpg?raw=true');">
         <Navbar2 class="navbar1" />
         <div class='container-status100'>
             <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">

@@ -113,7 +113,7 @@ export default {
     padding: 0px;
 }
 .back {
-      background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
+      background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg2.jpg?raw=true");
           background-repeat: no-repeat;
     background-attachment: fixed;
     /* background: #8fd3f4;
