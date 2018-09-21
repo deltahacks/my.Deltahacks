@@ -1,7 +1,7 @@
 <template>
   <v-toolbar class="toolbar">
     <v-toolbar-title id="title">
-      <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
+      <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=47px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
     </v-toolbar-title>
     <a href="/status" class="button button-hide">STATUS</a>&ensp;
     <a href="/apply" class="button button-hide">APPLY</a>&ensp;
@@ -11,7 +11,7 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-icon class="button-hide">person</v-icon>
+    <v-icon color="white" class="button-hide">person</v-icon>
     <a href="/status" class="button button-hide">
       {{c_user.email.toUpperCase()}}</a>
     <div class="text-xs-center">
@@ -68,44 +68,44 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-    name: 'Navbar',
-    components: {},
-    data() {
-        return {
-            c_user: firebase.auth().currentUser,
-            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-            current: 'DH V',
-            drawer: null,
-            items: [
-                { title: 'Home', icon: 'dashboard' },
-                { title: 'About', icon: 'question_answer' },
-            ],
-        };
+  name: "Navbar",
+  components: {},
+  data() {
+    return {
+      c_user: firebase.auth().currentUser,
+      dhs: ["DH V", "DH IV", "DH III", "DH II"],
+      current: "DH V",
+      drawer: null,
+      items: [
+        { title: "Home", icon: "dashboard" },
+        { title: "About", icon: "question_answer" }
+      ]
+    };
+  },
+  methods: {
+    tst() {
+      console.log("FUUUUUUUUUUUCK");
     },
-    methods: {
-        tst() {
-            console.log('FUUUUUUUUUUUCK');
-        },
-        logout() {
-            console.log('logging out');
-            firebase
-                .auth()
-                .signOut()
-                .then(
-                    () => {
-                        console.log('Logout successful');
-                        this.$router.push({ name: 'Login' });
-                    },
-                    error => {
-                        console.log('Logout unsuccessful');
-                        console.log(error);
-                    }
-                );
-        },
-    },
+    logout() {
+      console.log("logging out");
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            console.log("Logout successful");
+            this.$router.push({ name: "Login" });
+          },
+          error => {
+            console.log("Logout unsuccessful");
+            console.log(error);
+          }
+        );
+    }
+  }
 };
 </script>
 <style scoped src='../assets/css/navbar.css'>
