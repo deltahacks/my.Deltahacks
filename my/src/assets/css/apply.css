@@ -107,7 +107,6 @@ p {
     rgba(255, 255, 255, 0.6) 100%,
     rgba(0, 0, 0, 0.1) 100%
   );
-  border-radius: 10px;
   background: lighten;
   /* background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -o-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
