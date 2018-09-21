@@ -51,7 +51,7 @@
         </div>
         <div style="margin-top: 5%;">
           <v-layout row wrap>
-            <v-flex d-flex md3 :key="media2" v-for="media2 in social">
+            <v-flex d-flex md3 :key="media2.icon" v-for="media2 in social">
               <div>
                 <v-btn class="mx-3" dark icon :href="media2.link">
                   <v-icon size="24px">{{ media2.icon }}</v-icon>
@@ -192,7 +192,6 @@ export default {
                     default:
                         this.step = 0;
                 }
-                console.log(this.step);
             } else {
                 console.log('Document not found!');
             }
