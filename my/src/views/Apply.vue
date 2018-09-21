@@ -194,9 +194,16 @@
                     </v-layout>
                 </v-container><br>
                 <div class="small font">
-                    <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
-                    <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
-                    <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
+                    <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :error-messages="checkError">
+                        <span class="terms" slot="label">{{MLH}} <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the 
+                        <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.</span>
+                    </v-checkbox>
+                    <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError">
+                        <span class="terms" slot="label">I have read and agree to the <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
+                    </v-checkbox>
+                    <v-checkbox  name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
+                        <span class="terms" slot="label">{{MICROSOFT}}</span>
+                    </v-checkbox>
 
                 </div>
                 <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
@@ -287,6 +294,7 @@ export default {
       bannerTimeout: 3000,
       loadingMessage: 'Loading...',
       parent: this,
+      contest_terms:'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
       subsectionLabels: [
         'Personal Information',
         'Logistical stuff',
@@ -305,7 +313,9 @@ export default {
       ],
       url: '',
       MLH:
-                'I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*',
+                'I authorize you to share my application information for event administration,'
+                + ' ranking, MLH administration, event informational e-mails, and occasional messages about hackathons '
+                + ' in-line with the',
       SHARE:
                 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
       MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
@@ -650,7 +660,7 @@ export default {
         const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
-          this.submitted = true;
+        //   this.submitted = true;
           this.checkbox = true;
           this.share = true;
           this.application = doc.data();
@@ -801,6 +811,9 @@ p {
     text-align: center !important;
     text-decoration: none !important;
     text-transform: uppercase !important;
+}
+.terms {
+    font-size: 0.8em;
 }
 .button2 {
     -moz-appearance: none;
