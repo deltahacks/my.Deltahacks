@@ -28,11 +28,11 @@
                     </label><br>
                     <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
                     <label for="date" style='float:left'>
-                        <strong>Which of the following ethnicity do you identify as? *</strong>
+                        <strong>What ethnicity do you identify as? *</strong>
                     </label><br>
                     <v-select :items="races" name="race" :disabled="submitted" v-model="application.race" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('race:required')" data-vv-delay="1000"></v-select> 
                     <label for="university" style='float:left'>
-                        <strong>What university do you go to?*</strong>
+                        <strong>What university do you go to? *</strong>
                     </label><br>
                     <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -47,7 +47,7 @@
                         </template>
                     </v-combobox>
                     <label for="major" style='float:left'>
-                        <strong>What do you study?*</strong>
+                        <strong>What do you study? *</strong>
                     </label><br>
                     <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -62,11 +62,11 @@
                         </template>
                     </v-combobox>
                     <label for="major" style='float:left'>
-                        <strong>What degree are you currently pursuing?*</strong>
+                        <strong>What degree are you currently pursuing? *</strong>
                     </label><br>
                     <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
                     <label for="year" style='float:left'>
-                        <strong>What year of school are you in?*</strong>
+                        <strong>What year of school are you in? *</strong>
                     </label><br>
                     <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
                     </v-select>
@@ -74,12 +74,12 @@
                     <h2 style="float:left">{{subsectionLabels[1]}}</h2>
                     <br><br>
                     <label for="shirt size" style='float:left'>
-                        <strong>What's your shirt size?*</strong>
+                        <strong>What's your shirt size? *</strong>
                     </label><br>
                     <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
                     </v-select>
                     <label for="diet" style='float:left'>
-                        <strong>Any dietary restrictions?*</strong>
+                        <strong>Any dietary restrictions? *</strong>
                     </label><br>
                     <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -94,7 +94,7 @@
                         </template>
                     </v-combobox>
                     <label for="hackathons" style='float:left'>
-                        <strong>How many hackathons have you attended?*</strong>
+                        <strong>How many hackathons have you attended? *</strong>
                     </label><br>
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
@@ -104,7 +104,7 @@
                     <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
                     </v-combobox>
                     <label for="location" style='float:left'>
-                        <strong>Where are you coming from?*</strong>
+                        <strong>Where are you coming from? *</strong>
                     </label><br>
                     <v-combobox name="location" v-model="application.location" :items="cities" :disabled="submitted" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('location:required')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -141,17 +141,17 @@
                     <h2 style="float:left">{{subsectionLabels[3]}}</h2>
                     <br><br>
                     <label for="phone" style='float:left'>
-                        <strong>Your cell phone number*</strong>
+                        <strong>Your cell phone number *</strong>
                     </label><br>
                     <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
                     <label for="emergency phone" style='float:left'>
-                        <strong>Emergency contact number*</strong>
+                        <strong>Emergency contact number *</strong>
                     </label><br>
                     <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
                     <v-container d-inline-flex>
                         <v-flex xs6 sm6>
                             <label for="emergency name" style='float:left'>
-                                <strong>Emergency contact name*</strong>
+                                <strong>Emergency contact name *</strong>
                             </label><br>
                             <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
                         </v-flex>
@@ -159,7 +159,7 @@
                         </v-flex>
                         <v-flex xs6 sm6>
                             <label for="emergency relationship" style=''>
-                                <strong>Emergency contact relationship*</strong>
+                                <strong>Emergency contact relationship *</strong>
                             </label><br>
                             <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                         </v-flex>
