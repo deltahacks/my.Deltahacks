@@ -66,73 +66,73 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-    name: 'Navbar',
-    components: {},
-    data() {
-        return {
-            c_user: firebase.auth().currentUser,
-            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-            current: 'DH V',
-            drawer: null,
-            items: [{ title: 'Status' }, { title: 'Apply Now' }],
-        };
-    },
-    methods: {
-        logout() {
-            firebase
-                .auth()
-                .signOut()
-                .then(
-                    () => {
-                        this.$router.push({ name: 'Login' });
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-        },
-    },
+  name: "Navbar",
+  components: {},
+  data() {
+    return {
+      c_user: firebase.auth().currentUser,
+      dhs: ["DH V", "DH IV", "DH III", "DH II"],
+      current: "DH V",
+      drawer: null,
+      items: [{ title: "Status" }, { title: "Apply Now" }]
+    };
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            this.$router.push({ name: "Login" });
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    }
+  }
 };
 </script>
 <style>
 #title {
-    font-family: 'Roboto', serif;
-    font-weight: 500;
+  font-family: "Roboto", serif;
+  font-weight: 500;
 }
 
 #search {
-    width: 300px;
-    margin-right: 15px;
+  width: 300px;
+  margin-right: 15px;
 }
 
 .bold {
-    font-weight: 600;
+  font-weight: 600;
 }
 .smaller.delta {
-    width: 2%;
-    height: auto;
+  width: 2%;
+  height: auto;
 }
 .clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 @media only screen and (min-width: 960px) {
-    .hide-nav {
-        display: none;
-    }
+  .hide-nav {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 959px) {
-    .hide-chip {
-        display: none;
-    }
-    .smaller.delta {
-        width: 2%;
-        height: auto;
-        position: absolute;
-        left: 10%;
-    }
+  .hide-chip {
+    display: none;
+  }
+  .smaller.delta {
+    width: 2%;
+    height: auto;
+    position: absolute;
+    left: 10%;
+  }
 }
 </style>
