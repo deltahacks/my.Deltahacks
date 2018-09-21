@@ -23,7 +23,7 @@
       <v-btn flat to="/signup" v-if="!c_user">Signup</v-btn>
       <v-btn flat to="/login" v-if="!c_user">Login</v-btn>
       <!-- <v-btn flat to="/">Contact</v-btn> -->
-      <v-btn flat to="/">FAQ</v-btn>
+      <!-- <v-btn flat to="/">FAQ</v-btn> -->
       <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
     </v-toolbar-items>
     <v-chip color="white" text-color="black" class="clickable, hide-chip" style="margin: 0px 40px">
@@ -47,16 +47,16 @@
           </v-list-tile>
 
           <v-list-tile to="/apply">
-            <v-list-tile-title v-if="c_user">Apply Now</v-list-tile-title>
+            <v-list-tile-title v-if="c_user">Apply</v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile to="/">
+          <!-- <v-list-tile to="/">
             <v-list-tile-title>Contact</v-list-tile-title>
           </v-list-tile>
 
           <v-list-tile to="/">
             <v-list-tile-title>FAQ</v-list-tile-title>
-          </v-list-tile>
+          </v-list-tile> -->
 
         </v-list>
       </v-menu>
@@ -69,32 +69,32 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Navbar',
-  components: {},
-  data() {
-    return {
-      c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
-      drawer: null,
-      items: [{ title: 'Status' }, { title: 'Apply Now' }],
-    };
-  },
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
+    name: 'Navbar',
+    components: {},
+    data() {
+        return {
+            c_user: firebase.auth().currentUser,
+            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+            current: 'DH V',
+            drawer: null,
+            items: [{ title: 'Status' }, { title: 'Apply Now' }],
+        };
     },
-  },
+    methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(
+                    () => {
+                        this.$router.push({ name: 'Login' });
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        },
+    },
 };
 </script>
 <style>
