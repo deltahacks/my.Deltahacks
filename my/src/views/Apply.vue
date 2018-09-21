@@ -7,7 +7,7 @@
                     <h1 v-if="!submitted" class='text-xs-left'>Apply here.</h1>
                     <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
                     <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline.</p>
-                    <p v-if="!submitted" class='text-xs-left'>No programming experience? That's okay! We're just looking for well thought out answers. The more information submitted, the greater the chances of being accepted to DeltaHacks V. Only the questions marked "Application Questions" will be marked. You will receive an email on acceptance or waitlisting of your application.</p>
+                    <p v-if="!submitted" class='text-xs-left'>No programming experience? That's okay! We're just looking for well thought out answers. The more information you give us, the higher chance you have of being accepted to DeltaHacks V. Only the questions marked "Application Questions" will be marked. You will receive an email on acceptance or waitlisting of your application.</p>
                     <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                     <br><br>
                     <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
@@ -298,19 +298,23 @@ export default {
                 'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
             subsectionLabels: [
                 'Personal Information',
-                'Logistical stuff',
-                'Your profiles',
-                'Emergency info',
-                'Application questions',
+                'Logistical Stuff',
+                'Your Profiles',
+                'Emergency Info',
+                'Application Questions',
             ],
             cities: [
                 'Toronto',
+                'Hamilton',
                 'Waterloo',
                 'London',
                 'Montreal',
                 'Ottawa',
                 'Mississauga',
                 'Guelph',
+                'Burlington',
+                'Brampton',
+                'Markham',
             ],
             races: [
                 'Black / African American',
@@ -330,7 +334,7 @@ export default {
                 ' in-line with the',
             SHARE:
                 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
-            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
+            MICROSOFT: 'Do you give Microsoft permission to contact you, send you promotion material, and share resources to help you prepare for the hackathon?',
             picker: null,
             submitted: false,
             date: '2000-01-01',
