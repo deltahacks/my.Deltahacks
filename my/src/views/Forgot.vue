@@ -1,6 +1,11 @@
 <template>
   <div class="limiter">
-
+    <v-snackbar v-model="feedback" top :color="bannerColor" :timeout="bannerTimeout">
+      {{bannerMessage}}
+      <v-btn color="white" flat @click="feedback = false">
+        Close
+      </v-btn>
+    </v-snackbar>
     <head>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     </head>
@@ -18,9 +23,9 @@
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
           </div>
-          <v-alert :value="feedback" type="error">
+          <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
-          </v-alert>
+          </v-alert> -->
           <div><br></div>
           <div class="container-login100-form-btn">
             <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="forgotPass()">
@@ -50,6 +55,9 @@ export default {
     email: null,
     pass: null,
     feedback: null,
+    bannerMessage: "Success",
+    bannerTimeout: 2000,
+    bannerColor: "success",
     loader: null,
     loading: false,
     loaderSignup: null,
@@ -70,9 +78,10 @@ export default {
           .auth()
           .sendPasswordResetEmail(this.email)
           .then(() => {
-            this.$router.push({ name: "Login" });
-            console.log("email sent");
-            this.feedback = null;
+            console.log("Email sent");
+            // this.$router.push({ name: "Login" });
+            this.feedback = true;
+            this.bannerMessage = "Password reset sent to email";
           })
           .catch(error => {
             // Handle Errors here.

@@ -6,7 +6,8 @@
                 <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
                     <h1 v-if="!submitted" class='text-xs-left'>Apply here.</h1>
                     <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
-                    <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
+                    <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline.</p>
+                    <p v-if="!submitted" class='text-xs-left'>No programming experience? That's okay! We're just looking for well thought out answers. The more information submitted, the greater the chances of being accepted to DeltaHacks V. Only the questions marked "Application Questions" will be marked. You will receive an email on acceptance or waitlisting of your application.</p>
                     <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                     <br><br>
                     <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
@@ -98,11 +99,13 @@
                     </label><br>
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
-                    <label for="hackathons" style='float:left'>
-                        <strong>What workshops would you be interested in attending?</strong>
-                    </label><br>
-                    <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
-                    </v-combobox>
+                    <v-flex xs12>
+                        <label for="hackathons" style='float:left'>
+                            <strong>What workshops would you be interested in attending?</strong>
+                        </label><br>
+                        <v-combobox v-model="application.workshops" clearable small-chips allow-overflow :items="workshops" :disabled="submitted" @change="formChange" hide-selected multiple>
+                        </v-combobox>
+                    </v-flex>
                     <label for="location" style='float:left'>
                         <strong>Where are you coming from? *</strong>
                     </label><br>
@@ -141,29 +144,21 @@
                     <h2 style="float:left">{{subsectionLabels[3]}}</h2>
                     <br><br>
                     <label for="phone" style='float:left'>
-                        <strong>Your cell phone number *</strong>
+                        <strong>Your Cell Phone Number *</strong>
                     </label><br>
                     <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
                     <label for="emergency phone" style='float:left'>
-                        <strong>Emergency contact number *</strong>
+                        <strong>Emergency Contact Number *</strong>
                     </label><br>
                     <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
-                    <v-container d-inline-flex>
-                        <v-flex xs6 sm6>
-                            <label for="emergency name" style='float:left'>
-                                <strong>Emergency contact name *</strong>
-                            </label><br>
-                            <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
-                        </v-flex>
-                        <v-flex xs4>
-                        </v-flex>
-                        <v-flex xs6 sm6>
-                            <label for="emergency relationship" style=''>
-                                <strong>Emergency contact relationship *</strong>
-                            </label><br>
-                            <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
-                        </v-flex>
-                    </v-container>
+                    <label for="emergency name" style='float:left'>
+                        <strong>Emergency Contact's Name *</strong>
+                    </label><br>
+                    <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
+                    <label for="emergency relationship" style='float:left'>
+                        <strong>Relationship with Emergency Contact *</strong>
+                    </label><br>
+                    <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                     <div class="section divider"></div>
                     <h2 style="float:left; padding-left:26px;">{{subsectionLabels[4]}}</h2>
                     <br><br>
@@ -190,13 +185,9 @@
                             </v-flex>
                             <v-flex xs12>
                                 <p class="text-lg-left">Anything else you'd like to tell us?</p>
-                                <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
+                                <v-text-field :disabled="submitted" name="q4" placeholder="Could be anything!" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
                             </v-flex>
                             <div class="section divider"></div>
-                            <v-flex xs12>
-                                <p class="text-lg-left">What's your funniest meme?</p>
-                                <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100 />
-                            </v-flex>
                         </v-layout>
                     </v-container><br>
                     <div class="small font">
@@ -220,7 +211,7 @@
                             <v-btn slot="activator" :disabled="submitted" class="button1">Submit</v-btn>
                             <v-card>
                                 <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
-                                <v-card-text>You cannot edit your applicaiton once you've submitted.</v-card-text>
+                                <v-card-text>You cannot edit your application once you've submitted.</v-card-text>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
