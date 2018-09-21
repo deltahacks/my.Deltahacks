@@ -1,35 +1,35 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,600italic');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,600italic");
 html {
-	height: 100%;
-	font-family: Verdana , sans-serif, Agency FB;
+  height: 100%;
+  font-family: Verdana, sans-serif, Agency FB;
 }
 
 /*---------------------------------------------*/
 a {
-	font-family: Verdana ;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-	transition: all 0.4s;
-	-webkit-transition: all 0.4s;
+  font-family: Verdana;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
 
 a:focus {
-	outline: none !important;
+  outline: none !important;
 }
 
 a:hover {
-	text-decoration: none;
+  text-decoration: none;
   color: #fff;
 }
 
 /*---------------------------------------------*/
 input {
-	outline: none;
-	border: none;
+  outline: none;
+  border: none;
 }
 
 textarea {
@@ -37,55 +37,88 @@ textarea {
   border: none;
 }
 
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
   border-color: transparent !important;
 }
 
-input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; }
-input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+input:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+input:focus:-moz-placeholder {
+  color: transparent;
+}
+input:focus::-moz-placeholder {
+  color: transparent;
+}
+input:focus:-ms-input-placeholder {
+  color: transparent;
+}
 
-textarea:focus::-webkit-input-placeholder { color:transparent; }
-textarea:focus:-moz-placeholder { color:transparent; }
-textarea:focus::-moz-placeholder { color:transparent; }
-textarea:focus:-ms-input-placeholder { color:transparent; }
+textarea:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+textarea:focus:-moz-placeholder {
+  color: transparent;
+}
+textarea:focus::-moz-placeholder {
+  color: transparent;
+}
+textarea:focus:-ms-input-placeholder {
+  color: transparent;
+}
 
-input::-webkit-input-placeholder { color: #fff;}
-input:-moz-placeholder { color: #fff;}
-input::-moz-placeholder { color: #fff;}
-input:-ms-input-placeholder { color: #fff;}
+input::-webkit-input-placeholder {
+  color: #fff;
+}
+input:-moz-placeholder {
+  color: #fff;
+}
+input::-moz-placeholder {
+  color: #fff;
+}
+input:-ms-input-placeholder {
+  color: #fff;
+}
 
-textarea::-webkit-input-placeholder { color: #fff;}
-textarea:-moz-placeholder { color: #fff;}
-textarea::-moz-placeholder { color: #fff;}
-textarea:-ms-input-placeholder { color: #fff;}
+textarea::-webkit-input-placeholder {
+  color: #fff;
+}
+textarea:-moz-placeholder {
+  color: #fff;
+}
+textarea::-moz-placeholder {
+  color: #fff;
+}
+textarea:-ms-input-placeholder {
+  color: #fff;
+}
 
 /*---------------------------------------------*/
 button {
-	outline: none !important;
-	border: none;
-	background: transparent;
+  outline: none !important;
+  border: none;
+  background: transparent;
 }
 
 button:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 iframe {
-	border: none !important;
-overflow:hidden;
-	}
-
+  border: none !important;
+  overflow: hidden;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ Welcome Header ]*/
 .welcomeheader {
-	font-family:'Open Sans' ;
-font-size: 3em;
-font-weight: 600;
-line-height: 3em;
-text-decoration: none;
+  font-family: "Open Sans";
+  font-size: 3em;
+  font-weight: 600;
+  line-height: 3em;
+  text-decoration: none;
+  color: #525251;
 }
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
@@ -96,7 +129,7 @@ text-decoration: none;
 }
 
 .container-login100 {
-  width: 100%;  
+  width: 100%;
   min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
@@ -112,7 +145,7 @@ text-decoration: none;
   background-position: center;
   background-size: cover;
   position: relative;
-  z-index: 1;  
+  z-index: 1;
 }
 
 .container-login100::before {
@@ -126,7 +159,7 @@ text-decoration: none;
   left: 0;
   /* background-color: rgba(255,255,255,0.8); */
 }
-.background{
+.background {
   background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
   /* background: #9152f8;
   background: -webkit-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
@@ -139,7 +172,6 @@ text-decoration: none;
   /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
   /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
   /* https://webgradients.com/ */
-
 }
 
 .wrap-login100 {
@@ -148,15 +180,19 @@ text-decoration: none;
   overflow: hidden;
   padding: 55px 55px 37px 55px;
   /* border-radius: 25px; */
-    background: #C9CCD3;
-    background: linear-gradient(-180deg, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.1) 100%);
-    background: lighten;
-    /* background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+  background: #c9ccd3;
+  background: linear-gradient(
+    -180deg,
+    rgba(255, 255, 255, 0.6) 100%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border-radius: 10px;
+  background: lighten;
+  /* background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -o-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -moz-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8)); */
 }
- 
 
 /*------------------------------------------------------------------
 [ Form ]*/
@@ -181,7 +217,7 @@ text-decoration: none;
 }
 
 .login100-form-title {
-  font-family: Verdana ;
+  font-family: Verdana;
   font-size: 30px;
   color: #fff;
   line-height: 1.2;
@@ -190,8 +226,8 @@ text-decoration: none;
 
   display: block;
 }
-.alerter{
-	color: #000 ;
+.alerter {
+  color: #000;
 }
 
 /*------------------------------------------------------------------
@@ -203,9 +239,9 @@ text-decoration: none;
 }
 
 .input100 {
-  font-family: Verdana ;
+  font-family: Verdana;
   font-size: 18px;
-  color: #FFFF00;
+  color: #ffff00;
   line-height: 0.5;
 
   display: block;
@@ -217,7 +253,7 @@ text-decoration: none;
 /*------------------------------------------------------------------
 [ Button ]*/
 .container-login100-form-btn {
-	padding: 5px;
+  padding: 5px;
   width: 100%;
   /* display: -webkit-box;
   display: -webkit-flex;
@@ -234,16 +270,20 @@ text-decoration: none;
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
   background-color: transparent !important;
   font-family: sans-serif;
   border: 0;
   /* border-radius: 35px; */
-  box-shadow: inset 0 0 0 2px #fff !important;
-  color: #fff !important;
+  box-shadow: inset 0 0 0 2px #525251 !important;
+  color: #525251 !important;
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
@@ -253,8 +293,8 @@ text-decoration: none;
   text-decoration: none;
   text-transform: uppercase;
 }
-.login100-form-btn:hover{
-    box-shadow: inset 0 0 0 2px #017ef2 !important;
-    color: #017ef2 !important;
-    background: hsla(360, 100%, 100%, 0.50) 
-    !important;}
+.login100-form-btn:hover {
+  box-shadow: inset 0 0 0 2px #017ef2 !important;
+  color: #017ef2 !important;
+  background: hsla(360, 100%, 100%, 0.5) !important;
+}
