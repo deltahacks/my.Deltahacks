@@ -27,6 +27,10 @@
                         <strong>When is your birthday? *</strong>
                     </label><br>
                     <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+                    <label for="date" style='float:left'>
+                        <strong>Which of the following ethnicity do you identify as? *</strong>
+                    </label><br>
+                    <v-select :items="races" name="race" :disabled="submitted" v-model="application.race" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('race:required')" data-vv-delay="1000"></v-select> 
                     <label for="university" style='float:left'>
                         <strong>What university do you go to?*</strong>
                     </label><br>
@@ -196,9 +200,16 @@
                         </v-layout>
                     </v-container><br>
                     <div class="small font">
-                        <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
-                        <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
-                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
+                         <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :error-messages="checkError">
+                            <span style="font-size:0.8em;" class="terms" slot="label">{{MLH}} <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the 
+                            <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.</span>
+                        </v-checkbox>
+                        <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError">
+                            <span style="font-size:0.8em;" slot="label">I have read and agree to the <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
+                        </v-checkbox>
+                        <v-checkbox  name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
+                            <span style="font-size:0.8em;" class="terms" slot="label">{{MICROSOFT}}</span>
+                        </v-checkbox>
 
                     </div>
                     <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
@@ -293,6 +304,7 @@ export default {
       bannerTimeout: 3000,
       loadingMessage: "Loading...",
       parent: this,
+      contest_terms:'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
       subsectionLabels: [
         "Personal Information",
         "Logistical stuff",
@@ -309,12 +321,25 @@ export default {
         "Mississauga",
         "Guelph"
       ],
+      races: [
+          'Black / African American',
+          'Hispanic',
+          'East Asian',
+          'South Asian',
+          'Middle Eastern',
+          'Native American',
+          'White / Caucasian',
+          'Multiple ethnicity / Other',
+          'Prefer not to say',
+      ],
       url: "",
       MLH:
-        "I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*",
+                'I authorize you to share my application information for event administration,'
+                + ' ranking, MLH administration, event informational e-mails, and occasional messages about hackathons '
+                + ' in-line with the',
       SHARE:
         "I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*",
-      MICROSOFT: "I am interested in using Microsoft products at DeltaHacks.",
+      MICROSOFT: "I am interested in using Microsoft products at DeltaHacks.", 
       picker: null,
       submitted: false,
       date: "2000-01-01",
@@ -413,6 +438,12 @@ export default {
   computed: {
     q1Progress() {
       return Math.min(100, this.application.q1.length / 5);
+    },
+    q2Progress() {
+      return Math.min(100, this.application.q2.length / 5);
+    },
+    q3Progress() {
+      return Math.min(100, this.application.q3.length / 5);
     },
     validations: {
       name: { required, maxLength: maxLength(10) },
@@ -645,6 +676,20 @@ export default {
       ref.devpost = ref.devpost ? ref.devpost : "";
       ref.lastname = ref.lastname ? ref.lastname : "";
       ref.location = ref.location ? ref.location : "";
+    },
+    getUserAppStatus(userEmail) {
+      return new Promise((resolve, reject) => {
+        this.$store.state.db
+          .collection("applications")
+          .doc("DH5_Test")
+          .collection("submitted")
+          .doc(userEmail)
+          .get()
+          .then(doc => {
+            resolve(doc.exists);
+          })
+          .catch(err => reject(err));
+      });
     },
     beforeMount() {
       this.activateModal("Loading...");
