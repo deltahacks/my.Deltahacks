@@ -2,245 +2,247 @@
     <v-app class="dashboard background" style="background-image: url('https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg2.jpg?raw=true');">
         <Navbar2 class="navbar1" />
         <div class='container-status100'>
-            <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
-                <h1 v-if="!submitted" class='text-xs-left'>Apply here.</h1>
-                <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
-                <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
-                <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
-                <br><br>
-                <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
-                <br><br>
-                <label for="name" style='float:left'>
-                    <strong>What is your first name?</strong>
-                </label><br>
-                <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
-                <label for="name" style='float:left'>
-                    <strong>What is your last name?</strong>
-                </label><br>
-                <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.lastname" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
-                <!-- find a better way of including this in form -->
-                <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
-                <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
+            <div class="wrap-apply100">
+                <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
+                    <h1 v-if="!submitted" class='text-xs-left'>Apply here.</h1>
+                    <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
+                    <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline. The more information submitted, the greater the chances of being accepted to DeltaHacks V. You will receive an email on acceptance or waitlisting of your application.</p>
+                    <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
+                    <br><br>
+                    <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
+                    <br><br>
+                    <label for="name" style='float:left'>
+                        <strong>What is your first name?</strong>
+                    </label><br>
+                    <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+                    <label for="name" style='float:left'>
+                        <strong>What is your last name?</strong>
+                    </label><br>
+                    <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.lastname" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
+                    <!-- find a better way of including this in form -->
+                    <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
+                    <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
                     v-validate="'required:true'"></v-date-picker> -->
-                <label for="date" style='float:left'>
-                    <strong>When is your birthday? *</strong>
-                </label><br>
-                <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
-                <label for="university" style='float:left'>
-                    <strong>What university do you go to?*</strong>
-                </label><br>
-                <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
-                    <template slot="no-data">
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>
-                                    No results found. Press
-                                    <kbd>enter</kbd> to enter a custom option.
-                                </v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </template>
-                </v-combobox>
-                <label for="major" style='float:left'>
-                    <strong>What do you study?*</strong>
-                </label><br>
-                <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
-                    <template slot="no-data">
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>
-                                    No results found. Press
-                                    <kbd>enter</kbd> to enter a custom option.
-                                </v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </template>
-                </v-combobox>
-                <label for="major" style='float:left'>
-                    <strong>What degree are you currently pursuing?*</strong>
-                </label><br>
-                <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
-                <label for="year" style='float:left'>
-                    <strong>What year of school are you in?*</strong>
-                </label><br>
-                <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
-                </v-select>
-                <div class="section divider"></div>
-                <h2 style="float:left">{{subsectionLabels[1]}}</h2>
-                <br><br>
-                <label for="shirt size" style='float:left'>
-                    <strong>What's your shirt size?*</strong>
-                </label><br>
-                <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
-                </v-select>
-                <label for="diet" style='float:left'>
-                    <strong>Any dietary restrictions?*</strong>
-                </label><br>
-                <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
-                    <template slot="no-data">
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>
-                                    We don't know that one. Press
-                                    <kbd>tab</kbd> to create it.
-                                </v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </template>
-                </v-combobox>
-                <label for="hackathons" style='float:left'>
-                    <strong>How many hackathons have you attended?*</strong>
-                </label><br>
-                <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
-                </v-select>
-                <label for="hackathons" style='float:left'>
-                    <strong>What workshops would you be interested in attending?</strong>
-                </label><br>
-                <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
-                </v-combobox>
-                <label for="location" style='float:left'>
-                    <strong>Where are you coming from?*</strong>
-                </label><br>
-                <v-combobox name="location" v-model="application.location" :items="cities" :disabled="submitted" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('location:required')" data-vv-delay="1000">
-                    <template slot="no-data">
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>
-                                    We don't know that one. Press
-                                    <kbd>tab</kbd> to create it.
-                                </v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </template>
-                </v-combobox>
-                <div class="section divider"></div>
-                <h2 style="float:left">{{subsectionLabels[2]}}</h2>
-                <br><br>
-                <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
-                </v-text-field>
-                <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
-                </v-text-field>
-                <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
-                </v-text-field>
-                <v-text-field name="devpost" :disabled="submitted" label="Your Devpost" single-line data-vv-delay="4000" v-model="application.devpost" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('devpost')">
-                </v-text-field><br>
-                <div id="filePondContainer">
-                    <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
-                    <v-chip class="no border" style="float:left" v-if="haveFile" outline small color="gray">
-                        <v-icon left>info</v-icon>
-                        <strong>We've got your file "</strong>
-                        <a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
-                    </v-chip>
-                </div>
-                <div class="section divider"></div>
-                <h2 style="float:left">{{subsectionLabels[3]}}</h2>
-                <br><br>
-                <label for="phone" style='float:left'>
-                    <strong>Your cell phone number*</strong>
-                </label><br>
-                <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
-                <label for="emergency phone" style='float:left'>
-                    <strong>Emergency contact number*</strong>
-                </label><br>
-                <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
-                <v-container d-inline-flex>
-                    <v-flex xs6 sm6>
-                        <label for="emergency name" style='float:left'>
-                            <strong>Emergency contact name*</strong>
-                        </label><br>
-                        <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
-                    </v-flex>
-                    <v-flex xs4>
-                    </v-flex>
-                    <v-flex xs6 sm6>
-                        <label for="emergency relationship" style=''>
-                            <strong>Emergency contact relationship*</strong>
-                        </label><br>
-                        <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
-                    </v-flex>
-                </v-container>
-                <div class="section divider"></div>
-                <h2 style="float:left; padding-left:26px;">{{subsectionLabels[4]}}</h2>
-                <br><br>
-                <v-container fluid>
-                    <v-layout row wrap>
-                        <v-flex xs12>
-                            <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
-                            <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
-                            </v-textarea>
-                            <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
+                    <label for="date" style='float:left'>
+                        <strong>When is your birthday? *</strong>
+                    </label><br>
+                    <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+                    <label for="university" style='float:left'>
+                        <strong>What university do you go to?*</strong>
+                    </label><br>
+                    <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
+                        <template slot="no-data">
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>
+                                        No results found. Press
+                                        <kbd>enter</kbd> to enter a custom option.
+                                    </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </template>
+                    </v-combobox>
+                    <label for="major" style='float:left'>
+                        <strong>What do you study?*</strong>
+                    </label><br>
+                    <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
+                        <template slot="no-data">
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>
+                                        No results found. Press
+                                        <kbd>enter</kbd> to enter a custom option.
+                                    </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </template>
+                    </v-combobox>
+                    <label for="major" style='float:left'>
+                        <strong>What degree are you currently pursuing?*</strong>
+                    </label><br>
+                    <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
+                    <label for="year" style='float:left'>
+                        <strong>What year of school are you in?*</strong>
+                    </label><br>
+                    <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
+                    </v-select>
+                    <div class="section divider"></div>
+                    <h2 style="float:left">{{subsectionLabels[1]}}</h2>
+                    <br><br>
+                    <label for="shirt size" style='float:left'>
+                        <strong>What's your shirt size?*</strong>
+                    </label><br>
+                    <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
+                    </v-select>
+                    <label for="diet" style='float:left'>
+                        <strong>Any dietary restrictions?*</strong>
+                    </label><br>
+                    <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+                        <template slot="no-data">
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>
+                                        We don't know that one. Press
+                                        <kbd>tab</kbd> to create it.
+                                    </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </template>
+                    </v-combobox>
+                    <label for="hackathons" style='float:left'>
+                        <strong>How many hackathons have you attended?*</strong>
+                    </label><br>
+                    <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
+                    </v-select>
+                    <label for="hackathons" style='float:left'>
+                        <strong>What workshops would you be interested in attending?</strong>
+                    </label><br>
+                    <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
+                    </v-combobox>
+                    <label for="location" style='float:left'>
+                        <strong>Where are you coming from?*</strong>
+                    </label><br>
+                    <v-combobox name="location" v-model="application.location" :items="cities" :disabled="submitted" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('location:required')" data-vv-delay="1000">
+                        <template slot="no-data">
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>
+                                        We don't know that one. Press
+                                        <kbd>tab</kbd> to create it.
+                                    </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </template>
+                    </v-combobox>
+                    <div class="section divider"></div>
+                    <h2 style="float:left">{{subsectionLabels[2]}}</h2>
+                    <br><br>
+                    <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
+                    </v-text-field>
+                    <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
+                    </v-text-field>
+                    <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
+                    </v-text-field>
+                    <v-text-field name="devpost" :disabled="submitted" label="Your Devpost" single-line data-vv-delay="4000" v-model="application.devpost" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('devpost')">
+                    </v-text-field><br>
+                    <div id="filePondContainer">
+                        <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+                        <v-chip class="no border" style="float:left" v-if="haveFile" outline small color="gray">
+                            <v-icon left>info</v-icon>
+                            <strong>We've got your file "</strong>
+                            <a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
+                        </v-chip>
+                    </div>
+                    <div class="section divider"></div>
+                    <h2 style="float:left">{{subsectionLabels[3]}}</h2>
+                    <br><br>
+                    <label for="phone" style='float:left'>
+                        <strong>Your cell phone number*</strong>
+                    </label><br>
+                    <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+                    <label for="emergency phone" style='float:left'>
+                        <strong>Emergency contact number*</strong>
+                    </label><br>
+                    <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+                    <v-container d-inline-flex>
+                        <v-flex xs6 sm6>
+                            <label for="emergency name" style='float:left'>
+                                <strong>Emergency contact name*</strong>
+                            </label><br>
+                            <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
                         </v-flex>
-                        <div class="section divider"></div>
-                        <v-flex xs12>
-                            <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?*</p>
-                            <v-textarea box :disabled="submitted" name="q2" autocomplete="nope" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500 />
-                            <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
+                        <v-flex xs4>
                         </v-flex>
-                        <div class="section divider"></div>
-                        <v-flex xs12>
-                            <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
-                            <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500 />
-                            <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
+                        <v-flex xs6 sm6>
+                            <label for="emergency relationship" style=''>
+                                <strong>Emergency contact relationship*</strong>
+                            </label><br>
+                            <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                         </v-flex>
-                        <v-flex xs12>
-                            <p class="text-lg-left">Anything else you'd like to tell us?</p>
-                            <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
-                        </v-flex>
-                        <div class="section divider"></div>
-                        <v-flex xs12>
-                            <p class="text-lg-left">What's your funniest meme?</p>
-                            <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100 />
-                        </v-flex>
-                    </v-layout>
-                </v-container><br>
-                <div class="small font">
-                    <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
-                    <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
-                    <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
+                    </v-container>
+                    <div class="section divider"></div>
+                    <h2 style="float:left; padding-left:26px;">{{subsectionLabels[4]}}</h2>
+                    <br><br>
+                    <v-container fluid>
+                        <v-layout row wrap>
+                            <v-flex xs12>
+                                <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+                                </v-textarea>
+                                <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
+                            </v-flex>
+                            <div class="section divider"></div>
+                            <v-flex xs12>
+                                <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?*</p>
+                                <v-textarea box :disabled="submitted" name="q2" autocomplete="nope" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500 />
+                                <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
+                            </v-flex>
+                            <div class="section divider"></div>
+                            <v-flex xs12>
+                                <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
+                                <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500 />
+                                <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
+                            </v-flex>
+                            <v-flex xs12>
+                                <p class="text-lg-left">Anything else you'd like to tell us?</p>
+                                <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
+                            </v-flex>
+                            <div class="section divider"></div>
+                            <v-flex xs12>
+                                <p class="text-lg-left">What's your funniest meme?</p>
+                                <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100 />
+                            </v-flex>
+                        </v-layout>
+                    </v-container><br>
+                    <div class="small font">
+                        <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
+                        <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
+                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
 
-                </div>
-                <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
-                <div class="mx-auto gg">
-                    <v-dialog v-model="confirm" persistent max-width="400">
-                        <v-btn slot="activator" :disabled="submitted" class="button1">Submit</v-btn>
-                        <v-card>
-                            <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
-                            <v-card-text>You cannot edit your applicaiton once you've submitted.</v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click="submitApplication">Yes</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                    <v-dialog v-model="confirmClear" persistent max-width="400">
-                        <v-btn slot="activator" :disabled="submitted" class="button2">Clear</v-btn>
-                        <v-card>
-                            <v-card-title class="headline">Are you sure you'd like to clear the form?</v-card-title>
-                            <v-card-text>This will overwrite perviously saved data.</v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
-                                <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </div>
-            </form>
-            <v-dialog v-model="loading" persistent width="300">
-                <v-card color="primary" dark>
-                    <v-card-text>
-                        {{loadingMessage}}
-                        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
-            <v-snackbar v-model="feedback" top :color="bannerColor" right :timeout="bannerTimeout">
-                {{bannerMessage}}
-                <v-btn color="white" flat @click="feedback = false">
-                    Close
-                </v-btn>
-            </v-snackbar>
+                    </div>
+                    <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
+                    <div class="mx-auto gg">
+                        <v-dialog v-model="confirm" persistent max-width="400">
+                            <v-btn slot="activator" :disabled="submitted" class="button1">Submit</v-btn>
+                            <v-card>
+                                <v-card-title class="headline">Are you sure you'd like to submit?</v-card-title>
+                                <v-card-text>You cannot edit your applicaiton once you've submitted.</v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="red darken-1" flat @click.native="confirm = false">No</v-btn>
+                                    <v-btn color="green darken-1" flat @click="submitApplication">Yes</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                        <v-dialog v-model="confirmClear" persistent max-width="400">
+                            <v-btn slot="activator" :disabled="submitted" class="button2">Clear</v-btn>
+                            <v-card>
+                                <v-card-title class="headline">Are you sure you'd like to clear the form?</v-card-title>
+                                <v-card-text>This will overwrite perviously saved data.</v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
+                                    <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </div>
+                </form>
+                <v-dialog v-model="loading" persistent width="300">
+                    <v-card color="primary" dark>
+                        <v-card-text>
+                            {{loadingMessage}}
+                            <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+                <v-snackbar v-model="feedback" top :color="bannerColor" right :timeout="bannerTimeout">
+                    {{bannerMessage}}
+                    <v-btn color="white" flat @click="feedback = false">
+                        Close
+                    </v-btn>
+                </v-snackbar>
+            </div>
         </div>
         <!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg" alt="Major League Hacking 2019 Hackathon Season" style="width:100%"></a> -->
     </v-app>
@@ -401,11 +403,18 @@ export default {
         q1Progress() {
             return Math.min(100, this.application.q1.length / 5);
         },
-        q2Progress() {
-            return Math.min(100, this.application.q2.length / 5);
+        validations: {
+            name: { required, maxLength: maxLength(10) },
+            email: { required, email },
+            select: { required },
+            checkbox: { required },
+            university: { in: allUniversities },
         },
-        q3Progress() {
-            return Math.min(100, this.application.q3.length / 5);
+        components: {
+            Navbar,
+            FilePond,
+            Navigation,
+            Navbar2,
         },
         q1Color() {
             return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
@@ -622,19 +631,19 @@ export default {
             ref.lastname = ref.lastname ? ref.lastname : '';
             ref.location = ref.location ? ref.location : '';
         },
-        getUserAppStatus(userEmail) {
-            return new Promise((resolve, reject) => {
-                this.$store.state.db
-                    .collection('applications')
-                    .doc('DH5_Test')
-                    .collection('submitted')
-                    .doc(userEmail)
-                    .get()
-                    .then(doc => {
-                        resolve(doc.exists);
-                    })
-                    .catch(err => reject(err));
-            });
+        beforeMount() {
+            this.activateModal('Loading...');
+            const userEmail = firebase.auth().currentUser.email;
+            this.$store.state.db
+                .collection('applications')
+                .doc('DH5_Test')
+                .collection('submitted')
+                .doc(userEmail)
+                .get()
+                .then(doc => {
+                    resolve(doc.exists);
+                })
+                .catch(err => reject(err));
         },
     },
     beforeMount() {
@@ -677,158 +686,5 @@ export default {
 };
 </script>
 
-<style scoped>
-h1 {
-    margin-bottom: 2%;
-    margin-top: 5%;
-}
-
-p {
-    font-weight: bold;
-}
-
-@media only screen and (min-width: 1280px) and (max-width: 4000px) {
-    .ff {
-        width: 40%;
-        margin-bottom: 2%;
-    }
-}
-
-@media only screen and (min-width: 500px) and (max-width: 1280px) {
-    .ff {
-        margin-bottom: 5%;
-        width: 70%;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    .ff {
-        margin-bottom: 5%;
-        width: 90%;
-    }
-}
-
-#mlh {
-    margin-top: 10%;
-}
-.gg {
-    display: inline-block;
-}
-.section.split {
-    margin-top: 3%;
-    margin-bottom: 3%;
-}
-
-.large {
-    font-size: 1.3em !important;
-}
-.no.border {
-    border: none;
-}
-.small.font {
-    font-size: 0.3em !important;
-}
-.section.divider {
-    padding: 2em;
-}
-.navbar1 {
-    z-index: 0;
-    background-color: transparent;
-}
-.background {
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    box-shadow: inset 1px 4000px rgba(208, 208, 208, 0.6);
-}
-.container-status100 {
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    padding-bottom: 0px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    z-index: 1;
-}
-
-.container-status100::before {
-    content: '';
-    display: block;
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    /* background-color: rgba(255, 255, 255, 0.8); */
-}
-.button1 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left !important;
-    background-color: transparent !important;
-    font-family: sans-serif !important;
-    border: 1 !important;
-    /* border-radius: 40px; */
-    box-shadow: inset 0 0 0 2px #2196f3 !important;
-    color: #2196f3 !important;
-    cursor: pointer !important;
-    /* display: inline-block !important; */
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    /* line-height: 52px; */
-    padding: 0 1.75em !important;
-    text-align: center !important;
-    text-decoration: none !important;
-    text-transform: uppercase !important;
-}
-.button2 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent !important;
-    font-family: sans-serif !important;
-    border: 1 !important;
-    /* border-radius: 40px; */
-    box-shadow: inset 0 0 0 2px #f44336 !important;
-    color: #f44336 !important;
-    cursor: pointer !important;
-    /* display: inline-block; */
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    /* line-height: 52px; */
-    padding: 0 1.75em !important;
-    text-align: center !important;
-    text-decoration: none !important;
-    text-transform: uppercase !important;
-}
+<style scoped src='../assets/css/apply.css'>
 </style>
