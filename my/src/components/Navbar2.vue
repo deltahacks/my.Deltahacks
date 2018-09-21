@@ -34,7 +34,7 @@
       </v-menu>
     </div>
     <a @click.prevent='logout' class="button button-hide">LOGOUT</a>&ensp;
-    <div class="text-xs-center mobile" style="margin-right:-60px;">
+    <div class="text-xs-center mobile" style="margin-right:-40px;">
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
 
