@@ -98,11 +98,13 @@
                     </label><br>
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
-                    <label for="hackathons" style='float:left'>
-                        <strong>What workshops would you be interested in attending?</strong>
-                    </label><br>
-                    <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
-                    </v-combobox>
+                    <v-flex xs12>
+                        <label for="hackathons" style='float:left'>
+                            <strong>What workshops would you be interested in attending?</strong>
+                        </label><br>
+                        <v-combobox v-model="application.workshops" clearable small-chips allow-overflow :items="workshops" :disabled="submitted" @change="formChange" hide-selected multiple small-chips>
+                        </v-combobox>
+                    </v-flex>
                     <label for="location" style='float:left'>
                         <strong>Where are you coming from? *</strong>
                     </label><br>
@@ -148,22 +150,14 @@
                         <strong>Emergency contact number *</strong>
                     </label><br>
                     <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
-                    <v-container d-inline-flex>
-                        <v-flex xs6 sm6>
-                            <label for="emergency name" style='float:left'>
-                                <strong>Emergency contact name *</strong>
-                            </label><br>
-                            <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
-                        </v-flex>
-                        <v-flex xs4>
-                        </v-flex>
-                        <v-flex xs6 sm6>
-                            <label for="emergency relationship" style=''>
-                                <strong>Emergency contact relationship *</strong>
-                            </label><br>
-                            <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
-                        </v-flex>
-                    </v-container>
+                    <label for="emergency name" style='float:left'>
+                        <strong>Emergency contact name *</strong>
+                    </label><br>
+                    <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
+                    <label for="emergency relationship" style='float:left'>
+                        <strong>Emergency contact relationship *</strong>
+                    </label><br>
+                    <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                     <div class="section divider"></div>
                     <h2 style="float:left; padding-left:26px;">{{subsectionLabels[4]}}</h2>
                     <br><br>
@@ -193,10 +187,6 @@
                                 <v-text-field :disabled="submitted" name="q4" placeholder="Literally anything" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
                             </v-flex>
                             <div class="section divider"></div>
-                            <v-flex xs12>
-                                <p class="text-lg-left">What's your funniest meme?</p>
-                                <v-text-field :disabled="submitted" name="meme" placeholder="Leave a link..." v-model="application.meme" auto-grow v-validate="{required:true, max:100}" counter=100 />
-                            </v-flex>
                         </v-layout>
                     </v-container><br>
                     <div class="small font">
@@ -479,7 +469,6 @@ export default {
   },
   methods: {
     handleFilePondInit() {
-      console.log("FilePond has initialized");
       // FilePond instance methods are available on `this.$refs.pond`
     },
     getEmptyApplication() {
@@ -526,7 +515,6 @@ export default {
       return this.$validator.validateAll();
     },
     formChange() {
-      console.log("Change detected");
       if (this.timeout) {
         clearTimeout(this.timeout);
         this.timeout = null;
@@ -577,11 +565,9 @@ export default {
         .doc(firebase.auth().currentUser.email)
         .set(this.application)
         .then(() => {
-          console.log("saving...");
           this.showInfoMessage("Application progress saved!");
         })
         .catch(err => {
-          console.log(err);
           this.loading = false;
         });
     },
@@ -609,7 +595,6 @@ export default {
           this.loading = false;
         })
         .catch(err => {
-          console.log(err);
           this.loading = false;
         });
     },
@@ -656,7 +641,6 @@ export default {
       if (resume) {
         results.push(this.storeFileAndGetInfo(files[0]));
         this.application.documents = await Promise.all(results).catch(err => {
-          console.log(`Upload Failed: ${err}`);
           this.loading = false;
         });
       }
@@ -732,7 +716,6 @@ export default {
           // this.insertUserFileData(this.application.documents);
           this.loading = false;
         } else {
-          console.log("Document not found!");
           this.editing = false;
           this.loading = false;
         }
