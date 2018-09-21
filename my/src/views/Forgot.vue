@@ -28,16 +28,23 @@
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
+          <br>
+          <div class="container-login100-form-btn">
+            <v-divider></v-divider><br>
+            <p style="color: #525251; cursor: pointer;" @click="loginpage">
+              <i class="fas fa-arrow-left" /> Go Back
+            </p>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </template>
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data: () => ({
     drawer: null,
     email: null,
@@ -46,25 +53,28 @@ export default {
     loader: null,
     loading: false,
     loaderSignup: null,
-    loadingSignup: false,
+    loadingSignup: false
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: 'Forgot' });
+      this.$router.push({ name: "Forgot" });
+    },
+    loginpage() {
+      this.$router.push({ name: "Login" });
     },
     forgotPass() {
-      this.loader = 'loading';
+      this.loader = "loading";
       const parent = this;
       if (this.email) {
         firebase
           .auth()
           .sendPasswordResetEmail(this.email)
           .then(() => {
-            this.$router.push({ name: 'Login' });
-            console.log('email sent');
+            this.$router.push({ name: "Login" });
+            console.log("email sent");
             this.feedback = null;
           })
-          .catch((error) => {
+          .catch(error => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -72,11 +82,11 @@ export default {
             console.log(errorMessage);
           });
       }
-    },
+    }
   },
   mounted() {},
   props: {
-    source: String,
+    source: String
   },
   watch: {
     loader() {
@@ -85,8 +95,8 @@ export default {
 
       setTimeout(() => (this[l] = false), 3000);
       this.loader = null;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped src='../assets/css/login.css'>
