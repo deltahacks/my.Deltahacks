@@ -9,7 +9,7 @@ p {
 
 @media only screen and (min-width: 1280px) and (max-width: 4000px) {
   .ff {
-    width: 40%;
+    width: 80%;
     margin-bottom: 2%;
   }
 }

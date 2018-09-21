@@ -12,11 +12,11 @@
                     <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
                     <br><br>
                     <label for="name" style='float:left'>
-                        <strong>What is your first name?</strong>
+                        <strong>What's your first name?</strong>
                     </label><br>
                     <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                     <label for="name" style='float:left'>
-                        <strong>What is your last name?</strong>
+                        <strong>What's your last name?</strong>
                     </label><br>
                     <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.lastname" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
                     <!-- find a better way of including this in form -->
