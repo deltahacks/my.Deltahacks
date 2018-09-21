@@ -2,6 +2,7 @@
     <v-app class="dashboard background" style="background-image: url('https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg2.jpg?raw=true');">
         <Navbar2 class="navbar1" />
         <div class='container-status100'>
+            <div class="wrap-apply100">
             <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
                 <h1 v-if="!submitted" class='text-xs-left'>Apply here.</h1>
                 <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
@@ -195,14 +196,14 @@
                 </v-container><br>
                 <div class="small font">
                     <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :error-messages="checkError">
-                        <span class="terms" slot="label">{{MLH}} <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the 
+                        <span style="font-size:0.8em;" class="terms" slot="label">{{MLH}} <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the 
                         <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.</span>
                     </v-checkbox>
                     <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError">
-                        <span class="terms" slot="label">I have read and agree to the <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
+                        <span style="font-size:0.8em;" slot="label">I have read and agree to the <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
                     </v-checkbox>
                     <v-checkbox  name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
-                        <span class="terms" slot="label">{{MICROSOFT}}</span>
+                        <span style="font-size:0.8em;" class="terms" slot="label">{{MICROSOFT}}</span>
                     </v-checkbox>
 
                 </div>
@@ -248,6 +249,7 @@
                     Close
                 </v-btn>
             </v-snackbar>
+            </div>
         </div>
         <!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg" alt="Major League Hacking 2019 Hackathon Season" style="width:100%"></a> -->
     </v-app>
@@ -255,28 +257,31 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
-import firebase from 'firebase';
-import vueFilePond from 'vue-filepond';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import debounce from 'debounce';
-import Navbar from '@/components/Navbar.vue';
-import Navigation from '@/components/Navigation.vue';
-import Navbar2 from '@/components/Navbar2.vue';
-import { validationMixin } from 'vuelidate';
-import { Validator } from 'vee-validate';
-import { required, maxLength, email } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
-import { majors, allUniversities } from '../private/data';
+import firebase from "firebase";
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import debounce from "debounce";
+import Navbar from "@/components/Navbar.vue";
+import Navigation from "@/components/Navigation.vue";
+import Navbar2 from "@/components/Navbar2.vue";
+import { validationMixin } from "vuelidate";
+import { Validator } from "vee-validate";
+import { required, maxLength, email } from "vuelidate/lib/validators";
+import { mapGetters } from "vuex";
+import { majors, allUniversities } from "../private/data";
 // import { setTimeout } from 'timers';
 
-const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
 
 export default {
   mixins: [validationMixin],
-  name: 'Apply',
+  name: "Apply",
   data() {
     return {
       myFiles: [],
@@ -289,46 +294,46 @@ export default {
       checkError: undefined,
       shareError: undefined,
       pondError: undefined,
-      bannerColor: 'success',
-      bannerMessage: 'Complete!',
+      bannerColor: "success",
+      bannerMessage: "Complete!",
       bannerTimeout: 3000,
-      loadingMessage: 'Loading...',
+      loadingMessage: "Loading...",
       parent: this,
       contest_terms:'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
       subsectionLabels: [
-        'Personal Information',
-        'Logistical stuff',
-        'Your profiles',
-        'Emergency info',
-        'Application questions',
+        "Personal Information",
+        "Logistical stuff",
+        "Your profiles",
+        "Emergency info",
+        "Application questions"
       ],
       cities: [
-        'Toronto',
-        'Waterloo',
-        'London',
-        'Montreal',
-        'Ottawa',
-        'Mississauga',
-        'Guelph',
+        "Toronto",
+        "Waterloo",
+        "London",
+        "Montreal",
+        "Ottawa",
+        "Mississauga",
+        "Guelph"
       ],
-      url: '',
+      url: "",
       MLH:
                 'I authorize you to share my application information for event administration,'
                 + ' ranking, MLH administration, event informational e-mails, and occasional messages about hackathons '
                 + ' in-line with the',
       SHARE:
-                'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
-      MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
+        "I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*",
+      MICROSOFT: "I am interested in using Microsoft products at DeltaHacks.",
       picker: null,
       submitted: false,
-      date: '2000-01-01',
+      date: "2000-01-01",
       university: null,
       timeout: null,
       allUniversities,
       majors,
       application: {
-        name: '',
-        lastname: '',
+        name: "",
+        lastname: "",
         email: firebase.auth().currentUser.email,
         last_modified: undefined,
         first_submitted: undefined,
@@ -337,61 +342,68 @@ export default {
         dietary_restrictions: null,
         hackathons: null,
         university: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        devpost: '',
-        phone: '',
-        emergency_phone: '',
-        emergency_name: '',
-        q1: '',
-        q2: '',
-        q3: '',
-        q4: '',
-        meme: '',
-        major: '',
-        location: '',
+        github: "",
+        linkedin: "",
+        website: "",
+        devpost: "",
+        phone: "",
+        emergency_phone: "",
+        emergency_name: "",
+        q1: "",
+        q2: "",
+        q3: "",
+        q4: "",
+        meme: "",
+        major: "",
+        location: "",
         workshops: [],
-        degree: '',
-        birthday: '',
-        documents: [],
+        degree: "",
+        birthday: "",
+        documents: []
       },
-      links: ['Home', 'About', 'Contact'],
-      q1: '',
+      links: ["Home", "About", "Contact"],
+      q1: "",
       custom: true,
-      name: '',
-      email: '',
+      name: "",
+      email: "",
       select: null,
       items: [
-        'First Year',
-        'Second Year',
-        'Third Year',
-        'Fourth Year',
-        'Fifth Year',
-        'Sixth Year',
+        "First Year",
+        "Second Year",
+        "Third Year",
+        "Fourth Year",
+        "Fifth Year",
+        "Sixth Year"
       ],
       workshops: [
-        'NodeJs',
-        'ReactJs/VueJs',
-        'Blockchain',
-        'Machine Learning',
-        'Buzzwords',
-        'Android development',
-        'iOS development',
-        'Web Development',
-        'Intro to AR/VR',
-        'Blockchain',
-        'Hardware hacking',
-        'Computer Vision with OpenCV',
+        "NodeJs",
+        "ReactJs/VueJs",
+        "Blockchain",
+        "Machine Learning",
+        "Buzzwords",
+        "Android development",
+        "iOS development",
+        "Web Development",
+        "Intro to AR/VR",
+        "Blockchain",
+        "Hardware hacking",
+        "Computer Vision with OpenCV"
       ],
-      hackathons: ['This is my first one', '2', '3', '4', '5-9', '10+'],
-      food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-      shirts: ['XS', 'S', 'M', 'L', 'XL'],
-      degrees: ['Bachelors', 'Masters', 'PhD'],
-      relations: ['Parent', 'Grandparent', 'Sibling', 'Partner', 'Friend', 'Other'],
+      hackathons: ["This is my first one", "2", "3", "4", "5-9", "10+"],
+      food: ["None", "Vegetarian", "Vegan", "Halal", "Gluten Free", "Kosher"],
+      shirts: ["XS", "S", "M", "L", "XL"],
+      degrees: ["Bachelors", "Masters", "PhD"],
+      relations: [
+        "Parent",
+        "Grandparent",
+        "Sibling",
+        "Partner",
+        "Friend",
+        "Other"
+      ],
       checkbox: false,
       share: false,
-      microsoft: false,
+      microsoft: false
     };
   },
   validations: {
@@ -399,13 +411,13 @@ export default {
     email: { required, email },
     select: { required },
     checkbox: { required },
-    university: { in: allUniversities },
+    university: { in: allUniversities }
   },
   components: {
     Navbar,
     FilePond,
     Navigation,
-    Navbar2,
+    Navbar2
   },
   computed: {
     q1Progress() {
@@ -418,13 +430,13 @@ export default {
       return Math.min(100, this.application.q3.length / 5);
     },
     q1Color() {
-      return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
+      return ["error", "warning", "success"][Math.floor(this.q1Progress / 40)];
     },
     q2Color() {
-      return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
+      return ["error", "warning", "success"][Math.floor(this.q2Progress / 40)];
     },
     q3Color() {
-      return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
+      return ["error", "warning", "success"][Math.floor(this.q3Progress / 40)];
     },
     currentUser() {
       return firebase.auth().currentUser;
@@ -434,17 +446,17 @@ export default {
     },
     agreed() {
       return this.checkbox && this.share;
-    },
+    }
   },
   methods: {
     handleFilePondInit() {
-      console.log('FilePond has initialized');
+      console.log("FilePond has initialized");
       // FilePond instance methods are available on `this.$refs.pond`
     },
     getEmptyApplication() {
       return {
-        name: '',
-        lastname: '',
+        name: "",
+        lastname: "",
         email: firebase.auth().currentUser.email,
         last_modified: undefined,
         first_submitted: undefined,
@@ -453,21 +465,21 @@ export default {
         dietary_restrictions: null,
         hackathons: null,
         university: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        devpost: '',
-        phone: '',
-        emergency_phone: '',
-        q1: '',
-        q2: '',
-        q3: '',
-        q4: '',
-        meme: '',
-        major: '',
-        location: '',
-        birthday: '',
-        documents: [],
+        github: "",
+        linkedin: "",
+        website: "",
+        devpost: "",
+        phone: "",
+        emergency_phone: "",
+        q1: "",
+        q2: "",
+        q3: "",
+        q4: "",
+        meme: "",
+        major: "",
+        location: "",
+        birthday: "",
+        documents: []
       };
     },
     clearForm() {
@@ -485,7 +497,7 @@ export default {
       return this.$validator.validateAll();
     },
     formChange() {
-      console.log('Change detected');
+      console.log("Change detected");
       if (this.timeout) {
         clearTimeout(this.timeout);
         this.timeout = null;
@@ -496,12 +508,12 @@ export default {
     },
     showInfoMessage(msg) {
       this.bannerMessage = msg;
-      this.bannerColor = 'success';
+      this.bannerColor = "success";
       this.feedback = true;
     },
     showErrorMessage(msg) {
       this.bannerMessage = msg;
-      this.bannerColor = 'error';
+      this.bannerColor = "error";
       this.feedback = true;
     },
     async submitFileInfoOnDrop() {
@@ -523,23 +535,23 @@ export default {
       const unixts = Math.round(new Date().getTime() / 1000);
       this.application.last_modified = {
         unix: unixts,
-        date: new Date().toString(),
+        date: new Date().toString()
       };
       this.application.first_submitted = {
         unix: 0,
-        date: '',
+        date: ""
       };
       this.$store.state.db
-        .collection('applications')
-        .doc('DH5_Test')
-        .collection('in progress')
+        .collection("applications")
+        .doc("DH5_Test")
+        .collection("in progress")
         .doc(firebase.auth().currentUser.email)
         .set(this.application)
         .then(() => {
-          console.log('saving...');
-          this.showInfoMessage('Application progress saved!');
+          console.log("saving...");
+          this.showInfoMessage("Application progress saved!");
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           this.loading = false;
         });
@@ -548,26 +560,26 @@ export default {
       const unixts = Math.round(new Date().getTime() / 1000);
       this.application.first_submitted = {
         unix: unixts,
-        date: new Date().toString(),
+        date: new Date().toString()
       };
       this.application.last_modified = {
         unix: unixts,
-        date: new Date().toString(),
+        date: new Date().toString()
       };
     },
     setApplication() {
       this.setDateInformation();
       this.$store.state.db
-        .collection('applications')
-        .doc('DH5_Test')
-        .collection('submitted')
+        .collection("applications")
+        .doc("DH5_Test")
+        .collection("submitted")
         .doc(firebase.auth().currentUser.email)
         .set(this.application)
         .then(() => {
-          this.$router.push({ name: 'Status' });
+          this.$router.push({ name: "Status" });
           this.loading = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           this.loading = false;
         });
@@ -578,14 +590,18 @@ export default {
       const storeRef = firebase.storage().ref();
       return new Promise((resolve, reject) => {
         storeRef
-          .child(`hackathon/DH5/users/${firebase.auth().currentUser.email}/${filename}`)
+          .child(
+            `hackathon/DH5/users/${
+              firebase.auth().currentUser.email
+            }/${filename}`
+          )
           .put(file)
-          .then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((url) => {
+          .then(snapshot => {
+            snapshot.ref.getDownloadURL().then(url => {
               resolve({
                 download_link: url,
                 id,
-                filename,
+                filename
               });
             });
           })
@@ -597,20 +613,20 @@ export default {
       if (!await this.validateBeforeSubmit()) {
         return;
       } else if (!this.checkbox) {
-        this.checkError = 'Please accept the terms and conditions to continue.';
+        this.checkError = "Please accept the terms and conditions to continue.";
         return;
       } else if (!this.share) {
-        this.shareError = 'You must agree to these terms in order to proceed.';
+        this.shareError = "You must agree to these terms in order to proceed.";
         return;
       }
 
       const files = this.$refs.pond.getFiles();
-      this.activateModal('Submitting application...');
+      this.activateModal("Submitting application...");
       const resume = files[0];
       const results = [];
       if (resume) {
         results.push(this.storeFileAndGetInfo(files[0]));
-        this.application.documents = await Promise.all(results).catch((err) => {
+        this.application.documents = await Promise.all(results).catch(err => {
           console.log(`Upload Failed: ${err}`);
           this.loading = false;
         });
@@ -622,41 +638,41 @@ export default {
     },
     fillApplicationFields() {
       const ref = this.application;
-      ref.q1 = ref.q1 ? ref.q1 : '';
-      ref.q2 = ref.q2 ? ref.q2 : '';
-      ref.q3 = ref.q3 ? ref.q3 : '';
-      ref.q4 = ref.q4 ? ref.q4 : '';
-      ref.meme = ref.meme ? ref.meme : '';
+      ref.q1 = ref.q1 ? ref.q1 : "";
+      ref.q2 = ref.q2 ? ref.q2 : "";
+      ref.q3 = ref.q3 ? ref.q3 : "";
+      ref.q4 = ref.q4 ? ref.q4 : "";
+      ref.meme = ref.meme ? ref.meme : "";
       ref.workshops = ref.workshops ? ref.workshops : [];
-      ref.devpost = ref.devpost ? ref.devpost : '';
-      ref.lastname = ref.lastname ? ref.lastname : '';
-      ref.location = ref.location ? ref.location : '';
+      ref.devpost = ref.devpost ? ref.devpost : "";
+      ref.lastname = ref.lastname ? ref.lastname : "";
+      ref.location = ref.location ? ref.location : "";
     },
     getUserAppStatus(userEmail) {
       return new Promise((resolve, reject) => {
         this.$store.state.db
-          .collection('applications')
-          .doc('DH5_Test')
-          .collection('submitted')
+          .collection("applications")
+          .doc("DH5_Test")
+          .collection("submitted")
           .doc(userEmail)
           .get()
-          .then((doc) => {
+          .then(doc => {
             resolve(doc.exists);
           })
           .catch(err => reject(err));
       });
-    },
+    }
   },
   beforeMount() {
-    this.activateModal('Loading...');
+    this.activateModal("Loading...");
     const userEmail = firebase.auth().currentUser.email;
     this.$store.state.db
-      .collection('applications')
-      .doc('DH5_Test')
-      .collection('in progress')
+      .collection("applications")
+      .doc("DH5_Test")
+      .collection("in progress")
       .doc(userEmail)
       .get()
-      .then(async (doc) => {
+      .then(async doc => {
         const submitted = await this.getUserAppStatus(userEmail);
         if (submitted) {
           this.editing = true;
@@ -673,175 +689,19 @@ export default {
           // this.insertUserFileData(this.application.documents);
           this.loading = false;
         } else {
-          console.log('Document not found!');
+          console.log("Document not found!");
           this.editing = false;
           this.loading = false;
         }
       })
-      .catch((err) => {
-        console.log('User app query failed.');
+      .catch(err => {
+        console.log("User app query failed.");
         console.log(err);
         this.loading = false;
       });
-  },
+  }
 };
 </script>
 
-<style scoped>
-h1 {
-    margin-bottom: 2%;
-    margin-top: 5%;
-}
-
-p {
-    font-weight: bold;
-}
-
-@media only screen and (min-width: 1280px) and (max-width: 4000px) {
-    .ff {
-        width: 40%;
-        margin-bottom: 2%;
-    }
-}
-
-@media only screen and (min-width: 500px) and (max-width: 1280px) {
-    .ff {
-        margin-bottom: 5%;
-        width: 70%;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    .ff {
-        margin-bottom: 5%;
-        width: 90%;
-    }
-}
-
-#mlh {
-    margin-top: 10%;
-}
-.gg {
-    display: inline-block;
-}
-.section.split {
-    margin-top: 3%;
-    margin-bottom: 3%;
-}
-
-.large {
-    font-size: 1.3em !important;
-}
-.no.border {
-    border: none;
-}
-.small.font {
-    font-size: 0.3em !important;
-}
-.section.divider {
-    padding: 2em;
-}
-.navbar1 {
-    z-index: 0;
-    background-color: transparent;
-}
-.background {
-    background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: inset 1px 4000px rgba(208, 208, 208, 0.6);
-}
-.container-status100 {
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    padding-bottom: 0px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    z-index: 1;
-}
-
-.container-status100::before {
-    content: '';
-    display: block;
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    /* background-color: rgba(255, 255, 255, 0.8); */
-}
-.button1 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left !important;
-    background-color: transparent !important;
-    font-family: sans-serif !important;
-    border: 1 !important;
-    /* border-radius: 40px; */
-    box-shadow: inset 0 0 0 2px #2196f3 !important;
-    color: #2196f3 !important;
-    cursor: pointer !important;
-    /* display: inline-block !important; */
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    /* line-height: 52px; */
-    padding: 0 1.75em !important;
-    text-align: center !important;
-    text-decoration: none !important;
-    text-transform: uppercase !important;
-}
-.terms {
-    font-size: 0.8em;
-}
-.button2 {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    float: left;
-    background-color: transparent !important;
-    font-family: sans-serif !important;
-    border: 1 !important;
-    /* border-radius: 40px; */
-    box-shadow: inset 0 0 0 2px #f44336 !important;
-    color: #f44336 !important;
-    cursor: pointer !important;
-    /* display: inline-block; */
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    /* line-height: 52px; */
-    padding: 0 1.75em !important;
-    text-align: center !important;
-    text-decoration: none !important;
-    text-transform: uppercase !important;
-}
+<style scoped src='../assets/css/apply.css'>
 </style>
