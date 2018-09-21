@@ -6,7 +6,7 @@
     <a href="/status" class="button button-hide">STATUS</a>&ensp;
     <a href="/apply" class="button button-hide">APPLY</a>&ensp;
     <!-- <a href="#" class="button button-hide">CONTACT</a>&ensp; -->
-    <a href="/faq" class="button button-hide">FAQ</a>&ensp;
+    <!-- <a href="/faq" class="button button-hide">FAQ</a>&ensp; -->
     <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
@@ -45,16 +45,16 @@
           </v-list-tile>
 
           <v-list-tile to="/apply">
-            <v-list-tile-title v-if="c_user">Apply Now</v-list-tile-title>
+            <v-list-tile-title v-if="c_user">Apply</v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile to="/">
+          <!-- <v-list-tile to="/">
             <v-list-tile-title>Contact</v-list-tile-title>
           </v-list-tile>
 
           <v-list-tile to="/">
             <v-list-tile-title>FAQ</v-list-tile-title>
-          </v-list-tile>
+          </v-list-tile> -->
 
           <v-list-tile @click.prevent="logout" v-if="c_user">
             <v-list-tile-title>Logout</v-list-tile-title>
@@ -71,41 +71,41 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Navbar',
-  components: {},
-  data() {
-    return {
-      c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
-      drawer: null,
-      items: [
-        { title: 'Home', icon: 'dashboard' },
-        { title: 'About', icon: 'question_answer' },
-      ],
-    };
-  },
-  methods: {
-    tst() {
-      console.log('FUUUUUUUUUUUCK');
+    name: 'Navbar',
+    components: {},
+    data() {
+        return {
+            c_user: firebase.auth().currentUser,
+            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+            current: 'DH V',
+            drawer: null,
+            items: [
+                { title: 'Home', icon: 'dashboard' },
+                { title: 'About', icon: 'question_answer' },
+            ],
+        };
     },
-    logout() {
-      console.log('logging out');
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            console.log('Logout successful');
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log('Logout unsuccessful');
-            console.log(error);
-          },
-        );
+    methods: {
+        tst() {
+            console.log('FUUUUUUUUUUUCK');
+        },
+        logout() {
+            console.log('logging out');
+            firebase
+                .auth()
+                .signOut()
+                .then(
+                    () => {
+                        console.log('Logout successful');
+                        this.$router.push({ name: 'Login' });
+                    },
+                    error => {
+                        console.log('Logout unsuccessful');
+                        console.log(error);
+                    }
+                );
+        },
     },
-  },
 };
 </script>
 <style scoped src='../assets/css/navbar.css'>

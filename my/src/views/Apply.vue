@@ -737,9 +737,9 @@ p {
 }
 .background {
     background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: inset 1px 4000px rgba(208, 208, 208, 0.6);
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: inset 1px 4000px rgba(208, 208, 208, 0.6);
 }
 .container-status100 {
     width: 100%;
