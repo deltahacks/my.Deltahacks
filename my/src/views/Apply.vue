@@ -27,8 +27,12 @@
                         <strong>When is your birthday? *</strong>
                     </label><br>
                     <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+                    <label for="date" style='float:left'>
+                        <strong>What ethnicity do you identify as? *</strong>
+                    </label><br>
+                    <v-select :items="races" name="race" :disabled="submitted" v-model="application.race" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('race:required')" data-vv-delay="1000"></v-select> 
                     <label for="university" style='float:left'>
-                        <strong>What university do you go to?*</strong>
+                        <strong>What university do you go to? *</strong>
                     </label><br>
                     <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -43,7 +47,7 @@
                         </template>
                     </v-combobox>
                     <label for="major" style='float:left'>
-                        <strong>What do you study?*</strong>
+                        <strong>What do you study? *</strong>
                     </label><br>
                     <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -58,11 +62,11 @@
                         </template>
                     </v-combobox>
                     <label for="major" style='float:left'>
-                        <strong>What degree are you currently pursuing?*</strong>
+                        <strong>What degree are you currently pursuing? *</strong>
                     </label><br>
                     <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
                     <label for="year" style='float:left'>
-                        <strong>What year of school are you in?*</strong>
+                        <strong>What year of school are you in? *</strong>
                     </label><br>
                     <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
                     </v-select>
@@ -70,12 +74,12 @@
                     <h2 style="float:left">{{subsectionLabels[1]}}</h2>
                     <br><br>
                     <label for="shirt size" style='float:left'>
-                        <strong>What's your shirt size?*</strong>
+                        <strong>What's your shirt size? *</strong>
                     </label><br>
                     <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
                     </v-select>
                     <label for="diet" style='float:left'>
-                        <strong>Any dietary restrictions?*</strong>
+                        <strong>Any dietary restrictions? *</strong>
                     </label><br>
                     <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -90,7 +94,7 @@
                         </template>
                     </v-combobox>
                     <label for="hackathons" style='float:left'>
-                        <strong>How many hackathons have you attended?*</strong>
+                        <strong>How many hackathons have you attended? *</strong>
                     </label><br>
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
@@ -100,7 +104,7 @@
                     <v-combobox v-model="application.workshops" :items="workshops" hide-selected multiple persistent-hint small-chips>
                     </v-combobox>
                     <label for="location" style='float:left'>
-                        <strong>Where are you coming from?*</strong>
+                        <strong>Where are you coming from? *</strong>
                     </label><br>
                     <v-combobox name="location" v-model="application.location" :items="cities" :disabled="submitted" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('location:required')" data-vv-delay="1000">
                         <template slot="no-data">
@@ -137,17 +141,17 @@
                     <h2 style="float:left">{{subsectionLabels[3]}}</h2>
                     <br><br>
                     <label for="phone" style='float:left'>
-                        <strong>Your cell phone number*</strong>
+                        <strong>Your cell phone number *</strong>
                     </label><br>
                     <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
                     <label for="emergency phone" style='float:left'>
-                        <strong>Emergency contact number*</strong>
+                        <strong>Emergency contact number *</strong>
                     </label><br>
                     <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
                     <v-container d-inline-flex>
                         <v-flex xs6 sm6>
                             <label for="emergency name" style='float:left'>
-                                <strong>Emergency contact name*</strong>
+                                <strong>Emergency contact name *</strong>
                             </label><br>
                             <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
                         </v-flex>
@@ -155,7 +159,7 @@
                         </v-flex>
                         <v-flex xs6 sm6>
                             <label for="emergency relationship" style=''>
-                                <strong>Emergency contact relationship*</strong>
+                                <strong>Emergency contact relationship *</strong>
                             </label><br>
                             <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                         </v-flex>
@@ -196,9 +200,16 @@
                         </v-layout>
                     </v-container><br>
                     <div class="small font">
-                        <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :label="MLH" :error-messages="checkError"></v-checkbox>
-                        <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError"></v-checkbox>
-                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft" :label="MICROSOFT"></v-checkbox>
+                         <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :error-messages="checkError">
+                            <span style="font-size:0.8em;" class="terms" slot="label">{{MLH}} <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the 
+                            <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.</span>
+                        </v-checkbox>
+                        <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError">
+                            <span style="font-size:0.8em;" slot="label">I have read and agree to the <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
+                        </v-checkbox>
+                        <v-checkbox  name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
+                            <span style="font-size:0.8em;" class="terms" slot="label">{{MICROSOFT}}</span>
+                        </v-checkbox>
 
                     </div>
                     <!-- <v-checkbox name="share"   :disabled="submitted" id="share" v-model="share" :label="MLH"></v-checkbox> -->
@@ -293,6 +304,7 @@ export default {
       bannerTimeout: 3000,
       loadingMessage: "Loading...",
       parent: this,
+      contest_terms:'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
       subsectionLabels: [
         "Personal Information",
         "Logistical stuff",
@@ -309,12 +321,25 @@ export default {
         "Mississauga",
         "Guelph"
       ],
+      races: [
+          'Black / African American',
+          'Hispanic',
+          'East Asian',
+          'South Asian',
+          'Middle Eastern',
+          'Native American',
+          'White / Caucasian',
+          'Multiple ethnicity / Other',
+          'Prefer not to say',
+      ],
       url: "",
       MLH:
-        "I authorize you to share my application with MLH, Deltahacks, and our related sponsors.*",
+                'I authorize you to share my application information for event administration,'
+                + ' ranking, MLH administration, event informational e-mails, and occasional messages about hackathons '
+                + ' in-line with the',
       SHARE:
         "I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*",
-      MICROSOFT: "I am interested in using Microsoft products at DeltaHacks.",
+      MICROSOFT: "I am interested in using Microsoft products at DeltaHacks.", 
       picker: null,
       submitted: false,
       date: "2000-01-01",
@@ -413,6 +438,12 @@ export default {
   computed: {
     q1Progress() {
       return Math.min(100, this.application.q1.length / 5);
+    },
+    q2Progress() {
+      return Math.min(100, this.application.q2.length / 5);
+    },
+    q3Progress() {
+      return Math.min(100, this.application.q3.length / 5);
     },
     validations: {
       name: { required, maxLength: maxLength(10) },
@@ -645,6 +676,20 @@ export default {
       ref.devpost = ref.devpost ? ref.devpost : "";
       ref.lastname = ref.lastname ? ref.lastname : "";
       ref.location = ref.location ? ref.location : "";
+    },
+    getUserAppStatus(userEmail) {
+      return new Promise((resolve, reject) => {
+        this.$store.state.db
+          .collection("applications")
+          .doc("DH5_Test")
+          .collection("submitted")
+          .doc(userEmail)
+          .get()
+          .then(doc => {
+            resolve(doc.exists);
+          })
+          .catch(err => reject(err));
+      });
     },
     beforeMount() {
       this.activateModal("Loading...");
