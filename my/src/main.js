@@ -11,6 +11,14 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VeeValidate from 'vee-validate';
 import VueProgressBar from 'vue-progressbar'
 import VueMouseParallax from 'vue-mouse-parallax'
+const VueAnalytics = require('vue-analytics').default
+
+//Google Analytics code begins
+Vue.use(VueAnalytics, {
+  id: 'UA-105802545-2',
+})
+
+//Google Analytics code ends
 
 Vue.use(VueMouseParallax)
 
