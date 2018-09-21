@@ -29,14 +29,17 @@
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
+          <div style="font-size: 20px; text-align: center; color: #525251;">
+            -or-
+          </div>
           <div class="container-login100-form-btn">
             <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
           <div class="container-login100-form-btn">
-            <v-divider></v-divider>
-            <p style="color: white; cursor: pointer;" @click="forgotpage">
+            <v-divider></v-divider><br>
+            <p style="color: blue; cursor: pointer;" @click="forgotpage">
               Forgot Password?
             </p>
           </div>
@@ -46,10 +49,10 @@
   </div>
 </template>
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data: () => ({
     drawer: null,
     email: null,
@@ -58,28 +61,28 @@ export default {
     loader: null,
     loading: false,
     loaderSignup: null,
-    loadingSignup: false,
+    loadingSignup: false
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: 'Signup' });
+      this.$router.push({ name: "Signup" });
     },
     forgotpage() {
-      this.$router.push({ name: 'Forgot' });
+      this.$router.push({ name: "Forgot" });
     },
     login() {
-      this.loader = 'loading';
+      this.loader = "loading";
       const parent = this;
       if (this.email && this.pass) {
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.pass)
           .then(() => {
-            this.$router.push({ name: 'Status' });
-            console.log('logged in');
+            this.$router.push({ name: "Status" });
+            console.log("logged in");
             this.feedback = null;
           })
-          .catch((error) => {
+          .catch(error => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -87,11 +90,11 @@ export default {
             console.log(errorMessage);
           });
       }
-    },
+    }
   },
   mounted() {},
   props: {
-    source: String,
+    source: String
   },
   watch: {
     loader() {
@@ -100,8 +103,8 @@ export default {
 
       setTimeout(() => (this[l] = false), 3000);
       this.loader = null;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped src='../assets/css/login.css'>

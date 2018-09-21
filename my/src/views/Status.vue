@@ -6,8 +6,9 @@
 
       <div class="hide">
         <div class="wrap-status100">
-          <h1 v-show="step === 0">You haven't started yet! Go <a href="/apply" style="text-decoration: none;font:inherit; color: #a1c4fd;" class=""">here</a> to begin.</h1>
+          <h1 v-show="step === 0">You haven't started yet! Go <a href="/apply" style="text-decoration: none;font:inherit; color: #a1c4fd;" class="">here</a> to begin.</h1>
           <h1 v-show="step > 0">{{currentHeader}}</h1>
+          <br>
           <v-stepper alt-labels class="transp">
               <v-stepper-header>
                 <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
@@ -21,7 +22,6 @@
           </v-stepper>
         </div>
         <br><br><br><br>
-        <v-divider></v-divider>
         <div>
             <v-layout row wrap>
             <v-flex d-flex md3
@@ -59,126 +59,132 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
-import { auth } from 'firebase';
-import db from '../private/firebase_init';
-import Navbar from '@/components/Navbar.vue';
-import Navbar2 from '@/components/Navbar2.vue';
-import Navigation from '@/components/Navigation.vue';
-import { validationMixin } from 'vuelidate';
-import { required, maxLength, email } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
-import { allUniversities } from '../private/data';
+import { auth } from "firebase";
+import db from "../private/firebase_init";
+import Navbar from "@/components/Navbar.vue";
+import Navbar2 from "@/components/Navbar2.vue";
+import Navigation from "@/components/Navigation.vue";
+import { validationMixin } from "vuelidate";
+import { required, maxLength, email } from "vuelidate/lib/validators";
+import { mapGetters } from "vuex";
+import { allUniversities } from "../private/data";
 
 export default {
   mixins: [validationMixin],
-  name: 'Status',
+  name: "Status",
   data() {
     return {
       social: [
         {
-          link: 'https://twitter.com/deltahacks',
-          icon: 'fab fa-twitter',
+          link: "https://twitter.com/deltahacks",
+          icon: "fab fa-twitter"
         },
         {
-          link: 'https://www.facebook.com/thedeltahacks/',
-          icon: 'fab fa-facebook',
+          link: "https://www.facebook.com/thedeltahacks/",
+          icon: "fab fa-facebook"
         },
         {
-          link: 'https://www.instagram.com/deltahacks/',
-          icon: 'fab fa-instagram',
+          link: "https://www.instagram.com/deltahacks/",
+          icon: "fab fa-instagram"
         },
         {
-          link: 'https://www.linkedin.com/company/deltahacks/',
-          icon: 'fab fa-linkedin',
-        },
+          link: "https://www.linkedin.com/company/deltahacks/",
+          icon: "fab fa-linkedin"
+        }
       ],
       parent: this,
       picker: null,
-      date: '2000-01-01',
+      date: "2000-01-01",
       university: null,
       allUniversities,
       dropzoneOptions: {
-        url: 'https://httpbin.org/post',
+        url: "https://httpbin.org/post",
         thumbnailWidth: 150,
         maxFilesize: 0.5,
-        headers: { 'My-Awesome-Header': 'header value' },
+        headers: { "My-Awesome-Header": "header value" },
         addRemoveLinks: true,
-        acceptedFiles: 'application/pdf',
+        acceptedFiles: "application/pdf"
       },
       subheaders: [
-        'You haven\'t yet submitted your application.',
-        'You\'ve submitted your application, stay tuned for updates.',
-        'This application is under review.',
-        'Congratulations, you\'ve been accepted!',
-        'Unfortunately we cannot offer you an invitation this time.',
+        "You haven't submitted your application yet.",
+        "You've submitted your application, stay tuned for updates.",
+        "This application is under review.",
+        "Congratulations, you've been accepted!",
+        "Unfortunately we cannot offer you an invitation this time."
       ],
       application: {
-        name: '',
-        email: '',
+        name: "",
+        email: "",
         school_year: null,
         shirt_size: null,
         dietary_restrictions: null,
         hackathons: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        phone: '',
-        emergency_phone: '',
+        github: "",
+        linkedin: "",
+        website: "",
+        phone: "",
+        emergency_phone: ""
       },
-      links: ['Home', 'About', 'Contact'],
-      story: '',
+      links: ["Home", "About", "Contact"],
+      story: "",
       custom: true,
-      name: '',
+      name: "",
       step: 0,
-      email: '',
+      email: "",
       select: null,
-      items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
-      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-      shirts: ['XS', 'S', 'M', 'L', 'XL'],
-      checkbox: false,
+      items: [
+        "First Year",
+        "Second Year",
+        "Third Year",
+        "Fourth Year",
+        "Fifth Year"
+      ],
+      hackathons: ["This is my first one", "2", "3", "5+", "10+"],
+      food: ["Vegetarian", "Vegan", "Halal", "Gluten Free", "Kosher"],
+      shirts: ["XS", "S", "M", "L", "XL"],
+      checkbox: false
     };
   },
   validations: {
     name: { required, maxLength: maxLength(10) },
     email: { required, email },
     select: { required },
-    checkbox: { required },
+    checkbox: { required }
   },
   components: {
     Navbar,
     Navigation,
-    Navbar2,
+    Navbar2
   },
   computed: {
     baseStep() {
       console.log(this.step === 0);
       if (this.step === 0) {
-        return 'Not Started';
+        return "Not Started";
       }
-      return 'In Progress';
+      return "In Progress";
     },
     currentHeader() {
       return this.subheaders[this.step - 1];
-    },
+    }
   },
   methods: {
     updateStep(doc) {
       if (doc.exists) {
         switch (doc.data().status) {
-          case 'in progress':
+          case "in progress":
             this.step = 1;
             break;
-          case 'submitted':
+          case "submitted":
             this.step = 2;
             break;
-          case 'pending':
+          case "pending":
             this.step = 2;
             break;
-          case 'processing':
+          case "processing":
             this.step = 3;
             break;
-          case 'decided':
+          case "decided":
             this.step = 4;
             break;
           default:
@@ -186,17 +192,20 @@ export default {
         }
         console.log(this.step);
       } else {
-        console.log('Document not found!');
+        console.log("Document not found!");
       }
-    },
+    }
   },
   beforeMount() {
-    console.log('mounted');
+    console.log("mounted");
     const appEmail = auth().currentUser.email;
-    db.collection('users').doc(appEmail).onSnapshot((snap) => {
-      this.updateStep(snap);
-    });
-  },
+    db
+      .collection("users")
+      .doc(appEmail)
+      .onSnapshot(snap => {
+        this.updateStep(snap);
+      });
+  }
 };
 </script>
 <style scoped src='../assets/css/status.css'>
@@ -205,8 +214,8 @@ export default {
   color: inherit;
 }
 #footertext {
-  font-family:'Avenir', Helvetica, Arial, sans-serif;
-  font-weight:bold;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-weight: bold;
   font-size: 1.3em;
   float: left;
 }
