@@ -140,7 +140,6 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  color: white;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -236,6 +235,7 @@ iframe {
 .wrap-input100 {
   width: 100%;
   position: relative;
+  color: #017ef2;
 }
 
 .input100 {

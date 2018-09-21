@@ -1,7 +1,7 @@
 <template>
   <v-toolbar class="toolbar">
     <v-toolbar-title id="title">
-      <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
+      <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=47px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
     </v-toolbar-title>
     <a href="/status" class="button button-hide">STATUS</a>&ensp;
     <a href="/apply" class="button button-hide">APPLY</a>&ensp;
@@ -11,7 +11,7 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-icon class="button-hide" color='white'>person</v-icon>
+    <v-icon color="white" class="button-hide">person</v-icon>
     <a href="/status" class="button button-hide">
       {{c_user.email.toUpperCase()}}</a>
     <div class="text-xs-center">
