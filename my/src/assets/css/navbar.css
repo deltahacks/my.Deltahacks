@@ -1,14 +1,10 @@
 #title {
-  font-family: "Roboto", serif;
-  font-weight: 500;
+  font-family: "Roboto", Helvetica, sans-serif;
+	font-weight: 700;
 }
 #search {
   width: 300px;
   margin-right: 15px;
-}
-.list {
-	font-weight: 700;
-	color: white;
 }
 .bold {
   font-weight: 600;
