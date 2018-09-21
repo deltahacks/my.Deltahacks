@@ -7,8 +7,9 @@
       <div class="hide">
         <div class="wrap-status100">
           <h1 v-show="step === 0">You haven't started yet! Go
-            <a href="/apply" style="text-decoration: none;font:inherit; color: #a1c4fd;" class="" ">here</a> to begin.</h1>
-          <h1 v-show="step> 0">{{currentHeader}}</h1>
+            <a href="/apply" style="text-decoration: none;font:inherit; color: #a1c4fd;" class="">here</a> to begin.</h1>
+          <h1 v-show="step > 0">{{currentHeader}}</h1>
+          <br>
           <v-stepper alt-labels class="transp">
             <v-stepper-header>
               <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
@@ -22,7 +23,6 @@
           </v-stepper>
         </div>
         <br><br><br><br>
-        <v-divider></v-divider>
         <div>
           <v-layout row wrap>
             <v-flex d-flex md3 :key="media" v-for="media in social">
@@ -112,7 +112,7 @@ export default {
                 acceptedFiles: 'application/pdf',
             },
             subheaders: [
-                "You haven't yet submitted your application.",
+                "You haven't submitted your application yet.",
                 "You've submitted your application, stay tuned for updates.",
                 'This application is under review.',
                 "Congratulations, you've been accepted!",

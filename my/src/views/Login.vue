@@ -29,14 +29,17 @@
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
+          <div style="font-size: 20px; text-align: center; color: #525251;">
+            -or-
+          </div>
           <div class="container-login100-form-btn">
             <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
           <div class="container-login100-form-btn">
-            <v-divider></v-divider>
-            <p style="color: white; cursor: pointer;" @click="forgotpage">
+            <v-divider></v-divider><br>
+            <p style="color: blue; cursor: pointer;" @click="forgotpage">
               Forgot Password?
             </p>
           </div>
