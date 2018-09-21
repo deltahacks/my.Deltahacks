@@ -59,7 +59,7 @@
                         </template>
                     </v-combobox>
                     <label for="major" style='float:left'>
-                        <strong>What degree are you currently pursuing? *</strong>
+                        <strong>What degree are you pursuing? *</strong>
                     </label><br>
                     <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
                     <label for="year" style='float:left'>
@@ -91,15 +91,15 @@
                         </template>
                     </v-combobox>
                     <label for="hackathons" style='float:left'>
-                        <strong>How many hackathons have you attended? *</strong>
+                        <strong>Hackathons attended? *</strong>
                     </label><br>
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
                     <v-flex xs12>
                         <label for="workshops" style='float:left'>
-                            <strong>What workshops would you be interested in attending?</strong>
+                            <strong>Any workshops you'd be interested in?</strong>
                         </label><br>
-                        <v-combobox v-model="application.workshops" clearable small-chips allow-overflow :items="workshops" :disabled="submitted" @change="formChange" hide-selected multiple>
+                        <v-combobox v-model="application.workshops" deletable-chips small-chips :items="workshops" :disabled="submitted" @change="formChange" hide-selected multiple>
                         </v-combobox>
                     </v-flex>
                     <label for="discover" style="float:left">
@@ -574,7 +574,6 @@ export default {
                 .doc(firebase.auth().currentUser.email)
                 .set(this.application)
                 .then(() => {
-                    console.log('saving...');
                     this.showInfoMessage('Application progress saved!');
                 })
                 .catch(err => {
@@ -606,7 +605,6 @@ export default {
                     this.loading = false;
                 })
                 .catch(err => {
-                    console.log(err);
                     this.loading = false;
                 });
         },
