@@ -20,10 +20,6 @@
                         <strong>What's your last name?*</strong>
                     </label><br>
                     <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.lastname" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
-                    <!-- find a better way of including this in form -->
-                    <!-- <v-text-field name="email" :disabled="submitted" v-model="application.email" label="What email should we use to contact you?" v-validate="{required:true, email:true, max:100}" :error-messages="errors.first('email')" data-vv-delay="5000"></v-text-field> -->
-                    <!-- <v-date-picker name="date" v-model="date" color="green lighten-1"
-                    v-validate="'required:true'"></v-date-picker> -->
                     <label for="date" style='float:left'>
                         <strong>When is your birthday? *</strong>
                     </label><br>
@@ -100,12 +96,16 @@
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
                     <v-flex xs12>
-                        <label for="hackathons" style='float:left'>
+                        <label for="workshops" style='float:left'>
                             <strong>What workshops would you be interested in attending?</strong>
                         </label><br>
                         <v-combobox v-model="application.workshops" clearable small-chips allow-overflow :items="workshops" :disabled="submitted" @change="formChange" hide-selected multiple>
                         </v-combobox>
                     </v-flex>
+                    <label for="discover" style="float:left">
+                        <strong>How did you here about us? *</strong>
+                    </label><br>
+                    <v-select v-model="application.discover" :disabled="submitted" @change="formChange" :items="methods" v-validate="{required:true}" name="discover" id='diet' :error-messages="errors.first('discover:required')" data-vv-delay="1000"></v-select>
                     <label for="location" style='float:left'>
                         <strong>Where are you coming from? *</strong>
                     </label><br>
@@ -303,6 +303,13 @@ export default {
                 'Emergency Info',
                 'Application Questions',
             ],
+            methods: [
+                'A friend',
+                'MLH',
+                'Facebook',
+                'Twitter',
+                'Posters',
+            ],
             cities: [
                 'Toronto',
                 'Hamilton',
@@ -353,6 +360,7 @@ export default {
                 dietary_restrictions: null,
                 hackathons: null,
                 university: null,
+                discover: null,
                 github: '',
                 linkedin: '',
                 website: '',
@@ -482,6 +490,7 @@ export default {
                 dietary_restrictions: null,
                 hackathons: null,
                 university: null,
+                discover: null,
                 github: '',
                 linkedin: '',
                 website: '',
