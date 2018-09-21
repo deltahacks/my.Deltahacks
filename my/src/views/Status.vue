@@ -25,7 +25,7 @@
         <br><br><br><br>
         <div>
           <v-layout row wrap>
-            <v-flex d-flex md3 :key="media" v-for="media in social">
+            <v-flex d-flex md3 :key="media.icon" v-for="media in social">
               <div>
                 <v-btn class="mx-3" dark icon :href="media.link">
                   <v-icon size="24px">{{ media.icon }}</v-icon>
@@ -38,10 +38,12 @@
 
       <div class="mobile">
         <div class="wrap-status101">
-          <h1>This application is still under review</h1>
+          <h1 v-show="step === 0">You haven't started yet! Go
+            <a href="/apply" style="text-decoration: none;font:inherit; color: #a1c4fd;" class="">here</a> to begin.</h1>
+          <h1 v-show="step > 0">{{currentHeader}}</h1>
           <v-card-text></v-card-text>
-          <v-stepper vertical class="transp">
-            <v-stepper-step :complete="step > 0" step="1">In Progress</v-stepper-step>
+          <v-stepper vertical class="wrap-status201">
+            <v-stepper-step :complete="step > 0" step="1">{{baseStep}}</v-stepper-step>
             <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
             <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
             <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
