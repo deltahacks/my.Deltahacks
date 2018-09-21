@@ -28,33 +28,33 @@
     </v-toolbar-items>
     <v-chip color="white" text-color="black" class="clickable, hide-chip" style="margin: 0px 40px">
       <v-avatar>
-        <v-icon>account_circle</v-icon>
+        <v-icon large :color='rgba(255, 255, 0, 0.5)'>account_cidrcle</v-icon>
       </v-avatar>
       {{c_user.email}}
     </v-chip>
-    <!-- <v-chip  class="clickable" @click.prevent="logout" v-if="c_user">
+    <!-- <v-chip  class="clickable " @click.prevent="logout " v-if="c_user ">
         Logout
       </v-chip> -->
     <v-spacer></v-spacer>
 
-    <div class="text-xs-center, hide-nav">
+    <div class="text-xs-center, hide-nav ">
       <v-menu offset-y>
-        <v-btn slot="activator" color="grey darken-3" dark right>Menu</v-btn>
+        <v-btn slot="activator " color="grey darken-3 " dark right>Menu</v-btn>
 
         <v-list>
-          <v-list-tile to="/status">
-            <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
+          <v-list-tile to="/status ">
+            <v-list-tile-title v-if="c_user ">Status</v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile to="/apply">
-            <v-list-tile-title v-if="c_user">Apply</v-list-tile-title>
+          <v-list-tile to="/apply ">
+            <v-list-tile-title v-if="c_user ">Apply</v-list-tile-title>
           </v-list-tile>
 
-          <!-- <v-list-tile to="/">
+          <!-- <v-list-tile to="/ ">
             <v-list-tile-title>Contact</v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile to="/">
+          <v-list-tile to="/ ">
             <v-list-tile-title>FAQ</v-list-tile-title>
           </v-list-tile> -->
 

@@ -11,13 +11,13 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
-    <v-icon class="button-hide">person</v-icon>
+    <v-icon class="button-hide" color='white'>person</v-icon>
     <a href="/status" class="button button-hide">
       {{c_user.email.toUpperCase()}}</a>
     <div class="text-xs-center">
       <v-menu offset-y>
         <v-avatar>
-          <v-icon>account_circle</v-icon>
+          <v-icon :color='white'>account_circle</v-icon>
         </v-avatar>
 
         <v-list style="background-color:#85F8B5;">
