@@ -12,11 +12,11 @@
                     <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
                     <br><br>
                     <label for="name" style='float:left'>
-                        <strong>What's your first name?</strong>
+                        <strong>What's your first name?*</strong>
                     </label><br>
                     <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                     <label for="name" style='float:left'>
-                        <strong>What's your last name?</strong>
+                        <strong>What's your last name?*</strong>
                     </label><br>
                     <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.lastname" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
                     <!-- find a better way of including this in form -->
@@ -30,7 +30,7 @@
                     <label for="date" style='float:left'>
                         <strong>What ethnicity do you identify as? *</strong>
                     </label><br>
-                    <v-select :items="races" name="race" :disabled="submitted" v-model="application.race" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('race:required')" data-vv-delay="1000"></v-select> 
+                    <v-select :items="races" name="race" :disabled="submitted" v-model="application.race" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('race:required')" data-vv-delay="1000"></v-select>
                     <label for="university" style='float:left'>
                         <strong>What university do you go to? *</strong>
                     </label><br>
@@ -200,14 +200,16 @@
                         </v-layout>
                     </v-container><br>
                     <div class="small font">
-                         <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :error-messages="checkError">
-                            <span style="font-size:0.8em;" class="terms" slot="label">{{MLH}} <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the 
-                            <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.</span>
+                        <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :error-messages="checkError">
+                            <span style="font-size:0.8em;" class="terms" slot="label">{{MLH}}
+                                <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the
+                                <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.</span>
                         </v-checkbox>
                         <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError">
-                            <span style="font-size:0.8em;" slot="label">I have read and agree to the <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
+                            <span style="font-size:0.8em;" slot="label">I have read and agree to the
+                                <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
                         </v-checkbox>
-                        <v-checkbox  name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
+                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
                             <span style="font-size:0.8em;" class="terms" slot="label">{{MICROSOFT}}</span>
                         </v-checkbox>
 
@@ -262,487 +264,474 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
-import firebase from "firebase";
-import vueFilePond from "vue-filepond";
-import "filepond/dist/filepond.min.css";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import debounce from "debounce";
-import Navbar from "@/components/Navbar.vue";
-import Navigation from "@/components/Navigation.vue";
-import Navbar2 from "@/components/Navbar2.vue";
-import { validationMixin } from "vuelidate";
-import { Validator } from "vee-validate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
-import { mapGetters } from "vuex";
-import { majors, allUniversities } from "../private/data";
+import firebase from 'firebase';
+import vueFilePond from 'vue-filepond';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import debounce from 'debounce';
+import Navbar from '@/components/Navbar.vue';
+import Navigation from '@/components/Navigation.vue';
+import Navbar2 from '@/components/Navbar2.vue';
+import { validationMixin } from 'vuelidate';
+import { Validator } from 'vee-validate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import { majors, allUniversities } from '../private/data';
 // import { setTimeout } from 'timers';
 
-const FilePond = vueFilePond(
-  FilePondPluginFileValidateType,
-  FilePondPluginImagePreview
-);
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 export default {
-  mixins: [validationMixin],
-  name: "Apply",
-  data() {
-    return {
-      myFiles: [],
-      loading: false,
-      feedback: false,
-      confirm: false,
-      confirmClear: false,
-      editing: false,
-      existing_doc: undefined,
-      checkError: undefined,
-      shareError: undefined,
-      pondError: undefined,
-      bannerColor: "success",
-      bannerMessage: "Complete!",
-      bannerTimeout: 3000,
-      loadingMessage: "Loading...",
-      parent: this,
-      contest_terms:'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
-      subsectionLabels: [
-        "Personal Information",
-        "Logistical stuff",
-        "Your profiles",
-        "Emergency info",
-        "Application questions"
-      ],
-      cities: [
-        "Toronto",
-        "Waterloo",
-        "London",
-        "Montreal",
-        "Ottawa",
-        "Mississauga",
-        "Guelph"
-      ],
-      races: [
-          'Black / African American',
-          'Hispanic',
-          'East Asian',
-          'South Asian',
-          'Middle Eastern',
-          'Native American',
-          'White / Caucasian',
-          'Multiple ethnicity / Other',
-          'Prefer not to say',
-      ],
-      url: "",
-      MLH:
-                'I authorize you to share my application information for event administration,'
-                + ' ranking, MLH administration, event informational e-mails, and occasional messages about hackathons '
-                + ' in-line with the',
-      SHARE:
-        "I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*",
-      MICROSOFT: "I am interested in using Microsoft products at DeltaHacks.", 
-      picker: null,
-      submitted: false,
-      date: "2000-01-01",
-      university: null,
-      timeout: null,
-      allUniversities,
-      majors,
-      application: {
-        name: "",
-        lastname: "",
-        email: firebase.auth().currentUser.email,
-        last_modified: undefined,
-        first_submitted: undefined,
-        school_year: null,
-        shirt_size: null,
-        dietary_restrictions: null,
-        hackathons: null,
-        university: null,
-        github: "",
-        linkedin: "",
-        website: "",
-        devpost: "",
-        phone: "",
-        emergency_phone: "",
-        emergency_name: "",
-        q1: "",
-        q2: "",
-        q3: "",
-        q4: "",
-        meme: "",
-        major: "",
-        location: "",
-        workshops: [],
-        degree: "",
-        birthday: "",
-        documents: []
-      },
-      links: ["Home", "About", "Contact"],
-      q1: "",
-      custom: true,
-      name: "",
-      email: "",
-      select: null,
-      items: [
-        "First Year",
-        "Second Year",
-        "Third Year",
-        "Fourth Year",
-        "Fifth Year",
-        "Sixth Year"
-      ],
-      workshops: [
-        "NodeJs",
-        "ReactJs/VueJs",
-        "Blockchain",
-        "Machine Learning",
-        "Buzzwords",
-        "Android development",
-        "iOS development",
-        "Web Development",
-        "Intro to AR/VR",
-        "Blockchain",
-        "Hardware hacking",
-        "Computer Vision with OpenCV"
-      ],
-      hackathons: ["This is my first one", "2", "3", "4", "5-9", "10+"],
-      food: ["None", "Vegetarian", "Vegan", "Halal", "Gluten Free", "Kosher"],
-      shirts: ["XS", "S", "M", "L", "XL"],
-      degrees: ["Bachelors", "Masters", "PhD"],
-      relations: [
-        "Parent",
-        "Grandparent",
-        "Sibling",
-        "Partner",
-        "Friend",
-        "Other"
-      ],
-      checkbox: false,
-      share: false,
-      microsoft: false
-    };
-  },
-  validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    select: { required },
-    checkbox: { required },
-    university: { in: allUniversities }
-  },
-  components: {
-    Navbar,
-    FilePond,
-    Navigation,
-    Navbar2
-  },
-  computed: {
-    q1Progress() {
-      return Math.min(100, this.application.q1.length / 5);
-    },
-    q2Progress() {
-      return Math.min(100, this.application.q2.length / 5);
-    },
-    q3Progress() {
-      return Math.min(100, this.application.q3.length / 5);
+    mixins: [validationMixin],
+    name: 'Apply',
+    data() {
+        return {
+            myFiles: [],
+            loading: false,
+            feedback: false,
+            confirm: false,
+            confirmClear: false,
+            editing: false,
+            existing_doc: undefined,
+            checkError: undefined,
+            shareError: undefined,
+            pondError: undefined,
+            bannerColor: 'success',
+            bannerMessage: 'Complete!',
+            bannerTimeout: 3000,
+            loadingMessage: 'Loading...',
+            parent: this,
+            contest_terms:
+                'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
+            subsectionLabels: [
+                'Personal Information',
+                'Logistical stuff',
+                'Your profiles',
+                'Emergency info',
+                'Application questions',
+            ],
+            cities: [
+                'Toronto',
+                'Waterloo',
+                'London',
+                'Montreal',
+                'Ottawa',
+                'Mississauga',
+                'Guelph',
+            ],
+            races: [
+                'Black / African American',
+                'Hispanic',
+                'East Asian',
+                'South Asian',
+                'Middle Eastern',
+                'Native American',
+                'White / Caucasian',
+                'Multiple ethnicity / Other',
+                'Prefer not to say',
+            ],
+            url: '',
+            MLH:
+                'I authorize you to share my application information for event administration,' +
+                ' ranking, MLH administration, event informational e-mails, and occasional messages about hackathons ' +
+                ' in-line with the',
+            SHARE:
+                'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
+            MICROSOFT: 'I am interested in using Microsoft products at DeltaHacks.',
+            picker: null,
+            submitted: false,
+            date: '2000-01-01',
+            university: null,
+            timeout: null,
+            allUniversities,
+            majors,
+            application: {
+                name: '',
+                lastname: '',
+                email: firebase.auth().currentUser.email,
+                last_modified: undefined,
+                first_submitted: undefined,
+                school_year: null,
+                shirt_size: null,
+                dietary_restrictions: null,
+                hackathons: null,
+                university: null,
+                github: '',
+                linkedin: '',
+                website: '',
+                devpost: '',
+                phone: '',
+                emergency_phone: '',
+                emergency_name: '',
+                q1: '',
+                q2: '',
+                q3: '',
+                q4: '',
+                meme: '',
+                major: '',
+                location: '',
+                workshops: [],
+                degree: '',
+                birthday: '',
+                documents: [],
+            },
+            links: ['Home', 'About', 'Contact'],
+            q1: '',
+            custom: true,
+            name: '',
+            email: '',
+            select: null,
+            items: [
+                'First Year',
+                'Second Year',
+                'Third Year',
+                'Fourth Year',
+                'Fifth Year',
+                'Sixth Year',
+            ],
+            workshops: [
+                'NodeJs',
+                'ReactJs/VueJs',
+                'Blockchain',
+                'Machine Learning',
+                'Buzzwords',
+                'Android development',
+                'iOS development',
+                'Web Development',
+                'Intro to AR/VR',
+                'Blockchain',
+                'Hardware hacking',
+                'Computer Vision with OpenCV',
+            ],
+            hackathons: ['This is my first one', '2', '3', '4', '5-9', '10+'],
+            food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+            shirts: ['XS', 'S', 'M', 'L', 'XL'],
+            degrees: ['Bachelors', 'Masters', 'PhD'],
+            relations: ['Parent', 'Grandparent', 'Sibling', 'Partner', 'Friend', 'Other'],
+            checkbox: false,
+            share: false,
+            microsoft: false,
+        };
     },
     validations: {
-      name: { required, maxLength: maxLength(10) },
-      email: { required, email },
-      select: { required },
-      checkbox: { required },
-      university: { in: allUniversities }
+        name: { required, maxLength: maxLength(10) },
+        email: { required, email },
+        select: { required },
+        checkbox: { required },
+        university: { in: allUniversities },
     },
     components: {
-      Navbar,
-      FilePond,
-      Navigation,
-      Navbar2
+        Navbar,
+        FilePond,
+        Navigation,
+        Navbar2,
     },
-    q1Color() {
-      return ["error", "warning", "success"][Math.floor(this.q1Progress / 40)];
+    computed: {
+        q1Progress() {
+            return Math.min(100, this.application.q1.length / 5);
+        },
+        q2Progress() {
+            return Math.min(100, this.application.q2.length / 5);
+        },
+        q3Progress() {
+            return Math.min(100, this.application.q3.length / 5);
+        },
+        validations: {
+            name: { required, maxLength: maxLength(10) },
+            email: { required, email },
+            select: { required },
+            checkbox: { required },
+            university: { in: allUniversities },
+        },
+        components: {
+            Navbar,
+            FilePond,
+            Navigation,
+            Navbar2,
+        },
+        q1Color() {
+            return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
+        },
+        q2Color() {
+            return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
+        },
+        q3Color() {
+            return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
+        },
+        currentUser() {
+            return firebase.auth().currentUser;
+        },
+        haveFile() {
+            return this.editing && this.application.documents.filename;
+        },
+        agreed() {
+            return this.checkbox && this.share;
+        },
     },
-    q2Color() {
-      return ["error", "warning", "success"][Math.floor(this.q2Progress / 40)];
-    },
-    q3Color() {
-      return ["error", "warning", "success"][Math.floor(this.q3Progress / 40)];
-    },
-    currentUser() {
-      return firebase.auth().currentUser;
-    },
-    haveFile() {
-      return this.editing && this.application.documents.filename;
-    },
-    agreed() {
-      return this.checkbox && this.share;
-    }
-  },
-  methods: {
-    handleFilePondInit() {
-      console.log("FilePond has initialized");
-      // FilePond instance methods are available on `this.$refs.pond`
-    },
-    getEmptyApplication() {
-      return {
-        name: "",
-        lastname: "",
-        email: firebase.auth().currentUser.email,
-        last_modified: undefined,
-        first_submitted: undefined,
-        school_year: null,
-        shirt_size: null,
-        dietary_restrictions: null,
-        hackathons: null,
-        university: null,
-        github: "",
-        linkedin: "",
-        website: "",
-        devpost: "",
-        phone: "",
-        emergency_phone: "",
-        q1: "",
-        q2: "",
-        q3: "",
-        q4: "",
-        meme: "",
-        major: "",
-        location: "",
-        birthday: "",
-        documents: []
-      };
-    },
-    clearForm() {
-      this.confirmClear = false;
-      this.application = this.getEmptyApplication();
-    },
-    activateModal(msg) {
-      this.loading = true;
-      this.loadingMessage = msg;
-    },
-    toggleCheck() {
-      this.checkbox = !this.checkbox;
-    },
-    validateBeforeSubmit() {
-      return this.$validator.validateAll();
-    },
-    formChange() {
-      console.log("Change detected");
-      if (this.timeout) {
-        clearTimeout(this.timeout);
-        this.timeout = null;
-      }
-      this.timeout = setTimeout(() => {
-        this.setApplicationInProgress();
-      }, 2000);
-    },
-    showInfoMessage(msg) {
-      this.bannerMessage = msg;
-      this.bannerColor = "success";
-      this.feedback = true;
-    },
-    showErrorMessage(msg) {
-      this.bannerMessage = msg;
-      this.bannerColor = "error";
-      this.feedback = true;
-    },
-    async submitFileInfoOnDrop() {
-      const files = this.$refs.pond.getFiles();
-      try {
-        if (this.submitted) {
-          this.$refs.pond.removeFile(0);
-          return;
-        }
-        const info = await this.storeFileAndGetInfo(files[0]);
-        this.application.documents = info;
-        this.setApplicationInProgress();
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    setApplicationInProgress() {
-      if (this.submitted) return;
-      const unixts = Math.round(new Date().getTime() / 1000);
-      this.application.last_modified = {
-        unix: unixts,
-        date: new Date().toString()
-      };
-      this.application.first_submitted = {
-        unix: 0,
-        date: ""
-      };
-      this.$store.state.db
-        .collection("applications")
-        .doc("DH5_Test")
-        .collection("in progress")
-        .doc(firebase.auth().currentUser.email)
-        .set(this.application)
-        .then(() => {
-          console.log("saving...");
-          this.showInfoMessage("Application progress saved!");
-        })
-        .catch(err => {
-          console.log(err);
-          this.loading = false;
-        });
-    },
-    setDateInformation() {
-      const unixts = Math.round(new Date().getTime() / 1000);
-      this.application.first_submitted = {
-        unix: unixts,
-        date: new Date().toString()
-      };
-      this.application.last_modified = {
-        unix: unixts,
-        date: new Date().toString()
-      };
-    },
-    setApplication() {
-      this.setDateInformation();
-      this.$store.state.db
-        .collection("applications")
-        .doc("DH5_Test")
-        .collection("submitted")
-        .doc(firebase.auth().currentUser.email)
-        .set(this.application)
-        .then(() => {
-          this.$router.push({ name: "Status" });
-          this.loading = false;
-        })
-        .catch(err => {
-          console.log(err);
-          this.loading = false;
-        });
-    },
-    storeFileAndGetInfo(doc) {
-      if (!doc) return;
-      const { filename, file, id } = doc;
-      const storeRef = firebase.storage().ref();
-      return new Promise((resolve, reject) => {
-        storeRef
-          .child(
-            `hackathon/DH5/users/${
-              firebase.auth().currentUser.email
-            }/${filename}`
-          )
-          .put(file)
-          .then(snapshot => {
-            snapshot.ref.getDownloadURL().then(url => {
-              resolve({
-                download_link: url,
-                id,
-                filename
-              });
+    methods: {
+        handleFilePondInit() {
+            console.log('FilePond has initialized');
+            // FilePond instance methods are available on `this.$refs.pond`
+        },
+        getEmptyApplication() {
+            return {
+                name: '',
+                lastname: '',
+                email: firebase.auth().currentUser.email,
+                last_modified: undefined,
+                first_submitted: undefined,
+                school_year: null,
+                shirt_size: null,
+                dietary_restrictions: null,
+                hackathons: null,
+                university: null,
+                github: '',
+                linkedin: '',
+                website: '',
+                devpost: '',
+                phone: '',
+                emergency_phone: '',
+                q1: '',
+                q2: '',
+                q3: '',
+                q4: '',
+                meme: '',
+                major: '',
+                location: '',
+                birthday: '',
+                documents: [],
+            };
+        },
+        clearForm() {
+            this.confirmClear = false;
+            this.application = this.getEmptyApplication();
+        },
+        activateModal(msg) {
+            this.loading = true;
+            this.loadingMessage = msg;
+        },
+        toggleCheck() {
+            this.checkbox = !this.checkbox;
+        },
+        validateBeforeSubmit() {
+            return this.$validator.validateAll();
+        },
+        formChange() {
+            console.log('Change detected');
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+                this.timeout = null;
+            }
+            this.timeout = setTimeout(() => {
+                this.setApplicationInProgress();
+            }, 2000);
+        },
+        showInfoMessage(msg) {
+            this.bannerMessage = msg;
+            this.bannerColor = 'success';
+            this.feedback = true;
+        },
+        showErrorMessage(msg) {
+            this.bannerMessage = msg;
+            this.bannerColor = 'error';
+            this.feedback = true;
+        },
+        async submitFileInfoOnDrop() {
+            const files = this.$refs.pond.getFiles();
+            try {
+                if (this.submitted) {
+                    this.$refs.pond.removeFile(0);
+                    return;
+                }
+                const info = await this.storeFileAndGetInfo(files[0]);
+                this.application.documents = info;
+                this.setApplicationInProgress();
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        setApplicationInProgress() {
+            if (this.submitted) return;
+            const unixts = Math.round(new Date().getTime() / 1000);
+            this.application.last_modified = {
+                unix: unixts,
+                date: new Date().toString(),
+            };
+            this.application.first_submitted = {
+                unix: 0,
+                date: '',
+            };
+            this.$store.state.db
+                .collection('applications')
+                .doc('DH5_Test')
+                .collection('in progress')
+                .doc(firebase.auth().currentUser.email)
+                .set(this.application)
+                .then(() => {
+                    console.log('saving...');
+                    this.showInfoMessage('Application progress saved!');
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.loading = false;
+                });
+        },
+        setDateInformation() {
+            const unixts = Math.round(new Date().getTime() / 1000);
+            this.application.first_submitted = {
+                unix: unixts,
+                date: new Date().toString(),
+            };
+            this.application.last_modified = {
+                unix: unixts,
+                date: new Date().toString(),
+            };
+        },
+        setApplication() {
+            this.setDateInformation();
+            this.$store.state.db
+                .collection('applications')
+                .doc('DH5_Test')
+                .collection('submitted')
+                .doc(firebase.auth().currentUser.email)
+                .set(this.application)
+                .then(() => {
+                    this.$router.push({ name: 'Status' });
+                    this.loading = false;
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.loading = false;
+                });
+        },
+        storeFileAndGetInfo(doc) {
+            if (!doc) return;
+            const { filename, file, id } = doc;
+            const storeRef = firebase.storage().ref();
+            return new Promise((resolve, reject) => {
+                storeRef
+                    .child(`hackathon/DH5/users/${firebase.auth().currentUser.email}/${filename}`)
+                    .put(file)
+                    .then(snapshot => {
+                        snapshot.ref.getDownloadURL().then(url => {
+                            resolve({
+                                download_link: url,
+                                id,
+                                filename,
+                            });
+                        });
+                    })
+                    .catch(err => reject(err));
             });
-          })
-          .catch(err => reject(err));
-      });
-    },
-    async submitApplication() {
-      this.confirm = false;
-      if (!await this.validateBeforeSubmit()) {
-        return;
-      } else if (!this.checkbox) {
-        this.checkError = "Please accept the terms and conditions to continue.";
-        return;
-      } else if (!this.share) {
-        this.shareError = "You must agree to these terms in order to proceed.";
-        return;
-      }
+        },
+        async submitApplication() {
+            this.confirm = false;
+            if (!await this.validateBeforeSubmit()) {
+                return;
+            } else if (!this.checkbox) {
+                this.checkError = 'Please accept the terms and conditions to continue.';
+                return;
+            } else if (!this.share) {
+                this.shareError = 'You must agree to these terms in order to proceed.';
+                return;
+            }
 
-      const files = this.$refs.pond.getFiles();
-      this.activateModal("Submitting application...");
-      const resume = files[0];
-      const results = [];
-      if (resume) {
-        results.push(this.storeFileAndGetInfo(files[0]));
-        this.application.documents = await Promise.all(results).catch(err => {
-          console.log(`Upload Failed: ${err}`);
-          this.loading = false;
-        });
-      }
-      this.setApplication();
-    },
-    insertUserFileData(doc) {
-      this.$refs.pond.addFile(doc.download_link);
-    },
-    fillApplicationFields() {
-      const ref = this.application;
-      ref.q1 = ref.q1 ? ref.q1 : "";
-      ref.q2 = ref.q2 ? ref.q2 : "";
-      ref.q3 = ref.q3 ? ref.q3 : "";
-      ref.q4 = ref.q4 ? ref.q4 : "";
-      ref.meme = ref.meme ? ref.meme : "";
-      ref.workshops = ref.workshops ? ref.workshops : [];
-      ref.devpost = ref.devpost ? ref.devpost : "";
-      ref.lastname = ref.lastname ? ref.lastname : "";
-      ref.location = ref.location ? ref.location : "";
-    },
-    getUserAppStatus(userEmail) {
-      return new Promise((resolve, reject) => {
-        this.$store.state.db
-          .collection("applications")
-          .doc("DH5_Test")
-          .collection("submitted")
-          .doc(userEmail)
-          .get()
-          .then(doc => {
-            resolve(doc.exists);
-          })
-          .catch(err => reject(err));
-      });
+            const files = this.$refs.pond.getFiles();
+            this.activateModal('Submitting application...');
+            const resume = files[0];
+            const results = [];
+            if (resume) {
+                results.push(this.storeFileAndGetInfo(files[0]));
+                this.application.documents = await Promise.all(results).catch(err => {
+                    console.log(`Upload Failed: ${err}`);
+                    this.loading = false;
+                });
+            }
+            this.setApplication();
+        },
+        insertUserFileData(doc) {
+            this.$refs.pond.addFile(doc.download_link);
+        },
+        fillApplicationFields() {
+            const ref = this.application;
+            ref.q1 = ref.q1 ? ref.q1 : '';
+            ref.q2 = ref.q2 ? ref.q2 : '';
+            ref.q3 = ref.q3 ? ref.q3 : '';
+            ref.q4 = ref.q4 ? ref.q4 : '';
+            ref.meme = ref.meme ? ref.meme : '';
+            ref.workshops = ref.workshops ? ref.workshops : [];
+            ref.devpost = ref.devpost ? ref.devpost : '';
+            ref.lastname = ref.lastname ? ref.lastname : '';
+            ref.location = ref.location ? ref.location : '';
+        },
+        getUserAppStatus(userEmail) {
+            return new Promise((resolve, reject) => {
+                this.$store.state.db
+                    .collection('applications')
+                    .doc('DH5_Test')
+                    .collection('submitted')
+                    .doc(userEmail)
+                    .get()
+                    .then(doc => {
+                        resolve(doc.exists);
+                    })
+                    .catch(err => reject(err));
+            });
+        },
+        beforeMount() {
+            this.activateModal('Loading...');
+            const userEmail = firebase.auth().currentUser.email;
+            this.$store.state.db
+                .collection('applications')
+                .doc('DH5_Test')
+                .collection('submitted')
+                .doc(userEmail)
+                .get()
+                .then(doc => {
+                    resolve(doc.exists);
+                })
+                .catch(err => reject(err));
+        },
     },
     beforeMount() {
-      this.activateModal("Loading...");
-      const userEmail = firebase.auth().currentUser.email;
-      this.$store.state.db
-        .collection("applications")
-        .doc("DH5_Test")
-        .collection("submitted")
-        .doc(userEmail)
-        .get()
-        .then(doc => {
-          resolve(doc.exists);
-        })
-        .catch(err => reject(err));
-    }
-  },
-  beforeMount() {
-    this.activateModal("Loading...");
-    const userEmail = firebase.auth().currentUser.email;
-    this.$store.state.db
-      .collection("applications")
-      .doc("DH5_Test")
-      .collection("in progress")
-      .doc(userEmail)
-      .get()
-      .then(async doc => {
-        const submitted = await this.getUserAppStatus(userEmail);
-        if (submitted) {
-          this.editing = true;
-          this.submitted = true;
-          this.checkbox = true;
-          this.share = true;
-          this.application = doc.data();
-          this.fillApplicationFields();
-          this.loading = false;
-        } else if (doc.exists) {
-          this.editing = true;
-          this.application = doc.data();
-          this.fillApplicationFields();
-          // this.insertUserFileData(this.application.documents);
-          this.loading = false;
-        } else {
-          console.log("Document not found!");
-          this.editing = false;
-          this.loading = false;
-        }
-      })
-      .catch(err => {
-        console.log("User app query failed.");
-        console.log(err);
-        this.loading = false;
-      });
-  }
+        this.activateModal('Loading...');
+        const userEmail = firebase.auth().currentUser.email;
+        this.$store.state.db
+            .collection('applications')
+            .doc('DH5_Test')
+            .collection('in progress')
+            .doc(userEmail)
+            .get()
+            .then(async doc => {
+                const submitted = await this.getUserAppStatus(userEmail);
+                if (submitted) {
+                    this.editing = true;
+                    this.submitted = true;
+                    this.checkbox = true;
+                    this.share = true;
+                    this.application = doc.data();
+                    this.fillApplicationFields();
+                    this.loading = false;
+                } else if (doc.exists) {
+                    this.editing = true;
+                    this.application = doc.data();
+                    this.fillApplicationFields();
+                    // this.insertUserFileData(this.application.documents);
+                    this.loading = false;
+                } else {
+                    console.log('Document not found!');
+                    this.editing = false;
+                    this.loading = false;
+                }
+            })
+            .catch(err => {
+                console.log('User app query failed.');
+                console.log(err);
+                this.loading = false;
+            });
+    },
 };
 </script>
 
