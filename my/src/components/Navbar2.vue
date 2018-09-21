@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar class="toolbar">
+  <v-toolbar class="toolbar" style="background-color:rgba(0,0,0,0.3)">
     <v-toolbar-title id="title">
       <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=47px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
     </v-toolbar-title>
@@ -38,7 +38,7 @@
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
 
-        <v-list style="background-color:transparent;">
+        <v-list style="background-color:rgba(0,0,0,0.3);">
 
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>

@@ -172,7 +172,7 @@
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
-                                <p class="text-lg-left">Why do you want to come to Deltahacks V, what is one thing that you are passionate to bring to this years hackathon?*</p>
+                                <p class="text-lg-left">Why do you want to come to Deltahacks V, and what is one thing that you are passionate to bring to this year's hackathon?*</p>
                                 <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
@@ -311,6 +311,7 @@ export default {
                 'Posters',
             ],
             cities: [
+                '(Type your own option)',
                 'Toronto',
                 'Hamilton',
                 'Waterloo',
@@ -341,7 +342,7 @@ export default {
                 ' in-line with the',
             SHARE:
                 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
-            MICROSOFT: 'Do you give Microsoft permission to contact you, send you promotion material, and share resources to help you prepare for the hackathon?',
+            MICROSOFT: 'I give Microsoft permission to contact me, send me promotion material, and share resources to help me prepare for the hackathon.',
             picker: null,
             submitted: false,
             date: '2000-01-01',
