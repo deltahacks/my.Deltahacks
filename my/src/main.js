@@ -13,12 +13,7 @@ import VueProgressBar from 'vue-progressbar'
 import VueMouseParallax from 'vue-mouse-parallax'
 const VueAnalytics = require('vue-analytics').default
 
-//Google Analytics code begins
-Vue.use(VueAnalytics, {
-  id: 'UA-105802545-2',
-})
 
-//Google Analytics code ends
 
 Vue.use(VueMouseParallax)
 
@@ -64,6 +59,12 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app');
+
+//Google Analytics
+Vue.use(VueAnalytics, {
+  id: 'UA-105802545-2',
+  router
+})
 
 // Start first time only after firebase is loaded
 firebase.auth().onAuthStateChanged(() => {
