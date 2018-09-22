@@ -1,11 +1,11 @@
 html {
   height: 100%;
-  font-family: Verdana, sans-serif, Agency FB, Roboto;
+  font-family: 'Open Sans', sans-serif, Agency FB, Roboto;
 }
 
 /*---------------------------------------------*/
 a {
-  font-family: Verdana;
+  font-family: 'Open Sans';
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
@@ -159,6 +159,8 @@ iframe {
 }
 .background {
   background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
+  background-size: cover;
+  background-repeat: no-repeat;
   /* background: #9152f8;
   background: -webkit-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));
   background: -o-linear-gradient(top, rgb(72,198,239), rgb(111,134,214));

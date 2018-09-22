@@ -66,6 +66,8 @@ export default {
         },
         signUpFirebase() {
             if (this.vuex_email && this.vuex_password && this.password_repeat) {
+                if (this.vuex_password !== this.password_repeat)
+                    return (this.feedback = 'Passwords must match');
                 firebase
                     .auth()
                     .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password)
