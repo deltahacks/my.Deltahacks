@@ -1,7 +1,7 @@
 <template>
   <v-toolbar class="toolbar" style="background-color:rgba(0,0,0,0.3)">
     <v-toolbar-title id="title">
-      <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=47px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
+    <img src="@/assets/logo.png" height=47px alt="DeltaHacks Logo" />&ensp;&ensp;
     </v-toolbar-title>
     <a href="/status" class="button button-hide">STATUS</a>&ensp;
     <a href="/apply" class="button button-hide">APPLY</a>&ensp;
@@ -34,11 +34,11 @@
       </v-menu>
     </div>
     <a @click.prevent='logout' class="button button-hide">LOGOUT</a>&ensp;
-    <div class="text-xs-center mobile" style="margin-right:-60px;">
+    <div class="text-xs-center mobile" style="margin-right:-40px;">
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
 
-        <v-list style="background-color:rgba(0,0,0,0.3);">
+        <v-list style="background-color:rgba(255,255,255,0.7);">
 
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
