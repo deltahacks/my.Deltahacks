@@ -17,7 +17,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
           <span class="welcomeheader">
-            myDeltaHacks
+            Forgot
           </span>
           <p>Please enter your email and a link will be sent to it.</p>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
