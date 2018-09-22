@@ -41,7 +41,7 @@
       <v-menu offset-y>
         <v-btn slot="activator" color="grey darken-3" dark right>Menu</v-btn>
 
-        <v-list>
+        <v-list class="myNav">
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
           </v-list-tile>
