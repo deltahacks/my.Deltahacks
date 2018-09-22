@@ -116,9 +116,18 @@ iframe {
   font-family: "Open Sans";
   font-size: 3em;
   font-weight: 600;
-  line-height: 3em;
   text-decoration: none;
   color: #525251;
+}
+
+@media only screen and (max-width: 500px) {
+  .welcomeheader {
+    font-family: "Open Sans";
+    font-size: 8vw;
+    font-weight: 600;
+    text-decoration: none;
+    color: #525251;
+  }
 }
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
@@ -292,6 +301,39 @@ iframe {
   text-decoration: none;
   text-transform: uppercase;
 }
+
+@media only screen and (max-width: 500px) {
+  .login100-form-btn {
+    width: 100%;
+    height: 38px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-transition: background-color 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+      color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+      color 0.2s ease-in-out;
+    background-color: transparent !important;
+    font-family: sans-serif;
+    border: 0;
+    /* border-radius: 35px; */
+    box-shadow: inset 0 0 0 2px #525251 !important;
+    color: #525251 !important;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    /* line-height: 52px; */
+    padding: 0 1.75em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}
+
 .login100-form-btn:hover {
   box-shadow: inset 0 0 0 2px #017ef2 !important;
   color: #017ef2 !important;
