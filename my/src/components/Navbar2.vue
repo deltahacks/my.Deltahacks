@@ -38,7 +38,7 @@
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>&ensp;
 
-        <v-list style="background-color:rgba(0,0,0,0.3);">
+        <v-list style="background-color:rgba(255,255,255,0.7);">
 
           <v-list-tile to="/status">
             <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
