@@ -303,13 +303,7 @@ export default {
                 'Emergency Info',
                 'Application Questions',
             ],
-            methods: [
-                'A friend',
-                'MLH',
-                'Facebook',
-                'Twitter',
-                'Posters',
-            ],
+            methods: ['A friend', 'MLH', 'Facebook', 'Twitter', 'Posters'],
             cities: [
                 '(Type your own option)',
                 'Toronto',
@@ -342,7 +336,8 @@ export default {
                 ' in-line with the',
             SHARE:
                 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
-            MICROSOFT: 'I give Microsoft permission to contact me, send me promotion material, and share resources to help me prepare for the hackathon.',
+            MICROSOFT:
+                'I give Microsoft permission to contact me, send me promotion material, and share resources to help me prepare for the hackathon.',
             picker: null,
             submitted: false,
             date: '2000-01-01',
@@ -570,7 +565,7 @@ export default {
             };
             this.$store.state.db
                 .collection('applications')
-                .doc('DH5_Test')
+                .doc('DH5')
                 .collection('in progress')
                 .doc(firebase.auth().currentUser.email)
                 .set(this.application)
@@ -597,7 +592,7 @@ export default {
             this.setDateInformation();
             this.$store.state.db
                 .collection('applications')
-                .doc('DH5_Test')
+                .doc('DH5')
                 .collection('submitted')
                 .doc(firebase.auth().currentUser.email)
                 .set(this.application)
@@ -673,7 +668,7 @@ export default {
             return new Promise((resolve, reject) => {
                 this.$store.state.db
                     .collection('applications')
-                    .doc('DH5_Test')
+                    .doc('DH5')
                     .collection('submitted')
                     .doc(userEmail)
                     .get()
@@ -688,7 +683,7 @@ export default {
             const userEmail = firebase.auth().currentUser.email;
             this.$store.state.db
                 .collection('applications')
-                .doc('DH5_Test')
+                .doc('DH5')
                 .collection('submitted')
                 .doc(userEmail)
                 .get()
@@ -703,7 +698,7 @@ export default {
         const userEmail = firebase.auth().currentUser.email;
         this.$store.state.db
             .collection('applications')
-            .doc('DH5_Test')
+            .doc('DH5')
             .collection('in progress')
             .doc(userEmail)
             .get()

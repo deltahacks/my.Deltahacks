@@ -35,7 +35,7 @@ export default {
     const test = new Date();
     db
       .collection('applications')
-      .doc('DH5_Test')
+      .doc('DH5')
       .collection('all')
       .orderBy('last_modified.unix')
       .startAfter(startFrom.getTime() / 1000)
