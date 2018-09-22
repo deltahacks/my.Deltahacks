@@ -22,31 +22,34 @@
                   <v-layout row wrap>
                     <v-flex xs12 md6 lg6>
                       <v-card-text>
-                        <b> Name: </b>
+                        <h4> Name: </h4>
                       </v-card-text>
                       <v-card-text>
-                        <b> University: </b>
+                        <h4> University: </h4>
                       </v-card-text>
                       <v-card-text>
-                        <b> Year: </b>
+                        <h4> Year: </h4>
                       </v-card-text>
                       <v-card-text>
-                        <b> # of Previous Hackathons: </b>
+                        <h4> # of Previous Hackathons: </h4>
                       </v-card-text>
                       <v-card-text>
-                        <b> Major: </b>
+                        <h4> Major: </h4>
                       </v-card-text>
                       <v-card-text>
-                        <b> Degree: </b>
+                        <h4> Degree: </h4>
                       </v-card-text>
                       <v-card-text>
-                        <b> Git Repo: </b>
+                        <h4> Git Repo: </h4>
                       </v-card-text>
                       <v-card-text>
                         <b> LinkedIn: </b>
                       </v-card-text>
                       <v-card-text>
-                        <b> Website: </b>
+                        <h4> Website: </h4>
+                      </v-card-text>
+                      <v-card-text>
+                        <h4> Devpost: </h4>
                       </v-card-text>
                       <v-card-text>
                         <b> Dietary restrictions: </b>
@@ -55,48 +58,68 @@
                         <b> Shirt size: </b>
                       </v-card-text>
                       <v-card-text>
-                        <b> Creative question: </b>
+                        <b> Ethnicity: </b>
                       </v-card-text>
                       <v-card-text>
-                        <b> Anything else: </b>
+                        <b> Coming from: </b>
+                      </v-card-text>
+                      <v-card-text>
+                        <b> Heard from: </b>
+                      </v-card-text>
+                      <v-card-text>
+                        <b> Emergency contact: </b>
+                      </v-card-text>
+                      <v-card-text>
+                        <b> Workshops: </b>
                       </v-card-text>
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
                     </v-flex>
                     <v-flex xs12 md6 lg6>
-                      <v-card-text>{{ applicant.name }}</v-card-text>
+                      <v-card-text>
+                        {{ applicant.name + ' ' + applicant.lastname}}
+                      </v-card-text>
                       <v-card-text>{{ applicant.university }}</v-card-text>
                       <v-card-text>{{ applicant.school_year }}</v-card-text>
                       <v-card-text>{{ applicant.hackathons }}</v-card-text>
                       <v-card-text>{{ applicant.major }}</v-card-text>
                       <v-card-text>{{ applicant.degree }}</v-card-text>
                       <v-card-text>
-                        <a v-bind:href="applicant.github" target="_blank"> {{ applicant.github }} </a>
+                        <a v-bind:href="applicant.github" target="_blank"> {{ applicant.github == '' ? '-' : applicant.github }} </a>
                       </v-card-text>
                       <v-card-text>
-                        <a v-bind:href="applicant.linkedin" target="_blank"> {{ applicant.linkedin }} </a>
+                        <a v-bind:href="applicant.linkedin" target="_blank"> {{ applicant.linkedin == '' ? '-' : applicant.linkedin }} </a>
                       </v-card-text>
                       <v-card-text>
-                        <a v-bind:href="applicant.website" target="_blank"> {{ applicant.website }} </a>
+                        <a v-bind:href="applicant.website" target="_blank"> {{ applicant.website == '' ? '-' : applicant.website }} </a>
+                      </v-card-text>
+                      <v-card-text>
+                        <a v-bind:href="applicant.devpost" target="_blank"> {{ applicant.devpost == '' ? '-' : applicant.devpost }} </a>
                       </v-card-text>
                       <v-card-text>{{ applicant.dietary_restrictions }}</v-card-text>
                       <v-card-text>{{ applicant.shirt_size }}</v-card-text>
-                      <v-card-text>{{ applicant.q3 }}</v-card-text>
-                      <v-card-text>{{ applicant.q4 }}</v-card-text>
+                      <v-card-text>{{ applicant.race }}</v-card-text>
+                      <v-card-text>{{ applicant.location }}</v-card-text>
+                      <v-card-text>{{ applicant.discover }}</v-card-text>
+                      <v-card-text>{{ applicant.emergency_name + ' - ' + applicant.emergency_relationship + ' - ' + applicant.emergency_phone }}</v-card-text>
+                      <v-card-text>{{ applicant.workshops }}</v-card-text>
+
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
                     </v-flex>
                   </v-layout>
                 </v-card>
               </v-expansion-panel-content>
               <v-expansion-panel-content>
-                <div slot="header" class="headline mb-0">Question One</div>
+                <div slot="header" class="headline mb-0">Application Questions</div>
                 <v-card>
+                  <v-card-title class="questionTitle"> Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*
+                  </v-card-title>
                   <v-card-text>{{ applicant.q1 }}</v-card-text>
-                </v-card>
-              </v-expansion-panel-content>
-              <v-expansion-panel-content>
-                <div slot="header" class="headline mb-0">Question Two</div>
-                <v-card>
-                  <v-card-text>{{ applicant.q2 }}</v-card-text>
+                  <v-card-title class="questionTitle"> Why do you want to come to Deltahacks V, and what is one thing that you are passionate to bring to this year's hackathon?* </v-card-title>
+                  <v-card-text class="responseText">{{ applicant.q2 }}</v-card-text>
+                  <v-card-title class="questionTitle"> If you could teleport to anywhere in the world right now, where would you go and why?* </v-card-title>
+                  <v-card-text>{{ applicant.q3 }}</v-card-text>
+                  <v-card-title class="questionTitle"> Anything else you'd like to tell us? </v-card-title>
+                  <v-card-text>{{ applicant.q4 }}</v-card-text>
                 </v-card>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -134,156 +157,166 @@
 import vueSlider from 'vue-slider-component';
 
 export default {
-  name: 'Applicant',
-  props: ['usrname', 'applicant', 'isReviewed'],
-  data: () => ({
-    dialog: false,
-    currentPage: 0,
-    bannerColor: 'success',
-    bannerTimeout: 2000,
-    bannerMessage: 'Successfully Deleted!',
-    feedback: false,
-    currentUser1: 'yee',
-    topcard: true,
-    pageCount: 0,
-    status: 0,
-    score: 0,
-    resumeLink:
+    name: 'Applicant',
+    props: ['usrname', 'applicant', 'isReviewed'],
+    data: () => ({
+        dialog: false,
+        currentPage: 0,
+        bannerColor: 'success',
+        bannerTimeout: 2000,
+        bannerMessage: 'Successfully Deleted!',
+        feedback: false,
+        currentUser1: 'yee',
+        topcard: true,
+        pageCount: 0,
+        status: 0,
+        score: 0,
+        resumeLink:
             'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
-    cards: [
-      {
-        title: 'Pre-fab homes',
-        flex: 12,
-      },
-      {
-        title: 'Favorite road trips',
-        src: '/static/doc-images/cards/road.jpg',
-        flex: 6,
-      },
-      {
-        title: 'Best airlines',
-        src: '/static/doc-images/cards/plane.jpeg',
-        flex: 6,
-      },
-    ],
-  }),
-  components: {
-    vueSlider,
-  },
-  computed: {
-    hasResume() {
-      console.log(this.applicant);
-      const app = this.applicant;
-      return app.documents && app.documents.length !== 0;
+        cards: [
+            {
+                title: 'Pre-fab homes',
+                flex: 12,
+            },
+            {
+                title: 'Favorite road trips',
+                src: '/static/doc-images/cards/road.jpg',
+                flex: 6,
+            },
+            {
+                title: 'Best airlines',
+                src: '/static/doc-images/cards/plane.jpeg',
+                flex: 6,
+            },
+        ],
+    }),
+    components: {
+        vueSlider,
     },
-  },
-  mounted() {
-    console.log('Sub', this.isReviewed, this.applicant, this.random);
-    this.score = this.applicant.decision.reviewers.find(obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email).score;
-  },
-  methods: {
-    async updateApplicationScore() {
-      console.log('Updating score', this.$store.state.test);
-      try {
-        const userApplication = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
-          .get();
+    computed: {
+        hasResume() {
+            console.log(this.applicant);
+            const app = this.applicant;
+            return app.documents && app.documents.length !== 0;
+        },
+    },
+    mounted() {
+        console.log('Sub', this.isReviewed, this.applicant, this.random);
+        this.score = this.applicant.decision.reviewers.find(
+            obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email
+        ).score;
+    },
+    methods: {
+        async updateApplicationScore() {
+            console.log('Updating score', this.$store.state.test);
+            try {
+                const userApplication = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(this.applicant.email)
+                    .get();
 
-        const aaa = this.$store.state.test;
-        console.log(
-          aaa,
-          this.$store.state.firebase.auth().currentUser.email,
-          userApplication.data().decision,
-        );
-        const decision = { ...userApplication.data().decision };
-        const reviews = userApplication.data().decision.reviews + 1;
-        const reviewers = userApplication.data().decision.reviewers;
-        reviewers.push({
-          score: this.score,
-          reviewer: this.$store.state.firebase.auth().currentUser.email,
-        });
-        decision.reviews = reviews;
-        decision.reviewers = reviewers;
-        console.log('decision', decision);
-        const uploadScore = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
-          .update({ decision });
-        console.log('Review sent: ', uploadScore);
-      } catch (err) {
-        console.log('Error getting user app: ', err);
-      }
+                const aaa = this.$store.state.test;
+                console.log(
+                    aaa,
+                    this.$store.state.firebase.auth().currentUser.email,
+                    userApplication.data().decision
+                );
+                const decision = { ...userApplication.data().decision };
+                const reviews = userApplication.data().decision.reviews + 1;
+                const reviewers = userApplication.data().decision.reviewers;
+                reviewers.push({
+                    score: this.score,
+                    reviewer: this.$store.state.firebase.auth().currentUser.email,
+                });
+                decision.reviews = reviews;
+                decision.reviewers = reviewers;
+                console.log('decision', decision);
+                const uploadScore = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(this.applicant.email)
+                    .update({ decision });
+                console.log('Review sent: ', uploadScore);
+            } catch (err) {
+                console.log('Error getting user app: ', err);
+            }
+        },
+        async deleteApplicant(applicant) {
+            try {
+                const decisionDelete = await this.$store.state.db
+                    .collection('decisions')
+                    .doc('DH5')
+                    .collection('pending')
+                    .doc(applicant)
+                    .delete();
+                this.usrname = `(DELETED) ${this.usrname}`;
+                this.feedback = true;
+                console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
+            } catch (err) {
+                console.log('Error deleting application: ', err);
+            }
+            this.dialog = false;
+        },
     },
-    async deleteApplicant(applicant) {
-      try {
-        const decisionDelete = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(applicant)
-          .delete();
-        this.usrname = `(DELETED) ${this.usrname}`;
-        this.feedback = true;
-        console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
-      } catch (err) {
-        console.log('Error deleting application: ', err);
-      }
-      this.dialog = false;
-    },
-  },
 };
 </script>
 
 <style scoped>
 i {
-  font-size: 3em;
-  margin: 10px 20px;
+    font-size: 3em;
+    margin: 10px 20px;
 }
 
 #datacard {
-  height: 900px;
+    height: 900px;
 }
 
 #maind {
-  border: solid 2px black;
+    border: solid 2px black;
 }
 
 #contain {
-  border: solid 2px blue;
-  width: 100%;
-  height: 100%;
+    border: solid 2px blue;
+    width: 100%;
+    height: 100%;
 }
 
 #panel {
-  margin-left: 10%;
-  margin-right: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 #slider {
-  margin-left: 5%;
-  margin-right: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .name {
-  font-size: 2em;
-  color: black;
+    font-size: 2em;
+    color: black;
 }
 
 #topcard {
-  height: 200px;
+    height: 200px;
 }
 
 #resume {
-  width: 100%;
-  height: 900px;
+    width: 100%;
+    height: 900px;
 }
 
 #docCard {
-  width: 100%;
+    width: 100%;
+}
+
+.questionTitle {
+    font-weight: bold;
+}
+
+.responseText {
+    text-indent: 100%;
 }
 </style>
