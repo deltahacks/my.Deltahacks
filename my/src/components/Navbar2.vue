@@ -1,7 +1,7 @@
 <template>
   <v-toolbar class="toolbar" style="background-color:rgba(0,0,0,0.3)">
     <v-toolbar-title id="title">
-      <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=47px alt="DeltaHacks Logo" /></a>&ensp;&ensp;
+    <img src="@/assets/logo.png" height=47px alt="DeltaHacks Logo" />&ensp;&ensp;
     </v-toolbar-title>
     <a href="/status" class="button button-hide">STATUS</a>&ensp;
     <a href="/apply" class="button button-hide">APPLY</a>&ensp;
