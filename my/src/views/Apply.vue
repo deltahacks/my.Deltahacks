@@ -91,7 +91,7 @@
                         </template>
                     </v-combobox>
                     <label for="hackathons" style='float:left'>
-                        <strong>Hackathons attended? *</strong>
+                        <strong>Number of hackathons attended. *</strong>
                     </label><br>
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
@@ -134,7 +134,7 @@
                     </v-text-field><br>
                     <div id="filePondContainer">
                         <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
-                        <v-chip class="no border" style="float:left" v-if="haveFile" outline small color="gray">
+                        <v-chip class="no border" style="float:left;overflow: wrap" v-if="haveFile" outline small color="gray">
                             <v-icon left>info</v-icon>
                             <strong>We've got your file "</strong>
                             <a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
