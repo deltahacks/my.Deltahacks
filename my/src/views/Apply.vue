@@ -185,7 +185,7 @@
                             </v-flex>
                             <v-flex xs12>
                                 <p class="text-lg-left">Anything else you'd like to tell us? *</p>
-                                <v-text-field :disabled="submitted" name="wildcard" placeholder="Could be anything!" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" :error-messages="errors.first('wildcard')" counter=300 />
+                                <v-text-field :disabled="submitted" name="wildcard" placeholder="Could be anything!" v-model="application.q4" auto-grow />
                             </v-flex>
                             <div class="section divider"></div>
                         </v-layout>
