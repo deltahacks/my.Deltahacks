@@ -200,7 +200,7 @@
                             <span style="font-size:0.8em;" slot="label">I have read and agree to the
                                 <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
                         </v-checkbox>
-                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
+                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="application.microsoft">
                             <span style="font-size:0.8em;" class="terms" slot="label">{{MICROSOFT}}</span>
                         </v-checkbox>
 
@@ -375,6 +375,7 @@ export default {
                 degree: '',
                 birthday: '',
                 documents: [],
+                microsoft: false,
             },
             links: ['Home', 'About', 'Contact'],
             q1: '',
@@ -502,6 +503,7 @@ export default {
                 location: '',
                 birthday: '',
                 documents: [],
+                microsoft: false,
             };
         },
         clearForm() {
@@ -663,6 +665,7 @@ export default {
             ref.devpost = ref.devpost ? ref.devpost : '';
             ref.lastname = ref.lastname ? ref.lastname : '';
             ref.location = ref.location ? ref.location : '';
+            ref.microsoft = ref.microsoft ? ref.microsoft : false;
         },
         getUserAppStatus(userEmail) {
             return new Promise((resolve, reject) => {
