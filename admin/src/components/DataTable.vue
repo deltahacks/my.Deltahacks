@@ -1,45 +1,45 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <v-menu offset-y>
-        <v-btn style="width: 250px;" class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
-        <v-list>
-          <v-list-tile v-for="(item, index) in items" :key="index" @click="onChangeBucket(item)">
-            <v-list-tile-title class="">{{ item }}</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-      <v-spacer></v-spacer>
-      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-    </v-card-title>
-    <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[page - 1]" hide-actions item-key="email">
-      <template slot="items" slot-scope="props">
-        <tr @click="selectRow($event, props)">
-          <td class="text-md-left">{{ props.item.name }}</td>
-          <td class="text-md-left">{{ props.item.email }}</td>
-          <td class="text-xs-left">{{ props.item.university }}</td>
-          <td class="text-xs-left">{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
-          <td class="text-xs-left">{{ props.item.phone }}</td>
-          <td class="text-xs-left">{{ props.item.age }}</td>
-          <td class="text-xs-left" id="numRevs" :title="props.item.decision.assignedTo ? props.item.decision.assignedTo : 'unassigned'">
-            {{ props.item.decision.reviewers.length }}/3
-          </td>
+    <v-card>
+        <v-card-title>
+            <v-menu offset-y>
+                <v-btn style="width: 250px;" class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
+                <v-list>
+                    <v-list-tile v-for="(item, index) in items" :key="index" @click="onChangeBucket(item)">
+                        <v-list-tile-title class="">{{ item }}</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-spacer></v-spacer>
+            <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+        </v-card-title>
+        <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[page - 1]" hide-actions item-key="email">
+            <template slot="items" slot-scope="props">
+                <tr @click="selectRow($event, props)">
+                    <td class="text-md-left">{{ props.item.name + ' ' + props.item.lastname}}</td>
+                    <td class="text-md-left">{{ props.item.email }}</td>
+                    <td class="text-xs-left">{{ props.item.university }}</td>
+                    <td class="text-xs-left">{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
+                    <td class="text-xs-left">{{ props.item.phone }}</td>
+                    <td class="text-xs-left">{{ getAgeFromDate(props.item.birthday) }}</td>
+                    <td class="text-xs-left" id="numRevs" :title="props.item.decision.assignedTo ? props.item.decision.assignedTo : 'unassigned'">
+                        {{ props.item.decision.reviewers.length }}/3
+                    </td>
 
-          <td class="text-xs-right">
-            <status-indicator v-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)" active></status-indicator>
-            <status-indicator v-else-if="props.item.decision.assignedTo && props.item.decision.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())" intermediary></status-indicator>
-            <status-indicator v-else semi></status-indicator>
-          </td>
-        </tr>
-      </template>
-      <template slot="expand" slot-scope="props">
-        <applicant-dropdown id='dropdown' :usrname="props.item.name" :applicant='props.item' :isReviewed='props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)' :random='3' />
-      </template>
-    </v-data-table>
-    <div class="text-xs-center">
-      <v-pagination id="pageButton" v-model="page" :length="numApplicants" circle @input="nextPage"></v-pagination>
-    </div>
-  </v-card>
+                    <td class="text-xs-right">
+                        <status-indicator v-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)" active></status-indicator>
+                        <status-indicator v-else-if="props.item.decision.assignedTo && props.item.decision.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())" intermediary></status-indicator>
+                        <status-indicator v-else semi></status-indicator>
+                    </td>
+                </tr>
+            </template>
+            <template slot="expand" slot-scope="props">
+                <applicant-dropdown id='dropdown' :usrname="props.item.name" :applicant='props.item' :isReviewed='props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)' :random='3' />
+            </template>
+        </v-data-table>
+        <div class="text-xs-center">
+            <v-pagination id="pageButton" v-model="page" :length="numApplicants" circle @input="nextPage"></v-pagination>
+        </div>
+    </v-card>
 </template>
 
 <script>
@@ -129,6 +129,18 @@ export default {
                 });
             return (size = 5);
         },
+        getAgeFromDate(bday) {
+            let b2 = new Date(bday.slice(4), bday.slice(2, 4) - 1, bday.slice(0, 2));
+            console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
+            const current = new Date();
+            return this.calculateAge(b2);
+        },
+        calculateAge(birthday) {
+            // birthday is a date
+            var ageDifMs = Date.now() - birthday.getTime();
+            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+        },
     },
     components: {
         ApplicantDropdown,
@@ -189,7 +201,6 @@ export default {
         };
     },
     async mounted() {
-        tippy('[title]');
         const parent = this;
         await db
             .collection('statistics')
@@ -211,6 +222,7 @@ export default {
                 .where(...this.restriction)
                 .limit(this.rowsPerPage)
                 .get();
+            console.log('r123', result);
             this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
             Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
         }
