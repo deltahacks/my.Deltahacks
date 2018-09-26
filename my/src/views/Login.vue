@@ -12,7 +12,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
           <v-container>
-            <v-layout>              
+            <v-layout>
             <v-flex xs12>
             <span class="welcomeheader">
               myDeltaHacks
@@ -55,10 +55,10 @@
   </div>
 </template>
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => ({
     drawer: null,
     email: null,
@@ -67,28 +67,28 @@ export default {
     loader: null,
     loading: false,
     loaderSignup: null,
-    loadingSignup: false
+    loadingSignup: false,
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     forgotpage() {
-      this.$router.push({ name: "Forgot" });
+      this.$router.push({ name: 'Forgot' });
     },
     login() {
-      this.loader = "loading";
+      this.loader = 'loading';
       const parent = this;
       if (this.email && this.pass) {
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.pass)
           .then(() => {
-            this.$router.push({ name: "Status" });
-            console.log("logged in");
+            this.$router.push({ name: 'Status' });
+            console.log('logged in');
             this.feedback = null;
           })
-          .catch(error => {
+          .catch((error) => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -96,11 +96,11 @@ export default {
             console.log(errorMessage);
           });
       }
-    }
+    },
   },
   mounted() {},
   props: {
-    source: String
+    source: String,
   },
   watch: {
     loader() {
@@ -109,8 +109,8 @@ export default {
 
       setTimeout(() => (this[l] = false), 3000);
       this.loader = null;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped src='../assets/css/login.css'>
