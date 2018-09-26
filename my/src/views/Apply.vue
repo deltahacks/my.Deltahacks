@@ -166,26 +166,26 @@
                         <v-layout row wrap>
                             <v-flex xs12>
                                 <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('q1')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">Why do you want to come to Deltahacks V, and what is one thing that you are passionate to bring to this year's hackathon?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('q2')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
-                                <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500 />
+                                <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('q3')" counter=500 />
                                 <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
                             </v-flex>
                             <v-flex xs12>
                                 <p class="text-lg-left">Anything else you'd like to tell us?</p>
-                                <v-text-field :disabled="submitted" name="q4" placeholder="Could be anything!" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
+                                <v-text-field :disabled="submitted" name="q4" placeholder="Could be anything!" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" :error-messages="errors.first('q4')" counter=300 />
                             </v-flex>
                             <div class="section divider"></div>
                         </v-layout>
