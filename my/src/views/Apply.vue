@@ -103,7 +103,7 @@
                         </v-combobox>
                     </v-flex>
                     <label for="discover" style="float:left">
-                        <strong>How did you here about us? *</strong>
+                        <strong>How did you hear about us? *</strong>
                     </label><br>
                     <v-select v-model="application.discover" :disabled="submitted" @change="formChange" :items="methods" v-validate="{required:true}" name="discover" id='diet' :error-messages="errors.first('discover:required')" data-vv-delay="1000"></v-select>
                     <label for="location" style='float:left'>
@@ -185,7 +185,7 @@
                             </v-flex>
                             <v-flex xs12>
                                 <p class="text-lg-left">Anything else you'd like to tell us?</p>
-                                <v-text-field :disabled="submitted" name="q4" placeholder="Could be anything!" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" counter=300 />
+                                <v-text-field :disabled="submitted" name="q4" placeholder="Could be anything!" v-model="application.q4" auto-grow counter=300 />
                             </v-flex>
                             <div class="section divider"></div>
                         </v-layout>
@@ -194,11 +194,11 @@
                         <v-checkbox name="agreement" :disabled="submitted" id="mlh" v-model="checkbox" :error-messages="checkError">
                             <span style="font-size:0.8em;" class="terms" slot="label">{{MLH}}
                                 <a @click.stop href="https://mlh.io/privacy">MLH Privacy Policy</a>. I further agree to the
-                                <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.</span>
+                                <a @click.stop :href="contest_terms">MLH Contest Terms and Conditions</a>.*</span>
                         </v-checkbox>
                         <v-checkbox name="share" :disabled="submitted" id="share" v-model="share" :label="SHARE" :error-messages="shareError">
                             <span style="font-size:0.8em;" slot="label">I have read and agree to the
-                                <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.</span>
+                                <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.*</span>
                         </v-checkbox>
                         <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
                             <span style="font-size:0.8em;" class="terms" slot="label">{{MICROSOFT}}</span>
@@ -589,6 +589,8 @@ export default {
             };
         },
         setApplication() {
+            console.log('Submitting application...');
+            //if (this.application.q4 == '' || !this.application.q4) this.application.q4 = ' ';
             this.setDateInformation();
             this.$store.state.db
                 .collection('applications')
@@ -627,6 +629,7 @@ export default {
         async submitApplication() {
             this.confirm = false;
             if (!await this.validateBeforeSubmit()) {
+                console.log('Error validating inputs!');
                 return;
             } else if (!this.checkbox) {
                 this.checkError = 'Please accept the terms and conditions to continue.';

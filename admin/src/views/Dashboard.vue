@@ -14,7 +14,7 @@
                     <v-layout row wrap>
                         <v-flex d-flex>
                             <v-card color="white lighten-4" dark>
-                                <v-card-title primary class="title">Total Applicants:</v-card-title>
+                                <v-card-title primary class="title">Total Submissions:</v-card-title>
                                 <v-card-text class="totalapps center">
                                     <IOdometer class="iOdometer" :value=applicationCount />
                                 </v-card-text>
@@ -171,9 +171,17 @@ export default {
     async mounted() {
         let nameRes = await db
             .collection('admins')
-            .doc(this.$store.state.firebase.auth().currentUser.email)
+            //.doc(this.$store.state.firebase.auth().currentUser.email)
             .get();
-        this.$store.state.currentAdminUserName = nameRes.data().name;
+        console.log('ALL ADM', nameRes.docs[0].data());
+        let revObj = {};
+        nameRes.docs.forEach(val => {
+            revObj[val.data().email] = val.data().name;
+        });
+        this.$store.state.allAdmins = revObj;
+        this.$store.state.currentAdminUserName = this.$store.state.allAdmins[
+            this.$store.state.firebase.auth().currentUser.email
+        ];
         //console.log('NAMERES', nameRes.data());
         this.activateModal(
             `Welcome back ${
@@ -336,6 +344,10 @@ export default {
 
 #dataTable {
     width: 100%;
+}
+
+.title {
+    color: black;
 }
 </style>
 

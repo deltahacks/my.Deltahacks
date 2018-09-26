@@ -347,3 +347,9 @@ iframe {
   margin-top: -10px;
   margin-bottom: -10px;
 }
+
+.currentStatus {
+  text-decoration: none;
+  font: inherit;
+  color: #15488a;
+}
