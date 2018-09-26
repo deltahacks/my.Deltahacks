@@ -91,7 +91,7 @@
                         </template>
                     </v-combobox>
                     <label for="hackathons" style='float:left'>
-                        <strong>Hackathons attended? *</strong>
+                        <strong>Number of hackathons attended. *</strong>
                     </label><br>
                     <v-select v-model="application.hackathons" @change="formChange" :disabled="submitted" :items="hackathons" v-validate="{required:true}" name="hackathons" id="hackathons" :error-messages="errors.first('hackathons:required')" data-vv-delay="1000">
                     </v-select>
@@ -134,7 +134,7 @@
                     </v-text-field><br>
                     <div id="filePondContainer">
                         <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
-                        <v-chip class="no border" style="float:left" v-if="haveFile" outline small color="gray">
+                        <v-chip class="no border" style="float:left;overflow: wrap" v-if="haveFile" outline small color="gray">
                             <v-icon left>info</v-icon>
                             <strong>We've got your file "</strong>
                             <a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
@@ -166,21 +166,21 @@
                         <v-layout row wrap>
                             <v-flex xs12>
                                 <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('answer')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">Why do you want to come to Deltahacks V, and what is one thing that you are passionate to bring to this year's hackathon?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('answer')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
-                                <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" counter=500 />
+                                <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('answer')" counter=500 />
                                 <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
                             </v-flex>
                             <v-flex xs12>
@@ -200,7 +200,7 @@
                             <span style="font-size:0.8em;" slot="label">I have read and agree to the
                                 <a @click.stop href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>.*</span>
                         </v-checkbox>
-                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="microsoft">
+                        <v-checkbox name="microsoft" :disabled="submitted" id="mlh" v-model="application.microsoft">
                             <span style="font-size:0.8em;" class="terms" slot="label">{{MICROSOFT}}</span>
                         </v-checkbox>
 
@@ -375,6 +375,7 @@ export default {
                 degree: '',
                 birthday: '',
                 documents: [],
+                microsoft: false,
             },
             links: ['Home', 'About', 'Contact'],
             q1: '',
@@ -502,6 +503,7 @@ export default {
                 location: '',
                 birthday: '',
                 documents: [],
+                microsoft: false,
             };
         },
         clearForm() {
@@ -628,7 +630,7 @@ export default {
         },
         async submitApplication() {
             this.confirm = false;
-            if (!await this.validateBeforeSubmit()) {
+            if (!(await this.validateBeforeSubmit())) {
                 console.log('Error validating inputs!');
                 return;
             } else if (!this.checkbox) {
@@ -666,6 +668,7 @@ export default {
             ref.devpost = ref.devpost ? ref.devpost : '';
             ref.lastname = ref.lastname ? ref.lastname : '';
             ref.location = ref.location ? ref.location : '';
+            ref.microsoft = ref.microsoft ? ref.microsoft : false;
         },
         getUserAppStatus(userEmail) {
             return new Promise((resolve, reject) => {

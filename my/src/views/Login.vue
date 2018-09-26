@@ -11,9 +11,15 @@
           <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
-          <span class="welcomeheader">
-            myDeltaHacks
-          </span>
+          <v-container>
+            <v-layout>              
+            <v-flex xs12>
+            <span class="welcomeheader">
+              myDeltaHacks
+            </span>
+            </v-flex>
+            </v-layout>
+          </v-container>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
           </div>
