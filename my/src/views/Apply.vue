@@ -173,7 +173,7 @@
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">Why do you want to come to Deltahacks V, and what is one thing that you are passionate to bring to this year's hackathon?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('q2')" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('q2')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                             </v-flex>
