@@ -46,44 +46,44 @@
   </div>
 </template>
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => ({
     drawer: null,
     email: null,
     pass: null,
     feedback: null,
-    bannerMessage: "Success",
+    bannerMessage: 'Success',
     bannerTimeout: 2000,
-    bannerColor: "success",
+    bannerColor: 'success',
     loader: null,
     loading: false,
     loaderSignup: null,
-    loadingSignup: false
+    loadingSignup: false,
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: "Forgot" });
+      this.$router.push({ name: 'Forgot' });
     },
     loginpage() {
-      this.$router.push({ name: "Login" });
+      this.$router.push({ name: 'Login' });
     },
     forgotPass() {
-      this.loader = "loading";
+      this.loader = 'loading';
       const parent = this;
       if (this.email) {
         firebase
           .auth()
           .sendPasswordResetEmail(this.email)
           .then(() => {
-            console.log("Email sent");
+            console.log('Email sent');
             // this.$router.push({ name: "Login" });
             this.feedback = true;
-            this.bannerMessage = "Password reset sent to email";
+            this.bannerMessage = 'Password reset sent to email';
           })
-          .catch(error => {
+          .catch((error) => {
             // Handle Errors here.
             //   const errorCode = error.code;
             const errorMessage = error.message;
@@ -91,11 +91,11 @@ export default {
             console.log(errorMessage);
           });
       }
-    }
+    },
   },
   mounted() {},
   props: {
-    source: String
+    source: String,
   },
   watch: {
     loader() {
@@ -104,8 +104,8 @@ export default {
 
       setTimeout(() => (this[l] = false), 3000);
       this.loader = null;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped src='../assets/css/login.css'>

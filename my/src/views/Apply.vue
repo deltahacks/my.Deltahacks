@@ -7,7 +7,7 @@
                     <h1 v-if="!submitted" class='text-xs-left'>Apply here.</h1>
                     <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
                     <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline.</p>
-                    <p v-if="!submitted" class='text-xs-left'>No programming experience? That's okay! We're just looking for well thought out answers. The more information you give us, the higher chance you have of being accepted to DeltaHacks V. Only the questions marked "Application Questions" will be marked. You will receive an email on acceptance or waitlisting of your application.</p>
+                    <p v-if="!submitted" class='text-xs-left'>No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.</p>
                     <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                     <br><br>
                     <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
@@ -36,8 +36,8 @@
                             <v-list-tile>
                                 <v-list-tile-content>
                                     <v-list-tile-title>
-                                        No results found. Press
-                                        <kbd>enter</kbd> to enter a custom option.
+                                        We don't know that one. Press
+                                        <kbd>tab</kbd> to create it.
                                     </v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -51,8 +51,8 @@
                             <v-list-tile>
                                 <v-list-tile-content>
                                     <v-list-tile-title>
-                                        No results found. Press
-                                        <kbd>enter</kbd> to enter a custom option.
+                                        We don't know that one. Press
+                                        <kbd>tab</kbd> to create it.
                                     </v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -166,26 +166,26 @@
                         <v-layout row wrap>
                             <v-flex xs12>
                                 <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q1" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('answer')" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="project" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('project')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">Why do you want to come to Deltahacks V, and what is one thing that you are passionate to bring to this year's hackathon?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="q2" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('answer')" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="reason" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('reason')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
-                                <v-textarea box :disabled="submitted" name="q3" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('answer')" counter=500 />
+                                <v-textarea box :disabled="submitted" name="creative" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('creative')" counter=500 />
                                 <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
                             </v-flex>
                             <v-flex xs12>
-                                <p class="text-lg-left">Anything else you'd like to tell us?</p>
-                                <v-text-field :disabled="submitted" name="q4" placeholder="Could be anything!" v-model="application.q4" auto-grow counter=300 />
+                                <p class="text-lg-left">Anything else you'd like to tell us? *</p>
+                                <v-text-field :disabled="submitted" name="wildcard" placeholder="Could be anything!" v-model="application.q4" auto-grow v-validate="{required:true, max:300}" :error-messages="errors.first('wildcard')" counter=300 />
                             </v-flex>
                             <div class="section divider"></div>
                         </v-layout>
@@ -303,7 +303,17 @@ export default {
                 'Emergency Info',
                 'Application Questions',
             ],
-            methods: ['A friend', 'MLH', 'Facebook', 'Twitter', 'Posters'],
+            methods: [
+                'A friend',
+                'MLH',
+                'Facebook',
+                'Twitter',
+                'Posters',
+                'Instagram',
+                'Snapchat',
+                'Google',
+                'Other',
+            ],
             cities: [
                 '(Type your own option)',
                 'Toronto',
@@ -317,6 +327,7 @@ export default {
                 'Burlington',
                 'Brampton',
                 'Markham',
+                'Milton',
             ],
             races: [
                 'Black / African American',
@@ -401,15 +412,34 @@ export default {
                 'iOS development',
                 'Web Development',
                 'Intro to AR/VR',
-                'Blockchain',
+                'Game Development',
+                'Intro to UI/UX design',
                 'Hardware hacking',
                 'Computer Vision with OpenCV',
             ],
             hackathons: ['This is my first one', '2', '3', '4', '5-9', '10+'],
-            food: ['None', 'Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+            food: [
+                'None',
+                'Vegetarian',
+                'Vegan',
+                'Halal',
+                'Gluten Free',
+                'Kosher',
+                'No Beef',
+                'Lactose Intolerant',
+                'Gluten Free',
+            ],
             shirts: ['XS', 'S', 'M', 'L', 'XL'],
             degrees: ['Bachelors', 'Masters', 'PhD'],
-            relations: ['Parent', 'Grandparent', 'Sibling', 'Partner', 'Friend', 'Other'],
+            relations: [
+                'Parent',
+                'Grandparent',
+                'Sibling',
+                'Partner',
+                'Friend',
+                'Guardian',
+                'Other',
+            ],
             checkbox: false,
             share: false,
             microsoft: false,
@@ -592,7 +622,7 @@ export default {
         },
         setApplication() {
             console.log('Submitting application...');
-            //if (this.application.q4 == '' || !this.application.q4) this.application.q4 = ' ';
+            // if (this.application.q4 == '' || !this.application.q4) this.application.q4 = ' ';
             this.setDateInformation();
             this.$store.state.db
                 .collection('applications')
