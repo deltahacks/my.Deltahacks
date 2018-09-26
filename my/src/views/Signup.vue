@@ -74,6 +74,16 @@ export default {
           .then(user => {
             // console.log(user.user.uid, 'ID');
             // console.log(this.$store.state.db, 'DB');
+            this.$store.state.db
+              .collection("users")
+              .doc(this.vuex_email)
+              .set({
+                email: this.vuex_email,
+                // geo: this.geo,
+                user_id: user.user.uid,
+                ip: ipp,
+                is_admin: false
+              });
             axios
               .get("https://api.ipify.org?format=json")
               .then(response => {
