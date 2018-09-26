@@ -21,7 +21,7 @@
                     <td class="text-xs-left">{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
                     <td class="text-xs-left">{{ props.item.phone }}</td>
                     <td class="text-xs-left">{{ getAgeFromDate(props.item.birthday) }}</td>
-                    <td class="text-xs-left" id="numRevs" :title="props.item.decision.assignedTo ? props.item.decision.assignedTo : 'unassigned'">
+                    <td class="text-xs-left" id="numRevs" :title="props.item.decision.assignedTo ? assignmentToName(props.item.decision.assignedTo) : 'unassigned'">
                         {{ props.item.decision.reviewers.length }}/3
                     </td>
 
@@ -73,6 +73,13 @@ export default {
                     this.refetchCurrentPage();
                     break;
             }
+        },
+        assignmentToName(emails) {
+            let res = '';
+            emails.forEach(val => {
+                res += this.$store.state.allAdmins[val] + ', ';
+            });
+            return res;
         },
         async fb() {
             db
@@ -131,7 +138,7 @@ export default {
         },
         getAgeFromDate(bday) {
             let b2 = new Date(bday.slice(4), bday.slice(2, 4) - 1, bday.slice(0, 2));
-            console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
+            //console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
             const current = new Date();
             return this.calculateAge(b2);
         },
