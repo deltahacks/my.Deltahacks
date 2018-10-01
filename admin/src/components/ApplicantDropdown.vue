@@ -120,6 +120,8 @@
                   <v-card-text>{{ applicant.q3 }}</v-card-text>
                   <v-card-title class="questionTitle"> Anything else you'd like to tell us? </v-card-title>
                   <v-card-text>{{ applicant.q4 }}</v-card-text>
+                  <v-card-title class="questionTitle"> I give Microsoft permission to contact me, send me promotion material, and share resources to help me prepare for the hackathon. </v-card-title>
+                  <v-card-text>{{ applicant.microsoft ? 'Yes' : 'No' }}</v-card-text>
                 </v-card>
               </v-expansion-panel-content>
             </v-expansion-panel>
