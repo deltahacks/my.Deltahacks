@@ -1,6 +1,6 @@
 <template>
     <v-app class="dashboard">
-        <Navbar/>
+        <Navbar />
         <v-container fluid grid-list-md>
             <v-layout row wrap>
                 <v-flex d-flex xs12 sm6 md4>
@@ -37,10 +37,9 @@
                                             <v-btn slot="activator" color="error" depressed large dark id="debugger">
                                                 Debug
                                                 <v-icon right dark>cloud_upload</v-icon>
-
                                             </v-btn>
                                             <v-list>
-                                                <v-list-tile v-for="(func, index) in debugFunctions" :key="index" @click="func.execute">
+                                                <v-list-tile v-for="(func, index) in debugFunctions" :key="index" @click="func.execute()">
                                                     <v-list-tile-title>{{ func.title }}</v-list-tile-title>
                                                 </v-list-tile>
                                             </v-list>
@@ -58,7 +57,7 @@
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3>
                     <v-card color="white lighten-4" dark>
-                        <commit-chart/>
+                        <commit-chart />
                     </v-card>
                 </v-flex>
                 <!-- <v-subheader class="ht">Applicants</v-subheader> -->
@@ -155,6 +154,29 @@ export default {
                         }
                     },
                 },
+                {
+                    title: 'Count Microsoft',
+                    execute: async function() {
+                        try {
+                            console.log('Counting msft');
+                            let msftCount = await db
+                                .collection('decisions')
+                                .doc('DH5')
+                                .collection('pending')
+                                .get();
+                            let finalcount = 0;
+                            for (let inst of msftCount.docs) {
+                                //console.log('INST', inst.data(), inst);
+                                inst.data().microsoft
+                                    ? (finalcount += 1)
+                                    : (finalcount = finalcount);
+                            }
+                            console.log('Miccrosoft count: ', finalcount);
+                        } catch (err) {
+                            console.log('Error indexing applications');
+                        }
+                    },
+                },
             ],
         };
     },
@@ -188,8 +210,7 @@ export default {
                 this.$store.state.currentAdminUserName.trim().split(/\s+/)[0]
             }!, Loading hackathon data...`
         );
-        db //Change to real users later
-            .collection('users')
+        db.collection('users') //Change to real users later
             .get()
             .then(doc => {
                 doc.docs.forEach(val => {
@@ -208,8 +229,7 @@ export default {
                 this.loading = false;
             });
 
-        db
-            .collection('statistics')
+        db.collection('statistics')
             .doc('DH5')
             .onSnapshot(doc => {
                 this.applicationCount = doc.data().applications;
@@ -251,13 +271,11 @@ export default {
                 try {
                     let ind = await firebase.functions().httpsCallable('returnIndex')({});
                     console.log('Index data: ', ind.data.index);
-                    db
-                        .collection('fake_users')
+                    db.collection('fake_users')
                         .doc(j.email)
                         .set({ ...j2, index: ind.data.index })
                         .then(() => {
-                            db
-                                .collection('applications')
+                            db.collection('applications')
                                 .doc('DH5_Test')
                                 .collection('all')
                                 .doc(j.email)
