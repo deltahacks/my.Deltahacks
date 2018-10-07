@@ -77,13 +77,12 @@ export default {
         assignmentToName(emails) {
             let res = '';
             emails.forEach(val => {
-                res += this.$store.state.allAdmins[val] + ', ';
+                res += `${this.$store.state.allAdmins[val]}, `;
             });
             return res;
         },
         async fb() {
-            db
-                .collection('applications')
+            db.collection('applications')
                 .doc('DH5')
                 .collection('all')
                 .get();
@@ -105,7 +104,7 @@ export default {
                     .orderBy('index')
                     .where(...this.restriction)
                     .limit(this.rowsPerPage)
-                    .startAfter((this.page - 1) * 20)
+                    .startAfter((this.page - 1) * this.rowsPerPage)
                     .get();
                 this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
                 Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
@@ -137,15 +136,15 @@ export default {
             return (size = 5);
         },
         getAgeFromDate(bday) {
-            let b2 = new Date(bday.slice(4), bday.slice(2, 4) - 1, bday.slice(0, 2));
-            //console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
+            const b2 = new Date(bday.slice(4), bday.slice(2, 4) - 1, bday.slice(0, 2));
+            // console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
             const current = new Date();
             return this.calculateAge(b2);
         },
         calculateAge(birthday) {
             // birthday is a date
-            var ageDifMs = Date.now() - birthday.getTime();
-            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+            const ageDifMs = Date.now() - birthday.getTime();
+            const ageDate = new Date(ageDifMs); // miliseconds from epoch
             return Math.abs(ageDate.getUTCFullYear() - 1970);
         },
     },
@@ -157,7 +156,7 @@ export default {
         return {
             // lastVisible: null,
             page: 1,
-            rowsPerPage: 20,
+            rowsPerPage: 40,
             numApplicants: 0,
             applications: {},
             peeps: [fake],

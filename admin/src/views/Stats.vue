@@ -150,290 +150,280 @@ import db from '../private/firebase_init';
 import { allUniversities } from '../private/data';
 
 export default {
-    name: 'Stats',
-    data() {
-        return {
-            test: [50, 25, 25],
-            statistics: {
-                decisions: {
-                    accepted: 0,
-                    pending: 0,
-                    rejected: 0,
-                },
-                rsvp: 0,
-                checkedIn: 0,
-                mentors: 0,
-            },
-            data: {
-                labels: ['Accepted', 'Rejected', 'Pending'],
-                datasets: [
-                    {
-                        label: 'Applicant Distribution',
-                        backgroundColor: this.colors,
-                        data: [20, 30, 60],
-                    },
-                ],
-            },
-            checkInData: {
-                labels: ['Checked In', 'Not Checked In'],
-                datasets: [
-                    {
-                        label: 'Applicant Distribution',
-                        backgroundColor: this.colors,
-                        data: [40, 60],
-                    },
-                ],
-            },
-            ageData: {
-                labels: ['18', '19', '20', '21', '22', '23+'],
-                datasets: [
-                    {
-                        label: 'Age Distribution',
-                        backgroundColor: this.colors,
-                        data: [70, 160, 200, 125, 90, 50],
-                    },
-                ],
-            },
-            busData: {
-                labels: ['Toronto', 'Waterloo', 'London', 'Montreal', 'None'],
-                datasets: [
-                    {
-                        label: 'Number of Students Per Bus',
-                        backgroundColor: this.colors,
-                        data: [60, 120, 25, 34, 200],
-                    },
-                ],
-            },
-            colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f'],
-            options: {},
-        };
-    },
-    components: {
-        Navbar,
-        IOdometer,
-        PieChart,
-        BarChart,
-        ApexChart,
-    },
-    async beforeMount() {
-        this.statistics = await this.getStatistics();
-        this.setAllData();
+  name: 'Stats',
+  data() {
+    return {
+      test: [50, 25, 25],
+      statistics: {
+        decisions: {
+          accepted: 0,
+          pending: 0,
+          rejected: 0,
+        },
+        rsvp: 0,
+        checkedIn: 0,
+        mentors: 0,
+      },
+      data: {
+        labels: ['Accepted', 'Rejected', 'Pending'],
+        datasets: [
+          {
+            label: 'Applicant Distribution',
+            backgroundColor: this.colors,
+            data: [20, 30, 60],
+          },
+        ],
+      },
+      checkInData: {
+        labels: ['Checked In', 'Not Checked In'],
+        datasets: [
+          {
+            label: 'Applicant Distribution',
+            backgroundColor: this.colors,
+            data: [40, 60],
+          },
+        ],
+      },
+      ageData: {
+        labels: ['18', '19', '20', '21', '22', '23+'],
+        datasets: [
+          {
+            label: 'Age Distribution',
+            backgroundColor: this.colors,
+            data: [70, 160, 200, 125, 90, 50],
+          },
+        ],
+      },
+      busData: {
+        labels: ['Toronto', 'Waterloo', 'London', 'Montreal', 'None'],
+        datasets: [
+          {
+            label: 'Number of Students Per Bus',
+            backgroundColor: this.colors,
+            data: [60, 120, 25, 34, 200],
+          },
+        ],
+      },
+      colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f'],
+      options: {},
+    };
+  },
+  components: {
+    Navbar,
+    IOdometer,
+    PieChart,
+    BarChart,
+    ApexChart,
+  },
+  async beforeMount() {
+    this.statistics = await this.getStatistics();
+    this.setAllData();
 
-        db
-            .collection('statistics')
-            .doc('DH5')
-            .onSnapshot(doc => {
-                console.log(doc.data());
-                if (doc.exists) {
-                    this.statistics = doc.data();
-                    this.setAllData();
-                }
-            });
+    db
+      .collection('statistics')
+      .doc('DH5')
+      .onSnapshot((doc) => {
+        console.log(doc.data());
+        if (doc.exists) {
+          this.statistics = doc.data();
+          this.setAllData();
+        }
+      });
+  },
+  computed: {
+    total() {
+      const { accepted, rejected, pending } = this.statistics.decisions;
+      return accepted + rejected + pending;
     },
-    computed: {
-        total() {
-            const { accepted, rejected, pending } = this.statistics.decisions;
-            return accepted + rejected + pending;
-        },
+  },
+  methods: {
+    setAllData() {
+      this.setDecisionPanels();
+      // this.setAgePanels();
+      this.setCheckedInGraph();
+      this.setMiscStatistics();
+      // this.parseDateNum('21121998');
+      this.setAgePanels();
     },
-    methods: {
-        setAllData() {
-            this.setDecisionPanels();
-            // this.setAgePanels();
-            this.setCheckedInGraph();
-            this.setMiscStatistics();
-            // this.parseDateNum('21121998');
-            this.setAgePanels();
-        },
-        setCheckedInGraph() {
-            this.$refs.checkedIn.changeData({
-                labels: ['Checked In', 'Not Checked In'],
-                datasets: [
-                    {
-                        label: 'Applicant Distribution',
-                        backgroundColor: this.colors,
-                        data: [this.statistics.checkedIn, this.total - this.statistics.checkedIn],
-                    },
-                ],
-            });
-        },
-        parseDateField(date) {
-            const day = date.slice(0, 2);
-            const month = date.slice(2, 4);
-            const year = date.slice(4, date.length);
-            const parsed = `${month}/${day}/${year}`;
-            return new Date(parsed);
-        },
-        getAgeFromDate(bday) {
-            const current = new Date();
-            if (bday > this.createDate(current, current.getFullYear() - 18)) {
-                return '18-';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '19';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '20';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '21';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '22';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '23';
-            }
-            return '24+';
-        },
-    
-        updateCharts() {
-            this.setDecisionPanels();
-            // this.setAgePanels();
-            this.setCheckedInGraph();
-            this.setMiscStatistics();
-            // this.parseDateNum('21121998');
-            this.setAgePanels();
-        },
-        setCheckedInGraph() {
-            this.$refs.checkedIn.changeData({
-                labels: ['Checked In', 'Not Checked In'],
-                datasets: [
-                    {
-                        label: 'Applicant Distribution',
-                        backgroundColor: this.colors,
-                        data: [
-                            this.statistics.checkedIn,
-                            this.total - this.statistics.checkedIn,
-                        ],
-                    },
-                ],
-            });
-        },
-        parseDateField(date) {
-            const day = date.slice(0, 2);
-            const month = date.slice(2, 4);
-            const year = date.slice(4, date.length);
-            const parsed = `${month}/${day}/${year}`;
-            return new Date(parsed);
-        },
-        createDate(current, year) {
-            const out = new Date(current.setFullYear(year));
-            return out;
-        },
-        getAgeFromDate(bday) {
-            const current = new Date();
-            if (bday > this.createDate(current, current.getFullYear() - 18)) {
-                return '18-';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '19';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '20';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '21';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '22';
-            } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-                return '23';
-            }
-            return '24+';
-        },
-        updateAgeData(snap) {
-            const ages = {
-                '18-': 0,
-                19: 0,
-                20: 0,
-                21: 0,
-                22: 0,
-                23: 0,
-                '24+': 0,
-            };
-            snap.docs.forEach(doc => {
-                const data = doc.data();
-                const birthday = this.parseDateField(data.birthday);
-                ages[this.getAgeFromDate(birthday)] += 1;
-            });
-            this.setAgePanels(ages);
-        },
-        async setAgePanels(data) {
-            // const { data } = await this.getAgeData();
-            this.$refs.ages.changeData({
-                labels: ['18', '19', '20', '21', '22', '23+'],
-                datasets: [
-                    {
-                        label: 'Age Distribution',
-                        backgroundColor: this.colors,
-                        data: Object.values(data),
-                    },
-                ],
-            });
-        },
-        setDecisionPanels() {
-            this.$refs.decisions.changeData({
-                labels: ['Accepted', 'Rejected', 'Pending'],
-                datasets: [
-                    {
-                        label: 'Applicant Distribution',
-                        backgroundColor: this.colors,
-                        data: [
-                            this.statistics.decisions.accepted,
-                            this.statistics.decisions.rejected,
-                            this.statistics.decisions.pending,
-                        ],
-                    },
-                ],
-            });
-        },
-        setMiscStatistics() {
-            this.$refs.hackathons.changeData(
-                this.processField(this.statistics.applicationStats.hackathons, 'Hackathons')
-            );
-            this.$refs.majors.changeData(
-                this.processField(this.statistics.applicationStats.majors, 'Majors')
-            );
-            this.$refs.schoolYears.changeData(
-                this.processField(this.statistics.applicationStats.schoolYears, 'School Years')
-            );
-            this.$refs.shirt_sizes.changeData(
-                this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size')
-            );
-            // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
-            this.$refs.universities.changeData(
-                this.processField(this.statistics.applicationStats.universities, 'Universities')
-            );
-        },
-        filterData(data) {
+    setCheckedInGraph() {
+      this.$refs.checkedIn.changeData({
+        labels: ['Checked In', 'Not Checked In'],
+        datasets: [
+          {
+            label: 'Applicant Distribution',
+            backgroundColor: this.colors,
+            data: [this.statistics.checkedIn, this.total - this.statistics.checkedIn],
+          },
+        ],
+      });
+    },
+    parseDateField(date) {
+      const day = date.slice(0, 2);
+      const month = date.slice(2, 4);
+      const year = date.slice(4, date.length);
+      const parsed = `${month}/${day}/${year}`;
+      return new Date(parsed);
+    },
+    getAgeFromDate(bday) {
+      const current = new Date();
+      if (bday > this.createDate(current, current.getFullYear() - 18)) {
+        return '18-';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '19';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '20';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '21';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '22';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '23';
+      }
+      return '24+';
+    },
 
-        },
-        apexProcessField(field, label) {
-            const val = Object.values(field);
-            return {
-                labels: Object.keys(field),
-                datasets: [
-                    {
-                        label,
-                        backgroundColor: this.colors,
-                        data: val,
-                    },
-                ],
-            };
-        },
-        getStatistics() {
-            const ref = db.collection('statistics').doc('DH5');
-            return new Promise(async (resolve, reject) => {
-                const snap = await ref.get().catch(err => reject(err));
-                resolve(snap.data());
-            });
-        },
-        processField(field, label) {
-            const val = Object.values(field);
-            return {
-                labels: Object.keys(field),
-                datasets: [
-                    {
-                        label,
-                        backgroundColor: this.colors,
-                        data: val,
-                    },
-                ],
-            };
-        },
+    updateCharts() {
+      this.setDecisionPanels();
+      // this.setAgePanels();
+      this.setCheckedInGraph();
+      this.setMiscStatistics();
+      // this.parseDateNum('21121998');
+      this.setAgePanels();
     },
+    setCheckedInGraph() {
+      this.$refs.checkedIn.changeData({
+        labels: ['Checked In', 'Not Checked In'],
+        datasets: [
+          {
+            label: 'Applicant Distribution',
+            backgroundColor: this.colors,
+            data: [
+              this.statistics.checkedIn,
+              this.total - this.statistics.checkedIn,
+            ],
+          },
+        ],
+      });
+    },
+    parseDateField(date) {
+      const day = date.slice(0, 2);
+      const month = date.slice(2, 4);
+      const year = date.slice(4, date.length);
+      const parsed = `${month}/${day}/${year}`;
+      return new Date(parsed);
+    },
+    createDate(current, year) {
+      const out = new Date(current.setFullYear(year));
+      return out;
+    },
+    getAgeFromDate(bday) {
+      const current = new Date();
+      if (bday > this.createDate(current, current.getFullYear() - 18)) {
+        return '18-';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '19';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '20';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '21';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '22';
+      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+        return '23';
+      }
+      return '24+';
+    },
+    updateAgeData(snap) {
+      const ages = {
+        '18-': 0,
+        19: 0,
+        20: 0,
+        21: 0,
+        22: 0,
+        23: 0,
+        '24+': 0,
+      };
+      snap.docs.forEach((doc) => {
+        const data = doc.data();
+        const birthday = this.parseDateField(data.birthday);
+        ages[this.getAgeFromDate(birthday)] += 1;
+      });
+      this.setAgePanels(ages);
+    },
+    async setAgePanels(data) {
+      // const { data } = await this.getAgeData();
+      this.$refs.ages.changeData({
+        labels: ['18', '19', '20', '21', '22', '23+'],
+        datasets: [
+          {
+            label: 'Age Distribution',
+            backgroundColor: this.colors,
+            data: Object.values(data),
+          },
+        ],
+      });
+    },
+    setDecisionPanels() {
+      this.$refs.decisions.changeData({
+        labels: ['Accepted', 'Rejected', 'Pending'],
+        datasets: [
+          {
+            label: 'Applicant Distribution',
+            backgroundColor: this.colors,
+            data: [
+              this.statistics.decisions.accepted,
+              this.statistics.decisions.rejected,
+              this.statistics.decisions.pending,
+            ],
+          },
+        ],
+      });
+    },
+    setMiscStatistics() {
+      this.$refs.hackathons.changeData(this.processField(this.statistics.applicationStats.hackathons, 'Hackathons'));
+      this.$refs.majors.changeData(this.processField(this.statistics.applicationStats.majors, 'Majors'));
+      this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears, 'School Years'));
+      this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'));
+      // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
+      this.$refs.universities.changeData(this.processField(this.statistics.applicationStats.universities, 'Universities'));
+    },
+    filterData(data) {
+
+    },
+    apexProcessField(field, label) {
+      const val = Object.values(field);
+      return {
+        labels: Object.keys(field),
+        datasets: [
+          {
+            label,
+            backgroundColor: this.colors,
+            data: val,
+          },
+        ],
+      };
+    },
+    getStatistics() {
+      const ref = db.collection('statistics').doc('DH5');
+      return new Promise(async (resolve, reject) => {
+        const snap = await ref.get().catch(err => reject(err));
+        resolve(snap.data());
+      });
+    },
+    processField(field, label) {
+      const val = Object.values(field);
+      return {
+        labels: Object.keys(field),
+        datasets: [
+          {
+            label,
+            backgroundColor: this.colors,
+            data: val,
+          },
+        ],
+      };
+    },
+  },
 };
 </script>
 

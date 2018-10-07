@@ -171,7 +171,7 @@ export default {
                                     ? (finalcount += 1)
                                     : (finalcount = finalcount);
                             }
-                            console.log('Miccrosoft count: ', finalcount);
+                            console.log('Miccrosoft count: ', finalcount + 95);
                         } catch (err) {
                             console.log('Error indexing applications');
                         }
