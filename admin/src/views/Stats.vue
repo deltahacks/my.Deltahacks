@@ -380,15 +380,34 @@ export default {
       });
     },
     setMiscStatistics() {
+        this.filterData(this.statistics.applicationStats.universities);
       this.$refs.hackathons.changeData(this.processField(this.statistics.applicationStats.hackathons, 'Hackathons'));
-      this.$refs.majors.changeData(this.processField(this.statistics.applicationStats.majors, 'Majors'));
+      this.$refs.majors.changeData(this.processField(this.filterData(this.statistics.applicationStats.majors), 'Majors'));
       this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears, 'School Years'));
       this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'));
       // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
-      this.$refs.universities.changeData(this.processField(this.statistics.applicationStats.universities, 'Universities'));
+      this.$refs.universities.changeData(this.processField(this.filterData(this.statistics.applicationStats.universities), 'Universities'));
     },
+    // TODO: Improve the efficiency of this solution.
     filterData(data) {
-
+        const N = 5; // Number of fields to show before collapsing into "Other"
+        const eliminate = (arr, i) => arr.splice(i, 1)
+        const values = Object.values(data);
+        const keys = Object.keys(data);
+        const out = {};
+        let i = 0;
+        while (i < N) {
+            const mindex = values.indexOf(Math.max(...values));
+            console.log(Math.max(...values));
+            out[keys[mindex]] = values[mindex];
+            values.splice(mindex, 1);
+            keys.splice(mindex, 1);
+            i++;
+        }
+        out['Other'] = 0;
+        values.forEach(value => out['Other'] += value);
+        console.log(out);
+        return out;
     },
     apexProcessField(field, label) {
       const val = Object.values(field);
