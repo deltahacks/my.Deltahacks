@@ -240,11 +240,8 @@ export default {
   methods: {
     setAllData() {
       this.setDecisionPanels();
-      // this.setAgePanels();
       this.setCheckedInGraph();
       this.setMiscStatistics();
-      // this.parseDateNum('21121998');
-    //   this.updateAgeData();
     },
     setCheckedInGraph() {
       this.$refs.checkedIn.changeData({
@@ -257,6 +254,56 @@ export default {
           },
         ],
       });
+    },
+    setCheckedInGraph() {
+      this.$refs.checkedIn.changeData({
+        labels: ['Checked In', 'Not Checked In'],
+        datasets: [
+          {
+            label: 'Applicant Distribution',
+            backgroundColor: this.colors,
+            data: [
+              this.statistics.checkedIn,
+              this.total - this.statistics.checkedIn,
+            ],
+          },
+        ],
+      });
+    },
+    initAgeChart() {
+        db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
+            this.updateAgeData(snap);
+        });
+    },
+    parseDateField(date) {
+      const day = date.slice(0, 2);
+      const month = date.slice(2, 4);
+      const year = date.slice(4, date.length);
+      const parsed = `${month}/${day}/${year}`;
+      return new Date(parsed);
+    },
+    createDate(current, year) {
+      const out = new Date(current.setFullYear(year));
+      return out;
+    },
+    updateAgeData(snap) {
+      const ages = {
+        '18-': 0,
+        '19': 0,
+        '20': 0,
+        '21': 0,
+        '22': 0,
+        '23': 0,
+        '24+': 0,
+      };
+      snap.docs.forEach((doc) => {
+        const data = doc.data();
+        const birthday = this.parseDateField(data.birthday);
+        console.log(birthday);
+        console.log(this.getAgeFromDate(birthday));
+        ages[this.getAgeFromDate(birthday)] += 1;
+      });
+      this.setAgePanels(ages);
     },
     parseDateField(date) {
       const day = date.slice(0, 2);
@@ -281,64 +328,6 @@ export default {
         return '23';
       }
       return '24+';
-    },
-    updateCharts() {
-      this.setDecisionPanels();
-      // this.setAgePanels();
-      this.setCheckedInGraph();
-      this.setMiscStatistics();
-      // this.parseDateNum('21121998');
-    //   this.setAgePanels();
-    },
-    setCheckedInGraph() {
-      this.$refs.checkedIn.changeData({
-        labels: ['Checked In', 'Not Checked In'],
-        datasets: [
-          {
-            label: 'Applicant Distribution',
-            backgroundColor: this.colors,
-            data: [
-              this.statistics.checkedIn,
-              this.total - this.statistics.checkedIn,
-            ],
-          },
-        ],
-      });
-    },
-    parseDateField(date) {
-      const day = date.slice(0, 2);
-      const month = date.slice(2, 4);
-      const year = date.slice(4, date.length);
-      const parsed = `${month}/${day}/${year}`;
-      return new Date(parsed);
-    },
-    createDate(current, year) {
-      const out = new Date(current.setFullYear(year));
-      return out;
-    },
-    initAgeChart() {
-        db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
-            this.updateAgeData(snap);
-        });
-    },
-    updateAgeData(snap) {
-      const ages = {
-        '18-': 0,
-        '19': 0,
-        '20': 0,
-        '21': 0,
-        '22': 0,
-        '23': 0,
-        '24+': 0,
-      };
-      snap.docs.forEach((doc) => {
-        const data = doc.data();
-        const birthday = this.parseDateField(data.birthday);
-        console.log(birthday);
-        console.log(this.getAgeFromDate(birthday));
-        ages[this.getAgeFromDate(birthday)] += 1;
-      });
-      this.setAgePanels(ages);
     },
     async setAgePanels(data) {
       // const { data } = await this.getAgeData();
