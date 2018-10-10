@@ -229,6 +229,7 @@ export default {
           this.setAllData();
         }
       });
+    this.initAgeChart();
   },
   computed: {
     total() {
@@ -243,7 +244,7 @@ export default {
       this.setCheckedInGraph();
       this.setMiscStatistics();
       // this.parseDateNum('21121998');
-      this.setAgePanels();
+    //   this.updateAgeData();
     },
     setCheckedInGraph() {
       this.$refs.checkedIn.changeData({
@@ -266,7 +267,7 @@ export default {
     },
     getAgeFromDate(bday) {
       const current = new Date();
-      if (bday > this.createDate(current, current.getFullYear() - 18)) {
+      if (bday > this.createDate(current, current.getFullYear() - 19)) {
         return '18-';
       } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
         return '19';
@@ -281,14 +282,13 @@ export default {
       }
       return '24+';
     },
-
     updateCharts() {
       this.setDecisionPanels();
       // this.setAgePanels();
       this.setCheckedInGraph();
       this.setMiscStatistics();
       // this.parseDateNum('21121998');
-      this.setAgePanels();
+    //   this.setAgePanels();
     },
     setCheckedInGraph() {
       this.$refs.checkedIn.changeData({
@@ -316,36 +316,26 @@ export default {
       const out = new Date(current.setFullYear(year));
       return out;
     },
-    getAgeFromDate(bday) {
-      const current = new Date();
-      if (bday > this.createDate(current, current.getFullYear() - 18)) {
-        return '18-';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '19';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '20';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '21';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '22';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '23';
-      }
-      return '24+';
+    initAgeChart() {
+        db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
+            this.updateAgeData(snap);
+        });
     },
     updateAgeData(snap) {
       const ages = {
         '18-': 0,
-        19: 0,
-        20: 0,
-        21: 0,
-        22: 0,
-        23: 0,
+        '19': 0,
+        '20': 0,
+        '21': 0,
+        '22': 0,
+        '23': 0,
         '24+': 0,
       };
       snap.docs.forEach((doc) => {
         const data = doc.data();
         const birthday = this.parseDateField(data.birthday);
+        console.log(birthday);
+        console.log(this.getAgeFromDate(birthday));
         ages[this.getAgeFromDate(birthday)] += 1;
       });
       this.setAgePanels(ages);
@@ -391,14 +381,12 @@ export default {
     // TODO: Improve the efficiency of this solution.
     filterData(data) {
         const N = 5; // Number of fields to show before collapsing into "Other"
-        const eliminate = (arr, i) => arr.splice(i, 1)
         const values = Object.values(data);
         const keys = Object.keys(data);
         const out = {};
         let i = 0;
         while (i < N) {
             const mindex = values.indexOf(Math.max(...values));
-            console.log(Math.max(...values));
             out[keys[mindex]] = values[mindex];
             values.splice(mindex, 1);
             keys.splice(mindex, 1);
@@ -406,7 +394,6 @@ export default {
         }
         out['Other'] = 0;
         values.forEach(value => out['Other'] += value);
-        console.log(out);
         return out;
     },
     apexProcessField(field, label) {
