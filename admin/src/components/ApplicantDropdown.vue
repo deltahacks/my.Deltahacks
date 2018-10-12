@@ -127,7 +127,7 @@
             </v-expansion-panel>
           </v-flex>
         </v-layout>
-        <vue-slider :disabled='isReviewed || !$store.state.currentUserIsAuthorizedReviewer' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=10 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
+        <vue-slider :disabled='isReviewed || !$store.state.currentUserIsAuthorizedReviewer' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=14 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
         <v-btn color="success" class="button2" :disabled='isReviewed || !$store.state.currentUserIsAuthorizedReviewer' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
         <v-dialog v-model="dialog" width="500">
           <v-btn slot="activator" class="bold" color="red" dark :disabled='!$store.state.currentUserIsAuthorizedReviewer'>Delete</v-btn>
