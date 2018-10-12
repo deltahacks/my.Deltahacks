@@ -241,6 +241,7 @@ export default {
                     .collection('pending')
                     .doc(this.applicant.email)
                     .update({ decision });
+                this.isReviewed = true;
                 console.log('Review sent: ', uploadScore);
             } catch (err) {
                 console.log('Error getting user app: ', err);
