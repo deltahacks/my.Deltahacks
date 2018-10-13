@@ -160,7 +160,7 @@ import vueSlider from 'vue-slider-component';
 
 export default {
     name: 'Applicant',
-    props: ['usrname', 'applicant', 'isReviewed'],
+    props: ['usrname', 'applicant', 'isReviewed', 'refetchCurrentPage'],
     data: () => ({
         dialog: false,
         currentPage: 0,
@@ -242,6 +242,7 @@ export default {
                     .doc(this.applicant.email)
                     .update({ decision });
                 this.isReviewed = true;
+                this.refetchCurrentPage();
                 console.log('Review sent: ', uploadScore);
             } catch (err) {
                 console.log('Error getting user app: ', err);
