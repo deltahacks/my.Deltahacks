@@ -242,7 +242,7 @@ export default {
                     .doc(this.applicant.email)
                     .update({ decision });
                 this.isReviewed = true;
-                this.refetchCurrentPage();
+                //this.refetchCurrentPage();
                 console.log('Review sent: ', uploadScore);
             } catch (err) {
                 console.log('Error getting user app: ', err);
