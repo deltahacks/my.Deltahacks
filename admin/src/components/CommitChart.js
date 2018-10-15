@@ -32,18 +32,18 @@ export default {
     // Overwriting base render method with actual data.
     const startFrom = this.setStartDate(); // currently 1 month ago
     const track = this.populateDateLabels(startFrom);
-    const test = new Date();
     db
       .collection('applications')
       .doc('DH5')
-      .collection('all')
+      .collection('submitted')
       .orderBy('last_modified.unix')
-      .startAfter(startFrom.getTime() / 1000)
+      .endAt(startFrom.getTime() / 1000)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const item = doc.data();
-          const date = new Date(item.last_modified.date.toDate());
+          if (!item.last_modified) return;
+          const date = new Date(item.last_modified.date);
           const dateString = date.toDateString();
           if (!track[dateString]) {
             track[dateString] = 1;
