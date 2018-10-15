@@ -359,7 +359,7 @@ export default {
       });
     },
     setMiscStatistics() {
-        this.filterData(this.statistics.applicationStats.universities);
+      this.filterData(this.statistics.applicationStats.universities);
       this.$refs.hackathons.changeData(this.processField(this.statistics.applicationStats.hackathons, 'Hackathons'));
       this.$refs.majors.changeData(this.processField(this.filterData(this.statistics.applicationStats.majors), 'Majors'));
       this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears, 'School Years'));
