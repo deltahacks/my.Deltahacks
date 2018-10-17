@@ -148,7 +148,7 @@
           <v-card-text class="text-xs-left">
             <h2>Resume</h2>
           </v-card-text>
-          <iframe id='resume' v-if="applicant.documents[0]" :src="applicant.documents[0] ? applicant.documents[0].download_link : 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'"></iframe>
+          <iframe id='resume' v-if="applicant.documents[0] || applicant.documents" :src="applicant.documents[0] ? applicant.documents[0].download_link : (applicant.documents.download_link ? applicant.documents.download_link : 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf') "></iframe>
           <h2 v-else>No resume uploaded</h2>
         </v-card>
       </v-flex>
@@ -204,9 +204,10 @@ export default {
     },
     mounted() {
         console.log('Sub', this.isReviewed, this.applicant, this.random);
-        this.score = this.applicant.decision.reviewers.find(
+        /*         this.score = this.applicant.decision.reviewers.find(
             obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email
-        ).score;
+        ).score; */
+        console.log('Docs', this.applicant.documents);
     },
     methods: {
         async updateApplicationScore() {
