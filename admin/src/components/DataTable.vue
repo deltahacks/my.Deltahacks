@@ -156,7 +156,7 @@ export default {
         return {
             // lastVisible: null,
             page: 1,
-            rowsPerPage: 40,
+            rowsPerPage: 50,
             numApplicants: 0,
             applications: {},
             peeps: [fake],

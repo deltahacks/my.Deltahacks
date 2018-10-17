@@ -177,6 +177,34 @@ export default {
                         }
                     },
                 },
+                {
+                    title: 'Count Microsoft 2',
+                    execute: async function() {
+                        try {
+                            console.log('Counting msft');
+                            let msftCount = await db
+                                .collection('decisions')
+                                .doc('DH5')
+                                .collection('pending')
+                                .get();
+                            let finalcount = 0;
+                            for (let inst of msftCount.docs) {
+                                //console.log('INST', inst.data(), inst);
+                                inst.data().microsoft
+                                    ? console.log(
+                                          `,${inst.data().name} ${inst.data().lastname},`,
+                                          `${inst.data().email},`,
+                                          `${inst.data().major},`,
+                                          `${inst.data().university},`
+                                      )
+                                    : (finalcount = finalcount);
+                            }
+                            console.log('Miccrosoft count: ', finalcount + 95);
+                        } catch (err) {
+                            console.log('Error indexing applications');
+                        }
+                    },
+                },
             ],
         };
     },
