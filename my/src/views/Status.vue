@@ -7,7 +7,7 @@
       <div class="hide">
         <div class="wrap-status100">
           <h1 v-show="step === 0">You haven't started yet! Go
-            <a href="/apply" class="currentStatus">here</a> to begin.</h1>
+            <a href="/apply" class="currentStatus">here</a> to begin. Submit by Nov 15!</h1>
           <h1 v-show="step > 0">{{currentHeader}}</h1>
           <br>
           <v-stepper alt-labels class="transp">
@@ -39,7 +39,7 @@
       <div class="mobile">
         <div class="wrap-status101">
           <h1 v-show="step === 0">You haven't started yet! Go
-            <a href="/apply" class="currentStatus">here</a> to begin.</h1>
+            <a href="/apply" class="currentStatus">here</a> to begin. Submit by Nov 15!</h1>
           <h1 v-show="step > 0">{{currentHeader}}</h1>
           <v-card-text></v-card-text>
           <v-stepper vertical class="wrap-status201">

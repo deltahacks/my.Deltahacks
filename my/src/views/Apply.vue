@@ -9,8 +9,8 @@
                     <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline.</p>
                     <p v-if="!submitted" class='text-xs-left'>No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.</p>
                     <p v-if="!submitted" class='text-xs-left'>Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event (Jan 25-26, 2019).</p>
-                    <p v-if="!submitted" class='text-xs-left'>Round one has now concluded. Applications will now be considered for round two.</p>
-                    <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviewes it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
+                    <p v-if="!submitted" class='text-xs-left'>Round one has now concluded. Applications will now be considered for round two, which closes on Nov 15.</p>
+                    <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviews it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                     <br><br>
                     <h2 style="float:left">{{ subsectionLabels[0] }}</h2>
                     <br><br>
@@ -419,7 +419,7 @@ export default {
                 'Hardware hacking',
                 'Computer Vision with OpenCV',
             ],
-            hackathons: ['This is my first one', '2', '3', '4', '5-9', '10+'],
+            hackathons: ['This is my first one', '1', '2', '3', '4', '5-9', '10+'],
             food: [
                 'None',
                 'Vegetarian',
