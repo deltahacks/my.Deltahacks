@@ -8,7 +8,7 @@
                     <h1 v-else class='text-xs-left'>You've submitted your application. 😁</h1>
                     <p v-if="!submitted" class='text-xs-left'>Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it any time before the deadline.</p>
                     <p v-if="!submitted" class='text-xs-left'>No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.</p>
-                    <p v-if="!submitted" class='text-xs-left'>Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event, Jan 25, 2019.</p>
+                    <p v-if="!submitted" class='text-xs-left'>Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event, Jan 26, 2019.</p>
                     <p v-if="!submitted" class='text-xs-left'>Round one has now concluded. Applications will now be considered for round two, which closes on Nov 15.</p>
                     <p v-else class='text-xs-left'>Your application has been recieved by us, sit back and relax while our team reviews it. You'll be notified when a decision is made, in the meantime you can check the status page to check the progress of your application. If you wish to make any changes you can email relations@deltahacks.com.</p>
                     <br><br>
@@ -126,25 +126,6 @@
                     <div class="section divider"></div>
                     <h2 style="float:left">{{subsectionLabels[2]}}</h2>
                     <br><br>
-                    <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
-                    </v-text-field>
-                    <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
-                    </v-text-field>
-                    <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
-                    </v-text-field>
-                    <v-text-field name="devpost" :disabled="submitted" label="Your Devpost" single-line data-vv-delay="4000" v-model="application.devpost" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('devpost')">
-                    </v-text-field><br>
-                    <div id="filePondContainer">
-                        <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
-                        <v-chip class="no border" style="float:left;overflow: wrap" v-if="haveFile" outline small color="gray">
-                            <v-icon left>info</v-icon>
-                            <strong>We've got your file "</strong>
-                            <a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
-                        </v-chip>
-                    </div>
-                    <div class="section divider"></div>
-                    <h2 style="float:left">{{subsectionLabels[3]}}</h2>
-                    <br><br>
                     <label for="phone" style='float:left'>
                         <strong>Your Cell Phone Number *</strong>
                     </label><br>
@@ -161,6 +142,27 @@
                         <strong>Relationship with Emergency Contact *</strong>
                     </label><br>
                     <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
+                    <div class="section divider"></div>
+                    <p>Note : Only information below this line will be considered during the reviewing process. The above information is for statistics, demographics, and logistical purposes only.</p>
+                    <div class="section divider"></div>
+                    <h2 style="float:left">{{subsectionLabels[3]}}</h2>
+                    <br><br>
+                    <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
+                    </v-text-field>
+                    <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
+                    </v-text-field>
+                    <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
+                    </v-text-field>
+                    <v-text-field name="devpost" :disabled="submitted" label="Your Devpost" single-line data-vv-delay="4000" v-model="application.devpost" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('devpost')">
+                    </v-text-field><br>
+                    <div id="filePondContainer">
+                        <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
+                        <v-chip class="no border" style="float:left;overflow: wrap" v-if="haveFile" outline small color="gray">
+                            <v-icon left>info</v-icon>
+                            <strong>We've got your file "</strong>
+                            <a target="_blank" :href="application.documents.download_link">{{application.documents.filename}}</a>"
+                        </v-chip>
+                    </div>
                     <div class="section divider"></div>
                     <h2 style="float:left; padding-left:26px;">{{subsectionLabels[4]}}</h2>
                     <br><br>
@@ -301,8 +303,8 @@ export default {
             subsectionLabels: [
                 'Personal Information',
                 'Logistical Stuff',
-                'Your Profiles',
                 'Emergency Info',
+                'Your Profiles',
                 'Application Questions',
             ],
             methods: [
