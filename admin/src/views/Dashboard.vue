@@ -205,6 +205,42 @@ export default {
                         }
                     },
                 },
+                {
+                    title: 'Reviewer stats',
+                    execute: async function() {
+                        try {
+                            console.log('Calculating...');
+                            let msftCount = await db
+                                .collection('decisions')
+                                .doc('DH5')
+                                .collection('pending')
+                                .get();
+                            let finalcount = 0;
+                            let rStats = {};
+                            for (let inst of msftCount.docs) {
+                                //console.log('INST', inst.data(), inst);
+                                //console.log('Dec', inst.data().decision);
+                                if (!inst.data().decision) continue;
+                                for (let rev of inst.data().decision.assignedTo) {
+                                    if (rStats[rev]) {
+                                        rStats[rev].assigned += 1;
+                                        if (
+                                            inst
+                                                .data()
+                                                .decision.reviewers.some(p => p.reviewer === rev)
+                                        )
+                                            rStats[rev].marked += 1;
+                                    } else {
+                                        rStats[rev] = { marked: 0, assigned: 1 };
+                                    }
+                                }
+                            }
+                            console.log('Reviewers: ', rStats);
+                        } catch (err) {
+                            console.log('Error indexing applications', err);
+                        }
+                    },
+                },
             ],
         };
     },
