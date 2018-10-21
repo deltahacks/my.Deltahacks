@@ -432,6 +432,7 @@ export default {
                 'No Beef',
                 'Lactose Intolerant',
                 'Gluten Free',
+                '(Type your own option)',
             ],
             shirts: ['XS', 'S', 'M', 'L', 'XL'],
             degrees: ['Bachelors', 'Masters', 'PhD'],
