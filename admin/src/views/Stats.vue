@@ -154,6 +154,11 @@ export default {
   data() {
     return {
       test: [50, 25, 25],
+      decisions: {
+        accepted: 0,
+        pending: 0,
+        rejected: 0,
+      },
       statistics: {
         decisions: {
           accepted: 0,
@@ -299,8 +304,6 @@ export default {
       snap.docs.forEach((doc) => {
         const data = doc.data();
         const birthday = this.parseDateField(data.birthday);
-        console.log(birthday);
-        console.log(this.getAgeFromDate(birthday));
         ages[this.getAgeFromDate(birthday)] += 1;
       });
       this.setAgePanels(ages);
