@@ -1,0 +1,33 @@
+[debug] [2018-10-18T20:18:56.606Z] ----------------------------------------------------------------------
+[debug] [2018-10-18T20:18:56.609Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Kumail\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy --only functions
+[debug] [2018-10-18T20:18:56.609Z] CLI Version:   4.2.1
+[debug] [2018-10-18T20:18:56.609Z] Platform:      win32
+[debug] [2018-10-18T20:18:56.609Z] Node Version:  v10.9.0
+[debug] [2018-10-18T20:18:56.614Z] Time:          Thu Oct 18 2018 16:18:56 GMT-0400 (Eastern Daylight Time)
+[debug] [2018-10-18T20:18:56.614Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-18T20:18:56.629Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-18T20:18:56.630Z] > authorizing via signed-in user
+[debug] [2018-10-18T20:18:56.632Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-10-18T20:18:56.632Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-10-18T20:18:56.953Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-18T20:18:56.965Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/mydeltahacks  
+ 
+[debug] [2018-10-18T20:18:57.432Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'mydeltahacks'...
+[info] 
+[info] i  deploying functions
+[debug] [2018-10-18T20:18:57.441Z] TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received type undefined
+    at assertPath (path.js:39:11)
+    at Object.join (path.js:434:7)
+    at Config.path (C:\Users\Kumail\AppData\Roaming\npm\node_modules\firebase-tools\lib\config.js:166:37)
+    at C:\Users\Kumail\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\lifecycleHooks.js:68:38
+    at _chain (C:\Users\Kumail\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:26:38)
+    at deploy (C:\Users\Kumail\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:81:10)
+    at Command._action (C:\Users\Kumail\AppData\Roaming\npm\node_modules\firebase-tools\commands\deploy.js:53:12)
+    at C:\Users\Kumail\AppData\Roaming\npm\node_modules\firebase-tools\lib\command.js:202:29
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[error] 
+[error] Error: An unexpected error has occurred.

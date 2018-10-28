@@ -26,8 +26,8 @@
                                     <v-card color="white lighten-4" dark>
                                         <div class="tooltip">
                                             <span class="tooltiptext">Click only if you know what you're doing</span>
-                                            <v-btn @click="null" class="bold" color="orange" dark>Fake Firebase</v-btn>
-                                            <v-btn @click="null" class="bold" color="blue" dark>Send Mail</v-btn>
+                                            <v-btn class="bold" color="orange" dark>Fake Firebase</v-btn>
+                                            <v-btn class="bold" color="blue" dark>Send Mail</v-btn>
                                         </div>
                                     </v-card>
                                 </v-flex>
@@ -229,11 +229,25 @@ export default {
                                                 .data()
                                                 .decision.reviewers.some(p => p.reviewer === rev)
                                         )
-                                            rStats[rev].marked += 1;
+                                            rStats[rev].marked += 0;
                                     } else {
                                         rStats[rev] = { marked: 0, assigned: 1 };
                                     }
+                                    for (let rev2 of inst.data().decision.reviewers) {
+                                        if (rStats[rev2.reviewer]) {
+                                            rStats[rev2.reviewer].marked += 1;
+                                        } else {
+                                            rStats[rev2.reviewer] = { marked: 0, assigned: 1 };
+                                        }
+                                    }
                                 }
+                            }
+                            for (let finalRevCount in rStats) {
+                                //console.log('l24999', finalRevCount, rStats[finalRevCount]);
+                                rStats[finalRevCount].marked /= 3;
+                                rStats[finalRevCount].marked = Math.floor(
+                                    rStats[finalRevCount].marked
+                                );
                             }
                             console.log('Reviewers: ', rStats);
                         } catch (err) {

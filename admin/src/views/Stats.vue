@@ -271,9 +271,9 @@ export default {
       });
     },
     initAgeChart() {
-        db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
-            this.updateAgeData(snap);
-        });
+      db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
+        this.updateAgeData(snap);
+      });
     },
     parseDateField(date) {
       const day = date.slice(0, 2);
@@ -289,11 +289,11 @@ export default {
     updateAgeData(snap) {
       const ages = {
         '18-': 0,
-        '19': 0,
-        '20': 0,
-        '21': 0,
-        '22': 0,
-        '23': 0,
+        19: 0,
+        20: 0,
+        21: 0,
+        22: 0,
+        23: 0,
         '24+': 0,
       };
       snap.docs.forEach((doc) => {
@@ -369,21 +369,21 @@ export default {
     },
     // TODO: Improve the efficiency of this solution.
     filterData(data) {
-        const N = 5; // Number of fields to show before collapsing into "Other"
-        const values = Object.values(data);
-        const keys = Object.keys(data);
-        const out = {};
-        let i = 0;
-        while (i < N) {
-            const mindex = values.indexOf(Math.max(...values));
-            out[keys[mindex]] = values[mindex];
-            values.splice(mindex, 1);
-            keys.splice(mindex, 1);
-            i++;
-        }
-        out['Other'] = 0;
-        values.forEach(value => out['Other'] += value);
-        return out;
+      const N = 5; // Number of fields to show before collapsing into "Other"
+      const values = Object.values(data);
+      const keys = Object.keys(data);
+      const out = {};
+      let i = 0;
+      while (i < N) {
+        const mindex = values.indexOf(Math.max(...values));
+        out[keys[mindex]] = values[mindex];
+        values.splice(mindex, 1);
+        keys.splice(mindex, 1);
+        i++;
+      }
+      out.Other = 0;
+      values.forEach(value => out.Other += value);
+      return out;
     },
     apexProcessField(field, label) {
       const val = Object.values(field);
