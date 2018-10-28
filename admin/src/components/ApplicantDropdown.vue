@@ -159,113 +159,113 @@
 import vueSlider from 'vue-slider-component';
 
 export default {
-    name: 'Applicant',
-    props: ['usrname', 'applicant', 'isReviewed', 'refetchCurrentPage'],
-    data: () => ({
-        dialog: false,
-        currentPage: 0,
-        bannerColor: 'success',
-        bannerTimeout: 2000,
-        bannerMessage: 'Successfully Deleted!',
-        feedback: false,
-        currentUser1: 'yee',
-        topcard: true,
-        pageCount: 0,
-        status: 0,
-        score: 0,
-        resumeLink:
+  name: 'Applicant',
+  props: ['usrname', 'applicant', 'isReviewed', 'refetchCurrentPage'],
+  data: () => ({
+    dialog: false,
+    currentPage: 0,
+    bannerColor: 'success',
+    bannerTimeout: 2000,
+    bannerMessage: 'Successfully Deleted!',
+    feedback: false,
+    currentUser1: 'yee',
+    topcard: true,
+    pageCount: 0,
+    status: 0,
+    score: 0,
+    resumeLink:
             'https://drive.google.com/viewerng/viewer?embedded=true&url=https://writing.colostate.edu/guides/documents/resume/functionalSample.pdf',
-        cards: [
-            {
-                title: 'Pre-fab homes',
-                flex: 12,
-            },
-            {
-                title: 'Favorite road trips',
-                src: '/static/doc-images/cards/road.jpg',
-                flex: 6,
-            },
-            {
-                title: 'Best airlines',
-                src: '/static/doc-images/cards/plane.jpeg',
-                flex: 6,
-            },
-        ],
-    }),
-    components: {
-        vueSlider,
+    cards: [
+      {
+        title: 'Pre-fab homes',
+        flex: 12,
+      },
+      {
+        title: 'Favorite road trips',
+        src: '/static/doc-images/cards/road.jpg',
+        flex: 6,
+      },
+      {
+        title: 'Best airlines',
+        src: '/static/doc-images/cards/plane.jpeg',
+        flex: 6,
+      },
+    ],
+  }),
+  components: {
+    vueSlider,
+  },
+  computed: {
+    hasResume() {
+      console.log(this.applicant);
+      const app = this.applicant;
+      return app.documents && app.documents.length !== 0;
     },
-    computed: {
-        hasResume() {
-            console.log(this.applicant);
-            const app = this.applicant;
-            return app.documents && app.documents.length !== 0;
-        },
-    },
-    mounted() {
-        console.log('Sub', this.isReviewed, this.applicant, this.random);
-        /*         this.score = this.applicant.decision.reviewers.find(
+  },
+  mounted() {
+    console.log('Sub', this.isReviewed, this.applicant, this.random);
+    /*         this.score = this.applicant.decision.reviewers.find(
             obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email
         ).score; */
-        console.log('Docs', this.applicant.documents);
-    },
-    methods: {
-        async updateApplicationScore() {
-            console.log('Updating score', this.$store.state.test);
-            try {
-                const userApplication = await this.$store.state.db
-                    .collection('decisions')
-                    .doc('DH5')
-                    .collection('pending')
-                    .doc(this.applicant.email)
-                    .get();
+    console.log('Docs', this.applicant.documents);
+  },
+  methods: {
+    async updateApplicationScore() {
+      console.log('Updating score', this.$store.state.test);
+      try {
+        const userApplication = await this.$store.state.db
+          .collection('decisions')
+          .doc('DH5')
+          .collection('pending')
+          .doc(this.applicant.email)
+          .get();
 
-                const aaa = this.$store.state.test;
-                console.log(
-                    aaa,
-                    this.$store.state.firebase.auth().currentUser.email,
-                    userApplication.data().decision
-                );
-                const decision = { ...userApplication.data().decision };
-                const reviews = userApplication.data().decision.reviews + 1;
-                const reviewers = userApplication.data().decision.reviewers;
-                reviewers.push({
-                    score: this.score,
-                    reviewer: this.$store.state.firebase.auth().currentUser.email,
-                });
-                decision.reviews = reviews;
-                decision.reviewers = reviewers;
-                console.log('decision', decision);
-                const uploadScore = await this.$store.state.db
-                    .collection('decisions')
-                    .doc('DH5')
-                    .collection('pending')
-                    .doc(this.applicant.email)
-                    .update({ decision });
-                this.isReviewed = true;
-                //this.refetchCurrentPage();
-                console.log('Review sent: ', uploadScore);
-            } catch (err) {
-                console.log('Error getting user app: ', err);
-            }
-        },
-        async deleteApplicant(applicant) {
-            try {
-                const decisionDelete = await this.$store.state.db
-                    .collection('decisions')
-                    .doc('DH5')
-                    .collection('pending')
-                    .doc(applicant)
-                    .delete();
-                this.usrname = `(DELETED) ${this.usrname}`;
-                this.feedback = true;
-                console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
-            } catch (err) {
-                console.log('Error deleting application: ', err);
-            }
-            this.dialog = false;
-        },
+        const aaa = this.$store.state.test;
+        console.log(
+          aaa,
+          this.$store.state.firebase.auth().currentUser.email,
+          userApplication.data().decision,
+        );
+        const decision = { ...userApplication.data().decision };
+        const reviews = userApplication.data().decision.reviews + 1;
+        const reviewers = userApplication.data().decision.reviewers;
+        reviewers.push({
+          score: this.score,
+          reviewer: this.$store.state.firebase.auth().currentUser.email,
+        });
+        decision.reviews = reviews;
+        decision.reviewers = reviewers;
+        console.log('decision', decision);
+        const uploadScore = await this.$store.state.db
+          .collection('decisions')
+          .doc('DH5')
+          .collection('pending')
+          .doc(this.applicant.email)
+          .update({ decision });
+        this.isReviewed = true;
+        // this.refetchCurrentPage();
+        console.log('Review sent: ', uploadScore);
+      } catch (err) {
+        console.log('Error getting user app: ', err);
+      }
     },
+    async deleteApplicant(applicant) {
+      try {
+        const decisionDelete = await this.$store.state.db
+          .collection('decisions')
+          .doc('DH5')
+          .collection('pending')
+          .doc(applicant)
+          .delete();
+        this.usrname = `(DELETED) ${this.usrname}`;
+        this.feedback = true;
+        console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
+      } catch (err) {
+        console.log('Error deleting application: ', err);
+      }
+      this.dialog = false;
+    },
+  },
 };
 </script>
 
