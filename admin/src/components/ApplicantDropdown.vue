@@ -127,8 +127,8 @@
             </v-expansion-panel>
           </v-flex>
         </v-layout>
-        <vue-slider :disabled='isReviewed || !$store.state.currentUserIsAuthorizedReviewer' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=14 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
-        <v-btn color="success" class="button2" :disabled='isReviewed || !$store.state.currentUserIsAuthorizedReviewer' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
+        <vue-slider :disabled='applicant.decision.reviewers.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=14 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
+        <v-btn color="success" class="button2" :disabled='applicant.decision.reviewers.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
         <v-dialog v-model="dialog" width="500">
           <v-btn slot="activator" class="bold" color="red" dark :disabled='!$store.state.currentUserIsAuthorizedReviewer'>Delete</v-btn>
           <v-card>
@@ -244,7 +244,10 @@ export default {
                     .update({ decision });
                 this.isReviewed = true;
                 // this.refetchCurrentPage();
-                console.log('Review sent: ', uploadScore);
+                console.log(
+                    'Review sent: ',
+                    `${userApplication.data().name} ${userApplication.data().lastname}`
+                );
             } catch (err) {
                 console.log('Error getting user app: ', err);
             }

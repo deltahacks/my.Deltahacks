@@ -285,7 +285,9 @@ export default {
         //console.log('NAMERES', nameRes.data());
         this.activateModal(
             `Welcome back ${
-                this.$store.state.currentAdminUserName.trim().split(/\s+/)[0]
+                this.$store.state.currentAdminUserName
+                    ? this.$store.state.currentAdminUserName.trim().split(/\s+/)[0]
+                    : ''
             }!, Loading hackathon data...`
         );
         db.collection('users') //Change to real users later
