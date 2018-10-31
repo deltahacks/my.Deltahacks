@@ -8,7 +8,7 @@
                 </v-list-tile>
             </v-list>
         </v-menu>
-        <v-toolbar-title id="title">{{ this.$store.state.currentAdminUserName.trim().split(/\s+/)[0] }}'s Dashboard</v-toolbar-title>
+        <v-toolbar-title id="title">{{ this.$store.state.currentAdminUserName ? this.$store.state.currentAdminUserName.trim().split(/\s+/)[0] : "" }}'s Dashboard</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
@@ -38,30 +38,30 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Navbar',
-  components: {},
-  data() {
-    return {
-      c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
-    };
-  },
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
+    name: 'Navbar',
+    components: {},
+    data() {
+        return {
+            c_user: firebase.auth().currentUser,
+            dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+            current: 'DH V',
+        };
     },
-  },
+    methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(
+                    () => {
+                        this.$router.push({ name: 'Login' });
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        },
+    },
 };
 </script>
 <style>

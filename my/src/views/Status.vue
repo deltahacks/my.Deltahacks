@@ -1,68 +1,68 @@
 <template>
-  <v-app class="dashboard background">
-    <!-- <Navigation class="mobile"/> -->
-    <Navbar2 class="navbar1" />
-    <div class="container-status100">
+    <v-app class="dashboard background">
+        <!-- <Navigation class="mobile"/> -->
+        <Navbar2 class="navbar1" />
+        <div class="container-status100">
 
-      <div class="hide">
-        <div class="wrap-status100">
-          <h1 v-show="step === 0">You haven't started yet! Go
-            <a href="/apply" class="currentStatus">here</a> to begin.</h1>
-          <h1 v-show="step > 0">{{currentHeader}}</h1>
-          <br>
-          <v-stepper alt-labels class="transp">
-            <v-stepper-header>
-              <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
-            </v-stepper-header>
-          </v-stepper>
-        </div>
-        <br><br><br><br>
-        <div>
-          <v-layout row wrap>
-            <v-flex d-flex md3 :key="media.icon" v-for="media in social">
-              <div>
-                <v-btn class="mx-3" dark icon :href="media.link">
-                  <v-icon size="24px">{{ media.icon }}</v-icon>
-                </v-btn>
-              </div>
-            </v-flex>
-          </v-layout>
-        </div>
-      </div>
+            <div class="hide">
+                <div class="wrap-status100">
+                    <h1 v-show="step === 0">You haven't started yet! Go
+                        <a href="/apply" class="currentStatus">here</a> to begin.</h1>
+                    <h1 v-show="step > 0">{{currentHeader}}</h1>
+                    <br>
+                    <v-stepper alt-labels class="transp">
+                        <v-stepper-header>
+                            <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
+                            <v-divider></v-divider>
+                            <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
+                            <v-divider></v-divider>
+                            <v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
+                            <v-divider></v-divider>
+                            <v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
+                        </v-stepper-header>
+                    </v-stepper>
+                </div>
+                <br><br><br><br>
+                <div>
+                    <v-layout row wrap>
+                        <v-flex d-flex md3 :key="media.icon" v-for="media in social">
+                            <div>
+                                <v-btn class="mx-3" dark icon :href="media.link">
+                                    <v-icon size="24px">{{ media.icon }}</v-icon>
+                                </v-btn>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                </div>
+            </div>
 
-      <div class="mobile">
-        <div class="wrap-status101">
-          <h1 v-show="step === 0">You haven't started yet! Go
-            <a href="/apply" class="currentStatus">here</a> to begin.</h1>
-          <h1 v-show="step > 0">{{currentHeader}}</h1>
-          <v-card-text></v-card-text>
-          <v-stepper vertical class="wrap-status201">
-            <v-stepper-step :complete="step > 0" step="1">{{baseStep}}</v-stepper-step>
-            <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
-            <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
-            <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
-          </v-stepper>
+            <div class="mobile">
+                <div class="wrap-status101">
+                    <h1 v-show="step === 0">You haven't started yet! Go
+                        <a href="/apply" class="currentStatus">here</a> to begin.</h1>
+                    <h1 v-show="step > 0">{{currentHeader}}</h1>
+                    <v-card-text></v-card-text>
+                    <v-stepper vertical class="wrap-status201">
+                        <v-stepper-step :complete="step > 0" step="1">{{baseStep}}</v-stepper-step>
+                        <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
+                        <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
+                        <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
+                    </v-stepper>
+                </div>
+                <div style="margin-top: 5%;">
+                    <v-layout row wrap>
+                        <v-flex d-flex md3 :key="media2.icon" v-for="media2 in social">
+                            <div>
+                                <v-btn class="mx-3" dark icon :href="media2.link">
+                                    <v-icon size="24px">{{ media2.icon }}</v-icon>
+                                </v-btn>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                </div>
+            </div>
         </div>
-        <div style="margin-top: 5%;">
-          <v-layout row wrap>
-            <v-flex d-flex md3 :key="media2.icon" v-for="media2 in social">
-              <div>
-                <v-btn class="mx-3" dark icon :href="media2.link">
-                  <v-icon size="24px">{{ media2.icon }}</v-icon>
-                </v-btn>
-              </div>
-            </v-flex>
-          </v-layout>
-        </div>
-      </div>
-    </div>
-  </v-app>
+    </v-app>
 </template>
 
 <script>
@@ -184,6 +184,8 @@ export default {
                         this.step = 2;
                         break;
                     case 'processing':
+                    case 'accepted':
+                    case 'rejected':
                         this.step = 3;
                         break;
                     case 'decided':
