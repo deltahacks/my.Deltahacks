@@ -7,6 +7,10 @@ p {
   font-weight: bold;
 }
 
+.we_messed_up {
+  color: red;
+}
+
 @media only screen and (min-width: 1280px) and (max-width: 4000px) {
   .ff {
     width: 80%;

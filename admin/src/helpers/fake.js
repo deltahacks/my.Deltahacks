@@ -1,4 +1,4 @@
-import faker from 'faker';
+/* import faker from 'faker';
 
 const unis = ['Waterloo', 'U Toronto', 'York U', 'McMaster', 'Guelph', 'Queens', 'UBC', 'McGill'];
 const {
@@ -85,3 +85,4 @@ for (let i = 0; i < 2; i += 1) {
 }
 
 export default people;
+ */

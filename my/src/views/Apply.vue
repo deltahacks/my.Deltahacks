@@ -26,6 +26,11 @@
                         <strong>When is your birthday? *</strong>
                     </label><br>
                     <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+
+                    <label for="date" style='float:left'>
+                        <strong :class="submitted ? '' : 'we_messed_up'">What's your gender? *</strong>
+                    </label><br>
+                    <v-select name="gender" id='gender' :disabled="submitted" @change="formChange" v-model="application.gender" :items="['M', 'F', 'Other/Prefer not to say']" v-validate="{required:true}" :error-messages="errors.first('gender')" data-vv-delay="1000" />
                     <label for="date" style='float:left'>
                         <strong>What ethnicity do you identify as? *</strong>
                     </label><br>
@@ -391,6 +396,7 @@ export default {
                 birthday: '',
                 documents: [],
                 microsoft: false,
+                gender: '',
             },
             links: ['Home', 'About', 'Contact'],
             q1: '',
