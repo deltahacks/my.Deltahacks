@@ -28,7 +28,7 @@
                     <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
 
                     <label for="date" style='float:left'>
-                        <strong :class="submitted ? '' : 'we_messed_up'">What's your gender? *</strong>
+                        <strong :class="enableGenderSelect && submitted ? '' : 'we_messed_up'">What's your gender? *</strong>
                     </label><br>
                     <v-select name="gender" id='gender' :disabled="!enableGenderSelect && submitted" @change="genderChange" v-model="application.gender" :items="['M', 'F', 'Other/Prefer not to say']" v-validate="{required:true}" :error-messages="errors.first('gender')" data-vv-delay="1000" />
                     <label for="date" style='float:left'>
@@ -228,17 +228,6 @@
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
-                        <v-dialog v-model="confirmGender" persistent max-width="400">
-                            <v-card>
-                                <v-card-title class="headline">Are you sure you want to update your application with this answer?</v-card-title>
-                                <v-card-text>You cannot edit your answer once you've done this.</v-card-text>
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn color="red darken-1" flat @click.native="confirmGender = false">No</v-btn>
-                                    <v-btn color="green darken-1" flat @click="redirectToStatus">Yes</v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-dialog>
                         <v-dialog v-model="confirmClear" persistent max-width="400">
                             <v-btn slot="activator" :disabled="submitted" class="button2">Clear</v-btn>
                             <v-card>
@@ -248,6 +237,17 @@
                                     <v-spacer></v-spacer>
                                     <v-btn color="red darken-1" flat @click.native="confirmClear = false">No</v-btn>
                                     <v-btn color="green darken-1" flat @click="clearForm">Clear</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                        <v-dialog v-model="confirmGender" persistent max-width="400">
+                            <v-card>
+                                <v-card-title class="headline">Are you sure you want to update your application with this answer?</v-card-title>
+                                <v-card-text>You cannot edit your answer once you've done this.</v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="red darken-1" flat @click.native="confirmGender = false">No</v-btn>
+                                    <v-btn color="green darken-1" flat @click="redirectToStatus">Yes</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
@@ -563,7 +563,7 @@ export default {
         genderChange() {
             this.formChange();
 
-            
+
             if (this.submitted && this.application.gender && this.enableGenderSelect) {
                 this.confirmGender = true;
             }

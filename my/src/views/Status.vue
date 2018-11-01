@@ -6,9 +6,13 @@
 
             <div class="hide">
                 <div class="wrap-status100">
-                    <h1 v-show="step === 0">You haven't started yet! Go
+                    <h1 v-show="!genderCompleted" slot="activator">
+                        Please go to <a href="/apply" class="currentStatus">your application</a>
+                        and complete an additional field.
+                    </h1>
+                    <h1 v-show="step === 0 && genderCompleted">You haven't started yet! Go
                         <a href="/apply" class="currentStatus">here</a> to begin.</h1>
-                    <h1 v-show="step > 0">{{currentHeader}}</h1>
+                    <h1 v-show="step > 0 && genderCompleted">{{currentHeader}}</h1>
                     <br>
                     <v-stepper alt-labels class="transp">
                         <v-stepper-header>
@@ -82,6 +86,7 @@ export default {
     name: 'Status',
     data() {
         return {
+            genderCompleted: true,
             social: [
                 {
                     link: 'https://twitter.com/deltahacks',
@@ -198,14 +203,36 @@ export default {
                 console.log('Document not found!');
             }
         },
+        // returns boolean if they've added their gender to their application.
+        checkGenderInput(email) {
+            return new Promise((resolve, reject) => {
+               db.collection('applications').doc('DH5').collection('in progress')
+                .doc(email).get()
+                .then((snap) => {
+                    if (snap.exists) {
+                        const data = snap.data();
+                        if (data.gender) {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    }
+                })
+                .catch(err => reject(err));
+            });
+        },
     },
-    beforeMount() {
+    async beforeMount() {
         console.log('mounted');
         const appEmail = auth().currentUser.email;
+        const genderStatus = await this.checkGenderInput(appEmail);
         db.collection('users')
             .doc(appEmail)
             .onSnapshot(snap => {
                 this.updateStep(snap);
+                if (this.step > 1) {
+                    this.genderCompleted = genderStatus;
+                }
             });
     },
 };
