@@ -6,7 +6,7 @@
                 <v-flex d-flex xs12 sm6 md4>
                     <v-card color="white lighten-4" dark>
                         <GmapMap id="gmap" :center="{lat:43.6532, lng:-79.3832}" :zoom="7" map-type-id="terrain">
-                            <GmapMarker :key="index" title="yooo" v-for="(m, index) in positions" :position="m" :clickable="true" :draggable="false" @click="center=m" />
+                            <GmapMarker :key="index" v-for="(m, index) in positions.pos" :position="m" :title="positions.names[index].email" :clickable="true" :draggable="false" @click="center=m" />
                         </GmapMap>
                     </v-card>
                 </v-flex>
@@ -82,7 +82,6 @@
 
 <script>
 import firebase from 'firebase';
-// import Typed from 'typed.js';
 import PieChart from '@/components/PieChart';
 import Navbar from '@/components/Navbar.vue';
 // import Tab from '@/components/Tab'
@@ -109,7 +108,7 @@ export default {
             lorem:
                 'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
             c_user: firebase.auth().currentUser,
-            positions: [],
+            positions: { pos: [], names: [] },
             loading: false,
             loadingMessage: 'Loading...',
             debugFunctions: [
@@ -291,12 +290,17 @@ export default {
             }!, Loading hackathon data...`
         );
         db.collection('users') //Change to real users later
+            .where('geo.latitude', '<', 1000000)
             .get()
             .then(doc => {
                 doc.docs.forEach(val => {
-                    this.positions.push({
-                        lat: val.data().geo.latitude,
-                        lng: val.data().geo.longitude,
+                    console.log('Vaal', val);
+                    this.positions.pos.push({
+                        lat: val.data().geo ? val.data().geo.latitude : 0,
+                        lng: val.data().geo ? val.data().geo.longitude : 0,
+                    });
+                    this.positions.names.push({
+                        email: val.data().email,
                     });
                     //console.log(val.data().geo);
                     this.$Progress.finish();
@@ -304,7 +308,7 @@ export default {
                 this.loading = false;
             })
             .catch(err => {
-                console.log(err);
+                console.log('E307', err);
                 this.$Progress.fail();
                 this.loading = false;
             });
