@@ -197,7 +197,7 @@ export default {
     },
     computed: {
         hasResume() {
-            console.log(this.applicant);
+            //console.log(this.applicant);
             const app = this.applicant;
             return app.documents && app.documents.length !== 0;
         },
@@ -207,11 +207,11 @@ export default {
         /*         this.score = this.applicant.decision.reviewers.find(
             obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email
         ).score; */
-       // console.log('Docs', this.applicant.documents);
+        // console.log('Docs', this.applicant.documents);
     },
     methods: {
         async updateApplicationScore() {
-            console.log('Updating score', this.$store.state.test);
+            //console.log('Updating score', this.$store.state.test);
             try {
                 const userApplication = await this.$store.state.db
                     .collection('decisions')
@@ -221,11 +221,11 @@ export default {
                     .get();
 
                 const aaa = this.$store.state.test;
-                console.log(
-                    aaa,
-                    this.$store.state.firebase.auth().currentUser.email,
-                    userApplication.data().decision
-                );
+                // console.log(
+                //     aaa,
+                //     this.$store.state.firebase.auth().currentUser.email,
+                //     userApplication.data().decision
+                // );
                 const decision = { ...userApplication.data().decision };
                 const reviews = userApplication.data().decision.reviews + 1;
                 const reviewers = userApplication.data().decision.reviewers;
@@ -235,7 +235,7 @@ export default {
                 });
                 decision.reviews = reviews;
                 decision.reviewers = reviewers;
-                console.log('decision', decision);
+                //console.log('decision', decision);
                 const uploadScore = await this.$store.state.db
                     .collection('decisions')
                     .doc('DH5')
@@ -245,7 +245,7 @@ export default {
                 this.isReviewed = true;
                 // this.refetchCurrentPage();
                 console.log(
-                    'Review sent: ',
+                    'Review sent, you can chill: ',
                     `${userApplication.data().name} ${userApplication.data().lastname}`
                 );
             } catch (err) {
