@@ -294,7 +294,7 @@ export default {
             .get()
             .then(doc => {
                 doc.docs.forEach(val => {
-                    console.log('Vaal', val);
+                    //console.log('Vaal', val);
                     this.positions.pos.push({
                         lat: val.data().geo ? val.data().geo.latitude : 0,
                         lng: val.data().geo ? val.data().geo.longitude : 0,
