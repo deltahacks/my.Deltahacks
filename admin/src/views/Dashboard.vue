@@ -272,9 +272,11 @@ export default {
             .collection('admins')
             //.doc(this.$store.state.firebase.auth().currentUser.email)
             .get();
-        console.log('ALL ADM', nameRes.docs[0].data());
+        //console.log('ALL ADM', nameRes.docs[0].data());
         let revObj = {};
         nameRes.docs.forEach(val => {
+            if (val.data().email == this.$store.state.firebase.auth().currentUser.email)
+                this.$store.state.vuex_user_role = val.data().role;
             revObj[val.data().email] = val.data().name;
         });
         this.$store.state.allAdmins = revObj;
@@ -325,7 +327,7 @@ export default {
             .get();
 
         this.$store.state.currentUserIsAuthorizedReviewer = authRes.data().authorizedReviewer;
-        console.log('auth res: ', authRes.data());
+        //console.log('auth res: ', authRes.data());
     },
     methods: {
         async fnctn() {

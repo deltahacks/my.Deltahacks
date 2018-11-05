@@ -210,9 +210,9 @@ export default {
             .doc(this.hackathon)
             .get()
             .then(snap => {
-                console.log(snap.size);
+                //console.log(snap.size);
                 this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
-                console.log('Number apps: ', this.numApplicants);
+                //console.log('Number apps: ', this.numApplicants);
             });
 
         if (!this.applications[this.page - 1]) {
@@ -225,7 +225,7 @@ export default {
                 .where(...this.restriction)
                 .limit(this.rowsPerPage)
                 .get();
-            console.log('r123', result);
+            //console.log('r123', result);
             // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
             Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
         }

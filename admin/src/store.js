@@ -19,6 +19,7 @@ export default new Vuex.Store({
     vuex_email: null,
     vuex_password: null,
     vuex_user_has_applied: false,
+    vuex_user_role: 'none',
     db,
     firebase,
     test: 'test1',
