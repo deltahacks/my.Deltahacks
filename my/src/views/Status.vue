@@ -7,32 +7,45 @@
                 <!-- RSVP Section (not on mobile! need to add) -->
                 <!-- was rushing to get demo working so hardcoded inline styling for some of rsvp element -->
                 <div class="wrap-status100" style="height:445px;padding:35px 55px 35px 55px;" v-if="step > 3">
-                        <h1 class="rtitle">
-                            Congratulations (update this title)!
+                        <h1 v-if="!response.rsvp" class="rtitle">
+                            Congratulations!
                         </h1>
+                        <h1 v-if="response.rsvp" class="rtitle">
+                            Awesome, see you there!
+                        </h1>
+                        <h3 class="">
+                            Are you able to attend?
+                        </h3>
                     <div style="padding-top:10px;">
-                        <label for="name" style='float:left'>
+                        <div style="padding-top:10px;">
+                            <div class="mx-auto gg" style="display:inline-block;">
+                                <v-btn large color="success" @click="toggleRSVP(true)" :disabled="this.response.rsvp" class="button1">Yes!</v-btn>
+                                <v-btn large color="error" @click="toggleRSVP(false)" :disabled="!this.response.rsvp" class="button2">No.</v-btn>
+                            </div><br><br>
+                        </div>
+                        <!-- <label for="name" style='float:left'>
                             <strong>Will you be attending?*</strong>
                         </label><br>
-                        <!-- RSVP -->
-                        <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch>
+                        <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch> -->
                         <!-- Need Bus -->
-                        <div v-show="response.rsvp">
-                            <label for="name" style='float:left'>
-                                <strong>Will you need a bus?*</strong>
-                            </label><br>
-                            <v-switch @change="changeBus" :label="response.bus ? 'Yes!' : 'No.'" v-model="response.bus"></v-switch>
+                        <div class="mx-auto gg" style="display:inline-block;width:50% !important;" v-show="response.rsvp" transition="slide-x-transition">
+                            <div>
+                                <label for="name" style='float:left'>
+                                    <strong>Will you need a bus?*</strong>
+                                </label><br>
+                                <v-switch @change="changeBus" :label="response.bus ? 'Yes!' : 'No.'" v-model="response.bus"></v-switch>
+                            </div>
+                            <!-- Bus Location -->
+                            <div >
+                                <label for="name" style='float:left'>
+                                    <strong>Where are you coming from?*</strong>
+                                </label><br>
+                                <v-select @change="changeBus" :persistent-hint="true" :hint="busWarning" name="busLocation" v-model="response.location" :items="busLocations"></v-select>
+                            </div>
                         </div>
-                        <!-- Bus Location -->
-                        <div v-show="response.bus && response.rsvp">
-                            <label for="name" style='float:left'>
-                                <strong>Where are you coming from?*</strong>
-                            </label><br>
-                            <v-select name="busLocation" v-model="response.location" :items="busLocations"></v-select>
-                        </div>
-                        <div class="rspvButtons">
+                        <!-- <div class="rspvButtons">
                             <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="wrap-status100" v-if="step <= 3">
@@ -137,12 +150,14 @@ export default {
                 location: '',
                 email: auth().currentUser.email,
             },
+            timeout: undefined,
             bus: false,
             busLocations: [
                 'University of Waterloo',
                 'University of Toronto',
                 'University of Western Ontario',
             ],
+            busWarning: 'Buses aren\'t guarenteed! We are currently gauging interest.',
             feedback: false,
             social: [
                 {
@@ -233,13 +248,29 @@ export default {
         },
     },
     methods: {
+        toggleRSVP(res) {
+            this.response.rsvp = res;
+            if (!this.response.rsvp) {
+                this.response = this.emptyResponse;
+            }
+        },
         changeRSVP() {
             if (!this.response.rsvp) {
                 this.response = this.emptyResponse;
             }
         },
+        formChange() {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+                this.timeout = null;
+            }
+            this.timeout = setTimeout(() => {
+                this.submitRSVP();
+            }, 2000);
+        },
         changeBus() {
             if (!this.response.bus) this.response.location = '';
+            this.formChange();
         },
         submitRSVP() {
             const email = auth().currentUser.email;
@@ -344,6 +375,7 @@ export default {
 }
 .rtitle {
     padding-bottom: 30px !important;
+    font-size:2.5em !important;
 }
 .button1 {
   -moz-appearance: none;
