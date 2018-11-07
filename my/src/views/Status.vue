@@ -374,4 +374,8 @@ export default {
   text-decoration: none !important;
   text-transform: uppercase !important;
 }
+
+.no.border {
+  border: none;
+}
 </style>
