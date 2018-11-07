@@ -37,7 +37,7 @@
                 </div>
                 <div class="wrap-status100" v-if="step <= 3">
                     <div>
-                        <h1 v-show="!genderCompleted" slot="activator">
+                        <h1 v-show="!genderCompleted" slot="activator" style="color: #F14D4C">
                             Please go to <a href="/apply" class="currentStatus">your application</a>
                             and complete an additional field.
                         </h1>
