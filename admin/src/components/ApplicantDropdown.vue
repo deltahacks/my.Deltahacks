@@ -212,7 +212,11 @@ export default {
     },
     methods: {
         decisionStats() {
-            console.log(this.applicant.name, this.applicant.decision.reviewers);
+            let resstr = {};
+            for (let r of this.applicant.decision.reviewers) {
+                resstr[r.reviewer] = r.score;
+            }
+            console.log(this.applicant.name, resstr);
         },
         async updateApplicationScore() {
             //console.log('Updating score', this.$store.state.test);

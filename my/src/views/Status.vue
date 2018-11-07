@@ -6,7 +6,7 @@
 
             <div class="hide">
                 <div class="wrap-status100">
-                    <h1 v-show="!genderCompleted" slot="activator">
+                    <h1 v-show="!genderCompleted" slot="activator" style="color: #F14D4C;">
                         Please go to <a href="/apply" class="currentStatus">your application</a>
                         and complete an additional field.
                     </h1>
@@ -206,19 +206,22 @@ export default {
         // returns boolean if they've added their gender to their application.
         checkGenderInput(email) {
             return new Promise((resolve, reject) => {
-               db.collection('applications').doc('DH5').collection('in progress')
-                .doc(email).get()
-                .then((snap) => {
-                    if (snap.exists) {
-                        const data = snap.data();
-                        if (data.gender) {
-                            resolve(true);
-                        } else {
-                            resolve(false);
+                db.collection('applications')
+                    .doc('DH5')
+                    .collection('in progress')
+                    .doc(email)
+                    .get()
+                    .then(snap => {
+                        if (snap.exists) {
+                            const data = snap.data();
+                            if (data.gender) {
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
                         }
-                    }
-                })
-                .catch(err => reject(err));
+                    })
+                    .catch(err => reject(err));
             });
         },
     },

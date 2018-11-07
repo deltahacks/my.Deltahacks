@@ -43,166 +43,65 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { StatusIndicator } from 'vue-status-indicator';
-import { functions } from 'firebase';
-import { mapState, mapMutations } from 'vuex';
-import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
-import 'vue-status-indicator/styles.css';
-import db from '../private/firebase_init';
+import Vue from "vue";
+import { StatusIndicator } from "vue-status-indicator";
+import { functions } from "firebase";
+import { mapState, mapMutations } from "vuex";
+import ApplicantDropdown from "@/components/ApplicantDropdown.vue";
+import "vue-status-indicator/styles.css";
+import db from "../private/firebase_init";
 
 export default {
-    name: 'DataTable',
-    methods: {
-        // ...mapMutations(['update_DataTable_lastVisible']),
-        onChangeBucket(item) {
-            this.current = item;
-            switch (item) {
-                case 'Assigned to Me':
-                    this.restriction = [
-                        'decision.assignedTo',
-                        'array-contains',
-                        this.$store.state.firebase.auth().currentUser.email,
-                    ];
-                    this.refetchCurrentPage();
-                    break;
-                case 'All Applicants':
-                    this.restriction = this.defaultRestriction;
-                    this.refetchCurrentPage();
-                    break;
-            }
-        },
-        assignmentToName(emails) {
-            let res = '';
-            emails.forEach(val => {
-                res += `${this.$store.state.allAdmins[val]}, `;
-            });
-            return res;
-        },
-        async fb() {
-            db.collection('applications')
-                .doc('DH5')
-                .collection('all')
-                .get();
-        },
-        selectRow(e, props) {
-            // this is still kinda janky but seems to work
-            props.expanded = !props.expanded;
-            const offset = 50 * props.index;
-            window.scrollTo(0, window.screen.height / 2 + offset);
-        },
-        async nextPage() {
-            console.log('Page is: ', this.page);
-            if (!this.applications[`${this.page}`]) {
-                console.log('Getting next page');
-                const result = await db
-                    .collection(this.collection)
-                    .doc(this.hackathon)
-                    .collection(this.bucket)
-                    .orderBy('index')
-                    .where(...this.restriction)
-                    .limit(this.rowsPerPage)
-                    .startAfter((this.page - 1) * this.rowsPerPage)
-                    .get();
-                // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-                Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
-            }
-        },
-        async refetchCurrentPage() {
-            console.log('In mount fill');
-            const result = await db
-                .collection(this.collection)
-                .doc(this.hackathon)
-                .collection(this.bucket)
-                .orderBy('index')
-                .where(...this.restriction)
-                .limit(this.rowsPerPage)
-                .get();
-            // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-            Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
-        },
-        async applicantCount() {
-            let size = 0;
-            await db
-                .collection(this.collection)
-                .doc(this.hackathon)
-                .collection(this.bucket)
-                .get()
-                .then(snap => {
-                    size = 5;
-                });
-            return (size = 5);
-        },
-        getAgeFromDate(bday) {
-            const b2 = new Date(bday.slice(4), bday.slice(2, 4) - 1, bday.slice(0, 2));
-            // console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
-            const current = new Date();
-            return this.calculateAge(b2);
-        },
-        calculateAge(birthday) {
-            // birthday is a date
-            const ageDifMs = Date.now() - birthday.getTime();
-            const ageDate = new Date(ageDifMs); // miliseconds from epoch
-            return Math.abs(ageDate.getUTCFullYear() - 1970);
-        },
+  name: "DataTable",
+  methods: {
+    // ...mapMutations(['update_DataTable_lastVisible']),
+    onChangeBucket(item) {
+      this.current = item;
+      switch (item) {
+        case "All Applicants":
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+        case "Assigned to Me":
+          this.restriction = [
+            "decision.assignedTo",
+            "array-contains",
+
+            this.$store.state.firebase.auth().currentUser.email
+          ];
+          this.refetchCurrentPage();
+          break;
+        case "Accepted Applicants":
+          this.bucket = "round1";
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+        case "Overflow Applicants":
+          this.bucket = "overflow";
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+        case "Rejected Applicants":
+          this.bucket = "rejected";
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+      }
     },
-    components: {
-        ApplicantDropdown,
-        StatusIndicator,
+    assignmentToName(emails) {
+      let res = "";
+      emails.forEach(val => {
+        res += `${this.$store.state.allAdmins[val]}, `;
+      });
+      return res;
     },
-    data() {
-        return {
-            // lastVisible: null,
-            page: 1,
-            rowsPerPage: 50,
-            numApplicants: 0,
-            applications: {},
-            peeps: [],
-            current: 'All Applicants',
-            items: [
-                'All Applicants',
-                'Assigned to Me',
-                'Accepted Applicants',
-                'Unaccepted Applicants',
-            ],
-            collection: 'decisions',
-            hackathon: 'DH5',
-            bucket: 'pending',
-            restriction: ['index', '>=', 0],
-            defaultRestriction: ['index', '>=', 0],
-            buckets: [
-                {
-                    title: 'Pending Applications',
-                    db_key: 'in progre',
-                },
-                {
-                    title: 'Unsubmitted Applications',
-                    db_key: 'submitted',
-                },
-                {
-                    title: 'Accepted Applicants',
-                    db_key: 'submitted',
-                },
-                {
-                    title: 'Rejected Applicants',
-                    db_key: 'submitted',
-                },
-            ],
-            search: '',
-            rating: null,
-            expanded: {},
-            headers: [
-                { text: 'Name', align: 'left', value: 'name' },
-                { text: 'Email', value: 'email' },
-                { text: 'University', value: 'university' },
-                { text: 'Applied (seconds)', value: 'applied' },
-                { text: 'Phone', value: 'phone' },
-                { text: 'Age', value: 'age' },
-                { text: 'Status', value: 'rate' },
-                { text: '', value: 'rate' },
-            ],
-        };
+    async fb() {
+      db.collection("applications")
+        .doc("DH5")
+        .collection("all")
+        .get();
     },
+<<<<<<< HEAD
     async mounted() {
         const parent = this;
         await db
@@ -229,8 +128,165 @@ export default {
             // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
             Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
         }
+=======
+    selectRow(e, props) {
+      // this is still kinda janky but seems to work
+      props.expanded = !props.expanded;
+      const offset = 50 * props.index;
+      window.scrollTo(0, window.screen.height / 2 + offset);
     },
-    /*  computed: {
+    async nextPage() {
+      console.log("Page is: ", this.page);
+      if (!this.applications[`${this.page}`]) {
+        console.log("Getting next page");
+        const result = await db
+          .collection(this.collection)
+          .doc(this.hackathon)
+          .collection(this.bucket)
+          .orderBy("index")
+          .where(...this.restriction)
+          .limit(this.rowsPerPage)
+          .startAfter((this.page - 1) * this.rowsPerPage)
+          .get();
+        // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+        Vue.set(
+          this.applications,
+          this.page - 1,
+          result.docs.map(a => a.data())
+        );
+      }
+    },
+    async refetchCurrentPage() {
+      console.log("In mount fill");
+      const result = await db
+        .collection(this.collection)
+        .doc(this.hackathon)
+        .collection(this.bucket)
+        .orderBy("index")
+        .where(...this.restriction)
+        .limit(this.rowsPerPage)
+        .get();
+      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+    },
+    async applicantCount() {
+      let size = 0;
+      await db
+        .collection(this.collection)
+        .doc(this.hackathon)
+        .collection(this.bucket)
+        .get()
+        .then(snap => {
+          size = 5;
+        });
+      return (size = 5);
+    },
+    getAgeFromDate(bday) {
+      const b2 = new Date(
+        bday.slice(4),
+        bday.slice(2, 4) - 1,
+        bday.slice(0, 2)
+      );
+      // console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
+      const current = new Date();
+      return this.calculateAge(b2);
+>>>>>>> 85b75020b6cf5e17a78a00993f96514e294bdccc
+    },
+    calculateAge(birthday) {
+      // birthday is a date
+      const ageDifMs = Date.now() - birthday.getTime();
+      const ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
+  },
+  components: {
+    ApplicantDropdown,
+    StatusIndicator
+  },
+  data() {
+    return {
+      // lastVisible: null,
+      page: 1,
+      rowsPerPage: 50,
+      numApplicants: 0,
+      applications: {},
+      peeps: [],
+      current: "All Applicants",
+      items: [
+        "All Applicants",
+        "Assigned to Me",
+        "Accepted Applicants",
+        "Overflow Applicants",
+        "Rejected Applicants"
+      ],
+      collection: "decisions",
+      hackathon: "DH5",
+      bucket: "pending",
+      restriction: ["index", ">=", 0],
+      defaultRestriction: ["index", ">=", 0],
+      buckets: [
+        {
+          title: "Pending Applications",
+          db_key: "in progre"
+        },
+        {
+          title: "Unsubmitted Applications",
+          db_key: "submitted"
+        },
+        {
+          title: "Accepted Applicants",
+          db_key: "submitted"
+        },
+        {
+          title: "Rejected Applicants",
+          db_key: "submitted"
+        }
+      ],
+      search: "",
+      rating: null,
+      expanded: {},
+      headers: [
+        { text: "Name", align: "left", value: "name" },
+        { text: "Email", value: "email" },
+        { text: "University", value: "university" },
+        { text: "Applied (seconds)", value: "applied" },
+        { text: "Phone", value: "phone" },
+        { text: "Age", value: "age" },
+        { text: "Status", value: "rate" },
+        { text: "", value: "rate" }
+      ]
+    };
+  },
+  async mounted() {
+    const parent = this;
+    await db
+      .collection("statistics")
+      .doc(this.hackathon)
+      .get()
+      .then(snap => {
+        console.log(snap.size);
+        this.numApplicants = Math.ceil(
+          snap.data().applications / this.rowsPerPage
+        );
+        console.log("Number apps: ", this.numApplicants);
+      });
+
+    if (!this.applications[this.page - 1]) {
+      console.log("In mount fill");
+      const result = await db
+        .collection(this.collection)
+        .doc(this.hackathon)
+        .collection(this.bucket)
+        .orderBy("index")
+        .where(...this.restriction)
+        .limit(this.rowsPerPage)
+        .get();
+      console.log("r123", result);
+      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+    }
+  }
+  /*  computed: {
         lastVisible: 'DataTable.lastVisible',
     }, */
 };
@@ -238,15 +294,15 @@ export default {
 
 <style>
 .card_title {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 #dropdown {
-    width: 100%;
+  width: 100%;
 }
 
 #pageButton {
-    outline: 0;
-    border: none;
+  outline: 0;
+  border: none;
 }
 </style>
