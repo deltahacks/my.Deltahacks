@@ -172,7 +172,9 @@ iframe {
   background: -moz-linear-gradient(top, #84fab0 ,#8fd3f4);
   background: linear-gradient(top, #84fab0 ,#8fd3f4); */
 }
-
+.rsvp-status200 {
+  height: 435px;
+}
 .wrap-status100 {
   color: #525251;
   height: 335px;
