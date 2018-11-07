@@ -115,7 +115,7 @@ export default {
                 {
                     title: 'Index Apps',
                     execute: async function() {
-                        try {
+                        try { 
                             console.log('Envoking firebase function...');
                             let successfulIndex = await firebase
                                 .functions()

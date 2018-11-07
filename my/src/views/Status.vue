@@ -3,28 +3,60 @@
         <!-- <Navigation class="mobile"/> -->
         <Navbar2 class="navbar1" />
         <div class="container-status100">
-
             <div class="hide">
-                <div class="wrap-status100">
-                    <h1 v-show="!genderCompleted" slot="activator" style="color: #F14D4C;">
-                        Please go to <a href="/apply" class="currentStatus">your application</a>
-                        and complete an additional field.
+                <!-- RSVP Section (not on mobile! need to add) -->
+                <!-- was rushing to get demo working so hardcoded inline styling for some of rsvp element -->
+                <div class="wrap-status100" style="height:445px;padding:35px 55px 35px 55px;" v-if="step > 3">
+                    <h1 class="rtitle">
+                        Congratulations (update this title)!
                     </h1>
-                    <h1 v-show="step === 0 && genderCompleted">You haven't started yet! Go
-                        <a href="/apply" class="currentStatus">here</a> to begin.</h1>
-                    <h1 v-show="step > 0 && genderCompleted">{{currentHeader}}</h1>
-                    <br>
-                    <v-stepper alt-labels class="transp">
-                        <v-stepper-header>
-                            <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
-                            <v-divider></v-divider>
-                            <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
-                            <v-divider></v-divider>
-                            <v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
-                            <v-divider></v-divider>
-                            <v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
-                        </v-stepper-header>
-                    </v-stepper>
+                    <div style="padding-top:10px;">
+                        <label for="name" style='float:left'>
+                            <strong>Will you be attending?*</strong>
+                        </label><br>
+                        <!-- RSVP -->
+                        <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch>
+                        <!-- Need Bus -->
+                        <div v-show="response.rsvp">
+                            <label for="name" style='float:left'>
+                                <strong>Will you need a bus?*</strong>
+                            </label><br>
+                            <v-switch @change="changeBus" :label="response.bus ? 'Yes!' : 'No.'" v-model="response.bus"></v-switch>
+                        </div>
+                        <!-- Bus Location -->
+                        <div v-show="response.bus && response.rsvp">
+                            <label for="name" style='float:left'>
+                                <strong>Where are you coming from?*</strong>
+                            </label><br>
+                            <v-select name="busLocation" v-model="response.location" :items="busLocations"></v-select>
+                        </div>
+                        <div class="rspvButtons">
+                            <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrap-status100" v-if="step <= 3">
+                    <div>
+                        <h1 v-show="!genderCompleted" slot="activator">
+                            Please go to <a href="/apply" class="currentStatus">your application</a>
+                            and complete an additional field.
+                        </h1>
+                        <h1 v-show="step === 0 && genderCompleted">You haven't started yet! Go
+                            <a href="/apply" class="currentStatus">here</a> to begin.</h1>
+                        <h1 v-show="step > 0 && genderCompleted">{{currentHeader}}</h1>
+                        <br>
+                        <v-stepper alt-labels class="transp">
+                            <v-stepper-header>
+                                <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
+                                <v-divider></v-divider>
+                                <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
+                                <v-divider></v-divider>
+                                <v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
+                                <v-divider></v-divider>
+                                <v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
+                            </v-stepper-header>
+                        </v-stepper>
+                    </div>
                 </div>
                 <br><br><br><br>
                 <div>
@@ -40,7 +72,7 @@
                 </div>
             </div>
 
-            <div class="mobile">
+            <div class="mobile" v-if="step <= 3">
                 <div class="wrap-status101">
                     <h1 v-show="step === 0">You haven't started yet! Go
                         <a href="/apply" class="currentStatus">here</a> to begin.</h1>
@@ -66,6 +98,12 @@
                 </div>
             </div>
         </div>
+        <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
+            Thanks! We've got your response.
+            <v-btn color="white" flat @click="feedback = false">
+                Close
+            </v-btn>
+        </v-snackbar>
     </v-app>
 </template>
 
@@ -87,6 +125,25 @@ export default {
     data() {
         return {
             genderCompleted: true,
+            response: {
+                rsvp: false,
+                bus: false,
+                location: '',
+                email: auth().currentUser.email,
+            },
+            emptyResponse: {
+                rsvp: false,
+                bus: false,
+                location: '',
+                email: auth().currentUser.email,
+            },
+            bus: false,
+            busLocations: [
+                'University of Waterloo',
+                'University of Toronto',
+                'University of Western Ontario',
+            ],
+            feedback: false,
             social: [
                 {
                     link: 'https://twitter.com/deltahacks',
@@ -176,6 +233,34 @@ export default {
         },
     },
     methods: {
+        changeRSVP() {
+            if (!this.response.rsvp) {
+                this.response = this.emptyResponse;
+            }
+        },
+        changeBus() {
+            if (!this.response.bus) this.response.location = '';
+        },
+        submitRSVP() {
+            const email = auth().currentUser.email;
+            const folder = this.response.rsvp ? 'Yes' : 'No';
+            const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
+            const rsvpRef = db
+                .collection('hackathon')
+                .doc('DH5')
+                .collection('RSVP')
+                .doc('all');
+            rsvpRef
+                .collection(folder)
+                .doc(email)
+                .set(this.response)
+                .then(res => (this.feedback = true))
+                .catch(err => console.log(err));
+            rsvpRef
+                .collection(opposingFolder)
+                .doc(email)
+                .delete();
+        },
         updateStep(doc) {
             if (doc.exists) {
                 switch (doc.data().status) {
@@ -189,16 +274,17 @@ export default {
                         this.step = 2;
                         break;
                     case 'processing':
-                    case 'accepted':
                     case 'rejected':
                         this.step = 3;
                         break;
-                    case 'decided':
+                    case 'round1':
+                    case 'accepted':
                         this.step = 4;
                         break;
                     default:
                         this.step = 0;
                 }
+                console.log(this.step);
             } else {
                 console.log('Document not found!');
             }
@@ -224,6 +310,24 @@ export default {
                     .catch(err => reject(err));
             });
         },
+        fillRSVP() {
+            const email = auth().currentUser.email;
+            const folder = this.response.rsvp ? 'Yes' : 'No';
+            const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
+            const rsvpRef = db
+                .collection('hackathon')
+                .doc('DH5')
+                .collection('RSVP')
+                .doc('all')
+                .collection('Yes')
+                .doc(email);
+            rsvpRef.get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    this.response = data;
+                }
+            });
+        },
     },
     async beforeMount() {
         console.log('mounted');
@@ -232,9 +336,13 @@ export default {
         db.collection('users')
             .doc(appEmail)
             .onSnapshot(snap => {
+                console.log(snap.data());
                 this.updateStep(snap);
                 if (this.step > 1) {
                     this.genderCompleted = genderStatus;
+                }
+                if (this.step > 3) {
+                    this.fillRSVP();
                 }
             });
     },
@@ -250,5 +358,37 @@ export default {
     font-weight: bold;
     font-size: 1.3em;
     float: left;
+}
+.rtitle {
+    padding-bottom: 30px !important;
+}
+.button1 {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    float: left !important;
+    background-color: transparent !important;
+    font-family: sans-serif !important;
+    border: 1 !important;
+    /* border-radius: 40px; */
+    box-shadow: inset 0 0 0 2px #2196f3 !important;
+    color: #2196f3 !important;
+    cursor: pointer !important;
+    /* display: inline-block !important; */
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    /* line-height: 52px; */
+    padding: 0 1.75em !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
 }
 </style>
