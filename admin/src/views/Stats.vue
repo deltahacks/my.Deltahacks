@@ -11,7 +11,7 @@
             <v-card-title primary-title>Accepted Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='statistics.decisions.accepted' />
+                <IOdometer class='iOdometer' :value='decisions.accepted' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -21,7 +21,7 @@
             <v-card-title primary-title>Rejected Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='statistics.decisions.rejected' />
+                <IOdometer class='iOdometer' :value='decisions.rejected' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -31,7 +31,7 @@
             <v-card-title primary-title>Pending Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='statistics.decisions.pending' />
+                <IOdometer class='iOdometer' :value='decisions.pending' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -238,13 +238,13 @@ export default {
   },
   computed: {
     total() {
-      const { accepted, rejected, pending } = this.statistics.decisions;
+      const { accepted, rejected, pending } = this.decisions;
       return accepted + rejected + pending;
     },
   },
   methods: {
     setAllData() {
-      this.setDecisionPanels();
+      this.setDecisionListeners();
       this.setCheckedInGraph();
       this.setMiscStatistics();
     },
@@ -345,6 +345,26 @@ export default {
         ],
       });
     },
+    setDecisionListeners(init = false) {
+      db.collection('decisions').doc('DH5').collection('round1')
+                    .onSnapshot((snap) => {
+                      console.log(snap);
+                        this.decisions.accepted = snap.docs.length;
+                        console.log(this.decisions);
+                        this.setDecisionPanels();
+                    });
+      db.collection('decisions').doc('DH5').collection('rejected')
+                    .onSnapshot((snap) => {
+                        this.decisions.rejected = snap.docs.length;
+                        this.setDecisionPanels();
+                    });
+      db.collection('decisions').doc('DH5').collection('pending')
+                    .onSnapshot((snap) => {
+                        this.decisions.pending =
+                          snap.docs.length - this.decisions.accepted - this.decisions.rejected;
+                        this.setDecisionPanels();
+                    });
+    },
     setDecisionPanels() {
       this.$refs.decisions.changeData({
         labels: ['Accepted', 'Rejected', 'Pending'],
@@ -353,9 +373,9 @@ export default {
             label: 'Applicant Distribution',
             backgroundColor: this.colors,
             data: [
-              this.statistics.decisions.accepted,
-              this.statistics.decisions.rejected,
-              this.statistics.decisions.pending,
+              this.decisions.accepted,
+              this.decisions.rejected,
+              this.decisions.pending,
             ],
           },
         ],
