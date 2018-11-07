@@ -4,7 +4,7 @@
         <Navbar2 class="navbar1" />
         <div class="container-status100">
             <div class="hide">
-                <!-- RSVP Section -->
+                <!-- RSVP Section (not on mobile! need to add) -->
                 <!-- was rushing to get demo working so hardcoded inline styling for some of rsvp element -->
                 <div class="wrap-status100" style="height:445px;padding:35px 55px 35px 55px;" v-if="step > 3">
                         <h1 class="rtitle">
@@ -73,35 +73,6 @@
             </div>
 
             <div class="mobile" v-if="step <= 3">
-                <div class="wrap-status101" style="height:445px;padding:35px 55px 35px 55px;" v-if="step > 3">
-                        <h1 class="rtitle">
-                            Congratulations (update this title)!
-                        </h1>
-                    <div style="padding-top:10px;">
-                        <label for="name" style='float:left'>
-                            <strong>Will you be attending?*</strong>
-                        </label><br>
-                        <!-- RSVP -->
-                        <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch>
-                        <!-- Need Bus -->
-                        <div v-show="response.rsvp">
-                            <label for="name" style='float:left'>
-                                <strong>Will you need a bus?*</strong>
-                            </label><br>
-                            <v-switch @change="changeBus" :label="response.bus ? 'Yes!' : 'No.'" v-model="response.bus"></v-switch>
-                        </div>
-                        <!-- Bus Location -->
-                        <div v-show="response.bus && response.rsvp">
-                            <label for="name" style='float:left'>
-                                <strong>Where are you coming from?*</strong>
-                            </label><br>
-                            <v-select name="busLocation" v-model="response.location" :items="busLocations"></v-select>
-                        </div>
-                        <div class="rspvButtons">
-                            <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
-                        </div>
-                    </div>
-                </div>
                 <div class="wrap-status101">
                     <h1 v-show="step === 0">You haven't started yet! Go
                         <a href="/apply" class="currentStatus">here</a> to begin.</h1>
