@@ -53,6 +53,7 @@
                 <v-flex d-flex xs12 sm6 md3 child-flex>
                     <v-card color="white lighten-4" dark>
                         <pie-chart></pie-chart>
+                        <pie-chart2 ref="unigraph"></pie-chart2>
                     </v-card>
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3>
@@ -83,6 +84,7 @@
 <script>
 import firebase from 'firebase';
 import PieChart from '@/components/PieChart';
+import PieChart2 from '@/components/PieChartGen';
 import Navbar from '@/components/Navbar.vue';
 // import Tab from '@/components/Tab'
 import DataTable from '@/components/DataTable.vue';
@@ -262,6 +264,7 @@ export default {
         DataTable,
         CommitChart,
         PieChart,
+        PieChart2,
         IOdometer,
     },
     created() {
