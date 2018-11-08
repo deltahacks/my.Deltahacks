@@ -45,9 +45,7 @@ export default {
           if (!item.last_modified) return;
           const date = new Date(item.last_modified.date);
           const dateString = date.toDateString();
-          if (!track[dateString]) {
-            track[dateString] = 1;
-          } else {
+          if (track[dateString] >= 0) {
             track[dateString] += 1;
           }
         });
