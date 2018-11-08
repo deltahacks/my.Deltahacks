@@ -19,6 +19,9 @@ export default {
   methods: {
     changeData(data) {
       if (!data) return;
+      if (this.$data._chart) {
+        this.$data._chart.destroy();
+      }
       this.renderChart(data, this.options);
     },
   },
