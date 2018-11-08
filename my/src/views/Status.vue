@@ -7,15 +7,15 @@
                 <!-- RSVP Section (not on mobile! need to add) -->
                 <!-- was rushing to get demo working so hardcoded inline styling for some of rsvp element -->
                 <div class="wrap-status100" style="height:445px;padding:35px 55px 35px 55px;" v-if="step > 3">
-                        <h1 v-if="!response.rsvp" class="rtitle">
-                            Congratulations!
-                        </h1>
-                        <h1 v-if="response.rsvp" class="rtitle">
-                            Awesome, see you there!
-                        </h1>
-                        <h3 class="">
-                            Are you able to attend?
-                        </h3>
+                    <h1 v-if="!response.rsvp" class="rtitle">
+                        Congratulations!
+                    </h1>
+                    <h1 v-if="response.rsvp" class="rtitle">
+                        Awesome, see you there!
+                    </h1>
+                    <h3 class="">
+                        Are you able to attend?
+                    </h3>
                     <div style="padding-top:10px;">
                         <div style="padding-top:10px;">
                             <div class="mx-auto gg" style="display:inline-block;">
@@ -36,7 +36,7 @@
                                 <v-switch @change="changeBus" :label="response.bus ? 'Yes!' : 'No.'" v-model="response.bus"></v-switch>
                             </div>
                             <!-- Bus Location -->
-                            <div >
+                            <div>
                                 <label for="name" style='float:left'>
                                     <strong>Where are you coming from?*</strong>
                                 </label><br>
@@ -49,8 +49,8 @@
                     </div>
                 </div>
                 <div class="wrap-status100" v-if="step <= 3">
-                    <div >
-                        <h1 v-show="!genderCompleted" slot="activator">
+                    <div>
+                        <h1 v-show="!genderCompleted" slot="activator" style="color: #F14D4C">
                             Please go to <a href="/apply" class="currentStatus">your application</a>
                             and complete an additional field.
                         </h1>
@@ -157,7 +157,7 @@ export default {
                 'University of Toronto',
                 'University of Western Ontario',
             ],
-            busWarning: 'Buses aren\'t guarenteed! We are currently gauging interest.',
+            busWarning: "Buses aren't guarenteed! We are currently gauging interest.",
             feedback: false,
             social: [
                 {
@@ -276,11 +276,21 @@ export default {
             const email = auth().currentUser.email;
             const folder = this.response.rsvp ? 'Yes' : 'No';
             const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
-            const rsvpRef = db.collection('hackathon').doc('DH5')
-                              .collection('RSVP').doc('all');
-            rsvpRef.collection(folder).doc(email).set(this.response)
-                   .then(res => this.feedback = true).catch((err) => console.log(err));
-            rsvpRef.collection(opposingFolder).doc(email).delete();
+            const rsvpRef = db
+                .collection('hackathon')
+                .doc('DH5')
+                .collection('RSVP')
+                .doc('all');
+            rsvpRef
+                .collection(folder)
+                .doc(email)
+                .set(this.response)
+                .then(res => (this.feedback = true))
+                .catch(err => console.log(err));
+            rsvpRef
+                .collection(opposingFolder)
+                .doc(email)
+                .delete();
         },
         updateStep(doc) {
             if (doc.exists) {
@@ -298,13 +308,13 @@ export default {
                     case 'accepted':
                     case 'processing':
                     case 'rejected':
+                    case 'overflow':
+                    case 'round1':
+                    case 'accepted':
                         this.step = 3;
                         break;
-                    case 'round1':
-                    case 'round2':
-                    case 'round3':
-                        this.step = 4;
-                        break;
+                    // this.step = 4;
+                    // break;
                     default:
                         this.step = 0;
                 }
@@ -316,29 +326,36 @@ export default {
         // returns boolean if they've added their gender to their application.
         checkGenderInput(email) {
             return new Promise((resolve, reject) => {
-               db.collection('applications').doc('DH5').collection('in progress')
-                .doc(email).get()
-                .then((snap) => {
-                    if (snap.exists) {
-                        const data = snap.data();
-                        if (data.gender) {
-                            resolve(true);
-                        } else {
-                            resolve(false);
+                db.collection('applications')
+                    .doc('DH5')
+                    .collection('in progress')
+                    .doc(email)
+                    .get()
+                    .then(snap => {
+                        if (snap.exists) {
+                            const data = snap.data();
+                            if (data.gender) {
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
                         }
-                    }
-                })
-                .catch(err => reject(err));
+                    })
+                    .catch(err => reject(err));
             });
         },
         fillRSVP() {
             const email = auth().currentUser.email;
             const folder = this.response.rsvp ? 'Yes' : 'No';
             const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
-            const rsvpRef = db.collection('hackathon').doc('DH5')
-                              .collection('RSVP').doc('all')
-                              .collection('Yes').doc(email);
-            rsvpRef.get().then((doc) => {
+            const rsvpRef = db
+                .collection('hackathon')
+                .doc('DH5')
+                .collection('RSVP')
+                .doc('all')
+                .collection('Yes')
+                .doc(email);
+            rsvpRef.get().then(doc => {
                 if (doc.exists) {
                     const data = doc.data();
                     this.response = data;
@@ -378,39 +395,39 @@ export default {
 }
 .rtitle {
     padding-bottom: 30px !important;
-    font-size:2.5em !important;
+    font-size: 2.5em !important;
 }
 .button1 {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  float: left !important;
-  background-color: transparent !important;
-  font-family: sans-serif !important;
-  border: 1 !important;
-  /* border-radius: 40px; */
-  box-shadow: inset 0 0 0 2px #2196f3 !important;
-  color: #2196f3 !important;
-  cursor: pointer !important;
-  /* display: inline-block !important; */
-  font-size: 15px !important;
-  font-weight: 600 !important;
-  /* line-height: 52px; */
-  padding: 0 1.75em !important;
-  text-align: center !important;
-  text-decoration: none !important;
-  text-transform: uppercase !important;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    float: left !important;
+    background-color: transparent !important;
+    font-family: sans-serif !important;
+    border: 1 !important;
+    /* border-radius: 40px; */
+    box-shadow: inset 0 0 0 2px #2196f3 !important;
+    color: #2196f3 !important;
+    cursor: pointer !important;
+    /* display: inline-block !important; */
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    /* line-height: 52px; */
+    padding: 0 1.75em !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
 }
 
 .no.border {
-  border: none;
+    border: none;
 }
 </style>
