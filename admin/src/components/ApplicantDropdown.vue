@@ -129,6 +129,7 @@
         </v-layout>
         <vue-slider :disabled='applicant.decision.reviewers.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer' id="slider" v-model="score" :piecewise=false :piecewise-label=false step=1 :max=14 :use-keyboard=false :height=20 :dot-size=30></vue-slider>
         <v-btn color="success" class="button2" :disabled='applicant.decision.reviewers.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer' @click="updateApplicationScore">SUBMIT SCORE</v-btn>
+        <v-btn v-if="$store.state.vuex_user_role == 'mod'" class="bold" color="blue" dark @click="decisionStats">Stats</v-btn>
         <v-dialog v-model="dialog" width="500">
           <v-btn slot="activator" class="bold" color="red" dark :disabled='!$store.state.currentUserIsAuthorizedReviewer'>Delete</v-btn>
           <v-card>
@@ -210,6 +211,13 @@ export default {
         // console.log('Docs', this.applicant.documents);
     },
     methods: {
+        decisionStats() {
+            let resstr = {};
+            for (let r of this.applicant.decision.reviewers) {
+                resstr[r.reviewer] = r.score;
+            }
+            console.log(this.applicant.name, resstr);
+        },
         async updateApplicationScore() {
             //console.log('Updating score', this.$store.state.test);
             try {
