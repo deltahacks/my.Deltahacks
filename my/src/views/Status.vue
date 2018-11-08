@@ -294,12 +294,15 @@ export default {
                     case 'pending':
                         this.step = 2;
                         break;
+                    case 'overflow':
+                    case 'accepted':
                     case 'processing':
                     case 'rejected':
                         this.step = 3;
                         break;
                     case 'round1':
-                    case 'accepted':
+                    case 'round2':
+                    case 'round3':
                         this.step = 4;
                         break;
                     default:
