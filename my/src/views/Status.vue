@@ -7,11 +7,14 @@
                 <!-- RSVP Section (not on mobile! need to add) -->
                 <!-- was rushing to get demo working so hardcoded inline styling for some of rsvp element -->
                 <div class="wrap-status100" style="height:445px;padding:35px 55px 35px 55px;" v-if="step > 3">
-                    <h1 v-if="!response.rsvp" class="rtitle">
+                    <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
                         🎉 Congratulations, you've been invited to DeltaHacks V!
                     </h1>
                     <h1 v-if="response.rsvp" class="rtitle">
                         Awesome, see you there!
+                    </h1>
+                    <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
+                        That's too bad, thanks for letting us know!
                     </h1>
                     <h3 class="">
                         Will you be attending?
@@ -85,8 +88,8 @@
                 </div>
             </div>
 
-            <div class="mobile" v-if="step <= 3">
-                <div class="wrap-status101">
+            <div class="mobile" >
+                <div class="wrap-status101" v-if="step <= 3">
                     <h1 v-show="step === 0">You haven't started yet! Go
                         <a href="/apply" class="currentStatus">here</a> to begin.</h1>
                     <h1 v-show="step > 0">{{currentHeader}}</h1>
@@ -97,6 +100,51 @@
                         <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
                         <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
                     </v-stepper>
+                </div>
+                <div class="wrap-status101 wrap-status201" v-if="step > 3">
+                    <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
+                        🎉 Congratulations, you've been invited to DeltaHacks V!
+                    </h1>
+                    <h1 v-if="response.rsvp" class="rtitle">
+                        Awesome, see you there!
+                    </h1>
+                    <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
+                        That's too bad, thanks for letting us know!
+                    </h1>
+                    <h3 class="">
+                        Will you be attending?
+                    </h3>
+                    <div style="padding-top:10px;">
+                        <div style="padding-top:10px;">
+                            <div class="mx-auto gg" style="display:inline-block;">
+                                <v-btn large color="success" @click="toggleRSVP(true)" :disabled="response.rsvp && hasResponded" class="button1">Yes!</v-btn>
+                                <v-btn large color="error" @click="toggleRSVP(false)" :disabled="!response.rsvp && hasResponded" class="button2">No.</v-btn>
+                            </div><br><br>
+                        </div>
+                        <!-- <label for="name" style='float:left'>
+                            <strong>Will you be attending?*</strong>
+                        </label><br>
+                        <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch> -->
+                        <!-- Need Bus -->
+                        <div class="mx-auto gg" style="display:inline-block;width:50% !important;" v-show="response.rsvp" transition="slide-x-transition">
+                            <div>
+                                <label for="name" style='float:left'>
+                                    <strong>Will you need a bus?*</strong>
+                                </label><br>
+                                <v-switch @change="changeBus" :label="response.bus ? 'Yes!' : 'No.'" v-model="response.bus"></v-switch>
+                            </div>
+                            <!-- Bus Location -->
+                            <div>
+                                <label for="name" style='float:left'>
+                                    <strong>Where are you coming from?*</strong>
+                                </label><br>
+                                <v-select @change="changeBus" :persistent-hint="true" :hint="busWarning" name="busLocation" v-model="response.location" :items="busLocations"></v-select>
+                            </div>
+                        </div>
+                        <!-- <div class="rspvButtons">
+                            <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
+                        </div> -->
+                    </div>
                 </div>
                 <div style="margin-top: 5%;">
                     <v-layout row wrap>
