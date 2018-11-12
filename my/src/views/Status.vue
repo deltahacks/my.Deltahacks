@@ -11,7 +11,7 @@
                         🎉 Congratulations, you've been invited to DeltaHacks V!
                     </h1>
                     <h1 v-if="response.rsvp" class="rtitle">
-                        Awesome, see you there!
+                        😉 Awesome, see you there!
                     </h1>
                     <h3 class="">
                         Will you be attending?
@@ -312,7 +312,7 @@ export default {
                     case 'accepted':
                         this.step = 3;
                         break;
-                    case 'round1':
+                    case 'round1f':
                         this.step = 4;
                         break;
                     default:
