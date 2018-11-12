@@ -41,7 +41,7 @@
             <v-card-title primary-title>RSVP</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='statistics.rsvp' />
+                <IOdometer class='iOdometer' :value='rsvp' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -210,6 +210,7 @@ export default {
       },
       colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f'],
       options: {},
+      rsvp: 0,
     };
   },
   components: {
@@ -246,6 +247,7 @@ export default {
       this.setDecisionListeners();
       this.setCheckedInGraph();
       this.setMiscStatistics();
+      this.setRSVPData();
     },
     setCheckedInGraph() {
       this.$refs.checkedIn.changeData({
@@ -363,6 +365,12 @@ export default {
                           snap.docs.length - this.decisions.accepted - this.decisions.rejected;
                         this.setDecisionPanels();
                     });
+    },
+    setRSVPData() {
+      db.collection('hackathon').doc('DH5').collection('RSVP').doc('all').collection('Yes')
+        .onSnapshot((snap) => {
+          this.rsvp = snap.docs.length;
+        });
     },
     setDecisionPanels() {
       this.$refs.decisions.changeData({
