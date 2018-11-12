@@ -297,522 +297,522 @@ import { majors, allUniversities } from '../private/data';
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 export default {
-    mixins: [validationMixin],
-    name: 'Apply',
-    data() {
-        return {
-            myFiles: [],
-            loading: false,
-            feedback: false,
-            confirm: false,
-            confirmClear: false,
-            editing: false,
-            existing_doc: undefined,
-            checkError: undefined,
-            shareError: undefined,
-            confirmGender: false,
-            pondError: undefined,
-            bannerColor: 'success',
-            bannerMessage: 'Complete!',
-            bannerTimeout: 3000,
-            loadingMessage: 'Loading...',
-            parent: this,
-            enableGenderSelect: false,
-            contest_terms:
+  mixins: [validationMixin],
+  name: 'Apply',
+  data() {
+    return {
+      myFiles: [],
+      loading: false,
+      feedback: false,
+      confirm: false,
+      confirmClear: false,
+      editing: false,
+      existing_doc: undefined,
+      checkError: undefined,
+      shareError: undefined,
+      confirmGender: false,
+      pondError: undefined,
+      bannerColor: 'success',
+      bannerMessage: 'Complete!',
+      bannerTimeout: 3000,
+      loadingMessage: 'Loading...',
+      parent: this,
+      enableGenderSelect: false,
+      contest_terms:
                 'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
-            subsectionLabels: [
-                'Personal Information',
-                'Logistical Stuff',
-                'Emergency Info',
-                'Your Profiles',
-                'Application Questions',
-            ],
-            methods: [
-                'A friend',
-                'MLH',
-                'Facebook',
-                'Twitter',
-                'Posters',
-                'Instagram',
-                'Snapchat',
-                'Google',
-                'Other',
-            ],
-            cities: [
-                '(Type your own option)',
-                'Toronto',
-                'Hamilton',
-                'Waterloo',
-                'London',
-                'Montreal',
-                'Ottawa',
-                'Mississauga',
-                'Guelph',
-                'Burlington',
-                'Brampton',
-                'Markham',
-                'Milton',
-            ],
-            races: [
-                'Black / African American',
-                'Hispanic',
-                'East Asian',
-                'South Asian',
-                'Middle Eastern',
-                'Native American',
-                'White / Caucasian',
-                'Multiple ethnicity / Other',
-                'Prefer not to say',
-            ],
-            url: '',
-            MLH:
+      subsectionLabels: [
+        'Personal Information',
+        'Logistical Stuff',
+        'Emergency Info',
+        'Your Profiles',
+        'Application Questions',
+      ],
+      methods: [
+        'A friend',
+        'MLH',
+        'Facebook',
+        'Twitter',
+        'Posters',
+        'Instagram',
+        'Snapchat',
+        'Google',
+        'Other',
+      ],
+      cities: [
+        '(Type your own option)',
+        'Toronto',
+        'Hamilton',
+        'Waterloo',
+        'London',
+        'Montreal',
+        'Ottawa',
+        'Mississauga',
+        'Guelph',
+        'Burlington',
+        'Brampton',
+        'Markham',
+        'Milton',
+      ],
+      races: [
+        'Black / African American',
+        'Hispanic',
+        'East Asian',
+        'South Asian',
+        'Middle Eastern',
+        'Native American',
+        'White / Caucasian',
+        'Multiple ethnicity / Other',
+        'Prefer not to say',
+      ],
+      url: '',
+      MLH:
                 'I authorize you to share my application information for event administration,' +
                 ' ranking, MLH administration, event informational e-mails, and occasional messages about hackathons ' +
                 ' in-line with the',
-            SHARE:
+      SHARE:
                 'I also agree to the MLH Contest Terms and Conditions and the MLH Privacy Policy.*',
-            MICROSOFT:
+      MICROSOFT:
                 'I give Microsoft permission to contact me, send me promotion material, and share resources to help me prepare for the hackathon.',
-            picker: null,
-            submitted: false,
-            date: '2000-01-01',
-            university: null,
-            timeout: null,
-            allUniversities,
-            majors,
-            application: {
-                name: '',
-                lastname: '',
-                email: firebase.auth().currentUser.email,
-                last_modified: undefined,
-                first_submitted: undefined,
-                school_year: null,
-                shirt_size: null,
-                dietary_restrictions: null,
-                hackathons: null,
-                university: null,
-                discover: null,
-                github: '',
-                linkedin: '',
-                website: '',
-                devpost: '',
-                phone: '',
-                emergency_phone: '',
-                emergency_name: '',
-                q1: '',
-                q2: '',
-                q3: '',
-                q4: '',
-                meme: '',
-                major: '',
-                location: '',
-                workshops: [],
-                degree: '',
-                birthday: '',
-                documents: [],
-                microsoft: false,
-                gender: '',
-            },
-            links: ['Home', 'About', 'Contact'],
-            q1: '',
-            custom: true,
-            name: '',
-            email: '',
-            select: null,
-            items: [
-                'First Year',
-                'Second Year',
-                'Third Year',
-                'Fourth Year',
-                'Fifth Year',
-                'Sixth Year',
-            ],
-            workshops: [
-                'NodeJs',
-                'ReactJs/VueJs',
-                'Blockchain',
-                'Machine Learning',
-                'Buzzwords',
-                'Android development',
-                'iOS development',
-                'Web Development',
-                'Intro to AR/VR',
-                'Game Development',
-                'Intro to UI/UX design',
-                'Hardware hacking',
-                'Computer Vision with OpenCV',
-            ],
-            hackathons: ['This is my first one', '1', '2', '3', '4', '5-9', '10+'],
-            food: [
-                'None',
-                'Vegetarian',
-                'Vegan',
-                'Halal',
-                'Gluten Free',
-                'Kosher',
-                'No Beef',
-                'Lactose Intolerant',
-                'Gluten Free',
-                '(Type your own option)',
-            ],
-            shirts: ['XS', 'S', 'M', 'L', 'XL'],
-            degrees: ['Bachelors', 'Masters', 'PhD'],
-            relations: [
-                'Parent',
-                'Grandparent',
-                'Sibling',
-                'Partner',
-                'Friend',
-                'Guardian',
-                'Other',
-            ],
-            checkbox: false,
-            share: false,
-            microsoft: false,
-        };
+      picker: null,
+      submitted: false,
+      date: '2000-01-01',
+      university: null,
+      timeout: null,
+      allUniversities,
+      majors,
+      application: {
+        name: '',
+        lastname: '',
+        email: firebase.auth().currentUser.email,
+        last_modified: undefined,
+        first_submitted: undefined,
+        school_year: null,
+        shirt_size: null,
+        dietary_restrictions: null,
+        hackathons: null,
+        university: null,
+        discover: null,
+        github: '',
+        linkedin: '',
+        website: '',
+        devpost: '',
+        phone: '',
+        emergency_phone: '',
+        emergency_name: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
+        meme: '',
+        major: '',
+        location: '',
+        workshops: [],
+        degree: '',
+        birthday: '',
+        documents: [],
+        microsoft: false,
+        gender: '',
+      },
+      links: ['Home', 'About', 'Contact'],
+      q1: '',
+      custom: true,
+      name: '',
+      email: '',
+      select: null,
+      items: [
+        'First Year',
+        'Second Year',
+        'Third Year',
+        'Fourth Year',
+        'Fifth Year',
+        'Sixth Year',
+      ],
+      workshops: [
+        'NodeJs',
+        'ReactJs/VueJs',
+        'Blockchain',
+        'Machine Learning',
+        'Buzzwords',
+        'Android development',
+        'iOS development',
+        'Web Development',
+        'Intro to AR/VR',
+        'Game Development',
+        'Intro to UI/UX design',
+        'Hardware hacking',
+        'Computer Vision with OpenCV',
+      ],
+      hackathons: ['This is my first one', '1', '2', '3', '4', '5-9', '10+'],
+      food: [
+        'None',
+        'Vegetarian',
+        'Vegan',
+        'Halal',
+        'Gluten Free',
+        'Kosher',
+        'No Beef',
+        'Lactose Intolerant',
+        'Gluten Free',
+        '(Type your own option)',
+      ],
+      shirts: ['XS', 'S', 'M', 'L', 'XL'],
+      degrees: ['Bachelors', 'Masters', 'PhD'],
+      relations: [
+        'Parent',
+        'Grandparent',
+        'Sibling',
+        'Partner',
+        'Friend',
+        'Guardian',
+        'Other',
+      ],
+      checkbox: false,
+      share: false,
+      microsoft: false,
+    };
+  },
+  validations: {
+    name: { required, maxLength: maxLength(10) },
+    email: { required, email },
+    select: { required },
+    checkbox: { required },
+    university: { in: allUniversities },
+  },
+  components: {
+    Navbar,
+    FilePond,
+    Navigation,
+    Navbar2,
+  },
+  computed: {
+    q1Progress() {
+      return Math.min(100, this.application.q1.length / 5);
+    },
+    q2Progress() {
+      return Math.min(100, this.application.q2.length / 5);
+    },
+    q3Progress() {
+      return Math.min(100, this.application.q3.length / 5);
     },
     validations: {
-        name: { required, maxLength: maxLength(10) },
-        email: { required, email },
-        select: { required },
-        checkbox: { required },
-        university: { in: allUniversities },
+      name: { required, maxLength: maxLength(10) },
+      email: { required, email },
+      select: { required },
+      checkbox: { required },
+      university: { in: allUniversities },
     },
     components: {
-        Navbar,
-        FilePond,
-        Navigation,
-        Navbar2,
+      Navbar,
+      FilePond,
+      Navigation,
+      Navbar2,
     },
-    computed: {
-        q1Progress() {
-            return Math.min(100, this.application.q1.length / 5);
-        },
-        q2Progress() {
-            return Math.min(100, this.application.q2.length / 5);
-        },
-        q3Progress() {
-            return Math.min(100, this.application.q3.length / 5);
-        },
-        validations: {
-            name: { required, maxLength: maxLength(10) },
-            email: { required, email },
-            select: { required },
-            checkbox: { required },
-            university: { in: allUniversities },
-        },
-        components: {
-            Navbar,
-            FilePond,
-            Navigation,
-            Navbar2,
-        },
-        q1Color() {
-            return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
-        },
-        q2Color() {
-            return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
-        },
-        q3Color() {
-            return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
-        },
-        currentUser() {
-            return firebase.auth().currentUser;
-        },
-        haveFile() {
-            return this.editing && this.application.documents.filename;
-        },
-        agreed() {
-            return this.checkbox && this.share;
-        },
+    q1Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
     },
-    methods: {
-        handleFilePondInit() {
-            console.log('FilePond has initialized');
-            // FilePond instance methods are available on `this.$refs.pond`
-        },
-        getEmptyApplication() {
-            return {
-                name: '',
-                lastname: '',
-                email: firebase.auth().currentUser.email,
-                last_modified: undefined,
-                first_submitted: undefined,
-                school_year: null,
-                shirt_size: null,
-                dietary_restrictions: null,
-                hackathons: null,
-                university: null,
-                discover: null,
-                github: '',
-                linkedin: '',
-                website: '',
-                devpost: '',
-                phone: '',
-                emergency_phone: '',
-                q1: '',
-                q2: '',
-                q3: '',
-                q4: '',
-                meme: '',
-                major: '',
-                location: '',
-                birthday: '',
-                documents: [],
-                microsoft: false,
-            };
-        },
-        genderChange() {
-            this.formChange();
+    q2Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
+    },
+    q3Color() {
+      return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
+    },
+    currentUser() {
+      return firebase.auth().currentUser;
+    },
+    haveFile() {
+      return this.editing && this.application.documents.filename;
+    },
+    agreed() {
+      return this.checkbox && this.share;
+    },
+  },
+  methods: {
+    handleFilePondInit() {
+      console.log('FilePond has initialized');
+      // FilePond instance methods are available on `this.$refs.pond`
+    },
+    getEmptyApplication() {
+      return {
+        name: '',
+        lastname: '',
+        email: firebase.auth().currentUser.email,
+        last_modified: undefined,
+        first_submitted: undefined,
+        school_year: null,
+        shirt_size: null,
+        dietary_restrictions: null,
+        hackathons: null,
+        university: null,
+        discover: null,
+        github: '',
+        linkedin: '',
+        website: '',
+        devpost: '',
+        phone: '',
+        emergency_phone: '',
+        q1: '',
+        q2: '',
+        q3: '',
+        q4: '',
+        meme: '',
+        major: '',
+        location: '',
+        birthday: '',
+        documents: [],
+        microsoft: false,
+      };
+    },
+    genderChange() {
+      this.formChange();
 
-            if (this.submitted && this.application.gender && this.enableGenderSelect) {
-                this.confirmGender = true;
-            }
-        },
-        redirectToStatus() {
-            this.$router.push({ name: 'Status' });
-        },
-        clearForm() {
-            this.confirmClear = false;
-            this.application = this.getEmptyApplication();
-        },
-        activateModal(msg) {
-            this.loading = true;
-            this.loadingMessage = msg;
-        },
-        toggleCheck() {
-            this.checkbox = !this.checkbox;
-        },
-        validateBeforeSubmit() {
-            return this.$validator.validateAll();
-        },
-        formChange() {
-            console.log('Change detected');
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-                this.timeout = null;
-            }
-            this.timeout = setTimeout(() => {
-                this.setApplicationInProgress();
-            }, 2000);
-        },
-        showInfoMessage(msg) {
-            this.bannerMessage = msg;
-            this.bannerColor = 'success';
-            this.feedback = true;
-        },
-        showErrorMessage(msg) {
-            this.bannerMessage = msg;
-            this.bannerColor = 'error';
-            this.feedback = true;
-        },
-        async submitFileInfoOnDrop() {
-            const files = this.$refs.pond.getFiles();
-            try {
-                if (this.submitted) {
-                    this.$refs.pond.removeFile(0);
-                    return;
-                }
-                const info = await this.storeFileAndGetInfo(files[0]);
-                this.application.documents = info;
-                this.setApplicationInProgress();
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        setApplicationInProgress() {
-            if (this.submitted && !this.enableGenderSelect) return;
-            const unixts = Math.round(new Date().getTime() / 1000);
-            this.application.last_modified = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-            this.application.first_submitted = {
-                unix: 0,
-                date: '',
-            };
-            this.$store.state.db
-                .collection('applications')
-                .doc('DH5')
-                .collection('in progress')
-                .doc(firebase.auth().currentUser.email)
-                .set(this.application)
-                .then(() => {
-                    this.showInfoMessage('Application progress saved!');
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                });
-        },
-        setDateInformation() {
-            const unixts = Math.round(new Date().getTime() / 1000);
-            this.application.first_submitted = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-            this.application.last_modified = {
-                unix: unixts,
-                date: new Date().toString(),
-            };
-        },
-        setApplication() {
-            console.log('Submitting application...');
-            // if (this.application.q4 == '' || !this.application.q4) this.application.q4 = ' ';
-            this.setDateInformation();
-            this.$store.state.db
-                .collection('applications')
-                .doc('DH5')
-                .collection('submitted')
-                .doc(firebase.auth().currentUser.email)
-                .set(this.application)
-                .then(() => {
-                    this.$router.push({ name: 'Status' });
-                    this.loading = false;
-                })
-                .catch(err => {
-                    this.loading = false;
-                });
-        },
-        storeFileAndGetInfo(doc) {
-            if (!doc) return;
-            const { filename, file, id } = doc;
-            const storeRef = firebase.storage().ref();
-            return new Promise((resolve, reject) => {
-                storeRef
-                    .child(`hackathon/DH5/users/${firebase.auth().currentUser.email}/${filename}`)
-                    .put(file)
-                    .then(snapshot => {
-                        snapshot.ref.getDownloadURL().then(url => {
-                            resolve({
-                                download_link: url,
-                                id,
-                                filename,
-                            });
-                        });
-                    })
-                    .catch(err => reject(err));
+      if (this.submitted && this.application.gender && this.enableGenderSelect) {
+        this.confirmGender = true;
+      }
+    },
+    redirectToStatus() {
+      this.$router.push({ name: 'Status' });
+    },
+    clearForm() {
+      this.confirmClear = false;
+      this.application = this.getEmptyApplication();
+    },
+    activateModal(msg) {
+      this.loading = true;
+      this.loadingMessage = msg;
+    },
+    toggleCheck() {
+      this.checkbox = !this.checkbox;
+    },
+    validateBeforeSubmit() {
+      return this.$validator.validateAll();
+    },
+    formChange() {
+      console.log('Change detected');
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+      this.timeout = setTimeout(() => {
+        this.setApplicationInProgress();
+      }, 2000);
+    },
+    showInfoMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = 'success';
+      this.feedback = true;
+    },
+    showErrorMessage(msg) {
+      this.bannerMessage = msg;
+      this.bannerColor = 'error';
+      this.feedback = true;
+    },
+    async submitFileInfoOnDrop() {
+      const files = this.$refs.pond.getFiles();
+      try {
+        if (this.submitted) {
+          this.$refs.pond.removeFile(0);
+          return;
+        }
+        const info = await this.storeFileAndGetInfo(files[0]);
+        this.application.documents = info;
+        this.setApplicationInProgress();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    setApplicationInProgress() {
+      if (this.submitted && !this.enableGenderSelect) return;
+      const unixts = Math.round(new Date().getTime() / 1000);
+      this.application.last_modified = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+      this.application.first_submitted = {
+        unix: 0,
+        date: '',
+      };
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5')
+        .collection('in progress')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          this.showInfoMessage('Application progress saved!');
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    setDateInformation() {
+      const unixts = Math.round(new Date().getTime() / 1000);
+      this.application.first_submitted = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+      this.application.last_modified = {
+        unix: unixts,
+        date: new Date().toString(),
+      };
+    },
+    setApplication() {
+      console.log('Submitting application...');
+      // if (this.application.q4 == '' || !this.application.q4) this.application.q4 = ' ';
+      this.setDateInformation();
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5')
+        .collection('submitted')
+        .doc(firebase.auth().currentUser.email)
+        .set(this.application)
+        .then(() => {
+          this.$router.push({ name: 'Status' });
+          this.loading = false;
+        })
+        .catch((err) => {
+          this.loading = false;
+        });
+    },
+    storeFileAndGetInfo(doc) {
+      if (!doc) return;
+      const { filename, file, id } = doc;
+      const storeRef = firebase.storage().ref();
+      return new Promise((resolve, reject) => {
+        storeRef
+          .child(`hackathon/DH5/users/${firebase.auth().currentUser.email}/${filename}`)
+          .put(file)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              resolve({
+                download_link: url,
+                id,
+                filename,
+              });
             });
-        },
-        async submitApplication() {
-            this.confirm = false;
-            if (!(await this.validateBeforeSubmit())) {
-                console.log('Error validating inputs!');
-                return;
-            } else if (!this.checkbox) {
-                this.checkError = 'Please accept the terms and conditions to continue.';
-                return;
-            } else if (!this.share) {
-                this.shareError = 'You must agree to these terms in order to proceed.';
-                return;
-            }
+          })
+          .catch(err => reject(err));
+      });
+    },
+    async submitApplication() {
+      this.confirm = false;
+      if (!(await this.validateBeforeSubmit())) {
+        console.log('Error validating inputs!');
+        return;
+      } else if (!this.checkbox) {
+        this.checkError = 'Please accept the terms and conditions to continue.';
+        return;
+      } else if (!this.share) {
+        this.shareError = 'You must agree to these terms in order to proceed.';
+        return;
+      }
 
-            const files = this.$refs.pond.getFiles();
-            this.activateModal('Submitting application...');
-            const resume = files[0];
-            const results = [];
-            if (resume) {
-                results.push(this.storeFileAndGetInfo(files[0]));
-                this.application.documents = await Promise.all(results).catch(err => {
-                    console.log(`Upload Failed: ${err}`);
-                    this.loading = false;
-                });
-            }
-            this.setApplication();
-        },
-        insertUserFileData(doc) {
-            this.$refs.pond.addFile(doc.download_link);
-        },
-        fillApplicationFields() {
-            const ref = this.application;
-            ref.q1 = ref.q1 ? ref.q1 : '';
-            ref.q2 = ref.q2 ? ref.q2 : '';
-            ref.q3 = ref.q3 ? ref.q3 : '';
-            ref.q4 = ref.q4 ? ref.q4 : '';
-            ref.meme = ref.meme ? ref.meme : '';
-            ref.workshops = ref.workshops ? ref.workshops : [];
-            ref.devpost = ref.devpost ? ref.devpost : '';
-            ref.lastname = ref.lastname ? ref.lastname : '';
-            ref.location = ref.location ? ref.location : '';
-            ref.microsoft = ref.microsoft ? ref.microsoft : false;
-        },
-        getUserAppStatus(userEmail) {
-            return new Promise((resolve, reject) => {
-                this.$store.state.db
-                    .collection('applications')
-                    .doc('DH5')
-                    .collection('submitted')
-                    .doc(userEmail)
-                    .get()
-                    .then(doc => {
-                        resolve(doc.exists);
-                    })
-                    .catch(err => reject(err));
-            });
-        },
-        beforeMount() {
-            this.activateModal('Loading...');
-            const userEmail = firebase.auth().currentUser.email;
-            this.$store.state.db
-                .collection('applications')
-                .doc('DH5')
-                .collection('submitted')
-                .doc(userEmail)
-                .get()
-                .then(doc => {
-                    resolve(doc.exists);
-                })
-                .catch(err => reject(err));
-        },
-        setSubmittedVariables(data) {
-            this.editing = true;
-            this.submitted = true;
-            this.checkbox = true;
-            this.share = true;
-            this.application = data;
-            this.fillApplicationFields();
-            this.loading = false;
-        },
+      const files = this.$refs.pond.getFiles();
+      this.activateModal('Submitting application...');
+      const resume = files[0];
+      const results = [];
+      if (resume) {
+        results.push(this.storeFileAndGetInfo(files[0]));
+        this.application.documents = await Promise.all(results).catch((err) => {
+          console.log(`Upload Failed: ${err}`);
+          this.loading = false;
+        });
+      }
+      this.setApplication();
+    },
+    insertUserFileData(doc) {
+      this.$refs.pond.addFile(doc.download_link);
+    },
+    fillApplicationFields() {
+      const ref = this.application;
+      ref.q1 = ref.q1 ? ref.q1 : '';
+      ref.q2 = ref.q2 ? ref.q2 : '';
+      ref.q3 = ref.q3 ? ref.q3 : '';
+      ref.q4 = ref.q4 ? ref.q4 : '';
+      ref.meme = ref.meme ? ref.meme : '';
+      ref.workshops = ref.workshops ? ref.workshops : [];
+      ref.devpost = ref.devpost ? ref.devpost : '';
+      ref.lastname = ref.lastname ? ref.lastname : '';
+      ref.location = ref.location ? ref.location : '';
+      ref.microsoft = ref.microsoft ? ref.microsoft : false;
+    },
+    getUserAppStatus(userEmail) {
+      return new Promise((resolve, reject) => {
+        this.$store.state.db
+          .collection('applications')
+          .doc('DH5')
+          .collection('submitted')
+          .doc(userEmail)
+          .get()
+          .then((doc) => {
+            resolve(doc.exists);
+          })
+          .catch(err => reject(err));
+      });
     },
     beforeMount() {
-        this.activateModal('Loading...');
-        const userEmail = firebase.auth().currentUser.email;
-        this.$store.state.db
-            .collection('applications')
-            .doc('DH5')
-            .collection('in progress')
-            .doc(userEmail)
-            .get()
-            .then(async doc => {
-                const submitted = await this.getUserAppStatus(userEmail);
-                if (doc.exists) {
-                    const data = doc.data();
-                    const gender = data.gender;
-                    console.log(data);
-                    console.log(gender);
-                    if (submitted && !gender) {
-                        this.enableGenderSelect = true;
-                        this.setSubmittedVariables(data);
-                    } else if (submitted) {
-                        this.setSubmittedVariables(data);
-                    } else {
-                        this.editing = true;
-                        this.application = doc.data();
-                        this.fillApplicationFields();
-                        this.loading = false;
-                    }
-                } else {
-                    console.log('Document not found!');
-                    this.editing = false;
-                    this.loading = false;
-                }
-            })
-            .catch(err => {
-                console.log('User app query failed.');
-                console.log(err);
-                this.loading = false;
-            });
+      this.activateModal('Loading...');
+      const userEmail = firebase.auth().currentUser.email;
+      this.$store.state.db
+        .collection('applications')
+        .doc('DH5')
+        .collection('submitted')
+        .doc(userEmail)
+        .get()
+        .then((doc) => {
+          resolve(doc.exists);
+        })
+        .catch(err => reject(err));
     },
+    setSubmittedVariables(data) {
+      this.editing = true;
+      this.submitted = true;
+      this.checkbox = true;
+      this.share = true;
+      this.application = data;
+      this.fillApplicationFields();
+      this.loading = false;
+    },
+  },
+  beforeMount() {
+    this.activateModal('Loading...');
+    const userEmail = firebase.auth().currentUser.email;
+    this.$store.state.db
+      .collection('applications')
+      .doc('DH5')
+      .collection('in progress')
+      .doc(userEmail)
+      .get()
+      .then(async (doc) => {
+        const submitted = await this.getUserAppStatus(userEmail);
+        if (doc.exists) {
+          const data = doc.data();
+          const gender = data.gender;
+          console.log(data);
+          console.log(gender);
+          if (submitted && !gender) {
+            this.enableGenderSelect = true;
+            this.setSubmittedVariables(data);
+          } else if (submitted) {
+            this.setSubmittedVariables(data);
+          } else {
+            this.editing = true;
+            this.application = doc.data();
+            this.fillApplicationFields();
+            this.loading = false;
+          }
+        } else {
+          console.log('Document not found!');
+          this.editing = false;
+          this.loading = false;
+        }
+      })
+      .catch((err) => {
+        console.log('User app query failed.');
+        console.log(err);
+        this.loading = false;
+      });
+  },
 };
 </script>
 
