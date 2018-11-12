@@ -8,13 +8,13 @@
                 <!-- was rushing to get demo working so hardcoded inline styling for some of rsvp element -->
                 <div class="wrap-status100" style="height:445px;padding:35px 55px 35px 55px;" v-if="step > 3">
                     <h1 v-if="!response.rsvp" class="rtitle">
-                        Congratulations!
+                        🎉 Congratulations, you've been invited to DeltaHacks V!
                     </h1>
                     <h1 v-if="response.rsvp" class="rtitle">
                         Awesome, see you there!
                     </h1>
                     <h3 class="">
-                        Are you able to attend?
+                        Will you be attending?
                     </h3>
                     <div style="padding-top:10px;">
                         <div style="padding-top:10px;">
@@ -309,12 +309,12 @@ export default {
                     case 'processing':
                     case 'rejected':
                     case 'overflow':
-                    case 'round1':
                     case 'accepted':
                         this.step = 3;
                         break;
-                    // this.step = 4;
-                    // break;
+                    case 'round1':
+                        this.step = 4;
+                        break;
                     default:
                         this.step = 0;
                 }
