@@ -14,7 +14,7 @@
                         😉 Awesome, see you there!
                     </h1>
                     <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
-                        That's too bad, thanks for letting us know!
+                        We'll miss you, but thanks for letting us know!
                     </h1>
                     <h3 class="">
                         Will you be attending?
@@ -88,8 +88,8 @@
                 </div>
             </div>
 
-            <div class="mobile" >
-                <div class="wrap-status101" v-if="step <= 3">
+            <div class="mobile">
+                <div class="wrap-status101-accept" v-if="step <= 3">
                     <h1 v-show="step === 0">You haven't started yet! Go
                         <a href="/apply" class="currentStatus">here</a> to begin.</h1>
                     <h1 v-show="step > 0">{{currentHeader}}</h1>
@@ -101,22 +101,22 @@
                         <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
                     </v-stepper>
                 </div>
-                <div class="wrap-status101 wrap-status201" v-if="step > 3">
+                <div class="wrap-status101-accept wrap-status201-accept" v-if="step > 3">
                     <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
-                        🎉 Congratulations, you've been invited to DeltaHacks V!
+                        🎉 <div id="mobileCol"> Congratulations, you've been invited to DeltaHacks V! </div>
                     </h1>
                     <h1 v-if="response.rsvp" class="rtitle">
                         Awesome, see you there!
                     </h1>
                     <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
-                        That's too bad, thanks for letting us know!
+                        We'll miss you, but thanks for letting us know!
                     </h1>
                     <h3 class="">
                         Will you be attending?
                     </h3>
                     <div style="padding-top:10px;">
                         <div style="padding-top:10px;">
-                            <div class="mx-auto gg" style="display:inline-block;">
+                            <div class="" style="display:inline-block;">
                                 <v-btn large color="success" @click="toggleRSVP(true)" :disabled="response.rsvp && hasResponded" class="button1">Yes!</v-btn>
                                 <v-btn large color="error" @click="toggleRSVP(false)" :disabled="!response.rsvp && hasResponded" class="button2">No.</v-btn>
                             </div><br><br>
@@ -126,7 +126,7 @@
                         </label><br>
                         <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch> -->
                         <!-- Need Bus -->
-                        <div class="mx-auto gg" style="display:inline-block;width:50% !important;" v-show="response.rsvp" transition="slide-x-transition">
+                        <div class="" style="display:inline-block;width:80% !important;" v-show="response.rsvp" transition="slide-x-transition">
                             <div>
                                 <label for="name" style='float:left'>
                                     <strong>Will you need a bus?*</strong>

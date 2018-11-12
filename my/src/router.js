@@ -93,43 +93,43 @@ const router = new Router({
 // Router guard setup
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
-    console.log('Protected route detected');
+    // console.log('Protected route detected');
     Firebase.auth().onAuthStateChanged((user) => {
     // If user is logged in
       if (user) {
       // Proceed to next page
-        console.log('Authorized user: ', user);
+        // console.log('Authorized user: ', user);
         next();
       } else {
       // Otherwise redirect to login
-        console.log('Not authorized');
+        // console.log('Not authorized');
         next({ name: 'Login' });
       }
     });
   } else if (to.matched.some(rec => rec.meta.adminAuth)) {
-    console.log('Protected route detected');
+    // console.log('Protected route detected');
     Firebase.auth().onAuthStateChanged((user) => {
     // If user is logged in
       if (user) {
       // Proceed to next page
-        console.log('Authorized user2: ', user);
+        // console.log('Authorized user2: ', user);
 
         db.collection('admins').doc(user.email.toLocaleLowerCase()).get().then((doc) => {
           if (doc.exists) {
-            console.log('Document data:', doc.data());
+            // console.log('Document data:', doc.data());
             next();
           } else {
-            console.log('Not an admin user!');
+            // console.log('Not an admin user!');
             next({ name: 'Login' });
           }
         })
           .catch((error) => {
-            console.log('Not an admin user!');
+            // console.log('Not an admin user!');
             next({ name: 'Login' });
           });
       } else {
       // Otherwise redirect to login
-        console.log('Not authorized');
+        // console.log('Not authorized');
         next({ name: 'Login' });
       }
     });
@@ -140,12 +140,12 @@ router.beforeEach((to, from, next) => {
         next({ name: 'Status' });
       } else {
       // Otherwise redirect to login
-        console.log('Not authorized');
+        // console.log('Not authorized');
         next();
       }
     });
   } else {
-    console.log('No route guard');
+    // console.log('No route guard');
     next();
   }
 });
