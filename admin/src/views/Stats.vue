@@ -348,26 +348,27 @@ export default {
     },
     setDecisionListeners(init = false) {
       db.collection('decisions').doc('DH5').collection('round1')
-                    .onSnapshot((snap) => {
-                      console.log(snap);
-                        this.decisions.accepted = snap.docs.length;
-                        console.log(this.decisions);
-                        this.setDecisionPanels();
-                    });
+        .onSnapshot((snap) => {
+          console.log(snap);
+          this.decisions.accepted = snap.docs.length;
+          console.log(this.decisions);
+          this.setDecisionPanels();
+        });
       db.collection('decisions').doc('DH5').collection('rejected')
-                    .onSnapshot((snap) => {
-                        this.decisions.rejected = snap.docs.length;
-                        this.setDecisionPanels();
-                    });
+        .onSnapshot((snap) => {
+          this.decisions.rejected = snap.docs.length;
+          this.setDecisionPanels();
+        });
       db.collection('decisions').doc('DH5').collection('pending')
-                    .onSnapshot((snap) => {
-                        this.decisions.pending =
+        .onSnapshot((snap) => {
+          this.decisions.pending =
                           snap.docs.length - this.decisions.accepted - this.decisions.rejected;
-                        this.setDecisionPanels();
-                    });
+          this.setDecisionPanels();
+        });
     },
     setRSVPData() {
-      db.collection('hackathon').doc('DH5').collection('RSVP').doc('all').collection('Yes')
+      db.collection('hackathon').doc('DH5').collection('RSVP').doc('all')
+        .collection('Yes')
         .onSnapshot((snap) => {
           this.rsvp = snap.docs.length;
         });
