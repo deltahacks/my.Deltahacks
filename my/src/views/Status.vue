@@ -22,8 +22,8 @@
                     <div style="padding-top:10px;">
                         <div style="padding-top:10px;">
                             <div class="mx-auto gg" style="display:inline-block;">
-                                <v-btn large color="success" @click="toggleRSVP(true)" :disabled="response.rsvp && hasResponded" class="button1">Yes!</v-btn>
-                                <v-btn large color="error" @click="toggleRSVP(false)" :disabled="!response.rsvp && hasResponded" class="button2">No.</v-btn>
+                                <v-btn large color="success" @click="toggleRSVP(true)" :depressed="(response.rsvp && hasResponded)" class="button1">Yes!</v-btn>
+                                <v-btn large color="error" @click="toggleRSVP(false)" :depressed="(!response.rsvp && hasResponded)" class="button2">No.</v-btn>
                             </div><br><br>
                         </div>
                         <!-- <label for="name" style='float:left'>
@@ -117,8 +117,8 @@
                     <div style="padding-top:10px;">
                         <div style="padding-top:10px;">
                             <div class="" style="display:inline-block;">
-                                <v-btn large color="success" @click="toggleRSVP(true)" :disabled="response.rsvp && hasResponded" class="button1">Yes!</v-btn>
-                                <v-btn large color="error" @click="toggleRSVP(false)" :disabled="!response.rsvp && hasResponded" class="button2">No.</v-btn>
+                                <v-btn large color="success" @click="toggleRSVP(true)" :depressed="(response.rsvp && hasResponded)" class="button1">Yes!</v-btn>
+                                <v-btn large color="error" @click="toggleRSVP(false)" :depressed="(!response.rsvp && hasResponded)" class="button2">No.</v-btn>
                             </div><br><br>
                         </div>
                         <!-- <label for="name" style='float:left'>
