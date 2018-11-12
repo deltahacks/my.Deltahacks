@@ -14,10 +14,10 @@
                         😉 Awesome, see you there!
                     </h1>
                     <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
-                        We'll miss you, but thanks for letting us know!
+                        😢 We'll miss you, but thanks for letting us know!
                     </h1>
                     <h3 class="">
-                        Will you be attending?
+                        Will you be attending? <div v-if="!response.rsvp && !hasResponded"> Your response will be saved as soon as you click an option.</div>
                     </h3>
                     <div style="padding-top:10px;">
                         <div style="padding-top:10px;">
