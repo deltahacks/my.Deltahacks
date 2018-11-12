@@ -52,8 +52,8 @@
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3 child-flex>
                     <v-card color="white lighten-4" dark>
-                        <pie-chart></pie-chart>
-                        <pie-chart2 ref="unigraph"></pie-chart2>
+                        <!-- <pie-chart></pie-chart> -->
+                        <pie-chart2 ref="universities" :options="{}"></pie-chart2>
                     </v-card>
                 </v-flex>
                 <v-flex d-flex xs12 sm6 md3>
@@ -113,6 +113,7 @@ export default {
             positions: { pos: [], names: [] },
             loading: false,
             loadingMessage: 'Loading...',
+            colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f'],
             debugFunctions: [
                 {
                     title: 'Index Apps',
@@ -275,11 +276,9 @@ export default {
             .collection('admins')
             //.doc(this.$store.state.firebase.auth().currentUser.email)
             .get();
-        //console.log('ALL ADM', nameRes.docs[0].data());
+        console.log('ALL ADM', nameRes.docs[0].data());
         let revObj = {};
         nameRes.docs.forEach(val => {
-            if (val.data().email == this.$store.state.firebase.auth().currentUser.email)
-                this.$store.state.vuex_user_role = val.data().role;
             revObj[val.data().email] = val.data().name;
         });
         this.$store.state.allAdmins = revObj;
@@ -321,18 +320,50 @@ export default {
         db.collection('statistics')
             .doc('DH5')
             .onSnapshot(doc => {
+                const universityStats = doc.data().applicationStats.universities;
                 this.applicationCount = doc.data().applications;
+                this.$refs.universities.changeData(
+                    this.processField(this.filterData(universityStats), 'Universities'));
             });
-
         let authRes = await db
             .collection('admins')
             .doc(this.$store.state.firebase.auth().currentUser.email)
             .get();
 
         this.$store.state.currentUserIsAuthorizedReviewer = authRes.data().authorizedReviewer;
-        //console.log('auth res: ', authRes.data());
+        console.log('auth res: ', authRes.data());
     },
     methods: {
+        filterData(data) {
+            const N = 5; // Number of fields to show before collapsing into "Other"
+            const values = Object.values(data);
+            const keys = Object.keys(data);
+            const out = {};
+            let i = 0;
+            while (i < N) {
+                const mindex = values.indexOf(Math.max(...values));
+                out[keys[mindex]] = values[mindex];
+                values.splice(mindex, 1);
+                keys.splice(mindex, 1);
+                i++;
+            }
+            out.Other = 0;
+            values.forEach(value => out.Other += value);
+            return out;
+        },
+        processField(field, label) {
+            const val = Object.values(field);
+            return {
+                labels: Object.keys(field),
+                datasets: [
+                {
+                    label,
+                    backgroundColor: this.colors,
+                    data: val,
+                },
+                ],
+            };
+        },
         async fnctn() {
             try {
                 let f = await firebase.functions().httpsCallable('createAdminUser')({

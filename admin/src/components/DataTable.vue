@@ -1,4 +1,4 @@
-<template>
+ <template>
   <v-card>
     <v-card-title>
       <v-menu offset-y>
@@ -220,34 +220,36 @@ export default {
             ],
         };
     },
-    async mounted() {
-        const parent = this;
-        await db
-            .collection('statistics')
-            .doc(this.hackathon)
-            .get()
-            .then(snap => {
-                console.log(snap.size);
-                this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
-                console.log('Number apps: ', this.numApplicants);
-            });
+  async mounted() {
+    const parent = this;
+    await db
+      .collection("statistics")
+      .doc(this.hackathon)
+      .get()
+      .then(snap => {
+        console.log(snap.size);
+        this.numApplicants = Math.ceil(
+          snap.data().applications / this.rowsPerPage
+        );
+        console.log("Number apps: ", this.numApplicants);
+      });
 
-        if (!this.applications[this.page - 1]) {
-            console.log('In mount fill');
-            const result = await db
-                .collection(this.collection)
-                .doc(this.hackathon)
-                .collection(this.bucket)
-                .orderBy('index')
-                .where(...this.restriction)
-                .limit(this.rowsPerPage)
-                .get();
-            console.log('r123', result);
-            // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-            Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
-        }
-    },
-    /*  computed: {
+    if (!this.applications[this.page - 1]) {
+      console.log("In mount fill");
+      const result = await db
+        .collection(this.collection)
+        .doc(this.hackathon)
+        .collection(this.bucket)
+        .orderBy("index")
+        .where(...this.restriction)
+        .limit(this.rowsPerPage)
+        .get();
+      console.log("r123", result);
+      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+    }
+  }
+  /*  computed: {
         lastVisible: 'DataTable.lastVisible',
     }, */
 };
