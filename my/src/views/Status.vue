@@ -238,7 +238,7 @@ export default {
     },
     computed: {
         baseStep() {
-            console.log(this.step === 0);
+            //console.log(this.step === 0);
             if (this.step === 0) {
                 return 'Not Started';
             }
@@ -311,19 +311,17 @@ export default {
                     case 'accepted':
                     case 'processing':
                     case 'rejected':
-                    case 'overflow':
-                    case 'accepted':
                         this.step = 3;
                         break;
-                    case 'round1f':
+                    case 'round1':
                         this.step = 4;
                         break;
                     default:
                         this.step = 0;
                 }
-                console.log(this.step);
+                //console.log(this.step);
             } else {
-                console.log('Document not found!');
+                //console.log('Document not found!');
             }
         },
         // returns boolean if they've added their gender to their application.
@@ -364,13 +362,14 @@ export default {
                     this.response = data;
                     this.hasResponded = true;
                 } else {
-                    db
-                        .collection('hackathon')
+                    db.collection('hackathon')
                         .doc('DH5')
                         .collection('RSVP')
                         .doc('all')
                         .collection('No')
-                        .doc(email).get().then(doc => {
+                        .doc(email)
+                        .get()
+                        .then(doc => {
                             if (doc.exists) {
                                 this.hasResponded = true;
                             }
@@ -380,13 +379,13 @@ export default {
         },
     },
     async beforeMount() {
-        console.log('mounted');
+        //console.log('mounted');
         const appEmail = auth().currentUser.email;
         const genderStatus = await this.checkGenderInput(appEmail);
         db.collection('users')
             .doc(appEmail)
             .onSnapshot(snap => {
-                console.log(snap.data());
+                //console.log(snap.data());
                 this.updateStep(snap);
                 if (this.step > 1) {
                     this.genderCompleted = genderStatus;
