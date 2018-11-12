@@ -296,6 +296,9 @@ export default {
             return this.subheaders[this.step - 1];
         },
     },
+    watch: {
+        '$route': 'initialize',
+    },
     methods: {
         toggleRSVP(res) {
             this.hasResponded = true;
@@ -372,27 +375,47 @@ export default {
                 //console.log('Document not found!');
             }
         },
-        // returns boolean if they've added their gender to their application.
         checkGenderInput(email) {
-            return new Promise((resolve, reject) => {
-                db.collection('applications')
-                    .doc('DH5')
-                    .collection('in progress')
-                    .doc(email)
-                    .get()
-                    .then(snap => {
-                        if (snap.exists) {
-                            const data = snap.data();
-                            if (data.gender) {
-                                resolve(true);
-                            } else {
-                                resolve(false);
-                            }
+            if (this.step <= 1) return;
+            db.collection('applications')
+                .doc('DH5')
+                .collection('in progress')
+                .doc(email)
+                .onSnapshot(snap => {
+                    if (snap.exists) {
+                        const data = snap.data();
+                        console.log(data);
+                        if (data.gender) {
+                            this.genderCompleted = true;
+                        } else {
+                            this.genderCompleted = false;
                         }
-                    })
-                    .catch(err => reject(err));
-            });
+                    }
+                })
+                .catch(err => reject(err));
         },
+        // returns boolean if they've added their gender to their application.
+        // checkGenderInput(email) {
+        //     return new Promise((resolve, reject) => {
+        //         db.collection('applications')
+        //             .doc('DH5')
+        //             .collection('in progress')
+        //             .doc(email)
+        //             .get()
+        //             .then(snap => {
+        //                 if (snap.exists) {
+        //                     const data = snap.data();
+        //                     console.log(data);
+        //                     if (data.gender) {
+        //                         resolve(true);
+        //                     } else {
+        //                         resolve(false);
+        //                     }
+        //                 }
+        //             })
+        //             .catch(err => reject(err));
+        //     });
+        // },
         fillRSVP() {
             const email = auth().currentUser.email;
             const folder = this.response.rsvp ? 'Yes' : 'No';
@@ -425,23 +448,24 @@ export default {
                 }
             });
         },
+        async initialize() {
+            //console.log('mounted');
+            const appEmail = auth().currentUser.email;
+            // const genderStatus = await this.checkGenderInput(appEmail);
+            db.collection('users')
+                .doc(appEmail)
+                .onSnapshot(snap => {
+                    //console.log(snap.data());
+                    this.updateStep(snap);
+                    this.checkGenderInput(appEmail);
+                    if (this.step > 3) {
+                        this.fillRSVP();
+                    }
+                });
+        }
     },
     async beforeMount() {
-        //console.log('mounted');
-        const appEmail = auth().currentUser.email;
-        const genderStatus = await this.checkGenderInput(appEmail);
-        db.collection('users')
-            .doc(appEmail)
-            .onSnapshot(snap => {
-                //console.log(snap.data());
-                this.updateStep(snap);
-                if (this.step > 1) {
-                    this.genderCompleted = genderStatus;
-                }
-                if (this.step > 3) {
-                    this.fillRSVP();
-                }
-            });
+        this.initialize();
     },
 };
 </script>
