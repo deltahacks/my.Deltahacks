@@ -88,7 +88,7 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
-            <bar-chart :data='busData' :options='options' />
+            <pie-chart ref='universities' :options='options' />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -111,12 +111,11 @@
             <bar-chart ref='shirt_sizes' :options='options' />
           </v-card>
         </v-flex>
-        <v-flex d-flex xs12 sm6 md3>
+        <!-- <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
             <pie-chart ref='universities' :options='options' />
-            <!-- <apex-chart ref='universities'/> -->
           </v-card>
-        </v-flex>
+        </v-flex> -->
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
             <bar-chart ref='diets' :options='options' />
