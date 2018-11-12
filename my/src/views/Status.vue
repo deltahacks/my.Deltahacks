@@ -296,9 +296,6 @@ export default {
             return this.subheaders[this.step - 1];
         },
     },
-    watch: {
-        '$route': 'initialize',
-    },
     methods: {
         toggleRSVP(res) {
             this.hasResponded = true;
@@ -448,24 +445,21 @@ export default {
                 }
             });
         },
-        async initialize() {
-            //console.log('mounted');
-            const appEmail = auth().currentUser.email;
-            // const genderStatus = await this.checkGenderInput(appEmail);
-            db.collection('users')
-                .doc(appEmail)
-                .onSnapshot(snap => {
-                    //console.log(snap.data());
-                    this.updateStep(snap);
-                    this.checkGenderInput(appEmail);
-                    if (this.step > 3) {
-                        this.fillRSVP();
-                    }
-                });
-        }
     },
     async beforeMount() {
-        this.initialize();
+        //console.log('mounted');
+        const appEmail = auth().currentUser.email;
+        // const genderStatus = await this.checkGenderInput(appEmail);
+        db.collection('users')
+            .doc(appEmail)
+            .onSnapshot(snap => {
+                //console.log(snap.data());
+                this.updateStep(snap);
+                if (this.step > 1) this.checkGenderInput(appEmail);
+                if (this.step > 3) {
+                    this.fillRSVP();
+                }
+            });
     },
 };
 </script>
