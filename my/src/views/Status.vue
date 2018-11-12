@@ -89,7 +89,7 @@
             </div>
 
             <div class="mobile">
-                <div class="wrap-status101-accept" v-if="step <= 3">
+                <div class="wrap-status101" v-if="step <= 3">
                     <h1 v-show="step === 0">You haven't started yet! Go
                         <a href="/apply" class="currentStatus">here</a> to begin.</h1>
                     <h1 v-show="step > 0">{{currentHeader}}</h1>
