@@ -19,8 +19,8 @@
                     <div style="padding-top:10px;">
                         <div style="padding-top:10px;">
                             <div class="mx-auto gg" style="display:inline-block;">
-                                <v-btn large color="success" @click="toggleRSVP(true)" :disabled="this.response.rsvp" class="button1">Yes!</v-btn>
-                                <v-btn large color="error" @click="toggleRSVP(false)" :disabled="!this.response.rsvp" class="button2">No.</v-btn>
+                                <v-btn large color="success" @click="toggleRSVP(true)" :disabled="response.rsvp && hasResponded" class="button1">Yes!</v-btn>
+                                <v-btn large color="error" @click="toggleRSVP(false)" :disabled="!response.rsvp && hasResponded" class="button2">No.</v-btn>
                             </div><br><br>
                         </div>
                         <!-- <label for="name" style='float:left'>
@@ -150,6 +150,7 @@ export default {
                 location: '',
                 email: auth().currentUser.email,
             },
+            hasResponded: false,
             timeout: undefined,
             bus: false,
             busLocations: [
@@ -249,10 +250,12 @@ export default {
     },
     methods: {
         toggleRSVP(res) {
+            this.hasResponded = true;
             this.response.rsvp = res;
             if (!this.response.rsvp) {
                 this.response = this.emptyResponse;
             }
+            this.formChange();
         },
         changeRSVP() {
             if (!this.response.rsvp) {
@@ -359,6 +362,19 @@ export default {
                 if (doc.exists) {
                     const data = doc.data();
                     this.response = data;
+                    this.hasResponded = true;
+                } else {
+                    db
+                        .collection('hackathon')
+                        .doc('DH5')
+                        .collection('RSVP')
+                        .doc('all')
+                        .collection('No')
+                        .doc(email).get().then(doc => {
+                            if (doc.exists) {
+                                this.hasResponded = true;
+                            }
+                        });
                 }
             });
         },
