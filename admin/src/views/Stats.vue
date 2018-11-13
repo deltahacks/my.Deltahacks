@@ -18,7 +18,7 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
-            <v-card-title primary-title>Rejected Applications</v-card-title>
+            <v-card-title primary-title>Overflow Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
                 <IOdometer class='iOdometer' :value='decisions.rejected' />
@@ -354,7 +354,7 @@ export default {
                         console.log(this.decisions);
                         this.setDecisionPanels();
                     });
-      db.collection('decisions').doc('DH5').collection('rejected')
+      db.collection('decisions').doc('DH5').collection('overflow')
                     .onSnapshot((snap) => {
                         this.decisions.rejected = snap.docs.length;
                         this.setDecisionPanels();

@@ -165,6 +165,13 @@
                 Close
             </v-btn>
         </v-snackbar>
+        <v-snackbar v-model="criticalError" :auto-height="true" top color="error" right :timeout="10000">
+            Could not establish connection to the server. Consider refreshing or attempting
+            to access the page on mobile. If the issue persists contact us at hello@deltahacks.com.
+            <v-btn color="white" flat @click="criticalError = false">
+                Close
+            </v-btn>
+        </v-snackbar>
     </v-app>
 </template>
 
@@ -198,6 +205,7 @@ export default {
                 location: '',
                 email: auth().currentUser.email,
             },
+            criticalError: false,
             hasResponded: false,
             timeout: undefined,
             bus: false,
@@ -367,9 +375,8 @@ export default {
                     default:
                         this.step = 0;
                 }
-                //console.log(this.step);
             } else {
-                //console.log('Document not found!');
+                console.log('Document not found!');
             }
         },
         checkGenderInput(email) {
@@ -381,38 +388,14 @@ export default {
                 .onSnapshot(snap => {
                     if (snap.exists) {
                         const data = snap.data();
-                        console.log(data);
                         if (data.gender) {
                             this.genderCompleted = true;
                         } else {
                             this.genderCompleted = false;
                         }
                     }
-                })
-                .catch(err => reject(err));
+                });
         },
-        // returns boolean if they've added their gender to their application.
-        // checkGenderInput(email) {
-        //     return new Promise((resolve, reject) => {
-        //         db.collection('applications')
-        //             .doc('DH5')
-        //             .collection('in progress')
-        //             .doc(email)
-        //             .get()
-        //             .then(snap => {
-        //                 if (snap.exists) {
-        //                     const data = snap.data();
-        //                     console.log(data);
-        //                     if (data.gender) {
-        //                         resolve(true);
-        //                     } else {
-        //                         resolve(false);
-        //                     }
-        //                 }
-        //             })
-        //             .catch(err => reject(err));
-        //     });
-        // },
         fillRSVP() {
             const email = auth().currentUser.email;
             const folder = this.response.rsvp ? 'Yes' : 'No';
@@ -450,16 +433,24 @@ export default {
         //console.log('mounted');
         const appEmail = auth().currentUser.email;
         // const genderStatus = await this.checkGenderInput(appEmail);
-        db.collection('users')
-            .doc(appEmail)
-            .onSnapshot(snap => {
-                //console.log(snap.data());
-                this.updateStep(snap);
-                if (this.step > 1) this.checkGenderInput(appEmail);
-                if (this.step > 3) {
-                    this.fillRSVP();
-                }
-            });
+        try {
+            db.collection('users')
+                .doc(appEmail)
+                .onSnapshot((snap) => {
+                    if (snap.exists) {
+                        this.updateStep(snap);
+                        if (this.step > 1) this.checkGenderInput(appEmail);
+                        if (this.step > 3) {
+                            this.fillRSVP();
+                        }
+                    } else {
+                        console.log(`User ${appEmail} not found.`)
+                    }
+                });
+        } catch (err) {
+            console.error(err);
+            this.criticalError = true;
+        }
     },
 };
 </script>
