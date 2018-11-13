@@ -374,7 +374,8 @@ export default {
                     });
     },
     setRSVPData() {
-      db.collection('hackathon').doc('DH5').collection('RSVP').doc('all').collection('Yes')
+      db.collection('hackathon').doc('DH5').collection('RSVP').doc('all')
+        .collection('Yes')
         .onSnapshot((snap) => {
           this.rsvp = snap.docs.length;
         });
