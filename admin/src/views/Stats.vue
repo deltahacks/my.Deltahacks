@@ -21,7 +21,7 @@
             <v-card-title primary-title>Overflow Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='decisions.rejected' />
+                <IOdometer class='iOdometer' :value='decisions.overflow' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -31,17 +31,17 @@
             <v-card-title primary-title>Pending Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='decisions.pending' />
+                <IOdometer class='iOdometer' :value='pending' />
               </v-card-text>
             </v-card>
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
-            <v-card-title primary-title>RSVP</v-card-title>
+            <v-card-title primary-title>Submitted Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='rsvp' />
+                <IOdometer class='iOdometer' :value='submitted' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -58,10 +58,10 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
-            <v-card-title primary-title>Total Applications</v-card-title>
+            <v-card-title primary-title>RSVP</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='total' />
+                <IOdometer class='iOdometer' :value='rsvp' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -156,18 +156,20 @@ export default {
       decisions: {
         accepted: 0,
         pending: 0,
-        rejected: 0,
+        overflow: 0,
       },
       statistics: {
         decisions: {
           accepted: 0,
           pending: 0,
-          rejected: 0,
+          overflow: 0,
         },
         rsvp: 0,
         checkedIn: 0,
         mentors: 0,
       },
+      submitted: 0,
+      inProgress: 0,
       data: {
         labels: ['Accepted', 'Rejected', 'Pending'],
         datasets: [
@@ -241,6 +243,9 @@ export default {
       const { accepted, rejected, pending } = this.decisions;
       return accepted + rejected + pending;
     },
+    pending() {
+      return this.inProgress - this.submitted;
+    }
   },
   methods: {
     setAllData() {
@@ -356,14 +361,16 @@ export default {
                     });
       db.collection('decisions').doc('DH5').collection('overflow')
                     .onSnapshot((snap) => {
-                        this.decisions.rejected = snap.docs.length;
+                        this.decisions.overflow = snap.docs.length;
                         this.setDecisionPanels();
                     });
-      db.collection('decisions').doc('DH5').collection('pending')
+      db.collection('applications').doc('DH5').collection('submitted')
                     .onSnapshot((snap) => {
-                        this.decisions.pending =
-                          snap.docs.length - this.decisions.accepted - this.decisions.rejected;
-                        this.setDecisionPanels();
+                        this.submitted = snap.docs.length;
+                    });
+      db.collection('applications').doc('DH5').collection('in progress')
+                    .onSnapshot((snap) => {
+                      this.inProgress = snap.docs.length;
                     });
     },
     setRSVPData() {
@@ -374,15 +381,14 @@ export default {
     },
     setDecisionPanels() {
       this.$refs.decisions.changeData({
-        labels: ['Accepted', 'Rejected', 'Pending'],
+        labels: ['Accepted', 'Overflow'],
         datasets: [
           {
             label: 'Applicant Distribution',
             backgroundColor: this.colors,
             data: [
               this.decisions.accepted,
-              this.decisions.rejected,
-              this.decisions.pending,
+              this.decisions.overflow,
             ],
           },
         ],
