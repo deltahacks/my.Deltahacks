@@ -44,7 +44,13 @@
                                     <strong>Where are you coming from?*</strong>
                                 </label><br>
                                 <v-select @change="changeBus" :persistent-hint="true" :hint="busWarning" name="busLocation" v-model="response.location" :items="busLocations"></v-select>
-                            </div>
+                            </div><br>
+                        </div>
+                        <div class="mx-auto gg" v-if="hasResponded">
+                            <v-chip style="border:none;float:left;overflow:wrap;"  outline small color="#555" >
+                                <v-icon left>check</v-icon>
+                                <strong>Your response has been submitted.</strong>
+                            </v-chip>
                         </div>
                         <!-- <div class="rspvButtons">
                             <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
@@ -141,6 +147,13 @@
                                 <v-select @change="changeBus" :persistent-hint="true" :hint="busWarning" name="busLocation" v-model="response.location" :items="busLocations"></v-select>
                             </div>
                         </div>
+                        
+                        <div class="mx-auto gg" v-if="hasResponded">
+                            <v-chip style="border:none;float:left;overflow:wrap;"  outline small color="#555" >
+                                <v-icon left>check</v-icon>
+                                <strong>Your response has been submitted.</strong>
+                            </v-chip>
+                        </div>
                         <!-- <div class="rspvButtons">
                             <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
                         </div> -->
@@ -214,7 +227,7 @@ export default {
                 'University of Toronto',
                 'University of Western Ontario',
             ],
-            busWarning: "Buses aren't guarenteed! We are currently gauging interest.",
+            busWarning: "We're currently gauging interest in buses.",
             feedback: false,
             social: [
                 {
