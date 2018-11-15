@@ -46,7 +46,7 @@
                                 <v-select @change="changeBus" :persistent-hint="true" :hint="busWarning" name="busLocation" v-model="response.location" :items="busLocations"></v-select>
                             </div><br>
                         </div>
-                        <div class="mx-auto gg" v-if="hasResponded">
+                        <div class="mx-auto gg" v-if="confirmation">
                             <v-chip style="border:none;float:left;overflow:wrap;"  outline small color="#555" >
                                 <v-icon left>check</v-icon>
                                 <strong>Your response has been submitted.</strong>
@@ -148,7 +148,7 @@
                             </div>
                         </div>
                         
-                        <div class="mx-auto gg" v-if="hasResponded">
+                        <div class="mx-auto gg" v-if="confirmation">
                             <v-chip style="border:none;float:left;overflow:wrap;"  outline small color="#555" >
                                 <v-icon left>check</v-icon>
                                 <strong>Your response has been submitted.</strong>
@@ -220,6 +220,7 @@ export default {
             },
             criticalError: false,
             hasResponded: false,
+            confirmation: false,
             timeout: undefined,
             bus: false,
             busLocations: [
@@ -332,6 +333,7 @@ export default {
             }
         },
         formChange() {
+            this.confirmation = false;
             if (this.timeout) {
                 clearTimeout(this.timeout);
                 this.timeout = null;
@@ -357,7 +359,10 @@ export default {
                 .collection(folder)
                 .doc(email)
                 .set(this.response)
-                .then(res => (this.feedback = true))
+                .then(res => {
+                    this.feedback = true;
+                    this.confirmation = true;
+                })
                 .catch(err => console.log(err));
             rsvpRef
                 .collection(opposingFolder)
@@ -424,6 +429,7 @@ export default {
                 if (doc.exists) {
                     const data = doc.data();
                     this.response = data;
+                    this.confirmation = true;
                     this.hasResponded = true;
                 } else {
                     db.collection('hackathon')
@@ -435,6 +441,7 @@ export default {
                         .get()
                         .then(doc => {
                             if (doc.exists) {
+                                this.confirmation = true;
                                 this.hasResponded = true;
                             }
                         });
