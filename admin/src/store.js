@@ -41,6 +41,9 @@ export default new Vuex.Store({
     update_vuex_email(state, email) {
       state.vuex_email = email;
     },
+    update_vuex_role(state, role) {
+      state.vuex_user_role = role;
+    },
     update_vuex_password(state, pass) {
       state.vuex_password = pass;
     },

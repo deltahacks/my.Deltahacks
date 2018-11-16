@@ -280,6 +280,16 @@ export default {
         let revObj = {};
         nameRes.docs.forEach(val => {
             revObj[val.data().email] = val.data().name;
+            console.log(
+                val.data().email,
+                this.$store.state.firebase.auth().currentUser.email,
+                'fwe'
+            );
+            if (val.data().email === this.$store.state.firebase.auth().currentUser.email) {
+                console.log('Changing role: ', val.data().role);
+
+                this.$store.vuex_user_role = val.data().role;
+            }
         });
         this.$store.state.allAdmins = revObj;
         this.$store.state.currentAdminUserName = this.$store.state.allAdmins[
@@ -323,7 +333,8 @@ export default {
                 const universityStats = doc.data().applicationStats.universities;
                 this.applicationCount = doc.data().applications;
                 this.$refs.universities.changeData(
-                    this.processField(this.filterData(universityStats), 'Universities'));
+                    this.processField(this.filterData(universityStats), 'Universities')
+                );
             });
         let authRes = await db
             .collection('admins')
@@ -332,6 +343,32 @@ export default {
 
         this.$store.state.currentUserIsAuthorizedReviewer = authRes.data().authorizedReviewer;
         console.log('auth res: ', authRes.data());
+    },
+    computed: {
+        vuex_user_role: {
+            get() {
+                return this.$store.state.vuex_user_role;
+            },
+            set(value) {
+                this.$store.commit('update_vuex_role', value);
+            },
+        },
+        vuex_password: {
+            get() {
+                return this.$store.state.vuex_password;
+            },
+            set(value) {
+                this.$store.commit('update_vuex_password', value);
+            },
+        },
+        vuex_current_user: {
+            get() {
+                return this.$store.state.vuex_current_user;
+            },
+            set(value) {
+                this.$store.commit('update_vuex_current_user', value);
+            },
+        },
     },
     methods: {
         filterData(data) {
@@ -348,7 +385,7 @@ export default {
                 i++;
             }
             out.Other = 0;
-            values.forEach(value => out.Other += value);
+            values.forEach(value => (out.Other += value));
             return out;
         },
         processField(field, label) {
@@ -356,11 +393,11 @@ export default {
             return {
                 labels: Object.keys(field),
                 datasets: [
-                {
-                    label,
-                    backgroundColor: this.colors,
-                    data: val,
-                },
+                    {
+                        label,
+                        backgroundColor: this.colors,
+                        data: val,
+                    },
                 ],
             };
         },
