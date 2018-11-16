@@ -147,7 +147,7 @@
                                 <v-select @change="changeBus" :persistent-hint="true" :hint="busWarning" name="busLocation" v-model="response.location" :items="busLocations"></v-select>
                             </div>
                         </div>
-                        
+
                         <div class="mx-auto gg" v-if="confirmation">
                             <v-chip style="border:none;float:left;overflow:wrap;"  outline small color="#555" >
                                 <v-icon left>check</v-icon>
@@ -201,277 +201,277 @@ import { mapGetters } from 'vuex';
 import { allUniversities } from '../private/data';
 
 export default {
-    mixins: [validationMixin],
-    name: 'Status',
-    data() {
-        return {
-            genderCompleted: true,
-            response: {
-                rsvp: false,
-                bus: false,
-                location: '',
-                email: auth().currentUser.email,
-            },
-            emptyResponse: {
-                rsvp: false,
-                bus: false,
-                location: '',
-                email: auth().currentUser.email,
-            },
-            criticalError: false,
-            hasResponded: false,
-            confirmation: false,
-            timeout: undefined,
-            bus: false,
-            busLocations: [
-                'University of Waterloo',
-                'University of Toronto',
-                'University of Western Ontario',
-            ],
-            busWarning: "We're currently gauging interest in buses.",
-            feedback: false,
-            social: [
-                {
-                    link: 'https://twitter.com/deltahacks',
-                    icon: 'fab fa-twitter',
-                },
-                {
-                    link: 'https://www.facebook.com/thedeltahacks/',
-                    icon: 'fab fa-facebook',
-                },
-                {
-                    link: 'https://www.instagram.com/deltahacks/',
-                    icon: 'fab fa-instagram',
-                },
-                {
-                    link: 'https://www.linkedin.com/company/deltahacks/',
-                    icon: 'fab fa-linkedin',
-                },
-            ],
-            parent: this,
-            picker: null,
-            date: '2000-01-01',
-            university: null,
-            allUniversities,
-            dropzoneOptions: {
-                url: 'https://httpbin.org/post',
-                thumbnailWidth: 150,
-                maxFilesize: 0.5,
-                headers: { 'My-Awesome-Header': 'header value' },
-                addRemoveLinks: true,
-                acceptedFiles: 'application/pdf',
-            },
-            subheaders: [
-                "You haven't submitted your application yet. Make sure to submit by Nov 15.",
-                "You've submitted your application, stay tuned for updates.",
-                'This application is under review.',
-                "Congratulations, you've been accepted!",
-                'Unfortunately we cannot offer you an invitation this time.',
-            ],
-            application: {
-                name: '',
-                email: '',
-                school_year: null,
-                shirt_size: null,
-                dietary_restrictions: null,
-                hackathons: null,
-                github: '',
-                linkedin: '',
-                website: '',
-                phone: '',
-                emergency_phone: '',
-            },
-            links: ['Home', 'About', 'Contact'],
-            story: '',
-            custom: true,
-            name: '',
-            step: 0,
-            email: '',
-            select: null,
-            items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
-            hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-            food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-            shirts: ['XS', 'S', 'M', 'L', 'XL'],
-            checkbox: false,
-        };
+  mixins: [validationMixin],
+  name: 'Status',
+  data() {
+    return {
+      genderCompleted: true,
+      response: {
+        rsvp: false,
+        bus: false,
+        location: '',
+        email: auth().currentUser.email,
+      },
+      emptyResponse: {
+        rsvp: false,
+        bus: false,
+        location: '',
+        email: auth().currentUser.email,
+      },
+      criticalError: false,
+      hasResponded: false,
+      confirmation: false,
+      timeout: undefined,
+      bus: false,
+      busLocations: [
+        'University of Waterloo',
+        'University of Toronto',
+        'University of Western Ontario',
+      ],
+      busWarning: "We're currently gauging interest in buses.",
+      feedback: false,
+      social: [
+        {
+          link: 'https://twitter.com/deltahacks',
+          icon: 'fab fa-twitter',
+        },
+        {
+          link: 'https://www.facebook.com/thedeltahacks/',
+          icon: 'fab fa-facebook',
+        },
+        {
+          link: 'https://www.instagram.com/deltahacks/',
+          icon: 'fab fa-instagram',
+        },
+        {
+          link: 'https://www.linkedin.com/company/deltahacks/',
+          icon: 'fab fa-linkedin',
+        },
+      ],
+      parent: this,
+      picker: null,
+      date: '2000-01-01',
+      university: null,
+      allUniversities,
+      dropzoneOptions: {
+        url: 'https://httpbin.org/post',
+        thumbnailWidth: 150,
+        maxFilesize: 0.5,
+        headers: { 'My-Awesome-Header': 'header value' },
+        addRemoveLinks: true,
+        acceptedFiles: 'application/pdf',
+      },
+      subheaders: [
+        "You haven't submitted your application yet. Make sure to submit by Nov 15.",
+        "You've submitted your application, stay tuned for updates.",
+        'This application is under review.',
+        "Congratulations, you've been accepted!",
+        'Unfortunately we cannot offer you an invitation this time.',
+      ],
+      application: {
+        name: '',
+        email: '',
+        school_year: null,
+        shirt_size: null,
+        dietary_restrictions: null,
+        hackathons: null,
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
+      },
+      links: ['Home', 'About', 'Contact'],
+      story: '',
+      custom: true,
+      name: '',
+      step: 0,
+      email: '',
+      select: null,
+      items: ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year'],
+      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+      shirts: ['XS', 'S', 'M', 'L', 'XL'],
+      checkbox: false,
+    };
+  },
+  validations: {
+    name: { required, maxLength: maxLength(10) },
+    email: { required, email },
+    select: { required },
+    checkbox: { required },
+  },
+  components: {
+    Navbar,
+    Navigation,
+    Navbar2,
+  },
+  computed: {
+    baseStep() {
+      // console.log(this.step === 0);
+      if (this.step === 0) {
+        return 'Not Started';
+      }
+      return 'In Progress';
     },
-    validations: {
-        name: { required, maxLength: maxLength(10) },
-        email: { required, email },
-        select: { required },
-        checkbox: { required },
+    currentHeader() {
+      return this.subheaders[this.step - 1];
     },
-    components: {
-        Navbar,
-        Navigation,
-        Navbar2,
+  },
+  methods: {
+    toggleRSVP(res) {
+      this.hasResponded = true;
+      this.response.rsvp = res;
+      if (!this.response.rsvp) {
+        this.response = this.emptyResponse;
+      }
+      this.formChange();
     },
-    computed: {
-        baseStep() {
-            //console.log(this.step === 0);
-            if (this.step === 0) {
-                return 'Not Started';
-            }
-            return 'In Progress';
-        },
-        currentHeader() {
-            return this.subheaders[this.step - 1];
-        },
+    changeRSVP() {
+      if (!this.response.rsvp) {
+        this.response = this.emptyResponse;
+      }
     },
-    methods: {
-        toggleRSVP(res) {
-            this.hasResponded = true;
-            this.response.rsvp = res;
-            if (!this.response.rsvp) {
-                this.response = this.emptyResponse;
-            }
-            this.formChange();
-        },
-        changeRSVP() {
-            if (!this.response.rsvp) {
-                this.response = this.emptyResponse;
-            }
-        },
-        formChange() {
-            this.confirmation = false;
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-                this.timeout = null;
-            }
-            this.timeout = setTimeout(() => {
-                this.submitRSVP();
-            }, 2000);
-        },
-        changeBus() {
-            if (!this.response.bus) this.response.location = '';
-            this.formChange();
-        },
-        submitRSVP() {
-            const email = auth().currentUser.email;
-            const folder = this.response.rsvp ? 'Yes' : 'No';
-            const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
-            const rsvpRef = db
-                .collection('hackathon')
-                .doc('DH5')
-                .collection('RSVP')
-                .doc('all');
-            rsvpRef
-                .collection(folder)
-                .doc(email)
-                .set(this.response)
-                .then(res => {
-                    this.feedback = true;
-                    this.confirmation = true;
-                })
-                .catch(err => console.log(err));
-            rsvpRef
-                .collection(opposingFolder)
-                .doc(email)
-                .delete();
-        },
-        updateStep(doc) {
-            if (doc.exists) {
-                switch (doc.data().status) {
-                    case 'in progress':
-                        this.step = 1;
-                        break;
-                    case 'submitted':
-                        this.step = 2;
-                        break;
-                    case 'pending':
-                        this.step = 2;
-                        break;
-                    case 'overflow':
-                    case 'accepted':
-                    case 'processing':
-                    case 'rejected':
-                        this.step = 3;
-                        break;
-                    case 'round1':
-                        this.step = 4;
-                        break;
-                    default:
-                        this.step = 0;
-                }
-            } else {
-                console.log('Document not found!');
-            }
-        },
-        checkGenderInput(email) {
-            if (this.step <= 1) return;
-            db.collection('applications')
-                .doc('DH5')
-                .collection('in progress')
-                .doc(email)
-                .onSnapshot(snap => {
-                    if (snap.exists) {
-                        const data = snap.data();
-                        if (data.gender) {
-                            this.genderCompleted = true;
-                        } else {
-                            this.genderCompleted = false;
-                        }
-                    }
-                });
-        },
-        fillRSVP() {
-            const email = auth().currentUser.email;
-            const folder = this.response.rsvp ? 'Yes' : 'No';
-            const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
-            const rsvpRef = db
-                .collection('hackathon')
-                .doc('DH5')
-                .collection('RSVP')
-                .doc('all')
-                .collection('Yes')
-                .doc(email);
-            rsvpRef.get().then(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    this.response = data;
-                    this.confirmation = true;
-                    this.hasResponded = true;
-                } else {
-                    db.collection('hackathon')
-                        .doc('DH5')
-                        .collection('RSVP')
-                        .doc('all')
-                        .collection('No')
-                        .doc(email)
-                        .get()
-                        .then(doc => {
-                            if (doc.exists) {
-                                this.confirmation = true;
-                                this.hasResponded = true;
-                            }
-                        });
-                }
-            });
-        },
+    formChange() {
+      this.confirmation = false;
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+      this.timeout = setTimeout(() => {
+        this.submitRSVP();
+      }, 2000);
     },
-    async beforeMount() {
-        //console.log('mounted');
-        const appEmail = auth().currentUser.email;
-        // const genderStatus = await this.checkGenderInput(appEmail);
-        try {
-            db.collection('users')
-                .doc(appEmail)
-                .onSnapshot((snap) => {
-                    if (snap.exists) {
-                        this.updateStep(snap);
-                        if (this.step > 1) this.checkGenderInput(appEmail);
-                        if (this.step > 3) {
-                            this.fillRSVP();
-                        }
-                    } else {
-                        console.log(`User ${appEmail} not found.`)
-                    }
-                });
-        } catch (err) {
-            console.error(err);
-            this.criticalError = true;
+    changeBus() {
+      if (!this.response.bus) this.response.location = '';
+      this.formChange();
+    },
+    submitRSVP() {
+      const email = auth().currentUser.email;
+      const folder = this.response.rsvp ? 'Yes' : 'No';
+      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
+      const rsvpRef = db
+        .collection('hackathon')
+        .doc('DH5')
+        .collection('RSVP')
+        .doc('all');
+      rsvpRef
+        .collection(folder)
+        .doc(email)
+        .set(this.response)
+        .then((res) => {
+          this.feedback = true;
+          this.confirmation = true;
+        })
+        .catch(err => console.log(err));
+      rsvpRef
+        .collection(opposingFolder)
+        .doc(email)
+        .delete();
+    },
+    updateStep(doc) {
+      if (doc.exists) {
+        switch (doc.data().status) {
+          case 'in progress':
+            this.step = 1;
+            break;
+          case 'submitted':
+            this.step = 2;
+            break;
+          case 'pending':
+            this.step = 2;
+            break;
+          case 'overflow':
+          case 'accepted':
+          case 'processing':
+          case 'rejected':
+            this.step = 3;
+            break;
+          case 'round1':
+            this.step = 4;
+            break;
+          default:
+            this.step = 0;
         }
+      } else {
+        console.log('Document not found!');
+      }
     },
+    checkGenderInput(email) {
+      if (this.step <= 1) return;
+      db.collection('applications')
+        .doc('DH5')
+        .collection('in progress')
+        .doc(email)
+        .onSnapshot((snap) => {
+          if (snap.exists) {
+            const data = snap.data();
+            if (data.gender) {
+              this.genderCompleted = true;
+            } else {
+              this.genderCompleted = false;
+            }
+          }
+        });
+    },
+    fillRSVP() {
+      const email = auth().currentUser.email;
+      const folder = this.response.rsvp ? 'Yes' : 'No';
+      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
+      const rsvpRef = db
+        .collection('hackathon')
+        .doc('DH5')
+        .collection('RSVP')
+        .doc('all')
+        .collection('Yes')
+        .doc(email);
+      rsvpRef.get().then((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          this.response = data;
+          this.confirmation = true;
+          this.hasResponded = true;
+        } else {
+          db.collection('hackathon')
+            .doc('DH5')
+            .collection('RSVP')
+            .doc('all')
+            .collection('No')
+            .doc(email)
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                this.confirmation = true;
+                this.hasResponded = true;
+              }
+            });
+        }
+      });
+    },
+  },
+  async beforeMount() {
+    // console.log('mounted');
+    const appEmail = auth().currentUser.email;
+    // const genderStatus = await this.checkGenderInput(appEmail);
+    try {
+      db.collection('users')
+        .doc(appEmail)
+        .onSnapshot((snap) => {
+          if (snap.exists) {
+            this.updateStep(snap);
+            if (this.step > 1) this.checkGenderInput(appEmail);
+            if (this.step > 3) {
+              this.fillRSVP();
+            }
+          } else {
+            console.log(`User ${appEmail} not found.`);
+          }
+        });
+    } catch (err) {
+      console.error(err);
+      this.criticalError = true;
+    }
+  },
 };
 </script>
 <style scoped src='../assets/css/status.css'>
