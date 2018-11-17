@@ -78,11 +78,6 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
-            <pie-chart ref='checkedIn' :data='checkInData' :options='options' />
-          </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md3>
-          <v-card color='white lighten-4' dark>
             <bar-chart ref="ages" :options='options' />
           </v-card>
         </v-flex>
@@ -250,7 +245,7 @@ export default {
   methods: {
     setAllData() {
       this.setDecisionListeners();
-      this.setCheckedInGraph();
+      // this.setCheckedInGraph();
       this.setMiscStatistics();
       this.setRSVPData();
     },
@@ -266,21 +261,21 @@ export default {
         ],
       });
     },
-    setCheckedInGraph() {
-      this.$refs.checkedIn.changeData({
-        labels: ['Checked In', 'Not Checked In'],
-        datasets: [
-          {
-            label: 'Applicant Distribution',
-            backgroundColor: this.colors,
-            data: [
-              this.statistics.checkedIn,
-              this.total - this.statistics.checkedIn,
-            ],
-          },
-        ],
-      });
-    },
+    // setCheckedInGraph() {
+    //   this.$refs.checkedIn.changeData({
+    //     labels: ['Checked In', 'Not Checked In'],
+    //     datasets: [
+    //       {
+    //         label: 'Applicant Distribution',
+    //         backgroundColor: this.colors,
+    //         data: [
+    //           this.statistics.checkedIn,
+    //           this.total - this.statistics.checkedIn,
+    //         ],
+    //       },
+    //     ],
+    //   });
+    // },
     initAgeChart() {
       db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
         this.updateAgeData(snap);
@@ -366,10 +361,12 @@ export default {
                     });
       db.collection('applications').doc('DH5').collection('submitted')
                     .onSnapshot((snap) => {
+                      console.log(snap.docs.length);
                         this.submitted = snap.docs.length;
                     });
       db.collection('applications').doc('DH5').collection('in progress')
                     .onSnapshot((snap) => {
+                      console.log(snap.docs.length);
                       this.inProgress = snap.docs.length;
                     });
     },
