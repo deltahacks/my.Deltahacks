@@ -276,17 +276,11 @@ export default {
             .collection('admins')
             //.doc(this.$store.state.firebase.auth().currentUser.email)
             .get();
-        console.log('ALL ADM', nameRes.docs[0].data());
         let revObj = {};
         nameRes.docs.forEach(val => {
             revObj[val.data().email] = val.data().name;
-            console.log(
-                val.data().email,
-                this.$store.state.firebase.auth().currentUser.email,
-                'fwe'
-            );
             if (val.data().email === this.$store.state.firebase.auth().currentUser.email) {
-                console.log('Changing role: ', val.data().role);
+                //console.log('Changing role: ', val.data().role);
 
                 this.$store.state.vuex_user_role = val.data().role;
             }
