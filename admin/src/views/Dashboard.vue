@@ -288,7 +288,7 @@ export default {
             if (val.data().email === this.$store.state.firebase.auth().currentUser.email) {
                 console.log('Changing role: ', val.data().role);
 
-                this.$store.vuex_user_role = val.data().role;
+                this.$store.state.vuex_user_role = val.data().role;
             }
         });
         this.$store.state.allAdmins = revObj;
