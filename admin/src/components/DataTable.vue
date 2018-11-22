@@ -109,7 +109,7 @@ export default {
     },
     async nextPage() {
       console.log('Page is: ', this.page);
-      if (!this.applications[`${this.page}`]) {
+      if (!this.applications[`${this.page - 1}`]) {
         console.log('Getting next page');
         const result = await db
           .collection(this.collection)
