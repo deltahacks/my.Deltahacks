@@ -275,7 +275,8 @@
           <v-dialog v-model="deadline" persistent max-width="450" min-height="350">
             <v-card>
               <v-card-title class="mx-auto gg headline">Sorry, DeltaHacks V applications are now closed!</v-card-title>
-              <v-card-text>If you've already submitted your application and would like to see it's current status, please go <a href="/status">here</a>.</v-card-text>
+              <v-card-text>If you've already submitted your application and would like to see it's current status, please go <a href="/status">here</a>.
+               Still want a chance to hack at McMaster? DeltaHacks is hosting an <a :href="hackday_link">MLH Local Hack Day</a> on Dec 1st!</v-card-text>
             </v-card>
           </v-dialog>
         </v-layout>
@@ -315,7 +316,7 @@ export default {
       confirm: false,
       confirmClear: false,
       editing: false,
-      deadline: true,
+      deadline: true, // Change this if applications are ever needed.
       existing_doc: undefined,
       checkError: undefined,
       shareError: undefined,
@@ -327,6 +328,7 @@ export default {
       loadingMessage: 'Loading...',
       parent: this,
       enableGenderSelect: false,
+      hackday_link: 'https://localhackday.mlh.io/lhd-2018/events/854-deltahacks',
       contest_terms:
                 'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
       subsectionLabels: [
