@@ -310,9 +310,9 @@ export default {
     baseStep() {
       // console.log(this.step === 0);
       if (this.step === 0) {
-        return 'Not Started';
+        return 'Closed';
       }
-      return 'In Progress';
+      return 'Closed';
     },
     currentHeader() {
       return this.subheaders[this.step - 1];
