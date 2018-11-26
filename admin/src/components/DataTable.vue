@@ -227,7 +227,8 @@ export default {
       .doc(this.hackathon)
       .get()
       .then((snap) => {
-        console.log(snap.size);
+        console.log(this.rowsPerPage);
+        console.log(snap.data().applications);
         this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
         console.log('Number apps: ', this.numApplicants);
       });
