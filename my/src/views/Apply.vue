@@ -271,6 +271,14 @@
                 </v-snackbar>
             </div>
         </div>
+        <v-layout row justify-center>
+          <v-dialog v-model="deadline" persistent max-width="450" min-height="350">
+            <v-card>
+              <v-card-title class="mx-auto gg headline">Sorry, DeltaHacks V applications are now closed!</v-card-title>
+              <v-card-text>If you've already submitted your application and would like to see it's current status, please go <a href="/status">here</a>.</v-card-text>
+            </v-card>
+          </v-dialog>
+        </v-layout>
         <!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg" alt="Major League Hacking 2019 Hackathon Season" style="width:100%"></a> -->
     </v-app>
 </template>
@@ -307,6 +315,7 @@ export default {
       confirm: false,
       confirmClear: false,
       editing: false,
+      deadline: true,
       existing_doc: undefined,
       checkError: undefined,
       shareError: undefined,
