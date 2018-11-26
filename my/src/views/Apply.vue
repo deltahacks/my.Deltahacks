@@ -316,7 +316,7 @@ export default {
       confirm: false,
       confirmClear: false,
       editing: false,
-      deadline: true, // Change this if applications are ever needed.
+      deadline: false, // Change this if applications are ever needed.
       existing_doc: undefined,
       checkError: undefined,
       shareError: undefined,
@@ -803,14 +803,17 @@ export default {
           console.log(gender);
           if (submitted && !gender) {
             this.enableGenderSelect = true;
+            this.deadline = false;
             this.setSubmittedVariables(data);
           } else if (submitted) {
             this.setSubmittedVariables(data);
+            this.deadline = true;
           } else {
             this.editing = true;
             this.application = doc.data();
             this.fillApplicationFields();
             this.loading = false;
+            this.deadline = true;
           }
         } else {
           console.log('Document not found!');
