@@ -275,7 +275,7 @@
           <v-dialog v-model="deadline" persistent max-width="450" min-height="350">
             <v-card>
               <v-card-title class="mx-auto gg headline">Sorry, DeltaHacks V applications are now closed!</v-card-title>
-              <v-card-text>If you've already submitted your application and would like to see it's current status, please go <a href="/status">here</a>.
+              <v-card-text>If you've already submitted your application and would like to see it's current status, please go <a href="/status">here</a>.<br><br>
                Still want a chance to hack at McMaster? DeltaHacks is hosting an <a :href="hackday_link">MLH Local Hack Day</a> on Dec 1st!</v-card-text>
             </v-card>
           </v-dialog>
