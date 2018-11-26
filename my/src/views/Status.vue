@@ -262,7 +262,7 @@ export default {
         acceptedFiles: 'application/pdf',
       },
       subheaders: [
-        "You haven't submitted your application yet. Make sure to submit by Nov 15.",
+        "Applications are now closed.",
         "You've submitted your application, stay tuned for updates.",
         'This application is under review.',
         "Congratulations, you've been accepted!",
