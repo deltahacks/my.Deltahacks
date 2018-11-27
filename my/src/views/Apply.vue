@@ -819,12 +819,14 @@ export default {
           console.log('Document not found!');
           this.editing = false;
           this.loading = false;
+          this.deadline = true;
         }
       })
       .catch((err) => {
         console.log('User app query failed.');
         console.log(err);
         this.loading = false;
+        this.deadline = true;
       });
   },
 };
