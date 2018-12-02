@@ -101,8 +101,22 @@ export default {
         .collection('all')
         .get();
     },
+    bigDiff(prop) {
+      const M = 4; // The difference threshold you want to check for.
+      const reviewers = prop.item.decision.reviewers;
+      let max_diff = Math.abs(reviewers[1].score - reviewers[0].score);
+      let min_ele = Math.min(...reviewers.map(r => r.score));
+
+      for (let i = 0; i < reviewers.length; i++) {
+        const current = Math.abs(reviewers[i].score - min_ele);
+        if (current > max_diff)
+          max_diff = current;
+      }
+
+      return max_diff >= M;
+    },
     selectRow(e, props) {
-      // this is still kinda janky but seems to work
+      this.bigDiff(props);
       props.expanded = !props.expanded;
       const offset = 50 * props.index;
       window.scrollTo(0, window.screen.height / 2 + offset);
