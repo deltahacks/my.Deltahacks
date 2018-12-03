@@ -240,7 +240,7 @@ export default {
     },
     pending() {
       return this.inProgress - this.submitted;
-    }
+    },
   },
   methods: {
     setAllData() {
@@ -348,27 +348,27 @@ export default {
     },
     setDecisionListeners(init = false) {
       db.collection('decisions').doc('DH5').collection('round1')
-                    .onSnapshot((snap) => {
-                      console.log(snap);
-                        this.decisions.accepted = snap.docs.length;
-                        console.log(this.decisions);
-                        this.setDecisionPanels();
-                    });
+        .onSnapshot((snap) => {
+          console.log(snap);
+          this.decisions.accepted = snap.docs.length;
+          console.log(this.decisions);
+          this.setDecisionPanels();
+        });
       db.collection('decisions').doc('DH5').collection('overflow')
-                    .onSnapshot((snap) => {
-                        this.decisions.overflow = snap.docs.length;
-                        this.setDecisionPanels();
-                    });
+        .onSnapshot((snap) => {
+          this.decisions.overflow = snap.docs.length;
+          this.setDecisionPanels();
+        });
       db.collection('applications').doc('DH5').collection('submitted')
-                    .onSnapshot((snap) => {
-                      console.log(snap.docs.length);
-                        this.submitted = snap.docs.length;
-                    });
+        .onSnapshot((snap) => {
+          console.log(snap.docs.length);
+          this.submitted = snap.docs.length;
+        });
       db.collection('applications').doc('DH5').collection('in progress')
-                    .onSnapshot((snap) => {
-                      console.log(snap.docs.length);
-                      this.inProgress = snap.docs.length;
-                    });
+        .onSnapshot((snap) => {
+          console.log(snap.docs.length);
+          this.inProgress = snap.docs.length;
+        });
     },
     setRSVPData() {
       db.collection('hackathon').doc('DH5').collection('RSVP').doc('all')
