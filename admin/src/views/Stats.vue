@@ -11,7 +11,7 @@
             <v-card-title primary-title>Accepted Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='decisions.accepted' />
+                <IOdometer class='iOdometer' :value='accepted' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -152,12 +152,16 @@ export default {
         accepted: 0,
         pending: 0,
         overflow: 0,
+          round1: 0,
+          round2: 0,
       },
       statistics: {
         decisions: {
           accepted: 0,
           pending: 0,
           overflow: 0,
+          round1: 0,
+          round2: 0,
         },
         rsvp: 0,
         checkedIn: 0,
@@ -240,7 +244,11 @@ export default {
     },
     pending() {
       return this.inProgress - this.submitted;
-    }
+    },
+    accepted() {
+      const { round1, round2 } = this.decisions;
+      return round1 + round2;
+    },
   },
   methods: {
     setAllData() {
@@ -349,9 +357,7 @@ export default {
     setDecisionListeners(init = false) {
       db.collection('decisions').doc('DH5').collection('round1')
                     .onSnapshot((snap) => {
-                      console.log(snap);
-                        this.decisions.accepted = snap.docs.length;
-                        console.log(this.decisions);
+                        this.decisions.round1 = snap.docs.length;
                         this.setDecisionPanels();
                     });
       db.collection('decisions').doc('DH5').collection('overflow')
@@ -368,6 +374,11 @@ export default {
                     .onSnapshot((snap) => {
                       console.log(snap.docs.length);
                       this.inProgress = snap.docs.length;
+                    });
+      db.collection('decisions').doc('DH5').collection('round2')
+                    .onSnapshot((snap) => {
+                        this.decisions.round2 = snap.docs.length;
+                        this.setDecisionPanels();
                     });
     },
     setRSVPData() {

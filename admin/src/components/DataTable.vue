@@ -116,7 +116,7 @@ export default {
       return max_diff >= M;
     },
     selectRow(e, props) {
-      this.bigDiff(props);
+      props.item.decision.reviewers.forEach(r => console.log(r.score));
       props.expanded = !props.expanded;
       const offset = 50 * props.index;
       window.scrollTo(0, window.screen.height / 2 + offset);
