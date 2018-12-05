@@ -2,38 +2,74 @@
   <v-card>
     <v-card-title>
       <v-menu offset-y>
-        <v-btn style="width: 250px;" class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
+        <v-btn
+          style="width: 250px;"
+          class="bold"
+          slot="activator"
+          color="primary"
+          dark
+        >{{ current }}</v-btn>
         <v-list>
           <v-list-tile v-for="(item, index) in items" :key="index" @click="onChangeBucket(item)">
-            <v-list-tile-title class="">{{ item }}</v-list-tile-title>
+            <v-list-tile-title class>{{ item }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
-    <v-data-table v-bind:peeps="peeps" :disable-initial-sort=true :dark=false :search="search" :headers="headers" :items="applications[page - 1]" hide-actions item-key="email">
+    <v-data-table
+      v-bind:peeps="peeps"
+      :disable-initial-sort="true"
+      :dark="false"
+      :search="search"
+      :headers="headers"
+      :items="applications[page - 1]"
+      hide-actions
+      item-key="email"
+    >
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
           <td class="text-md-left">{{ props.item.name + ' ' + props.item.lastname}}</td>
           <td class="text-md-left">{{ props.item.email }}</td>
           <td class="text-xs-left">{{ props.item.university }}</td>
-          <td class="text-xs-left">{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
+          <td
+            class="text-xs-left"
+          >{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
           <td class="text-xs-left">{{ props.item.phone }}</td>
           <td class="text-xs-left">{{ getAgeFromDate(props.item.birthday) }}</td>
-          <td class="text-xs-left" id="numRevs" :title="props.item.decision.assignedTo ? assignmentToName(props.item.decision.assignedTo) : 'unassigned'">
-            {{ props.item.decision.reviewers.length }}/3
-          </td>
+          <td
+            class="text-xs-left"
+            id="numRevs"
+            :title="props.item.decision.assignedTo ? assignmentToName(props.item.decision.assignedTo) : 'unassigned'"
+          >{{ props.item.decision.reviewers.length }}/3</td>
 
           <td class="text-xs-right">
-            <status-indicator v-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)" active></status-indicator>
-            <status-indicator v-else-if="props.item.decision.assignedTo && props.item.decision.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())" intermediary></status-indicator>
+            <status-indicator
+              v-if="$store.state.vuex_user_role == 'mod' && bigDiff(props)"
+              negative
+            ></status-indicator>
+            <status-indicator
+              v-else-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
+              active
+            ></status-indicator>
+            <status-indicator
+              v-else-if="props.item.decision.assignedTo && props.item.decision.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())"
+              intermediary
+            ></status-indicator>
             <status-indicator v-else semi></status-indicator>
           </td>
         </tr>
       </template>
       <template slot="expand" slot-scope="props">
-        <applicant-dropdown v-bind="{refetchCurrentPage}" id='dropdown' :usrname="props.item.name" :applicant='props.item' :isReviewed='props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)' :random='3' />
+        <applicant-dropdown
+          v-bind="{refetchCurrentPage}"
+          id="dropdown"
+          :usrname="props.item.name"
+          :applicant="props.item"
+          :isReviewed="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
+          :random="3"
+        />
       </template>
     </v-data-table>
     <div class="text-xs-center">
@@ -102,15 +138,15 @@ export default {
         .get();
     },
     bigDiff(prop) {
+      if (!prop || !prop.item.decision.reviewers[1]) return false;
       const M = 5; // The difference threshold you want to check for.
       const reviewers = prop.item.decision.reviewers;
       let max_diff = Math.abs(reviewers[1].score - reviewers[0].score);
-      let min_ele = Math.min(...reviewers.map(r => r.score));
+      const min_ele = Math.min(...reviewers.map(r => r.score));
 
       for (let i = 0; i < reviewers.length; i++) {
         const current = Math.abs(reviewers[i].score - min_ele);
-        if (current > max_diff)
-          max_diff = current;
+        if (current > max_diff) max_diff = current;
       }
 
       return max_diff >= M;
@@ -135,7 +171,11 @@ export default {
           .startAfter((this.page - 1) * this.rowsPerPage)
           .get();
         // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-        Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+        Vue.set(
+          this.applications,
+          this.page - 1,
+          result.docs.map(a => a.data()),
+        );
       }
     },
     async refetchCurrentPage() {
@@ -164,7 +204,11 @@ export default {
       return (size = 5);
     },
     getAgeFromDate(bday) {
-      const b2 = new Date(bday.slice(4), bday.slice(2, 4) - 1, bday.slice(0, 2));
+      const b2 = new Date(
+        bday.slice(4),
+        bday.slice(2, 4) - 1,
+        bday.slice(0, 2),
+      );
       // console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
       const current = new Date();
       return this.calculateAge(b2);
@@ -270,15 +314,15 @@ export default {
 
 <style>
 .card_title {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 #dropdown {
-    width: 100%;
+  width: 100%;
 }
 
 #pageButton {
-    outline: 0;
-    border: none;
+  outline: 0;
+  border: none;
 }
 </style>
