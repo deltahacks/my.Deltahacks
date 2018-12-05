@@ -361,15 +361,15 @@ export default {
                         this.setDecisionPanels();
                     });
       db.collection('decisions').doc('DH5').collection('overflow')
-                    .onSnapshot((snap) => {
-                        this.decisions.overflow = snap.docs.length;
-                        this.setDecisionPanels();
-                    });
+        .onSnapshot((snap) => {
+          this.decisions.overflow = snap.docs.length;
+          this.setDecisionPanels();
+        });
       db.collection('applications').doc('DH5').collection('submitted')
-                    .onSnapshot((snap) => {
-                      console.log(snap.docs.length);
-                        this.submitted = snap.docs.length;
-                    });
+        .onSnapshot((snap) => {
+          console.log(snap.docs.length);
+          this.submitted = snap.docs.length;
+        });
       db.collection('applications').doc('DH5').collection('in progress')
                     .onSnapshot((snap) => {
                       console.log(snap.docs.length);
