@@ -5,6 +5,8 @@ admin/dist
 my/src/private
 my/node_modules
 my/dist
+my/.*
+admin/.*
 .DS_Store
 /dist
 /src/private

@@ -475,6 +475,7 @@ export default {
             break;
           case "round1":
           case "round2":
+          case "round3":
             this.step = 4;
             break;
           default:
