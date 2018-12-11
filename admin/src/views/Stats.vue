@@ -152,8 +152,9 @@ export default {
         accepted: 0,
         pending: 0,
         overflow: 0,
-          round1: 0,
-          round2: 0,
+        round1: 0,
+        round2: 0,
+        round3: 0,
       },
       statistics: {
         decisions: {
@@ -246,8 +247,8 @@ export default {
       return this.inProgress - this.submitted;
     },
     accepted() {
-      const { round1, round2 } = this.decisions;
-      return round1 + round2;
+      const { round1, round2, round3 } = this.decisions;
+      return round1 + round2 + round3;
     },
   },
   methods: {
@@ -360,7 +361,7 @@ export default {
                         this.decisions.round1 = snap.docs.length;
                         this.setDecisionPanels();
                     });
-      db.collection('decisions').doc('DH5').collection('overflow')
+      db.collection('decisions').doc('DH5').collection('overflow2')
         .onSnapshot((snap) => {
           this.decisions.overflow = snap.docs.length;
           this.setDecisionPanels();
@@ -380,6 +381,11 @@ export default {
                         this.decisions.round2 = snap.docs.length;
                         this.setDecisionPanels();
                     });
+      db.collection('decisions').doc('DH5').collection('round2')
+                    .onSnapshot((snap) => {
+                        this.decisions.round3 = snap.docs.length;
+                        this.setDecisionPanels();
+                    });
     },
     setRSVPData() {
       db.collection('hackathon').doc('DH5').collection('RSVP').doc('all')
@@ -396,7 +402,7 @@ export default {
             label: 'Applicant Distribution',
             backgroundColor: this.colors,
             data: [
-              this.decisions.accepted,
+              this.accepted,
               this.decisions.overflow,
             ],
           },
