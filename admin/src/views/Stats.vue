@@ -106,14 +106,24 @@
             <bar-chart ref='shirt_sizes' :options='options' />
           </v-card>
         </v-flex>
-        <!-- <v-flex d-flex xs12 sm6 md3>
-          <v-card color='white lighten-4' dark>
-            <pie-chart ref='universities' :options='options' />
-          </v-card>
-        </v-flex> -->
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
-            <bar-chart ref='diets' :options='options' />
+            <bar-chart ref='discovery' :options='options' />
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color='white lighten-4' dark>
+            <bar-chart ref='dietary_restrictions' :options='options' />
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color='white lighten-4' dark>
+            <bar-chart ref='location' :options='options' />
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color='white lighten-4' dark>
+            <bar-chart ref='workshops' :options='options' />
           </v-card>
         </v-flex>
       </v-layout>
@@ -210,7 +220,16 @@ export default {
           },
         ],
       },
-      colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f'],
+      colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f','#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'],
       options: {},
       rsvp: 0,
     };
@@ -415,12 +434,16 @@ export default {
       this.$refs.majors.changeData(this.processField(this.filterData(this.statistics.applicationStats.majors), 'Majors'));
       this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears, 'School Years'));
       this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'));
+      this.$refs.discovery.changeData(this.processField(this.statistics.applicationStats.discovery, 'Discovered By'));
+      this.$refs.dietary_restrictions.changeData(this.processField(this.filterData(this.statistics.applicationStats.dietary_restrictions,12), 'Food Restrictions'));
+      this.$refs.location.changeData(this.processField(this.filterData(this.statistics.applicationStats.transport,12), 'Coming From'));
+      this.$refs.workshops.changeData(this.processField(this.filterData(this.statistics.applicationStats.workshops, 12), 'Workshops'));
       // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
       this.$refs.universities.changeData(this.processField(this.filterData(this.statistics.applicationStats.universities), 'Universities'));
     },
     // TODO: Improve the efficiency of this solution.
-    filterData(data) {
-      const N = 5; // Number of fields to show before collapsing into "Other"
+    filterData(data, fields = 7) {
+      const N = fields; // Number of fields to show before collapsing into "Other"
       const values = Object.values(data);
       const keys = Object.keys(data);
       const out = {};
