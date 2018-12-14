@@ -18,10 +18,10 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
-            <v-card-title primary-title>Overflow Applications</v-card-title>
+            <v-card-title primary-title>Rejected Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='decisions.overflow' />
+                <IOdometer class='iOdometer' :value='decisions.rejected' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -165,6 +165,8 @@ export default {
         round1: 0,
         round2: 0,
         round3: 0,
+        round4: 0,
+        rejected:0,
       },
       statistics: {
         decisions: {
@@ -266,8 +268,8 @@ export default {
       return this.inProgress - this.submitted;
     },
     accepted() {
-      const { round1, round2, round3 } = this.decisions;
-      return round1 + round2 + round3;
+      const { round1, round2, round3, round4 } = this.decisions;
+      return round1 + round2 + round3 + round4;
     },
   },
   methods: {
@@ -380,11 +382,6 @@ export default {
                         this.decisions.round1 = snap.docs.length;
                         this.setDecisionPanels();
                     });
-      db.collection('decisions').doc('DH5').collection('overflow2')
-        .onSnapshot((snap) => {
-          this.decisions.overflow = snap.docs.length;
-          this.setDecisionPanels();
-        });
       db.collection('applications').doc('DH5').collection('submitted')
         .onSnapshot((snap) => {
           console.log(snap.docs.length);
@@ -400,9 +397,19 @@ export default {
                         this.decisions.round2 = snap.docs.length;
                         this.setDecisionPanels();
                     });
-      db.collection('decisions').doc('DH5').collection('round2')
+      db.collection('decisions').doc('DH5').collection('round3')
                     .onSnapshot((snap) => {
                         this.decisions.round3 = snap.docs.length;
+                        this.setDecisionPanels();
+                    });
+      db.collection('decisions').doc('DH5').collection('round4')
+                    .onSnapshot((snap) => {
+                        this.decisions.round4 = snap.docs.length;
+                        this.setDecisionPanels();
+                    });
+      db.collection('decisions').doc('DH5').collection('actually rejected')
+                    .onSnapshot((snap) => {
+                        this.decisions.rejected = snap.docs.length;
                         this.setDecisionPanels();
                     });
     },
