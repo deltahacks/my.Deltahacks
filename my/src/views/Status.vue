@@ -468,9 +468,12 @@ export default {
             this.step = 2;
             break;
           case "overflow":
+          case "overflow2":
           case "accepted":
           case "processing":
           case "rejected":
+          case "round4":
+          case "actually rejected":
             this.step = 3;
             break;
           case "round1":
