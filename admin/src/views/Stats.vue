@@ -394,11 +394,13 @@ export default {
                     });
       db.collection('decisions').doc('DH5').collection('round2')
                     .onSnapshot((snap) => {
+                        console.log(snap.docs.length);
                         this.decisions.round2 = snap.docs.length;
                         this.setDecisionPanels();
                     });
       db.collection('decisions').doc('DH5').collection('round3')
                     .onSnapshot((snap) => {
+                        console.log(snap.docs.length);
                         this.decisions.round3 = snap.docs.length;
                         this.setDecisionPanels();
                     });

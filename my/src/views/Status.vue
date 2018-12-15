@@ -343,7 +343,7 @@ export default {
       },
       subheaders: [
         "Applications are now closed.",
-        "You've submitted your application, stay tuned for updates.",
+        "Sorry we couldn't offer you a spot.",
         "This application is under review.",
         "Congratulations, you've been accepted!",
         "Unfortunately we cannot offer you an invitation this time."
@@ -458,24 +458,27 @@ export default {
     updateStep(doc) {
       if (doc.exists) {
         switch (doc.data().status) {
-          case "in progress":
+          case 'in progress':
             this.step = 1;
             break;
-          case "submitted":
+          case 'submitted':
             this.step = 2;
             break;
-          case "pending":
+          case 'pending':
             this.step = 2;
             break;
-          case "overflow":
-          case "accepted":
-          case "processing":
-          case "rejected":
+          case 'actually rejected':
+            this.step = 2;
+            break;
+          case 'overflow':
+          case 'accepted':
+          case 'processing':
+          case 'rejected':
             this.step = 3;
             break;
-          case "round1":
-          case "round2":
-          case "round3":
+          case 'round1':
+          case 'round2':
+          case 'round3':
             this.step = 4;
             break;
           default:
