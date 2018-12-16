@@ -109,11 +109,11 @@
               <v-stepper-header>
                 <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="step > 1">Submitted</v-stepper-step>
+                <v-stepper-step step="2" :complete="step > 0">Submitted</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="step > 2">Processing</v-stepper-step>
+                <v-stepper-step step="3" :complete="step > 0">Processing</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="step > 3">Decision</v-stepper-step>
+                <v-stepper-step step="4" :complete="step > 0">Decision</v-stepper-step>
               </v-stepper-header>
             </v-stepper>
           </div>
@@ -145,9 +145,9 @@
           <v-card-text></v-card-text>
           <v-stepper vertical class="wrap-status201">
             <v-stepper-step :complete="step > 0" step="1">{{baseStep}}</v-stepper-step>
-            <v-stepper-step :complete="step > 1" step="2">Submitted</v-stepper-step>
-            <v-stepper-step :complete="step > 2" step="3">Processing</v-stepper-step>
-            <v-stepper-step :complete="step > 3" step="4">Decision</v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="2">Submitted</v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="3">Processing</v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="4">Decision</v-stepper-step>
           </v-stepper>
         </div>
         <div class="wrap-status101-accept wrap-status201-accept" v-if="step > 3">
