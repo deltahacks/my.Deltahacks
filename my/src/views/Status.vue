@@ -343,7 +343,7 @@ export default {
       },
       subheaders: [
         "Applications are now closed.",
-        "You've submitted your application, stay tuned for updates.",
+        "Sorry we couldn't offer you a spot.",
         "This application is under review.",
         "Congratulations, you've been accepted!",
         "Unfortunately we cannot offer you an invitation this time."
@@ -465,6 +465,7 @@ export default {
             this.step = 2;
             break;
           case "pending":
+          case "actually rejected":
             this.step = 2;
             break;
           case "overflow":
@@ -473,7 +474,6 @@ export default {
           case "processing":
           case "rejected":
           case "round4":
-          case "actually rejected":
             this.step = 3;
             break;
           case "round1":
