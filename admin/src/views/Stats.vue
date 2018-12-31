@@ -246,6 +246,8 @@ export default {
   async beforeMount() {
     this.statistics = await this.getStatistics();
     this.setAllData();
+    // updating diet restrictions
+    
 
     db
       .collection('statistics')
@@ -396,18 +398,18 @@ export default {
                     .onSnapshot((snap) => {
                         console.log(snap.docs.length);
                         this.decisions.round2 = snap.docs.length;
-                        this.setDecisionPanels();
+                        this.setDecisionPanels();   
                     });
       db.collection('decisions').doc('DH5').collection('round3')
                     .onSnapshot((snap) => {
                         console.log(snap.docs.length);
                         this.decisions.round3 = snap.docs.length;
-                        this.setDecisionPanels();
+                        this.setDecisionPanels();  
                     });
       db.collection('decisions').doc('DH5').collection('round4')
                     .onSnapshot((snap) => {
                         this.decisions.round4 = snap.docs.length;
-                        this.setDecisionPanels();
+                        this.setDecisionPanels();   
                     });
       db.collection('decisions').doc('DH5').collection('actually rejected')
                     .onSnapshot((snap) => {
@@ -444,7 +446,7 @@ export default {
       this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears, 'School Years'));
       this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'));
       this.$refs.discovery.changeData(this.processField(this.statistics.applicationStats.discovery, 'Discovered By'));
-      this.$refs.dietary_restrictions.changeData(this.processField(this.filterData(this.statistics.applicationStats.dietary_restrictions,12), 'Food Restrictions'));
+      this.$refs.dietary_restrictions.changeData(this.processField(this.filterData(this.statistics.applicationStats.dietary_restrictions_accepted ,12), 'Food Restrictions'));
       this.$refs.location.changeData(this.processField(this.filterData(this.statistics.applicationStats.transport,12), 'Coming From'));
       this.$refs.workshops.changeData(this.processField(this.filterData(this.statistics.applicationStats.workshops, 12), 'Workshops'));
       // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
