@@ -356,7 +356,7 @@ export default {
         labels: ['18', '19', '20', '21', '22', '23+'],
         datasets: [
           {
-            label: 'Age Distribution',
+            label: 'Age Distribution (All)',
             backgroundColor: this.colors,
             data: Object.values(data),
           },
