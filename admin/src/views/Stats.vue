@@ -293,21 +293,6 @@ export default {
         ],
       });
     },
-    // setCheckedInGraph() {
-    //   this.$refs.checkedIn.changeData({
-    //     labels: ['Checked In', 'Not Checked In'],
-    //     datasets: [
-    //       {
-    //         label: 'Applicant Distribution',
-    //         backgroundColor: this.colors,
-    //         data: [
-    //           this.statistics.checkedIn,
-    //           this.total - this.statistics.checkedIn,
-    //         ],
-    //       },
-    //     ],
-    //   });
-    // },
     initAgeChart() {
       db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
         this.updateAgeData(snap);
@@ -378,6 +363,32 @@ export default {
         ],
       });
     },
+    // for updating statistics with accepted info, careful about overriding.
+    setAcceptedStats(data) {
+      db.collection('statistics').doc('DH5').get().then((snap) => {
+        const current = snap.data();
+        Object.keys(data).forEach((key) => {
+          current.applicationStats[key] = data[key];
+        });
+        // console.log(current);
+        // db.collection('statistics').doc('DH5').set(current);
+      });
+    },
+    // for updating statistics, not used in standard page.
+    processApplication(stats, app){
+      const safeAdd = (obj, section, index) => {
+        if (!obj[section]) obj[section] = {};
+        if (obj[section][index]) obj[section][index]++;
+        else obj[section][index] = 1;
+      }
+      safeAdd(stats, 'hackathons_accepted', app.hackathons);
+      safeAdd(stats, 'majors_accepted', app.major);
+      safeAdd(stats, 'schoolYears_accepted', app.school_year);
+      safeAdd(stats, 'shirt_sizes_accepted', app.shirt_size);
+      safeAdd(stats, 'transport_accepted', app.location);
+      safeAdd(stats, 'universities_accepted', app.university);
+      app.workshops.forEach((w) => safeAdd(stats, 'workshops_accepted', w));
+    },
     setDecisionListeners(init = false) {
       db.collection('decisions').doc('DH5').collection('round1')
                     .onSnapshot((snap) => {
@@ -441,16 +452,16 @@ export default {
     },
     setMiscStatistics() {
       this.filterData(this.statistics.applicationStats.universities);
-      this.$refs.hackathons.changeData(this.processField(this.statistics.applicationStats.hackathons, 'Hackathons'));
-      this.$refs.majors.changeData(this.processField(this.filterData(this.statistics.applicationStats.majors), 'Majors'));
-      this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears, 'School Years'));
-      this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes, 'Shirt Size'));
-      this.$refs.discovery.changeData(this.processField(this.statistics.applicationStats.discovery, 'Discovered By'));
-      this.$refs.dietary_restrictions.changeData(this.processField(this.filterData(this.statistics.applicationStats.dietary_restrictions_accepted ,12), 'Food Restrictions'));
-      this.$refs.location.changeData(this.processField(this.filterData(this.statistics.applicationStats.transport,12), 'Coming From'));
-      this.$refs.workshops.changeData(this.processField(this.filterData(this.statistics.applicationStats.workshops, 12), 'Workshops'));
+      this.$refs.hackathons.changeData(this.processField(this.statistics.applicationStats.hackathons_accepted, 'Hackathons (Accepted)'));
+      this.$refs.majors.changeData(this.processField(this.filterData(this.statistics.applicationStats.majors_accepted), 'Majors (Accepted)'));
+      this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears_accepted, 'School Years (Accepted)'));
+      this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes_accepted, 'Shirt Size (Accepted)'));
+      this.$refs.discovery.changeData(this.processField(this.statistics.applicationStats.discovery, 'Discovered By (All)'));
+      this.$refs.dietary_restrictions.changeData(this.processField(this.filterData(this.statistics.applicationStats.dietary_restrictions_accepted ,12), 'Food Restrictions (Accepted)'));
+      this.$refs.location.changeData(this.processField(this.filterData(this.statistics.applicationStats.transport_accepted,12), 'Coming From (Accepted)'));
+      this.$refs.workshops.changeData(this.processField(this.filterData(this.statistics.applicationStats.workshops_accepted, 12), 'Workshops (Accepted)'));
       // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
-      this.$refs.universities.changeData(this.processField(this.filterData(this.statistics.applicationStats.universities), 'Universities'));
+      this.$refs.universities.changeData(this.processField(this.filterData(this.statistics.applicationStats.universities_accepted), 'Universities (Accepted)'));
     },
     // TODO: Improve the efficiency of this solution.
     filterData(data, fields = 7) {
