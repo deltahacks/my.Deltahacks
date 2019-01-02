@@ -28,16 +28,6 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
-            <v-card-title primary-title>Pending Applications</v-card-title>
-            <v-card color='white lighten-4' dark>
-              <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='pending' />
-              </v-card-text>
-            </v-card>
-          </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md2>
-          <v-card color='white lighten-4'>
             <v-card-title primary-title>Submitted Applications</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
@@ -66,6 +56,16 @@
             </v-card>
           </v-card>
         </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color='white lighten-4'>
+            <v-card-title primary-title>Bus Passengers</v-card-title>
+            <v-card color='white lighten-4' dark>
+              <v-card-text class='totalapps center'>
+                <IOdometer class='iOdometer' :value='bus_passengers' />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
       </v-layout>
       <v-layout row wrap>
         <h3>Distribution</h3>
@@ -73,7 +73,7 @@
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md3 child-flex>
           <v-card color='white lighten-4' dark>
-            <pie-chart ref='decisions' :data='data' :options='options' />
+            <pie-chart ref='decisions' :data='data' :options='{}' />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -83,7 +83,12 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
-            <pie-chart ref='universities' :options='options' />
+            <pie-chart ref='universities' :options='{}' />
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color='white lighten-4' dark>
+            <bar-chart ref='bus_locations' :options='options' />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -180,6 +185,12 @@ export default {
         checkedIn: 0,
         mentors: 0,
       },
+      bus_passengers:0,
+      pickups: {
+        "University of Waterloo": 0,
+        "University of Toronto": 0,
+        "University of Western Ontario": 0,
+      },
       submitted: 0,
       inProgress: 0,
       data: {
@@ -232,7 +243,15 @@ export default {
 		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
 		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
 		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'],
-      options: {},
+      options: {
+        scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+      },
       rsvp: 0,
     };
   },
@@ -246,9 +265,6 @@ export default {
   async beforeMount() {
     this.statistics = await this.getStatistics();
     this.setAllData();
-    // updating diet restrictions
-    
-
     db
       .collection('statistics')
       .doc('DH5')
@@ -433,7 +449,40 @@ export default {
         .collection('Yes')
         .onSnapshot((snap) => {
           this.rsvp = snap.docs.length;
+          // set rsvp data.
+          this.bus_passengers = 0;
+          this.pickups = {
+            "University of Waterloo": 0,
+            "University of Toronto": 0,
+            "University of Western Ontario": 0,
+          };
+          snap.docs.forEach((doc) => {
+            const current = doc.data();
+            if (current.bus) {
+              this.bus_passengers += 1;
+              this.pickups[current.location] += 1;
+            }
+          });
+          this.redrawRSVP();
         });
+    },
+    redrawRSVP() {
+      this.$refs.bus_locations.changeData({
+        labels: ["U of Waterloo",
+                 "U of Toronto",
+                 "U of Western"],
+        datasets: [
+          {
+            label: 'Bus Location Distribution',
+            backgroundColor: this.colors,
+            data: [
+              this.pickups["University of Waterloo"],
+              this.pickups["University of Toronto"],
+              this.pickups["University of Western Ontario"],
+            ],
+          },
+        ],
+      });
     },
     setDecisionPanels() {
       this.$refs.decisions.changeData({
