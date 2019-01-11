@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Firebase from 'firebase';
 import Dashboard from './views/Dashboard.vue';
 import Login from './views/Login.vue';
+import LiveDesk from './views/LiveDesk.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import v404 from './views/404.vue';
 import AdminSignup from './views/AdminSignup.vue';
@@ -52,6 +53,14 @@ const router = new Router({
       path: '/stats',
       name: 'Stats',
       component: Stats,
+      meta: {
+        adminAuth: true,
+      },
+    },
+    {
+      path: '/desk',
+      name: 'LiveDesk',
+      component: LiveDesk,
       meta: {
         adminAuth: true,
       },
