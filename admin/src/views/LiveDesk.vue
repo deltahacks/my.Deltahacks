@@ -1,6 +1,7 @@
 <template>
   <div id='app'>
     <v-app id='inspire'>
+    <Navbar/>
       <v-content>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
@@ -100,10 +101,14 @@
 import firebase from 'firebase';
 import pdf from 'jspdf';
 import QR from 'qrcode';
+import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
 
 export default {
   name: 'LiveDesk',
+  components: {
+    Navbar,
+  },
   data: () => ({
     drawer: null,
     email: null,
@@ -189,18 +194,17 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    // TODO: Once badge template is created adjust this to use that.
-    async openBadge() { // inserts QR Code of email into green rectangle
+    async openBadge() {
       const badge = this.createTemplate();
-      const code = await QR.toDataURL(this.application.email);
-      badge.addImage(code, 'JPEG', 90, 50, 30, 30);
-      badge.save(`${this.application.email}_badge`);
+      const QRImage = await QR.toDataURL(this.application.email);
+      badge.addImage(QRImage, 'JPEG', 14, 40, 15, 15);
+      badge.save(`DH5_${this.application.name}${this.application.lastname}`);
     },
     // should insert / generate the back of DH5 badge.
     createTemplate() {
-      const t = new pdf();
-      t.text(90,10,'DeltaHacks V');
-      t.text(85,20, 'Event information');
+      const t = new pdf('p','mm', [200, 125]);
+      t.text(5,10,'DeltaHacks V');
+      t.text(0,20, 'Event information');
       return t;
     },
   },
