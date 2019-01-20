@@ -8,17 +8,35 @@
             <v-flex xs12 sm8 md4>
               <form action>
                 <h2>{{header}}</h2>
-                <v-text-field
-                  :disabled='true'
-                  name='name'
-                  label='Name'
-                  id='name'
-                  autocomplete='off'
-                  v-model='fullName'
-                ></v-text-field>
-                <!-- <v-text-field name='email' label='Email' autocomplete='off' v-model='application.email'></v-text-field> -->
+                <div v-if="!active">
+                  <v-text-field
+                    :disabled='active'
+                    name='name'
+                    label='Name'
+                    id='name'
+                    autocomplete='off'
+                    v-model='application.name'
+                  ></v-text-field>
+                  <v-text-field
+                    :disabled='active'
+                    name='email'
+                    label='Email'
+                    autocomplete='off'
+                    v-model='application.email'
+                  ></v-text-field>
+                </div>
+                <div v-else>
+                  <v-text-field
+                    :disabled='active'
+                    name='name'
+                    label='Name'
+                    id='name'
+                    autocomplete='off'
+                    v-model='fullName'
+                  ></v-text-field>
+                </div>
                 <v-select
-                  :disabled='true'
+                  :disabled='active'
                   :items='sizes'
                   name='shirt_size'
                   label='Shirt Size'
@@ -26,24 +44,25 @@
                   v-model='application.shirt_size'
                 ></v-select>
                 <v-text-field
-                  :disabled='true'
+                  :disabled='active'
                   name='dietary_restriction'
                   label='Dietary Restriction'
                   autocomplete='off'
                   v-model='application.dietary_restrictions'
                 ></v-text-field>
                 <v-text-field
-                  :disabled='true'
+                  :disabled='active'
                   name='university'
-                  label='University'
-                  autocomplete='off'
                   v-model='application.university'
+                  autocomplete='off'
+                  label='University'
                 ></v-text-field>
                 <v-container fluid fill-height>
                   <v-flex>
                     <v-text-field
-                      :disabled='true'
+                      :disabled='active'
                       name='phone'
+                      mask='phone'
                       label='Phone'
                       autocomplete='off'
                       v-model='application.phone'
@@ -52,7 +71,8 @@
                   <v-flex></v-flex>
                   <v-flex>
                     <v-text-field
-                      :disabled='true'
+                      mask='phone'
+                      :disabled='active'
                       name='emergency_phone'
                       label='Emergency Phone'
                       autocomplete='off'
@@ -61,25 +81,42 @@
                   </v-flex>
                 </v-container>
                 <v-text-field
-                  :disabled='true'
+                  :disabled='active'
                   name='location'
                   label='Coming From'
                   autocomplete='off'
                   v-model='application.location'
                 ></v-text-field>
-                <v-text-field
-                  :disabled='true'
+                <v-select
+                  :disabled='active'
                   name='gender'
                   label='Gender'
-                  autocomplete='off'
+                  :items="['M', 'F', 'Other']"
                   v-model='safeGender'
-                ></v-text-field>
+                ></v-select>
                 <v-container fluid fill-height>
                   <v-flex>
-                    <v-btn color='green' @click='checkin' large>Check In</v-btn>
+                    <v-btn color='green' :disabled="!active" @click='checkin' large>Check In</v-btn>
                   </v-flex>
                   <v-flex>
-                    <v-btn color='blue' @click='openBadge' large>Open Badge</v-btn>
+                    <v-btn color='blue' :disabled="!active" @click='openBadge' large>Open Badge</v-btn>
+                  </v-flex>
+                  <v-flex v-if="!active">
+                    <v-dialog v-model="confirm" persistent max-width="400">
+                      <v-btn color="orange" slot="activator" large>Walk In</v-btn>
+                      <v-card>
+                          <v-card-title class="headline">Are you sure you'd like to register {{application.email}}?</v-card-title>
+                          <v-card-text>Make sure you've filled all the fields first!</v-card-text>
+                          <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="red" flat @click.native="confirm = false">No</v-btn>
+                              <v-btn color="green" flat @click="addWalkIn">Yes</v-btn>
+                          </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-flex>
+                  <v-flex v-else>
+                    <v-btn color="red" @click="reset" large>Reset Form</v-btn>
                   </v-flex>
                 </v-container>
               </form>
@@ -111,11 +148,28 @@ export default {
   },
   data: () => ({
     drawer: null,
+    admin: firebase.auth().currentUser.email,
     email: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     bannerMessage: '',
     banner: false,
+    confirm: false,
     header: 'No QR code has been scanned yet.',
+    active: false,
+    emptyApp: {
+      name: '',
+      lastname: '',
+      email: '',
+      shirt_size: null,
+      dietary_restrictions: null,
+      university: null,
+      phone: '',
+      emergency_phone: '',
+      emergency_name: '',
+      location: '',
+      birthday: '',
+      gender: ''
+    },
     application: {
       name: '',
       lastname: '',
@@ -129,7 +183,7 @@ export default {
       location: '',
       birthday: '',
       gender: ''
-    }
+    },
   }),
   computed: {
     safeGender() {
@@ -141,8 +195,33 @@ export default {
     }
   },
   methods: {
+    reset() {
+      const admin = firebase.auth().currentUser.email
+      const ref = db
+      .collection('hackathon')
+      .doc('DH5')
+      .collection('FrontDesk')
+      .doc(admin);
+      ref.get().then((snap) => {
+        if (snap.exists) {
+          const data = snap.data();
+          data.scanned = '';
+          ref.set(data);
+        }
+      });
+    },
+    addWalkIn() {
+      const app = this.application;
+
+      db.collection('decisions').doc('DH5').collection('pending').doc(app.email).set(app);
+      this.banner = true;
+      this.bannerMessage = `${this.application.email} has been registered as a walk-in!`;
+      this.confirm = false;
+    },
     getUserApplication(email) {
       return new Promise((resolve, reject) => {
+        if (email.length === 0) resolve({found: false, data: {}});
+
         db.collection('decisions')
           .doc('DH5')
           .collection('pending')
@@ -150,8 +229,14 @@ export default {
           .get()
           .then(snap => {
             const data = this.parseApplication(snap.data());
-            if (snap.exists) resolve(data);
-            else reject(`Failed to retrieve application for ${email}.`);
+            if (snap.exists) resolve({
+              data,
+              found: true,
+            });
+            else resolve({
+              found: false,
+              data: {},
+            });
           });
       });
     },
@@ -218,11 +303,18 @@ export default {
     ref.onSnapshot(async snap => {
       if (snap.exists) {
         const { scanned } = snap.data();
-        const app = await this.getUserApplication(scanned).catch(err =>
+        const result = await this.getUserApplication(scanned).catch(err =>
           console.error(err)
         );
-        this.application = app;
-        this.header = app.email;
+        if (result.found) {
+          this.application = result.data;
+          this.header = result.data.email;
+          this.active = true;
+        } else {
+          this.application = this.emptyApp;
+          this.header = 'No target attendee detected.'
+          this.active = false;
+        }
       } else {
         this.header = `Account ${admin} not found in front desk collection.`;
       }
