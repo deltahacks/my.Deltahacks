@@ -12,7 +12,7 @@
                   <v-text-field
                     :disabled='active'
                     name='name'
-                    label='Name'
+                    label='Name *'
                     id='name'
                     autocomplete='off'
                     v-model='application.name'
@@ -20,7 +20,7 @@
                   <v-text-field
                     :disabled='active'
                     name='email'
-                    label='Email'
+                    label='Email *'
                     autocomplete='off'
                     v-model='application.email'
                   ></v-text-field>
@@ -102,8 +102,31 @@
                     <v-btn color='blue' :disabled="!active" @click='openBadge' large>Open Badge</v-btn>
                   </v-flex>
                   <v-flex v-if="!active">
+                    <v-menu offset-y>
+                      <v-btn slot="activator" color="orange" depressed large dark id="register">Register
+                      </v-btn>
+                      <v-list>
+                        <v-list-tile
+                          @click="register('Walkins')"
+                        >
+                          <v-list-tile-title>Walk In</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile
+                          @click="register('Sponsors')"
+                        >
+                          <v-list-tile-title>Sponsor</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile
+                          @click="register('Mentors')"
+                        >
+                          <v-list-tile-title>Mentor</v-list-tile-title>
+                        </v-list-tile>
+                      </v-list>
+                    </v-menu>
+                  </v-flex>
+                  <v-flex v-if="!active">
                     <v-dialog v-model="confirm" persistent max-width="400">
-                      <v-btn color="orange" slot="activator" large>Walk In</v-btn>
+                      <!-- <v-btn color="orange" slot="activator" large>Walk In</v-btn> -->
                       <v-card>
                           <v-card-title class="headline">Are you sure you'd like to register {{application.email}}?</v-card-title>
                           <v-card-text>Make sure you've filled all the fields first!</v-card-text>
@@ -130,6 +153,12 @@
               Close
           </v-btn>
       </v-snackbar>
+      <v-snackbar v-model="error" top color="red" right :timeout="6000">
+          {{errorMessage}}
+          <v-btn color="white" flat @click="error = false">
+              Close
+          </v-btn>
+      </v-snackbar>
     </v-app>
   </div>
 </template>
@@ -152,6 +181,8 @@ export default {
     email: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     bannerMessage: '',
+    error: false,
+    errorMessage: '',
     banner: false,
     confirm: false,
     header: 'No QR code has been scanned yet.',
@@ -210,13 +241,20 @@ export default {
         }
       });
     },
-    addWalkIn() {
+    register(target) {
       const app = this.application;
-
-      db.collection('decisions').doc('DH5').collection('pending').doc(app.email).set(app);
+      if (app.email === '' || app.name === '') {
+        this.rejectRegistration();
+        return;
+      }
+      db.collection('hackathon').doc('DH5').collection(target).doc(app.email).set(app);
       this.banner = true;
-      this.bannerMessage = `${this.application.email} has been registered as a walk-in!`;
+      this.bannerMessage = `${this.application.email} has been registered under ${target}!`;
       this.confirm = false;
+    },
+    rejectRegistration() {
+      this.error = true;
+      this.errorMessage = `Could not register person as one of 'Name' or 'Email' was left blank.`;
     },
     getUserApplication(email) {
       return new Promise((resolve, reject) => {
@@ -252,8 +290,8 @@ export default {
     checkin() {
       if (this.application.email === '') return;
       db.collection('hackathon')
-        .doc('DHV')
-        .collection('checked in')
+        .doc('DH5')
+        .collection('Checked In')
         .doc(this.application.email)
         .set({
           checkedIn: true,
