@@ -246,8 +246,7 @@ export default {
       // add to respective directory
       db.collection('hackathon').doc('DH5').collection(target).doc(app.email).set(app);
       // add type and include in general checked in directory
-      app.type = this.directoryToName(target);
-      db.collection('hackathon').doc('DH5').collection('Checked In').doc(app.email).set(app);
+      this.checkin(this.directoryToName(target));
       // open banner
       this.banner = true;
       this.bannerMessage = `${this.application.email} has been registered under ${target}!`;
@@ -288,8 +287,10 @@ export default {
       return app;
     },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
-    checkin() {
+    checkin(type) {
       if (this.application.email === '') return;
+      const app = this.application;
+      app.type = type ? type : 'attendee';
       db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
@@ -298,6 +299,7 @@ export default {
           checkedIn: true,
           time: new Date(),
           by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
+          type: app.type,
           whereabouts: [
             {
               initialCheckin: true,
