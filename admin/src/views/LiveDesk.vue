@@ -124,20 +124,6 @@
                       </v-list>
                     </v-menu>
                   </v-flex>
-                  <v-flex v-if="!active">
-                    <v-dialog v-model="confirm" persistent max-width="400">
-                      <!-- <v-btn color="orange" slot="activator" large>Walk In</v-btn> -->
-                      <v-card>
-                          <v-card-title class="headline">Are you sure you'd like to register {{application.email}}?</v-card-title>
-                          <v-card-text>Make sure you've filled all the fields first!</v-card-text>
-                          <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="red" flat @click.native="confirm = false">No</v-btn>
-                              <v-btn color="green" flat @click="addWalkIn">Yes</v-btn>
-                          </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                  </v-flex>
                   <v-flex v-else>
                     <v-btn color="red" @click="reset" large>Reset Form</v-btn>
                   </v-flex>
@@ -241,13 +227,27 @@ export default {
         }
       });
     },
+    directoryToName(dir) {
+      if (dir === 'Walkins') return 'walk in';
+      if (dir === 'Sponsors') return 'sponsor';
+      if (dir === 'Mentor') return 'mentor';
+    },
     register(target) {
       const app = this.application;
+      // reject if no identifying field is created.
       if (app.email === '' || app.name === '') {
         this.rejectRegistration();
         return;
       }
+      // parse name field
+      const [first, last] = app.name.split(' ');
+      app.name = first;
+      app.lastname = last ? last : '';
+      // add to respective directory
       db.collection('hackathon').doc('DH5').collection(target).doc(app.email).set(app);
+      // add type and include in general checked in directory
+      this.checkin(this.directoryToName(target));
+      // open banner
       this.banner = true;
       this.bannerMessage = `${this.application.email} has been registered under ${target}!`;
       this.confirm = false;
@@ -287,8 +287,10 @@ export default {
       return app;
     },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
-    checkin() {
+    checkin(type) {
       if (this.application.email === '') return;
+      const app = this.application;
+      app.type = type ? type : 'attendee';
       db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
@@ -297,6 +299,7 @@ export default {
           checkedIn: true,
           time: new Date(),
           by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
+          type: app.type,
           whereabouts: [
             {
               initialCheckin: true,
