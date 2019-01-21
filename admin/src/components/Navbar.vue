@@ -19,6 +19,9 @@
                     <v-list-tile to="/stats">
                         <v-list-tile-title v-if="c_user">Statistics</v-list-tile-title>
                     </v-list-tile>
+                    <v-list-tile to="/desk">
+                        <v-list-tile-title v-if="c_user">Live Desk</v-list-tile-title>
+                    </v-list-tile>
                     <v-list-tile @click.prevent="logout" v-if="c_user">
                         <v-list-tile-title>Logout</v-list-tile-title>
                     </v-list-tile>
@@ -27,6 +30,7 @@
         </div>
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat to="/stats" v-if="c_user" class="green lighten-2">Statistics</v-btn>
+            <v-btn flat to="/desk" v-if="c_user" class="orange lighten-2">Live Desk</v-btn>
             <v-btn flat to="/dashboard" v-if="c_user">{{ c_user.email }}</v-btn>
             <v-btn flat to="/login" v-if="!c_user">Login</v-btn>
             <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn>
