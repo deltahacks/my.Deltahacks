@@ -99,7 +99,7 @@
                     <v-btn color='green' :disabled="!active" @click='checkin' large>Check In</v-btn>
                   </v-flex>
                   <v-flex>
-                    <v-btn color='blue' :disabled="!active" @click='openBadge' large>Open Badge</v-btn>
+                    <v-btn color='blue' @click='openBadge' large>Open Badge</v-btn>
                   </v-flex>
                   <v-flex v-if="!active">
                     <v-menu offset-y>
@@ -321,6 +321,7 @@ export default {
         .catch(err => console.log(err));
     },
     async openBadge() {
+      if (this.application.email === '') return;
       const badge = this.createTemplate();
       const QRImage = await QR.toDataURL(this.application.email);
       badge.addImage(QRImage, 'JPEG', 14, 40, 15, 15);
