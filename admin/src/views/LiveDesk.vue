@@ -96,7 +96,7 @@
                 ></v-select>
                 <v-container fluid fill-height>
                   <v-flex>
-                    <v-btn color='green' :disabled="!active" @click='checkin' large>Check In</v-btn>
+                    <v-btn color='green' :disabled="!active" @click="checkin('attendee')" large>Check In</v-btn>
                   </v-flex>
                   <v-flex>
                     <v-btn color='blue' @click='openBadge' large>Open Badge</v-btn>
@@ -288,12 +288,14 @@ export default {
       }
       return app;
     },
+    attendee() {
+      this.checkin('attendee');
+    },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
-    checkin(type) {
+    checkin(type = 'attendee') {
       if (this.application.email === '') return;
       const app = this.application;
-      console.log(type);
-      app.type = type ? type : 'attendee';
+      app.type = type;
       db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
