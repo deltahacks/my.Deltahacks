@@ -96,7 +96,7 @@
                 ></v-select>
                 <v-container fluid fill-height>
                   <v-flex>
-                    <v-btn color='green' :disabled="!active" @click='checkin' large>Check In</v-btn>
+                    <v-btn color='green' :disabled="!active" @click="checkin('attendee')" large>Check In</v-btn>
                   </v-flex>
                   <v-flex>
                     <v-btn color='blue' @click='openBadge' large>Open Badge</v-btn>
@@ -228,9 +228,10 @@ export default {
       });
     },
     directoryToName(dir) {
+      console.log(dir);
       if (dir === 'Walkins') return 'walk in';
       if (dir === 'Sponsors') return 'sponsor';
-      if (dir === 'Mentor') return 'mentor';
+      if (dir === 'Mentors') return 'mentor';
     },
     register(target) {
       const app = this.application;
@@ -245,7 +246,8 @@ export default {
       app.lastname = last ? last : '';
       // add to respective directory
       db.collection('hackathon').doc('DH5').collection(target).doc(app.email).set(app);
-      // add type and include in general checked in directory
+      // add type and include in general checked in directory)
+      console.log(this.directoryToName(target));
       this.checkin(this.directoryToName(target));
       // open banner
       this.banner = true;
@@ -286,11 +288,14 @@ export default {
       }
       return app;
     },
+    attendee() {
+      this.checkin('attendee');
+    },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
-    checkin(type) {
+    checkin(type = 'attendee') {
       if (this.application.email === '') return;
       const app = this.application;
-      app.type = type ? type : 'attendee';
+      app.type = type;
       db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
