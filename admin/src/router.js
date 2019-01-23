@@ -66,6 +66,14 @@ const router = new Router({
       },
     },
     {
+      path: '/desk/:email',
+      name: 'LiveDesk',
+      component: LiveDesk,
+      meta: {
+        adminAuth: true,
+      },
+    },
+    {
       path: '/checkin/:id',
       name: 'Checkin',
       component: Checkin,

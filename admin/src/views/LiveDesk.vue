@@ -295,6 +295,7 @@ export default {
     checkin(type = 'attendee') {
       if (this.application.email === '') return;
       const app = this.application;
+      const name = `${app.name} ${app.lastname}`;
       app.type = type;
       db.collection('hackathon')
         .doc('DH5')
@@ -305,6 +306,7 @@ export default {
           time: new Date(),
           by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
           type: app.type,
+          name,
           whereabouts: [
             {
               initialCheckin: true,
@@ -327,17 +329,54 @@ export default {
     },
     async openBadge() {
       if (this.application.email === '') return;
-      const badge = this.createTemplate();
-      const QRImage = await QR.toDataURL(this.application.email);
-      badge.addImage(QRImage, 'JPEG', 14, 40, 15, 15);
+      const {badge, error} = await this.createTemplate();
+      if (error) return;
+      const QRImage = await QR.toDataURL(`https://admin.deltahacks.com/checkin/${this.application.email}`);
+      const imageOffset = (badge.internal.pageSize.width - 25) / 2;
+      badge.addImage(QRImage, 'JPEG', imageOffset, 3, 25, 25);
       badge.save(`DH5_${this.application.name}${this.application.lastname}`);
     },
     // should insert / generate the back of DH5 badge.
-    createTemplate() {
-      const t = new pdf('p','mm', [200, 125]);
-      t.text(5,10,'DeltaHacks V');
-      t.text(0,20, 'Event information');
-      return t;
+    async createTemplate() {
+      const t = new pdf('l','mm', [165, 200]);
+      const centeredText = function(text, y) {
+          const textWidth = t.getStringUnitWidth(text) * t.internal.getFontSize() / t.internal.scaleFactor;
+          const textOffset = (t.internal.pageSize.width - textWidth) / 2;
+          t.text(textOffset, y, text);
+      }
+      const snap = await db.collection('hackathon').doc('DH5').collection('Checked In')
+        .doc(this.application.email).get();
+      if (snap.exists) {
+        const data = snap.data();
+        centeredText(data.name, 35);
+        t.setFontSize(10);
+        centeredText(this.application.university, 40);
+        t.setFontSize(18);
+        centeredText(this.typeToTitle(data.type),50);
+      } else {
+        this.error = true;
+        this.errorMessage = `${this.application.email} has not been registered or checked in!`;
+        return {
+          error: true,
+          badge: undefined,
+        }
+      }
+      // t.text(15,35, data.name);
+      // t.text(25,40,this.typeToTitle(data.type));
+      // if (snap.exists) {
+      // } else {  
+      //   
+      // }
+      // t.text(0,20, 'Event information');
+      return {
+        error: false,
+        badge: t,
+      };
+    },
+    typeToTitle(type) {
+      if (type === 'sponsor') return 'Sponsor';
+      else if (type === 'mentor') return 'Mentor';
+      else return 'Attendee';
     },
   },
   beforeMount() {
@@ -350,7 +389,8 @@ export default {
     ref.onSnapshot(async snap => {
       if (snap.exists) {
         const { scanned } = snap.data();
-        const result = await this.getUserApplication(scanned).catch(err =>
+        const email = this.$route.params.email ? this.$route.params.email.toLowerCase() : scanned;
+        const result = await this.getUserApplication(email).catch(err =>
           console.error(err)
         );
         if (result.found) {
