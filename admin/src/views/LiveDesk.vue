@@ -159,6 +159,7 @@ import pdf from "jspdf";
 import QR from "qrcode";
 import Navbar from "@/components/Navbar.vue";
 import db from "../private/firebase_init";
+import { encrypt, decrypt, ereplace, dreplace } from "../private/crypto-helper";
 
 export default {
   name: "LiveDesk",
@@ -305,6 +306,28 @@ export default {
     attendee() {
       this.checkin("attendee");
     },
+    //ENCRYPT AND DECRYPT FUNCTIONS HERE - KAJOBAN
+    mainencrypt(plainText) {
+      //use CryptoJS to encrypt plaintext email
+      let cipher = encrypt(plainText);
+      //use custom function to replace special chars
+      cipher = ereplace(cipher);
+      //return ciphertext
+      return cipher;
+    },
+    maindecrypt(cipherText) {
+      //use custom function to replace special chars
+      let cipher = dreplace(cipherText);
+      //use CryptoJS to decrypt the ciphertext
+      let plaintext = decrypt(cipher);
+      //return plaintext
+      return plaintext;
+    },
+    isValidEmail(email) {
+      return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        String(email).toLowerCase()
+      );
+    },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
     checkin(type = "attendee") {
       if (this.application.email === "") return;
@@ -413,9 +436,20 @@ export default {
     ref.onSnapshot(async snap => {
       if (snap.exists) {
         const { scanned } = snap.data();
+        //this code (below) is case sensitive !
+        //it is critical that you use THIS CODE to decrypt an email
+        const code = this.$route.params.email; 
         const email = this.$route.params.email
           ? this.$route.params.email.toLowerCase()
           : scanned;
+        //EN(DE)CRYPT HERE - KAJOBAN
+        if (email != null && this.isValidEmail(email)) {
+          let encryptedemail = this.mainencrypt(email);
+          console.log(encryptedemail); //KUMAIL LOOK AT THIS
+        } else {
+          let decryptedemail = this.maindecrypt(code);
+          console.log(decryptedemail); //KUMAIL LOOK AT THIS
+        }
         const result = await this.getUserApplication(email).catch(err =>
           console.error(err)
         );
