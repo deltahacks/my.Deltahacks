@@ -41,7 +41,7 @@
             <v-card-title primary-title>Checked In</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='checkedIn' />
+                <IOdometer class='iOdometer' :value='safeCheckIn' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -325,6 +325,9 @@ export default {
       const { round1, round2, round3, round4, round5 } = this.decisions;
       return round1 + round2 + round3 + round4 + round5;
     },
+    safeCheckIn() {
+      return this.checkin - this.mentor - this.sponsor;
+    },
   },
   methods: {
     setCheckInData() {
@@ -339,11 +342,11 @@ export default {
       db.collection('hackathon').doc('DH5').collection('Sponsors')
         .onSnapshot((snap) => {
           this.sponsors = snap.docs.length;
-        })
+        });
       db.collection('hackathon').doc('DH5').collection('Walkins')
         .onSnapshot((snap) => {
           this.walkins = snap.docs.length;
-        })
+        });
     },
     getRSVP() {
       return new Promise((resolve, reject) => {
