@@ -458,27 +458,27 @@ export default {
     updateStep(doc) {
       if (doc.exists) {
         switch (doc.data().status) {
-          case 'in progress':
+          case "in progress":
             this.step = 1;
             break;
-          case 'submitted':
+          case "submitted":
             this.step = 2;
             break;
-          case 'pending':
+          case "pending":
+          case "actually rejected":
             this.step = 2;
             break;
-          case 'actually rejected':
-            this.step = 2;
-            break;
-          case 'overflow':
-          case 'accepted':
-          case 'processing':
-          case 'rejected':
+          case "overflow":
+          case "overflow2":
+          case "accepted":
+          case "processing":
+          case "rejected":
+          case "round4":
             this.step = 3;
             break;
-          case 'round1':
-          case 'round2':
-          case 'round3':
+          case "round1":
+          case "round2":
+          case "round3":
             this.step = 4;
             break;
           default:

@@ -186,11 +186,11 @@ export default {
         checkedIn: 0,
         mentors: 0,
       },
-      bus_passengers:0,
+      bus_passengers: 0,
       pickups: {
-        "University of Waterloo": 0,
-        "University of Toronto": 0,
-        "University of Western Ontario": 0,
+        'University of Waterloo': 0,
+        'University of Toronto': 0,
+        'University of Western Ontario': 0,
       },
       submitted: 0,
       inProgress: 0,
@@ -234,7 +234,7 @@ export default {
           },
         ],
       },
-      colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f','#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+      colors: ['#E31836', '#83002C', '#004C9B', '#FDD54F', '#4F2682', '#63a832', '#e0932f', '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
 		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
 		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
@@ -246,12 +246,12 @@ export default {
 		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'],
       options: {
         scales: {
-        yAxes: [{
+          yAxes: [{
             ticks: {
-                beginAtZero: true
-            }
-        }]
-    }
+              beginAtZero: true,
+            },
+          }],
+        },
       },
       rsvp: 0,
     };
@@ -412,12 +412,12 @@ export default {
       });
     },
     // for updating statistics, not used in standard page.
-    processApplication(stats, app){
+    processApplication(stats, app) {
       const safeAdd = (obj, section, index) => {
         if (!obj[section]) obj[section] = {};
         if (obj[section][index]) obj[section][index]++;
         else obj[section][index] = 1;
-      }
+      };
       safeAdd(stats, 'hackathons_accepted', app.hackathons);
       safeAdd(stats, 'gender_accepted', app.gender);
       // safeAdd(stats, 'gender', app.gender);
@@ -431,10 +431,10 @@ export default {
     async setDecisionListeners(init = false) {
       const info = {};
       db.collection('decisions').doc('DH5').collection('round1')
-                    .onSnapshot((snap) => {
-                        this.decisions.round1 = snap.docs.length;
-                        this.setDecisionPanels();
-                    });
+        .onSnapshot((snap) => {
+          this.decisions.round1 = snap.docs.length;
+          this.setDecisionPanels();
+        });
       db.collection('applications').doc('DH5').collection('submitted')
         .onSnapshot((snap) => {
           this.submitted = snap.docs.length;
@@ -445,11 +445,11 @@ export default {
                         this.setDecisionPanels();   
                     });
       db.collection('decisions').doc('DH5').collection('round3')
-                    .onSnapshot((snap) => {
-                        console.log(snap.docs.length);
-                        this.decisions.round3 = snap.docs.length;
-                        this.setDecisionPanels();  
-                    });
+        .onSnapshot((snap) => {
+          console.log(snap.docs.length);
+          this.decisions.round3 = snap.docs.length;
+          this.setDecisionPanels();
+        });
       db.collection('decisions').doc('DH5').collection('round4')
                     .onSnapshot((snap) => {
                         this.decisions.round4 = snap.docs.length;
@@ -479,9 +479,9 @@ export default {
           // set rsvp data.
           this.bus_passengers = 0;
           this.pickups = {
-            "University of Waterloo": 0,
-            "University of Toronto": 0,
-            "University of Western Ontario": 0,
+            'University of Waterloo': 0,
+            'University of Toronto': 0,
+            'University of Western Ontario': 0,
           };
           snap.docs.forEach((doc) => {
             const current = doc.data();
@@ -495,17 +495,17 @@ export default {
     },
     redrawRSVP() {
       this.$refs.bus_locations.changeData({
-        labels: ["U of Waterloo",
-                 "U of Toronto",
-                 "U of Western"],
+        labels: ['U of Waterloo',
+          'U of Toronto',
+          'U of Western'],
         datasets: [
           {
             label: 'Bus Location Distribution',
             backgroundColor: this.colors,
             data: [
-              this.pickups["University of Waterloo"],
-              this.pickups["University of Toronto"],
-              this.pickups["University of Western Ontario"],
+              this.pickups['University of Waterloo'],
+              this.pickups['University of Toronto'],
+              this.pickups['University of Western Ontario'],
             ],
           },
         ],
@@ -533,8 +533,8 @@ export default {
       this.$refs.schoolYears.changeData(this.processField(this.statistics.applicationStats.schoolYears_accepted, 'School Years (Accepted)'));
       this.$refs.shirt_sizes.changeData(this.processField(this.statistics.applicationStats.shirt_sizes_accepted, 'Shirt Size (Accepted)'));
       this.$refs.discovery.changeData(this.processField(this.statistics.applicationStats.discovery, 'Discovered By (All)'));
-      this.$refs.dietary_restrictions.changeData(this.processField(this.filterData(this.statistics.applicationStats.dietary_restrictions_accepted ,12), 'Food Restrictions (Accepted)'));
-      this.$refs.location.changeData(this.processField(this.filterData(this.statistics.applicationStats.transport_accepted,12), 'Coming From (Accepted)'));
+      this.$refs.dietary_restrictions.changeData(this.processField(this.filterData(this.statistics.applicationStats.dietary_restrictions_accepted, 12), 'Food Restrictions (Accepted)'));
+      this.$refs.location.changeData(this.processField(this.filterData(this.statistics.applicationStats.transport_accepted, 12), 'Coming From (Accepted)'));
       this.$refs.workshops.changeData(this.processField(this.filterData(this.statistics.applicationStats.workshops_accepted, 12), 'Workshops (Accepted)'));
       // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
       this.$refs.universities.changeData(this.processField(this.filterData(this.statistics.applicationStats.universities_accepted), 'Universities (Accepted)'));
