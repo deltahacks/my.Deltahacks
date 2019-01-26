@@ -88,11 +88,10 @@
                   v-model="application.location"
                 ></v-text-field>
                 <v-select
-                  :disabled="active"
                   name="gender"
                   label="Gender"
                   :items="['M', 'F', 'Other']"
-                  v-model="safeGender"
+                  v-model="application.gender"
                 ></v-select>
                 <v-container fluid fill-height>
                   <v-flex>
@@ -297,7 +296,7 @@ export default {
 
         db.collection('applications')
           .doc('DH5')
-          .collection('submitted')
+          .collection('in progress')
           .doc(email)
           .get()
           .then(snap => {
@@ -385,8 +384,22 @@ export default {
           this.bannerMessage = `${this.fullName} has been checked in!`;
           this.banner = true;
           console.log("Successfully written");
+          this.updateGender();
         })
         .catch(err => console.log(err));
+    },
+    updateGender() {
+      const ref = db.collection('applications').doc('DH5')
+                    .collection('in progress').doc(this.application.email);
+      ref.get().then((snap) => {
+          if (snap.exists) {
+            const data = snap.data();
+            data.gender = this.application.gender;
+            ref.set(data);
+          } else {
+            console.log('Couldn\'t find user in `in progress`!');
+          }
+        });
     },
     async openBadge() {
       if (this.application.email === "") return;
