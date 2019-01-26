@@ -41,7 +41,7 @@
             <v-card-title primary-title>Checked In</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='checkedIn' />
+                <IOdometer class='iOdometer' :value='safeCheckIn' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -326,7 +326,7 @@ export default {
       return round1 + round2 + round3 + round4 + round5;
     },
     safeCheckIn() {
-      return this.checkin - this.mentor - this.sponsor;
+      return this.checkedIn - this.mentors - this.sponsors;
     },
   },
   methods: {
