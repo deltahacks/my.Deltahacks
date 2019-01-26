@@ -46,6 +46,37 @@
             </v-card>
           </v-card>
         </v-flex>
+        
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color='white lighten-4'>
+            <v-card-title primary-title>Mentors</v-card-title>
+            <v-card color='white lighten-4' dark>
+              <v-card-text class='totalapps center'>
+                <IOdometer class='iOdometer' :value='mentors' />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color='white lighten-4'>
+            <v-card-title primary-title>Sponsors</v-card-title>
+            <v-card color='white lighten-4' dark>
+              <v-card-text class='totalapps center'>
+                <IOdometer class='iOdometer' :value='sponsors' />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color='white lighten-4'>
+            <v-card-title primary-title>Walk Ins</v-card-title>
+            <v-card color='white lighten-4' dark>
+              <v-card-text class='totalapps center'>
+                <IOdometer class='iOdometer' :value='walkins' />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
             <v-card-title primary-title>RSVP</v-card-title>
@@ -186,6 +217,9 @@ export default {
         checkedIn: 0,
         mentors: 0,
       },
+      mentors: 0,
+      sponsors:0,
+      walkins: 0,
       bus_passengers: 0,
       pickups: {
         'University of Waterloo': 0,
@@ -294,10 +328,22 @@ export default {
   },
   methods: {
     setCheckInData() {
+      db.collection('hackathon').doc('DH5').collection('Mentors')
+        .onSnapshot((snap) => {
+          this.mentors = snap.docs.length;
+        });
       db.collection('hackathon').doc('DH5').collection('Checked In')
         .onSnapshot((snap) => {
           this.checkedIn = snap.docs.length;
         });
+      db.collection('hackathon').doc('DH5').collection('Sponsors')
+        .onSnapshot((snap) => {
+          this.sponsors = snap.docs.length;
+        })
+      db.collection('hackathon').doc('DH5').collection('Walkins')
+        .onSnapshot((snap) => {
+          this.walkins = snap.docs.length;
+        })
     },
     getRSVP() {
       return new Promise((resolve, reject) => {
