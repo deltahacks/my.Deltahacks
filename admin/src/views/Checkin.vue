@@ -49,7 +49,7 @@ export default {
     checkin() {
       db
         .collection('hackathon')
-        .doc('DHV')
+        .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .set({
@@ -80,7 +80,7 @@ export default {
       return navigator.geolocation.getCurrentPosition((position) => {
         db
           .collection('hackathon')
-          .doc('DHV')
+          .doc('DH5')
           .collection('Checked In')
           .doc(this.$route.params.id.toLowerCase())
           .update({
@@ -104,7 +104,7 @@ export default {
       return navigator.geolocation.getCurrentPosition((position) => {
         db
           .collection('hackathon')
-          .doc('DHV')
+          .doc('DH5')
           .collection('Checked In')
           .doc(this.$route.params.id.toLowerCase())
           .update({
@@ -127,7 +127,7 @@ export default {
     attachListener() {
       db
         .collection('hackathon')
-        .doc('DHV')
+        .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .onSnapshot((doc) => {
@@ -155,7 +155,7 @@ export default {
       console.log('Adjusting meal');
       db
         .collection('hackathon')
-        .doc('DHV')
+        .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .update({
