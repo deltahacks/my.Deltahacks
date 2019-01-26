@@ -12,6 +12,7 @@
     </div>
     <h1 id="id">{{$route.params.id}}</h1>
     <h2> Last status: {{ lastStatus }}</h2>
+    <v-btn @click="beam" class="checkinButtons" :disabled="alreadyCheckedIn">Beam</v-btn>
     <v-btn @click="checkin" class="checkinButtons" :disabled="alreadyCheckedIn">Check in</v-btn>
     <v-btn @click="signin" class="checkinButtons" :disabled="!alreadyCheckedIn">Sign in building</v-btn>
     <v-btn @click="signout" class="checkinButtons" :disabled="!alreadyCheckedIn">Sign out building</v-btn>
@@ -75,6 +76,11 @@ export default {
           this.attachListener();
         })
         .catch(err => console.log(err));
+    },
+    beam() {
+      db.collection('hackathon').doc('DH5').collection('FrontDesk')
+        .doc(this.$store.state.firebase.auth().currentUser.email.toLowerCase())
+        .set({scanned: this.$route.params.id.toLowerCase()});
     },
     signin() {
       return navigator.geolocation.getCurrentPosition((position) => {
