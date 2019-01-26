@@ -41,7 +41,7 @@
             <v-card-title primary-title>Checked In</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='safeCheckIn' />
+                <IOdometer class='iOdometer' :value='checkedIn' />
               </v-card-text>
             </v-card>
           </v-card>
