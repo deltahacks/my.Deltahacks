@@ -125,6 +125,12 @@
                         <v-list-tile @click="register('Mentors')">
                           <v-list-tile-title>Mentor</v-list-tile-title>
                         </v-list-tile>
+                        <v-list-tile @click="register('Exec')">
+                          <v-list-tile-title>Exec</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="register('Volunteer')">
+                          <v-list-tile-title>Volunteer</v-list-tile-title>
+                        </v-list-tile>
                       </v-list>
                     </v-menu>
                   </v-flex>
@@ -253,6 +259,8 @@ export default {
       if (dir === "Walkins") return "walk in";
       if (dir === "Sponsors") return "sponsor";
       if (dir === "Mentors") return "mentor";
+      if (dir === "Volunteer") return "volunteer";
+      if (dir === "Exec") return "executive"
     },
     register(target) {
       if (!this.validateForm()) {
@@ -447,6 +455,8 @@ export default {
     typeToTitle(type) {
       if (type === 'sponsor') return 'Sponsor';
       else if (type === 'mentor') return 'Mentor';
+      else if (type === 'executive') return 'Organizer';
+      else if (type === 'volunteer') return 'Volunteer';
       else return 'Attendee';
     },
     validateForm() {
