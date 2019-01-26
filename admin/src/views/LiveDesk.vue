@@ -35,6 +35,13 @@
                     v-model='fullName'
                   ></v-text-field>
                 </div>
+                <v-text-field
+                  :disabled='active'
+                  name='university'
+                  v-model='application.university'
+                  autocomplete='off'
+                  label='University/Organization *'
+                ></v-text-field>
                 <v-select
                   :disabled='active'
                   :items='sizes'
@@ -49,13 +56,6 @@
                   label='Dietary Restriction'
                   autocomplete='off'
                   v-model='application.dietary_restrictions'
-                ></v-text-field>
-                <v-text-field
-                  :disabled='active'
-                  name='university'
-                  v-model='application.university'
-                  autocomplete='off'
-                  label='University'
                 ></v-text-field>
                 <v-container fluid fill-height>
                   <v-flex>
@@ -212,6 +212,23 @@ export default {
     }
   },
   methods: {
+    // saveDownLoadLinks() {
+    //   const document = db.collection('decisions').doc('DH5').collection('round5');
+    //   document.get()
+    //     .then((snap) => {
+    //       snap.docs.forEach((doc) => {
+    //         const app = doc.data();
+    //         const { email } = app;
+    //         const ref = firebase.storage().ref();
+    //         ref.child(`hackathon/DH5/users/${email}/QRCode.png`)
+    //           .getDownloadURL().then((url) => {
+    //             console.log(email);
+    //             app.download = url;
+    //             document.doc(email).set(app);
+    //           });
+    //       });
+    //     });
+    // }, 
     reset() {
       const admin = firebase.auth().currentUser.email
       const ref = db
@@ -234,6 +251,10 @@ export default {
       if (dir === 'Mentors') return 'mentor';
     },
     register(target) {
+      if (!this.validateForm()) {
+        this.formFeedback();
+        return;
+      }
       const app = this.application;
       // reject if no identifying field is created.
       if (app.email === '' || app.name === '') {
@@ -262,9 +283,9 @@ export default {
       return new Promise((resolve, reject) => {
         if (email.length === 0) resolve({found: false, data: {}});
 
-        db.collection('decisions')
+        db.collection('applications')
           .doc('DH5')
-          .collection('pending')
+          .collection('submitted')
           .doc(email)
           .get()
           .then(snap => {
@@ -293,7 +314,10 @@ export default {
     },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
     checkin(type = 'attendee') {
-      if (this.application.email === '') return;
+      if (!this.validateForm()) {
+        this.formFeedback();
+        return;
+      }
       const app = this.application;
       const name = `${app.name} ${app.lastname}`;
       app.type = type;
@@ -339,11 +363,11 @@ export default {
     // should insert / generate the back of DH5 badge.
     async createTemplate() {
       const t = new pdf('l','mm', [165, 200]);
-      const centeredText = function(text, y) {
+      const centeredText = (text, y) => {
           const textWidth = t.getStringUnitWidth(text) * t.internal.getFontSize() / t.internal.scaleFactor;
           const textOffset = (t.internal.pageSize.width - textWidth) / 2;
           t.text(textOffset, y, text);
-      }
+      };
       const snap = await db.collection('hackathon').doc('DH5').collection('Checked In')
         .doc(this.application.email).get();
       if (snap.exists) {
@@ -351,7 +375,7 @@ export default {
         centeredText(data.name, 35);
         t.setFontSize(10);
         centeredText(this.application.university, 40);
-        t.setFontSize(18);
+        t.setFontSize(14);
         centeredText(this.typeToTitle(data.type),50);
       } else {
         this.error = true;
@@ -361,13 +385,6 @@ export default {
           badge: undefined,
         }
       }
-      // t.text(15,35, data.name);
-      // t.text(25,40,this.typeToTitle(data.type));
-      // if (snap.exists) {
-      // } else {  
-      //   
-      // }
-      // t.text(0,20, 'Event information');
       return {
         error: false,
         badge: t,
@@ -378,8 +395,18 @@ export default {
       else if (type === 'mentor') return 'Mentor';
       else return 'Attendee';
     },
+    validateForm() {
+      const {university, email } = this.application;
+      if (this.firstName.length < 2) return false;
+      if (university === '' || email === '') return false;
+      return true;
+    },
+    formFeedback() {
+      this.error = true;
+      this.errorMessage = 'Required fields not filled!';
+    },
   },
-  beforeMount() {
+  async beforeMount() {
     const admin = firebase.auth().currentUser.email;
     const ref = db
       .collection('hackathon')
