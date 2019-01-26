@@ -50,7 +50,7 @@ export default {
       db
         .collection('hackathon')
         .doc('DHV')
-        .collection('checked in')
+        .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .set({
           checkedIn: true,
@@ -81,7 +81,7 @@ export default {
         db
           .collection('hackathon')
           .doc('DHV')
-          .collection('checked in')
+          .collection('Checked In')
           .doc(this.$route.params.id.toLowerCase())
           .update({
             whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion({
@@ -105,7 +105,7 @@ export default {
         db
           .collection('hackathon')
           .doc('DHV')
-          .collection('checked in')
+          .collection('Checked In')
           .doc(this.$route.params.id.toLowerCase())
           .update({
             whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion({
@@ -128,7 +128,7 @@ export default {
       db
         .collection('hackathon')
         .doc('DHV')
-        .collection('checked in')
+        .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .onSnapshot((doc) => {
           this.attendeeData = doc.data();
@@ -156,7 +156,7 @@ export default {
       db
         .collection('hackathon')
         .doc('DHV')
-        .collection('checked in')
+        .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .update({
           meals: (this.meals += adjustment),
@@ -172,8 +172,8 @@ export default {
   mounted() {
     db
       .collection('hackathon')
-      .doc('DHV')
-      .collection('checked in')
+      .doc('DH5')
+      .collection('Checked In')
       .doc(this.$route.params.id.toLowerCase())
       .get()
       .then((doc) => {

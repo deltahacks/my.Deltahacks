@@ -41,7 +41,7 @@
             <v-card-title primary-title>Checked In</v-card-title>
             <v-card color='white lighten-4' dark>
               <v-card-text class='totalapps center'>
-                <IOdometer class='iOdometer' :value='statistics.checkedIn' />
+                <IOdometer class='iOdometer' :value='checkedIn' />
               </v-card-text>
             </v-card>
           </v-card>
@@ -171,6 +171,7 @@ export default {
         round2: 0,
         round3: 0,
         round4: 0,
+        round5: 0,
         rejected:0,
       },
       statistics: {
@@ -265,6 +266,7 @@ export default {
   async beforeMount() {
     this.statistics = await this.getStatistics();
     this.setAllData();
+    this.setCheckInData();
     db
       .collection('statistics')
       .doc('DH5')
@@ -286,11 +288,30 @@ export default {
       return this.inProgress - this.submitted;
     },
     accepted() {
-      const { round1, round2, round3, round4 } = this.decisions;
-      return round1 + round2 + round3 + round4;
+      const { round1, round2, round3, round4, round5 } = this.decisions;
+      return round1 + round2 + round3 + round4 + round5;
     },
   },
   methods: {
+    setCheckInData() {
+      db.collection('hackathon').doc('DH5').collection('Checked In')
+        .onSnapshot((snap) => {
+          this.checkedIn = snap.docs.length;
+        });
+    },
+    getRSVP() {
+      return new Promise((resolve, reject) => {
+        db.collection('hackathon').doc('DH5').collection('RSVP').doc('all').collection('Yes').get()
+          .then((snap) => {
+            const out = {};
+            snap.docs.forEach(doc => {
+              const data = doc.data();
+              out[data.email] = true;
+              resolve(out);
+            })
+          })
+      })
+    },
     setAllData() {
       this.setDecisionListeners();
       // this.setCheckedInGraph();
@@ -398,14 +419,17 @@ export default {
         else obj[section][index] = 1;
       }
       safeAdd(stats, 'hackathons_accepted', app.hackathons);
-      safeAdd(stats, 'majors_accepted', app.major);
-      safeAdd(stats, 'schoolYears_accepted', app.school_year);
-      safeAdd(stats, 'shirt_sizes_accepted', app.shirt_size);
-      safeAdd(stats, 'transport_accepted', app.location);
-      safeAdd(stats, 'universities_accepted', app.university);
-      app.workshops.forEach((w) => safeAdd(stats, 'workshops_accepted', w));
+      safeAdd(stats, 'gender_accepted', app.gender);
+      // safeAdd(stats, 'gender', app.gender);
     },
-    setDecisionListeners(init = false) {
+    aggregateAccepted(obj, snap) {
+      snap.docs.forEach((doc) => {
+        const data = doc.data();
+        obj[data.email] = true;
+      });
+    },
+    async setDecisionListeners(init = false) {
+      const info = {};
       db.collection('decisions').doc('DH5').collection('round1')
                     .onSnapshot((snap) => {
                         this.decisions.round1 = snap.docs.length;
@@ -413,17 +437,10 @@ export default {
                     });
       db.collection('applications').doc('DH5').collection('submitted')
         .onSnapshot((snap) => {
-          console.log(snap.docs.length);
           this.submitted = snap.docs.length;
         });
-      db.collection('applications').doc('DH5').collection('in progress')
-                    .onSnapshot((snap) => {
-                      console.log(snap.docs.length);
-                      this.inProgress = snap.docs.length;
-                    });
       db.collection('decisions').doc('DH5').collection('round2')
                     .onSnapshot((snap) => {
-                        console.log(snap.docs.length);
                         this.decisions.round2 = snap.docs.length;
                         this.setDecisionPanels();   
                     });
@@ -438,9 +455,19 @@ export default {
                         this.decisions.round4 = snap.docs.length;
                         this.setDecisionPanels();   
                     });
+      db.collection('decisions').doc('DH5').collection('round5')
+                    .onSnapshot((snap) => {
+                        this.decisions.round5 = snap.docs.length;
+                        this.setDecisionPanels();   
+                    });
+      await db.collection('decisions').doc('DH5').collection('pending')
+                    .onSnapshot((snap) => {
+                        this.aggregateAccepted(info, snap);
+                    })
       db.collection('decisions').doc('DH5').collection('actually rejected')
                     .onSnapshot((snap) => {
                         this.decisions.rejected = snap.docs.length;
+                        this.aggregateAccepted(info, snap);
                         this.setDecisionPanels();
                     });
     },
