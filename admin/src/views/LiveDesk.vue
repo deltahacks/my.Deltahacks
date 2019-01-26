@@ -328,27 +328,27 @@ export default {
       this.checkin("attendee");
     },
     //ENCRYPT AND DECRYPT FUNCTIONS HERE - KAJOBAN
-    mainencrypt(plainText) {
-      //use CryptoJS to encrypt plaintext email
-      let cipher = encrypt(plainText);
-      //use custom function to replace special chars
-      cipher = ereplace(cipher);
-      //return ciphertext
-      return cipher;
-    },
-    maindecrypt(cipherText) {
-      //use custom function to replace special chars
-      let cipher = dreplace(cipherText);
-      //use CryptoJS to decrypt the ciphertext
-      let plaintext = decrypt(cipher);
-      //return plaintext
-      return plaintext;
-    },
-    isValidEmail(email) {
-      return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        String(email).toLowerCase()
-      );
-    },
+    // mainencrypt(plainText) {
+    //   //use CryptoJS to encrypt plaintext email
+    //   let cipher = encrypt(plainText);
+    //   //use custom function to replace special chars
+    //   cipher = ereplace(cipher);
+    //   //return ciphertext
+    //   return cipher;
+    // },
+    // maindecrypt(cipherText) {
+    //   //use custom function to replace special chars
+    //   let cipher = dreplace(cipherText);
+    //   //use CryptoJS to decrypt the ciphertext
+    //   let plaintext = decrypt(cipher);
+    //   //return plaintext
+    //   return plaintext;
+    // },
+    // isValidEmail(email) {
+    //   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    //     String(email).toLowerCase()
+    //   );
+    // },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
     checkin(type = 'attendee') {
       if (!this.validateForm()) {
@@ -438,7 +438,7 @@ export default {
     },
     validateForm() {
       const {university, email } = this.application;
-      if (this.firstName.length < 2) return false;
+      // if (this.name.length < 2) return false;
       if (university === '' || email === '') return false;
       return true;
     },
@@ -463,14 +463,14 @@ export default {
         const email = this.$route.params.email
           ? this.$route.params.email.toLowerCase()
           : scanned;
-        //EN(DE)CRYPT HERE - KAJOBAN
-        if (email != null && this.isValidEmail(email)) {
-          let encryptedemail = this.mainencrypt(email);
-          console.log(encryptedemail); //KUMAIL LOOK AT THIS
-        } else {
-          let decryptedemail = this.maindecrypt(code);
-          console.log(decryptedemail); //KUMAIL LOOK AT THIS
-        }
+        // //EN(DE)CRYPT HERE - KAJOBAN
+        // if (email != null && this.isValidEmail(email)) {
+        //   let encryptedemail = this.mainencrypt(email);
+        //   console.log(encryptedemail); //KUMAIL LOOK AT THIS
+        // } else {
+        //   let decryptedemail = this.maindecrypt(code);
+        //   console.log(decryptedemail); //KUMAIL LOOK AT THIS
+        // }
         const result = await this.getUserApplication(email).catch(err =>
           console.error(err)
         );
