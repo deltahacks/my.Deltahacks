@@ -6,7 +6,7 @@
         <h3>Summary</h3>
       </v-layout>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 md2>
+        <!-- <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
             <v-card-title primary-title>Accepted Applications</v-card-title>
             <v-card color='white lighten-4' dark>
@@ -35,7 +35,7 @@
               </v-card-text>
             </v-card>
           </v-card>
-        </v-flex>
+        </v-flex> -->
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
             <v-card-title primary-title>Checked In</v-card-title>
@@ -102,11 +102,11 @@
         <h3>Distribution</h3>
       </v-layout>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 md3 child-flex>
+        <!-- <v-flex d-flex xs12 sm6 md3 child-flex>
           <v-card color='white lighten-4' dark>
             <pie-chart ref='decisions' :data='data' :options='{}' />
           </v-card>
-        </v-flex>
+        </v-flex> -->
         <v-flex d-flex xs12 sm6 md3>
           <v-card color='white lighten-4' dark>
             <bar-chart ref="ages" :options='options' />
@@ -219,6 +219,7 @@ export default {
       },
       mentors: 0,
       sponsors:0,
+      checkedIn: 0,
       walkins: 0,
       bus_passengers: 0,
       pickups: {
@@ -326,6 +327,7 @@ export default {
       return round1 + round2 + round3 + round4 + round5;
     },
     safeCheckIn() {
+      console.log(this.checkedIn, this.mentors, this.sponsors);
       return this.checkedIn - this.mentors - this.sponsors;
     },
   },
@@ -366,18 +368,6 @@ export default {
       // this.setCheckedInGraph();
       this.setMiscStatistics();
       this.setRSVPData();
-    },
-    setCheckedInGraph() {
-      this.$refs.checkedIn.changeData({
-        labels: ['Checked In', 'Not Checked In'],
-        datasets: [
-          {
-            label: 'Applicant Distribution',
-            backgroundColor: this.colors,
-            data: [this.statistics.checkedIn, this.total - this.statistics.checkedIn],
-          },
-        ],
-      });
     },
     initAgeChart() {
       db.collection('applications').doc('DH5').collection('submitted').onSnapshot((snap) => {
@@ -479,36 +469,36 @@ export default {
     },
     async setDecisionListeners(init = false) {
       const info = {};
-      db.collection('decisions').doc('DH5').collection('round1')
-        .onSnapshot((snap) => {
-          this.decisions.round1 = snap.docs.length;
-          this.setDecisionPanels();
-        });
+      // db.collection('decisions').doc('DH5').collection('round1')
+      //   .onSnapshot((snap) => {
+      //     this.decisions.round1 = snap.docs.length;
+      //     this.setDecisionPanels();
+      //   });
       db.collection('applications').doc('DH5').collection('submitted')
         .onSnapshot((snap) => {
           this.submitted = snap.docs.length;
         });
-      db.collection('decisions').doc('DH5').collection('round2')
-                    .onSnapshot((snap) => {
-                        this.decisions.round2 = snap.docs.length;
-                        this.setDecisionPanels();   
-                    });
-      db.collection('decisions').doc('DH5').collection('round3')
-        .onSnapshot((snap) => {
-          console.log(snap.docs.length);
-          this.decisions.round3 = snap.docs.length;
-          this.setDecisionPanels();
-        });
-      db.collection('decisions').doc('DH5').collection('round4')
-                    .onSnapshot((snap) => {
-                        this.decisions.round4 = snap.docs.length;
-                        this.setDecisionPanels();   
-                    });
-      db.collection('decisions').doc('DH5').collection('round5')
-                    .onSnapshot((snap) => {
-                        this.decisions.round5 = snap.docs.length;
-                        this.setDecisionPanels();   
-                    });
+      // db.collection('decisions').doc('DH5').collection('round2')
+      //               .onSnapshot((snap) => {
+      //                   this.decisions.round2 = snap.docs.length;
+      //                   this.setDecisionPanels();   
+      //               });
+      // db.collection('decisions').doc('DH5').collection('round3')
+      //   .onSnapshot((snap) => {
+      //     console.log(snap.docs.length);
+      //     this.decisions.round3 = snap.docs.length;
+      //     this.setDecisionPanels();
+      //   });
+      // db.collection('decisions').doc('DH5').collection('round4')
+      //               .onSnapshot((snap) => {
+      //                   this.decisions.round4 = snap.docs.length;
+      //                   this.setDecisionPanels();   
+      //               });
+      // db.collection('decisions').doc('DH5').collection('round5')
+      //               .onSnapshot((snap) => {
+      //                   this.decisions.round5 = snap.docs.length;
+      //                   this.setDecisionPanels();   
+      //               });
       await db.collection('decisions').doc('DH5').collection('pending')
                     .onSnapshot((snap) => {
                         this.aggregateAccepted(info, snap);
