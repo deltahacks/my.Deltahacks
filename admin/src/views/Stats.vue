@@ -176,11 +176,11 @@
 </template>
 
 
-<script>
+<script lang="ts">
 import firebase from 'firebase';
 import IOdometer from 'vue-odometer';
 import functions from 'firebase/functions';
-import fake from '@/helpers/fake';
+// import fake from '@/helpers/fake';
 // import Typed from 'typed.js';
 import PieChart from '@/components/PieChartGen';
 import BarChart from '@/components/BarChart';
@@ -585,9 +585,9 @@ export default {
     // TODO: Improve the efficiency of this solution.
     filterData(data, fields = 7) {
       const N = fields; // Number of fields to show before collapsing into "Other"
-      const values = Object.values(data);
+      const values: number[] = Object.values(data);
       const keys = Object.keys(data);
-      const out = {};
+      const out = <any>{};
       let i = 0;
       while (i < N) {
         const mindex = values.indexOf(Math.max(...values));

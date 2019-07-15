@@ -158,7 +158,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import firebase from 'firebase';
 import pdf from 'jspdf';
 import QR from 'qrcode';
@@ -217,7 +217,7 @@ export default {
   computed: {
     safeGender() {
       const { gender } = this.application;
-      return gender != '' ? gender : 'N/A';
+      return gender !== '' ? gender : 'N/A';
     },
     fullName() {
       return `${this.application.name} ${this.application.lastname}`;
@@ -263,6 +263,7 @@ export default {
       if (dir === 'Mentors') return 'mentor';
       if (dir === 'Volunteer') return 'volunteer';
       if (dir === 'Exec') return 'executive';
+      return '';
     },
     register(target) {
       if (!this.validateForm()) {

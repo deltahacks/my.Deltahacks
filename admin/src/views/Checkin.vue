@@ -24,7 +24,7 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
 
