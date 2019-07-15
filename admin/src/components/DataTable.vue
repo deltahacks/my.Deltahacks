@@ -140,7 +140,7 @@ export default {
     bigDiff(prop) {
       if (!prop || !prop.item.decision.reviewers[1]) return false;
       const M = 5; // The difference threshold you want to check for.
-      const reviewers = prop.item.decision.reviewers;
+      const { reviewers } = prop.item.decision;
       let max_diff = Math.abs(reviewers[1].score - reviewers[0].score);
       const min_ele = Math.min(...reviewers.map(r => r.score));
 

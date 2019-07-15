@@ -80,7 +80,7 @@ export default {
     beam() {
       db.collection('hackathon').doc('DH5').collection('FrontDesk')
         .doc(this.$store.state.firebase.auth().currentUser.email.toLowerCase())
-        .set({scanned: this.$route.params.id.toLowerCase()});
+        .set({ scanned: this.$route.params.id.toLowerCase() });
     },
     signin() {
       return navigator.geolocation.getCurrentPosition((position) => {

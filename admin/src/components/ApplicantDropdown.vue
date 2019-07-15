@@ -285,7 +285,7 @@ export default {
         // );
         const decision = { ...userApplication.data().decision };
         const reviews = userApplication.data().decision.reviews + 1;
-        const reviewers = userApplication.data().decision.reviewers;
+        const { reviewers } = userApplication.data().decision;
         reviewers.push({
           score: this.score,
           reviewer: this.$store.state.firebase.auth().currentUser.email,
