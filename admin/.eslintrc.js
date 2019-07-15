@@ -17,6 +17,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-unused-labels': 'off',
     'no-param-reassign': 'off',
+    'no-plusplus': 'off'
   },
 
   parserOptions: {

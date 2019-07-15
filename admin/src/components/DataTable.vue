@@ -78,7 +78,7 @@
   </v-card>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
 import { functions } from 'firebase';
@@ -122,6 +122,8 @@ export default {
           this.restriction = this.defaultRestriction;
           this.refetchCurrentPage();
           break;
+        default:
+          break;
       }
     },
     assignmentToName(emails) {
@@ -141,15 +143,15 @@ export default {
       if (!prop || !prop.item.decision.reviewers[1]) return false;
       const M = 5; // The difference threshold you want to check for.
       const { reviewers } = prop.item.decision;
-      let max_diff = Math.abs(reviewers[1].score - reviewers[0].score);
-      const min_ele = Math.min(...reviewers.map(r => r.score));
+      let maxDiff = Math.abs(reviewers[1].score - reviewers[0].score);
+      const minEle = Math.min(...reviewers.map(r => r.score));
 
       for (let i = 0; i < reviewers.length; i++) {
-        const current = Math.abs(reviewers[i].score - min_ele);
-        if (current > max_diff) max_diff = current;
+        const current = Math.abs(reviewers[i].score - minEle);
+        if (current > maxDiff) maxDiff = current;
       }
 
-      return max_diff >= M;
+      return maxDiff >= M;
     },
     selectRow(e, props) {
       props.item.decision.reviewers.forEach(r => console.log(r.score));

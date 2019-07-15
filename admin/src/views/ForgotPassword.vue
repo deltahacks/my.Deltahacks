@@ -47,7 +47,7 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import firebase from 'firebase';
 
 export default {

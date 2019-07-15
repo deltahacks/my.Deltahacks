@@ -1,4 +1,5 @@
 <template>
+  <script src="https://rawgit.com/TahaSh/vue-paginate/master/dist/vue-paginate.js"></script>
   <v-app class="dashboard">
     <Navbar/>
     <v-container fluid grid-list-md>
@@ -95,172 +96,169 @@
 </template>
 
 
-<script src="https://rawgit.com/TahaSh/vue-paginate/master/dist/vue-paginate.js"></script>
-
-<script>
-import firebase from "firebase";
-import PieChart from "@/components/PieChart";
-import PieChart2 from "@/components/PieChartGen";
-import Navbar from "@/components/Navbar.vue";
+<script lang="ts">
+import IOdometer from 'vue-odometer';
+import PieChart from '@/components/PieChart';
+import PieChart2 from '@/components/PieChartGen';
+import Navbar from '@/components/Navbar.vue';
 // import Tab from '@/components/Tab'
-import DataTable from "@/components/DataTable.vue";
+import DataTable from '@/components/DataTable.vue';
 // import MapCard from '@/components/MapCard'
 // import Chart from '@/components/Chart'
-import IOdometer from "vue-odometer";
-import "odometer/themes/odometer-theme-default.css";
-import CommitChart from "@/components/CommitChart";
-import db from "../private/firebase_init";
-import { allUniversities } from "../private/data";
-import fake from "@/helpers/fake";
-import functions from "firebase/functions";
+import 'odometer/themes/odometer-theme-default.css';
+import CommitChart from '@/components/CommitChart';
+import db from '../private/firebase_init';
+import { allUniversities } from '../private/data';
+// import fake from '@/helpers/fake';
+import * as firebase from 'firebase/app';
+import 'firebase/functions';
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   data() {
     return {
       applicationCount: 0,
       page: 3,
-      apps: "245",
-      links: ["Home", "About", "Contact"],
+      apps: '245',
+      links: ['Home', 'About', 'Contact'],
       allUniversities,
       lorem:
-        "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
+        'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
       c_user: firebase.auth().currentUser,
       positions: { pos: [], names: [] },
       loading: false,
-      loadingMessage: "Loading...",
+      loadingMessage: 'Loading...',
       colors: [
-        "#E31836",
-        "#83002C",
-        "#004C9B",
-        "#FDD54F",
-        "#4F2682",
-        "#63a832",
-        "#e0932f"
+        '#E31836',
+        '#83002C',
+        '#004C9B',
+        '#FDD54F',
+        '#4F2682',
+        '#63a832',
+        '#e0932f',
       ],
       debugFunctions: [
         {
-          title: "Index Apps",
-          execute: async function() {
+          title: 'Index Apps',
+          async execute() {
             try {
-              console.log("Envoking firebase function...");
-              let successfulIndex = await firebase
+              console.log('Envoking firebase function...');
+              const successfulIndex = await firebase
                 .functions()
-                .httpsCallable("indexApplications")({ adminKey: 1234 });
-              console.log("Success!", successfulIndex);
+                .httpsCallable('indexApplications')({ adminKey: 1234 });
+              console.log('Success!', successfulIndex);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Test Firebase Functions",
-          execute: async function() {
+          title: 'Test Firebase Functions',
+          async execute() {
             try {
-              let successfulIndex = await firebase
+              const successfulIndex = await firebase
                 .functions()
-                .httpsCallable("newHello")({ adminKey: 1234 });
+                .httpsCallable('newHello')({ adminKey: 1234 });
               console.log(successfulIndex);
             } catch (err) {
-              console.log("Error testing");
+              console.log('Error testing');
             }
-          }
+          },
         },
         {
-          title: "Force update stats",
-          execute: async function() {
+          title: 'Force update stats',
+          async execute() {
             try {
-              console.log("Envoking firebase function...");
-              let successfulIndex = await firebase
+              console.log('Envoking firebase function...');
+              const successfulIndex = await firebase
                 .functions()
-                .httpsCallable("forceUpdateStatistics")({ adminKey: 1234 });
-              console.log("Success!", successfulIndex);
+                .httpsCallable('forceUpdateStatistics')({ adminKey: 1234 });
+              console.log('Success!', successfulIndex);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Count Microsoft",
-          execute: async function() {
+          title: 'Count Microsoft',
+          async execute() {
             try {
-              console.log("Counting msft");
-              let msftCount = await db
-                .collection("decisions")
-                .doc("DH5")
-                .collection("pending")
+              console.log('Counting msft');
+              const msftCount = await db
+                .collection('decisions')
+                .doc('DH5')
+                .collection('pending')
                 .get();
               let finalcount = 0;
-              for (let inst of msftCount.docs) {
-                //console.log('INST', inst.data(), inst);
+              for (const inst of msftCount.docs) {
+                // console.log('INST', inst.data(), inst);
                 inst.data().microsoft
                   ? (finalcount += 1)
                   : (finalcount = finalcount);
               }
-              console.log("Miccrosoft count: ", finalcount + 95);
+              console.log('Miccrosoft count: ', finalcount + 95);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Count Microsoft 2",
-          execute: async function() {
+          title: 'Count Microsoft 2',
+          async execute() {
             try {
-              console.log("Counting msft");
-              let msftCount = await db
-                .collection("decisions")
-                .doc("DH5")
-                .collection("pending")
-                .where("index", ">", 500)
+              console.log('Counting msft');
+              const msftCount = await db
+                .collection('decisions')
+                .doc('DH5')
+                .collection('pending')
+                .where('index', '>', 500)
                 .get();
               let finalcount = 0;
-              for (let inst of msftCount.docs) {
-                //console.log('INST', inst.data(), inst);
+              for (const inst of msftCount.docs) {
+                // console.log('INST', inst.data(), inst);
                 inst.data().microsoft
                   ? console.log(
-                      `,${inst.data().name} ${inst.data().lastname},`,
-                      `${inst.data().email},`,
-                      `${inst.data().major},`,
-                      `${inst.data().university},`
-                    )
+                    `,${inst.data().name} ${inst.data().lastname},`,
+                    `${inst.data().email},`,
+                    `${inst.data().major},`,
+                    `${inst.data().university},`,
+                  )
                   : (finalcount = finalcount);
               }
-              console.log("Miccrosoft count: ", finalcount + 95);
+              console.log('Miccrosoft count: ', finalcount + 95);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Reviewer stats",
-          execute: async function() {
+          title: 'Reviewer stats',
+          async execute() {
             try {
-              console.log("Calculating...");
-              let msftCount = await db
-                .collection("decisions")
-                .doc("DH5")
-                .collection("pending")
+              console.log('Calculating...');
+              const msftCount = await db
+                .collection('decisions')
+                .doc('DH5')
+                .collection('pending')
                 .get();
-              let finalcount = 0;
-              let rStats = {};
-              for (let inst of msftCount.docs) {
-                //console.log('INST', inst.data(), inst);
-                //console.log('Dec', inst.data().decision);
+              const finalcount = 0;
+              const rStats = {};
+              for (const inst of msftCount.docs) {
+                // console.log('INST', inst.data(), inst);
+                // console.log('Dec', inst.data().decision);
                 if (!inst.data().decision) continue;
-                for (let rev of inst.data().decision.assignedTo) {
+                for (const rev of inst.data().decision.assignedTo) {
                   if (rStats[rev]) {
                     rStats[rev].assigned += 1;
                     if (
                       inst
                         .data()
                         .decision.reviewers.some(p => p.reviewer === rev)
-                    )
-                      rStats[rev].marked += 0;
+                    ) rStats[rev].marked += 0;
                   } else {
                     rStats[rev] = { marked: 0, assigned: 1 };
                   }
-                  for (let rev2 of inst.data().decision.reviewers) {
+                  for (const rev2 of inst.data().decision.reviewers) {
                     if (rStats[rev2.reviewer]) {
                       rStats[rev2.reviewer].marked += 1;
                     } else {
@@ -269,20 +267,20 @@ export default {
                   }
                 }
               }
-              for (let finalRevCount in rStats) {
-                //console.log('l24999', finalRevCount, rStats[finalRevCount]);
+              for (const finalRevCount in rStats) {
+                // console.log('l24999', finalRevCount, rStats[finalRevCount]);
                 rStats[finalRevCount].marked /= 3;
                 rStats[finalRevCount].marked = Math.floor(
-                  rStats[finalRevCount].marked
+                  rStats[finalRevCount].marked,
                 );
               }
-              console.log("Reviewers: ", rStats);
+              console.log('Reviewers: ', rStats);
             } catch (err) {
-              console.log("Error indexing applications", err);
+              console.log('Error indexing applications', err);
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     };
   },
   components: {
@@ -291,23 +289,23 @@ export default {
     CommitChart,
     PieChart,
     PieChart2,
-    IOdometer
+    IOdometer,
   },
   created() {
     this.$Progress.start();
   },
   async mounted() {
-    let nameRes = await db
-      .collection("admins")
-      //.doc(this.$store.state.firebase.auth().currentUser.email)
+    const nameRes = await db
+      .collection('admins')
+      // .doc(this.$store.state.firebase.auth().currentUser.email)
       .get();
-    let revObj = {};
-    nameRes.docs.forEach(val => {
+    const revObj = {};
+    nameRes.docs.forEach((val) => {
       revObj[val.data().email] = val.data().name;
       if (
         val.data().email === this.$store.state.firebase.auth().currentUser.email
       ) {
-        //console.log('Changing role: ', val.data().role);
+        // console.log('Changing role: ', val.data().role);
 
         this.$store.state.vuex_user_role = val.data().role;
       }
@@ -316,54 +314,54 @@ export default {
     this.$store.state.currentAdminUserName = this.$store.state.allAdmins[
       this.$store.state.firebase.auth().currentUser.email
     ];
-    //console.log('NAMERES', nameRes.data());
+    // console.log('NAMERES', nameRes.data());
     this.activateModal(
       `Welcome back ${
         this.$store.state.currentAdminUserName
           ? this.$store.state.currentAdminUserName.trim().split(/\s+/)[0]
-          : ""
-      }!, Loading hackathon data...`
+          : ''
+      }!, Loading hackathon data...`,
     );
-    db.collection("users") //Change to real users later
-      .where("geo.latitude", "<", 1000000)
+    db.collection('users') // Change to real users later
+      .where('geo.latitude', '<', 1000000)
       .get()
-      .then(doc => {
-        doc.docs.forEach(val => {
-          //console.log('Vaal', val);
+      .then((doc) => {
+        doc.docs.forEach((val) => {
+          // console.log('Vaal', val);
           this.positions.pos.push({
             lat: val.data().geo ? val.data().geo.latitude : 0,
-            lng: val.data().geo ? val.data().geo.longitude : 0
+            lng: val.data().geo ? val.data().geo.longitude : 0,
           });
           this.positions.names.push({
-            email: val.data().email
+            email: val.data().email,
           });
-          //console.log(val.data().geo);
+          // console.log(val.data().geo);
           this.$Progress.finish();
         });
         this.loading = false;
       })
-      .catch(err => {
-        console.log("E307", err);
+      .catch((err) => {
+        console.log('E307', err);
         this.$Progress.fail();
         this.loading = false;
       });
 
-    db.collection("statistics")
-      .doc("DH5")
-      .onSnapshot(doc => {
+    db.collection('statistics')
+      .doc('DH5')
+      .onSnapshot((doc) => {
         const universityStats = doc.data().applicationStats.universities;
         this.applicationCount = doc.data().applications;
         this.$refs.universities.changeData(
-          this.processField(this.filterData(universityStats), "Universities")
+          this.processField(this.filterData(universityStats), 'Universities'),
         );
       });
-    let authRes = await db
-      .collection("admins")
+    const authRes = await db
+      .collection('admins')
       .doc(this.$store.state.firebase.auth().currentUser.email)
       .get();
 
     this.$store.state.currentUserIsAuthorizedReviewer = authRes.data().authorizedReviewer;
-    console.log("auth res: ", authRes.data());
+    console.log('auth res: ', authRes.data());
   },
   computed: {
     vuex_user_role: {
@@ -371,32 +369,32 @@ export default {
         return this.$store.state.vuex_user_role;
       },
       set(value) {
-        this.$store.commit("update_vuex_role", value);
-      }
+        this.$store.commit('update_vuex_role', value);
+      },
     },
     vuex_password: {
       get() {
         return this.$store.state.vuex_password;
       },
       set(value) {
-        this.$store.commit("update_vuex_password", value);
-      }
+        this.$store.commit('update_vuex_password', value);
+      },
     },
     vuex_current_user: {
       get() {
         return this.$store.state.vuex_current_user;
       },
       set(value) {
-        this.$store.commit("update_vuex_current_user", value);
-      }
-    }
+        this.$store.commit('update_vuex_current_user', value);
+      },
+    },
   },
   methods: {
     filterData(data) {
       const N = 5; // Number of fields to show before collapsing into "Other"
-      const values = Object.values(data);
+      const values: number[] = Object.values(data);
       const keys = Object.keys(data);
-      const out = {};
+      const out = <any>{};
       let i = 0;
       while (i < N) {
         const mindex = values.indexOf(Math.max(...values));
@@ -417,17 +415,17 @@ export default {
           {
             label,
             backgroundColor: this.colors,
-            data: val
-          }
-        ]
+            data: val,
+          },
+        ],
       };
     },
     async fnctn() {
       try {
-        let f = await firebase.functions().httpsCallable("createAdminUser")({
-          email: "admin1@google.com",
-          phoneNumber: "6473338767",
-          password: "password1"
+        const f = await firebase.functions().httpsCallable('createAdminUser')({
+          email: 'admin1@google.com',
+          phoneNumber: '6473338767',
+          password: 'password1',
         });
         console.log(f);
       } catch (err) {
@@ -435,55 +433,55 @@ export default {
       }
     },
     async f2() {
-      let func = firebase.functions().httpsCallable("newHello");
+      const func = firebase.functions().httpsCallable('newHello');
       try {
-        let res = await func({ hello: "hi" });
+        const res = await func({ hello: 'hi' });
         console.log(res);
       } catch (err) {
-        console.log("l129", err);
+        console.log('l129', err);
       }
     },
-    async fbdata() {
-      for (let j of fake) {
-        let { application, ...j2 } = j;
+    /* async fbdata() {
+      for (const j of fake) {
+        const { application, ...j2 } = j;
         try {
-          let ind = await firebase.functions().httpsCallable("returnIndex")({});
-          console.log("Index data: ", ind.data.index);
-          db.collection("fake_users")
+          const ind = await firebase.functions().httpsCallable('returnIndex')({});
+          console.log('Index data: ', ind.data.index);
+          db.collection('fake_users')
             .doc(j.email)
             .set({ ...j2, index: ind.data.index })
             .then(() => {
-              db.collection("applications")
-                .doc("DH5_Test")
-                .collection("all")
+              db.collection('applications')
+                .doc('DH5_Test')
+                .collection('all')
                 .doc(j.email)
                 .set(application)
-                .then(() => console.log("Successfully written"))
+                .then(() => console.log('Successfully written'))
                 .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
           console.log(j);
         } catch (err) {
-          console.log("Error getting index: ", err);
+          console.log('Error getting index: ', err);
         }
       }
-    },
+    }, */
     fake_apps() {},
     async getApplicationCount() {
       try {
-        let allStatistics = await db
-          .collection("statistics")
-          .doc("DH5")
+        const allStatistics = await db
+          .collection('statistics')
+          .doc('DH5')
           .get();
       } catch (err) {
-        console.log("An error occured: ", err);
+        console.log('An error occured: ', err);
       }
     },
-    activateModal(msg = "Loading...") {
+    activateModal(msg = 'Loading...') {
       this.loading = true;
       this.loadingMessage = msg;
-    }
-  }
+    },
+  },
 };
 </script>
 
