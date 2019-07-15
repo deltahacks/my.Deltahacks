@@ -1,5 +1,4 @@
 <template>
-  <script src="https://rawgit.com/TahaSh/vue-paginate/master/dist/vue-paginate.js"></script>
   <v-app class="dashboard">
     <Navbar/>
     <v-container fluid grid-list-md>
@@ -96,6 +95,7 @@
 </template>
 
 
+<script src="https://rawgit.com/TahaSh/vue-paginate/master/dist/vue-paginate.js"></script>
 <script lang="ts">
 import IOdometer from 'vue-odometer';
 import PieChart from '@/components/PieChart';
