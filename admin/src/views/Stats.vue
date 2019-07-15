@@ -406,13 +406,6 @@ export default {
       });
       this.setAgePanels(ages);
     },
-    parseDateField(date) {
-      const day = date.slice(0, 2);
-      const month = date.slice(2, 4);
-      const year = date.slice(4, date.length);
-      const parsed = `${month}/${day}/${year}`;
-      return new Date(parsed);
-    },
     getAgeFromDate(bday) {
       const current = new Date();
       if (bday > this.createDate(current, current.getFullYear() - 19)) {
