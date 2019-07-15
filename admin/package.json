@@ -6,17 +6,17 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "backup": "Firestore-export -a ./src/private/key.json -b ./src/private/backup/master.json",
     "fix": ".\\node_modules\\.bin/eslint --fix . --ext .js,.vue src",
-    "fun-up": "firebase deploy --only functions",
-    "backup": "Firestore-export -a ./src/private/key.json -b ./src/private/backup/master.json"
+    "fun-up": "firebase deploy --only functions"
   },
   "dependencies": {
     "apexcharts": "^2.0.9",
     "axios": "^0.18.0",
     "caesar-salad": "^1.0.1",
     "chart.js": "^2.7.2",
+    "core-js": "^2.6.5",
     "debounce": "^1.1.0",
-    "dns": "^0.2.2",
     "filepond": "^1.8.5",
     "filepond-plugin-file-validate-type": "^1.1.0",
     "filepond-plugin-image-preview": "^1.0.9",
@@ -27,7 +27,7 @@
     "odometer": "^0.4.8",
     "qrcode": "^1.3.2",
     "vee-validate": "^2.1.0-beta.2",
-    "vue": "^2.5.16",
+    "vue": "^2.6.10",
     "vue-apexcharts": "^1.2.1",
     "vue-chartjs": "^3.3.1",
     "vue-filepond": "^2.1.1",
@@ -40,16 +40,19 @@
     "vue2-google-maps": "^0.9.7",
     "vuelidate": "^0.7.4",
     "vuetify": "^1.0.19",
-    "vuex": "^3.0.1"
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
-    "@vue/cli-service": "^3.0.0-beta.15",
-    "@vue/eslint-config-airbnb": "^3.0.0-beta.15",
+    "@vue/cli-plugin-babel": "^3.9.2",
+    "@vue/cli-plugin-eslint": "^3.9.2",
+    "@vue/cli-service": "^3.9.2",
+    "@vue/eslint-config-airbnb": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.3",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [
     "> 1%",

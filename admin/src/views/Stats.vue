@@ -46,7 +46,7 @@
             </v-card>
           </v-card>
         </v-flex>
-        
+
         <v-flex d-flex xs12 sm6 md2>
           <v-card color='white lighten-4'>
             <v-card-title primary-title>Mentors</v-card-title>
@@ -203,7 +203,7 @@ export default {
         round3: 0,
         round4: 0,
         round5: 0,
-        rejected:0,
+        rejected: 0,
       },
       statistics: {
         decisions: {
@@ -218,7 +218,7 @@ export default {
         mentors: 0,
       },
       mentors: 0,
-      sponsors:0,
+      sponsors: 0,
       checkedIn: 0,
       walkins: 0,
       bus_passengers: 0,
@@ -323,7 +323,9 @@ export default {
       return this.inProgress - this.submitted;
     },
     accepted() {
-      const { round1, round2, round3, round4, round5 } = this.decisions;
+      const {
+        round1, round2, round3, round4, round5,
+      } = this.decisions;
       return round1 + round2 + round3 + round4 + round5;
     },
     safeCheckIn() {
@@ -352,16 +354,18 @@ export default {
     },
     getRSVP() {
       return new Promise((resolve, reject) => {
-        db.collection('hackathon').doc('DH5').collection('RSVP').doc('all').collection('Yes').get()
+        db.collection('hackathon').doc('DH5').collection('RSVP').doc('all')
+          .collection('Yes')
+          .get()
           .then((snap) => {
             const out = {};
-            snap.docs.forEach(doc => {
+            snap.docs.forEach((doc) => {
               const data = doc.data();
               out[data.email] = true;
               resolve(out);
-            })
-          })
-      })
+            });
+          });
+      });
     },
     setAllData() {
       this.setDecisionListeners();
@@ -413,15 +417,15 @@ export default {
       const current = new Date();
       if (bday > this.createDate(current, current.getFullYear() - 19)) {
         return '18-';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+      } if (bday > this.createDate(current, current.getFullYear() - 1)) {
         return '19';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+      } if (bday > this.createDate(current, current.getFullYear() - 1)) {
         return '20';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+      } if (bday > this.createDate(current, current.getFullYear() - 1)) {
         return '21';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+      } if (bday > this.createDate(current, current.getFullYear() - 1)) {
         return '22';
-      } else if (bday > this.createDate(current, current.getFullYear() - 1)) {
+      } if (bday > this.createDate(current, current.getFullYear() - 1)) {
         return '23';
       }
       return '24+';
@@ -481,7 +485,7 @@ export default {
       // db.collection('decisions').doc('DH5').collection('round2')
       //               .onSnapshot((snap) => {
       //                   this.decisions.round2 = snap.docs.length;
-      //                   this.setDecisionPanels();   
+      //                   this.setDecisionPanels();
       //               });
       // db.collection('decisions').doc('DH5').collection('round3')
       //   .onSnapshot((snap) => {
@@ -492,23 +496,23 @@ export default {
       // db.collection('decisions').doc('DH5').collection('round4')
       //               .onSnapshot((snap) => {
       //                   this.decisions.round4 = snap.docs.length;
-      //                   this.setDecisionPanels();   
+      //                   this.setDecisionPanels();
       //               });
       // db.collection('decisions').doc('DH5').collection('round5')
       //               .onSnapshot((snap) => {
       //                   this.decisions.round5 = snap.docs.length;
-      //                   this.setDecisionPanels();   
+      //                   this.setDecisionPanels();
       //               });
       await db.collection('decisions').doc('DH5').collection('pending')
-                    .onSnapshot((snap) => {
-                        this.aggregateAccepted(info, snap);
-                    })
+        .onSnapshot((snap) => {
+          this.aggregateAccepted(info, snap);
+        });
       db.collection('decisions').doc('DH5').collection('actually rejected')
-                    .onSnapshot((snap) => {
-                        this.decisions.rejected = snap.docs.length;
-                        this.aggregateAccepted(info, snap);
-                        this.setDecisionPanels();
-                    });
+        .onSnapshot((snap) => {
+          this.decisions.rejected = snap.docs.length;
+          this.aggregateAccepted(info, snap);
+          this.setDecisionPanels();
+        });
     },
     setRSVPData() {
       db.collection('hackathon').doc('DH5').collection('RSVP').doc('all')
