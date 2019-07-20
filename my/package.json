@@ -6,11 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "backup": "Firestore-export -a ./src/private/key.json -b ./src/private/backup/master.json",
     "fix": ".\\node_modules\\.bin/eslint --fix . --ext .js,.vue src",
-    "fun-up": "firebase deploy --only functions",
-    "backup": "Firestore-export -a ./src/private/key.json -b ./src/private/backup/master.json"
+    "fun-up": "firebase deploy --only functions"
   },
   "dependencies": {
+    "@hapi/hawk": "^7.1.0",
     "axios": "^0.18.0",
     "chart.js": "^2.7.2",
     "debounce": "^1.1.0",
@@ -42,10 +43,13 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
+    "@vue/cli-plugin-typescript": "^3.9.0",
     "@vue/cli-service": "^3.0.0-beta.15",
     "@vue/eslint-config-airbnb": "^3.0.0-beta.15",
+    "@vue/eslint-config-typescript": "^4.0.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.3",
+    "typescript": "^3.4.3",
     "vue-template-compiler": "^2.5.16"
   },
   "browserslist": [
