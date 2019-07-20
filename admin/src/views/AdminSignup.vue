@@ -44,7 +44,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import firebase from 'firebase';
 import functions from 'firebase/functions';
@@ -80,10 +80,10 @@ export default {
     async adminsignup() {
       this.loader = 'loading';
       if (
-        this.admin_email &&
-                this.admin_password_repeat &&
-                this.admin_password &&
-                this.admin_secret
+        this.admin_email
+                && this.admin_password_repeat
+                && this.admin_password
+                && this.admin_secret
       ) {
         if (this.admin_password_repeat !== this.admin_password) {
           this.feedback = 'Both passwords need to be identical';
@@ -143,7 +143,7 @@ export default {
                   .catch((err) => {
                     console.log(err);
                   });
-                console.log(response.ip);
+                console.log(response.data.ip);
               })
               .catch((error) => {
                 console.log(error);
@@ -192,7 +192,7 @@ export default {
       const l = this.loader;
       this[l] = !this[l];
 
-      setTimeout(() => (this[l] = false), 3000);
+      setTimeout(() => { this[l] = false; }, 3000);
 
       this.loader = null;
     },
