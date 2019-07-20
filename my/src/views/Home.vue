@@ -1,36 +1,18 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <!-- <applicant-dropdown/> -->
-    <!-- <data-table/> -->
-    <signup/>
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
-import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
-import DataTable from '@/components/DataTable.vue';
-import Apply from '@/views/Apply.vue';
-import Dashboard from '@/views/Dashboard.vue';
-import ForgotPassword from '@/views/ForgotPassword.vue';
-import Login from '@/views/Login.vue';
-import Signup from '@/views/Signup.vue';
+<script lang="ts">
+import Vue from 'vue';
+import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
-
-export default {
+export default Vue.extend({
   name: 'home',
   components: {
     HelloWorld,
-    ApplicantDropdown,
-    DataTable,
-    Apply,
-    ForgotPassword,
-    Dashboard,
-    Login,
-    Signup,
   },
-};
+});
 </script>
