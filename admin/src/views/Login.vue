@@ -45,7 +45,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import firebase from 'firebase';
 
 export default {
@@ -118,7 +118,7 @@ export default {
       const l = this.loader;
       this[l] = !this[l];
 
-      setTimeout(() => (this[l] = false), 3000);
+      setTimeout(() => { this[l] = false; }, 3000);
 
       this.loader = null;
     },
