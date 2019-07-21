@@ -164,9 +164,6 @@ import pdf from 'jspdf';
 import QR from 'qrcode';
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
-import {
-  encrypt, decrypt, ereplace, dreplace,
-} from '../private/crypto-helper';
 
 export default {
   name: 'LiveDesk',
@@ -215,11 +212,11 @@ export default {
     },
   }),
   computed: {
-    safeGender() {
+    safeGender(): String {
       const { gender } = this.application;
       return gender !== '' ? gender : 'N/A';
     },
-    fullName() {
+    fullName(): String {
       return `${this.application.name} ${this.application.lastname}`;
     },
   },
@@ -256,7 +253,7 @@ export default {
         }
       });
     },
-    directoryToName(dir) {
+    directoryToName(dir): String {
       console.log(dir);
       if (dir === 'Walkins') return 'walk in';
       if (dir === 'Sponsors') return 'sponsor';

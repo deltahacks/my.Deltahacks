@@ -46,7 +46,7 @@ Vue.use(VueGoogleMaps, {
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
 
-let app = null;
+let app: Vue = null;
 
 new Vue({
   router,
@@ -57,7 +57,7 @@ new Vue({
 // Start first time only after firebase is loaded
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
-    var app = new Vue({
+    const app = new Vue({
       router,
       store,
       render: h => h(App)
