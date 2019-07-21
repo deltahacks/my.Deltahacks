@@ -187,11 +187,57 @@ import BarChart from '@/components/BarChart';
 import ApexChart from '@/components/ApexBar.vue';
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
-import { allUniversities } from '../private/data';
+
+interface Dataset {
+    label: string,
+    backgroundColor: string[],
+    data: number[],
+}
+interface Data {
+  labels: string[],
+  datasets: Dataset[]
+}
+interface Decisions {
+  accepted: number,
+  pending: number,
+  overflow: number,
+  round1?: number,
+  round2?: number,
+  round3?: number,
+  round4?: number,
+  round5?: number,
+  rejected?: number
+}
+interface Statistics {
+  decisions: Decisions,
+  rsvp: number,
+  checkedIn: number,
+  mentors: number,
+}
+interface StatsData {
+  test: number[],
+  decisions: Decisions,
+  statistics: Statistics,
+  mentors: number,
+  sponsors: number,
+  checkedIn: number,
+  walkins: number,
+  bus_passengers: number,
+  pickups: {[index: string]: number},
+  submitted: number,
+  inProgress: number,
+  data: Data,
+  checkInData: Data,
+  ageData: Data,
+  busData: Data,
+  colors: string[],
+  options: any
+  rsvp: number
+}
 
 export default {
   name: 'Stats',
-  data() {
+  data(): StatsData {
     return {
       test: [50, 25, 25],
       decisions: {

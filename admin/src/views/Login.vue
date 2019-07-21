@@ -47,20 +47,35 @@
 </template>
 <script lang="ts">
 import firebase from 'firebase';
+import Vue from 'vue';
+
+interface LoginData {
+  drawer: String,
+  email: String,
+  pass: String,
+  feedback: String,
+  color: String,
+  bannerColor: String,
+  loader: String,
+  loading: Boolean,
+  loading2: Boolean,
+}
 
 export default {
   name: 'Login',
-  data: () => ({
-    drawer: null,
-    email: null,
-    pass: null,
-    feedback: null,
-    color: 'success',
-    bannerColor: 'success',
-    loader: null,
-    loading: false,
-    loading2: false,
-  }),
+  data(): LoginData {
+    return {
+      drawer: null,
+      email: null,
+      pass: null,
+      feedback: null,
+      color: 'success',
+      bannerColor: 'success',
+      loader: null,
+      loading: false,
+      loading2: false,
+    };
+  },
   methods: {
     signuppage() {
       this.$router.push({ name: 'Signup' });
