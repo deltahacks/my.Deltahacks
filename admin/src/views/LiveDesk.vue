@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <Navbar/>
+      <Navbar />
       <v-content>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
@@ -36,11 +36,11 @@
                   ></v-text-field>
                 </div>
                 <v-text-field
-                  :disabled='active'
-                  name='university'
-                  v-model='application.university'
-                  autocomplete='off'
-                  label='University/Organization *'
+                  :disabled="active"
+                  name="university"
+                  v-model="application.university"
+                  autocomplete="off"
+                  label="University/Organization *"
                 ></v-text-field>
                 <v-select
                   :disabled="active"
@@ -159,66 +159,66 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
-import pdf from 'jspdf';
-import QR from 'qrcode';
-import Navbar from '@/components/Navbar.vue';
-import db from '../private/firebase_init';
+import QR from "qrcode";
+import pdf from "jspdf";
+import firebase from "firebase";
+import db from "../private/firebase_init";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
-  name: 'LiveDesk',
+  name: "LiveDesk",
   components: {
-    Navbar,
+    Navbar
   },
   data: () => ({
     drawer: null,
     admin: firebase.auth().currentUser.email,
     email: null,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    bannerMessage: '',
+    sizes: ["XS", "S", "M", "L", "XL"],
+    bannerMessage: "",
     error: false,
-    errorMessage: '',
+    errorMessage: "",
     banner: false,
     confirm: false,
-    header: 'No QR code has been scanned yet.',
+    header: "No QR code has been scanned yet.",
     active: false,
     emptyApp: {
-      name: '',
-      lastname: '',
-      email: '',
+      name: "",
+      lastname: "",
+      email: "",
       shirt_size: null,
       dietary_restrictions: null,
       university: null,
-      phone: '',
-      emergency_phone: '',
-      emergency_name: '',
-      location: '',
-      birthday: '',
-      gender: '',
+      phone: "",
+      emergency_phone: "",
+      emergency_name: "",
+      location: "",
+      birthday: "",
+      gender: ""
     },
     application: {
-      name: '',
-      lastname: '',
-      email: '',
+      name: "",
+      lastname: "",
+      email: "",
       shirt_size: null,
       dietary_restrictions: null,
       university: null,
-      phone: '',
-      emergency_phone: '',
-      emergency_name: '',
-      location: '',
-      birthday: '',
-      gender: '',
-    },
+      phone: "",
+      emergency_phone: "",
+      emergency_name: "",
+      location: "",
+      birthday: "",
+      gender: ""
+    }
   }),
   computed: {
     safeGender(): String {
       const { gender } = this.application;
-      return gender !== '' ? gender : 'N/A';
+      return gender !== "" ? gender : "N/A";
     },
     fullName(): String {
       return `${this.application.name} ${this.application.lastname}`;
-    },
+    }
   },
   methods: {
     // saveDownLoadLinks() {
@@ -241,26 +241,26 @@ export default {
     reset() {
       const admin = firebase.auth().currentUser.email;
       const ref = db
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('FrontDesk')
+        .collection("hackathon")
+        .doc("DH5")
+        .collection("FrontDesk")
         .doc(admin);
-      ref.get().then((snap) => {
+      ref.get().then(snap => {
         if (snap.exists) {
           const data = snap.data();
-          data.scanned = '';
+          data.scanned = "";
           ref.set(data);
         }
       });
     },
     directoryToName(dir): String {
       console.log(dir);
-      if (dir === 'Walkins') return 'walk in';
-      if (dir === 'Sponsors') return 'sponsor';
-      if (dir === 'Mentors') return 'mentor';
-      if (dir === 'Volunteer') return 'volunteer';
-      if (dir === 'Exec') return 'executive';
-      return '';
+      if (dir === "Walkins") return "walk in";
+      if (dir === "Sponsors") return "sponsor";
+      if (dir === "Mentors") return "mentor";
+      if (dir === "Volunteer") return "volunteer";
+      if (dir === "Exec") return "executive";
+      return "";
     },
     register(target) {
       if (!this.validateForm()) {
@@ -269,17 +269,17 @@ export default {
       }
       const app = this.application;
       // reject if no identifying field is created.
-      if (app.email === '' || app.name === '') {
+      if (app.email === "" || app.name === "") {
         this.rejectRegistration();
         return;
       }
       // parse name field
-      const [first, last] = app.name.split(' ');
+      const [first, last] = app.name.split(" ");
       app.name = first;
-      app.lastname = last || '';
+      app.lastname = last || "";
       // add to respective directory
-      db.collection('hackathon')
-        .doc('DH5')
+      db.collection("hackathon")
+        .doc("DH5")
         .collection(target)
         .doc(app.email)
         .set(app);
@@ -288,35 +288,34 @@ export default {
       this.checkin(this.directoryToName(target));
       // open banner
       this.banner = true;
-      this.bannerMessage = `${
-        this.application.email
-      } has been registered under ${target}!`;
+      this.bannerMessage = `${this.application.email} has been registered under ${target}!`;
       this.confirm = false;
     },
     rejectRegistration() {
       this.error = true;
-      this.errorMessage = "Could not register person as one of 'Name' or 'Email' was left blank.";
+      this.errorMessage =
+        "Could not register person as one of 'Name' or 'Email' was left blank.";
     },
     getUserApplication(email) {
       return new Promise((resolve, reject) => {
         if (email.length === 0) resolve({ found: false, data: {} });
 
-        db.collection('applications')
-          .doc('DH5')
-          .collection('in progress')
+        db.collection("applications")
+          .doc("DH5")
+          .collection("in progress")
           .doc(email)
           .get()
-          .then((snap) => {
+          .then(snap => {
             const data = this.parseApplication(snap.data());
             if (snap.exists) {
               resolve({
                 data,
-                found: true,
+                found: true
               });
             } else {
               resolve({
                 found: false,
-                data: {},
+                data: {}
               });
             }
           });
@@ -326,12 +325,12 @@ export default {
     // probably won't need any others.
     parseApplication(app) {
       if (!app.gender) {
-        app.gender = '';
+        app.gender = "";
       }
       return app;
     },
     attendee() {
-      this.checkin('attendee');
+      this.checkin("attendee");
     },
     // ENCRYPT AND DECRYPT FUNCTIONS HERE - KAJOBAN
     // mainencrypt(plainText) {
@@ -356,7 +355,7 @@ export default {
     //   );
     // },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
-    checkin(type = 'attendee') {
+    checkin(type = "attendee") {
       if (!this.validateForm()) {
         this.formFeedback();
         return;
@@ -364,9 +363,9 @@ export default {
       const app = this.application;
       const name = `${app.name} ${app.lastname}`;
       app.type = type;
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
+      db.collection("hackathon")
+        .doc("DH5")
+        .collection("Checked In")
         .doc(this.application.email)
         .set({
           checkedIn: true,
@@ -377,57 +376,65 @@ export default {
           whereabouts: [
             {
               initialCheckin: true,
-              building: 'ETB',
+              building: "ETB",
               time: new Date(),
               by: this.$store.state.firebase
                 .auth()
                 .currentUser.email.toLowerCase(),
-              type: 'incoming',
-            },
+              type: "incoming"
+            }
           ],
-          meals: 0,
+          meals: 0
         })
         .then(() => {
           this.bannerMessage = `${this.fullName} has been checked in!`;
           this.banner = true;
-          console.log('Successfully written');
+          console.log("Successfully written");
           this.updateGender();
         })
         .catch(err => console.log(err));
     },
     updateGender() {
-      const ref = db.collection('applications').doc('DH5')
-        .collection('in progress').doc(this.application.email);
-      ref.get().then((snap) => {
+      const ref = db
+        .collection("applications")
+        .doc("DH5")
+        .collection("in progress")
+        .doc(this.application.email);
+      ref.get().then(snap => {
         if (snap.exists) {
           const data = snap.data();
           data.gender = this.application.gender;
           ref.set(data);
         } else {
-          console.log('Couldn\'t find user in `in progress`!');
+          console.log("Couldn't find user in `in progress`!");
         }
       });
     },
     async openBadge() {
-      if (this.application.email === '') return;
+      if (this.application.email === "") return;
       const { badge, error } = await this.createTemplate();
       if (error) return;
       const QRImage = await QR.toDataURL(
-        `https://admin.deltahacks.com/checkin/${this.application.email}`,
+        `https://admin.deltahacks.com/checkin/${this.application.email}`
       );
       const imageOffset = (badge.internal.pageSize.width - 25) / 2;
-      badge.addImage(QRImage, 'JPEG', imageOffset, 3, 25, 25);
+      badge.addImage(QRImage, "JPEG", imageOffset, 3, 25, 25);
       badge.save(`DH5_${this.application.name}${this.application.lastname}`);
     },
     // should insert / generate the back of DH5 badge.
     async createTemplate() {
-      const t = new pdf('l', 'mm', [165, 200]);
+      const t = new pdf("l", "mm", [165, 200]);
       const centeredText = (text, y) => {
-        const textWidth = t.getStringUnitWidth(text) * t.internal.getFontSize() / t.internal.scaleFactor;
+        const textWidth =
+          (t.getStringUnitWidth(text) * t.internal.getFontSize()) /
+          t.internal.scaleFactor;
         const textOffset = (t.internal.pageSize.width - textWidth) / 2;
         t.text(textOffset, y, text);
       };
-      const snap = await db.collection('hackathon').doc('DH5').collection('Checked In')
+      const snap = await db
+        .collection("hackathon")
+        .doc("DH5")
+        .collection("Checked In")
         .doc(this.application.email)
         .get();
       if (snap.exists) {
@@ -439,45 +446,43 @@ export default {
         centeredText(this.typeToTitle(data.type), 50);
       } else {
         this.error = true;
-        this.errorMessage = `${
-          this.application.email
-        } has not been registered or checked in!`;
+        this.errorMessage = `${this.application.email} has not been registered or checked in!`;
         return {
           error: true,
-          badge: undefined,
+          badge: undefined
         };
       }
       return {
         error: false,
-        badge: t,
+        badge: t
       };
     },
     typeToTitle(type) {
-      if (type === 'sponsor') return 'Sponsor';
-      if (type === 'mentor') return 'Mentor';
-      if (type === 'executive') return 'Organizer';
-      if (type === 'volunteer') return 'Volunteer';
-      return 'Attendee';
+      if (type === "sponsor") return "Sponsor";
+      if (type === "mentor") return "Mentor";
+      if (type === "executive") return "Organizer";
+      if (type === "volunteer") return "Volunteer";
+      return "Attendee";
     },
     validateForm() {
       const { university, email } = this.application;
       // if (this.name.length < 2) return false;
-      if (university === '' || email === '') return false;
+      if (university === "" || email === "") return false;
       return true;
     },
     formFeedback() {
       this.error = true;
-      this.errorMessage = 'Required fields not filled!';
-    },
+      this.errorMessage = "Required fields not filled!";
+    }
   },
   async beforeMount() {
     const admin = firebase.auth().currentUser.email;
     const ref = db
-      .collection('hackathon')
-      .doc('DH5')
-      .collection('FrontDesk')
+      .collection("hackathon")
+      .doc("DH5")
+      .collection("FrontDesk")
       .doc(admin);
-    ref.onSnapshot(async (snap) => {
+    ref.onSnapshot(async snap => {
       if (snap.exists) {
         const { scanned } = snap.data();
         // this code (below) is case sensitive !
@@ -494,20 +499,22 @@ export default {
         //   let decryptedemail = this.maindecrypt(code);
         //   console.log(decryptedemail); //KUMAIL LOOK AT THIS
         // }
-        const result = await this.getUserApplication(email).catch(err => console.error(err));
+        const result = await this.getUserApplication(email).catch(err =>
+          console.error(err)
+        );
         if (result.found) {
           this.application = result.data;
           this.header = result.data.email;
           this.active = true;
         } else {
           this.application = this.emptyApp;
-          this.header = 'No target attendee detected.';
+          this.header = "No target attendee detected.";
           this.active = false;
         }
       } else {
         this.header = `Account ${admin} not found in front desk collection.`;
       }
     });
-  },
+  }
 };
 </script>

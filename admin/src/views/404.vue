@@ -1,5 +1,5 @@
 <template>
-  <html>
+<html>
   <div class="stars"></div>
   <div class="twinkling"></div>
   <div class="container-error100">
@@ -13,28 +13,29 @@
       <span>0</span>
       <span>4</span>
       <section class="wrap">
-        <p>Page Not Found
-          <p>
-            <p>The page you're looking for appears to have been moved,deleted or doesn't exist!!</p>
-            <section class="wrap2">
-              <a href="javascript:history.back()">Go Back To The Previous Page</a>
-            </section>
-            <section class="wrap2">
-              <a href="/">Go Home</a>
-            </section>
-            <h2><br>DeltaHacks V</h2>
+        <p>Page Not Found</p>
+        <p></p>
+        <p>The page you're looking for appears to have been moved,deleted or doesn't exist!!</p>
+        <section class="wrap2">
+          <a href="javascript:history.back()">Go Back To The Previous Page</a>
+        </section>
+        <section class="wrap2">
+          <a href="/">Go Home</a>
+        </section>
+        <h2>
+          <br />DeltaHacks V
+        </h2>
       </section>
     </section>
   </div>
-
-  </html>
+</html>
 </template>
 
 <script lang="ts">
 export default {
   data() {
     return {};
-  },
+  }
 };
 </script>
 
