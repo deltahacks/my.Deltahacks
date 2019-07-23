@@ -91,12 +91,12 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
-import firebase from "firebase";
-import functions from "firebase/functions";
+import axios from 'axios';
+import firebase from 'firebase';
+import functions from 'firebase/functions';
 
 export default {
-  name: "Signup",
+  name: 'Signup',
   data: () => ({
     geo: null,
     email: null,
@@ -106,7 +106,7 @@ export default {
     password: null,
     feedback: null,
     loading2: false,
-    color: "success",
+    color: 'success',
     admin_name: null,
     ip_address: null,
     admin_email: null,
@@ -114,48 +114,48 @@ export default {
     admin_password: null,
     password_repeat: null,
     successFeedback: null,
-    admin_password_repeat: null
+    admin_password_repeat: null,
   }),
   props: {
-    source: String
+    source: String,
   },
   methods: {
     tester: () => console.log(this.vuex_email),
     async adminsignup() {
-      this.loader = "loading";
+      this.loader = 'loading';
       if (
-        this.admin_email &&
-        this.admin_password_repeat &&
-        this.admin_password &&
-        this.admin_secret
+        this.admin_email
+        && this.admin_password_repeat
+        && this.admin_password
+        && this.admin_secret
       ) {
         if (this.admin_password_repeat !== this.admin_password) {
-          this.feedback = "Both passwords need to be identical";
+          this.feedback = 'Both passwords need to be identical';
           return;
         }
         try {
           const adminSignupResponse = await firebase
             .functions()
-            .httpsCallable("createAdminUser")({
-            email: this.admin_email,
-            password: this.admin_password,
-            secret: this.admin_secret,
-            name: this.admin_name
-          });
-          console.log("RESPONSE: ", adminSignupResponse.data);
+            .httpsCallable('createAdminUser')({
+              email: this.admin_email,
+              password: this.admin_password,
+              secret: this.admin_secret,
+              name: this.admin_name,
+            });
+          console.log('RESPONSE: ', adminSignupResponse.data);
           this.successFeedback = true;
           if (adminSignupResponse.data.createdUser) {
             this.$router.push({
-              name: "Login",
-              params: { successFeedback: true }
+              name: 'Login',
+              params: { successFeedback: true },
             });
           }
         } catch (err) {
-          this.feedback = "There was an error :(";
-          console.log("Error: ", err);
+          this.feedback = 'There was an error :(';
+          console.log('Error: ', err);
         }
       } else {
-        this.feedback = "You need to enter all the fields";
+        this.feedback = 'You need to enter all the fields';
       }
     },
     signUpFirebase() {
@@ -163,64 +163,64 @@ export default {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password)
-          .then(user => {
-            console.log(user.user.uid, "ID");
-            console.log(this.$store.state.db, "DB");
+          .then((user) => {
+            console.log(user.user.uid, 'ID');
+            console.log(this.$store.state.db, 'DB');
             axios
-              .get("https://api.ipify.org?format=json")
-              .then(response => {
+              .get('https://api.ipify.org?format=json')
+              .then((response) => {
                 console.log(response.data.ip);
                 const ipp = response.data.ip;
                 axios
                   .get(`https://ipapi.co/${ipp}/json/`)
-                  .then(data => {
+                  .then((data) => {
                     console.log(data.data);
                     this.geo = data.data;
                     this.$store.state.db
-                      .collection("users")
+                      .collection('users')
                       .doc(this.vuex_email)
                       .set({
                         email: this.vuex_email,
                         geo: this.geo,
                         user_id: user.user.uid,
                         ip: ipp,
-                        is_admin: false
+                        is_admin: false,
                       });
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     console.log(err);
                   });
                 console.log(response.data.ip);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           })
           .then(() => {
-            console.log("success");
-            this.$router.push({ name: "Dashboard" });
+            console.log('success');
+            this.$router.push({ name: 'Dashboard' });
           })
-          .catch(err => {
+          .catch((err) => {
             this.feedback = err.message;
           });
       } else {
-        this.feedback = "You need to enter all the fields";
+        this.feedback = 'You need to enter all the fields';
       }
-    }
+    },
   },
   computed: {
     vuex_email: {
       get: () => this.$store.state.vuex_email,
-      set: value => this.$store.commit("update_vuex_email", value)
+      set: value => this.$store.commit('update_vuex_email', value),
     },
     vuex_password: {
       get: () => this.$store.state.vuex_password,
-      set: value => this.$store.commit("update_vuex_password", value)
+      set: value => this.$store.commit('update_vuex_password', value),
     },
     vuex_current_user: {
       get: () => this.$store.state.vuex_current_user,
-      set: value => this.$store.commit("update_vuex_current_user", value)
-    }
+      set: value => this.$store.commit('update_vuex_current_user', value),
+    },
   },
   watch: {
     loader() {
@@ -232,8 +232,8 @@ export default {
       }, 3000);
 
       this.loader = null;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped src='../assets/css/adminsignup.css'>
