@@ -80,8 +80,8 @@
 </div>
 </template>
 <script lang="ts">
-import firebase from "firebase";
-import Vue from "vue";
+import firebase from 'firebase';
+import Vue from 'vue';
 
 interface LoginData {
   drawer: String;
@@ -96,36 +96,36 @@ interface LoginData {
 }
 
 export default {
-  name: "Login",
+  name: 'Login',
   data(): LoginData {
     return {
       drawer: null,
       email: null,
       pass: null,
       feedback: null,
-      color: "success",
-      bannerColor: "success",
+      color: 'success',
+      bannerColor: 'success',
       loader: null,
       loading: false,
-      loading2: false
+      loading2: false,
     };
   },
   methods: {
     signuppage() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     login() {
-      this.loader = "loading";
+      this.loader = 'loading';
       if (this.email && this.pass) {
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.pass)
           .then(() => {
-            this.$router.push({ name: "Dashboard" });
-            console.log("logged in");
+            this.$router.push({ name: 'Dashboard' });
+            console.log('logged in');
             this.feedback = null;
           })
-          .catch(error => {
+          .catch((error) => {
             // Handle Errors here.
             const errorMessage = error.message;
             this.feedback = errorMessage;
@@ -138,22 +138,22 @@ export default {
 
       this.$http
         .jsonp(
-          "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz"
+          'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz',
         )
         .then(
-          response => {
+          (response) => {
             this.$Progress.finish();
           },
-          response => {
+          (response) => {
             this.$Progress.fail();
-          }
+          },
         );
-    }
+    },
   },
   mounted() {},
   props: {
     source: String,
-    successFeedback: null
+    successFeedback: null,
   },
   watch: {
     loader() {
@@ -165,8 +165,8 @@ export default {
       }, 3000);
 
       this.loader = null;
-    }
-  }
+    },
+  },
 };
 </script>
 

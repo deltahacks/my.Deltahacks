@@ -41,33 +41,33 @@
 </template>
 
 <script lang="ts">
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "ForgotPassword",
+  name: 'ForgotPassword',
   data: () => ({
     drawer: null,
-    email: null
+    email: null,
   }),
   methods: {
     signuppage() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     reset() {
       firebase
         .auth()
         .sendPasswordResetEmail(this.email)
         .then(() => {
-          console.log("Email sent.");
-          this.$router.push({ name: "Login" });
+          console.log('Email sent.');
+          this.$router.push({ name: 'Login' });
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
+    },
   },
   props: {
-    source: String
-  }
+    source: String,
+  },
 };
 </script>
