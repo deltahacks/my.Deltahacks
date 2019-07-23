@@ -177,9 +177,8 @@
 
 
 <script lang="ts">
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import IOdometer from 'vue-odometer';
-import functions from 'firebase/functions';
 // import fake from '@/helpers/fake';
 // import Typed from 'typed.js';
 import PieChart from '@/components/PieChartGen';
@@ -187,6 +186,7 @@ import BarChart from '@/components/BarChart';
 import ApexChart from '@/components/ApexBar.vue';
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 interface Dataset {
     label: string,
@@ -351,7 +351,7 @@ export default {
     db
       .collection('statistics')
       .doc('DH5')
-      .onSnapshot((doc) => {
+      .onSnapshot((doc: DocumentSnapshot) => {
         console.log(doc.data());
         if (doc.exists) {
           this.statistics = doc.data();
@@ -361,20 +361,20 @@ export default {
     this.initAgeChart();
   },
   computed: {
-    total() {
+    total(): number {
       const { accepted, rejected, pending } = this.decisions;
       return accepted + rejected + pending;
     },
-    pending() {
+    pending(): number {
       return this.inProgress - this.submitted;
     },
-    accepted() {
+    accepted(): number {
       const {
         round1, round2, round3, round4, round5,
       } = this.decisions;
       return round1 + round2 + round3 + round4 + round5;
     },
-    safeCheckIn() {
+    safeCheckIn(): number {
       console.log(this.checkedIn, this.mentors, this.sponsors);
       return this.checkedIn - this.mentors - this.sponsors;
     },
@@ -424,16 +424,15 @@ export default {
         this.updateAgeData(snap);
       });
     },
-    parseDateField(date) {
+    parseDateField(date: string): Date {
       const day = date.slice(0, 2);
       const month = date.slice(2, 4);
       const year = date.slice(4, date.length);
       const parsed = `${month}/${day}/${year}`;
       return new Date(parsed);
     },
-    createDate(current, year) {
-      const out = new Date(current.setFullYear(year));
-      return out;
+    createDate(current, year): Date {
+      return new Date(current.setFullYear(year));
     },
     updateAgeData(snap) {
       const ages = {
@@ -452,7 +451,7 @@ export default {
       });
       this.setAgePanels(ages);
     },
-    getAgeFromDate(bday) {
+    getAgeFromDate(bday): String {
       const current = new Date();
       if (bday > this.createDate(current, current.getFullYear() - 19)) {
         return '18-';
