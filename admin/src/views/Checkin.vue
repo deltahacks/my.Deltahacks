@@ -1,25 +1,30 @@
 <template>
   <v-app>
-    <Navbar/>
+    <Navbar />
     <v-snackbar v-model="feedback" top :color="bannerColor" :timeout="bannerTimeout">
       {{bannerMessage}}
-      <v-btn color="white" flat @click="feedback = false">
-        Close
-      </v-btn>
+      <v-btn color="white" flat @click="feedback = false">Close</v-btn>
     </v-snackbar>
     <div id="search">
-      <v-text-field id="search" hint='Search for attendees' prepend-icon="search" hide-details single-line :clearable=true></v-text-field>
+      <v-text-field
+        id="search"
+        hint="Search for attendees"
+        prepend-icon="search"
+        hide-details
+        single-line
+        :clearable="true"
+      ></v-text-field>
     </div>
     <h1 id="id">{{$route.params.id}}</h1>
-    <h2> Last status: {{ lastStatus }}</h2>
+    <h2>Last status: {{ lastStatus }}</h2>
     <v-btn @click="beam" class="checkinButtons" :disabled="alreadyCheckedIn">Beam</v-btn>
     <v-btn @click="checkin" class="checkinButtons" :disabled="alreadyCheckedIn">Check in</v-btn>
     <v-btn @click="signin" class="checkinButtons" :disabled="!alreadyCheckedIn">Sign in building</v-btn>
     <v-btn @click="signout" class="checkinButtons" :disabled="!alreadyCheckedIn">Sign out building</v-btn>
     <div class="input-prepend-append">
-      <button type="button" class="btn btn-prepend" @click='adjustMeals(-1)'> - </button>
-      <input type="number" min="0" max="5" id="meals" name='f' :value="meals">
-      <button type="button" class="btn btn-append" @click='adjustMeals(1)'> + </button>
+      <button type="button" class="btn btn-prepend" @click="adjustMeals(-1)">-</button>
+      <input type="number" min="0" max="5" id="meals" name="f" :value="meals" />
+      <button type="button" class="btn btn-append" @click="adjustMeals(1)">+</button>
     </div>
   </v-app>
 </template>
@@ -27,6 +32,7 @@
 <script lang="ts">
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
+
 import DocumentData = firebase.firestore.DocumentData;
 
 interface CheckinData {
@@ -60,8 +66,7 @@ export default {
   },
   methods: {
     checkin() {
-      db
-        .collection('hackathon')
+      db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
@@ -74,7 +79,9 @@ export default {
               initialCheckin: true,
               building: 'ETB',
               time: new Date(),
-              by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
+              by: this.$store.state.firebase
+                .auth()
+                .currentUser.email.toLowerCase(),
               type: 'incoming',
             },
           ],
@@ -90,25 +97,33 @@ export default {
         .catch(err => console.log(err));
     },
     beam() {
-      db.collection('hackathon').doc('DH5').collection('FrontDesk')
+      db.collection('hackathon')
+        .doc('DH5')
+        .collection('FrontDesk')
         .doc(this.$store.state.firebase.auth().currentUser.email.toLowerCase())
         .set({ scanned: this.$route.params.id.toLowerCase() });
     },
     signin() {
       return navigator.geolocation.getCurrentPosition((position) => {
-        db
-          .collection('hackathon')
+        db.collection('hackathon')
           .doc('DH5')
           .collection('Checked In')
           .doc(this.$route.params.id.toLowerCase())
           .update({
-            whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion({
-              building: 'ETB',
-              geolocation: [position.coords.latitude, position.coords.longitude],
-              time: new Date(),
-              by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
-              type: 'incoming',
-            }),
+            whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion(
+              {
+                building: 'ETB',
+                geolocation: [
+                  position.coords.latitude,
+                  position.coords.longitude,
+                ],
+                time: new Date(),
+                by: this.$store.state.firebase
+                  .auth()
+                  .currentUser.email.toLowerCase(),
+                type: 'incoming',
+              },
+            ),
           })
           .then(() => {
             this.feedback = true;
@@ -120,19 +135,25 @@ export default {
     },
     signout() {
       return navigator.geolocation.getCurrentPosition((position) => {
-        db
-          .collection('hackathon')
+        db.collection('hackathon')
           .doc('DH5')
           .collection('Checked In')
           .doc(this.$route.params.id.toLowerCase())
           .update({
-            whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion({
-              building: 'ETB',
-              geolocation: [position.coords.latitude, position.coords.longitude],
-              time: new Date(),
-              by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
-              type: 'outgoing',
-            }),
+            whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion(
+              {
+                building: 'ETB',
+                geolocation: [
+                  position.coords.latitude,
+                  position.coords.longitude,
+                ],
+                time: new Date(),
+                by: this.$store.state.firebase
+                  .auth()
+                  .currentUser.email.toLowerCase(),
+                type: 'outgoing',
+              },
+            ),
           })
           .then(() => {
             this.feedback = true;
@@ -143,41 +164,48 @@ export default {
       });
     },
     attachListener() {
-      db
-        .collection('hackathon')
+      db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .onSnapshot((doc) => {
           this.attendeeData = doc.data();
           if (
-            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .type === 'incoming'
+            this.attendeeData.whereabouts[
+              this.attendeeData.whereabouts.length - 1
+            ].type === 'incoming'
           ) {
             this.lastStatus = `Checked into ${
-              this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-                .building
-            } at ${new Date(this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .time.seconds * 1000)}`;
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].building
+            } at ${new Date(
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].time.seconds * 1000,
+            )}`;
           } else {
             this.lastStatus = `Left ${
-              this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-                .building
-            } at ${new Date(this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .time.seconds * 1000)}`;
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].building
+            } at ${new Date(
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].time.seconds * 1000,
+            )}`;
           }
           console.log('Current data: ', doc.data());
         });
     },
     adjustMeals(adjustment) {
       console.log('Adjusting meal');
-      db
-        .collection('hackathon')
+      db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .update({
-          meals: (this.meals += adjustment),
+          meals: this.meals += adjustment,
         })
         .then(() => {
           this.feedback = true;
@@ -188,8 +216,7 @@ export default {
     },
   },
   mounted() {
-    db
-      .collection('hackathon')
+    db.collection('hackathon')
       .doc('DH5')
       .collection('Checked In')
       .doc(this.$route.params.id.toLowerCase())
@@ -200,20 +227,29 @@ export default {
           this.alreadyCheckedIn = true;
           this.attendeeData = doc.data();
           if (
-            this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .type === 'incoming'
+            this.attendeeData.whereabouts[
+              this.attendeeData.whereabouts.length - 1
+            ].type === 'incoming'
           ) {
             this.lastStatus = `Checked into ${
-              this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-                .building
-            } at ${new Date(this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .time.seconds * 1000)}`;
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].building
+            } at ${new Date(
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].time.seconds * 1000,
+            )}`;
           } else {
             this.lastStatus = `Left ${
-              this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-                .building
-            } at ${new Date(this.attendeeData.whereabouts[this.attendeeData.whereabouts.length - 1]
-              .time.seconds * 1000)}`;
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].building
+            } at ${new Date(
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].time.seconds * 1000,
+            )}`;
           }
           this.meals = this.attendeeData.meals;
           console.log('Document data:', doc.data());
@@ -235,18 +271,18 @@ export default {
 
 <style scoped>
 .checkinButtons {
-    height: 10%;
+  height: 10%;
 }
 
 #id {
-    margin-top: 5%;
+  margin-top: 5%;
 }
 
 input {
-    text-align: center;
+  text-align: center;
 }
 #search {
-    width: 90%;
-    margin: 0 auto;
+  width: 90%;
+  margin: 0 auto;
 }
 </style>
