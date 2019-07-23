@@ -27,11 +27,23 @@
 <script lang="ts">
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
+import DocumentData = firebase.firestore.DocumentData;
+
+interface CheckinData {
+  meals: number,
+  feedback: boolean,
+  bannerMessage: string,
+  bannerTimeout: number,
+  bannerColor: string,
+  attendeeData: DocumentData,
+  lastStatus: string,
+  alreadyCheckedIn: boolean,
+  exists: boolean
+}
 
 export default {
-  data() {
+  data(): CheckinData {
     return {
-      d: 'l',
       meals: 0,
       feedback: null,
       bannerMessage: 'Success',

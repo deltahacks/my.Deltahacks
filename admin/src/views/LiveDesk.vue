@@ -297,7 +297,7 @@ export default {
       this.error = true;
       this.errorMessage = "Could not register person as one of 'Name' or 'Email' was left blank.";
     },
-    getUserApplication(email) {
+    getUserApplication(email: String) {
       return new Promise((resolve, reject) => {
         if (email.length === 0) resolve({ found: false, data: {} });
 
