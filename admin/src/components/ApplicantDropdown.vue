@@ -205,7 +205,7 @@
     </v-layout>
   </div>
 </template>
-<script>
+<script lang="ts">
 import vueSlider from 'vue-slider-component';
 
 export default {
@@ -285,7 +285,7 @@ export default {
         // );
         const decision = { ...userApplication.data().decision };
         const reviews = userApplication.data().decision.reviews + 1;
-        const reviewers = userApplication.data().decision.reviewers;
+        const { reviewers } = userApplication.data().decision;
         reviewers.push({
           score: this.score,
           reviewer: this.$store.state.firebase.auth().currentUser.email,
@@ -319,7 +319,7 @@ export default {
           .delete();
         this.usrname = `(DELETED) ${this.usrname}`;
         this.feedback = true;
-        console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
+        // console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
       } catch (err) {
         console.log('Error deleting application: ', err);
       }

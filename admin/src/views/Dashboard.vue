@@ -1,6 +1,6 @@
 <template>
   <v-app class="dashboard">
-    <Navbar/>
+    <Navbar />
     <v-container fluid grid-list-md>
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md4>
@@ -29,7 +29,7 @@
               <v-card color="white lighten-4" dark>
                 <v-card-title primary class="title">Total Submissions:</v-card-title>
                 <v-card-text class="totalapps center">
-                  <IOdometer class="iOdometer" :value="applicationCount"/>
+                  <IOdometer class="iOdometer" :value="applicationCount" />
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -47,7 +47,8 @@
                 <v-flex d-flex xs12>
                   <v-card color="white lighten-4" dark>
                     <v-menu offset-y>
-                      <v-btn slot="activator" color="error" depressed large dark id="debugger">Debug
+                      <v-btn slot="activator" color="error" depressed large dark id="debugger">
+                        Debug
                         <v-icon right dark>cloud_upload</v-icon>
                       </v-btn>
                       <v-list>
@@ -74,12 +75,12 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <commit-chart/>
+            <commit-chart />
           </v-card>
         </v-flex>
         <!-- <v-subheader class="ht">Applicants</v-subheader> -->
         <v-flex d-flex xs12 sm12 md12>
-          <DataTable id="dataTable"/>
+          <DataTable id="dataTable" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -95,40 +96,34 @@
 </template>
 
 
-<script src="https://rawgit.com/TahaSh/vue-paginate/master/dist/vue-paginate.js"></script>
-
-<script>
-import firebase from "firebase";
-import PieChart from "@/components/PieChart";
-import PieChart2 from "@/components/PieChartGen";
-import Navbar from "@/components/Navbar.vue";
-// import Tab from '@/components/Tab'
-import DataTable from "@/components/DataTable.vue";
-// import MapCard from '@/components/MapCard'
-// import Chart from '@/components/Chart'
+<script lang="ts">
 import IOdometer from "vue-odometer";
-import "odometer/themes/odometer-theme-default.css";
-import CommitChart from "@/components/CommitChart";
+import * as firebase from "firebase/app";
+
 import db from "../private/firebase_init";
+import Navbar from "@/components/Navbar.vue";
+import PieChart from "../components/PieChart";
+import PieChart2 from "../components/PieChartGen";
+import DataTable from "@/components/DataTable.vue";
+import CommitChart from "../components/CommitChart";
 import { allUniversities } from "../private/data";
-import fake from "@/helpers/fake";
-import functions from "firebase/functions";
+
+import "firebase/functions";
+import "odometer/themes/odometer-theme-default.css";
 
 export default {
   name: "Dashboard",
   data() {
     return {
-      applicationCount: 0,
       page: 3,
       apps: "245",
-      links: ["Home", "About", "Contact"],
-      allUniversities,
-      lorem:
-        "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
-      c_user: firebase.auth().currentUser,
-      positions: { pos: [], names: [] },
       loading: false,
+      allUniversities,
+      applicationCount: 0,
       loadingMessage: "Loading...",
+      positions: { pos: [], names: [] },
+      links: ["Home", "About", "Contact"],
+      c_user: firebase.auth().currentUser,
       colors: [
         "#E31836",
         "#83002C",
@@ -141,10 +136,10 @@ export default {
       debugFunctions: [
         {
           title: "Index Apps",
-          execute: async function() {
+          async execute() {
             try {
               console.log("Envoking firebase function...");
-              let successfulIndex = await firebase
+              const successfulIndex = await firebase
                 .functions()
                 .httpsCallable("indexApplications")({ adminKey: 1234 });
               console.log("Success!", successfulIndex);
@@ -155,9 +150,9 @@ export default {
         },
         {
           title: "Test Firebase Functions",
-          execute: async function() {
+          async execute() {
             try {
-              let successfulIndex = await firebase
+              const successfulIndex = await firebase
                 .functions()
                 .httpsCallable("newHello")({ adminKey: 1234 });
               console.log(successfulIndex);
@@ -168,10 +163,10 @@ export default {
         },
         {
           title: "Force update stats",
-          execute: async function() {
+          async execute() {
             try {
               console.log("Envoking firebase function...");
-              let successfulIndex = await firebase
+              const successfulIndex = await firebase
                 .functions()
                 .httpsCallable("forceUpdateStatistics")({ adminKey: 1234 });
               console.log("Success!", successfulIndex);
@@ -182,17 +177,17 @@ export default {
         },
         {
           title: "Count Microsoft",
-          execute: async function() {
+          async execute() {
             try {
               console.log("Counting msft");
-              let msftCount = await db
+              const msftCount = await db
                 .collection("decisions")
                 .doc("DH5")
                 .collection("pending")
                 .get();
               let finalcount = 0;
-              for (let inst of msftCount.docs) {
-                //console.log('INST', inst.data(), inst);
+              for (const inst of msftCount.docs) {
+                // console.log('INST', inst.data(), inst);
                 inst.data().microsoft
                   ? (finalcount += 1)
                   : (finalcount = finalcount);
@@ -205,18 +200,18 @@ export default {
         },
         {
           title: "Count Microsoft 2",
-          execute: async function() {
+          async execute() {
             try {
               console.log("Counting msft");
-              let msftCount = await db
+              const msftCount = await db
                 .collection("decisions")
                 .doc("DH5")
                 .collection("pending")
                 .where("index", ">", 500)
                 .get();
               let finalcount = 0;
-              for (let inst of msftCount.docs) {
-                //console.log('INST', inst.data(), inst);
+              for (const inst of msftCount.docs) {
+                // console.log('INST', inst.data(), inst);
                 inst.data().microsoft
                   ? console.log(
                       `,${inst.data().name} ${inst.data().lastname},`,
@@ -234,21 +229,21 @@ export default {
         },
         {
           title: "Reviewer stats",
-          execute: async function() {
+          async execute() {
             try {
               console.log("Calculating...");
-              let msftCount = await db
+              const msftCount = await db
                 .collection("decisions")
                 .doc("DH5")
                 .collection("pending")
                 .get();
-              let finalcount = 0;
-              let rStats = {};
-              for (let inst of msftCount.docs) {
-                //console.log('INST', inst.data(), inst);
-                //console.log('Dec', inst.data().decision);
+              const finalcount = 0;
+              const rStats = {};
+              for (const inst of msftCount.docs) {
+                // console.log('INST', inst.data(), inst);
+                // console.log('Dec', inst.data().decision);
                 if (!inst.data().decision) continue;
-                for (let rev of inst.data().decision.assignedTo) {
+                for (const rev of inst.data().decision.assignedTo) {
                   if (rStats[rev]) {
                     rStats[rev].assigned += 1;
                     if (
@@ -260,7 +255,7 @@ export default {
                   } else {
                     rStats[rev] = { marked: 0, assigned: 1 };
                   }
-                  for (let rev2 of inst.data().decision.reviewers) {
+                  for (const rev2 of inst.data().decision.reviewers) {
                     if (rStats[rev2.reviewer]) {
                       rStats[rev2.reviewer].marked += 1;
                     } else {
@@ -269,8 +264,8 @@ export default {
                   }
                 }
               }
-              for (let finalRevCount in rStats) {
-                //console.log('l24999', finalRevCount, rStats[finalRevCount]);
+              for (const finalRevCount in rStats) {
+                // console.log('l24999', finalRevCount, rStats[finalRevCount]);
                 rStats[finalRevCount].marked /= 3;
                 rStats[finalRevCount].marked = Math.floor(
                   rStats[finalRevCount].marked
@@ -287,27 +282,27 @@ export default {
   },
   components: {
     Navbar,
-    DataTable,
-    CommitChart,
     PieChart,
     PieChart2,
-    IOdometer
+    IOdometer,
+    DataTable,
+    CommitChart
   },
   created() {
     this.$Progress.start();
   },
   async mounted() {
-    let nameRes = await db
+    const nameRes = await db
       .collection("admins")
-      //.doc(this.$store.state.firebase.auth().currentUser.email)
+      // .doc(this.$store.state.firebase.auth().currentUser.email)
       .get();
-    let revObj = {};
+    const revObj = {};
     nameRes.docs.forEach(val => {
       revObj[val.data().email] = val.data().name;
       if (
         val.data().email === this.$store.state.firebase.auth().currentUser.email
       ) {
-        //console.log('Changing role: ', val.data().role);
+        // console.log('Changing role: ', val.data().role);
 
         this.$store.state.vuex_user_role = val.data().role;
       }
@@ -316,7 +311,7 @@ export default {
     this.$store.state.currentAdminUserName = this.$store.state.allAdmins[
       this.$store.state.firebase.auth().currentUser.email
     ];
-    //console.log('NAMERES', nameRes.data());
+    // console.log('NAMERES', nameRes.data());
     this.activateModal(
       `Welcome back ${
         this.$store.state.currentAdminUserName
@@ -324,12 +319,12 @@ export default {
           : ""
       }!, Loading hackathon data...`
     );
-    db.collection("users") //Change to real users later
+    db.collection("users") // Change to real users later
       .where("geo.latitude", "<", 1000000)
       .get()
       .then(doc => {
         doc.docs.forEach(val => {
-          //console.log('Vaal', val);
+          // console.log('Vaal', val);
           this.positions.pos.push({
             lat: val.data().geo ? val.data().geo.latitude : 0,
             lng: val.data().geo ? val.data().geo.longitude : 0
@@ -337,7 +332,7 @@ export default {
           this.positions.names.push({
             email: val.data().email
           });
-          //console.log(val.data().geo);
+          // console.log(val.data().geo);
           this.$Progress.finish();
         });
         this.loading = false;
@@ -357,7 +352,7 @@ export default {
           this.processField(this.filterData(universityStats), "Universities")
         );
       });
-    let authRes = await db
+    const authRes = await db
       .collection("admins")
       .doc(this.$store.state.firebase.auth().currentUser.email)
       .get();
@@ -394,9 +389,9 @@ export default {
   methods: {
     filterData(data) {
       const N = 5; // Number of fields to show before collapsing into "Other"
-      const values = Object.values(data);
+      const values: number[] = Object.values(data);
       const keys = Object.keys(data);
-      const out = {};
+      const out = <any>{};
       let i = 0;
       while (i < N) {
         const mindex = values.indexOf(Math.max(...values));
@@ -424,7 +419,7 @@ export default {
     },
     async fnctn() {
       try {
-        let f = await firebase.functions().httpsCallable("createAdminUser")({
+        const f = await firebase.functions().httpsCallable("createAdminUser")({
           email: "admin1@google.com",
           phoneNumber: "6473338767",
           password: "password1"
@@ -435,43 +430,43 @@ export default {
       }
     },
     async f2() {
-      let func = firebase.functions().httpsCallable("newHello");
+      const func = firebase.functions().httpsCallable("newHello");
       try {
-        let res = await func({ hello: "hi" });
+        const res = await func({ hello: "hi" });
         console.log(res);
       } catch (err) {
         console.log("l129", err);
       }
     },
-    async fbdata() {
-      for (let j of fake) {
-        let { application, ...j2 } = j;
+    /* async fbdata() {
+      for (const j of fake) {
+        const { application, ...j2 } = j;
         try {
-          let ind = await firebase.functions().httpsCallable("returnIndex")({});
-          console.log("Index data: ", ind.data.index);
-          db.collection("fake_users")
+          const ind = await firebase.functions().httpsCallable('returnIndex')({});
+          console.log('Index data: ', ind.data.index);
+          db.collection('fake_users')
             .doc(j.email)
             .set({ ...j2, index: ind.data.index })
             .then(() => {
-              db.collection("applications")
-                .doc("DH5_Test")
-                .collection("all")
+              db.collection('applications')
+                .doc('DH5_Test')
+                .collection('all')
                 .doc(j.email)
                 .set(application)
-                .then(() => console.log("Successfully written"))
+                .then(() => console.log('Successfully written'))
                 .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
           console.log(j);
         } catch (err) {
-          console.log("Error getting index: ", err);
+          console.log('Error getting index: ', err);
         }
       }
-    },
+    }, */
     fake_apps() {},
     async getApplicationCount() {
       try {
-        let allStatistics = await db
+        const allStatistics = await db
           .collection("statistics")
           .doc("DH5")
           .get();
@@ -546,4 +541,3 @@ export default {
   color: black;
 }
 </style>
-

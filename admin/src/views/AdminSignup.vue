@@ -1,50 +1,96 @@
 <template>
-    <div class="limiter">
-        <div class="container-signup100" style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');">
-            <div class="wrap-signup100">
-                <form class="signup100-form validate-form">
-                    <span class="signup100-form-logo">
-                        <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
-                    </span>
-                    <span class="welcomeheader">
-                        DeltaHacks V Admin Sign Up
-                    </span>
+  <div class="limiter">
+    <div
+      class="container-signup100"
+      style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');"
+    >
+      <div class="wrap-signup100">
+        <form class="signup100-form validate-form">
+          <span class="signup100-form-logo">
+            <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
+          </span>
+          <span class="welcomeheader">DeltaHacks V Admin Sign Up</span>
 
-                    <div class="wrap-input100 validate-input" data-validate="Enter username">
-                        <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="admin_email"></v-text-field>
-                    </div>
-                    <div class="wrap-input100 validate-input" data-validate="Enter password">
-                        <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model="admin_password"></v-text-field>
-                    </div>
-                    <div class="wrap-input100 validate-input" data-validate="Enter password">
-                        <v-text-field prepend-icon="lock" name="password2" label="Retype password" id="password2" type="password" v-model="admin_password_repeat"></v-text-field>
-                    </div>
-                    <div class="wrap-input100 validate-input" data-validate="Enter secret">
-                        <v-text-field prepend-icon="lock" name="secret" label="Enter team secret" id="secret" type="text" v-model="admin_secret"></v-text-field>
-                    </div>
-                    <div class="wrap-input100 validate-input" data-validate="Enter name">
-                        <v-text-field prepend-icon="person" name="name" label="Enter full name" id="name" type="text" v-model="admin_name"></v-text-field>
-                    </div>
-                    <div class="container-signup100-form-btn">
-                        <v-alert :value="feedback" type="error">
-                            {{ feedback }}
-                        </v-alert>
-                        <v-btn class="signup100-form-btn" :loading="loading" :disabled="loading" @click.prevent="adminsignup">Signup &nbsp;
-                            <i class="fas fa-user-plus" />
-                        </v-btn>
-                    </div>
-                    <div class="container-signup100-form-btn">
-                        <v-btn class="signup100-form-btn" :href="source" target="_blank" slot="activator" to="/">LOGIN
-                            <v-icon right>lock_open</v-icon>
-                        </v-btn>
-                    </div>
-                </form>
-            </div>
-        </div>
+          <div class="wrap-input100 validate-input" data-validate="Enter username">
+            <v-text-field
+              prepend-icon="email"
+              name="email"
+              label="Email"
+              type="email"
+              v-model="admin_email"
+            ></v-text-field>
+          </div>
+          <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <v-text-field
+              prepend-icon="lock"
+              name="password"
+              label="Password"
+              id="password"
+              type="password"
+              v-model="admin_password"
+            ></v-text-field>
+          </div>
+          <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <v-text-field
+              prepend-icon="lock"
+              name="password2"
+              label="Retype password"
+              id="password2"
+              type="password"
+              v-model="admin_password_repeat"
+            ></v-text-field>
+          </div>
+          <div class="wrap-input100 validate-input" data-validate="Enter secret">
+            <v-text-field
+              prepend-icon="lock"
+              name="secret"
+              label="Enter team secret"
+              id="secret"
+              type="text"
+              v-model="admin_secret"
+            ></v-text-field>
+          </div>
+          <div class="wrap-input100 validate-input" data-validate="Enter name">
+            <v-text-field
+              prepend-icon="person"
+              name="name"
+              label="Enter full name"
+              id="name"
+              type="text"
+              v-model="admin_name"
+            ></v-text-field>
+          </div>
+          <div class="container-signup100-form-btn">
+            <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
+            <v-btn
+              class="signup100-form-btn"
+              :loading="loading"
+              :disabled="loading"
+              @click.prevent="adminsignup"
+            >
+              Signup &nbsp;
+              <i class="fas fa-user-plus" />
+            </v-btn>
+          </div>
+          <div class="container-signup100-form-btn">
+            <v-btn
+              class="signup100-form-btn"
+              :href="source"
+              target="_blank"
+              slot="activator"
+              to="/"
+            >
+              LOGIN
+              <v-icon right>lock_open</v-icon>
+            </v-btn>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import firebase from 'firebase';
 import functions from 'firebase/functions';
@@ -52,38 +98,36 @@ import functions from 'firebase/functions';
 export default {
   name: 'Signup',
   data: () => ({
-    drawer: null,
-    email: null,
-    password: null,
-    password_repeat: null,
-    feedback: null,
-    ip_address: null,
     geo: null,
-    admin_name: null,
-    admin_email: null,
-    admin_password: null,
-    admin_secret: null,
-    admin_password_repeat: null,
-    successFeedback: null,
-    color: 'success',
+    email: null,
+    drawer: null,
     loader: null,
     loading: false,
+    password: null,
+    feedback: null,
     loading2: false,
+    color: 'success',
+    admin_name: null,
+    ip_address: null,
+    admin_email: null,
+    admin_secret: null,
+    admin_password: null,
+    password_repeat: null,
+    successFeedback: null,
+    admin_password_repeat: null,
   }),
   props: {
     source: String,
   },
   methods: {
-    tester() {
-      console.log(this.vuex_email);
-    },
+    tester: () => console.log(this.vuex_email),
     async adminsignup() {
       this.loader = 'loading';
       if (
-        this.admin_email &&
-                this.admin_password_repeat &&
-                this.admin_password &&
-                this.admin_secret
+        this.admin_email
+        && this.admin_password_repeat
+        && this.admin_password
+        && this.admin_secret
       ) {
         if (this.admin_password_repeat !== this.admin_password) {
           this.feedback = 'Both passwords need to be identical';
@@ -101,7 +145,10 @@ export default {
           console.log('RESPONSE: ', adminSignupResponse.data);
           this.successFeedback = true;
           if (adminSignupResponse.data.createdUser) {
-            this.$router.push({ name: 'Login', params: { successFeedback: true } });
+            this.$router.push({
+              name: 'Login',
+              params: { successFeedback: true },
+            });
           }
         } catch (err) {
           this.feedback = 'There was an error :(';
@@ -143,7 +190,7 @@ export default {
                   .catch((err) => {
                     console.log(err);
                   });
-                console.log(response.ip);
+                console.log(response.data.ip);
               })
               .catch((error) => {
                 console.log(error);
@@ -163,28 +210,16 @@ export default {
   },
   computed: {
     vuex_email: {
-      get() {
-        return this.$store.state.vuex_email;
-      },
-      set(value) {
-        this.$store.commit('update_vuex_email', value);
-      },
+      get: () => this.$store.state.vuex_email,
+      set: value => this.$store.commit('update_vuex_email', value),
     },
     vuex_password: {
-      get() {
-        return this.$store.state.vuex_password;
-      },
-      set(value) {
-        this.$store.commit('update_vuex_password', value);
-      },
+      get: () => this.$store.state.vuex_password,
+      set: value => this.$store.commit('update_vuex_password', value),
     },
     vuex_current_user: {
-      get() {
-        return this.$store.state.vuex_current_user;
-      },
-      set(value) {
-        this.$store.commit('update_vuex_current_user', value);
-      },
+      get: () => this.$store.state.vuex_current_user,
+      set: value => this.$store.commit('update_vuex_current_user', value),
     },
   },
   watch: {
@@ -192,7 +227,9 @@ export default {
       const l = this.loader;
       this[l] = !this[l];
 
-      setTimeout(() => (this[l] = false), 3000);
+      setTimeout(() => {
+        this[l] = false;
+      }, 3000);
 
       this.loader = null;
     },
