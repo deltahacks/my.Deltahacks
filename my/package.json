@@ -11,16 +11,13 @@
     "fun-up": "firebase deploy --only functions"
   },
   "dependencies": {
-    "@hapi/hawk": "^7.1.0",
     "axios": "^0.18.0",
     "chart.js": "^2.7.2",
-    "debounce": "^1.1.0",
     "filepond": "^1.8.5",
     "filepond-plugin-file-validate-type": "^1.1.0",
     "filepond-plugin-image-preview": "^1.0.9",
     "firebase": "^5.4.0",
     "firebase-admin": "^5.12.1",
-    "npm": "^6.4.0",
     "vee-validate": "^2.1.0-beta.2",
     "vue": "^2.5.16",
     "vue-analytics": "^5.16.0",
@@ -37,7 +34,6 @@
     "vuelidate": "^0.7.4",
     "vuetify": "^1.0.19",
     "vuex": "^3.0.1",
-    "yarn": "^1.9.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.2",
