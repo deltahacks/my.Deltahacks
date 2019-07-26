@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <Navbar/>
+      <Navbar />
       <v-content>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
@@ -36,11 +36,11 @@
                   ></v-text-field>
                 </div>
                 <v-text-field
-                  :disabled='active'
-                  name='university'
-                  v-model='application.university'
-                  autocomplete='off'
-                  label='University/Organization *'
+                  :disabled="active"
+                  name="university"
+                  v-model="application.university"
+                  autocomplete="off"
+                  label="University/Organization *"
                 ></v-text-field>
                 <v-select
                   :disabled="active"
@@ -159,14 +159,11 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
-import pdf from 'jspdf';
 import QR from 'qrcode';
-import Navbar from '@/components/Navbar.vue';
+import pdf from 'jspdf';
+import firebase from 'firebase';
 import db from '../private/firebase_init';
-import {
-  encrypt, decrypt, ereplace, dreplace,
-} from '../private/crypto-helper';
+import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'LiveDesk',
@@ -215,11 +212,11 @@ export default {
     },
   }),
   computed: {
-    safeGender() {
+    safeGender(): String {
       const { gender } = this.application;
       return gender !== '' ? gender : 'N/A';
     },
-    fullName() {
+    fullName(): String {
       return `${this.application.name} ${this.application.lastname}`;
     },
   },
@@ -256,7 +253,7 @@ export default {
         }
       });
     },
-    directoryToName(dir) {
+    directoryToName(dir): String {
       console.log(dir);
       if (dir === 'Walkins') return 'walk in';
       if (dir === 'Sponsors') return 'sponsor';
@@ -291,16 +288,14 @@ export default {
       this.checkin(this.directoryToName(target));
       // open banner
       this.banner = true;
-      this.bannerMessage = `${
-        this.application.email
-      } has been registered under ${target}!`;
+      this.bannerMessage = `${this.application.email} has been registered under ${target}!`;
       this.confirm = false;
     },
     rejectRegistration() {
       this.error = true;
       this.errorMessage = "Could not register person as one of 'Name' or 'Email' was left blank.";
     },
-    getUserApplication(email) {
+    getUserApplication(email: String) {
       return new Promise((resolve, reject) => {
         if (email.length === 0) resolve({ found: false, data: {} });
 
@@ -399,15 +394,18 @@ export default {
         .catch(err => console.log(err));
     },
     updateGender() {
-      const ref = db.collection('applications').doc('DH5')
-        .collection('in progress').doc(this.application.email);
+      const ref = db
+        .collection('applications')
+        .doc('DH5')
+        .collection('in progress')
+        .doc(this.application.email);
       ref.get().then((snap) => {
         if (snap.exists) {
           const data = snap.data();
           data.gender = this.application.gender;
           ref.set(data);
         } else {
-          console.log('Couldn\'t find user in `in progress`!');
+          console.log("Couldn't find user in `in progress`!");
         }
       });
     },
@@ -426,11 +424,15 @@ export default {
     async createTemplate() {
       const t = new pdf('l', 'mm', [165, 200]);
       const centeredText = (text, y) => {
-        const textWidth = t.getStringUnitWidth(text) * t.internal.getFontSize() / t.internal.scaleFactor;
+        const textWidth = (t.getStringUnitWidth(text) * t.internal.getFontSize())
+          / t.internal.scaleFactor;
         const textOffset = (t.internal.pageSize.width - textWidth) / 2;
         t.text(textOffset, y, text);
       };
-      const snap = await db.collection('hackathon').doc('DH5').collection('Checked In')
+      const snap = await db
+        .collection('hackathon')
+        .doc('DH5')
+        .collection('Checked In')
         .doc(this.application.email)
         .get();
       if (snap.exists) {
@@ -442,9 +444,7 @@ export default {
         centeredText(this.typeToTitle(data.type), 50);
       } else {
         this.error = true;
-        this.errorMessage = `${
-          this.application.email
-        } has not been registered or checked in!`;
+        this.errorMessage = `${this.application.email} has not been registered or checked in!`;
         return {
           error: true,
           badge: undefined,
