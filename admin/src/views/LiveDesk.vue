@@ -212,11 +212,11 @@ export default {
     },
   }),
   computed: {
-    safeGender(): String {
+    safeGender(): string {
       const { gender } = this.application;
       return gender !== '' ? gender : 'N/A';
     },
-    fullName(): String {
+    fullName(): string {
       return `${this.application.name} ${this.application.lastname}`;
     },
   },
@@ -253,7 +253,7 @@ export default {
         }
       });
     },
-    directoryToName(dir): String {
+    directoryToName(dir): string {
       console.log(dir);
       if (dir === 'Walkins') return 'walk in';
       if (dir === 'Sponsors') return 'sponsor';
@@ -295,7 +295,7 @@ export default {
       this.error = true;
       this.errorMessage = "Could not register person as one of 'Name' or 'Email' was left blank.";
     },
-    getUserApplication(email: String) {
+    getUserApplication(email: string) {
       return new Promise((resolve, reject) => {
         if (email.length === 0) resolve({ found: false, data: {} });
 
