@@ -203,9 +203,9 @@ export default {
         .then((snap) => {
           size = 5;
         });
-      return (size = 5);
+      return 5;
     },
-    getAgeFromDate(bday) {
+    getAgeFromDate(bday): number {
       const b2 = new Date(
         bday.slice(4),
         bday.slice(2, 4) - 1,
@@ -215,7 +215,7 @@ export default {
       const current = new Date();
       return this.calculateAge(b2);
     },
-    calculateAge(birthday) {
+    calculateAge(birthday: Date): number {
       // birthday is a date
       const ageDifMs = Date.now() - birthday.getTime();
       const ageDate = new Date(ageDifMs); // miliseconds from epoch
@@ -289,7 +289,9 @@ export default {
       .then((snap) => {
         console.log(this.rowsPerPage);
         console.log(snap.data().applications);
-        this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
+        this.numApplicants = Math.ceil(
+          snap.data().applications / this.rowsPerPage,
+        );
         console.log('Number apps: ', this.numApplicants);
       });
 
