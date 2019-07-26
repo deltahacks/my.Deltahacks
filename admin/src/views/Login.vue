@@ -84,7 +84,6 @@ import firebase from 'firebase';
 import Vue from 'vue';
 
 interface LoginData {
-  drawer: String;
   email: String;
   pass: String;
   feedback: String;
@@ -92,14 +91,12 @@ interface LoginData {
   bannerColor: String;
   loader: String;
   loading: Boolean;
-  loading2: Boolean;
 }
 
 export default {
   name: 'Login',
   data(): LoginData {
     return {
-      drawer: null,
       email: null,
       pass: null,
       feedback: null,
@@ -107,7 +104,6 @@ export default {
       bannerColor: 'success',
       loader: null,
       loading: false,
-      loading2: false,
     };
   },
   methods: {

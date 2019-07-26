@@ -198,6 +198,7 @@ interface Data {
   datasets: Dataset[];
 }
 
+// Decision interface to be used when using statistics, feel free to change mandatory fields
 interface Decisions {
   accepted: number;
   pending: number;
@@ -211,38 +212,36 @@ interface Decisions {
 }
 
 interface Statistics {
-  decisions: Decisions;
-  rsvp: number;
-  checkedIn: number;
-  mentors: number;
+  decisions: Decisions; // Refer above
+  rsvp: number; //Stats - # of rsvp
+  checkedIn: number; //Stats - # of people checked in
+  mentors: number; //Stats - # of mentors
 }
 
 interface StatsData {
-  test: number[];
   decisions: Decisions;
   statistics: Statistics;
-  mentors: number;
-  sponsors: number;
-  checkedIn: number;
-  walkins: number;
-  bus_passengers: number;
+  mentors: number; //Stats - # of mentors
+  sponsors: number; //Stats - # of sponsors
+  checkedIn: number; //Stats - # of people checked in
+  walkins: number; //Stats - # of people walked in
+  bus_passengers: number; //Stats - # of bus passengers
   pickups: { [index: string]: number };
-  submitted: number;
-  inProgress: number;
+  submitted: number; //Stats - # of submitted applications
+  inProgress: number; //Stats - # of in progress applications
   data: Data;
   checkInData: Data;
   ageData: Data;
   busData: Data;
-  colors: string[];
-  options: any;
-  rsvp: number;
+  colors: string[]; // Graphing colors array
+  options: any; // Graphing options
+  rsvp: number; //Stats - # of RSVP
 }
 
 export default {
   name: "Stats",
   data(): StatsData {
     return {
-      test: [50, 25, 25],
       decisions: {
         accepted: 0,
         pending: 0,
@@ -650,7 +649,7 @@ export default {
             "University of Toronto": 0,
             "University of Western Ontario": 0
           };
-          snap.docs.forEach(doc => {
+          snap.docs.forEach((doc: DocumentSnapshot) => {
             const current = doc.data();
             if (current.bus) {
               this.bus_passengers += 1;
@@ -792,7 +791,11 @@ export default {
       const ref = db.collection("statistics").doc("DH5");
       return new Promise(async (resolve, reject) => {
         const snap = await ref.get().catch(err => reject(err));
-        resolve(snap.data());
+        if(snap) {
+          resolve(snap.data());
+        } else {
+          resolve('');
+        }
       });
     },
     processField(field, label) {
