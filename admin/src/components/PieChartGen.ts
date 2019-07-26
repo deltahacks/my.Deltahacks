@@ -19,7 +19,9 @@ export default {
   methods: {
     changeData(data) {
       if (!data) return;
+      // eslint-disable-next-line no-underscore-dangle
       if (this.$data._chart) {
+        // eslint-disable-next-line no-underscore-dangle
         this.$data._chart.destroy();
       }
       this.renderChart(data, this.options);

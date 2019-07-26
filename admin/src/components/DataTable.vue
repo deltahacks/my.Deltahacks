@@ -78,7 +78,7 @@
   </v-card>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
 import { functions } from 'firebase';
@@ -122,6 +122,8 @@ export default {
           this.restriction = this.defaultRestriction;
           this.refetchCurrentPage();
           break;
+        default:
+          break;
       }
     },
     assignmentToName(emails) {
@@ -140,16 +142,16 @@ export default {
     bigDiff(prop) {
       if (!prop || !prop.item.decision.reviewers[1]) return false;
       const M = 5; // The difference threshold you want to check for.
-      const reviewers = prop.item.decision.reviewers;
-      let max_diff = Math.abs(reviewers[1].score - reviewers[0].score);
-      const min_ele = Math.min(...reviewers.map(r => r.score));
+      const { reviewers } = prop.item.decision;
+      let maxDiff = Math.abs(reviewers[1].score - reviewers[0].score);
+      const minEle = Math.min(...reviewers.map(r => r.score));
 
       for (let i = 0; i < reviewers.length; i++) {
-        const current = Math.abs(reviewers[i].score - min_ele);
-        if (current > max_diff) max_diff = current;
+        const current = Math.abs(reviewers[i].score - minEle);
+        if (current > maxDiff) maxDiff = current;
       }
 
-      return max_diff >= M;
+      return maxDiff >= M;
     },
     selectRow(e, props) {
       props.item.decision.reviewers.forEach(r => console.log(r.score));
@@ -201,9 +203,9 @@ export default {
         .then((snap) => {
           size = 5;
         });
-      return (size = 5);
+      return 5;
     },
-    getAgeFromDate(bday) {
+    getAgeFromDate(bday): number {
       const b2 = new Date(
         bday.slice(4),
         bday.slice(2, 4) - 1,
@@ -213,7 +215,7 @@ export default {
       const current = new Date();
       return this.calculateAge(b2);
     },
-    calculateAge(birthday) {
+    calculateAge(birthday: Date): number {
       // birthday is a date
       const ageDifMs = Date.now() - birthday.getTime();
       const ageDate = new Date(ageDifMs); // miliseconds from epoch
@@ -287,7 +289,9 @@ export default {
       .then((snap) => {
         console.log(this.rowsPerPage);
         console.log(snap.data().applications);
-        this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
+        this.numApplicants = Math.ceil(
+          snap.data().applications / this.rowsPerPage,
+        );
         console.log('Number apps: ', this.numApplicants);
       });
 
