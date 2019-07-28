@@ -81,20 +81,18 @@ export default {
     };
   },
   methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
-    },
-  },
+    async logout() {
+      try {
+        let request = firebase
+          .auth()
+          .signOut();
+        let response = await request;
+        this.$router.push({ name: 'Login' });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
 };
 </script>
 <style>

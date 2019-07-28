@@ -631,7 +631,7 @@ export default {
         console.log(err);
       }
     },
-    setApplicationInProgress() {
+    async setApplicationInProgress() {
       if (this.submitted && !this.enableGenderSelect) return;
       const unixts = Math.round(new Date().getTime() / 1000);
       this.application.last_modified = {
@@ -642,19 +642,19 @@ export default {
         unix: 0,
         date: '',
       };
-      this.$store.state.db
-        .collection('applications')
-        .doc('DH5')
-        .collection('in progress')
-        .doc(firebase.auth().currentUser.email)
-        .set(this.application)
-        .then(() => {
-          this.showInfoMessage('Application progress saved!');
-        })
-        .catch((err) => {
+      try {
+        let request = this.$store.state.db
+          .collection('applications')
+          .doc('DH5')
+          .collection('in progress')
+          .doc(firebase.auth().currentUser.email)
+          .set(this.application)
+        let response = await request;
+        this.showInfoMessage('Application progress saved!');
+      } catch(err) {
           console.log(err);
           this.loading = false;
-        });
+      }
     },
     setDateInformation() {
       const unixts = Math.round(new Date().getTime() / 1000);

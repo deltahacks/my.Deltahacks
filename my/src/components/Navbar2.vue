@@ -84,21 +84,18 @@ export default {
     tst() {
       console.log("FUUUUUUUUUUUCK");
     },
-    logout() {
+    async logout() {
       console.log("logging out");
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            console.log("Logout successful");
-            this.$router.push({ name: "Login" });
-          },
-          error => {
-            console.log("Logout unsuccessful");
-            console.log(error);
-          }
-        );
+      try {
+        let response = await firebase
+          .auth()
+          .signOut();
+        console.log("Logout successful");
+        this.$router.push({ name: "Login" });
+      } catch (e) {
+        console.log("Logout unsuccessful");
+        showError(e);
+      }
     }
   }
 };

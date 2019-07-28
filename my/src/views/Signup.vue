@@ -64,64 +64,51 @@ export default {
     tester() {
       console.log(this.vuex_email);
     },
-    signUpFirebase() {
+    async signUpFirebase() {
       if (this.vuex_email && this.vuex_password && this.password_repeat) {
         if (this.vuex_password !== this.password_repeat) { return (this.feedback = 'Passwords must match'); }
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password)
-          .then((user) => {
-            // console.log(user.user.uid, 'ID');
-            // console.log(this.$store.state.db, 'DB');
-            this.$store.state.db
-              .collection('users')
-              .doc(this.vuex_email)
-              .set({
-                email: this.vuex_email,
-                // geo: this.geo,
-                user_id: user.user.uid,
-                ip: ipp,
-                is_admin: false,
-              });
-            axios
-              .get('https://api.ipify.org?format=json')
-              .then((response) => {
-                // console.log(response.data.ip);
-                const ipp = response.data.ip;
-                axios
-                  .get(`https://ipapi.co/${ipp}/json/`)
-                  .then((data) => {
-                    // console.log(data.data);
-                    this.geo = data.data;
-                    this.$store.state.db
-                      .collection('users')
-                      .doc(this.vuex_email)
-                      .set({
-                        email: this.vuex_email,
-                        geo: this.geo,
-                        user_id: user.user.uid,
-                        ip: ipp,
-                        is_admin: false,
-                      });
-                  })
-                  .catch((err) => {
-                    // console.log(err);
-                  });
-                // console.log(response.ip);
-              })
-              .catch((error) => {
-                // console.log(error);
-              });
-          })
-          .then(() => {
-            // this.vuex_current_user = firebase.auth().currentUser
-            // console.log('success');
-            this.$router.push({ name: 'Status' });
-          })
-          .catch((err) => {
-            this.feedback = err.message;
-          });
-      } else {
+        try {
+          let user = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password);
+          // console.log(user.user.uid, 'ID');
+          // console.log(this.$store.state.db, 'DB');
+          this.$store.state.db
+            .collection('users')
+            .doc(this.vuex_email)
+            .set({
+              email: this.vuex_email,
+              // geo: this.geo,
+              user_id: user.user.uid,
+              ip: ipp,
+              is_admin: false,
+            });
+          let response = await axios
+            .get('https://api.ipify.org?format=json');
+          // console.log(response.data.ip);
+          const ipp = response.data.ip;
+          let data = await axios
+            .get(`https://ipapi.co/${ipp}/json/`);
+          // console.log(data.data);
+          this.geo = data.data;
+          this.$store.state.db
+            .collection('users')
+            .doc(this.vuex_email)
+            .set({
+              email: this.vuex_email,
+              geo: this.geo,
+              user_id: user.user.uid,
+              ip: ipp,
+              is_admin: false,
+            });
+          // this.vuex_current_user = firebase.auth().currentUser
+          // console.log('success');
+          this.$router.push({ name: 'Status' });
+        } catch(err) {
+          this.feedback = err.message;
+        }
+      }
+      else {
         this.feedback = 'You need to enter all the fields';
       }
     },
