@@ -158,51 +158,39 @@ export default {
         this.feedback = 'You need to enter all the fields';
       }
     },
-    signUpFirebase() {
+    async signUpFirebase() {
       if (this.vuex_email && this.vuex_password && this.password_repeat) {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password)
-          .then((user) => {
-            console.log(user.user.uid, 'ID');
-            console.log(this.$store.state.db, 'DB');
-            axios
-              .get('https://api.ipify.org?format=json')
-              .then((response) => {
-                console.log(response.data.ip);
-                const ipp = response.data.ip;
-                axios
-                  .get(`https://ipapi.co/${ipp}/json/`)
-                  .then((data) => {
-                    console.log(data.data);
-                    this.geo = data.data;
-                    this.$store.state.db
-                      .collection('users')
-                      .doc(this.vuex_email)
-                      .set({
-                        email: this.vuex_email,
-                        geo: this.geo,
-                        user_id: user.user.uid,
-                        ip: ipp,
-                        is_admin: false,
-                      });
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-                console.log(response.data.ip);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          })
-          .then(() => {
-            console.log('success');
-            this.$router.push({ name: 'Dashboard' });
-          })
-          .catch((err) => {
-            this.feedback = err.message;
+        let user = await firebase.auth().createUserWithEmailAndPassword(this.vuex_email, this.vuex_password);
+
+        console.log(user.user.uid, 'ID');
+        console.log(this.$store.state.db, 'DB');
+
+        try {
+          let response = await axios.get('https://api.ipify.org?format=json');
+          console.log(response.data.ip);
+          const ipp = response.data.ip;
+
+          let data = await axios.get(`https://ipapi.co/${ipp}/json/`);
+          console.log(data.data);
+          this.geo = data.data;
+
+          this.$store.state.db.collection('users').doc(this.vuex_email).set({
+            email: this.vuex_email,
+            geo: this.geo,
+            user_id: user.user.uid,
+            ip: ipp,
+            is_admin: false,
           });
+
+          console.log(response.data.ip);
+
+          console.log('success');
+          this.$router.push({ name: 'Dashboard' });
+
+        } catch (err) {
+          console.log(err);
+          this.feedback = err.message;
+        }
       } else {
         this.feedback = 'You need to enter all the fields';
       }
