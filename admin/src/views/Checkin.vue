@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import firebase from 'firebase/app';
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
 
