@@ -60,13 +60,14 @@ export default {
     signuppage() {
       this.$router.push({ name: 'Signup' });
     },
-    reset() {
-      firebase.auth().sendPasswordResetEmail(this.email).then(() => {
-        console.log('Email sent.');
-        this.$router.push({ name: 'Login' });
-      }).catch((error) => {
+    async reset() {
+      try {
+      await firebase.auth().sendPasswordResetEmail(this.email);
+      console.log('Email sent.');
+      this.$router.push({ name: 'Login' });
+      } catch(error) {
         console.log(error);
-      });
+      }
     },
   },
   props: {

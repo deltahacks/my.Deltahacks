@@ -432,7 +432,7 @@ export default {
       if (!this.response.bus) this.response.location = "";
       this.formChange();
     },
-    submitRSVP() {
+    async submitRSVP() {
       const email = auth().currentUser.email;
       const folder = this.response.rsvp ? "Yes" : "No";
       const opposingFolder = !this.response.rsvp ? "Yes" : "No";
@@ -441,15 +441,16 @@ export default {
         .doc("DH5")
         .collection("RSVP")
         .doc("all");
-      rsvpRef
-        .collection(folder)
-        .doc(email)
-        .set(this.response)
-        .then(res => {
+      try {
+        let res = await rsvpRef
+          .collection(folder)
+          .doc(email)
+          .set(this.response);
           this.feedback = true;
           this.confirmation = true;
-        })
-        .catch(err => console.log(err));
+      } catch(err) {
+        console.log(err);
+      }
       rsvpRef
         .collection(opposingFolder)
         .doc(email)
@@ -505,7 +506,7 @@ export default {
           }
         });
     },
-    fillRSVP() {
+    async fillRSVP() {
       const email = auth().currentUser.email;
       const folder = this.response.rsvp ? "Yes" : "No";
       const opposingFolder = !this.response.rsvp ? "Yes" : "No";
@@ -516,28 +517,25 @@ export default {
         .doc("all")
         .collection("Yes")
         .doc(email);
-      rsvpRef.get().then(doc => {
+      let doc = rsvpRef.get();
+      if (doc.exists) {
+        const data = doc.data();
+        this.response = data;
+        this.confirmation = true;
+        this.hasResponded = true;
+      } else {
+        let doc = await db.collection("hackathon")
+          .doc("DH5")
+          .collection("RSVP")
+          .doc("all")
+          .collection("No")
+          .doc(email)
+          .get();
         if (doc.exists) {
-          const data = doc.data();
-          this.response = data;
           this.confirmation = true;
           this.hasResponded = true;
-        } else {
-          db.collection("hackathon")
-            .doc("DH5")
-            .collection("RSVP")
-            .doc("all")
-            .collection("No")
-            .doc(email)
-            .get()
-            .then(doc => {
-              if (doc.exists) {
-                this.confirmation = true;
-                this.hasResponded = true;
-              }
-            });
         }
-      });
+      }
     }
   },
   async beforeMount() {

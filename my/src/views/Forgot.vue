@@ -70,26 +70,25 @@ export default {
     loginpage() {
       this.$router.push({ name: 'Login' });
     },
-    forgotPass() {
+    async forgotPass() {
       this.loader = 'loading';
       const parent = this;
       if (this.email) {
-        firebase
-          .auth()
-          .sendPasswordResetEmail(this.email)
-          .then(() => {
-            console.log('Email sent');
-            // this.$router.push({ name: "Login" });
-            this.feedback = true;
-            this.bannerMessage = 'Password reset sent to email';
-          })
-          .catch((error) => {
-            // Handle Errors here.
-            //   const errorCode = error.code;
-            const errorMessage = error.message;
-            this.feedback = errorMessage;
-            console.log(errorMessage);
-          });
+        try {
+          await firebase
+            .auth()
+            .sendPasswordResetEmail(this.email);
+          console.log('Email sent');
+          // this.$router.push({ name: "Login" });
+          this.feedback = true;
+          this.bannerMessage = 'Password reset sent to email';          
+        } catch(error) {
+          // Handle Errors here.
+          //   const errorCode = error.code;
+          const errorMessage = error.message;
+          this.feedback = errorMessage;
+          console.log(errorMessage);
+        }
       }
     },
   },
