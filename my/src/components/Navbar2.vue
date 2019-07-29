@@ -87,7 +87,7 @@ export default {
     async logout() {
       console.log("logging out");
       try {
-        let response = await firebase
+        await firebase
           .auth()
           .signOut();
         console.log("Logout successful");
