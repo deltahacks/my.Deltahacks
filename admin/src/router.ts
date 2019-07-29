@@ -108,23 +108,22 @@ router.beforeEach((to, from, next) => {
       if (user) {
         // Proceed to next page
         console.log('Authorized user2: ', user);
-
-        db.collection('admins')
-          .doc(user.email.toLocaleLowerCase())
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              console.log('Document data:', doc.data());
-              next();
-            } else {
-              console.log('Not an admin user!');
-              next({ name: 'Login' });
-            }
-          })
-          .catch((error) => {
+        try {
+          let doc = db.collection('admins')
+            .doc(user.email.toLocaleLowerCase())
+            .get();
+          
+          if (doc.exists) {
+            console.log('Document data:', doc.data());
+            next();
+          } else {
             console.log('Not an admin user!');
             next({ name: 'Login' });
-          });
+          }
+        } catch (err) {
+          console.log('Not an admin user!');
+          next({ name: 'Login' });
+        }
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');

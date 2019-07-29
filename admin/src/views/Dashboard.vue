@@ -319,10 +319,12 @@ export default {
           : ""
       }!, Loading hackathon data...`
     );
-    db.collection("users") // Change to real users later
-      .where("geo.latitude", "<", 1000000)
-      .get()
-      .then(doc => {
+
+    try {
+      let doc = await db.collection("users") // Change to real users later
+        .where("geo.latitude", "<", 1000000)
+        .get();
+
         doc.docs.forEach(val => {
           // console.log('Vaal', val);
           this.positions.pos.push({
@@ -335,13 +337,12 @@ export default {
           // console.log(val.data().geo);
           this.$Progress.finish();
         });
-        this.loading = false;
-      })
-      .catch(err => {
-        console.log("E307", err);
-        this.$Progress.fail();
-        this.loading = false;
-      });
+      this.loading = false;
+    } catch (err) {
+      console.log("E307", err);
+      this.$Progress.fail();
+      this.loading = false;
+    }
 
     db.collection("statistics")
       .doc("DH5")
