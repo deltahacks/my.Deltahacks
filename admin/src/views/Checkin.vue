@@ -65,36 +65,38 @@ export default {
     Navbar,
   },
   methods: {
-    checkin() {
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
-        .doc(this.$route.params.id.toLowerCase())
-        .set({
-          checkedIn: true,
-          time: new Date(),
-          by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
-          whereabouts: [
-            {
-              initialCheckin: true,
-              building: 'ETB',
-              time: new Date(),
-              by: this.$store.state.firebase
-                .auth()
-                .currentUser.email.toLowerCase(),
-              type: 'incoming',
-            },
-          ],
-          meals: 0,
-        })
-        .then(() => {
+    async checkin() {
+      try {
+        await db.collection('hackathon')
+          .doc('DH5')
+          .collection('Checked In')
+          .doc(this.$route.params.id.toLowerCase())
+          .set({
+            checkedIn: true,
+            time: new Date(),
+            by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
+            whereabouts: [
+              {
+                initialCheckin: true,
+                building: 'ETB',
+                time: new Date(),
+                by: this.$store.state.firebase
+                  .auth()
+                  .currentUser.email.toLowerCase(),
+                type: 'incoming',
+              },
+            ],
+            meals: 0,
+          })
+
           this.feedback = true;
           this.alreadyCheckedIn = true;
           this.bannerMessage = 'Successfully checked in';
           console.log('Successfully written');
           this.attachListener();
-        })
-        .catch(err => console.log(err));
+      } catch (err) {
+        console.log(err);
+      }
     },
     beam() {
       db.collection('hackathon')
@@ -103,64 +105,68 @@ export default {
         .doc(this.$store.state.firebase.auth().currentUser.email.toLowerCase())
         .set({ scanned: this.$route.params.id.toLowerCase() });
     },
-    signin() {
-      return navigator.geolocation.getCurrentPosition((position) => {
-        db.collection('hackathon')
-          .doc('DH5')
-          .collection('Checked In')
-          .doc(this.$route.params.id.toLowerCase())
-          .update({
-            whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion(
-              {
-                building: 'ETB',
-                geolocation: [
-                  position.coords.latitude,
-                  position.coords.longitude,
-                ],
-                time: new Date(),
-                by: this.$store.state.firebase
-                  .auth()
-                  .currentUser.email.toLowerCase(),
-                type: 'incoming',
-              },
-            ),
-          })
-          .then(() => {
-            this.feedback = true;
-            this.bannerMessage = 'Successfully signed in building';
-            console.log('Successfully written');
-          })
-          .catch(err => console.log(err));
+    async signin() {
+      return navigator.geolocation.getCurrentPosition(async (position) => {
+        try {
+          await db.collection('hackathon')
+            .doc('DH5')
+            .collection('Checked In')
+            .doc(this.$route.params.id.toLowerCase())
+            .update({
+              whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion(
+                {
+                  building: 'ETB',
+                  geolocation: [
+                    position.coords.latitude,
+                    position.coords.longitude,
+                  ],
+                  time: new Date(),
+                  by: this.$store.state.firebase
+                    .auth()
+                    .currentUser.email.toLowerCase(),
+                  type: 'incoming',
+                },
+              ),
+            });
+
+          this.feedback = true;
+          this.bannerMessage = 'Successfully signed in building';
+          console.log('Successfully written');
+        } catch (err) {
+          console.log(err);
+        }
       });
     },
-    signout() {
-      return navigator.geolocation.getCurrentPosition((position) => {
-        db.collection('hackathon')
-          .doc('DH5')
-          .collection('Checked In')
-          .doc(this.$route.params.id.toLowerCase())
-          .update({
-            whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion(
-              {
-                building: 'ETB',
-                geolocation: [
-                  position.coords.latitude,
-                  position.coords.longitude,
-                ],
-                time: new Date(),
-                by: this.$store.state.firebase
-                  .auth()
-                  .currentUser.email.toLowerCase(),
-                type: 'outgoing',
-              },
-            ),
-          })
-          .then(() => {
-            this.feedback = true;
-            this.bannerMessage = 'Successfully signed out building';
-            console.log('Successfully written');
-          })
-          .catch(err => console.log(err));
+    async signout() {
+      return navigator.geolocation.getCurrentPosition(async (position) => {
+        try {
+          await db.collection('hackathon')
+            .doc('DH5')
+            .collection('Checked In')
+            .doc(this.$route.params.id.toLowerCase())
+            .update({
+              whereabouts: this.$store.state.firebase.firestore.FieldValue.arrayUnion(
+                {
+                  building: 'ETB',
+                  geolocation: [
+                    position.coords.latitude,
+                    position.coords.longitude,
+                  ],
+                  time: new Date(),
+                  by: this.$store.state.firebase
+                    .auth()
+                    .currentUser.email.toLowerCase(),
+                  type: 'outgoing',
+                },
+              ),
+            })
+
+          this.feedback = true;
+          this.bannerMessage = 'Successfully signed out building';
+          console.log('Successfully written');
+        } catch (err) {
+          console.log(err);
+        }
       });
     },
     attachListener() {
@@ -198,30 +204,33 @@ export default {
           console.log('Current data: ', doc.data());
         });
     },
-    adjustMeals(adjustment) {
+    async adjustMeals(adjustment) {
       console.log('Adjusting meal');
-      db.collection('hackathon')
+      try {
+        await db.collection('hackathon')
+          .doc('DH5')
+          .collection('Checked In')
+          .doc(this.$route.params.id.toLowerCase())
+          .update({
+            meals: this.meals += adjustment,
+          })
+
+        this.feedback = true;
+        this.bannerMessage = 'Successfully Adjusted Meal';
+        console.log('Successfully written');
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  async mounted() {
+    try {
+      let doc = await db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
-        .update({
-          meals: this.meals += adjustment,
-        })
-        .then(() => {
-          this.feedback = true;
-          this.bannerMessage = 'Successfully Adjusted Meal';
-          console.log('Successfully written');
-        })
-        .catch(err => console.log(err));
-    },
-  },
-  mounted() {
-    db.collection('hackathon')
-      .doc('DH5')
-      .collection('Checked In')
-      .doc(this.$route.params.id.toLowerCase())
-      .get()
-      .then((doc) => {
+        .get()
+
         if (doc.exists) {
           this.exists = true;
           this.alreadyCheckedIn = true;
@@ -261,10 +270,9 @@ export default {
         console.log('No such document!');
         this.lastStatus = 'Not checked in';
         return false;
-      })
-      .catch((error) => {
-        console.log('Error getting document:', error);
-      });
+    } catch (err) {
+      console.log('Error getting document:', err);
+    }
   },
 };
 </script>

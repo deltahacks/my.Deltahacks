@@ -160,12 +160,11 @@ export default {
     },
     async signUpFirebase() {
       if (this.vuex_email && this.vuex_password && this.password_repeat) {
-        let user = await firebase.auth().createUserWithEmailAndPassword(this.vuex_email, this.vuex_password);
-
-        console.log(user.user.uid, 'ID');
-        console.log(this.$store.state.db, 'DB');
-
         try {
+          let user = await firebase.auth().createUserWithEmailAndPassword(this.vuex_email, this.vuex_password);
+          console.log(user.user.uid, 'ID');
+          console.log(this.$store.state.db, 'DB');
+
           let response = await axios.get('https://api.ipify.org?format=json');
           console.log(response.data.ip);
           const ipp = response.data.ip;

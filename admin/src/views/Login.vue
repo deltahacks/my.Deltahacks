@@ -114,41 +114,39 @@ export default {
     signuppage() {
       this.$router.push({ name: 'Signup' });
     },
-    login() {
+    async login() {
       this.loader = 'loading';
       if (this.email && this.pass) {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(this.email, this.pass)
-          .then(() => {
+        try {
+          await firebase
+            .auth()
+            .signInWithEmailAndPassword(this.email, this.pass)
+
             this.$router.push({ name: 'Dashboard' });
             console.log('logged in');
             this.feedback = null;
-          })
-          .catch((error) => {
-            // Handle Errors here.
-            const errorMessage = error.message;
-            this.feedback = errorMessage;
-            console.log(errorMessage, error.code);
-          });
+        } catch (err) {
+          const errorMessage = err.message;
+          this.feedback = errorMessage;
+          console.log(errorMessage, err.code);
+        }
       }
     },
-    htest() {
-      this.$Progress.start();
-
-      this.$http
-        .jsonp(
-          'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz',
-        )
-        .then(
-          (response) => {
-            this.$Progress.finish();
-          },
-          (response) => {
-            this.$Progress.fail();
-          },
-        );
-    },
+    // async htest() {
+    //   this.$Progress.start();
+    //   this.$http
+    //     .jsonp(
+    //       'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=7waqfqbprs7pajbz28mqf6vz',
+    //     )
+    //     .then(
+    //       (response) => {
+    //         this.$Progress.finish();
+    //       },
+    //       (response) => {
+    //         this.$Progress.fail();
+    //       },
+    //     );
+    // },
   },
   mounted() {},
   props: {

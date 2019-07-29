@@ -238,20 +238,20 @@ export default {
     //       });
     //     });
     // },
-    reset() {
+    async reset() {
       const admin = firebase.auth().currentUser.email;
       const ref = db
         .collection('hackathon')
         .doc('DH5')
         .collection('FrontDesk')
         .doc(admin);
-      ref.get().then((snap) => {
-        if (snap.exists) {
-          const data = snap.data();
-          data.scanned = '';
-          ref.set(data);
-        }
-      });
+
+      let snap = await ref.get();
+      if (snap.exists) {
+        const data = snap.data();
+        data.scanned = '';
+        ref.set(data);
+      }
     },
     directoryToName(dir): String {
       console.log(dir);
@@ -295,29 +295,29 @@ export default {
       this.error = true;
       this.errorMessage = "Could not register person as one of 'Name' or 'Email' was left blank.";
     },
-    getUserApplication(email: String) {
-      return new Promise((resolve, reject) => {
+    async getUserApplication(email: String) {
+      return new Promise(async (resolve, reject) => {
         if (email.length === 0) resolve({ found: false, data: {} });
 
-        db.collection('applications')
+        let snap = await db.collection('applications')
           .doc('DH5')
           .collection('in progress')
           .doc(email)
-          .get()
-          .then((snap) => {
-            const data = this.parseApplication(snap.data());
-            if (snap.exists) {
-              resolve({
-                data,
-                found: true,
-              });
-            } else {
-              resolve({
-                found: false,
-                data: {},
-              });
-            }
-          });
+          .get();
+
+
+          const data = this.parseApplication(snap.data());
+          if (snap.exists) {
+            resolve({
+              data,
+              found: true,
+            });
+          } else {
+            resolve({
+              found: false,
+              data: {},
+            });
+          }
       });
     },
     // append any other safety checks needed.
@@ -354,7 +354,7 @@ export default {
     //   );
     // },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
-    checkin(type = 'attendee') {
+    async checkin(type = 'attendee') {
       if (!this.validateForm()) {
         this.formFeedback();
         return;
@@ -362,52 +362,55 @@ export default {
       const app = this.application;
       const name = `${app.name} ${app.lastname}`;
       app.type = type;
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
-        .doc(this.application.email)
-        .set({
-          checkedIn: true,
-          time: new Date(),
-          by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
-          type: app.type,
-          name,
-          whereabouts: [
-            {
-              initialCheckin: true,
-              building: 'ETB',
-              time: new Date(),
-              by: this.$store.state.firebase
-                .auth()
-                .currentUser.email.toLowerCase(),
-              type: 'incoming',
-            },
-          ],
-          meals: 0,
-        })
-        .then(() => {
-          this.bannerMessage = `${this.fullName} has been checked in!`;
-          this.banner = true;
-          console.log('Successfully written');
-          this.updateGender();
-        })
-        .catch(err => console.log(err));
+      try {
+        await db.collection('hackathon')
+          .doc('DH5')
+          .collection('Checked In')
+          .doc(this.application.email)
+          .set({
+            checkedIn: true,
+            time: new Date(),
+            by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
+            type: app.type,
+            name,
+            whereabouts: [
+              {
+                initialCheckin: true,
+                building: 'ETB',
+                time: new Date(),
+                by: this.$store.state.firebase
+                  .auth()
+                  .currentUser.email.toLowerCase(),
+                type: 'incoming',
+              },
+            ],
+            meals: 0,
+          })
+
+        this.bannerMessage = `${this.fullName} has been checked in!`;
+        this.banner = true;
+        console.log('Successfully written');
+        this.updateGender();
+      } catch (err) {
+        console.log(err);
+      }
     },
-    updateGender() {
+    async updateGender() {
       const ref = db
         .collection('applications')
         .doc('DH5')
         .collection('in progress')
         .doc(this.application.email);
-      ref.get().then((snap) => {
-        if (snap.exists) {
-          const data = snap.data();
-          data.gender = this.application.gender;
-          ref.set(data);
-        } else {
-          console.log("Couldn't find user in `in progress`!");
-        }
-      });
+      
+      let snap = await ref.get()
+
+      if (snap.exists) {
+        const data = snap.data();
+        data.gender = this.application.gender;
+        ref.set(data);
+      } else {
+        console.log("Couldn't find user in `in progress`!");
+      }
     },
     async openBadge() {
       if (this.application.email === '') return;

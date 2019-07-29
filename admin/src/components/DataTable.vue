@@ -195,14 +195,9 @@ export default {
     },
     async applicantCount() {
       let size = 0;
-      await db
-        .collection(this.collection)
-        .doc(this.hackathon)
-        .collection(this.bucket)
-        .get()
-        .then((snap) => {
-          size = 5;
-        });
+
+      let snap = await db.collection(this.collection).doc(this.hackathon).collection(this.bucket).get()
+      size = 5;
       return 5;
     },
     getAgeFromDate(bday): number {
@@ -282,18 +277,13 @@ export default {
   },
   async mounted() {
     const parent = this;
-    await db
-      .collection('statistics')
-      .doc(this.hackathon)
-      .get()
-      .then((snap) => {
-        console.log(this.rowsPerPage);
-        console.log(snap.data().applications);
-        this.numApplicants = Math.ceil(
-          snap.data().applications / this.rowsPerPage,
-        );
-        console.log('Number apps: ', this.numApplicants);
-      });
+    let snap = await db.collection('statistics').doc(this.hackathon).get();
+    console.log(this.rowsPerPage);
+    console.log(snap.data().applications);
+    this.numApplicants = Math.ceil(
+      snap.data().applications / this.rowsPerPage,
+    );
+    console.log('Number apps: ', this.numApplicants);
 
     if (!this.applications[this.page - 1]) {
       console.log('In mount fill');

@@ -460,21 +460,20 @@ export default {
           this.walkins = snap.docs.length;
         });
     },
-    getRSVP() {
-      return new Promise((resolve, reject) => {
-        db.collection("hackathon")
+    async getRSVP() {
+      return new Promise(async (resolve, reject) => {
+        let snap = await db.collection("hackathon")
           .doc("DH5")
           .collection("RSVP")
           .doc("all")
           .collection("Yes")
-          .get()
-          .then(snap => {
-            const out = {};
-            snap.docs.forEach(doc => {
-              const data = doc.data();
-              out[data.email] = true;
-              resolve(out);
-            });
+          .get();
+
+          const out = {};
+          snap.docs.forEach(doc => {
+            const data = doc.data();
+            out[data.email] = true;
+            resolve(out);
           });
       });
     },
@@ -555,18 +554,17 @@ export default {
       });
     },
     // for updating statistics with accepted info, careful about overriding.
-    setAcceptedStats(data) {
-      db.collection("statistics")
+    async setAcceptedStats(data) {
+      let snap = await db.collection("statistics")
         .doc("DH5")
-        .get()
-        .then(snap => {
-          const current = snap.data();
-          Object.keys(data).forEach(key => {
-            current.applicationStats[key] = data[key];
-          });
-          // console.log(current);
-          // db.collection('statistics').doc('DH5').set(current);
+        .get();
+
+        const current = snap.data();
+        Object.keys(data).forEach(key => {
+          current.applicationStats[key] = data[key];
         });
+        // console.log(current);
+        // db.collection('statistics').doc('DH5').set(current);
     },
     // for updating statistics, not used in standard page.
     processApplication(stats, app) {
