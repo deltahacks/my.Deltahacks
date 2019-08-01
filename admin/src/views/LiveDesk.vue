@@ -162,17 +162,18 @@
 import QR from 'qrcode';
 import pdf from 'jspdf';
 import firebase from 'firebase';
+import Vue from 'vue';
 import db from '../private/firebase_init';
 import Navbar from '@/components/Navbar.vue';
 
-export default {
+export default Vue.extend({
   name: 'LiveDesk',
   components: {
     Navbar,
   },
   data: () => ({
     drawer: null,
-    admin: firebase.auth().currentUser.email,
+    admin: firebase.auth().currentUser!.email,
     email: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     bannerMessage: '',
@@ -195,6 +196,7 @@ export default {
       location: '',
       birthday: '',
       gender: '',
+      type: '',
     },
     application: {
       name: '',
@@ -209,6 +211,7 @@ export default {
       location: '',
       birthday: '',
       gender: '',
+      type: '',
     },
   }),
   computed: {
@@ -239,17 +242,17 @@ export default {
     //     });
     // },
     reset() {
-      const admin = firebase.auth().currentUser.email;
+      const admin = firebase.auth().currentUser!.email;
       const ref = db
         .collection('hackathon')
         .doc('DH5')
         .collection('FrontDesk')
-        .doc(admin);
+        .doc(admin || undefined);
       ref.get().then((snap) => {
         if (snap.exists) {
           const data = snap.data();
-          data.scanned = '';
-          ref.set(data);
+          data!.scanned = '';
+          ref.set(data!);
         }
       });
     },
@@ -402,8 +405,8 @@ export default {
       ref.get().then((snap) => {
         if (snap.exists) {
           const data = snap.data();
-          data.gender = this.application.gender;
-          ref.set(data);
+          data!.gender = this.application.gender;
+          ref.set(data!);
         } else {
           console.log("Couldn't find user in `in progress`!");
         }
@@ -422,6 +425,7 @@ export default {
     },
     // should insert / generate the back of DH5 badge.
     async createTemplate() {
+      // eslint-disable-next-line new-cap
       const t = new pdf('l', 'mm', [165, 200]);
       const centeredText = (text, y) => {
         const textWidth = (t.getStringUnitWidth(text) * t.internal.getFontSize())
@@ -437,11 +441,11 @@ export default {
         .get();
       if (snap.exists) {
         const data = snap.data();
-        centeredText(data.name, 35);
+        centeredText(data!.name, 35);
         t.setFontSize(10);
         centeredText(this.application.university, 40);
         t.setFontSize(14);
-        centeredText(this.typeToTitle(data.type), 50);
+        centeredText(this.typeToTitle(data!.type), 50);
       } else {
         this.error = true;
         this.errorMessage = `${this.application.email} has not been registered or checked in!`;
@@ -474,15 +478,15 @@ export default {
     },
   },
   async beforeMount() {
-    const admin = firebase.auth().currentUser.email;
+    const admin = firebase.auth().currentUser!.email;
     const ref = db
       .collection('hackathon')
       .doc('DH5')
       .collection('FrontDesk')
-      .doc(admin);
+      .doc(admin || undefined);
     ref.onSnapshot(async (snap) => {
       if (snap.exists) {
-        const { scanned } = snap.data();
+        const { scanned }: any = snap.data();
         // this code (below) is case sensitive !
         // it is critical that you use THIS CODE to decrypt an email
         const code = this.$route.params.email;
@@ -497,7 +501,7 @@ export default {
         //   let decryptedemail = this.maindecrypt(code);
         //   console.log(decryptedemail); //KUMAIL LOOK AT THIS
         // }
-        const result = await this.getUserApplication(email).catch(err => console.error(err));
+        const result: any = await this.getUserApplication(email).catch(err => console.error(err));
         if (result.found) {
           this.application = result.data;
           this.header = result.data.email;
@@ -512,5 +516,5 @@ export default {
       }
     });
   },
-};
+});
 </script>

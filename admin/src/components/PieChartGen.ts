@@ -1,9 +1,10 @@
 import { Pie, mixins } from 'vue-chartjs';
+import Vue from 'vue';
 import db from '../private/firebase_init';
 
 const { reactiveProp } = mixins;
 // doc.data()['U Toronto']
-export default {
+export default Vue.extend({
   extends: Pie,
   data() {
     return {
@@ -27,4 +28,4 @@ export default {
       this.renderChart(data, this.options);
     },
   },
-};
+});

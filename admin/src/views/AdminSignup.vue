@@ -94,33 +94,57 @@
 import axios from 'axios';
 import firebase from 'firebase';
 import functions from 'firebase/functions';
+import Vue from 'vue';
 
-export default {
+/* eslint-disable camelcase */
+
+interface SomeState {
+  geo: null;
+  email: null|string;
+  drawer: null|string;
+  loader: string;
+  loading: boolean;
+  password: null|string;
+  feedback: string;
+  loading2: boolean;
+  color: string;
+  admin_name: null|string;
+  ip_address: null|string;
+  admin_email: null|string;
+  admin_secret: null|string;
+  admin_password: null|string;
+  password_repeat: null|string;
+  successFeedback: boolean;
+  admin_password_repeat: null|string;
+}
+
+export default Vue.extend({
   name: 'Signup',
-  data: () => ({
-    geo: null,
-    email: null,
-    drawer: null,
-    loader: null,
-    loading: false,
-    password: null,
-    feedback: null,
-    loading2: false,
-    color: 'success',
-    admin_name: null,
-    ip_address: null,
-    admin_email: null,
-    admin_secret: null,
-    admin_password: null,
-    password_repeat: null,
-    successFeedback: null,
-    admin_password_repeat: null,
-  }),
+  data(): SomeState {
+    return {
+      geo: null,
+      email: null,
+      drawer: null,
+      loader: '',
+      loading: false,
+      password: null,
+      feedback: '',
+      loading2: false,
+      color: 'success',
+      admin_name: null,
+      ip_address: null,
+      admin_email: null,
+      admin_secret: null,
+      admin_password: null,
+      password_repeat: null,
+      successFeedback: false,
+      admin_password_repeat: null,
+    };
+  },
   props: {
     source: String,
-  },
+  } as any,
   methods: {
-    tester: () => console.log(this.vuex_email),
     async adminsignup() {
       this.loader = 'loading';
       if (
@@ -147,7 +171,7 @@ export default {
           if (adminSignupResponse.data.createdUser) {
             this.$router.push({
               name: 'Login',
-              params: { successFeedback: true },
+              params: { successFeedback: 'true' },
             });
           }
         } catch (err) {
@@ -164,7 +188,7 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password)
           .then((user) => {
-            console.log(user.user.uid, 'ID');
+            console.log(user.user!.uid, 'ID');
             console.log(this.$store.state.db, 'DB');
             axios
               .get('https://api.ipify.org?format=json')
@@ -182,7 +206,7 @@ export default {
                       .set({
                         email: this.vuex_email,
                         geo: this.geo,
-                        user_id: user.user.uid,
+                        user_id: user.user!.uid,
                         ip: ipp,
                         is_admin: false,
                       });
@@ -210,31 +234,43 @@ export default {
   },
   computed: {
     vuex_email: {
-      get: () => this.$store.state.vuex_email,
-      set: value => this.$store.commit('update_vuex_email', value),
+      get(): string {
+        return this.$store.state.vuex_email;
+      },
+      set(value: string) {
+        this.$store.commit('update_vuex_role', value);
+      },
     },
     vuex_password: {
-      get: () => this.$store.state.vuex_password,
-      set: value => this.$store.commit('update_vuex_password', value),
+      get(): string {
+        return this.$store.state.vuex_password;
+      },
+      set(value: string) {
+        this.$store.commit('update_vuex_password', value);
+      },
     },
     vuex_current_user: {
-      get: () => this.$store.state.vuex_current_user,
-      set: value => this.$store.commit('update_vuex_current_user', value),
+      get(): string {
+        return this.$store.state.vuex_current_user;
+      },
+      set(value: string) {
+        this.$store.commit('update_vuex_current_user', value);
+      },
     },
   },
   watch: {
     loader() {
-      const l = this.loader;
+      const l: string = this.loader;
       this[l] = !this[l];
 
       setTimeout(() => {
         this[l] = false;
       }, 3000);
 
-      this.loader = null;
+      this.loader = '';
     },
   },
-};
+});
 </script>
 <style scoped src='../assets/css/adminsignup.css'>
 </style>
