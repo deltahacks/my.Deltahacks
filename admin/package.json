@@ -24,7 +24,7 @@
     "vee-validate": "^2.1.0-beta.2",
     "vue": "^2.6.10",
     "vue-apexcharts": "^1.2.1",
-    "vue-chartjs": "^3.3.1",
+    "vue-chartjs": "^3.4.2",
     "vue-filepond": "^2.1.1",
     "vue-odometer": "^1.0.1",
     "vue-paginate": "^3.6.0",

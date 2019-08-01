@@ -2,9 +2,10 @@
 import { Line } from 'vue-chartjs';
 // import firebase from 'firebase';
 import { functions } from 'firebase';
+import Vue from 'vue';
 import db from '../private/firebase_init';
 
-export default {
+export default Vue.extend({
   extends: Line,
   methods: {
     setStartDate() {
@@ -78,4 +79,4 @@ export default {
         });
       });
   },
-};
+});

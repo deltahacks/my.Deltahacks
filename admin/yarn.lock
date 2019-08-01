@@ -9936,9 +9936,10 @@ vue-apexcharts@^1.2.1:
   resolved "https://registry.yarnpkg.com/vue-apexcharts/-/vue-apexcharts-1.4.0.tgz#a654ae51e5d47fe2ac9f8b4c3d1095426b09c808"
   integrity sha512-x3HplG6UZ5ZEoyNYaFZlMUgijyBvkG65mB4AY4RMvEMMxp83kh0QZV8x47vimZ96K7vDkPeUrIH5Uy6FjSY8lg==
 
-vue-chartjs@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-3.3.1.tgz#fb08dc244da316e385910401daf16874f52ac1fc"
+vue-chartjs@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-3.4.2.tgz#0323e6a99a10a68f38d426899c3994f48596fd23"
+  integrity sha512-EhoXUJ17+9isMLhJpOliS++xE5z5FM8iAVytIqnKofByVMr8AISRL/SCy3zvWbvzhjgQPStd9y6adMF5bnWQdg==
 
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
