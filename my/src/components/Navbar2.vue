@@ -94,7 +94,7 @@ export default {
         this.$router.push({ name: "Login" });
       } catch (e) {
         console.log("Logout unsuccessful");
-        showError(e);
+        console.log(e);
       }
     }
   }
