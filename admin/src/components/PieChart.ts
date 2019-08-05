@@ -1,4 +1,5 @@
 import { Pie, mixins } from 'vue-chartjs';
+import Vue from 'vue';
 import db from '../private/firebase_init';
 
 const { reactiveProp } = mixins;
@@ -38,9 +39,9 @@ function shade(col, light) {
   return color(r, g, b);
 }
 // doc.data()['U Toronto']
-export default {
+export default Vue.extend({
   extends: Pie,
-  data() {
+  data(): {uft: number} {
     return {
       uft: 2,
     };
@@ -62,4 +63,4 @@ export default {
         });
       });
   },
-};
+});

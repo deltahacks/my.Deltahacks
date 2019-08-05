@@ -110,7 +110,7 @@ router.beforeEach((to, from, next) => {
         console.log('Authorized user2: ', user);
 
         db.collection('admins')
-          .doc(user.email.toLocaleLowerCase())
+          .doc(user.email!.toLocaleLowerCase())
           .get()
           .then((doc) => {
             if (doc.exists) {

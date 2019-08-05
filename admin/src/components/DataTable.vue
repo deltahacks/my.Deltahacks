@@ -87,7 +87,7 @@ import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
 import db from '../private/firebase_init';
 
-export default {
+export default Vue.extend({
   name: 'DataTable',
   methods: {
     // ...mapMutations(['update_DataTable_lastVisible']),
@@ -168,7 +168,7 @@ export default {
           .doc(this.hackathon)
           .collection(this.bucket)
           .orderBy('index')
-          .where(...this.restriction)
+          .where(...this.restriction as [any, any, any])
           .limit(this.rowsPerPage)
           .startAfter((this.page - 1) * this.rowsPerPage)
           .get();
@@ -187,7 +187,7 @@ export default {
         .doc(this.hackathon)
         .collection(this.bucket)
         .orderBy('index')
-        .where(...this.restriction)
+        .where(...this.restriction as [any, any, any])
         .limit(this.rowsPerPage)
         .get();
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
@@ -245,8 +245,8 @@ export default {
       collection: 'decisions',
       hackathon: 'DH5',
       bucket: 'pending',
-      restriction: ['index', '>=', 0],
-      defaultRestriction: ['index', '>=', 0],
+      restriction: ['index', '>=', 0] as [any, any, any],
+      defaultRestriction: ['index', '>=', 0] as [any, any, any],
       buckets: [
         {
           title: 'Pending Applications',
@@ -288,9 +288,9 @@ export default {
       .get()
       .then((snap) => {
         console.log(this.rowsPerPage);
-        console.log(snap.data().applications);
+        console.log(snap.data()!.applications);
         this.numApplicants = Math.ceil(
-          snap.data().applications / this.rowsPerPage,
+          snap.data()!.applications / this.rowsPerPage,
         );
         console.log('Number apps: ', this.numApplicants);
       });
@@ -302,7 +302,7 @@ export default {
         .doc(this.hackathon)
         .collection(this.bucket)
         .orderBy('index')
-        .where(...this.restriction)
+        .where(...this.restriction as [any, any, any])
         .limit(this.rowsPerPage)
         .get();
       console.log('r123', result);
@@ -313,7 +313,7 @@ export default {
   /*  computed: {
         lastVisible: 'DataTable.lastVisible',
     }, */
-};
+});
 </script>
 
 <style>

@@ -207,8 +207,9 @@
 </template>
 <script lang="ts">
 import vueSlider from 'vue-slider-component';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'Applicant',
   props: ['usrname', 'applicant', 'isReviewed', 'refetchCurrentPage'],
   data: () => ({
@@ -245,13 +246,15 @@ export default {
   components: {
     vueSlider,
   },
-  computed: {
+  /*
+  created: {
     hasResume() {
       // console.log(this.applicant);
       const app = this.applicant;
       return app.documents && app.documents.length !== 0;
     },
   },
+  */
   mounted() {
     // console.log('Sub', this.isReviewed, this.applicant, this.random);
     /*         this.score = this.applicant.decision.reviewers.find(
@@ -262,6 +265,7 @@ export default {
   methods: {
     decisionStats() {
       const resstr = {};
+      // eslint-disable-next-line no-restricted-syntax
       for (const r of this.applicant.decision.reviewers) {
         resstr[r.reviewer] = r.score;
       }
@@ -326,7 +330,7 @@ export default {
       this.dialog = false;
     },
   },
-};
+});
 </script>
 
 <style scoped>

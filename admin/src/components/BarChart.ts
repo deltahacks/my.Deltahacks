@@ -1,9 +1,10 @@
 import { Bar, mixins } from 'vue-chartjs';
+import Vue from 'vue';
 import db from '../private/firebase_init';
 
 const { reactiveProp } = mixins;
 
-export default {
+export default Vue.extend({
   extends: Bar,
   data() {
     return {
@@ -23,4 +24,4 @@ export default {
       this.renderChart(data, this.options);
     },
   },
-};
+});

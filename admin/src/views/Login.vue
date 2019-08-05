@@ -84,30 +84,30 @@ import firebase from 'firebase';
 import Vue from 'vue';
 
 interface LoginData {
-  drawer: String;
-  email: String;
-  pass: String;
-  feedback: String;
-  color: String;
-  bannerColor: String;
-  loader: String;
-  loading: Boolean;
-  loading2: Boolean;
+  email: string;
+  pass: string;
+  feedback: string;
+  color: string;
+  bannerColor: string;
+  loader: string;
+  loading: boolean;
 }
 
-export default {
+export default Vue.extend({
   name: 'Login',
+  props: {
+    source: String,
+    successFeedback: Boolean,
+  },
   data(): LoginData {
     return {
-      drawer: null,
-      email: null,
-      pass: null,
-      feedback: null,
+      email: '',
+      pass: '',
+      feedback: '',
       color: 'success',
       bannerColor: 'success',
-      loader: null,
+      loader: '',
       loading: false,
-      loading2: false,
     };
   },
   methods: {
@@ -123,7 +123,7 @@ export default {
           .then(() => {
             this.$router.push({ name: 'Dashboard' });
             console.log('logged in');
-            this.feedback = null;
+            this.feedback = '';
           })
           .catch((error) => {
             // Handle Errors here.
@@ -133,6 +133,8 @@ export default {
           });
       }
     },
+  },
+  /*
     htest() {
       this.$Progress.start();
 
@@ -150,24 +152,20 @@ export default {
         );
     },
   },
-  mounted() {},
-  props: {
-    source: String,
-    successFeedback: null,
-  },
+  */
   watch: {
     loader() {
-      const l = this.loader;
+      const l: string = this.loader;
       this[l] = !this[l];
 
       setTimeout(() => {
         this[l] = false;
       }, 3000);
 
-      this.loader = null;
+      this.loader = '';
     },
   },
-};
+});
 </script>
 
 <style scoped src='../assets/css/login.css'>
