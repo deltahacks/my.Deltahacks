@@ -30,6 +30,8 @@
 </template>
 
 <script lang="ts">
+import firebase from 'firebase/app';
+import Vue from 'vue';
 import Navbar from '@/components/Navbar.vue';
 import db from '../private/firebase_init';
 
@@ -41,17 +43,17 @@ interface CheckinData {
   bannerMessage: string,
   bannerTimeout: number,
   bannerColor: string,
-  attendeeData: DocumentData,
-  lastStatus: string,
+  attendeeData: DocumentData | null,
+  lastStatus: string | null,
   alreadyCheckedIn: boolean,
   exists: boolean
 }
 
-export default {
+export default Vue.extend({
   data(): CheckinData {
     return {
       meals: 0,
-      feedback: null,
+      feedback: false,
       bannerMessage: 'Success',
       bannerTimeout: 2000,
       bannerColor: 'success',
@@ -169,31 +171,33 @@ export default {
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
         .onSnapshot((doc) => {
-          this.attendeeData = doc.data();
-          if (
-            this.attendeeData.whereabouts[
-              this.attendeeData.whereabouts.length - 1
-            ].type === 'incoming'
-          ) {
-            this.lastStatus = `Checked into ${
+          this.attendeeData = doc.data() || null;
+          if (this.attendeeData) {
+            if (
               this.attendeeData.whereabouts[
                 this.attendeeData.whereabouts.length - 1
-              ].building
-            } at ${new Date(
-              this.attendeeData.whereabouts[
-                this.attendeeData.whereabouts.length - 1
-              ].time.seconds * 1000,
-            )}`;
-          } else {
-            this.lastStatus = `Left ${
-              this.attendeeData.whereabouts[
-                this.attendeeData.whereabouts.length - 1
-              ].building
-            } at ${new Date(
-              this.attendeeData.whereabouts[
-                this.attendeeData.whereabouts.length - 1
-              ].time.seconds * 1000,
-            )}`;
+              ].type === 'incoming'
+            ) {
+              this.lastStatus = `Checked into ${
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].building
+              } at ${new Date(
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].time.seconds * 1000,
+              )}`;
+            } else {
+              this.lastStatus = `Left ${
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].building
+              } at ${new Date(
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].time.seconds * 1000,
+              )}`;
+            }
           }
           console.log('Current data: ', doc.data());
         });
@@ -225,33 +229,35 @@ export default {
         if (doc.exists) {
           this.exists = true;
           this.alreadyCheckedIn = true;
-          this.attendeeData = doc.data();
-          if (
-            this.attendeeData.whereabouts[
-              this.attendeeData.whereabouts.length - 1
-            ].type === 'incoming'
-          ) {
-            this.lastStatus = `Checked into ${
+          this.attendeeData = doc.data() || null;
+          if (this.attendeeData) {
+            if (
               this.attendeeData.whereabouts[
                 this.attendeeData.whereabouts.length - 1
-              ].building
-            } at ${new Date(
-              this.attendeeData.whereabouts[
-                this.attendeeData.whereabouts.length - 1
-              ].time.seconds * 1000,
-            )}`;
-          } else {
-            this.lastStatus = `Left ${
-              this.attendeeData.whereabouts[
-                this.attendeeData.whereabouts.length - 1
-              ].building
-            } at ${new Date(
-              this.attendeeData.whereabouts[
-                this.attendeeData.whereabouts.length - 1
-              ].time.seconds * 1000,
-            )}`;
+              ].type === 'incoming'
+            ) {
+              this.lastStatus = `Checked into ${
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].building
+              } at ${new Date(
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].time.seconds * 1000,
+              )}`;
+            } else {
+              this.lastStatus = `Left ${
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].building
+              } at ${new Date(
+                this.attendeeData.whereabouts[
+                  this.attendeeData.whereabouts.length - 1
+                ].time.seconds * 1000,
+              )}`;
+            }
           }
-          this.meals = this.attendeeData.meals;
+          this.meals = this.attendeeData!.meals;
           console.log('Document data:', doc.data());
           console.log('Listener Attached');
           this.attachListener();
@@ -266,7 +272,7 @@ export default {
         console.log('Error getting document:', error);
       });
   },
-};
+});
 </script>
 
 <style scoped>
