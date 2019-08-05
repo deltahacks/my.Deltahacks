@@ -388,7 +388,7 @@ export default Vue.extend({
       get(): string {
         return this.$store.state.vuex_user_role;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_role', value);
       },
     },
@@ -396,7 +396,7 @@ export default Vue.extend({
       get(): string {
         return this.$store.state.vuex_password;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_password', value);
       },
     },
@@ -404,7 +404,7 @@ export default Vue.extend({
       get(): string {
         return this.$store.state.vuex_current_user;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_current_user', value);
       },
     },

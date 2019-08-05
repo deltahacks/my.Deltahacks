@@ -171,8 +171,8 @@ export default Vue.extend({
           if (adminSignupResponse.data.createdUser) {
             this.$router.push({
               name: 'Login',
-              params: { successFeedback: 'true' },
-            });
+              params: { successFeedback: true },
+            } as {name: string, params: any});
           }
         } catch (err) {
           this.feedback = 'There was an error :(';
