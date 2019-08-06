@@ -71,21 +71,20 @@ export default {
     };
   },
   methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            console.log('Successfully logged out');
-            this.$router.push({ name: 'Login' });
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
-    },
-  },
+    async logout() {
+      console.log("logging out");
+      try {
+        await firebase
+          .auth()
+          .signOut();
+        console.log("Logout successful");
+        this.$router.push({ name: "Login" });
+      } catch (e) {
+        console.log("Logout unsuccessful");
+        showError(e);
+      }
+    }
+  }
 };
 </script>
 <style>

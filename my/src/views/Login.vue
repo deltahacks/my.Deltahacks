@@ -76,25 +76,24 @@ export default {
     forgotpage() {
       this.$router.push({ name: 'Forgot' });
     },
-    login() {
+    async login() {
       this.loader = 'loading';
       const parent = this;
       if (this.email && this.pass) {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(this.email, this.pass)
-          .then(() => {
+        try {
+          await firebase
+            .auth()
+            .signInWithEmailAndPassword(this.email, this.pass);
             this.$router.push({ name: 'Status' });
             console.log('logged in');
             this.feedback = null;
-          })
-          .catch((error) => {
-            // Handle Errors here.
-            //   const errorCode = error.code;
-            const errorMessage = error.message;
-            this.feedback = errorMessage;
-            console.log(errorMessage);
-          });
+        } catch(error) {
+          // Handle Errors here.
+          //   const errorCode = error.code;
+          const errorMessage = error.message;
+          this.feedback = errorMessage;
+          console.log(errorMessage);
+        } 
       }
     },
   },
