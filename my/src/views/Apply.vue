@@ -631,7 +631,7 @@ export default {
         console.log(err);
       }
     },
-    setApplicationInProgress() {
+    async setApplicationInProgress() {
       if (this.submitted && !this.enableGenderSelect) return;
       const unixts = Math.round(new Date().getTime() / 1000);
       this.application.last_modified = {
@@ -642,19 +642,18 @@ export default {
         unix: 0,
         date: '',
       };
-      this.$store.state.db
-        .collection('applications')
-        .doc('DH5')
-        .collection('in progress')
-        .doc(firebase.auth().currentUser.email)
-        .set(this.application)
-        .then(() => {
-          this.showInfoMessage('Application progress saved!');
-        })
-        .catch((err) => {
+      try {
+        await this.$store.state.db
+          .collection('applications')
+          .doc('DH5')
+          .collection('in progress')
+          .doc(firebase.auth().currentUser.email)
+          .set(this.application)
+        this.showInfoMessage('Application progress saved!');
+      } catch(err) {
           console.log(err);
           this.loading = false;
-        });
+      }
     },
     setDateInformation() {
       const unixts = Math.round(new Date().getTime() / 1000);
@@ -667,43 +666,41 @@ export default {
         date: new Date().toString(),
       };
     },
-    setApplication() {
+    async setApplication() {
       console.log('Submitting application...');
       // if (this.application.q4 == '' || !this.application.q4) this.application.q4 = ' ';
       this.setDateInformation();
-      this.$store.state.db
-        .collection('applications')
-        .doc('DH5')
-        .collection('submitted')
-        .doc(firebase.auth().currentUser.email)
-        .set(this.application)
-        .then(() => {
-          this.$router.push({ name: 'Status' });
-          this.loading = false;
-        })
-        .catch((err) => {
-          this.loading = false;
-        });
+      try {
+        await this.$store.state.db
+          .collection('applications')
+          .doc('DH5')
+          .collection('submitted')
+          .doc(firebase.auth().currentUser.email)
+          .set(this.application);
+        this.$router.push({ name: 'Status' });
+        this.loading = false;
+      } catch(err) {
+        this.loading = false;
+      }
     },
-    storeFileAndGetInfo(doc) {
+    async storeFileAndGetInfo(doc) {
       if (!doc) return;
       const { filename, file, id } = doc;
       const storeRef = firebase.storage().ref();
-      return new Promise((resolve, reject) => {
-        storeRef
+
+      try {
+        let snapshot = await storeRef
           .child(`hackathon/DH5/users/${firebase.auth().currentUser.email}/${filename}`)
-          .put(file)
-          .then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((url) => {
-              resolve({
-                download_link: url,
-                id,
-                filename,
-              });
-            });
-          })
-          .catch(err => reject(err));
-      });
+          .put(file);
+        let url = await snapshot.ref.getDownloadURL();
+        return ({
+          download_link: url,
+          id,
+          filename,
+        });
+      } catch(err){
+        console.log(err);
+      }
     },
     async submitApplication() {
       this.confirm = false;
@@ -747,7 +744,18 @@ export default {
       ref.location = ref.location ? ref.location : '';
       ref.microsoft = ref.microsoft ? ref.microsoft : false;
     },
-    getUserAppStatus(userEmail) {
+    async getUserAppStatus(userEmail) {
+      try {
+        let doc = await this.$store.state.db
+          .collection('applications')
+          .doc('DH5')
+          .collection('submitted')
+          .doc(userEmail)
+          .get();
+        return doc.exists;
+      } catch(err) {
+        console.log(err);
+      }
       return new Promise((resolve, reject) => {
         this.$store.state.db
           .collection('applications')
@@ -785,49 +793,48 @@ export default {
       this.loading = false;
     },
   },
-  beforeMount() {
+  async beforeMount() {
     this.activateModal('Loading...');
     const userEmail = firebase.auth().currentUser.email;
-    this.$store.state.db
-      .collection('applications')
-      .doc('DH5')
-      .collection('in progress')
-      .doc(userEmail)
-      .get()
-      .then(async (doc) => {
-        const submitted = await this.getUserAppStatus(userEmail);
-        if (doc.exists) {
-          const data = doc.data();
-          const gender = data.gender;
-          console.log(data);
-          console.log(gender);
-          if (submitted && !gender) {
-            this.enableGenderSelect = true;
-            this.deadline = false;
-            this.setSubmittedVariables(data);
-          } else if (submitted) {
-            this.setSubmittedVariables(data);
-            this.deadline = true;
-          } else {
-            this.editing = true;
-            this.application = doc.data();
-            this.fillApplicationFields();
-            this.loading = false;
-            this.deadline = true;
-          }
+    try {
+      let doc = await this.$store.state.db
+        .collection('applications')
+        .doc('DH5')
+        .collection('in progress')
+        .doc(userEmail)
+        .get();
+      const submitted = await this.getUserAppStatus(userEmail);
+      if (doc.exists) {
+        const data = doc.data();
+        const gender = data.gender;
+        console.log(data);
+        console.log(gender);
+        if (submitted && !gender) {
+          this.enableGenderSelect = true;
+          this.deadline = false;
+          this.setSubmittedVariables(data);
+        } else if (submitted) {
+          this.setSubmittedVariables(data);
+          this.deadline = true;
         } else {
-          console.log('Document not found!');
-          this.editing = false;
+          this.editing = true;
+          this.application = doc.data();
+          this.fillApplicationFields();
           this.loading = false;
           this.deadline = true;
         }
-      })
-      .catch((err) => {
-        console.log('User app query failed.');
-        console.log(err);
+      } else {
+        console.log('Document not found!');
+        this.editing = false;
         this.loading = false;
         this.deadline = true;
-      });
+      }
+    } catch(err) {
+      console.log('User app query failed.');
+      console.log(err);
+      this.loading = false;
+      this.deadline = true;
+    }
   },
 };
 </script>
