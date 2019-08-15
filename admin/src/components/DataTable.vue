@@ -79,46 +79,46 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { StatusIndicator } from 'vue-status-indicator';
-import { functions } from 'firebase';
-import { mapState, mapMutations } from 'vuex';
-import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
-import 'vue-status-indicator/styles.css';
-import db from '../private/firebase_init';
+import Vue from "vue";
+import { StatusIndicator } from "vue-status-indicator";
+import { functions } from "firebase";
+import { mapState, mapMutations } from "vuex";
+import ApplicantDropdown from "@/components/ApplicantDropdown.vue";
+import "vue-status-indicator/styles.css";
+import db from "../private/firebase_init";
 
 export default Vue.extend({
-  name: 'DataTable',
+  name: "DataTable",
   methods: {
     // ...mapMutations(['update_DataTable_lastVisible']),
     onChangeBucket(item) {
       this.current = item;
       switch (item) {
-        case 'All Applicants':
+        case "All Applicants":
           this.restriction = this.defaultRestriction;
           this.refetchCurrentPage();
           break;
-        case 'Assigned to Me':
+        case "Assigned to Me":
           this.restriction = [
-            'decision.assignedTo',
-            'array-contains',
+            "decision.assignedTo",
+            "array-contains",
 
-            this.$store.state.firebase.auth().currentUser.email,
+            this.$store.state.firebase.auth().currentUser.email
           ];
           this.refetchCurrentPage();
           break;
-        case 'Accepted Applicants':
-          this.bucket = 'round1';
+        case "Accepted Applicants":
+          this.bucket = "round1";
           this.restriction = this.defaultRestriction;
           this.refetchCurrentPage();
           break;
-        case 'Overflow Applicants':
-          this.bucket = 'overflow';
+        case "Overflow Applicants":
+          this.bucket = "overflow";
           this.restriction = this.defaultRestriction;
           this.refetchCurrentPage();
           break;
-        case 'Rejected Applicants':
-          this.bucket = 'rejected';
+        case "Rejected Applicants":
+          this.bucket = "rejected";
           this.restriction = this.defaultRestriction;
           this.refetchCurrentPage();
           break;
@@ -127,16 +127,16 @@ export default Vue.extend({
       }
     },
     assignmentToName(emails) {
-      let res = '';
-      emails.forEach((val) => {
+      let res = "";
+      emails.forEach(val => {
         res += `${this.$store.state.allAdmins[val]}, `;
       });
       return res;
     },
     async fb() {
-      db.collection('applications')
-        .doc('DH5')
-        .collection('all')
+      db.collection("applications")
+        .doc("DH5")
+        .collection("all")
         .get();
     },
     bigDiff(prop) {
@@ -160,15 +160,15 @@ export default Vue.extend({
       window.scrollTo(0, window.screen.height / 2 + offset);
     },
     async nextPage() {
-      console.log('Page is: ', this.page);
+      console.log("Page is: ", this.page);
       if (!this.applications[`${this.page - 1}`]) {
-        console.log('Getting next page');
+        console.log("Getting next page");
         const result = await db
           .collection(this.collection)
           .doc(this.hackathon)
           .collection(this.bucket)
-          .orderBy('index')
-          .where(...this.restriction as [any, any, any])
+          .orderBy("index")
+          .where(...(this.restriction as [any, any, any]))
           .limit(this.rowsPerPage)
           .startAfter((this.page - 1) * this.rowsPerPage)
           .get();
@@ -176,18 +176,18 @@ export default Vue.extend({
         Vue.set(
           this.applications,
           this.page - 1,
-          result.docs.map(a => a.data()),
+          result.docs.map(a => a.data())
         );
       }
     },
     async refetchCurrentPage() {
-      console.log('In mount fill');
+      console.log("In mount fill");
       const result = await db
         .collection(this.collection)
         .doc(this.hackathon)
         .collection(this.bucket)
-        .orderBy('index')
-        .where(...this.restriction as [any, any, any])
+        .orderBy("index")
+        .where(...(this.restriction as [any, any, any]))
         .limit(this.rowsPerPage)
         .get();
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
@@ -195,21 +195,20 @@ export default Vue.extend({
     },
     async applicantCount() {
       let size = 0;
-      await db
+
+      let snap = await db
         .collection(this.collection)
         .doc(this.hackathon)
         .collection(this.bucket)
-        .get()
-        .then((snap) => {
-          size = 5;
-        });
+        .get();
+      size = 5;
       return 5;
     },
     getAgeFromDate(bday): number {
       const b2 = new Date(
         bday.slice(4),
         bday.slice(2, 4) - 1,
-        bday.slice(0, 2),
+        bday.slice(0, 2)
       );
       // console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
       const current = new Date();
@@ -220,11 +219,11 @@ export default Vue.extend({
       const ageDifMs = Date.now() - birthday.getTime();
       const ageDate = new Date(ageDifMs); // miliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970);
-    },
+    }
   },
   components: {
     ApplicantDropdown,
-    StatusIndicator,
+    StatusIndicator
   },
   data() {
     return {
@@ -234,82 +233,78 @@ export default Vue.extend({
       numApplicants: 0,
       applications: {},
       peeps: [],
-      current: 'All Applicants',
+      current: "All Applicants",
       items: [
-        'All Applicants',
-        'Assigned to Me',
-        'Accepted Applicants',
-        'Overflow Applicants',
-        'Rejected Applicants',
+        "All Applicants",
+        "Assigned to Me",
+        "Accepted Applicants",
+        "Overflow Applicants",
+        "Rejected Applicants"
       ],
-      collection: 'decisions',
-      hackathon: 'DH5',
-      bucket: 'pending',
-      restriction: ['index', '>=', 0] as [any, any, any],
-      defaultRestriction: ['index', '>=', 0] as [any, any, any],
+      collection: "decisions",
+      hackathon: "DH5",
+      bucket: "pending",
+      restriction: ["index", ">=", 0] as [any, any, any],
+      defaultRestriction: ["index", ">=", 0] as [any, any, any],
       buckets: [
         {
-          title: 'Pending Applications',
-          db_key: 'in progre',
+          title: "Pending Applications",
+          db_key: "in progre"
         },
         {
-          title: 'Unsubmitted Applications',
-          db_key: 'submitted',
+          title: "Unsubmitted Applications",
+          db_key: "submitted"
         },
         {
-          title: 'Accepted Applicants',
-          db_key: 'submitted',
+          title: "Accepted Applicants",
+          db_key: "submitted"
         },
         {
-          title: 'Rejected Applicants',
-          db_key: 'submitted',
-        },
+          title: "Rejected Applicants",
+          db_key: "submitted"
+        }
       ],
-      search: '',
+      search: "",
       rating: null,
       expanded: {},
       headers: [
-        { text: 'Name', align: 'left', value: 'name' },
-        { text: 'Email', value: 'email' },
-        { text: 'University', value: 'university' },
-        { text: 'Applied (seconds)', value: 'applied' },
-        { text: 'Phone', value: 'phone' },
-        { text: 'Age', value: 'age' },
-        { text: 'Status', value: 'rate' },
-        { text: '', value: 'rate' },
-      ],
+        { text: "Name", align: "left", value: "name" },
+        { text: "Email", value: "email" },
+        { text: "University", value: "university" },
+        { text: "Applied (seconds)", value: "applied" },
+        { text: "Phone", value: "phone" },
+        { text: "Age", value: "age" },
+        { text: "Status", value: "rate" },
+        { text: "", value: "rate" }
+      ]
     };
   },
   async mounted() {
     const parent = this;
-    await db
-      .collection('statistics')
+    let snap = await db
+      .collection("statistics")
       .doc(this.hackathon)
-      .get()
-      .then((snap) => {
-        console.log(this.rowsPerPage);
-        console.log(snap.data()!.applications);
-        this.numApplicants = Math.ceil(
-          snap.data()!.applications / this.rowsPerPage,
-        );
-        console.log('Number apps: ', this.numApplicants);
-      });
+      .get();
+    console.log(this.rowsPerPage);
+    // console.log(snap.data().applications);
+    this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
+    console.log("Number apps: ", this.numApplicants);
 
     if (!this.applications[this.page - 1]) {
-      console.log('In mount fill');
+      console.log("In mount fill");
       const result = await db
         .collection(this.collection)
         .doc(this.hackathon)
         .collection(this.bucket)
-        .orderBy('index')
-        .where(...this.restriction as [any, any, any])
+        .orderBy("index")
+        .where(...(this.restriction as [any, any, any]))
         .limit(this.rowsPerPage)
         .get();
-      console.log('r123', result);
+      console.log("r123", result);
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
       Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
     }
-  },
+  }
   /*  computed: {
         lastVisible: 'DataTable.lastVisible',
     }, */

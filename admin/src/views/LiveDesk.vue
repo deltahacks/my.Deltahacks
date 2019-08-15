@@ -159,69 +159,69 @@
 </template>
 
 <script lang="ts">
-import QR from 'qrcode';
-import pdf from 'jspdf';
-import firebase from 'firebase';
-import Vue from 'vue';
-import db from '../private/firebase_init';
-import Navbar from '@/components/Navbar.vue';
+import QR from "qrcode";
+import pdf from "jspdf";
+import firebase from "firebase";
+import Vue from "vue";
+import db from "../private/firebase_init";
+import Navbar from "@/components/Navbar.vue";
 
 export default Vue.extend({
-  name: 'LiveDesk',
+  name: "LiveDesk",
   components: {
-    Navbar,
+    Navbar
   },
   data: () => ({
     drawer: null,
     admin: firebase.auth().currentUser!.email,
     email: null,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    bannerMessage: '',
+    sizes: ["XS", "S", "M", "L", "XL"],
+    bannerMessage: "",
     error: false,
-    errorMessage: '',
+    errorMessage: "",
     banner: false,
     confirm: false,
-    header: 'No QR code has been scanned yet.',
+    header: "No QR code has been scanned yet.",
     active: false,
     emptyApp: {
-      name: '',
-      lastname: '',
-      email: '',
+      name: "",
+      lastname: "",
+      email: "",
       shirt_size: null,
       dietary_restrictions: null,
       university: null,
-      phone: '',
-      emergency_phone: '',
-      emergency_name: '',
-      location: '',
-      birthday: '',
-      gender: '',
-      type: '',
+      phone: "",
+      emergency_phone: "",
+      emergency_name: "",
+      location: "",
+      birthday: "",
+      gender: "",
+      type: ""
     },
     application: {
-      name: '',
-      lastname: '',
-      email: '',
+      name: "",
+      lastname: "",
+      email: "",
       shirt_size: null,
       dietary_restrictions: null,
       university: null,
-      phone: '',
-      emergency_phone: '',
-      emergency_name: '',
-      location: '',
-      birthday: '',
-      gender: '',
-      type: '',
-    },
+      phone: "",
+      emergency_phone: "",
+      emergency_name: "",
+      location: "",
+      birthday: "",
+      gender: "",
+      type: ""
+    }
   }),
   computed: {
     safeGender(): string {
       const { gender } = this.application;
-      return gender !== '' ? gender : 'N/A';
+      return gender !== "" ? gender : "N/A";
     },
     fullName(): string {
       return `${this.application.name} ${this.application.lastname}`;
-    },
+    }
   },
   methods: {
     // saveDownLoadLinks() {
@@ -241,29 +241,29 @@ export default Vue.extend({
     //       });
     //     });
     // },
-    reset() {
-      const admin = firebase.auth().currentUser!.email;
+    async reset() {
+      const admin = firebase.auth().currentUser.email;
       const ref = db
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('FrontDesk')
+        .collection("hackathon")
+        .doc("DH5")
+        .collection("FrontDesk")
         .doc(admin || undefined);
-      ref.get().then((snap) => {
+      ref.get().then(snap => {
         if (snap.exists) {
           const data = snap.data();
-          data!.scanned = '';
+          data!.scanned = "";
           ref.set(data!);
         }
       });
     },
     directoryToName(dir): string {
       console.log(dir);
-      if (dir === 'Walkins') return 'walk in';
-      if (dir === 'Sponsors') return 'sponsor';
-      if (dir === 'Mentors') return 'mentor';
-      if (dir === 'Volunteer') return 'volunteer';
-      if (dir === 'Exec') return 'executive';
-      return '';
+      if (dir === "Walkins") return "walk in";
+      if (dir === "Sponsors") return "sponsor";
+      if (dir === "Mentors") return "mentor";
+      if (dir === "Volunteer") return "volunteer";
+      if (dir === "Exec") return "executive";
+      return "";
     },
     register(target) {
       if (!this.validateForm()) {
@@ -272,17 +272,17 @@ export default Vue.extend({
       }
       const app = this.application;
       // reject if no identifying field is created.
-      if (app.email === '' || app.name === '') {
+      if (app.email === "" || app.name === "") {
         this.rejectRegistration();
         return;
       }
       // parse name field
-      const [first, last] = app.name.split(' ');
+      const [first, last] = app.name.split(" ");
       app.name = first;
-      app.lastname = last || '';
+      app.lastname = last || "";
       // add to respective directory
-      db.collection('hackathon')
-        .doc('DH5')
+      db.collection("hackathon")
+        .doc("DH5")
         .collection(target)
         .doc(app.email)
         .set(app);
@@ -296,43 +296,44 @@ export default Vue.extend({
     },
     rejectRegistration() {
       this.error = true;
-      this.errorMessage = "Could not register person as one of 'Name' or 'Email' was left blank.";
+      this.errorMessage =
+        "Could not register person as one of 'Name' or 'Email' was left blank.";
     },
-    getUserApplication(email: string) {
-      return new Promise((resolve, reject) => {
+    async getUserApplication(email: string) {
+      return new Promise(async (resolve, reject) => {
         if (email.length === 0) resolve({ found: false, data: {} });
 
-        db.collection('applications')
-          .doc('DH5')
-          .collection('in progress')
+        let snap = await db
+          .collection("applications")
+          .doc("DH5")
+          .collection("in progress")
           .doc(email)
-          .get()
-          .then((snap) => {
-            const data = this.parseApplication(snap.data());
-            if (snap.exists) {
-              resolve({
-                data,
-                found: true,
-              });
-            } else {
-              resolve({
-                found: false,
-                data: {},
-              });
-            }
+          .get();
+
+        const data = this.parseApplication(snap.data());
+        if (snap.exists) {
+          resolve({
+            data,
+            found: true
           });
+        } else {
+          resolve({
+            found: false,
+            data: {}
+          });
+        }
       });
     },
     // append any other safety checks needed.
     // probably won't need any others.
     parseApplication(app) {
       if (!app.gender) {
-        app.gender = '';
+        app.gender = "";
       }
       return app;
     },
     attendee() {
-      this.checkin('attendee');
+      this.checkin("attendee");
     },
     // ENCRYPT AND DECRYPT FUNCTIONS HERE - KAJOBAN
     // mainencrypt(plainText) {
@@ -357,7 +358,7 @@ export default Vue.extend({
     //   );
     // },
     //   Make sure this stays consistent with checkin function of ./Checkin.vue
-    checkin(type = 'attendee') {
+    async checkin(type = "attendee") {
       if (!this.validateForm()) {
         this.formFeedback();
         return;
@@ -365,78 +366,85 @@ export default Vue.extend({
       const app = this.application;
       const name = `${app.name} ${app.lastname}`;
       app.type = type;
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
-        .doc(this.application.email)
-        .set({
-          checkedIn: true,
-          time: new Date(),
-          by: this.$store.state.firebase.auth().currentUser.email.toLowerCase(),
-          type: app.type,
-          name,
-          whereabouts: [
-            {
-              initialCheckin: true,
-              building: 'ETB',
-              time: new Date(),
-              by: this.$store.state.firebase
-                .auth()
-                .currentUser.email.toLowerCase(),
-              type: 'incoming',
-            },
-          ],
-          meals: 0,
-        })
-        .then(() => {
-          this.bannerMessage = `${this.fullName} has been checked in!`;
-          this.banner = true;
-          console.log('Successfully written');
-          this.updateGender();
-        })
-        .catch(err => console.log(err));
+      try {
+        await db
+          .collection("hackathon")
+          .doc("DH5")
+          .collection("Checked In")
+          .doc(this.application.email)
+          .set({
+            checkedIn: true,
+            time: new Date(),
+            by: this.$store.state.firebase
+              .auth()
+              .currentUser.email.toLowerCase(),
+            type: app.type,
+            name,
+            whereabouts: [
+              {
+                initialCheckin: true,
+                building: "ETB",
+                time: new Date(),
+                by: this.$store.state.firebase
+                  .auth()
+                  .currentUser.email.toLowerCase(),
+                type: "incoming"
+              }
+            ],
+            meals: 0
+          });
+
+        this.bannerMessage = `${this.fullName} has been checked in!`;
+        this.banner = true;
+        console.log("Successfully written");
+        this.updateGender();
+      } catch (err) {
+        console.log(err);
+      }
     },
-    updateGender() {
+    async updateGender() {
       const ref = db
-        .collection('applications')
-        .doc('DH5')
-        .collection('in progress')
+        .collection("applications")
+        .doc("DH5")
+        .collection("in progress")
         .doc(this.application.email);
-      ref.get().then((snap) => {
-        if (snap.exists) {
-          const data = snap.data();
-          data!.gender = this.application.gender;
-          ref.set(data!);
-        } else {
-          console.log("Couldn't find user in `in progress`!");
-        }
-      });
+
+      let snap = await ref.get();
+
+      if (snap.exists) {
+        const data = snap.data();
+        data.gender = this.application.gender;
+        ref.set(data);
+      } else {
+        console.log("Couldn't find user in `in progress`!");
+      }
     },
     async openBadge() {
-      if (this.application.email === '') return;
+      if (this.application.email === "") return;
       const { badge, error } = await this.createTemplate();
       if (error) return;
       const QRImage = await QR.toDataURL(
-        `https://admin.deltahacks.com/checkin/${this.application.email}`,
+        `https://admin.deltahacks.com/checkin/${this.application.email}`
       );
       const imageOffset = (badge.internal.pageSize.width - 25) / 2;
-      badge.addImage(QRImage, 'JPEG', imageOffset, 3, 25, 25);
+      badge.addImage(QRImage, "JPEG", imageOffset, 3, 25, 25);
       badge.save(`DH5_${this.application.name}${this.application.lastname}`);
     },
     // should insert / generate the back of DH5 badge.
     async createTemplate() {
       // eslint-disable-next-line new-cap
-      const t = new pdf('l', 'mm', [165, 200]);
+      const t = new pdf("l", "mm", [165, 200]);
       const centeredText = (text, y) => {
-        const textWidth = (t.getStringUnitWidth(text) * t.internal.getFontSize())
-          / t.internal.scaleFactor;
+        const textWidth =
+          (t.getStringUnitWidth(text) * t.internal.getFontSize()) /
+          t.internal.scaleFactor;
         const textOffset = (t.internal.pageSize.width - textWidth) / 2;
         t.text(textOffset, y, text);
       };
       const snap = await db
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
+        .collection("hackathon")
+        .doc("DH5")
+        .collection("Checked In")
         .doc(this.application.email)
         .get();
       if (snap.exists) {
@@ -451,40 +459,40 @@ export default Vue.extend({
         this.errorMessage = `${this.application.email} has not been registered or checked in!`;
         return {
           error: true,
-          badge: undefined,
+          badge: undefined
         };
       }
       return {
         error: false,
-        badge: t,
+        badge: t
       };
     },
     typeToTitle(type) {
-      if (type === 'sponsor') return 'Sponsor';
-      if (type === 'mentor') return 'Mentor';
-      if (type === 'executive') return 'Organizer';
-      if (type === 'volunteer') return 'Volunteer';
-      return 'Attendee';
+      if (type === "sponsor") return "Sponsor";
+      if (type === "mentor") return "Mentor";
+      if (type === "executive") return "Organizer";
+      if (type === "volunteer") return "Volunteer";
+      return "Attendee";
     },
     validateForm() {
       const { university, email } = this.application;
       // if (this.name.length < 2) return false;
-      if (university === '' || email === '') return false;
+      if (university === "" || email === "") return false;
       return true;
     },
     formFeedback() {
       this.error = true;
-      this.errorMessage = 'Required fields not filled!';
-    },
+      this.errorMessage = "Required fields not filled!";
+    }
   },
   async beforeMount() {
     const admin = firebase.auth().currentUser!.email;
     const ref = db
-      .collection('hackathon')
-      .doc('DH5')
-      .collection('FrontDesk')
+      .collection("hackathon")
+      .doc("DH5")
+      .collection("FrontDesk")
       .doc(admin || undefined);
-    ref.onSnapshot(async (snap) => {
+    ref.onSnapshot(async snap => {
       if (snap.exists) {
         const { scanned }: any = snap.data();
         // this code (below) is case sensitive !
@@ -501,20 +509,22 @@ export default Vue.extend({
         //   let decryptedemail = this.maindecrypt(code);
         //   console.log(decryptedemail); //KUMAIL LOOK AT THIS
         // }
-        const result: any = await this.getUserApplication(email).catch(err => console.error(err));
+        const result: any = await this.getUserApplication(email).catch(err =>
+          console.error(err)
+        );
         if (result.found) {
           this.application = result.data;
           this.header = result.data.email;
           this.active = true;
         } else {
           this.application = this.emptyApp;
-          this.header = 'No target attendee detected.';
+          this.header = "No target attendee detected.";
           this.active = false;
         }
       } else {
         this.header = `Account ${admin} not found in front desk collection.`;
       }
     });
-  },
+  }
 });
 </script>
