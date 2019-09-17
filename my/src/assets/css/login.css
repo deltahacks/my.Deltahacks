@@ -220,6 +220,7 @@ iframe {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-right:80px;
     /* padding: 177px 130px 33px 95px; */
     min-height: 60vh;
   /* padding: 55px 55px 37px 55px; */
