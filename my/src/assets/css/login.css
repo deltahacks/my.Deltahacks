@@ -170,7 +170,7 @@ iframe {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 15px;
+    /* padding: 15px; */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -193,10 +193,10 @@ iframe {
 .background {
     background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
     background: #9152f8;
-    background: -webkit-linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -o-linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: -moz-linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
-    background: linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
+    background: -webkit-linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
+    background: -o-linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
+    background: -moz-linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
+    background: linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
     /* background-image: linear-gradient(bottom, #69EACB 0%, #EACCF8 48%, #6654F1 100%); */
     /* background-image: linear-gradient(top, #92fe9d 0%, #00c9ff 100%); */
     /* background-image: linear-gradient(to top, #4fb576 0%, #44c489 30%, #28a9ae 46%, #28a2b7 59%, #4c7788 71%, #6c4f63 86%, #432c39 100%); */
@@ -223,7 +223,7 @@ iframe {
     justify-content: space-between;
     /* padding: 177px 130px 33px 95px; */
     min-height: 60vh;
-  padding: 55px 55px 37px 55px;
+  /* padding: 55px 55px 37px 55px; */
     /* background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -o-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -moz-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
