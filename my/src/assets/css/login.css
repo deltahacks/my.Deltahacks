@@ -235,7 +235,9 @@ iframe {
 [ Form ]*/
 
 .login100-pic {
-    width: 316px;
+    width: 50%;
+    margin:0px;
+    padding:0px;
 }
 
 .login100-pic img {
@@ -244,6 +246,8 @@ iframe {
 
 .login100-form {
     width: 290px;
+    margin:0px;
+    padding:0px;
 }
 
 .login100-form-logo {
@@ -333,7 +337,7 @@ iframe {
     font-size: 15px;
     font-weight: 600;
     /* line-height: 52px; */
-    padding: 0 1.75em;
+    /* padding: 0 1.75em; */
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
