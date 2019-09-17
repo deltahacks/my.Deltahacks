@@ -7,10 +7,13 @@
     <div class="container-login100 background">
       <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <div class="wrap-login100">
+        <div class="login100-pic">
+					<img src="@/assets/logo.png" alt="IMG">
+				</div>
         <form class="login100-form validate-form">
-          <span class="login100-form-logo">
+          <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
-          </span>
+          </span> -->
           <v-container>
             <v-layout>
             <v-flex xs12>
@@ -35,13 +38,13 @@
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
-          <div style="font-size: 15px; text-align: center; color: #525251;">
+          <!-- <div style="font-size: 15px; text-align: center; color: #525251;">
             Applications are now closed.
-          </div>
+          </div> -->
           <div class="container-login100-form-btn">
-            <!-- <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
+            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
               <i class="fas fa-user-plus" />
-            </v-btn> -->
+            </v-btn>
           </div>
           <div class="container-login100-form-btn">
             <v-divider></v-divider><br>

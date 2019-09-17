@@ -1,322 +1,328 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,600italic");
 html {
-  height: 100%;
-  font-family: Verdana, sans-serif, Agency FB;
+    height: 100%;
+    font-family: Verdana, sans-serif, Agency FB;
 }
 
+
 /*---------------------------------------------*/
+
 a {
-  font-family: Verdana;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #666666;
-  margin: 0px;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
+    font-family: Verdana;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #666666;
+    margin: 0px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
 }
 
 a:focus {
-  outline: none !important;
+    outline: none !important;
 }
 
 a:hover {
-  text-decoration: none;
-  color: #fff;
+    text-decoration: none;
+    color: #fff;
 }
 
+
 /*---------------------------------------------*/
+
 input {
-  outline: none;
-  border: none;
+    outline: none;
+    border: none;
 }
 
 textarea {
-  outline: none;
-  border: none;
+    outline: none;
+    border: none;
 }
 
 textarea:focus,
 input:focus {
-  border-color: transparent !important;
+    border-color: transparent !important;
 }
 
 input:focus::-webkit-input-placeholder {
-  color: transparent;
+    color: transparent;
 }
+
 input:focus:-moz-placeholder {
-  color: transparent;
+    color: transparent;
 }
+
 input:focus::-moz-placeholder {
-  color: transparent;
+    color: transparent;
 }
+
 input:focus:-ms-input-placeholder {
-  color: transparent;
+    color: transparent;
 }
 
 textarea:focus::-webkit-input-placeholder {
-  color: transparent;
+    color: transparent;
 }
+
 textarea:focus:-moz-placeholder {
-  color: transparent;
+    color: transparent;
 }
+
 textarea:focus::-moz-placeholder {
-  color: transparent;
+    color: transparent;
 }
+
 textarea:focus:-ms-input-placeholder {
-  color: transparent;
+    color: transparent;
 }
 
 input::-webkit-input-placeholder {
-  color: #fff;
+    color: #fff;
 }
+
 input:-moz-placeholder {
-  color: #fff;
+    color: #fff;
 }
+
 input::-moz-placeholder {
-  color: #fff;
+    color: #fff;
 }
+
 input:-ms-input-placeholder {
-  color: #fff;
+    color: #fff;
 }
 
 textarea::-webkit-input-placeholder {
-  color: #fff;
-}
-textarea:-moz-placeholder {
-  color: #fff;
-}
-textarea::-moz-placeholder {
-  color: #fff;
-}
-textarea:-ms-input-placeholder {
-  color: #fff;
+    color: #fff;
 }
 
+textarea:-moz-placeholder {
+    color: #fff;
+}
+
+textarea::-moz-placeholder {
+    color: #fff;
+}
+
+textarea:-ms-input-placeholder {
+    color: #fff;
+}
+
+
 /*---------------------------------------------*/
+
 button {
-  outline: none !important;
-  border: none;
-  background: transparent;
+    outline: none !important;
+    border: none;
+    background: transparent;
 }
 
 button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 iframe {
-  border: none !important;
-  overflow: hidden;
+    border: none !important;
+    overflow: hidden;
 }
+
 
 /*//////////////////////////////////////////////////////////////////
 [ Welcome Header ]*/
-.welcomeheader {
-  font-family: "Open Sans";
-  font-size: 3em;
-  font-weight: 600;
-  text-decoration: none;
-  color: #525251;
-}
 
-@media only screen and (max-width: 500px) {
-  .welcomeheader {
+.welcomeheader {
     font-family: "Open Sans";
-    font-size: 8vw;
+    font-size: 3em;
     font-weight: 600;
     text-decoration: none;
     color: #525251;
-  }
 }
+
+@media only screen and (max-width: 500px) {
+    .welcomeheader {
+        font-family: "Open Sans";
+        font-size: 8vw;
+        font-weight: 600;
+        text-decoration: none;
+        color: #525251;
+    }
+}
+
+
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
 
 .limiter {
-  width: 100%;
-  margin: auto;
+    width: 100%;
+    margin: auto;
 }
 
 .container-login100 {
-  width: 100%;
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
 }
 
 .container-login100::before {
-  content: "";
-  display: block;
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  /* background-color: rgba(255,255,255,0.8); */
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* background-color: rgba(255,255,255,0.8); */
 }
+
 .background {
-  background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
-  /* background: #9152f8;
-  background: -webkit-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
-  background: -o-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
-  background: -moz-linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214));
-  background: linear-gradient(bottom, rgb(72,198,239), rgb(111,134,214)); */
-  /* background-image: linear-gradient(bottom, #69EACB 0%, #EACCF8 48%, #6654F1 100%); */
-  /* background-image: linear-gradient(top, #92fe9d 0%, #00c9ff 100%); */
-  /* background-image: linear-gradient(to top, #4fb576 0%, #44c489 30%, #28a9ae 46%, #28a2b7 59%, #4c7788 71%, #6c4f63 86%, #432c39 100%); */
-  /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
-  /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
-  /* https://webgradients.com/ */
+    background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
+    background: #9152f8;
+    background: -webkit-linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
+    background: -o-linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
+    background: -moz-linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
+    background: linear-gradient(bottom, rgb(72, 198, 239), rgb(111, 134, 214));
+    /* background-image: linear-gradient(bottom, #69EACB 0%, #EACCF8 48%, #6654F1 100%); */
+    /* background-image: linear-gradient(top, #92fe9d 0%, #00c9ff 100%); */
+    /* background-image: linear-gradient(to top, #4fb576 0%, #44c489 30%, #28a9ae 46%, #28a2b7 59%, #4c7788 71%, #6c4f63 86%, #432c39 100%); */
+    /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
+    /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
+    /* https://webgradients.com/ */
 }
 
 .wrap-login100 {
-  min-height: 630px;
-  width: 500px;
-  overflow: hidden;
+    width: 960px;
+    /* height: 50vh; */
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #c9ccd3;
+    background: linear-gradient( -180deg, rgba(255, 255, 255, 0.6) 100%, rgba(0, 0, 0, 0.1) 100%);
+    background: lighten;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* padding: 177px 130px 33px 95px; */
+    min-height: 60vh;
   padding: 55px 55px 37px 55px;
-  /* border-radius: 25px; */
-  background: #c9ccd3;
-  background: linear-gradient(
-    -180deg,
-    rgba(255, 255, 255, 0.6) 100%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
-  background: lighten;
-  /* background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
+    /* background: -webkit-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -o-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: -moz-linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8));
   background: linear-gradient(top, rgba(72,198,239,0.8), rgba(111,134,214,0.8)); */
 }
 
+
 /*------------------------------------------------------------------
 [ Form ]*/
 
+.login100-pic {
+    width: 316px;
+}
+
+.login100-pic img {
+    max-width: 100%;
+}
+
 .login100-form {
-  width: 100%;
+    width: 290px;
 }
 
 .login100-form-logo {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #fff;
-  margin: 0 auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 0 auto;
 }
 
 .login100-form-title {
-  font-family: Verdana;
-  font-size: 30px;
-  color: #fff;
-  line-height: 1.2;
-  text-align: center;
-  text-transform: uppercase;
+    font-family: Verdana;
+    font-size: 30px;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    display: block;
+}
 
-  display: block;
-}
 .alerter {
-  color: #000;
+    color: #000;
 }
+
 
 /*------------------------------------------------------------------
 [ Input ]*/
 
 .wrap-input100 {
-  width: 100%;
-  position: relative;
-  color: #017ef2;
+    width: 100%;
+    position: relative;
+    color: #017ef2;
 }
 
 .input100 {
-  font-family: Verdana;
-  font-size: 18px;
-  color: #ffff00;
-  line-height: 0.5;
-
-  display: block;
-  width: 100%;
-  height: 45px;
-  background: transparent;
-  padding: 0 5px 0 38px;
+    font-family: Verdana;
+    font-size: 18px;
+    color: #ffff00;
+    line-height: 0.5;
+    display: block;
+    width: 100%;
+    height: 45px;
+    background: transparent;
+    padding: 0 5px 0 38px;
 }
+
+
 /*------------------------------------------------------------------
 [ Button ]*/
+
 .container-login100-form-btn {
-  padding: 5px;
-  width: 100%;
-  /* display: -webkit-box;
+    padding: 5px;
+    width: 100%;
+    /* display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap; */
-  justify-content: center;
+    justify-content: center;
 }
 
 .login100-form-btn {
-  width: 220px;
-  height: 38px;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  background-color: transparent !important;
-  font-family: sans-serif;
-  border: 0;
-  /* border-radius: 35px; */
-  box-shadow: inset 0 0 0 2px #525251 !important;
-  color: #525251 !important;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
-  /* line-height: 52px; */
-  padding: 0 1.75em;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-@media only screen and (max-width: 500px) {
-  .login100-form-btn {
-    width: 100%;
+    width: 220px;
     height: 38px;
     -moz-appearance: none;
     -webkit-appearance: none;
     -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-      color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-      color 0.2s ease-in-out;
+    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
     background-color: transparent !important;
     font-family: sans-serif;
     border: 0;
@@ -331,11 +337,44 @@ iframe {
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-  }
+}
+
+@media only screen and (max-width: 500px) {
+    .login100-form-btn {
+        width: 100%;
+        height: 38px;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+        -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+        -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+        transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+        background-color: transparent !important;
+        font-family: sans-serif;
+        border: 0;
+        /* border-radius: 35px; */
+        box-shadow: inset 0 0 0 2px #525251 !important;
+        color: #525251 !important;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        /* line-height: 52px; */
+        padding: 0 1.75em;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+    .login100-pic {
+        width: 35%;
+    }
+    .login100-form {
+        width: 50%;
+    }
 }
 
 .login100-form-btn:hover {
-  box-shadow: inset 0 0 0 2px #017ef2 !important;
-  color: #017ef2 !important;
-  background: hsla(360, 100%, 100%, 0.5) !important;
+    box-shadow: inset 0 0 0 2px #017ef2 !important;
+    color: #017ef2 !important;
+    background: hsla(360, 100%, 100%, 0.5) !important;
 }
