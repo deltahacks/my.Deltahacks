@@ -307,54 +307,54 @@ const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImage
 
 interface Application: {
         name: {
-          first: string,
-          last: string,
-        },
+          first: string;
+          last: string;
+        }
         contact: {
-          email: string,
-          phone: string,
-        },
-        first_submitted: undefined,
+          email: string;
+          phone: string;
+        }
+        first_submitted: undefined
         academics: {
-          degree: enum,
-          major: string,
-          school: string,
-          year: enum,
-        },
+          degree: enum;
+          major: string;
+          school: string;
+          year: enum;
+        }
         personal: {
-          birthday: date,
-          gender: enum,
-          race: enum,
-        },
+          birthday: date;
+          gender: enum;
+          race: enum;
+        }
         emergency: {
-          name: string,
-          phone: string,
-          relation: enum,
-        },
+          name: string;
+          phone: string;
+          relation: enum;
+        }
         documents: {
-          download_link?: string,
-          filename?: string,
-          id?: number,
-        },
+          download_link?: string;
+          filename?: string;
+          id?: number;
+        }
         profiles: {
-          devpost?: string,
-          github?: string,
-          linkedin?: string,
-          website?: string,
-        },
+          devpost?: string;
+          github?: string;
+          linkedin?: string;
+          website?: string;
+        }
         responses: {
-          q1?: string,
-          q2?: string,
-          q3?: string,
-          q4?: string,
-        },
+          q1?: string;
+          q2?: string;
+          q3?: string;
+          q4?: string;
+        }
         other: {
-          dietary_restrictions: enum,
-          discover: string,
-          shirt_size: enum,
-        },
-      },
-      
+          dietary_restrictions: enum;
+          discover: string;
+          shirt_size: enum;
+        }
+      }
+
 export default {
   mixins: [validationMixin],
   name: 'Apply',
