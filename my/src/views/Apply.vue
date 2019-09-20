@@ -391,6 +391,55 @@ export default {
       timeout: null,
       allUniversities,
       majors,
+      interface Application: {
+        name: {
+          first: string,
+          last: string,
+        },
+        contact: {
+          email: string,
+          phone: string,
+        },
+        first_submitted: undefined,
+        academics: {
+          degree: enum,
+          major: string,
+          school: string,
+          year: enum,
+        },
+        personal: {
+          birthday: date,
+          gender: enum,
+          race: enum,
+        },
+        emergency: {
+          name: string,
+          phone: string,
+          relation: enum,
+        },
+        documents: {
+          download_link?: string,
+          filename?: string,
+          id?: number,
+        },
+        profiles: {
+          devpost?: string,
+          github?: string,
+          linkedin?: string,
+          website?: string,
+        },
+        responses: {
+          q1?: string,
+          q2?: string,
+          q3?: string,
+          q4?: string,
+        },
+        other: {
+          dietary_restrictions: enum,
+          discover: string,
+          shirt_size: enum,
+        },
+      },
       application: {
         name: {
           first: '',
