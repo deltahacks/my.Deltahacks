@@ -132,14 +132,26 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Welcome Header ]*/
 
-.welcomeheader {
+.txt1 {
     font-family: "Open Sans";
-    font-size: 3em;
-    font-weight: 600;
+    font-size: 2.5em;
+    font-weight: 100;
     text-decoration: none;
-    color: #525251;
+    color: white;
 }
-
+.txt2 {
+    font-family: "Open Sans";
+    font-size: 2.5em;
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+}.txt3 {
+    font-family: "Open Sans";
+    font-size: 2.5em;
+    font-weight: 200;
+    text-decoration: none;
+    color: white;
+}
 @media only screen and (max-width: 500px) {
     .welcomeheader {
         font-family: "Open Sans";
@@ -234,11 +246,20 @@ animation: animate 6s ease infinite;
 .login100-pic img {
     max-width: 100%;
 }
+.card {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    width: 30%;
+  }
 
 .login100-form {
-    width: 290px;
-    margin:0px;
-    padding:0px;
+    width: 300px;
+    margin-right:80px;
+    padding-left:80px;
+    border-top-left-radius: 50px;
+    box-shadow:  -1px 0px 2px 0px rgba(0,0,0,0.2);
+    border-bottom-left-radius: 50px;
 }
 
 .login100-form-logo {
@@ -262,7 +283,7 @@ animation: animate 6s ease infinite;
     color: #fff;
     line-height: 1.2;
     text-align: center;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     display: block;
 }
 
@@ -277,7 +298,7 @@ animation: animate 6s ease infinite;
 .wrap-input100 {
     width: 100%;
     position: relative;
-    color: #017ef2;
+    color: white;
 }
 
 .input100 {
@@ -305,7 +326,9 @@ animation: animate 6s ease infinite;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap; */
-    justify-content: center;
+  text-decoration: none;
+  justify-content: center;
+
 }
 
 .login100-form-btn {
@@ -314,24 +337,32 @@ animation: animate 6s ease infinite;
     -moz-appearance: none;
     -webkit-appearance: none;
     -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-    background-color: transparent !important;
-    font-family: sans-serif;
-    border: 0;
-    /* border-radius: 35px; */
-    box-shadow: inset 0 0 0 2px #525251 !important;
-    color: #525251 !important;
+    -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    font-family: "Open Sans";
+    color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    /* line-height: 52px; */
-    /* padding: 0 1.75em; */
+    font-size: 17px;
+    font-weight: 300;
     text-align: center;
     text-decoration: none;
-    text-transform: uppercase;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    /* text-transform: uppercase; */
+    text-transform: none;
+    /* box-shadow: inset 0 0 0 2px #525251 !important; */
+    /* line-height: 52px; */
+    /* padding: 0 1.75em; */
+}
+
+.login100-form-btn:hover {
+    /* box-shadow: inset 0 0 0 2px #017ef2 !important; */
+    color: black !important;
+    background: rgba(255, 255, 255,0.25) !important;
 }
 
 @media only screen and (max-width: 500px) {
@@ -346,7 +377,7 @@ animation: animate 6s ease infinite;
         -ms-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
         transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
         background-color: transparent !important;
-        font-family: sans-serif;
+        font-family: "Open Sans";
         border: 0;
         /* border-radius: 35px; */
         box-shadow: inset 0 0 0 2px #525251 !important;
@@ -358,7 +389,7 @@ animation: animate 6s ease infinite;
         padding: 0 1.75em;
         text-align: center;
         text-decoration: none;
-        text-transform: uppercase;
+        /* text-transform: uppercase; */
     }
     .login100-pic {
         width: 35%;
@@ -368,23 +399,7 @@ animation: animate 6s ease infinite;
     }
 }
 
-.login100-form-btn:hover {
-    box-shadow: inset 0 0 0 2px #017ef2 !important;
-    color: #017ef2 !important;
-    background: hsla(360, 100%, 100%, 0.5) !important;
-}
 
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    width: 40%;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    width: 50%;
-  }
-
-  
-  
   @-webkit-keyframes animate {
     0%{background-position:0% 51%}
     50%{background-position:100% 50%}

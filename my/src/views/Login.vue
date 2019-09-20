@@ -7,9 +7,9 @@
     <div class="container-login100 background">
       <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <div class="wrap-login100">
-          <div class="card">
-  <img src="../assets/logo.png" alt="Avatar" style="width:100%">
-</div>
+        <div class="card">
+          <img src="../assets/logo.png" alt="Avatar" style="width:100%">
+        </div>
         <form class="login100-form validate-form">
           <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
@@ -17,8 +17,8 @@
           <v-container>
             <v-layout>
             <v-flex xs12>
-            <span class="welcomeheader">
-              myDeltaHacks
+            <span class="txt1">
+              my</span><span class="txt2">Delta</span><span class="txt3">Hacks
             </span>
             </v-flex>
             </v-layout>
@@ -34,7 +34,7 @@
           </v-alert>
           <div class="container-login100-form-btn">
             <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">
-              LOGIN
+              login
               <v-icon right>lock_open</v-icon>
             </v-btn>
           </div>
@@ -42,7 +42,7 @@
             Applications are now closed.
           </div> -->
           <div class="container-login100-form-btn">
-            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
+            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">register &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
