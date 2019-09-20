@@ -191,25 +191,21 @@ iframe {
 }
 
 .background {
-    background-image: url("https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg.jpg?raw=true");
-    background: #9152f8;
-    background: -webkit-linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
-    background: -o-linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
-    background: -moz-linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
-    background: linear-gradient(left, rgb(57, 188, 130), rgb(26, 127, 195));
-    /* background-image: linear-gradient(bottom, #69EACB 0%, #EACCF8 48%, #6654F1 100%); */
-    /* background-image: linear-gradient(top, #92fe9d 0%, #00c9ff 100%); */
-    /* background-image: linear-gradient(to top, #4fb576 0%, #44c489 30%, #28a9ae 46%, #28a2b7 59%, #4c7788 71%, #6c4f63 86%, #432c39 100%); */
-    /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
-    /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
-    /* https://webgradients.com/ */
+    background: linear-gradient(270deg, #1a7fc3, #39bc82);
+    background-size: 400% 400%;
+    
+    -webkit-animation: animate 6s ease infinite;
+-moz-animation: animate 6s ease infinite;
+-o-animation: animate 6s ease infinite;
+animation: animate 6s ease infinite;
 }
 
 .wrap-login100 {
     width: 750px;
     /* height: 50vh; */
-    box-shadow: 1px 1px 0px 0px black;
-    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+
+    border-radius: 50px;
     overflow: hidden;
     /* background: linear-gradient( -180deg, rgba(255, 255, 255, 0.6) 100%, rgba(0, 0, 0, 0.1) 100%); */
     background: lighten;
@@ -234,11 +230,6 @@ iframe {
 /*------------------------------------------------------------------
 [ Form ]*/
 
-.login100-pic {
-    width: 50%;
-    margin-bottom:-10px;
-    padding:0px;
-}
 
 .login100-pic img {
     max-width: 100%;
@@ -381,4 +372,36 @@ iframe {
     box-shadow: inset 0 0 0 2px #017ef2 !important;
     color: #017ef2 !important;
     background: hsla(360, 100%, 100%, 0.5) !important;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    width: 50%;
+  }
+
+  
+  
+  @-webkit-keyframes animate {
+    0%{background-position:0% 51%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 51%}
+}
+@-moz-keyframes animate {
+    0%{background-position:0% 51%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 51%}
+}
+@-o-keyframes animate {
+    0%{background-position:0% 51%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 51%}
+}
+@keyframes animate {
+    0%{background-position:0% 51%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 51%}
 }

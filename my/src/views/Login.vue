@@ -7,9 +7,9 @@
     <div class="container-login100 background">
       <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <div class="wrap-login100">
-        <div class="login100-pic">
-					<img src="@/assets/login_left.png" alt="IMG">
-				</div>
+          <div class="card">
+  <img src="../assets/logo.png" alt="Avatar" style="width:100%">
+</div>
         <form class="login100-form validate-form">
           <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
