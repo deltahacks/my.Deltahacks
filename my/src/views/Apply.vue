@@ -284,7 +284,7 @@
     </v-app>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable no-unused-expressions */
 import firebase from 'firebase';
 import vueFilePond from 'vue-filepond';
@@ -304,6 +304,75 @@ import { majors, allUniversities } from '../private/data';
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+
+interface Application {
+        name: {
+          first: string;
+          last: string;
+        }
+        contact: {
+          email: string;
+          phone: string;
+        }
+        first_submitted: Date;
+        academics: {
+          degree: 'Bachelors' | 'Masters' | 'PhD';
+          major: string;
+          school: string;
+          year: 'First Year' |
+                'Second Year' |
+                'Third Year' |
+                'Fourth Year' |
+                'Fifth Year' |
+                'Sixth Year' ;
+        }
+        personal: {
+          birthday: Date;
+          gender: 'M' | 'F' | 'O';
+          race: 'Black / African American' |
+                'Hispanic' |
+                'East Asian' |
+                'South Asian' |
+                'Middle Eastern' |
+                'Native American' |
+                'White / Caucasian' |
+                'Multiple ethnicity / Other' |
+                'Prefer not to say';
+        }
+        emergency: {
+          name: string;
+          phone: string;
+          relation: 'Parent' |
+                    'Grandparent' |
+                    'Sibling' |
+                    'Partner' |
+                    'Friend' |
+                    'Guardian' |
+                    'Other';
+        }
+        documents: {
+          download_link?: string;
+          filename?: string;
+          id?: number;
+        }
+        profiles: {
+          devpost?: string;
+          github?: string;
+          linkedin?: string;
+          website?: string;
+        }
+        responses: {
+          q1?: string;
+          q2?: string;
+          q3?: string;
+          q4?: string;
+        }
+        other: {
+          dietary_restrictions: string;
+          discover: string;
+          shirt_size: 'XS' | 'S' | 'M' | 'L' | 'XL';
+        }
+      }
 
 export default {
   mixins: [validationMixin],
