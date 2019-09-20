@@ -782,8 +782,8 @@ import { Validator } from 'vee-validate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
 import { mapGetters } from 'vuex'
 import { majors, allUniversities } from '../private/data'
+
 import { ApplicationModel } from '../types'
-// import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
@@ -1280,18 +1280,18 @@ export default {
       })
     },
     beforeMount() {
-      this.activateModal('Loading...')
-      const userEmail = firebase.auth().currentUser.email
-      this.$store.state.db
-        .collection('applications')
-        .doc('DH5')
-        .collection('submitted')
-        .doc(userEmail)
-        .get()
-        .then(doc => {
-          resolve(doc.exists)
-        })
-        .catch(err => reject(err))
+      // this.activateModal('Loading...')
+      // const userEmail = firebase.auth().currentUser.email
+      // this.$store.state.db
+      //   .collection('applications')
+      //   .doc('DH5')
+      //   .collection('submitted')
+      //   .doc(userEmail)
+      //   .get()
+      //   .then(doc => {
+      //     resolve(doc.exists)
+      //   })
+      //   .catch(err => reject(err))
     },
     setSubmittedVariables(data) {
       this.editing = true
@@ -1304,47 +1304,47 @@ export default {
     },
   },
   async beforeMount() {
-    this.activateModal('Loading...')
-    const userEmail = firebase.auth().currentUser.email
-    try {
-      let doc = await this.$store.state.db
-        .collection('applications')
-        .doc('DH5')
-        .collection('in progress')
-        .doc(userEmail)
-        .get()
-      const submitted = await this.getUserAppStatus(userEmail)
-      if (doc.exists) {
-        const data = doc.data()
-        const gender = data.gender
-        console.log(data)
-        console.log(gender)
-        if (submitted && !gender) {
-          this.enableGenderSelect = true
-          this.deadline = false
-          this.setSubmittedVariables(data)
-        } else if (submitted) {
-          this.setSubmittedVariables(data)
-          this.deadline = true
-        } else {
-          this.editing = true
-          this.application = doc.data()
-          this.fillApplicationFields()
-          this.loading = false
-          this.deadline = true
-        }
-      } else {
-        console.log('Document not found!')
-        this.editing = false
-        this.loading = false
-        this.deadline = true
-      }
-    } catch (err) {
-      console.log('User app query failed.')
-      console.log(err)
-      this.loading = false
-      this.deadline = true
-    }
+    // this.activateModal('Loading...')
+    // const userEmail = firebase.auth().currentUser.email
+    // try {
+    //   let doc = await this.$store.state.db
+    //     .collection('applications')
+    //     .doc('DH5')
+    //     .collection('in progress')
+    //     .doc(userEmail)
+    //     .get()
+    //   const submitted = await this.getUserAppStatus(userEmail)
+    //   if (doc.exists) {
+    //     const data = doc.data()
+    //     const gender = data.gender
+    //     console.log(data)
+    //     console.log(gender)
+    //     if (submitted && !gender) {
+    //       this.enableGenderSelect = true
+    //       this.deadline = false
+    //       this.setSubmittedVariables(data)
+    //     } else if (submitted) {
+    //       this.setSubmittedVariables(data)
+    //       this.deadline = true
+    //     } else {
+    //       this.editing = true
+    //       this.application = doc.data()
+    //       this.fillApplicationFields()
+    //       this.loading = false
+    //       this.deadline = true
+    //     }
+    //   } else {
+    //     console.log('Document not found!')
+    //     this.editing = false
+    //     this.loading = false
+    //     this.deadline = true
+    //   }
+    // } catch (err) {
+    //   console.log('User app query failed.')
+    //   console.log(err)
+    //   this.loading = false
+    //   this.deadline = true
+    // }
   },
 }
 </script>
