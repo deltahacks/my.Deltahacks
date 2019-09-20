@@ -17,28 +17,28 @@
                     <label for="name" style='float:left'>
                         <strong>What's your first name?*</strong>
                     </label><br>
-                    <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
+                    <v-text-field name="name" id='name' :disabled="submitted" autocomplete="off" v-model="application.name.first" v-validate="{required:true, max:100}" :error-messages="errors.first('name')" data-vv-delay="1000"></v-text-field>
                     <label for="name" style='float:left'>
                         <strong>What's your last name?*</strong>
                     </label><br>
-                    <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.lastname" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
+                    <v-text-field name="lastname" id="lastname" :disabled="submitted" autocomplete="off" v-model="application.name.last" v-validate="{required:true, max:100}" :error-messages="errors.first('lastname')" data-vv-delay="1000"></v-text-field>
                     <label for="date" style='float:left'>
                         <strong>When is your birthday? *</strong>
                     </label><br>
-                    <v-text-field name="date" id="date" :disabled="submitted" v-model="application.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
+                    <v-text-field name="date" id="date" :disabled="submitted" v-model="application.personal.birthday" mask="date" placeholder="dd/mm/yyyy" v-validate="{required: true}" :error-messages="errors.first('date')"></v-text-field>
 
                     <label for="date" style='float:left'>
                         <strong :class="enableGenderSelect && submitted ? 'we_messed_up' : ''">What's your gender? *</strong>
                     </label><br>
-                    <v-select name="gender" id='gender' :disabled="!enableGenderSelect && submitted" @change="genderChange" v-model="application.gender" :items="['M', 'F', 'Other/Prefer not to say']" v-validate="{required:true}" :error-messages="errors.first('gender')" data-vv-delay="1000" />
+                    <v-select name="gender" id='gender' :disabled="!enableGenderSelect && submitted" @change="genderChange" v-model="application.personal.gender" :items="['M', 'F', 'Other/Prefer not to say']" v-validate="{required:true}" :error-messages="errors.first('gender')" data-vv-delay="1000" />
                     <label for="date" style='float:left'>
                         <strong>What ethnicity do you identify as? *</strong>
                     </label><br>
-                    <v-select :items="races" name="race" :disabled="submitted" v-model="application.race" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('race:required')" data-vv-delay="1000"></v-select>
+                    <v-select :items="races" name="race" :disabled="submitted" v-model="application.personal.race" @change="formChange" v-validate="{required: true}" :error-messages="errors.first('race:required')" data-vv-delay="1000"></v-select>
                     <label for="university" style='float:left'>
                         <strong>What university/college do you go to? *</strong>
                     </label><br>
-                    <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
+                    <v-combobox name="university" id='university' :disabled="submitted" @change="formChange" :items="allUniversities" v-model="application.academics.university" v-validate="{required: true}" :error-messages="errors.first('university:required')" data-vv-delay="1000">
                         <template slot="no-data">
                             <v-list-tile>
                                 <v-list-tile-content>
@@ -53,7 +53,7 @@
                     <label for="major" style='float:left'>
                         <strong>What do you study? *</strong>
                     </label><br>
-                    <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
+                    <v-combobox name="major" id='major' :disabled="submitted" :items='majors' @change="formChange" v-model="application.academics.major" v-validate="{required:true}" :error-messages="errors.first('major')" data-vv-delay="1000">
                         <template slot="no-data">
                             <v-list-tile>
                                 <v-list-tile-content>
@@ -68,11 +68,11 @@
                     <label for="major" style='float:left'>
                         <strong>What degree are you pursuing? *</strong>
                     </label><br>
-                    <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
+                    <v-select name="degree" id='degree' :disabled="submitted" :items='degrees' @change="formChange" v-model="application.academics.degree" v-validate="{required:true}" :error-messages="errors.first('degree')" data-vv-delay="1000"></v-select>
                     <label for="year" style='float:left'>
                         <strong>What year of school are you in? *</strong>
                     </label><br>
-                    <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.school_year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
+                    <v-select name="year" id='year' :disabled="submitted" @change="formChange" v-model="application.academics.year" :items="items" v-validate="{required:true}" :error-messages="errors.first('year:required')" data-vv-delay="1000">
                     </v-select>
                     <div class="section divider"></div>
                     <h2 style="float:left">{{subsectionLabels[1]}}</h2>
@@ -80,12 +80,12 @@
                     <label for="shirt size" style='float:left'>
                         <strong>What's your shirt size? *</strong>
                     </label><br>
-                    <v-select v-model="application.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
+                    <v-select v-model="application.other.shirt_size" :disabled="submitted" @change="formChange" :items="shirts" v-validate="{required:true}" name="shirt size" id="shirt size" :error-messages="errors.first('shirt size:required')" data-vv-delay="1000">
                     </v-select>
                     <label for="diet" style='float:left'>
                         <strong>Any dietary restrictions? *</strong>
                     </label><br>
-                    <v-combobox v-model="application.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
+                    <v-combobox v-model="application.other.dietary_restrictions" :disabled="submitted" @change="formChange" :items="food" v-validate="{required:true}" name="diet" id='diet' :error-messages="errors.first('diet:required')" data-vv-delay="1000">
                         <template slot="no-data">
                             <v-list-tile>
                                 <v-list-tile-content>
@@ -112,7 +112,7 @@
                     <label for="discover" style="float:left">
                         <strong>How did you hear about us? *</strong>
                     </label><br>
-                    <v-select v-model="application.discover" :disabled="submitted" @change="formChange" :items="methods" v-validate="{required:true}" name="discover" id='diet' :error-messages="errors.first('discover:required')" data-vv-delay="1000"></v-select>
+                    <v-select v-model="application.other.discover" :disabled="submitted" @change="formChange" :items="methods" v-validate="{required:true}" name="discover" id='diet' :error-messages="errors.first('discover:required')" data-vv-delay="1000"></v-select>
                     <label for="location" style='float:left'>
                         <strong>Where are you coming from? *</strong>
                     </label><br>
@@ -134,31 +134,31 @@
                     <label for="phone" style='float:left'>
                         <strong>Your Cell Phone Number *</strong>
                     </label><br>
-                    <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency_phone}" :error-messages="errors.first('phone:required')"></v-text-field>
+                    <v-text-field mask="phone" :disabled="submitted" name="phone" id='phone' v-model="application.contact.phone" prepend-icon="phone" data-vv-delay="1000" v-validate="{required:true, max: 11, is_not: application.emergency.phone}" :error-messages="errors.first('phone:required')"></v-text-field>
                     <label for="emergency phone" style='float:left'>
                         <strong>Emergency Contact Number *</strong>
                     </label><br>
-                    <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency_phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
+                    <v-text-field mask="phone" :disabled="submitted" name="emergency phone" id='emergency phone' v-model="application.emergency.phone" prepend-icon="phone" v-validate="{required:true, max: 11, is_not: application.contact.phone}" :error-messages="errors.first('emergency phone')"></v-text-field>
                     <label for="emergency name" style='float:left'>
                         <strong>Emergency Contact's Name *</strong>
                     </label><br>
-                    <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency_name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
+                    <v-text-field name="emergency name" id='emergency name' :disabled="submitted" autocomplete="off" v-model="application.emergency.name" v-validate="{required:true, max:100}" :error-messages="errors.first('emergency name')" data-vv-delay="1000"></v-text-field>
                     <label for="emergency relationship" style='float:left'>
                         <strong>Relationship with Emergency Contact *</strong>
                     </label><br>
-                    <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency_relationship" v-validate="{required:true, max: 11, is_not: application.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
+                    <v-select :disabled="submitted" :items="relations" name="emergency relationship" id='emergency relationship' v-model="application.emergency.relation" v-validate="{required:true, max: 11, is_not: application.contact.phone}" :error-messages="errors.first('emergency relationship')"></v-select>
                     <div class="section divider"></div>
                     <p>Note : Only information below this line will be considered during the reviewing process. The above information is for statistics, demographics, and logistical purposes only.</p>
                     <div class="section divider"></div>
                     <h2 style="float:left">{{subsectionLabels[3]}}</h2>
                     <br><br>
-                    <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
+                    <v-text-field name="github" :disabled="submitted" label="Your Github" single-line data-vv-delay="4000" v-model="application.profiles.github" prepend-icon="fab fa-github" v-validate="{max:150, url:true}" :error-messages="errors.first('github')">
                     </v-text-field>
-                    <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
+                    <v-text-field name="linkedin" :disabled="submitted" label="Your Linkedin" single-line data-vv-delay="4000" v-model="application.profiles.linkedin" prepend-icon="fab fa-linkedin" v-validate="{max:150, url:true}" :error-messages="errors.first('linkedin')">
                     </v-text-field>
-                    <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
+                    <v-text-field name="website" :disabled="submitted" label="Your Website" single-line data-vv-delay="4000" v-model="application.profiles.website" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('website')">
                     </v-text-field>
-                    <v-text-field name="devpost" :disabled="submitted" label="Your Devpost" single-line data-vv-delay="4000" v-model="application.devpost" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('devpost')">
+                    <v-text-field name="devpost" :disabled="submitted" label="Your Devpost" single-line data-vv-delay="4000" v-model="application.profiles.devpost" prepend-icon="fas fa-link" v-validate="{max:150, url:true}" :error-messages="errors.first('devpost')">
                     </v-text-field><br>
                     <div id="filePondContainer">
                         <file-pond @addfile="submitFileInfoOnDrop" v-if="!submitted" name="test" ref="pond" label-idle="Drop resume here..." accepted-file-types="application/pdf" v-bind:files="myFiles" v-on:init="handleFilePondInit" />
@@ -175,26 +175,26 @@
                         <v-layout row wrap>
                             <v-flex xs12>
                                 <p class="text-lg-left">Tell us about a project you worked on/ thing you made/ internship you did/ course you took that you are really passionate about, and why?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="project" placeholder="Tell us about a project you've worked on recently..." v-model="application.q1" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('project')" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="project" placeholder="Tell us about a project you've worked on recently..." v-model="application.responses.q1" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('project')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q1Progress" :color="q1Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">Why do you want to come to Deltahacks V, and what is one thing that you are passionate to bring to this year's hackathon?*</p>
-                                <v-textarea box :disabled="submitted" autocomplete="nope" name="reason" placeholder="Why do you want to come to Deltahacks V..." v-model="application.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('reason')" counter=500>
+                                <v-textarea box :disabled="submitted" autocomplete="nope" name="reason" placeholder="Why do you want to come to Deltahacks V..." v-model="application.responses.q2" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('reason')" counter=500>
                                 </v-textarea>
                                 <v-progress-linear v-if="custom" slot="progress" :value="q2Progress" :color="q2Color" height="5"></v-progress-linear>
                             </v-flex>
                             <div class="section divider"></div>
                             <v-flex xs12>
                                 <p class="text-lg-left">If you could teleport to anywhere in the world right now, where would you go and why?*</p>
-                                <v-textarea box :disabled="submitted" name="creative" placeholder="Answer here..." autocomplete="nope" v-model="application.q3" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('creative')" counter=500 />
+                                <v-textarea box :disabled="submitted" name="creative" placeholder="Answer here..." autocomplete="nope" v-model="application.responses.q3" auto-grow v-validate="{required:true, max:500}" :error-messages="errors.first('creative')" counter=500 />
                                 <v-progress-linear v-if="custom" slot="progress" :value="q3Progress" :color="q3Color" height="5"></v-progress-linear>
                             </v-flex>
                             <v-flex xs12>
                                 <p class="text-lg-left">Anything else you'd like to tell us? *</p>
-                                <v-text-field :disabled="submitted" name="wildcard" placeholder="Could be anything!" v-model="application.q4" auto-grow />
+                                <v-text-field :disabled="submitted" name="wildcard" placeholder="Could be anything!" v-model="application.responses.q4" auto-grow />
                             </v-flex>
                             <div class="section divider"></div>
                         </v-layout>
@@ -392,37 +392,84 @@ export default {
       allUniversities,
       majors,
       application: {
-        name: '',
-        lastname: '',
-        email: firebase.auth().currentUser.email,
-        last_modified: undefined,
+        name: {
+          first: '',
+          last: '',
+        },
+        contact: {
+          email: firebase.auth().currentUser.email,
+          phone: '',
+        },
         first_submitted: undefined,
-        school_year: null,
-        shirt_size: null,
-        dietary_restrictions: null,
-        hackathons: null,
-        university: null,
-        discover: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        devpost: '',
-        phone: '',
-        emergency_phone: '',
-        emergency_name: '',
-        q1: '',
-        q2: '',
-        q3: '',
-        q4: '',
-        meme: '',
-        major: '',
-        location: '',
-        workshops: [],
-        degree: '',
-        birthday: '',
-        documents: [],
-        microsoft: false,
-        gender: '',
+        academics: {
+          degree: '',
+          major: '',
+          school: '',
+          year: '',
+        },
+        personal: {
+          birthday: '',
+          gender: '',
+          race: '',
+        },
+        emergency: {
+          name: '',
+          phone: '',
+          relation: '',
+        },
+        documents: {
+          download_link: '',
+          filename: '',
+          id: '',
+        },
+        profiles: {
+          devpost: '',
+          github: '',
+          linkedin: '',
+          website: '',
+        },
+        responses: {
+          q1: '',
+          q2: '',
+          q3: '',
+          q4: '',
+        },
+        other: {
+          dietary_restrictions: '',
+          discover: '',
+          shirt_size: ''
+        },
+        // name: '',
+        // lastname: '',
+        // email: firebase.auth().currentUser.email,
+        // last_modified: undefined,
+        // first_submitted: undefined,
+        // school_year: null,
+        // shirt_size: null,
+        // dietary_restrictions: null,
+        // hackathons: null,
+        // university: null,
+        // discover: null,
+        // github: '',
+        // linkedin: '',
+        // website: '',
+        // devpost: '',
+        // phone: '',
+        // emergency_phone: '',
+        // emergency_name: '',
+        // q1: '',
+        // q2: '',
+        // q3: '',
+        // q4: '',
+        // meme: '',
+        // major: '',
+        // location: '',
+        // workshops: [],
+        // degree: '',
+        // birthday: '',
+        // documents: [],
+        // microsoft: false,
+        // gender: '',
       },
       links: ['Home', 'About', 'Contact'],
       q1: '',
@@ -497,13 +544,13 @@ export default {
   },
   computed: {
     q1Progress() {
-      return Math.min(100, this.application.q1.length / 5);
+      return Math.min(100, this.application.responses.q1.length / 5);
     },
     q2Progress() {
-      return Math.min(100, this.application.q2.length / 5);
+      return Math.min(100, this.application.responses.q2.length / 5);
     },
     q3Progress() {
-      return Math.min(100, this.application.q3.length / 5);
+      return Math.min(100, this.application.responses.q3.length / 5);
     },
     validations: {
       name: { required, maxLength: maxLength(10) },
@@ -576,7 +623,7 @@ export default {
     genderChange() {
       this.formChange();
 
-      if (this.submitted && this.application.gender && this.enableGenderSelect) {
+      if (this.submitted && this.application.personal.gender && this.enableGenderSelect) {
         this.confirmGender = true;
       }
     },
