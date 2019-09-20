@@ -204,12 +204,10 @@ iframe {
 
 .background {
     background: linear-gradient(270deg, #1a7fc3, #39bc82);
-    background-size: 400% 400%;
-    
-    -webkit-animation: animate 6s ease infinite;
--moz-animation: animate 6s ease infinite;
--o-animation: animate 6s ease infinite;
-animation: animate 6s ease infinite;
+    background-size: 200% 200%;
+    -webkit-animation: animated 25s ease infinite;
+    -moz-animation: animated 25s ease infinite;
+    animation: animated 25s ease infinite;
 }
 
 .wrap-login100 {
@@ -399,24 +397,18 @@ animation: animate 6s ease infinite;
     }
 }
 
-
-  @-webkit-keyframes animate {
-    0%{background-position:0% 51%}
+@-webkit-keyframes animated {
+    0%{background-position:0% 50%}
     50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
+    100%{background-position:0% 50%}
 }
-@-moz-keyframes animate {
-    0%{background-position:0% 51%}
+@-moz-keyframes animated {
+    0%{background-position:0% 50%}
     50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
+    100%{background-position:0% 50%}
 }
-@-o-keyframes animate {
-    0%{background-position:0% 51%}
+@keyframes animated {
+    0%{background-position:0% 50%}
     50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
-}
-@keyframes animate {
-    0%{background-position:0% 51%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
+    100%{background-position:0% 50%}
 }

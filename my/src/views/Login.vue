@@ -48,7 +48,7 @@
           </div>
           <div class="container-login100-form-btn">
             <v-divider></v-divider><br>
-            <p style="color: blue; cursor: pointer;" @click="forgotpage">
+            <p style="color: black; cursor: pointer;" @click="forgotpage">
               Forgot Password?
             </p>
           </div>
