@@ -284,7 +284,7 @@
     </v-app>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable no-unused-expressions */
 import firebase from 'firebase';
 import vueFilePond from 'vue-filepond';
@@ -305,7 +305,7 @@ import { majors, allUniversities } from '../private/data';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
-interface Application: {
+interface Application {
         name: {
           first: string;
           last: string;
@@ -314,22 +314,41 @@ interface Application: {
           email: string;
           phone: string;
         }
-        first_submitted: undefined
+        first_submitted: Date;
         academics: {
-          degree: enum;
+          degree: 'Bachelors' | 'Masters' | 'PhD';
           major: string;
           school: string;
-          year: enum;
+          year: 'First Year' |
+                'Second Year' |
+                'Third Year' |
+                'Fourth Year' |
+                'Fifth Year' |
+                'Sixth Year' ;
         }
         personal: {
-          birthday: date;
-          gender: enum;
-          race: enum;
+          birthday: Date;
+          gender: 'M' | 'F' | 'O';
+          race: 'Black / African American' |
+                'Hispanic' |
+                'East Asian' |
+                'South Asian' |
+                'Middle Eastern' |
+                'Native American' |
+                'White / Caucasian' |
+                'Multiple ethnicity / Other' |
+                'Prefer not to say';
         }
         emergency: {
           name: string;
           phone: string;
-          relation: enum;
+          relation: 'Parent' |
+                    'Grandparent' |
+                    'Sibling' |
+                    'Partner' |
+                    'Friend' |
+                    'Guardian' |
+                    'Other';
         }
         documents: {
           download_link?: string;
@@ -349,9 +368,9 @@ interface Application: {
           q4?: string;
         }
         other: {
-          dietary_restrictions: enum;
+          dietary_restrictions: string;
           discover: string;
-          shirt_size: enum;
+          shirt_size: 'XS' | 'S' | 'M' | 'L' | 'XL';
         }
       }
 
