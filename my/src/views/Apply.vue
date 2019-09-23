@@ -1044,6 +1044,7 @@ export default {
       console.log('FilePond has initialized')
       // FilePond instance methods are available on `this.$refs.pond`
     },
+    // Used to clear the application form
     getEmptyApplication() {
       return {
         name: '',

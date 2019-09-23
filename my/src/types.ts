@@ -64,8 +64,9 @@ export interface ApplicationModel {
     q4?: string;
   };
   other: {
-    dietary_restrictions: string;
     discover: string;
+    dietary_restrictions: string;
     shirt_size: "XS" | "S" | "M" | "L" | "XL";
+    hackathons_attended: number;
   };
 }
