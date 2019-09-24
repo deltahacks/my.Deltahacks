@@ -98,20 +98,20 @@
 
 <script lang="ts">
 /* eslint-disable no-restricted-syntax */
-import IOdometer from "vue-odometer";
-import * as firebase from "firebase/app";
+import IOdometer from 'vue-odometer';
+import * as firebase from 'firebase/app';
 
-import Vue from "vue";
-import db from "../private/firebase_init";
-import Navbar from "@/components/Navbar.vue";
-import PieChart from "../components/PieChart";
-import PieChart2 from "../components/PieChartGen";
-import DataTable from "@/components/DataTable.vue";
-import CommitChart from "../components/CommitChart";
-import { allUniversities } from "../private/data";
+import Vue from 'vue';
+import db from '../private/firebase_init';
+import Navbar from '@/components/Navbar.vue';
+import PieChart from '../components/PieChart';
+import PieChart2 from '../components/PieChartGen';
+import DataTable from '@/components/DataTable.vue';
+import CommitChart from '../components/CommitChart';
+import { allUniversities } from '../private/data';
 
-import "firebase/functions";
-import "odometer/themes/odometer-theme-default.css";
+import 'firebase/functions';
+import 'odometer/themes/odometer-theme-default.css';
 
 interface DashboardData {
   page: number;
@@ -129,78 +129,78 @@ interface DashboardData {
 }
 
 export default Vue.extend({
-  name: "Dashboard",
+  name: 'Dashboard',
   data(): DashboardData {
     return {
       page: 3,
-      apps: "245",
+      apps: '245',
       loading: false,
       allUniversities,
       applicationCount: 0,
-      loadingMessage: "Loading...",
+      loadingMessage: 'Loading...',
       positions: { pos: [], names: [] },
-      links: ["Home", "About", "Contact"],
+      links: ['Home', 'About', 'Contact'],
       c_user: firebase.auth().currentUser,
       colors: [
-        "#E31836",
-        "#83002C",
-        "#004C9B",
-        "#FDD54F",
-        "#4F2682",
-        "#63a832",
-        "#e0932f"
+        '#E31836',
+        '#83002C',
+        '#004C9B',
+        '#FDD54F',
+        '#4F2682',
+        '#63a832',
+        '#e0932f',
       ],
       debugFunctions: [
         {
-          title: "Index Apps",
+          title: 'Index Apps',
           async execute() {
             try {
-              console.log("Envoking firebase function...");
+              console.log('Envoking firebase function...');
               const successfulIndex = await firebase
                 .functions()
-                .httpsCallable("indexApplications")({ adminKey: 1234 });
-              console.log("Success!", successfulIndex);
+                .httpsCallable('indexApplications')({ adminKey: 1234 });
+              console.log('Success!', successfulIndex);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Test Firebase Functions",
+          title: 'Test Firebase Functions',
           async execute() {
             try {
               const successfulIndex = await firebase
                 .functions()
-                .httpsCallable("newHello")({ adminKey: 1234 });
+                .httpsCallable('newHello')({ adminKey: 1234 });
               console.log(successfulIndex);
             } catch (err) {
-              console.log("Error testing");
+              console.log('Error testing');
             }
-          }
+          },
         },
         {
-          title: "Force update stats",
+          title: 'Force update stats',
           async execute() {
             try {
-              console.log("Envoking firebase function...");
+              console.log('Envoking firebase function...');
               const successfulIndex = await firebase
                 .functions()
-                .httpsCallable("forceUpdateStatistics")({ adminKey: 1234 });
-              console.log("Success!", successfulIndex);
+                .httpsCallable('forceUpdateStatistics')({ adminKey: 1234 });
+              console.log('Success!', successfulIndex);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Count Microsoft",
+          title: 'Count Microsoft',
           async execute() {
             try {
-              console.log("Counting msft");
+              console.log('Counting msft');
               const msftCount = await db
-                .collection("decisions")
-                .doc("DH5")
-                .collection("pending")
+                .collection('decisions')
+                .doc('DH5')
+                .collection('pending')
                 .get();
               let finalcount = 0;
               for (const inst of msftCount.docs) {
@@ -209,22 +209,22 @@ export default Vue.extend({
                   ? finalcount + 1
                   : finalcount;
               }
-              console.log("Miccrosoft count: ", finalcount + 95);
+              console.log('Miccrosoft count: ', finalcount + 95);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Count Microsoft 2",
+          title: 'Count Microsoft 2',
           async execute() {
             try {
-              console.log("Counting msft");
+              console.log('Counting msft');
               const msftCount = await db
-                .collection("decisions")
-                .doc("DH5")
-                .collection("pending")
-                .where("index", ">", 500)
+                .collection('decisions')
+                .doc('DH5')
+                .collection('pending')
+                .where('index', '>', 500)
                 .get();
               // eslint-disable-next-line prefer-const
               let finalcount = 0;
@@ -233,28 +233,28 @@ export default Vue.extend({
                 // eslint-disable-next-line no-unused-expressions
                 inst.data().microsoft
                   ? console.log(
-                      `,${inst.data().name} ${inst.data().lastname},`,
-                      `${inst.data().email},`,
-                      `${inst.data().major},`,
-                      `${inst.data().university},`
-                    )
+                    `,${inst.data().name} ${inst.data().lastname},`,
+                    `${inst.data().email},`,
+                    `${inst.data().major},`,
+                    `${inst.data().university},`,
+                  )
                   : false;
               }
-              console.log("Miccrosoft count: ", finalcount + 95);
+              console.log('Miccrosoft count: ', finalcount + 95);
             } catch (err) {
-              console.log("Error indexing applications");
+              console.log('Error indexing applications');
             }
-          }
+          },
         },
         {
-          title: "Reviewer stats",
+          title: 'Reviewer stats',
           async execute() {
             try {
-              console.log("Calculating...");
+              console.log('Calculating...');
               const msftCount = await db
-                .collection("decisions")
-                .doc("DH5")
-                .collection("pending")
+                .collection('decisions')
+                .doc('DH5')
+                .collection('pending')
                 .get();
               const finalcount = 0;
               const rStats = {};
@@ -290,16 +290,16 @@ export default Vue.extend({
                 // console.log('l24999', finalRevCount, rStats[finalRevCount]);
                 rStats[finalRevCount].marked /= 3;
                 rStats[finalRevCount].marked = Math.floor(
-                  rStats[finalRevCount].marked
+                  rStats[finalRevCount].marked,
                 );
               }
-              console.log("Reviewers: ", rStats);
+              console.log('Reviewers: ', rStats);
             } catch (err) {
-              console.log("Error indexing applications", err);
+              console.log('Error indexing applications', err);
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     };
   },
   components: {
@@ -309,18 +309,18 @@ export default Vue.extend({
     PieChart2,
     IOdometer,
     DataTable,
-    CommitChart
+    CommitChart,
   },
   created() {
     this.$Progress.start();
   },
   async mounted() {
     const nameRes = await db
-      .collection("admins")
+      .collection('admins')
       // .doc(this.$store.state.firebase.auth().currentUser.email)
       .get();
     const revObj = {};
-    nameRes.docs.forEach(val => {
+    nameRes.docs.forEach((val) => {
       revObj[val.data().email] = val.data().name;
       if (
         val.data().email === this.$store.state.firebase.auth().currentUser.email
@@ -339,53 +339,53 @@ export default Vue.extend({
       `Welcome back ${
         this.$store.state.currentAdminUserName
           ? this.$store.state.currentAdminUserName.trim().split(/\s+/)[0]
-          : ""
-      }!, Loading hackathon data...`
+          : ''
+      }!, Loading hackathon data...`,
     );
 
     try {
-      let doc = await db
-        .collection("users") // Change to real users later
-        .where("geo.latitude", "<", 1000000)
+      const doc = await db
+        .collection('users') // Change to real users later
+        .where('geo.latitude', '<', 1000000)
         .get();
 
-      doc.docs.forEach(val => {
+      doc.docs.forEach((val) => {
         // console.log('Vaal', val);
         this.positions.pos.push({
           lat: val.data().geo ? val.data().geo.latitude : 0,
-          lng: val.data().geo ? val.data().geo.longitude : 0
+          lng: val.data().geo ? val.data().geo.longitude : 0,
         });
         this.positions.names.push({
-          email: val.data().email
+          email: val.data().email,
         });
         // console.log(val.data().geo);
         this.$Progress.finish();
       });
       this.loading = false;
     } catch (err) {
-      console.log("E307", err);
+      console.log('E307', err);
       this.$Progress.fail();
       this.loading = false;
     }
 
-    db.collection("statistics")
-      .doc("DH5")
-      .onSnapshot(doc => {
+    db.collection('statistics')
+      .doc('DH5')
+      .onSnapshot((doc) => {
         if (doc) {
           const universityStats = doc.data()!.applicationStats.universities;
           this.applicationCount = doc.data()!.applications;
           (this.$refs.universities as any).changeData(
-            this.processField(this.filterData(universityStats), "Universities")
+            this.processField(this.filterData(universityStats), 'Universities'),
           );
         }
       });
     const authRes = await db
-      .collection("admins")
+      .collection('admins')
       .doc(this.$store.state.firebase.auth().currentUser.email)
       .get();
 
     this.$store.state.currentUserIsAuthorizedReviewer = authRes.data()!.authorizedReviewer;
-    console.log("auth res: ", authRes.data());
+    console.log('auth res: ', authRes.data());
   },
   computed: {
     vuex_user_role: {
@@ -393,25 +393,25 @@ export default Vue.extend({
         return this.$store.state.vuex_user_role;
       },
       set(value: string) {
-        this.$store.commit("update_vuex_role", value);
-      }
+        this.$store.commit('update_vuex_role', value);
+      },
     },
     vuex_password: {
       get(): string {
         return this.$store.state.vuex_password;
       },
       set(value: string) {
-        this.$store.commit("update_vuex_password", value);
-      }
+        this.$store.commit('update_vuex_password', value);
+      },
     },
     vuex_current_user: {
       get(): string {
         return this.$store.state.vuex_current_user;
       },
       set(value: string) {
-        this.$store.commit("update_vuex_current_user", value);
-      }
-    }
+        this.$store.commit('update_vuex_current_user', value);
+      },
+    },
   },
   methods: {
     filterData(data) {
@@ -428,7 +428,7 @@ export default Vue.extend({
         i++;
       }
       out.Other = 0;
-      values.forEach(value => {
+      values.forEach((value) => {
         out.Other += value;
       });
       return out;
@@ -441,17 +441,17 @@ export default Vue.extend({
           {
             label,
             backgroundColor: this.colors,
-            data: val
-          }
-        ]
+            data: val,
+          },
+        ],
       };
     },
     async fnctn() {
       try {
-        const f = await firebase.functions().httpsCallable("createAdminUser")({
-          email: "admin1@google.com",
-          phoneNumber: "6473338767",
-          password: "password1"
+        const f = await firebase.functions().httpsCallable('createAdminUser')({
+          email: 'admin1@google.com',
+          phoneNumber: '6473338767',
+          password: 'password1',
         });
         console.log(f);
       } catch (err) {
@@ -459,12 +459,12 @@ export default Vue.extend({
       }
     },
     async f2() {
-      const func = firebase.functions().httpsCallable("newHello");
+      const func = firebase.functions().httpsCallable('newHello');
       try {
-        const res = await func({ hello: "hi" });
+        const res = await func({ hello: 'hi' });
         console.log(res);
       } catch (err) {
-        console.log("l129", err);
+        console.log('l129', err);
       }
     },
     /* async fbdata() {
@@ -496,18 +496,18 @@ export default Vue.extend({
     async getApplicationCount() {
       try {
         const allStatistics = await db
-          .collection("statistics")
-          .doc("DH5")
+          .collection('statistics')
+          .doc('DH5')
           .get();
       } catch (err) {
-        console.log("An error occured: ", err);
+        console.log('An error occured: ', err);
       }
     },
-    activateModal(msg = "Loading...") {
+    activateModal(msg = 'Loading...') {
       this.loading = true;
       this.loadingMessage = msg;
-    }
-  }
+    },
+  },
 });
 </script>
 

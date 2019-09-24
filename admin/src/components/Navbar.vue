@@ -41,29 +41,29 @@
 </template>
 
 <script lang="ts">
-import firebase from "firebase";
-import Vue from "vue";
+import firebase from 'firebase';
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "Navbar",
+  name: 'Navbar',
   components: {},
   data() {
     return {
-      current: "DH V",
+      current: 'DH V',
       c_user: firebase.auth().currentUser,
-      dhs: ["DH V", "DH IV", "DH III", "DH II"]
+      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
     };
   },
   methods: {
     logout() {
       try {
         firebase.auth().signOut();
-        this.$router.push({ name: "Login" });
+        this.$router.push({ name: 'Login' });
       } catch (err) {
         console.log(err);
       }
-    }
-  }
+    },
+  },
 });
 </script>
 <style>

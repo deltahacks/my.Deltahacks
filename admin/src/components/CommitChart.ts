@@ -34,7 +34,7 @@ export default Vue.extend({
     const startFrom = this.setStartDate(); // currently 1 month ago
     const track = this.populateDateLabels(startFrom);
 
-    let querySnapshot = await db
+    const querySnapshot = await db
       .collection('applications')
       .doc('DH5')
       .collection('submitted')
@@ -42,41 +42,41 @@ export default Vue.extend({
       .endAt(startFrom.getTime() / 1000)
       .get();
 
-      querySnapshot.forEach((doc) => {
-        const item = doc.data();
-        if (!item.last_modified) return;
-        const date = new Date(item.last_modified.date);
-        const dateString = date.toDateString();
-        if (track[dateString] >= 0) {
-          track[dateString] += 1;
-        }
-      });
-      this.renderChart({
-        labels: Object.keys(track),
-        datasets: [{
-          label: 'Applicants per day',
-          borderColor: '#f87979',
-          backgroundColor: '#f87979',
-          data: Object.values(track),
-          fill: false,
+    querySnapshot.forEach((doc) => {
+      const item = doc.data();
+      if (!item.last_modified) return;
+      const date = new Date(item.last_modified.date);
+      const dateString = date.toDateString();
+      if (track[dateString] >= 0) {
+        track[dateString] += 1;
+      }
+    });
+    this.renderChart({
+      labels: Object.keys(track),
+      datasets: [{
+        label: 'Applicants per day',
+        borderColor: '#f87979',
+        backgroundColor: '#f87979',
+        data: Object.values(track),
+        fill: false,
+      }],
+    }, {
+      responsive: true,
+      title: {
+        display: true,
+      },
+      tooltips: {
+        position: 'average',
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            stepSize: 5, // adjust this to change interval with label
+          },
         }],
-      }, {
-        responsive: true,
-        title: {
-          display: true,
-        },
-        tooltips: {
-          position: 'average',
-          mode: 'index',
-          intersect: false,
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              stepSize: 5, // adjust this to change interval with label
-            },
-          }],
-        },
-      });
+      },
+    });
   },
 });

@@ -58,10 +58,10 @@ export default Vue.extend({
       try {
         await firebase
           .auth()
-          .sendPasswordResetEmail(this.email)
+          .sendPasswordResetEmail(this.email);
 
-          console.log('Email sent.');
-          this.$router.push({ name: 'Login' });
+        console.log('Email sent.');
+        this.$router.push({ name: 'Login' });
       } catch (err) {
         console.log(err);
       }

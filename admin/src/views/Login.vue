@@ -120,19 +120,20 @@ export default Vue.extend({
         try {
           await firebase
             .auth()
-            .signInWithEmailAndPassword(this.email, this.pass)
+            .signInWithEmailAndPassword(this.email, this.pass);
 
-            this.$router.push({ name: 'Dashboard' });
-            console.log('logged in');
-            this.feedback = '';
-        } catch(error) {
-            // Handle Errors here.
-            const errorMessage = error.message;
-            this.feedback = errorMessage;
-            console.log(errorMessage, error.code);
-          };
+          this.$router.push({ name: 'Dashboard' });
+          console.log('logged in');
+          this.feedback = '';
+        } catch (error) {
+          // Handle Errors here.
+          const errorMessage = error.message;
+          this.feedback = errorMessage;
+          console.log(errorMessage, error.code);
+        }
       }
     },
+  },
   watch: {
     loader() {
       const l: string = this.loader;

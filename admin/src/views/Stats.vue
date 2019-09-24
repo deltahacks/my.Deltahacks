@@ -465,19 +465,19 @@ export default Vue.extend({
     },
     async getRSVP() {
       return new Promise(async (resolve, reject) => {
-        let snap = await db.collection("hackathon")
-          .doc("DH5")
-          .collection("RSVP")
-          .doc("all")
-          .collection("Yes")
+        const snap = await db.collection('hackathon')
+          .doc('DH5')
+          .collection('RSVP')
+          .doc('all')
+          .collection('Yes')
           .get();
 
-          const out = {};
-          snap.docs.forEach(doc => {
-            const data = doc.data();
-            out[data.email] = true;
-            resolve(out);
-          });
+        const out = {};
+        snap.docs.forEach((doc) => {
+          const data = doc.data();
+          out[data.email] = true;
+          resolve(out);
+        });
       });
     },
     setAllData() {
@@ -558,16 +558,16 @@ export default Vue.extend({
     },
     // for updating statistics with accepted info, careful about overriding.
     async setAcceptedStats(data) {
-      let snap = await db.collection("statistics")
-        .doc("DH5")
+      const snap = await db.collection('statistics')
+        .doc('DH5')
         .get();
 
-        const current = snap.data();
-        Object.keys(data).forEach(key => {
-          current.applicationStats[key] = data[key];
-        });
-        // console.log(current);
-        // db.collection('statistics').doc('DH5').set(current);
+      const current = snap.data();
+      Object.keys(data).forEach((key) => {
+        current!.applicationStats[key] = data[key];
+      });
+      // console.log(current);
+      // db.collection('statistics').doc('DH5').set(current);
     },
     // for updating statistics, not used in standard page.
     processApplication(stats, app) {
