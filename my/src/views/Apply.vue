@@ -791,70 +791,10 @@ const FilePond = vueFilePond(
   FilePondPluginImagePreview,
 );
 
-interface ApplyData {
-  myFiles: any,
-  loading: boolean,
-  feedback: boolean,
-  confirm: boolean,
-  confirmClear: boolean,
-  editing: boolean,
-  deadline: boolean, // Change this if applications are ever needed.
-  // eslint-disable-next-line camelcase
-  existing_doc: any,
-  checkError: any,
-  shareError: any,
-  confirmGender: boolean,
-  pondError: any,
-  bannerColor: string,
-  bannerMessage: string,
-  bannerTimeout: number,
-  loadingMessage: string,
-  parent: any,
-  enableGenderSelect: boolean,
-  // eslint-disable-next-line camelcase
-  hackday_link:
-    string,
-  // eslint-disable-next-line camelcase
-  contest_terms:
-    string,
-  subsectionLabels: string[],
-  methods: string[],
-  cities: string[],
-  races: string[],
-  url: string,
-  MLH: string,
-  SHARE: string,
-  MICROSOFT: string,
-  picker: any,
-  submitted: boolean,
-  date: string,
-  university: any,
-  timeout: any,
-  allUniversities: string[],
-  majors: string[],
-  application: any,
-  links: string[],
-  q1: string,
-  custom: boolean,
-  name: string,
-  email: string,
-  select: any,
-  items: string[],
-  workshops: string[],
-  hackathons: string[],
-  food: string[],
-  shirts: string[],
-  degrees: string[],
-  relations: string[],
-  checkbox: boolean,
-  share: boolean,
-  microsoft: boolean,
-}
-
 export default Vue.extend({
   mixins: [validationMixin],
   name: 'Apply',
-  data(): ApplyData {
+  data() {
     return {
       myFiles: [],
       loading: false,
