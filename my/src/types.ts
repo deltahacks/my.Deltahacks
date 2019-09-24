@@ -11,6 +11,7 @@ export interface ApplicationModel {
   academics: {
     degree: "Bachelors" | "Masters" | "PhD";
     major: string;
+    graduating: string,
     school: string;
     year:
       | "First Year"
@@ -49,7 +50,7 @@ export interface ApplicationModel {
   documents: {
     download_link?: string;
     filename?: string;
-    id?: number;
+    id?: string;
   };
   profiles: {
     devpost?: string;
@@ -58,15 +59,22 @@ export interface ApplicationModel {
     website?: string;
   };
   responses: {
+    anything_else?: string;
     q1?: string;
     q2?: string;
     q3?: string;
     q4?: string;
+    workshops?: Array<string>;
   };
-  other: {
-    discover: string;
-    dietary_restrictions: string;
+  logistics: {
+    discovered_by: string;
+    diet_restrictions: string;
     shirt_size: "XS" | "S" | "M" | "L" | "XL";
+    traveling_from: string;
     hackathons_attended: number;
   };
+  resume: {
+    filename: string;
+    link: string;
+  }
 }

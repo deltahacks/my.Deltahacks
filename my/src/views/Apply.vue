@@ -218,7 +218,7 @@
           </label>
           <br />
           <v-select
-            v-model="application.other.shirt_size"
+            v-model="application.logistics.shirt_size"
             :disabled="submitted"
             @change="formChange"
             :items="shirts"
@@ -233,7 +233,7 @@
           </label>
           <br />
           <v-combobox
-            v-model="application.other.dietary_restrictions"
+            v-model="application.logistics.diet_restrictions"
             :disabled="submitted"
             @change="formChange"
             :items="food"
@@ -276,7 +276,7 @@
             </label>
             <br />
             <v-combobox
-              v-model="application.workshops"
+              v-model="application.responses.workshops"
               deletable-chips
               small-chips
               :items="workshops"
@@ -291,7 +291,7 @@
           </label>
           <br />
           <v-select
-            v-model="application.other.discover"
+            v-model="application.logistics.discovered_by"
             :disabled="submitted"
             @change="formChange"
             :items="methods"
@@ -307,7 +307,7 @@
           <br />
           <v-combobox
             name="location"
-            v-model="application.location"
+            v-model="application.logistics.traveling_from"
             :items="cities"
             :disabled="submitted"
             @change="formChange"
@@ -891,6 +891,7 @@ export default {
         academics: {
           degree: '',
           major: '',
+          graduating: '',
           school: '',
           year: '',
         },
@@ -916,16 +917,23 @@ export default {
           website: '',
         },
         responses: {
+          anything_else: '',
           q1: '',
           q2: '',
           q3: '',
           q4: '',
+          workshops: [],
         },
-        other: {
-          dietary_restrictions: '',
-          discover: '',
+        logistics: {
+          diet_restrictions: '',
+          discovered_by: '',
           shirt_size: '',
+          traveling_from: '', 
         },
+        resume: {
+          filenamwe: '',
+          link: '',
+        }
       },
       links: ['Home', 'About', 'Contact'],
       q1: '',
@@ -1041,33 +1049,62 @@ export default {
     // Used to clear the application form
     getEmptyApplication() {
       return {
-        name: '',
-        lastname: '',
-        email: firebase.auth().currentUser!.email,
-        last_modified: undefined,
+        name: {
+          first: '',
+          last: '',
+        },
+        contact: {
+          email: firebase.auth().currentUser!.email,
+          phone: '',
+        },
         first_submitted: undefined,
-        school_year: null,
-        shirt_size: null,
-        dietary_restrictions: null,
-        hackathons: null,
-        university: null,
-        discover: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        devpost: '',
-        phone: '',
-        emergency_phone: '',
-        q1: '',
-        q2: '',
-        q3: '',
-        q4: '',
-        meme: '',
-        major: '',
-        location: '',
-        birthday: '',
-        documents: [],
-        microsoft: false,
+        academics: {
+          degree: null,
+          major: '',
+          graduating: '',
+          school: '',
+          year: null,
+        },
+        personal: {
+          birthday: undefined,
+          gender: null,
+          race: null,
+        },
+        emergency: {
+          name: '',
+          phone: '',
+          relation: null,
+        },
+        documents: {
+          download_link: '',
+          filename: '',
+          id: '',
+        },
+        profiles: {
+          devpost: '',
+          github: '',
+          linkedin: '',
+          website: '',
+        },
+        responses: {
+          anything_else: '',
+          q1: '',
+          q2: '',
+          q3: '',
+          q4: '',
+          workshops: [],
+        },
+        logistics: {
+          diet_restrictions: '',
+          discovered_by: '',
+          shirt_size: null,
+          traveling_from: '', 
+          hackathons_attended: 0,
+        },
+        resume: {
+          filenamwe: '',
+          link: '',
+        }
       };
     },
     genderChange() {
