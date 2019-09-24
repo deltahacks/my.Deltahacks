@@ -767,33 +767,94 @@
 
 <script lang="ts">
 /* eslint-disable no-unused-expressions */
-import firebase from 'firebase'
-import vueFilePond from 'vue-filepond'
-import 'filepond/dist/filepond.min.css'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import debounce from 'debounce'
-import Navbar from '@/components/Navbar.vue'
-import Navigation from '@/components/Navigation.vue'
-import Navbar2 from '@/components/Navbar2.vue'
-import { validationMixin } from 'vuelidate'
-import { Validator } from 'vee-validate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
-import { mapGetters } from 'vuex'
-import { majors, allUniversities } from '../private/data'
+import firebase from 'firebase';
+import vueFilePond from 'vue-filepond';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import debounce from 'debounce';
+import Navbar from '@/components/Navbar.vue';
+import Navigation from '@/components/Navigation.vue';
+import Navbar2 from '@/components/Navbar2.vue';
+import Vue from 'vue';
+import { validationMixin } from 'vuelidate';
+import { Validator } from 'vee-validate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import { majors, allUniversities } from '../private/data';
 
-import { ApplicationModel } from '../types'
+import { ApplicationModel } from '../types';
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview,
-)
+);
 
-export default {
+interface ApplyData {
+  myFiles: any,
+  loading: boolean,
+  feedback: boolean,
+  confirm: boolean,
+  confirmClear: boolean,
+  editing: boolean,
+  deadline: boolean, // Change this if applications are ever needed.
+  // eslint-disable-next-line camelcase
+  existing_doc: any,
+  checkError: any,
+  shareError: any,
+  confirmGender: boolean,
+  pondError: any,
+  bannerColor: string,
+  bannerMessage: string,
+  bannerTimeout: number,
+  loadingMessage: string,
+  parent: any,
+  enableGenderSelect: boolean,
+  // eslint-disable-next-line camelcase
+  hackday_link:
+    string,
+  // eslint-disable-next-line camelcase
+  contest_terms:
+    string,
+  subsectionLabels: string[],
+  methods: string[],
+  cities: string[],
+  races: string[],
+  url: string,
+  MLH: string,
+  SHARE: string,
+  MICROSOFT: string,
+  picker: any,
+  submitted: boolean,
+  date: string,
+  university: any,
+  timeout: any,
+  allUniversities: string[],
+  majors: string[],
+  application: any,
+  links: string[],
+  q1: string,
+  custom: boolean,
+  name: string,
+  email: string,
+  select: any,
+  items: string[],
+  workshops: string[],
+  hackathons: string[],
+  food: string[],
+  shirts: string[],
+  degrees: string[],
+  relations: string[],
+  checkbox: boolean,
+  share: boolean,
+  microsoft: boolean,
+}
+
+export default Vue.extend({
   mixins: [validationMixin],
   name: 'Apply',
-  data() {
+  data(): ApplyData {
     return {
       myFiles: [],
       loading: false,
@@ -883,7 +944,7 @@ export default {
           last: '',
         },
         contact: {
-          email: firebase.auth().currentUser.email,
+          email: firebase.auth().currentUser!.email,
           phone: '',
         },
         first_submitted: undefined,
@@ -982,14 +1043,7 @@ export default {
       checkbox: false,
       share: false,
       microsoft: false,
-    }
-  },
-  validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    select: { required },
-    checkbox: { required },
-    university: { in: allUniversities },
+    };
   },
   components: {
     Navbar,
@@ -999,13 +1053,13 @@ export default {
   },
   computed: {
     q1Progress() {
-      return Math.min(100, this.application.responses.q1.length / 5)
+      return Math.min(100, this.application.responses.q1.length / 5);
     },
     q2Progress() {
-      return Math.min(100, this.application.responses.q2.length / 5)
+      return Math.min(100, this.application.responses.q2.length / 5);
     },
     q3Progress() {
-      return Math.min(100, this.application.responses.q3.length / 5)
+      return Math.min(100, this.application.responses.q3.length / 5);
     },
     validations: {
       name: { required, maxLength: maxLength(10) },
@@ -1013,35 +1067,35 @@ export default {
       select: { required },
       checkbox: { required },
       university: { in: allUniversities },
-    },
+    } as any,
     components: {
       Navbar,
       FilePond,
       Navigation,
       Navbar2,
     },
-    q1Color() {
-      return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)]
+    q1Color(): string {
+      return ['error', 'warning', 'success'][Math.floor(this.q1Progress() / 40)];
     },
-    q2Color() {
-      return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)]
+    q2Color(): string {
+      return ['error', 'warning', 'success'][Math.floor(this.q2Progress() / 40)];
     },
-    q3Color() {
-      return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)]
+    q3Color(): string {
+      return ['error', 'warning', 'success'][Math.floor(this.q3Progress() / 40)];
     },
     currentUser() {
-      return firebase.auth().currentUser
+      return firebase.auth().currentUser;
     },
     haveFile() {
-      return this.editing && this.application.documents.filename
+      return this.editing && this.application.documents.filename;
     },
     agreed() {
-      return this.checkbox && this.share
+      return this.checkbox && this.share;
     },
   },
   methods: {
     handleFilePondInit() {
-      console.log('FilePond has initialized')
+      console.log('FilePond has initialized');
       // FilePond instance methods are available on `this.$refs.pond`
     },
     // Used to clear the application form
@@ -1049,7 +1103,7 @@ export default {
       return {
         name: '',
         lastname: '',
-        email: firebase.auth().currentUser.email,
+        email: firebase.auth().currentUser!.email,
         last_modified: undefined,
         first_submitted: undefined,
         school_year: null,
@@ -1074,198 +1128,195 @@ export default {
         birthday: '',
         documents: [],
         microsoft: false,
-      }
+      };
     },
     genderChange() {
-      this.formChange()
-
+      this.formChange();
       if (
         this.submitted &&
         this.application.personal.gender &&
         this.enableGenderSelect
       ) {
-        this.confirmGender = true
+        this.confirmGender = true;
       }
     },
     redirectToStatus() {
-      this.$router.push({ name: 'Status' })
+      this.$router.push({ name: 'Status' });
     },
     clearForm() {
-      this.confirmClear = false
-      this.application = this.getEmptyApplication()
+      this.confirmClear = false;
+      this.application = this.getEmptyApplication();
     },
     activateModal(msg) {
-      this.loading = true
-      this.loadingMessage = msg
+      this.loading = true;
+      this.loadingMessage = msg;
     },
     toggleCheck() {
-      this.checkbox = !this.checkbox
+      this.checkbox = !this.checkbox;
     },
     validateBeforeSubmit() {
-      return this.$validator.validateAll()
+      return this.$validator.validateAll();
     },
     formChange() {
-      console.log('Change detected')
+      console.log('Change detected');
       if (this.timeout) {
-        clearTimeout(this.timeout)
-        this.timeout = null
+        clearTimeout(this.timeout);
+        this.timeout = null;
       }
       this.timeout = setTimeout(() => {
-        this.setApplicationInProgress()
-      }, 2000)
+        this.setApplicationInProgress();
+      }, 2000);
     },
     showInfoMessage(msg) {
-      this.bannerMessage = msg
-      this.bannerColor = 'success'
-      this.feedback = true
+      this.bannerMessage = msg;
+      this.bannerColor = 'success';
+      this.feedback = true;
     },
     showErrorMessage(msg) {
-      this.bannerMessage = msg
-      this.bannerColor = 'error'
-      this.feedback = true
+      this.bannerMessage = msg;
+      this.bannerColor = 'error';
+      this.feedback = true;
     },
     async submitFileInfoOnDrop() {
-      const files = this.$refs.pond.getFiles()
+      const files = this.$refs.pond.getFiles();
       try {
         if (this.submitted) {
-          this.$refs.pond.removeFile(0)
-          return
+          this.$refs.pond.removeFile(0);
+          return;
         }
-        const info = await this.storeFileAndGetInfo(files[0])
-        this.application.documents = info
-        this.setApplicationInProgress()
+        const info = await this.storeFileAndGetInfo(files[0]);
+        this.application.documents = info;
+        this.setApplicationInProgress();
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     async setApplicationInProgress() {
-      if (this.submitted && !this.enableGenderSelect) return
-      const unixts = Math.round(new Date().getTime() / 1000)
+      if (this.submitted && !this.enableGenderSelect) return;
+      const unixts = Math.round(new Date().getTime() / 1000);
       this.application.last_modified = {
         unix: unixts,
         date: new Date().toString(),
-      }
+      };
       this.application.first_submitted = {
         unix: 0,
         date: '',
-      }
+      };
       try {
         await this.$store.state.db
           .collection('applications')
           .doc('DH5')
           .collection('in progress')
           .doc(firebase.auth().currentUser.email)
-          .set(this.application)
-        this.showInfoMessage('Application progress saved!')
+          .set(this.application);
+        this.showInfoMessage('Application progress saved!');
       } catch (err) {
-        console.log(err)
-        this.loading = false
+        console.log(err);
+        this.loading = false;
       }
     },
     setDateInformation() {
-      const unixts = Math.round(new Date().getTime() / 1000)
+      const unixts = Math.round(new Date().getTime() / 1000);
       this.application.first_submitted = {
         unix: unixts,
         date: new Date().toString(),
-      }
+      };
       this.application.last_modified = {
         unix: unixts,
         date: new Date().toString(),
-      }
+      };
     },
     async setApplication() {
-      console.log('Submitting application...')
+      console.log('Submitting application...');
       // if (this.application.q4 == '' || !this.application.q4) this.application.q4 = ' ';
-      this.setDateInformation()
+      this.setDateInformation();
       try {
         await this.$store.state.db
           .collection('applications')
           .doc('DH5')
           .collection('submitted')
           .doc(firebase.auth().currentUser.email)
-          .set(this.application)
-        this.$router.push({ name: 'Status' })
-        this.loading = false
+          .set(this.application);
+        this.$router.push({ name: 'Status' });
+        this.loading = false;
       } catch (err) {
-        this.loading = false
+        this.loading = false;
       }
     },
     async storeFileAndGetInfo(doc) {
-      if (!doc) return
-      const { filename, file, id } = doc
-      const storeRef = firebase.storage().ref()
+      if (!doc) return;
+      const { filename, file, id } = doc;
+      const storeRef = firebase.storage().ref();
 
       try {
-        let snapshot = await storeRef
-          .child(
-            `hackathon/DH5/users/${
-              firebase.auth().currentUser.email
-            }/${filename}`,
-          )
-          .put(file)
-        let url = await snapshot.ref.getDownloadURL()
+        const snapshot = await storeRef
+          .child(`hackathon/DH5/users/${
+            firebase.auth().currentUser.email
+          }/${filename}`)
+          .put(file);
+        const url = await snapshot.ref.getDownloadURL();
         return {
           download_link: url,
           id,
           filename,
-        }
+        };
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     async submitApplication() {
-      this.confirm = false
+      this.confirm = false;
       if (!(await this.validateBeforeSubmit())) {
-        console.log('Error validating inputs!')
-        return
+        console.log('Error validating inputs!');
+        return;
       } else if (!this.checkbox) {
-        this.checkError = 'Please accept the terms and conditions to continue.'
-        return
+        this.checkError = 'Please accept the terms and conditions to continue.';
+        return;
       } else if (!this.share) {
-        this.shareError = 'You must agree to these terms in order to proceed.'
-        return
+        this.shareError = 'You must agree to these terms in order to proceed.';
+        return;
       }
 
-      const files = this.$refs.pond.getFiles()
-      this.activateModal('Submitting application...')
-      const resume = files[0]
-      const results = []
+      const files = this.$refs.pond.getFiles();
+      this.activateModal('Submitting application...');
+      const resume = files[0];
+      const results = [];
       if (resume) {
-        results.push(this.storeFileAndGetInfo(files[0]))
-        this.application.documents = await Promise.all(results).catch(err => {
-          console.log(`Upload Failed: ${err}`)
-          this.loading = false
-        })
+        results.push(this.storeFileAndGetInfo(files[0]));
+        this.application.documents = await Promise.all(results).catch((err) => {
+          console.log(`Upload Failed: ${err}`);
+          this.loading = false;
+        });
       }
-      this.setApplication()
+      this.setApplication();
     },
     insertUserFileData(doc) {
-      this.$refs.pond.addFile(doc.download_link)
+      this.$refs.pond.addFile(doc.download_link);
     },
     fillApplicationFields() {
-      const ref = this.application
-      ref.q1 = ref.q1 ? ref.q1 : ''
-      ref.q2 = ref.q2 ? ref.q2 : ''
-      ref.q3 = ref.q3 ? ref.q3 : ''
-      ref.q4 = ref.q4 ? ref.q4 : ''
-      ref.meme = ref.meme ? ref.meme : ''
-      ref.workshops = ref.workshops ? ref.workshops : []
-      ref.devpost = ref.devpost ? ref.devpost : ''
-      ref.lastname = ref.lastname ? ref.lastname : ''
-      ref.location = ref.location ? ref.location : ''
-      ref.microsoft = ref.microsoft ? ref.microsoft : false
+      const ref = this.application;
+      ref.q1 = ref.q1 ? ref.q1 : '';
+      ref.q2 = ref.q2 ? ref.q2 : '';
+      ref.q3 = ref.q3 ? ref.q3 : '';
+      ref.q4 = ref.q4 ? ref.q4 : '';
+      ref.meme = ref.meme ? ref.meme : '';
+      ref.workshops = ref.workshops ? ref.workshops : [];
+      ref.devpost = ref.devpost ? ref.devpost : '';
+      ref.lastname = ref.lastname ? ref.lastname : '';
+      ref.location = ref.location ? ref.location : '';
+      ref.microsoft = ref.microsoft ? ref.microsoft : false;
     },
     async getUserAppStatus(userEmail) {
       try {
-        let doc = await this.$store.state.db
+        const doc = await this.$store.state.db
           .collection('applications')
           .doc('DH5')
           .collection('submitted')
           .doc(userEmail)
-          .get()
-        return doc.exists
+          .get();
+        return doc.exists;
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
       return new Promise((resolve, reject) => {
         this.$store.state.db
@@ -1274,11 +1325,11 @@ export default {
           .collection('submitted')
           .doc(userEmail)
           .get()
-          .then(doc => {
-            resolve(doc.exists)
+          .then((doc) => {
+            resolve(doc.exists);
           })
-          .catch(err => reject(err))
-      })
+          .catch(err => reject(err));
+      });
     },
     beforeMount() {
       // this.activateModal('Loading...')
@@ -1294,14 +1345,14 @@ export default {
       //   })
       //   .catch(err => reject(err))
     },
-    setSubmittedVariables(data) {
-      this.editing = true
-      this.submitted = true
-      this.checkbox = true
-      this.share = true
-      this.application = data
-      this.fillApplicationFields()
-      this.loading = false
+    setSubmittedVariables(data: any) {
+      this.editing = true;
+      this.submitted = true;
+      this.checkbox = true;
+      this.share = true;
+      this.application = data;
+      this.fillApplicationFields();
+      this.loading = false;
     },
   },
   async beforeMount() {
@@ -1347,7 +1398,7 @@ export default {
     //   this.deadline = true
     // }
   },
-}
+});
 </script>
 
 <style scoped src='../assets/css/apply.css'>
