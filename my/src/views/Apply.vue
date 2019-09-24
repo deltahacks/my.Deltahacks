@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-app>
     <Card title="Name" />
-  </div>
+  </v-app>
 </template>
 
 <script lang='ts'>
@@ -14,8 +14,8 @@ type ApplicationPageData = ApplicationModel | ApplyState;
 import Card from '../components/Card.vue';
 
 export default Vue.extend({
-  data(): any {
-    return { app: {} } as ApplicationPageData;
+  data(): ApplicationPageData {
+    return { app: {} };
   },
   components: {
     Card,
@@ -37,22 +37,23 @@ export default Vue.extend({
 
     // validates all fields before submission
     validateBeforeSubmit(): void {},
-  },
-  async created(): Promise<any> {
-    try {
-      const app = await this.$store.state.db
+
+    // Grrabs the application from where its store in firebase
+    fetchFromFirebase: (): any =>
+      this.$store.state.db
         .collection(this.$store.state.hackathon)
         .doc('applications')
         .collection('all')
-        // .doc(firebase.auth().currentUser.email)
         .doc('test@test.com')
-        .get();
-
+        .get(),
+  },
+  async created(): Promise<any> {
+    try {
+      const app = await this.fetchFromFirebase();
       this.app = app.data();
     } catch (error) {
       console.log('Error tying to fetch data: ', error);
     }
-    // fetch application data and store it in data here
   },
   mounted(): void {
     // populate autofill data here
@@ -60,4 +61,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="stylus" scoped></style>
+<style scoped></style>
