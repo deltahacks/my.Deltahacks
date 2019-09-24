@@ -1,7 +1,7 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import firebase from 'firebase';
-import db from './private/firebase_init';
+import Vue from "vue";
+import Vuex from "vuex";
+import firebase from "firebase";
+import db from "./private/firebase_init";
 
 // Use vuex with Vue
 Vue.use(Vuex);
@@ -10,16 +10,17 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   // Vuex state variables appended with vuex in front
   state: {
+    hackathon: "DH6",
     vuex_current_user: null,
     vuex_msgs: [],
     vuex_name: null,
-    user_name: 'Kumail',
+    user_name: "Kumail",
     vuex_email: null,
     vuex_password: null,
     vuex_user_has_applied: false,
     db,
     firebase,
-    test: 'test1',
+    test: "test1",
     vuex_user_application: null,
     DataTable: {
       lastVisible: null,

@@ -23,7 +23,7 @@ export default Vue.extend({
   color: white;
   padding: 50px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(53, 61, 56, 0.452);
   border-radius: 20px;
   height: 250px;
 }
