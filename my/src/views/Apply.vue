@@ -791,7 +791,7 @@ const FilePond = vueFilePond(
   FilePondPluginImagePreview,
 );
 
-export default Vue.extend({
+export default {
   mixins: [validationMixin],
   name: 'Apply',
   data() {
@@ -1015,13 +1015,13 @@ export default Vue.extend({
       Navbar2,
     },
     q1Color(): string {
-      return ['error', 'warning', 'success'][Math.floor(this.q1Progress() / 40)];
+      return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
     },
     q2Color(): string {
-      return ['error', 'warning', 'success'][Math.floor(this.q2Progress() / 40)];
+      return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
     },
     q3Color(): string {
-      return ['error', 'warning', 'success'][Math.floor(this.q3Progress() / 40)];
+      return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
     },
     currentUser() {
       return firebase.auth().currentUser;
@@ -1338,7 +1338,7 @@ export default Vue.extend({
     //   this.deadline = true
     // }
   },
-});
+};
 </script>
 
 <style scoped src='../assets/css/apply.css'>
