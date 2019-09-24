@@ -89,13 +89,13 @@ export default Vue.extend({
               },
             ],
             meals: 0,
-          })
+          });
 
-          this.feedback = true;
-          this.alreadyCheckedIn = true;
-          this.bannerMessage = 'Successfully checked in';
-          console.log('Successfully written');
-          this.attachListener();
+        this.feedback = true;
+        this.alreadyCheckedIn = true;
+        this.bannerMessage = 'Successfully checked in';
+        console.log('Successfully written');
+        this.attachListener();
       } catch (err) {
         console.log(err);
       }
@@ -161,7 +161,7 @@ export default Vue.extend({
                   type: 'outgoing',
                 },
               ),
-            })
+            });
 
           this.feedback = true;
           this.bannerMessage = 'Successfully signed out building';
@@ -217,7 +217,7 @@ export default Vue.extend({
           .doc(this.$route.params.id.toLowerCase())
           .update({
             meals: this.meals += adjustment,
-          })
+          });
 
         this.feedback = true;
         this.bannerMessage = 'Successfully Adjusted Meal';
@@ -229,53 +229,53 @@ export default Vue.extend({
   },
   async mounted() {
     try {
-      let doc = await db.collection('hackathon')
+      const doc = await db.collection('hackathon')
         .doc('DH5')
         .collection('Checked In')
         .doc(this.$route.params.id.toLowerCase())
-        .get()
+        .get();
 
-        if (doc.exists) {
-          this.exists = true;
-          this.alreadyCheckedIn = true;
-          this.attendeeData = doc.data() || null;
-          if (this.attendeeData) {
-            if (
+      if (doc.exists) {
+        this.exists = true;
+        this.alreadyCheckedIn = true;
+        this.attendeeData = doc.data() || null;
+        if (this.attendeeData) {
+          if (
+            this.attendeeData.whereabouts[
+              this.attendeeData.whereabouts.length - 1
+            ].type === 'incoming'
+          ) {
+            this.lastStatus = `Checked into ${
               this.attendeeData.whereabouts[
                 this.attendeeData.whereabouts.length - 1
-              ].type === 'incoming'
-            ) {
-              this.lastStatus = `Checked into ${
-                this.attendeeData.whereabouts[
-                  this.attendeeData.whereabouts.length - 1
-                ].building
-              } at ${new Date(
-                this.attendeeData.whereabouts[
-                  this.attendeeData.whereabouts.length - 1
-                ].time.seconds * 1000,
-              )}`;
-            } else {
-              this.lastStatus = `Left ${
-                this.attendeeData.whereabouts[
-                  this.attendeeData.whereabouts.length - 1
-                ].building
-              } at ${new Date(
-                this.attendeeData.whereabouts[
-                  this.attendeeData.whereabouts.length - 1
-                ].time.seconds * 1000,
-              )}`;
-            }
+              ].building
+            } at ${new Date(
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].time.seconds * 1000,
+            )}`;
+          } else {
+            this.lastStatus = `Left ${
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].building
+            } at ${new Date(
+              this.attendeeData.whereabouts[
+                this.attendeeData.whereabouts.length - 1
+              ].time.seconds * 1000,
+            )}`;
           }
-          this.meals = this.attendeeData!.meals;
-          console.log('Document data:', doc.data());
-          console.log('Listener Attached');
-          this.attachListener();
-          return true;
         }
-        // doc.data() will be undefined in this case
-        console.log('No such document!');
-        this.lastStatus = 'Not checked in';
-        return false;
+        this.meals = this.attendeeData!.meals;
+        console.log('Document data:', doc.data());
+        console.log('Listener Attached');
+        this.attachListener();
+        return true;
+      }
+      // doc.data() will be undefined in this case
+      console.log('No such document!');
+      this.lastStatus = 'Not checked in';
+      return false;
     } catch (err) {
       console.log('Error getting document:', err);
     }
