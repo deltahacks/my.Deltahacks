@@ -1,62 +1,64 @@
 export interface ApplicationModel {
-  app: {
-    name: {
-      first: string;
-      last: string;
-    };
-    contact: {
-      email: string;
-      phone: string;
-    };
-    first_submitted: Date;
-    academics: {
-      degree: degree;
-      major: string;
-      graduating: string;
-      school: string;
-      year: year;
-    };
-    personal: {
-      birthday: Date;
-      gender: gender;
-      race: race;
-    };
-    emergency: {
-      name: string;
-      phone: string;
-      relation: relation;
-    };
-    documents: {
-      download_link?: string;
-      filename?: string;
-      id?: string;
-    };
-    profiles: {
-      devpost?: string;
-      github?: string;
-      linkedin?: string;
-      website?: string;
-    };
-    responses: {
-      anything_else?: string;
-      q1?: string;
-      q2?: string;
-      q3?: string;
-      q4?: string;
-      workshops?: Array<string>;
-    };
-    logistics: {
-      discovered_by: string;
-      diet_restrictions: string;
-      shirt_size: shirt_size;
-      traveling_from: string;
-      hackathons_attended: number;
-    };
-    resume: {
-      filename: string;
-      link: string;
-    };
-  };
+  app:
+    | {}
+    | {
+        name: {
+          first: string;
+          last: string;
+        };
+        contact: {
+          email: string;
+          phone: string;
+        };
+        first_submitted: Date;
+        academics: {
+          degree: degree;
+          major: string;
+          graduating: string;
+          school: string;
+          year: year;
+        };
+        personal: {
+          birthday: Date;
+          gender: gender;
+          race: race;
+        };
+        emergency: {
+          name: string;
+          phone: string;
+          relation: relation;
+        };
+        documents: {
+          download_link?: string;
+          filename?: string;
+          id?: string;
+        };
+        profiles: {
+          devpost?: string;
+          github?: string;
+          linkedin?: string;
+          website?: string;
+        };
+        responses: {
+          anything_else?: string;
+          q1?: string;
+          q2?: string;
+          q3?: string;
+          q4?: string;
+          workshops?: Array<string>;
+        };
+        logistics: {
+          discovered_by: string;
+          diet_restrictions: string;
+          shirt_size: shirt_size;
+          traveling_from: string;
+          hackathons_attended: number;
+        };
+        resume: {
+          filename: string;
+          link: string;
+        };
+      };
 }
 
 export interface ApplyState {
