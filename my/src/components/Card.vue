@@ -1,0 +1,45 @@
+<template>
+  <div class="background">
+    <div class="container">
+      <h1 class="title">{{ title }}</h1>
+      <input class="field" />
+    </div>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+export default Vue.extend({
+  props: ['title'],
+})
+</script>
+
+<style scoped>
+.title {
+  font-size: 2.5em;
+}
+
+.container {
+  color: white;
+  padding: 50px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  height: 250px;
+}
+
+.field {
+  margin: 80px;
+  background: transparent;
+  border: transparent;
+  border-bottom: 1px solid white;
+  width: 75%;
+  color: white;
+  font-size: 1.5em;
+}
+
+.field:focus {
+  outline: none;
+  /*   border-bottom: 2px solid white; */
+}
+</style>
