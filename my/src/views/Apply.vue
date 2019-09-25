@@ -39,8 +39,8 @@ export default Vue.extend({
     validateBeforeSubmit(): void {},
 
     // Grrabs the application from where its store in firebase
-    fetchFromFirebase(): void {
-      this.$store.state.db
+    fetchFromFirebase(): Promise<any> {
+      return this.$store.state.db
         .collection(this.$store.state.hackathon)
         .doc('applications')
         .collection('all')

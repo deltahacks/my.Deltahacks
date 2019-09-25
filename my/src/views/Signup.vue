@@ -43,18 +43,21 @@
 import axios from 'axios';
 import firebase from 'firebase';
 import Vue from 'vue';
+import { SignupModel } from '../types';
 
 export default Vue.extend({
   name: 'Signup',
-  data: () => ({
-    drawer: null,
-    email: null,
-    password: null,
-    password_repeat: null,
-    feedback: null,
-    ip_address: null,
-    geo: null,
-  }),
+  data(): SignupModel {
+    return {
+      drawer: null,
+      email: null,
+      password: null,
+      password_repeat: null,
+      feedback: null,
+      ip_address: null,
+      geo: null,
+    };
+  },
   props: {
     source: String,
   },
@@ -65,6 +68,7 @@ export default Vue.extend({
     tester() {
       console.log(this.vuex_email);
     },
+    // eslint-disable-next-line consistent-return
     async signUpFirebase() {
       if (this.vuex_email && this.vuex_password && this.password_repeat) {
         if (this.vuex_password !== this.password_repeat) {

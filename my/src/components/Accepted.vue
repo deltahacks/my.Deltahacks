@@ -28,9 +28,9 @@ export default Vue.extend({
     return {};
   },
   mounted() {
-    let W = window.innerWidth;
-    let H = window.innerHeight;
-    const canvas = document.getElementById('canvas');
+    let W = window.innerWidth as number;
+    let H = window.innerHeight as number;
+    const canvas: any = document.getElementById('canvas');
     const context = canvas.getContext('2d');
     const maxConfettis = 150;
     const particles = [];
@@ -55,7 +55,7 @@ export default Vue.extend({
       return Math.floor((Math.random() * ((to - from) + 1)) + from);
     }
 
-    function ConfettiParticle() {
+    function ConfettiParticle(this: any) {
       this.x = Math.random() * W; // x
       this.y = (Math.random() * H) - H; // y
       this.r = randomFromTo(11, 33); // radius
@@ -65,6 +65,7 @@ export default Vue.extend({
       this.tiltAngleIncremental = (Math.random() * 0.07) + 0.05;
       this.tiltAngle = 0;
 
+      // eslint-disable-next-line func-names
       this.draw = function () {
         context.beginPath();
         context.lineWidth = this.r / 2;
@@ -87,7 +88,7 @@ export default Vue.extend({
         results.push(particles[i].draw());
       }
 
-      let particle = {};
+      let particle: any = {};
       let remainingFlakes = 0;
       for (let j = 0; j < maxConfettis; j += 1) {
         particle = particles[j];
@@ -127,8 +128,8 @@ export default Vue.extend({
     }
 
     // Initialize
-    canvas.width = W;
-    canvas.height = H;
+    canvas!.width = W;
+    canvas!.height = H;
     Draw();
   },
 });

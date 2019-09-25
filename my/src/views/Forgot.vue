@@ -48,22 +48,25 @@
 <script lang="ts">
 import firebase from 'firebase';
 import Vue from 'vue';
+import { ForgotModel } from '../types';
 
 export default Vue.extend({
   name: 'Login',
-  data: () => ({
-    drawer: null,
-    email: null,
-    pass: null,
-    feedback: null,
-    bannerMessage: 'Success',
-    bannerTimeout: 2000,
-    bannerColor: 'success',
-    loader: null,
-    loading: false,
-    loaderSignup: null,
-    loadingSignup: false,
-  }),
+  data(): ForgotModel {
+    return {
+      drawer: null,
+      email: null,
+      pass: null,
+      feedback: null,
+      bannerMessage: 'Success',
+      bannerTimeout: 2000,
+      bannerColor: 'success',
+      loader: null,
+      loading: false,
+      loaderSignup: null,
+      loadingSignup: false,
+    };
+  },
   methods: {
     signuppage() {
       this.$router.push({ name: 'Forgot' });
@@ -99,10 +102,10 @@ export default Vue.extend({
   },
   watch: {
     loader() {
-      const l = this.loader;
+      const l: any = this.loader;
       this[l] = !this[l];
 
-      setTimeout(() => (this[l] = false), 3000);
+      setTimeout(() => { this[l] = false; }, 3000);
       this.loader = null;
     },
   },
