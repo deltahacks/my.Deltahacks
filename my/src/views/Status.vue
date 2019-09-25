@@ -384,12 +384,6 @@ export default Vue.extend({
       checkbox: false,
     };
   },
-  validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    select: { required },
-    checkbox: { required },
-  },
   components: {
     Navbar,
     Navigation,
@@ -403,12 +397,12 @@ export default Vue.extend({
       }
       return 'Closed';
     },
-    currentHeader() {
+    currentHeader(): string {
       return this.subheaders[this.step - 1];
     },
   },
   methods: {
-    toggleRSVP(res: any): void {
+    toggleRSVP(res) {
       this.hasResponded = true;
       this.response.rsvp = res;
       if (!this.response.rsvp) {
@@ -501,7 +495,7 @@ export default Vue.extend({
         .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
-            if (data.gender) {
+            if (data!.gender) {
               this.genderCompleted = true;
             } else {
               this.genderCompleted = false;

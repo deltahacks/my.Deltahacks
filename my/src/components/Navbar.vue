@@ -82,7 +82,7 @@ export default Vue.extend({
         this.$router.push({ name: 'Login' });
       } catch (e) {
         console.log('Logout unsuccessful');
-        showError(e);
+        // showError(e);
       }
     },
   },

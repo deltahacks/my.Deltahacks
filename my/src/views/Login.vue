@@ -57,19 +57,22 @@
 <script lang="ts">
 import firebase from 'firebase';
 import Vue from 'vue';
+import { LoginModel } from '../types';
 
 export default Vue.extend({
   name: 'Login',
-  data: () => ({
-    drawer: null,
-    email: null,
-    pass: null,
-    feedback: null,
-    loader: null,
-    loading: false,
-    loaderSignup: null,
-    loadingSignup: false,
-  }),
+  data(): LoginModel {
+    return {
+      drawer: null,
+      email: null,
+      pass: null,
+      feedback: null,
+      loader: null,
+      loading: false,
+      loaderSignup: null,
+      loadingSignup: false,
+    };
+  },
   methods: {
     signuppage() {
       this.$router.push({ name: 'Signup' });
@@ -104,7 +107,7 @@ export default Vue.extend({
   },
   watch: {
     loader() {
-      const l = this.loader;
+      const l: any = this.loader;
       this[l] = !this[l];
 
       setTimeout(() => { this[l] = false; }, 3000);

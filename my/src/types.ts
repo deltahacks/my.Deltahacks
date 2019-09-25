@@ -132,7 +132,7 @@ export interface ApplyState {
   applicationStatus: applicationStatus;
 }
 
-export interface SignupState {
+export interface SignupModel {
   drawer: null,
   email: null | string,
   password: null,
@@ -140,6 +140,36 @@ export interface SignupState {
   feedback: null | string,
   ip_address: null,
   geo: null,
+}
+
+export interface LoginModel {
+  drawer: null,
+  email: null | string,
+  pass: null | string,
+  feedback: null,
+  loader: null | string,
+  loading: false,
+  loaderSignup: null,
+  loadingSignup: false,
+}
+
+export interface ForgetPasswordModel {
+  drawer: null,
+  email: null | string,
+}
+
+export interface ForgotModel {
+  drawer: null,
+  email: null | string,
+  pass: null,
+  feedback: null | boolean,
+  bannerMessage: string,
+  bannerTimeout: number,
+  bannerColor: string,
+  loader: null | string,
+  loading: boolean,
+  loaderSignup: null,
+  loadingSignup: boolean,
 }
 
 export interface AutofillData {}
