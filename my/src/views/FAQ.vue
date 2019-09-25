@@ -52,7 +52,7 @@
 </template>
 
 
-<script>
+<script lang="ts">
 import Navbar2 from '@/components/Navbar2.vue';
 
 export default {

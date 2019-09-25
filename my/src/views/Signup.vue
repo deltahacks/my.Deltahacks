@@ -39,11 +39,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import firebase from 'firebase';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'Signup',
   data: () => ({
     drawer: null,
@@ -66,7 +67,10 @@ export default {
     },
     async signUpFirebase() {
       if (this.vuex_email && this.vuex_password && this.password_repeat) {
-        if (this.vuex_password !== this.password_repeat) { return (this.feedback = 'Passwords must match'); }
+        if (this.vuex_password !== this.password_repeat) {
+          this.feedback = 'Passwords must match';
+          return this.feedback;
+        }
         try {
           const user = await firebase
             .auth()
@@ -138,7 +142,7 @@ export default {
       },
     },
   },
-};
+});
 </script>
 <style scoped src='../assets/css/signup.css'>
 </style>
