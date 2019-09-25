@@ -65,10 +65,11 @@
   </v-toolbar>
 </template>
 
-<script>
+<script lang="ts">
 import firebase from 'firebase';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'Navbar',
   components: {},
   data() {
@@ -92,7 +93,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 <style>
 #title {

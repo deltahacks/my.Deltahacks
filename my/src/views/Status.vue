@@ -268,19 +268,21 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable no-unused-expressions */
-import { auth } from 'firebase';
-import db from '../private/firebase_init';
+/* eslint-disable no-shadow */
 import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
+import Vue from 'vue';
+import { auth } from 'firebase';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { allUniversities } from '../private/data';
+import db from '../private/firebase_init';
 
-export default {
+export default Vue.extend({
   mixins: [validationMixin],
   name: 'Status',
   data() {
@@ -290,13 +292,13 @@ export default {
         rsvp: false,
         bus: false,
         location: '',
-        email: auth().currentUser.email,
+        email: auth().currentUser!.email,
       },
       emptyResponse: {
         rsvp: false,
         bus: false,
         location: '',
-        email: auth().currentUser.email,
+        email: auth().currentUser!.email,
       },
       criticalError: false,
       hasResponded: false,
@@ -517,7 +519,7 @@ export default {
         .doc('all')
         .collection('Yes')
         .doc(email);
-      const doc = rsvpRef.get();
+      const doc: any = rsvpRef.get();
       if (doc.exists) {
         const data = doc.data();
         this.response = data;
@@ -561,7 +563,8 @@ export default {
       this.criticalError = true;
     }
   },
-};
+});
+
 </script>
 <style scoped src='../assets/css/status.css'>
 .regular {

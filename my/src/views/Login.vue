@@ -54,10 +54,11 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import firebase from 'firebase';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'Login',
   data: () => ({
     drawer: null,
@@ -106,11 +107,11 @@ export default {
       const l = this.loader;
       this[l] = !this[l];
 
-      setTimeout(() => (this[l] = false), 3000);
+      setTimeout(() => { this[l] = false; }, 3000);
       this.loader = null;
     },
   },
-};
+});
 </script>
 <style scoped src='../assets/css/login.css'>
 </style>

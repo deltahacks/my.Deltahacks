@@ -26,10 +26,13 @@
     </v-app>
 </template>
 
-<script>
+
+<script lang="ts">
 /* eslint-disable no-unused-expressions */
+/* eslint-disable camelcase */
 import firebase from 'firebase';
 import vueFilePond from 'vue-filepond';
+import Vue from 'vue';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
@@ -47,10 +50,14 @@ import { majors, allUniversities } from '../private/data';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
-export default {
+interface Data {
+  myFiles: any, loading: boolean, feedback: boolean, confirm: boolean, confirmClear: boolean, editing: boolean, deadline: boolean, existing_doc: any, hackday_link: string, contest_terms: string
+}
+
+export default Vue.extend({
   mixins: [validationMixin],
   name: 'Apply',
-  data() {
+  data(): Data {
     return {
       myFiles: [],
       loading: false,
@@ -66,19 +73,18 @@ export default {
     };
   },
   components: {
-    Navbar,
-    FilePond,
-    Navigation,
+    // Navbar,
+    // FilePond,
+    // Navigation,
     Navbar2,
   },
   computed: {
   },
   methods: {
-
   },
   beforeMount() {
   },
-};
+});
 </script>
 
 <style scoped src='../assets/css/apply.css'>

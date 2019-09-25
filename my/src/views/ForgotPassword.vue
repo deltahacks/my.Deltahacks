@@ -47,10 +47,11 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import firebase from 'firebase';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'ForgotPassword',
   data: () => ({
     drawer: null,
@@ -73,5 +74,5 @@ export default {
   props: {
     source: String,
   },
-};
+});
 </script>
