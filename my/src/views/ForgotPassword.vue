@@ -62,10 +62,10 @@ export default {
     },
     async reset() {
       try {
-      await firebase.auth().sendPasswordResetEmail(this.email);
-      console.log('Email sent.');
-      this.$router.push({ name: 'Login' });
-      } catch(error) {
+        await firebase.auth().sendPasswordResetEmail(this.email);
+        console.log('Email sent.');
+        this.$router.push({ name: 'Login' });
+      } catch (error) {
         console.log(error);
       }
     },

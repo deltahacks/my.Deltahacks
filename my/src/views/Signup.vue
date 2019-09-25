@@ -68,7 +68,7 @@ export default {
       if (this.vuex_email && this.vuex_password && this.password_repeat) {
         if (this.vuex_password !== this.password_repeat) { return (this.feedback = 'Passwords must match'); }
         try {
-          let user = await firebase
+          const user = await firebase
             .auth()
             .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password);
           // console.log(user.user.uid, 'ID');
@@ -83,11 +83,11 @@ export default {
               ip: ipp,
               is_admin: false,
             });
-          let response = await axios
+          const response = await axios
             .get('https://api.ipify.org?format=json');
           // console.log(response.data.ip);
           const ipp = response.data.ip;
-          let data = await axios
+          const data = await axios
             .get(`https://ipapi.co/${ipp}/json/`);
           // console.log(data.data);
           this.geo = data.data;
@@ -104,11 +104,10 @@ export default {
           // this.vuex_current_user = firebase.auth().currentUser
           // console.log('success');
           this.$router.push({ name: 'Status' });
-        } catch(err) {
+        } catch (err) {
           this.feedback = err.message;
         }
-      }
-      else {
+      } else {
         this.feedback = 'You need to enter all the fields';
       }
     },

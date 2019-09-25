@@ -928,12 +928,12 @@ export default {
           diet_restrictions: '',
           discovered_by: '',
           shirt_size: '',
-          traveling_from: '', 
+          traveling_from: '',
         },
         resume: {
           filenamwe: '',
           link: '',
-        }
+        },
       },
       links: ['Home', 'About', 'Contact'],
       q1: '',
@@ -1098,13 +1098,13 @@ export default {
           diet_restrictions: '',
           discovered_by: '',
           shirt_size: null,
-          traveling_from: '', 
+          traveling_from: '',
           hackathons_attended: 0,
         },
         resume: {
           filenamwe: '',
           link: '',
-        }
+        },
       };
     },
     genderChange() {

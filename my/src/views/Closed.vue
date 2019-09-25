@@ -74,7 +74,7 @@ export default {
   computed: {
   },
   methods: {
-    
+
   },
   beforeMount() {
   },

@@ -63,41 +63,41 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {},
   data() {
     return {
       c_user: firebase.auth().currentUser,
-      dhs: ["DH V", "DH IV", "DH III", "DH II"],
-      current: "DH V",
+      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH V',
       drawer: null,
       items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
-      ]
+        { title: 'Home', icon: 'dashboard' },
+        { title: 'About', icon: 'question_answer' },
+      ],
     };
   },
   methods: {
     tst() {
-      console.log("FUUUUUUUUUUUCK");
+      console.log('FUUUUUUUUUUUCK');
     },
     async logout() {
-      console.log("logging out");
+      console.log('logging out');
       try {
         await firebase
           .auth()
           .signOut();
-        console.log("Logout successful");
-        this.$router.push({ name: "Login" });
+        console.log('Logout successful');
+        this.$router.push({ name: 'Login' });
       } catch (e) {
-        console.log("Logout unsuccessful");
+        console.log('Logout unsuccessful');
         console.log(e);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped src='../assets/css/navbar.css'>

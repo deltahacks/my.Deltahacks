@@ -72,19 +72,19 @@ export default {
   },
   methods: {
     async logout() {
-      console.log("logging out");
+      console.log('logging out');
       try {
         await firebase
           .auth()
           .signOut();
-        console.log("Logout successful");
-        this.$router.push({ name: "Login" });
+        console.log('Logout successful');
+        this.$router.push({ name: 'Login' });
       } catch (e) {
-        console.log("Logout unsuccessful");
+        console.log('Logout unsuccessful');
         showError(e);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
