@@ -4,16 +4,16 @@
   </v-app>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue';
 import firebase from 'firebase';
-import { ApplicationModel, AppContents } from '../types';
+import {ApplicationModel, AppContents} from '../types';
 
 import Card from '../components/Card.vue';
 
 export default Vue.extend({
   data(): ApplicationModel {
-    return { app: {} };
+    return {app: {}};
   },
   components: {
     Card,
@@ -30,7 +30,7 @@ export default Vue.extend({
 
     // does what it says
     redirectAfterSubmit(): void {
-      this.$router.push({ name: 'Status' });
+      this.$router.push({name: 'Status'});
     },
 
     // validates all fields before submission
@@ -45,6 +45,9 @@ export default Vue.extend({
         .doc('test@test.com')
         .get();
     },
+
+    // grabs current (logged in) users unique identifier
+    getUID: (): string | null => firebase.auth().currentUser!.email,
   },
   async created(): Promise<any> {
     try {
