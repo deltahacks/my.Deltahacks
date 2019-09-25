@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <Nav />
     <Card title="Name" />
   </v-app>
 </template>
@@ -9,6 +10,7 @@ import Vue from 'vue';
 import firebase from 'firebase';
 import {ApplicationModel, AppContents} from '../types';
 
+import Nav from '@/components/Nav.vue';
 import Card from '../components/Card.vue';
 
 export default Vue.extend({
@@ -17,6 +19,7 @@ export default Vue.extend({
   },
   components: {
     Card,
+    Nav,
   },
   methods: {
     // updates in progress application
