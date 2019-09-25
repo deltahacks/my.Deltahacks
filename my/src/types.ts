@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export interface ApplicationModel {
   app:
     | {}
@@ -85,62 +86,62 @@ export interface FormValidation {
 }
 
 type discovered_by =
-  | "A friend"
-  | "MLH"
-  | "Facebook"
-  | "Twitter"
-  | "Posters"
-  | "Instagram"
-  | "Snapchat"
-  | "Other";
+  | 'A friend'
+  | 'MLH'
+  | 'Facebook'
+  | 'Twitter'
+  | 'Posters'
+  | 'Instagram'
+  | 'Snapchat'
+  | 'Other';
 
 type race =
-  | "Black / African American"
-  | "Hispanic"
-  | "East Asian"
-  | "South Asian"
-  | "Middle Eastern"
-  | "Native American"
-  | "White / Caucasian"
-  | "Multiple ethnicity / Other"
-  | "Prefer not to say";
+  | 'Black / African American'
+  | 'Hispanic'
+  | 'East Asian'
+  | 'South Asian'
+  | 'Middle Eastern'
+  | 'Native American'
+  | 'White / Caucasian'
+  | 'Multiple ethnicity / Other'
+  | 'Prefer not to say';
 
 type year =
-  | "First Year"
-  | "Second Year"
-  | "Third Year"
-  | "Fourth Year"
-  | "Fifth Year"
-  | "Sixth Year";
+  | 'First Year'
+  | 'Second Year'
+  | 'Third Year'
+  | 'Fourth Year'
+  | 'Fifth Year'
+  | 'Sixth Year';
 
 type relation =
-  | "Parent"
-  | "Grandparent"
-  | "Sibling"
-  | "Partner"
-  | "Friend"
-  | "Guardian"
-  | "Other";
+  | 'Parent'
+  | 'Grandparent'
+  | 'Sibling'
+  | 'Partner'
+  | 'Friend'
+  | 'Guardian'
+  | 'Other';
 
 type citites =
-  | "(Type your own option)"
-  | "Hamilton"
-  | "Toronto"
-  | "Waterloo"
-  | "London"
-  | "Montreal"
-  | "Ottawa"
-  | "Mississauga"
-  | "Guelph"
-  | "Burlington"
-  | "Brampton"
-  | "Markham"
-  | "Milton";
+  | '(Type your own option)'
+  | 'Hamilton'
+  | 'Toronto'
+  | 'Waterloo'
+  | 'London'
+  | 'Montreal'
+  | 'Ottawa'
+  | 'Mississauga'
+  | 'Guelph'
+  | 'Burlington'
+  | 'Brampton'
+  | 'Markham'
+  | 'Milton';
 
-type shirt_size = "XS" | "S" | "M" | "L" | "XL";
+type shirt_size = 'XS' | 'S' | 'M' | 'L' | 'XL';
 
-type degree = "Bachelors" | "Masters" | "PhD";
+type degree = 'Bachelors' | 'Masters' | 'PhD';
 
-type gender = "M" | "F" | "O";
+type gender = 'M' | 'F' | 'O';
 
-type applicationStatus = "in progress" | "submitted";
+type applicationStatus = 'in progress' | 'submitted';

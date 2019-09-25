@@ -270,33 +270,33 @@
 
 <script>
 /* eslint-disable no-unused-expressions */
-import { auth } from "firebase";
-import db from "../private/firebase_init";
-import Navbar from "@/components/Navbar.vue";
-import Navbar2 from "@/components/Navbar2.vue";
-import Navigation from "@/components/Navigation.vue";
-import { validationMixin } from "vuelidate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
-import { mapGetters } from "vuex";
-import { allUniversities } from "../private/data";
+import { auth } from 'firebase';
+import db from '../private/firebase_init';
+import Navbar from '@/components/Navbar.vue';
+import Navbar2 from '@/components/Navbar2.vue';
+import Navigation from '@/components/Navigation.vue';
+import { validationMixin } from 'vuelidate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import { allUniversities } from '../private/data';
 
 export default {
   mixins: [validationMixin],
-  name: "Status",
+  name: 'Status',
   data() {
     return {
       genderCompleted: true,
       response: {
         rsvp: false,
         bus: false,
-        location: "",
-        email: auth().currentUser.email
+        location: '',
+        email: auth().currentUser.email,
       },
       emptyResponse: {
         rsvp: false,
         bus: false,
-        location: "",
-        email: auth().currentUser.email
+        location: '',
+        email: auth().currentUser.email,
       },
       criticalError: false,
       hasResponded: false,
@@ -304,105 +304,105 @@ export default {
       timeout: undefined,
       bus: false,
       busLocations: [
-        "University of Waterloo",
-        "University of Toronto",
-        "University of Western Ontario"
+        'University of Waterloo',
+        'University of Toronto',
+        'University of Western Ontario',
       ],
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
         {
-          link: "https://twitter.com/deltahacks",
-          icon: "fab fa-twitter"
+          link: 'https://twitter.com/deltahacks',
+          icon: 'fab fa-twitter',
         },
         {
-          link: "https://www.facebook.com/thedeltahacks/",
-          icon: "fab fa-facebook"
+          link: 'https://www.facebook.com/thedeltahacks/',
+          icon: 'fab fa-facebook',
         },
         {
-          link: "https://www.instagram.com/deltahacks/",
-          icon: "fab fa-instagram"
+          link: 'https://www.instagram.com/deltahacks/',
+          icon: 'fab fa-instagram',
         },
         {
-          link: "https://www.linkedin.com/company/deltahacks/",
-          icon: "fab fa-linkedin"
-        }
+          link: 'https://www.linkedin.com/company/deltahacks/',
+          icon: 'fab fa-linkedin',
+        },
       ],
       parent: this,
       picker: null,
-      date: "2000-01-01",
+      date: '2000-01-01',
       university: null,
       allUniversities,
       dropzoneOptions: {
-        url: "https://httpbin.org/post",
+        url: 'https://httpbin.org/post',
         thumbnailWidth: 150,
         maxFilesize: 0.5,
-        headers: { "My-Awesome-Header": "header value" },
+        headers: { 'My-Awesome-Header': 'header value' },
         addRemoveLinks: true,
-        acceptedFiles: "application/pdf"
+        acceptedFiles: 'application/pdf',
       },
       subheaders: [
-        "Applications are now closed.",
+        'Applications are now closed.',
         "Sorry we couldn't offer you a spot.",
-        "This application is under review.",
+        'This application is under review.',
         "Congratulations, you've been accepted!",
-        "Unfortunately we cannot offer you an invitation this time."
+        'Unfortunately we cannot offer you an invitation this time.',
       ],
       application: {
-        name: "",
-        email: "",
+        name: '',
+        email: '',
         school_year: null,
         shirt_size: null,
         dietary_restrictions: null,
         hackathons: null,
-        github: "",
-        linkedin: "",
-        website: "",
-        phone: "",
-        emergency_phone: ""
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
       },
-      links: ["Home", "About", "Contact"],
-      story: "",
+      links: ['Home', 'About', 'Contact'],
+      story: '',
       custom: true,
-      name: "",
+      name: '',
       step: 0,
-      email: "",
+      email: '',
       select: null,
       items: [
-        "First Year",
-        "Second Year",
-        "Third Year",
-        "Fourth Year",
-        "Fifth Year"
+        'First Year',
+        'Second Year',
+        'Third Year',
+        'Fourth Year',
+        'Fifth Year',
       ],
-      hackathons: ["This is my first one", "2", "3", "5+", "10+"],
-      food: ["Vegetarian", "Vegan", "Halal", "Gluten Free", "Kosher"],
-      shirts: ["XS", "S", "M", "L", "XL"],
-      checkbox: false
+      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+      shirts: ['XS', 'S', 'M', 'L', 'XL'],
+      checkbox: false,
     };
   },
   validations: {
     name: { required, maxLength: maxLength(10) },
     email: { required, email },
     select: { required },
-    checkbox: { required }
+    checkbox: { required },
   },
   components: {
     Navbar,
     Navigation,
-    Navbar2
+    Navbar2,
   },
   computed: {
     baseStep() {
       // console.log(this.step === 0);
       if (this.step === 0) {
-        return "Closed";
+        return 'Closed';
       }
-      return "Closed";
+      return 'Closed';
     },
     currentHeader() {
       return this.subheaders[this.step - 1];
-    }
+    },
   },
   methods: {
     toggleRSVP(res) {
@@ -429,26 +429,26 @@ export default {
       }, 2000);
     },
     changeBus() {
-      if (!this.response.bus) this.response.location = "";
+      if (!this.response.bus) this.response.location = '';
       this.formChange();
     },
     async submitRSVP() {
-      const email = auth().currentUser.email;
-      const folder = this.response.rsvp ? "Yes" : "No";
-      const opposingFolder = !this.response.rsvp ? "Yes" : "No";
+      const { email } = auth().currentUser;
+      const folder = this.response.rsvp ? 'Yes' : 'No';
+      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
       const rsvpRef = db
-        .collection("hackathon")
-        .doc("DH5")
-        .collection("RSVP")
-        .doc("all");
+        .collection('hackathon')
+        .doc('DH5')
+        .collection('RSVP')
+        .doc('all');
       try {
-        let res = await rsvpRef
+        const res = await rsvpRef
           .collection(folder)
           .doc(email)
           .set(this.response);
-          this.feedback = true;
-          this.confirmation = true;
-      } catch(err) {
+        this.feedback = true;
+        this.confirmation = true;
+      } catch (err) {
         console.log(err);
       }
       rsvpRef
@@ -459,43 +459,43 @@ export default {
     updateStep(doc) {
       if (doc.exists) {
         switch (doc.data().status) {
-          case "in progress":
+          case 'in progress':
             this.step = 1;
             break;
-          case "submitted":
+          case 'submitted':
             this.step = 2;
             break;
-          case "pending":
-          case "actually rejected":
+          case 'pending':
+          case 'actually rejected':
             this.step = 2;
             break;
-          case "overflow":
-          case "overflow2":
-          case "accepted":
-          case "processing":
-          case "rejected":
-          case "round4":
+          case 'overflow':
+          case 'overflow2':
+          case 'accepted':
+          case 'processing':
+          case 'rejected':
+          case 'round4':
             this.step = 3;
             break;
-          case "round1":
-          case "round2":
-          case "round3":
+          case 'round1':
+          case 'round2':
+          case 'round3':
             this.step = 4;
             break;
           default:
             this.step = 0;
         }
       } else {
-        console.log("Document not found!");
+        console.log('Document not found!');
       }
     },
     checkGenderInput(email) {
       if (this.step <= 1) return;
-      db.collection("applications")
-        .doc("DH5")
-        .collection("in progress")
+      db.collection('applications')
+        .doc('DH5')
+        .collection('in progress')
         .doc(email)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
             if (data.gender) {
@@ -507,28 +507,28 @@ export default {
         });
     },
     async fillRSVP() {
-      const email = auth().currentUser.email;
-      const folder = this.response.rsvp ? "Yes" : "No";
-      const opposingFolder = !this.response.rsvp ? "Yes" : "No";
+      const { email } = auth().currentUser;
+      const folder = this.response.rsvp ? 'Yes' : 'No';
+      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
       const rsvpRef = db
-        .collection("hackathon")
-        .doc("DH5")
-        .collection("RSVP")
-        .doc("all")
-        .collection("Yes")
+        .collection('hackathon')
+        .doc('DH5')
+        .collection('RSVP')
+        .doc('all')
+        .collection('Yes')
         .doc(email);
-      let doc = rsvpRef.get();
+      const doc = rsvpRef.get();
       if (doc.exists) {
         const data = doc.data();
         this.response = data;
         this.confirmation = true;
         this.hasResponded = true;
       } else {
-        let doc = await db.collection("hackathon")
-          .doc("DH5")
-          .collection("RSVP")
-          .doc("all")
-          .collection("No")
+        const doc = await db.collection('hackathon')
+          .doc('DH5')
+          .collection('RSVP')
+          .doc('all')
+          .collection('No')
           .doc(email)
           .get();
         if (doc.exists) {
@@ -536,16 +536,16 @@ export default {
           this.hasResponded = true;
         }
       }
-    }
+    },
   },
   async beforeMount() {
     // console.log('mounted');
     const appEmail = auth().currentUser.email;
     // const genderStatus = await this.checkGenderInput(appEmail);
     try {
-      db.collection("users")
+      db.collection('users')
         .doc(appEmail)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             this.updateStep(snap);
             if (this.step > 1) this.checkGenderInput(appEmail);
@@ -560,7 +560,7 @@ export default {
       console.error(err);
       this.criticalError = true;
     }
-  }
+  },
 };
 </script>
 <style scoped src='../assets/css/status.css'>

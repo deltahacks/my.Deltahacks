@@ -84,16 +84,16 @@ export default {
           await firebase
             .auth()
             .signInWithEmailAndPassword(this.email, this.pass);
-            this.$router.push({ name: 'Status' });
-            console.log('logged in');
-            this.feedback = null;
-        } catch(error) {
+          this.$router.push({ name: 'Status' });
+          console.log('logged in');
+          this.feedback = null;
+        } catch (error) {
           // Handle Errors here.
           //   const errorCode = error.code;
           const errorMessage = error.message;
           this.feedback = errorMessage;
           console.log(errorMessage);
-        } 
+        }
       }
     },
   },

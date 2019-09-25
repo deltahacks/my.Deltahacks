@@ -9,9 +9,9 @@ import Vue from 'vue';
 import firebase from 'firebase';
 import { ApplicationModel, ApplyState } from '../types';
 
-type ApplicationPageData = ApplicationModel | ApplyState;
-
 import Card from '../components/Card.vue';
+
+type ApplicationPageData = ApplicationModel | ApplyState;
 
 export default Vue.extend({
   data(): ApplicationPageData {
