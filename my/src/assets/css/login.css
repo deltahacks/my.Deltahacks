@@ -264,6 +264,7 @@ iframe {
     box-shadow:  -1px 0px 2px 0px rgba(0,0,0,0.2);
     border-bottom-left-radius: 50px;
     /* border:1px solid black; */
+    background: rgba(255, 255, 255, 0.30);
     background-image:url("../vi.png");
     background-repeat: no-repeat;
     /* background-position: center; */
