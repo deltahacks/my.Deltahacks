@@ -281,11 +281,12 @@ import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { allUniversities } from '../private/data';
 import db from '../private/firebase_init';
+import { StatusModel } from '../types';
 
 export default Vue.extend({
   mixins: [validationMixin],
   name: 'Status',
-  data() {
+  data(): StatusModel {
     return {
       genderCompleted: true,
       response: {
@@ -395,7 +396,7 @@ export default Vue.extend({
     Navbar2,
   },
   computed: {
-    baseStep() {
+    baseStep(): string {
       // console.log(this.step === 0);
       if (this.step === 0) {
         return 'Closed';
@@ -407,7 +408,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    toggleRSVP(res) {
+    toggleRSVP(res: any): void {
       this.hasResponded = true;
       this.response.rsvp = res;
       if (!this.response.rsvp) {
@@ -542,7 +543,7 @@ export default Vue.extend({
   },
   async beforeMount() {
     // console.log('mounted');
-    const appEmail = auth().currentUser.email;
+    const appEmail = auth().currentUser!.email as string;
     // const genderStatus = await this.checkGenderInput(appEmail);
     try {
       db.collection('users')

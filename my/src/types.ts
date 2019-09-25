@@ -62,6 +62,63 @@ export interface ApplicationModel {
       };
 }
 
+export interface StatusModel {
+  genderCompleted: boolean,
+  response: {
+    rsvp: boolean,
+    bus: boolean,
+    location: string,
+    email: string | null,
+  },
+  emptyResponse: {
+    rsvp: boolean,
+    bus: boolean,
+    location: string,
+    email: string | null,
+  },
+  criticalError: boolean,
+  hasResponded: boolean,
+  confirmation: boolean,
+  timeout: any,
+  bus: boolean,
+  busLocations: string[],
+  busWarning: string,
+  feedback: boolean,
+  social: any,
+  parent: any,
+  picker: any,
+  date: string,
+  university: any,
+  allUniversities: string[],
+  dropzoneOptions: any,
+  subheaders: string[]
+  application: {
+    name: string,
+    email: string,
+    school_year: any,
+    shirt_size: any,
+    dietary_restrictions: any,
+    hackathons: any,
+    github: string,
+    linkedin: string,
+    website: string,
+    phone: string,
+    emergency_phone: string,
+  },
+  links: string[],
+  story: string,
+  custom: boolean,
+  name: string,
+  step: number,
+  email: string,
+  select: any,
+  items: string[],
+  hackathons: string[],
+  food: string[],
+  shirts: string[],
+  checkbox: boolean,
+}
+
 export interface ApplyState {
   loading: boolean;
   feedback: string;
@@ -73,6 +130,16 @@ export interface ApplyState {
   // Todo: type this as a Firestore object
   appFirestorePath: any;
   applicationStatus: applicationStatus;
+}
+
+export interface SignupState {
+  drawer: null,
+  email: null | string,
+  password: null,
+  password_repeat: null,
+  feedback: null | string,
+  ip_address: null,
+  geo: null,
 }
 
 export interface AutofillData {}

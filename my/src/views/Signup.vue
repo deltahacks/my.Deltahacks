@@ -83,7 +83,7 @@ export default Vue.extend({
             .set({
               email: this.vuex_email,
               // geo: this.geo,
-              user_id: user.user.uid,
+              user_id: user.user!.uid,
               ip: ipp,
               is_admin: false,
             });
@@ -101,7 +101,7 @@ export default Vue.extend({
             .set({
               email: this.vuex_email,
               geo: this.geo,
-              user_id: user.user.uid,
+              user_id: user.user!.uid,
               ip: ipp,
               is_admin: false,
             });
@@ -118,26 +118,26 @@ export default Vue.extend({
   },
   computed: {
     vuex_email: {
-      get() {
+      get(): string {
         return this.$store.state.vuex_email;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_email', value);
       },
     },
     vuex_password: {
-      get() {
+      get(): string {
         return this.$store.state.vuex_password;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_password', value);
       },
     },
     vuex_current_user: {
-      get() {
+      get(): string {
         return this.$store.state.vuex_current_user;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_current_user', value);
       },
     },
