@@ -7,14 +7,12 @@
 <script lang='ts'>
 import Vue from 'vue';
 import firebase from 'firebase';
-import { ApplicationModel, ApplyState } from '../types';
+import { ApplicationModel, AppContents } from '../types';
 
 import Card from '../components/Card.vue';
 
-type ApplicationPageData = ApplicationModel | ApplyState;
-
 export default Vue.extend({
-  data(): ApplicationPageData {
+  data(): ApplicationModel {
     return { app: {} };
   },
   components: {
@@ -51,7 +49,7 @@ export default Vue.extend({
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      this.app = app.data();
+      this.app = app.data() as AppContents;
     } catch (error) {
       console.log('Error tying to fetch data: ', error);
     }
