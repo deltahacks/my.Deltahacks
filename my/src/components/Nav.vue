@@ -63,7 +63,7 @@ export default Vue.extend({
     async logout() {
       try {
         await firebase.auth().signOut();
-        this.$router.push({name: 'Login'});
+        this.$router.push({ name: 'Login' });
       } catch (error) {
         console.log('Logout unsuccessful:', error);
       }
