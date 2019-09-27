@@ -39,21 +39,25 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import firebase from 'firebase';
+import Vue from 'vue';
+import { SignupModel } from '../types';
 
-export default {
+export default Vue.extend({
   name: 'Signup',
-  data: () => ({
-    drawer: null,
-    email: null,
-    password: null,
-    password_repeat: null,
-    feedback: null,
-    ip_address: null,
-    geo: null,
-  }),
+  data(): SignupModel {
+    return {
+      drawer: null,
+      email: null,
+      password: null,
+      password_repeat: null,
+      feedback: null,
+      ip_address: null,
+      geo: null,
+    };
+  },
   props: {
     source: String,
   },
@@ -64,11 +68,15 @@ export default {
     tester() {
       console.log(this.vuex_email);
     },
+    // eslint-disable-next-line consistent-return
     async signUpFirebase() {
       if (this.vuex_email && this.vuex_password && this.password_repeat) {
-        if (this.vuex_password !== this.password_repeat) { return (this.feedback = 'Passwords must match'); }
+        if (this.vuex_password !== this.password_repeat) {
+          this.feedback = 'Passwords must match';
+          return this.feedback;
+        }
         try {
-          let user = await firebase
+          const user = await firebase
             .auth()
             .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password);
           // console.log(user.user.uid, 'ID');
@@ -79,15 +87,15 @@ export default {
             .set({
               email: this.vuex_email,
               // geo: this.geo,
-              user_id: user.user.uid,
+              user_id: user.user!.uid,
               ip: ipp,
               is_admin: false,
             });
-          let response = await axios
+          const response = await axios
             .get('https://api.ipify.org?format=json');
           // console.log(response.data.ip);
           const ipp = response.data.ip;
-          let data = await axios
+          const data = await axios
             .get(`https://ipapi.co/${ipp}/json/`);
           // console.log(data.data);
           this.geo = data.data;
@@ -97,49 +105,48 @@ export default {
             .set({
               email: this.vuex_email,
               geo: this.geo,
-              user_id: user.user.uid,
+              user_id: user.user!.uid,
               ip: ipp,
               is_admin: false,
             });
           // this.vuex_current_user = firebase.auth().currentUser
           // console.log('success');
           this.$router.push({ name: 'Status' });
-        } catch(err) {
+        } catch (err) {
           this.feedback = err.message;
         }
-      }
-      else {
+      } else {
         this.feedback = 'You need to enter all the fields';
       }
     },
   },
   computed: {
     vuex_email: {
-      get() {
+      get(): string {
         return this.$store.state.vuex_email;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_email', value);
       },
     },
     vuex_password: {
-      get() {
+      get(): string {
         return this.$store.state.vuex_password;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_password', value);
       },
     },
     vuex_current_user: {
-      get() {
+      get(): string {
         return this.$store.state.vuex_current_user;
       },
-      set(value) {
+      set(value: string) {
         this.$store.commit('update_vuex_current_user', value);
       },
     },
   },
-};
+});
 </script>
 <style scoped src='../assets/css/signup.css'>
 </style>

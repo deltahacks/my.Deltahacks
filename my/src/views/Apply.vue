@@ -1,24 +1,25 @@
 <template>
   <v-app>
+    <Nav />
     <Card title="Name" />
   </v-app>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue';
 import firebase from 'firebase';
-import { ApplicationModel, ApplyState } from '../types';
+import { ApplicationModel, AppContents } from '../types';
 
-type ApplicationPageData = ApplicationModel | ApplyState;
-
+import Nav from '@/components/Nav.vue';
 import Card from '../components/Card.vue';
 
 export default Vue.extend({
-  data(): ApplicationPageData {
+  data(): ApplicationModel {
     return { app: {} };
   },
   components: {
     Card,
+    Nav,
   },
   methods: {
     // updates in progress application
@@ -38,19 +39,23 @@ export default Vue.extend({
     // validates all fields before submission
     validateBeforeSubmit(): void {},
 
-    // Grrabs the application from where its store in firebase
-    fetchFromFirebase: (): any =>
-      this.$store.state.db
+    // Grabs the application from where its store in firebase
+    fetchFromFirebase(): Promise<any> {
+      return this.$store.state.db
         .collection(this.$store.state.hackathon)
         .doc('applications')
         .collection('all')
         .doc('test@test.com')
-        .get(),
+        .get();
+    },
+
+    // grabs current (logged in) users unique identifier
+    getUID: (): string | null => firebase.auth().currentUser!.email,
   },
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      this.app = app.data();
+      this.app = app.data() as AppContents;
     } catch (error) {
       console.log('Error tying to fetch data: ', error);
     }
