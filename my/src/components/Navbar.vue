@@ -57,10 +57,11 @@
   </v-toolbar>
 </template>
 
-<script>
+<script lang="ts">
 import firebase from 'firebase';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'Navbar',
   components: {},
   data() {
@@ -72,20 +73,20 @@ export default {
   },
   methods: {
     async logout() {
-      console.log("logging out");
+      console.log('logging out');
       try {
         await firebase
           .auth()
           .signOut();
-        console.log("Logout successful");
-        this.$router.push({ name: "Login" });
+        console.log('Logout successful');
+        this.$router.push({ name: 'Login' });
       } catch (e) {
-        console.log("Logout unsuccessful");
-        showError(e);
+        console.log('Logout unsuccessful');
+        // showError(e);
       }
-    }
-  }
-};
+    },
+  },
+});
 </script>
 <style>
 .navbar {

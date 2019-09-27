@@ -47,25 +47,29 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import firebase from 'firebase';
+import Vue from 'vue';
+import { ForgetPasswordModel } from '../types';
 
-export default {
+export default Vue.extend({
   name: 'ForgotPassword',
-  data: () => ({
-    drawer: null,
-    email: null,
-  }),
+  data(): ForgetPasswordModel {
+    return {
+      drawer: null,
+      email: null,
+    };
+  },
   methods: {
     signuppage() {
       this.$router.push({ name: 'Signup' });
     },
     async reset() {
       try {
-      await firebase.auth().sendPasswordResetEmail(this.email);
-      console.log('Email sent.');
-      this.$router.push({ name: 'Login' });
-      } catch(error) {
+        await firebase.auth().sendPasswordResetEmail(this.email as string);
+        console.log('Email sent.');
+        this.$router.push({ name: 'Login' });
+      } catch (error) {
         console.log(error);
       }
     },
@@ -73,5 +77,5 @@ export default {
   props: {
     source: String,
   },
-};
+});
 </script>

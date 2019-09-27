@@ -8,6 +8,7 @@ module.exports = {
   extends: [
     'plugin:vue/essential',
     '@vue/airbnb',
+    '@vue/typescript'
   ],
 
   rules: {
@@ -18,15 +19,10 @@ module.exports = {
     'no-unused-labels': 'off',
     'no-param-reassign': 'off',
     'no-plusplus': 'off',
+    'linebreak-style': 0
   },
 
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },
-
-  'extends': [
-    'plugin:vue/essential',
-    '@vue/airbnb',
-    '@vue/typescript'
-  ]
 };

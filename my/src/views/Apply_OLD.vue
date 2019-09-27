@@ -765,7 +765,8 @@
   </v-app>
 </template>
 
-<script lang="ts">
+<script>
+// @ts-nocheck
 /* eslint-disable no-unused-expressions */
 import firebase from 'firebase';
 import vueFilePond from 'vue-filepond';
@@ -884,7 +885,7 @@ export default {
           last: '',
         },
         contact: {
-          email: firebase.auth().currentUser!.email,
+          email: firebase.auth().currentUser.email,
           phone: '',
         },
         first_submitted: undefined,
@@ -928,12 +929,12 @@ export default {
           diet_restrictions: '',
           discovered_by: '',
           shirt_size: '',
-          traveling_from: '', 
+          traveling_from: '',
         },
         resume: {
           filenamwe: '',
           link: '',
-        }
+        },
       },
       links: ['Home', 'About', 'Contact'],
       q1: '',
@@ -994,9 +995,9 @@ export default {
     };
   },
   components: {
-    Navbar,
+    // Navbar,
     FilePond,
-    Navigation,
+    // Navigation,
     Navbar2,
   },
   computed: {
@@ -1015,20 +1016,20 @@ export default {
       select: { required },
       checkbox: { required },
       university: { in: allUniversities },
-    } as any,
+    },
     components: {
       Navbar,
       FilePond,
       Navigation,
       Navbar2,
     },
-    q1Color(): string {
+    q1Color() {
       return ['error', 'warning', 'success'][Math.floor(this.q1Progress / 40)];
     },
-    q2Color(): string {
+    q2Color() {
       return ['error', 'warning', 'success'][Math.floor(this.q2Progress / 40)];
     },
-    q3Color(): string {
+    q3Color() {
       return ['error', 'warning', 'success'][Math.floor(this.q3Progress / 40)];
     },
     currentUser() {
@@ -1054,7 +1055,7 @@ export default {
           last: '',
         },
         contact: {
-          email: firebase.auth().currentUser!.email,
+          email: firebase.auth().currentUser.email,
           phone: '',
         },
         first_submitted: undefined,
@@ -1098,13 +1099,13 @@ export default {
           diet_restrictions: '',
           discovered_by: '',
           shirt_size: null,
-          traveling_from: '', 
+          traveling_from: '',
           hackathons_attended: 0,
         },
         resume: {
           filenamwe: '',
           link: '',
-        }
+        },
       };
     },
     genderChange() {
@@ -1232,6 +1233,7 @@ export default {
           }/${filename}`)
           .put(file);
         const url = await snapshot.ref.getDownloadURL();
+        // eslint-disable-next-line consistent-return
         return {
           download_link: url,
           id,
@@ -1322,7 +1324,7 @@ export default {
       //   })
       //   .catch(err => reject(err))
     },
-    setSubmittedVariables(data: any) {
+    setSubmittedVariables(data) {
       this.editing = true;
       this.submitted = true;
       this.checkbox = true;
