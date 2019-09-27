@@ -19,6 +19,7 @@ module.exports = {
     'no-unused-labels': 'off',
     'no-param-reassign': 'off',
     'no-plusplus': 'off',
+    'linebreak-style': 0
   },
 
   parserOptions: {
