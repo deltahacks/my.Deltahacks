@@ -1,7 +1,7 @@
 <template>
   <v-app class="dashboard background">
     <!-- <Navigation class="mobile"/> -->
-    <Navbar2 class="navbar1"/>
+    <Navbar2 class="navbar1" />
     <div class="container-status100">
       <div class="hide">
         <!-- RSVP Section (not on mobile! need to add) -->
@@ -11,15 +11,15 @@
           style="height:445px;padding:35px 55px 35px 55px;"
           v-if="step > 3"
         >
-          <h1
-            v-if="!response.rsvp && !hasResponded"
-            class="rtitle"
-          >🎉 Congratulations, you've been invited to DeltaHacks V!</h1>
-          <h1 v-if="response.rsvp" class="rtitle">😉 Awesome, see you there!</h1>
-          <h1
-            v-if="!response.rsvp && hasResponded"
-            class="rtitle"
-          >We'll miss you, but thanks for letting us know!</h1>
+          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
+            🎉 Congratulations, you've been invited to DeltaHacks V!
+          </h1>
+          <h1 v-if="response.rsvp" class="rtitle">
+            😉 Awesome, see you there!
+          </h1>
+          <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
+            We'll miss you, but thanks for letting us know!
+          </h1>
           <h3 class>Will you be attending?</h3>
           <div style="padding-top:10px;">
             <div style="padding-top:10px;">
@@ -28,19 +28,23 @@
                   large
                   color="success"
                   @click="toggleRSVP(true)"
-                  :depressed="(response.rsvp && hasResponded)"
+                  :depressed="response.rsvp && hasResponded"
                   class="button1"
-                >Yes!</v-btn>
+                >
+                  Yes!
+                </v-btn>
                 <v-btn
                   large
                   color="error"
                   @click="toggleRSVP(false)"
-                  :depressed="(!response.rsvp && hasResponded)"
+                  :depressed="!response.rsvp && hasResponded"
                   class="button2"
-                >No.</v-btn>
+                >
+                  No.
+                </v-btn>
               </div>
-              <br>
-              <br>
+              <br />
+              <br />
             </div>
             <!-- <label for="name" style='float:left'>
                             <strong>Will you be attending?*</strong>
@@ -57,7 +61,7 @@
                 <label for="name" style="float:left">
                   <strong>Will you need a bus?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-switch
                   @change="changeBus"
                   :label="response.bus ? 'Yes!' : 'No.'"
@@ -69,7 +73,7 @@
                 <label for="name" style="float:left">
                   <strong>Where are you coming from?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-select
                   @change="changeBus"
                   :persistent-hint="true"
@@ -79,10 +83,15 @@
                   :items="busLocations"
                 ></v-select>
               </div>
-              <br>
+              <br />
             </div>
             <div class="mx-auto gg" v-if="confirmation">
-              <v-chip style="border:none;float:left;overflow:wrap;" outline small color="#555">
+              <v-chip
+                style="border:none;float:left;overflow:wrap;"
+                outline
+                small
+                color="#555"
+              >
                 <v-icon left>check</v-icon>
                 <strong>Your response has been submitted.</strong>
               </v-chip>
@@ -94,34 +103,47 @@
         </div>
         <div class="wrap-status100" v-if="step <= 3">
           <div>
-            <h1 v-show="!genderCompleted" slot="activator" style="color: #F14D4C">
+            <h1
+              v-show="!genderCompleted"
+              slot="activator"
+              style="color: #F14D4C"
+            >
               Please go to
               <a href="/apply" class="currentStatus">your application</a>
               and complete an additional field.
             </h1>
             <h1 v-show="step === 0 && genderCompleted">
               You haven't started yet! Go
-              <a href="/apply" class="currentStatus">here</a> to begin.
+              <a href="/apply" class="currentStatus">here</a>
+              to begin.
             </h1>
-            <h1 v-show="step > 0 && genderCompleted">{{currentHeader}}</h1>
-            <br>
+            <h1 v-show="step > 0 && genderCompleted">{{ currentHeader }}</h1>
+            <br />
             <v-stepper alt-labels class="transp">
               <v-stepper-header>
-                <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
+                <v-stepper-step step="1" :complete="step > 0">
+                  {{ baseStep }}
+                </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="step > 0">Submitted</v-stepper-step>
+                <v-stepper-step step="2" :complete="step > 0">
+                  Submitted
+                </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="step > 0">Processing</v-stepper-step>
+                <v-stepper-step step="3" :complete="step > 0">
+                  Processing
+                </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="step > 0">Decision</v-stepper-step>
+                <v-stepper-step step="4" :complete="step > 0">
+                  Decision
+                </v-stepper-step>
               </v-stepper-header>
             </v-stepper>
           </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
+        <br />
+        <br />
+        <br />
+        <br />
         <div>
           <v-layout row wrap>
             <v-flex d-flex md3 :key="media.icon" v-for="media in social">
@@ -139,26 +161,40 @@
         <div class="wrap-status101" v-if="step <= 3">
           <h1 v-show="step === 0">
             You haven't started yet! Go
-            <a href="/apply" class="currentStatus">here</a> to begin.
+            <a href="/apply" class="currentStatus">here</a>
+            to begin.
           </h1>
-          <h1 v-show="step > 0">{{currentHeader}}</h1>
+          <h1 v-show="step > 0">{{ currentHeader }}</h1>
           <v-card-text></v-card-text>
           <v-stepper vertical class="wrap-status201">
-            <v-stepper-step :complete="step > 0" step="1">{{baseStep}}</v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="2">Submitted</v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="3">Processing</v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="4">Decision</v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="1">
+              {{ baseStep }}
+            </v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="2">
+              Submitted
+            </v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="3">
+              Processing
+            </v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="4">
+              Decision
+            </v-stepper-step>
           </v-stepper>
         </div>
-        <div class="wrap-status101-accept wrap-status201-accept" v-if="step > 3">
-          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">🎉
-            <div id="mobileCol">Congratulations, you've been invited to DeltaHacks V!</div>
+        <div
+          class="wrap-status101-accept wrap-status201-accept"
+          v-if="step > 3"
+        >
+          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
+            🎉
+            <div id="mobileCol">
+              Congratulations, you've been invited to DeltaHacks V!
+            </div>
           </h1>
           <h1 v-if="response.rsvp" class="rtitle">Awesome, see you there!</h1>
-          <h1
-            v-if="!response.rsvp && hasResponded"
-            class="rtitle"
-          >We'll miss you, but thanks for letting us know!</h1>
+          <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
+            We'll miss you, but thanks for letting us know!
+          </h1>
           <h3 class>Will you be attending?</h3>
           <div style="padding-top:10px;">
             <div style="padding-top:10px;">
@@ -167,19 +203,23 @@
                   large
                   color="success"
                   @click="toggleRSVP(true)"
-                  :depressed="(response.rsvp && hasResponded)"
+                  :depressed="response.rsvp && hasResponded"
                   class="button1"
-                >Yes!</v-btn>
+                >
+                  Yes!
+                </v-btn>
                 <v-btn
                   large
                   color="error"
                   @click="toggleRSVP(false)"
-                  :depressed="(!response.rsvp && hasResponded)"
+                  :depressed="!response.rsvp && hasResponded"
                   class="button2"
-                >No.</v-btn>
+                >
+                  No.
+                </v-btn>
               </div>
-              <br>
-              <br>
+              <br />
+              <br />
             </div>
             <!-- <label for="name" style='float:left'>
                             <strong>Will you be attending?*</strong>
@@ -196,7 +236,7 @@
                 <label for="name" style="float:left">
                   <strong>Will you need a bus?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-switch
                   @change="changeBus"
                   :label="response.bus ? 'Yes!' : 'No.'"
@@ -208,7 +248,7 @@
                 <label for="name" style="float:left">
                   <strong>Where are you coming from?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-select
                   @change="changeBus"
                   :persistent-hint="true"
@@ -221,7 +261,12 @@
             </div>
 
             <div class="mx-auto gg" v-if="confirmation">
-              <v-chip style="border:none;float:left;overflow:wrap;" outline small color="#555">
+              <v-chip
+                style="border:none;float:left;overflow:wrap;"
+                outline
+                small
+                color="#555"
+              >
                 <v-icon left>check</v-icon>
                 <strong>Your response has been submitted.</strong>
               </v-chip>
@@ -244,13 +289,8 @@
         </div>
       </div>
     </div>
-    <v-snackbar
-      v-model="feedback"
-      top
-      color="success"
-      right
-      :timeout="3000"
-    >Thanks! We've got your response.
+    <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
+      Thanks! We've got your response.
       <v-btn color="white" flat @click="feedback = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar
@@ -261,8 +301,9 @@
       right
       :timeout="10000"
     >
-      Could not establish connection to the server. Consider refreshing or attempting
-      to access the page on mobile. If the issue persists contact us at hello@deltahacks.com.
+      Could not establish connection to the server. Consider refreshing or
+      attempting to access the page on mobile. If the issue persists contact us
+      at hello@deltahacks.com.
       <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
     </v-snackbar>
   </v-app>
@@ -492,7 +533,7 @@ export default Vue.extend({
         .doc('DH5')
         .collection('in progress')
         .doc(email)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             const data = snap.data();
             if (data!.gender) {
@@ -521,7 +562,8 @@ export default Vue.extend({
         this.confirmation = true;
         this.hasResponded = true;
       } else {
-        const doc = await db.collection('hackathon')
+        const doc = await db
+          .collection('hackathon')
           .doc('DH5')
           .collection('RSVP')
           .doc('all')
@@ -542,7 +584,7 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             this.updateStep(snap);
             if (this.step > 1) this.checkGenderInput(appEmail);
@@ -559,7 +601,6 @@ export default Vue.extend({
     }
   },
 });
-
 </script>
 <style scoped src='../assets/css/status.css'>
 .regular {
@@ -567,7 +608,7 @@ export default Vue.extend({
   color: inherit;
 }
 #footertext {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 1.3em;
   float: left;
