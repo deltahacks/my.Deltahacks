@@ -8,14 +8,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import firebase from 'firebase';
-import {ApplicationModel, AppContents} from '../types';
+import { ApplicationModel, AppContents } from '../types';
 
 import Nav from '@/components/Nav.vue';
 import Card from '../components/Card.vue';
 
 export default Vue.extend({
   data(): ApplicationModel {
-    return {app: {}};
+    return { app: {} };
   },
   components: {
     Card,
@@ -33,13 +33,13 @@ export default Vue.extend({
 
     // does what it says
     redirectAfterSubmit(): void {
-      this.$router.push({name: 'Status'});
+      this.$router.push({ name: 'Status' });
     },
 
     // validates all fields before submission
     validateBeforeSubmit(): void {},
 
-    // Grrabs the application from where its store in firebase
+    // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
         .collection(this.$store.state.hackathon)
