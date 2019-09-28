@@ -1,7 +1,15 @@
 <template>
   <v-app>
     <Nav />
-    <Card title="Name" />
+    <form action="">
+      <Card
+        class="card"
+        v-for="(question, i) in questions"
+        :key="i"
+        :title="question.label"
+        v-model="question.model"
+      />
+    </form>
   </v-app>
 </template>
 
@@ -15,7 +23,67 @@ import Card from '../components/Card.vue';
 
 export default Vue.extend({
   data(): ApplicationModel {
-    return { app: {} };
+    return {
+      app: {
+        name: {
+          first: '',
+          last: '',
+        },
+        contact: {
+          email: '',
+          phone: '',
+        },
+        first_submitted: new Date(),
+        academics: {
+          degree: 'Bachelors',
+          major: '',
+          graduating: '',
+          school: '',
+          year: 'First Year',
+        },
+        personal: {
+          birthday: new Date(),
+          gender: 'M',
+          race: 'Black / African American',
+        },
+        emergency: {
+          name: '',
+          phone: '',
+          relation: 'Parent',
+        },
+        documents: {
+          download_link: '',
+          filename: '',
+          id: '',
+        },
+        profiles: {
+          devpost: '',
+          github: '',
+          linkedin: '',
+          website: '',
+        },
+        responses: {
+          anything_else: '',
+          q1: '',
+          q2: '',
+          q3: '',
+          q4: '',
+          workshops: [],
+        },
+        logistics: {
+          discovered_by: '',
+          diet_restrictions: '',
+          shirt_size: 'M',
+          traveling_from: '',
+          hackathons_attended: 3,
+        },
+        resume: {
+          filename: '',
+          link: '',
+        },
+      },
+      questions: {},
+    };
   },
   components: {
     Card,
@@ -62,8 +130,56 @@ export default Vue.extend({
   },
   mounted(): void {
     // populate autofill data here
+
+    this.questions = [
+      {
+        label: "What's your first name?",
+        fieldType: 'text',
+        model: this.app.name.first,
+      },
+      {
+        label: 'And your last name?',
+        fieldType: 'text',
+        model: this.app.name.last,
+      },
+      {
+        label: "What's your birthday?",
+        fieldType: 'text',
+        model: this.app.personal.birthday,
+      },
+      {
+        label: 'Where do you study?',
+        fieldType: 'text',
+        model: this.app.academics.school,
+      },
+      {
+        label: 'And what do you study?',
+        fieldType: 'text',
+        model: this.app.academics.major,
+      },
+      {
+        label: 'What degree are you pursuing?',
+        fieldType: 'multi-select',
+        model: this.app.academics.degree,
+      },
+      {
+        label: 'What year are you in?',
+        fieldType: 'text',
+        model: this.app.academics.year,
+      },
+      {
+        label: 'And when do you expect to graduate?',
+        fieldType: 'text',
+        model: this.app.academics.graduating,
+      },
+    ];
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.card {
+  margin: 10px 10px 10px 10px;
+}
+</style>
+
