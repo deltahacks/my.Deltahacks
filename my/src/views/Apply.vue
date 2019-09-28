@@ -19,7 +19,7 @@ import firebase from 'firebase';
 import { ApplicationModel, AppContents } from '../types';
 
 import Nav from '@/components/Nav.vue';
-import Card from '../components/Card.vue';
+import Card from '@/components/Card.vue';
 
 export default Vue.extend({
   data(): ApplicationModel {

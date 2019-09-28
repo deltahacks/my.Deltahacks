@@ -471,7 +471,7 @@ export default Vue.extend({
       this.formChange();
     },
     async submitRSVP() {
-      const { email } = auth().currentUser;
+      const { email } = auth().currentUser!;
       const folder = this.response.rsvp ? 'Yes' : 'No';
       const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
       const rsvpRef = db
@@ -482,7 +482,8 @@ export default Vue.extend({
       try {
         const res = await rsvpRef
           .collection(folder)
-          .doc(email)
+          //TOD(null-check) implement better solution for when email is null
+          .doc(email ? email : 'test@test.com')
           .set(this.response);
         this.feedback = true;
         this.confirmation = true;
@@ -491,7 +492,8 @@ export default Vue.extend({
       }
       rsvpRef
         .collection(opposingFolder)
-        .doc(email)
+        //TOD(null-check) implement better solution for when email is null
+        .doc(email ? email : 'test@test.com')
         .delete();
     },
     updateStep(doc) {
@@ -545,7 +547,7 @@ export default Vue.extend({
         });
     },
     async fillRSVP() {
-      const { email } = auth().currentUser;
+      const { email } = auth().currentUser!;
       const folder = this.response.rsvp ? 'Yes' : 'No';
       const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
       const rsvpRef = db
@@ -554,7 +556,8 @@ export default Vue.extend({
         .collection('RSVP')
         .doc('all')
         .collection('Yes')
-        .doc(email);
+        //TOD(null-check) implement better solution for when email is null
+        .doc(email ? email : 'test@test.com');
       const doc: any = rsvpRef.get();
       if (doc.exists) {
         const data = doc.data();
@@ -568,7 +571,8 @@ export default Vue.extend({
           .collection('RSVP')
           .doc('all')
           .collection('No')
-          .doc(email)
+          //TOD(null-check) implement better solution for when email is null
+          .doc(email ? email : 'test@test.com')
           .get();
         if (doc.exists) {
           this.confirmation = true;
