@@ -19,5 +19,5 @@ export default new Vuex.Store({
   state: {
     db,
     firebase,
-  },
+  } as StoreState,
 });
