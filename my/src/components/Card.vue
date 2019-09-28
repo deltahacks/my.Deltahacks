@@ -18,6 +18,7 @@ export default Vue.extend({
 <style scoped>
 .title {
   font-size: 2.5em;
+  color: white;
 }
 
 .container {
