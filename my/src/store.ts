@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase';
@@ -5,6 +6,25 @@ import db from './private/firebase_init';
 
 // Use vuex with Vue
 Vue.use(Vuex);
+
+interface StoreState {
+  hackathon: string,
+  vuex_current_user: null,
+  vuex_msgs: [],
+  vuex_name: null,
+  user_name: string,
+  vuex_email: string,
+  vuex_password: string,
+  vuex_user_has_applied: boolean,
+  db,
+  firebase,
+  test: string,
+  vuex_user_application: null,
+  DataTable: {
+    lastVisible: null,
+  },
+}
+
 
 // export the store
 export default new Vuex.Store({
