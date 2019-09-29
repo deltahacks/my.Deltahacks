@@ -5,7 +5,7 @@
       <input
         class="field"
         :value="value"
-        @input="$emit('input', $event.target.value)"
+        @input="onChange($event)"
       />
     </div>
   </div>
@@ -16,7 +16,13 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'Card',
-  props: ['title', 'value'],
+  props: ['title', 'value', 'requestUpdate'],
+  methods: {
+    onChange(event) {
+      this.$emit('input', event.target.value);
+      this.requestUpdate();
+    },
+  },
 });
 </script>
 
