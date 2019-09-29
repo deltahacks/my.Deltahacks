@@ -5,6 +5,7 @@ export interface ApplicationModel {
   // this needs to be typed
   questions: any;
   updateTimeout: any;
+  snack: SnackBar;
 }
 
 export interface AppContents {
@@ -184,6 +185,14 @@ export interface FormValidation {
   select: {required: any};
   checkbox: {required: any};
   university: {in: any};
+}
+
+export interface SnackBar {
+  color: string;
+  btnColor: string;
+  timeout: number;
+  visible: boolean;
+  message: string;
 }
 
 type discovered_by =
