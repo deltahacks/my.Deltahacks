@@ -11,6 +11,7 @@
         v-model="app[question.model[0]][question.model[1]]"
       />
     </form>
+    <button @click="resetApplication">RESET</button>
   </v-app>
 </template>
 
@@ -21,6 +22,7 @@ import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 
 import { ApplicationModel, AppContents } from '../types';
+import { blankApplication } from '../data';
 
 export default Vue.extend({
   data(): ApplicationModel {
@@ -94,11 +96,10 @@ export default Vue.extend({
   methods: {
     // updates in progress application
     onFormChange() {
-      if (this.updateTimeout) {
-        clearTimeout(this.updateTimeout);
-      }
+      if (this.updateTimeout) clearTimeout(this.updateTimeout);
       this.updateTimeout = setTimeout(this.updateAppProgress, 4000);
     },
+
     updateAppProgress(): void {
       console.log('Updated!');
       (this.$store.state.db as firebase.firestore.Firestore)
@@ -113,7 +114,10 @@ export default Vue.extend({
     submitApp(): void {},
 
     // clears all fields in the application
-    resetApplication(): void {},
+    resetApplication(): void {
+      this.app = blankApplication as AppContents;
+      this.updateAppProgress();
+    },
 
     // does what it says
     redirectAfterSubmit(): void {
