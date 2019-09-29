@@ -252,7 +252,7 @@ iframe {
     width: 40%;
     margin-right:-100px;
     padding-right:0px;
-    background: rgba(255, 255, 255, 0.15);
+    /* background: rgba(255, 255, 255, 0.15); */
   }
 
 .login100-form {
@@ -263,7 +263,7 @@ iframe {
     border-top-left-radius: 50px;
     box-shadow:  -1px 0px 2px 0px rgba(0,0,0,0.2);
     border-bottom-left-radius: 50px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.25);
 }
 .img1{
     z-index:0;
