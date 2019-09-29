@@ -14,6 +14,7 @@
           <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span> -->
+          <img src="../assets/vi.png" class="img1"/>
           <v-container>
             <v-layout>
             <v-flex xs12>

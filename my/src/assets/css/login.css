@@ -257,20 +257,27 @@ iframe {
 
 .login100-form {
     position: relative;
-    z-index:20;
+    z-index:40;
     width: 595px;
     padding-left:100px;
     border-top-left-radius: 50px;
     box-shadow:  -1px 0px 2px 0px rgba(0,0,0,0.2);
     border-bottom-left-radius: 50px;
-    /* border:1px solid black; */
-    background: rgba(255, 255, 255, 0.30);
-    background-image:url("../vi.png");
-    background-repeat: no-repeat;
-    /* background-position: center; */
-    background-size: cover;
+    background: rgba(255,255,255,0.1);
 }
+.img1{
+    z-index:0;
+    width:30%;
+    /* position:absolute; */
+    float:right;
+    margin-top: 65%;
+    margin-right:0%;
+    /* background-image:url("../vi.png"); */
+    /* background-repeat: no-repeat; */
+    /* background-position: center; */
+    /* background-size: cover; */
 
+}
 .login100-form-logo {
     display: -webkit-box;
     display: -webkit-flex;
