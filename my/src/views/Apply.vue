@@ -7,7 +7,7 @@
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
-        v-model="question.model"
+        v-model="app[question.model[0]][question.model[1]]"
       />
     </form>
   </v-app>
@@ -26,7 +26,7 @@ export default Vue.extend({
     return {
       app: {
         name: {
-          first: '',
+          first: 'oi',
           last: '',
         },
         contact: {
@@ -123,54 +123,53 @@ export default Vue.extend({
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      this.app = app.data() as AppContents;
+      //this.app = app.data() as AppContents;
     } catch (error) {
       console.log('Error tying to fetch data: ', error);
     }
   },
   mounted(): void {
     // populate autofill data here
-
     this.questions = [
       {
         label: "What's your first name?",
         fieldType: 'text',
-        model: this.app.name.first,
+        model: ['name', 'first'],
       },
       {
         label: 'And your last name?',
         fieldType: 'text',
-        model: this.app.name.last,
+        model: ['name', 'last'],
       },
       {
         label: "What's your birthday?",
         fieldType: 'text',
-        model: this.app.personal.birthday,
+        model: ['personal', 'birthday'],
       },
       {
         label: 'Where do you study?',
         fieldType: 'text',
-        model: this.app.academics.school,
+        model: ['academics', 'school'],
       },
       {
         label: 'And what do you study?',
         fieldType: 'text',
-        model: this.app.academics.major,
+        model: ['academics', 'major'],
       },
       {
         label: 'What degree are you pursuing?',
         fieldType: 'multi-select',
-        model: this.app.academics.degree,
+        model: ['academics', 'degree'],
       },
       {
         label: 'What year are you in?',
         fieldType: 'text',
-        model: this.app.academics.year,
+        model: ['academics', 'year'],
       },
       {
         label: 'And when do you expect to graduate?',
         fieldType: 'text',
-        model: this.app.academics.graduating,
+        model: ['academics', 'graduating'],
       },
     ];
   },
