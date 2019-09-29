@@ -4,6 +4,7 @@ export interface ApplicationModel {
 
   // this needs to be typed
   questions: any;
+  updateTimeout: any;
 }
 
 export interface AppContents {

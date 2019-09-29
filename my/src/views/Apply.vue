@@ -7,6 +7,7 @@
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
+        :requestUpdate="onFormChange"
         v-model="app[question.model[0]][question.model[1]]"
       />
     </form>
@@ -15,7 +16,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase from 'firebase';
+import firebase, { firestore } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 
@@ -26,7 +27,7 @@ export default Vue.extend({
     return {
       app: {
         name: {
-          first: 'oi',
+          first: '',
           last: '',
         },
         contact: {
@@ -83,6 +84,7 @@ export default Vue.extend({
         },
       },
       questions: {},
+      updateTimeout: null,
     };
   },
   components: {
@@ -91,7 +93,21 @@ export default Vue.extend({
   },
   methods: {
     // updates in progress application
-    updateAppProgress(): void {},
+    onFormChange() {
+      if (this.updateTimeout) {
+        clearTimeout(this.updateTimeout);
+      }
+      this.updateTimeout = setTimeout(this.updateAppProgress, 4000);
+    },
+    updateAppProgress(): void {
+      console.log('Updated!');
+      (this.$store.state.db as firebase.firestore.Firestore)
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .doc(this.getUID())
+        .set(this.app);
+    },
 
     // actually submits application
     submitApp(): void {},
@@ -110,20 +126,20 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection(this.$store.state.hackathon)
+        .collection('DH6')
         .doc('applications')
         .collection('all')
-        .doc('test@test.com')
+        .doc(this.getUID())
         .get();
     },
 
     // grabs current (logged in) users unique identifier
-    getUID: (): string | null => firebase.auth().currentUser!.email,
+    getUID: (): string => firebase.auth().currentUser!.email as string,
   },
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      // this.app = app.data() as AppContents;
+      this.app = app.data() as AppContents;
     } catch (error) {
       console.log('Error tying to fetch data: ', error);
     }

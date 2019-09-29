@@ -78,7 +78,7 @@ export default Vue.extend({
       this.tiltAngle = 0;
 
       // eslint-disable-next-line func-names
-      this.draw = function() {
+      this.draw = function () {
         context.beginPath();
         context.lineWidth = this.r / 2;
         context.strokeStyle = this.color;
