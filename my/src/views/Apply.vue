@@ -35,21 +35,21 @@ export default Vue.extend({
         },
         first_submitted: new Date(),
         academics: {
-          degree: 'Bachelors',
+          degree: '',
           major: '',
           graduating: '',
           school: '',
-          year: 'First Year',
+          year: '',
         },
         personal: {
           birthday: new Date(),
-          gender: 'M',
-          race: 'Black / African American',
+          gender: '',
+          race: '',
         },
         emergency: {
           name: '',
           phone: '',
-          relation: 'Parent',
+          relation: '',
         },
         documents: {
           download_link: '',
@@ -73,9 +73,9 @@ export default Vue.extend({
         logistics: {
           discovered_by: '',
           diet_restrictions: '',
-          shirt_size: 'M',
+          shirt_size: '',
           traveling_from: '',
-          hackathons_attended: 3,
+          hackathons_attended: 0,
         },
         resume: {
           filename: '',
