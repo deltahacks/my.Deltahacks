@@ -43,7 +43,7 @@ export default Vue.extend({
     return {
       app: {
         name: {
-          first: '',
+          first: 'oi',
           last: '',
         },
         contact: {
