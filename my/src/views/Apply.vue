@@ -144,8 +144,9 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
       this.app = app.data() as AppContents;
+      console.log('Success');
     } catch (error) {
-      console.log('Error tying to fetch data: ', error);
+      console.log('Unable to fetch, trying again...');
     }
   },
   mounted(): void {

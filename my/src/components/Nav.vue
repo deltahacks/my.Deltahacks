@@ -73,8 +73,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    uppercaseID() {
-      return this.uid.email.toUpperCase();
+    uppercaseID(): string {
+      return this.uid ? this.uid.email!.toUpperCase() : '';
     },
   },
 });
