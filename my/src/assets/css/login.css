@@ -265,13 +265,21 @@ iframe {
     border-bottom-left-radius: 50px;
     background: rgba(255,255,255,0.25);
 }
-.img1{
+.sidebar{
+    width:300px;
+    margin-top:35%;
+    margin-left:20px;
+    padding-right:20px;
+}
+.back-vi{
     z-index:0;
-    width:30%;
+    width:50%;
     /* position:absolute; */
     float:right;
-    padding-top: 78%;
     margin-right:0%;
+    margin-top:250px;
+    position:center;
+    opacity:0.15;
     /* background-image:url("../vi.png"); */
     /* background-repeat: no-repeat; */
     /* background-position: center; */
