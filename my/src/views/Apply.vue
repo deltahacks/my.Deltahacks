@@ -16,10 +16,10 @@
 <script lang="ts">
 import Vue from 'vue';
 import firebase from 'firebase';
-import { ApplicationModel, AppContents } from '../types';
-
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
+
+import { ApplicationModel, AppContents } from '../types';
 
 export default Vue.extend({
   data(): ApplicationModel {
@@ -123,7 +123,7 @@ export default Vue.extend({
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      //this.app = app.data() as AppContents;
+      // this.app = app.data() as AppContents;
     } catch (error) {
       console.log('Error tying to fetch data: ', error);
     }
