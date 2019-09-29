@@ -242,6 +242,7 @@ iframe {
     position: relative;
     z-index:40;
     width: 38vw;
+    padding-top:1vh;
     padding-left:16%;
     border-radius:50px;
     box-shadow:  -1px 0px 2px 0px rgba(0,0,0,0.2);
