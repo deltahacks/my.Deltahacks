@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
-import Vue from "vue";
-import Vuex from "vuex";
-import firebase from "firebase";
-import db from "./private/firebase_init";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import firebase from 'firebase';
+import db from './private/firebase_init';
 
 // Use vuex with Vue
 Vue.use(Vuex);
 
 interface StoreState {
-  //TODO(typing) type these as firebase objects
+  // TODO(typing) type these as firebase objects
   db: any;
   firebase: any;
 }
