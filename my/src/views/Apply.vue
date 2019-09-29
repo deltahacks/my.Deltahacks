@@ -1,6 +1,18 @@
 <template>
   <v-app>
     <Nav />
+    <v-snackbar
+      top
+      right
+      :color="snack.color"
+      v-model="snack.visible"
+      :timeout="snack.timeout"
+    >
+      {{ snack.message }}
+      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+        Close
+      </v-btn>
+    </v-snackbar>
     <form action="">
       <Card
         class="card"
@@ -87,6 +99,13 @@ export default Vue.extend({
       },
       questions: {},
       updateTimeout: null,
+      snack: {
+        color: 'success',
+        btnColor: 'white',
+        timeout: 3000,
+        visible: false,
+        message: 'Progress saved!',
+      },
     };
   },
   components: {
@@ -102,12 +121,13 @@ export default Vue.extend({
 
     updateAppProgress(): void {
       console.log('Updated!');
-      (this.$store.state.db as firebase.firestore.Firestore)
+      this.$store.state.db
         .collection('DH6')
         .doc('applications')
         .collection('all')
         .doc(this.getUID())
         .set(this.app);
+      this.snack.visible = true;
     },
 
     // actually submits application
@@ -146,6 +166,7 @@ export default Vue.extend({
       this.app = app.data() as AppContents;
       console.log('Success');
     } catch (error) {
+      // Create popup modal here warning user
       console.log('Unable to fetch, trying again...');
     }
   },

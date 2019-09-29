@@ -2,11 +2,7 @@
   <div class="background">
     <div class="container">
       <h1 class="title">{{ title }}</h1>
-      <input
-        class="field"
-        :value="value"
-        @input="onChange($event)"
-      />
+      <input class="field" :value="value" @input="onChange($event)" />
     </div>
   </div>
 </template>
@@ -15,7 +11,6 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'Card',
   props: ['title', 'value', 'requestUpdate'],
   methods: {
     onChange(event) {

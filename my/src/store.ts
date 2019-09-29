@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 interface StoreState {
   // TODO(typing) type these as firebase objects
-  db: any;
+  db: firebase.firestore.Firestore;
   firebase: any;
 }
 

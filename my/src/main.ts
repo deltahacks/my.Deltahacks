@@ -1,19 +1,19 @@
 /* eslint-disable */
-import Vue from "vue";
-import Vuetify from "vuetify";
-import firebase from "firebase";
-import "vuetify/dist/vuetify.min.css";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import VeeValidate from "vee-validate";
-import VueProgressBar from "vue-progressbar";
-const VueAnalytics = require("vue-analytics").default;
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+import firebase from 'firebase';
+import 'vuetify/dist/vuetify.min.css';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import VeeValidate from 'vee-validate';
+import VueProgressBar from 'vue-progressbar';
+const VueAnalytics = require('vue-analytics').default;
 
 Vue.use(VueProgressBar, {
-  color: "rgb(143, 255, 199)",
-  failedColor: "red",
-  height: "2px",
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px',
 });
 Vue.use(VeeValidate);
 
@@ -22,15 +22,9 @@ Vue.use(Vuetify);
 
 let app: null | any = null;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount("#app");
-
 //Google Analytics
 Vue.use(VueAnalytics, {
-  id: "UA-105802545-2",
+  id: 'UA-105802545-2',
   router,
 });
 
@@ -41,7 +35,7 @@ firebase.auth().onAuthStateChanged(() => {
       router,
       store,
       render: h => h(App),
-    }).$mount("#app");
+    }).$mount('#app');
 });
 //Lint command
 //.\node_modules\.bin\eslint --fix . --ext .js,.vue src
