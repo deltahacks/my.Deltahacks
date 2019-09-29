@@ -2,7 +2,11 @@
   <div class="background">
     <div class="container">
       <h1 class="title">{{ title }}</h1>
-      <input class="field" />
+      <input
+        class="field"
+        :value="value"
+        @input="$emit('input', $event.target.value)"
+      />
     </div>
   </div>
 </template>
@@ -11,7 +15,8 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['title'],
+  name: 'Card',
+  props: ['title', 'value'],
 });
 </script>
 
