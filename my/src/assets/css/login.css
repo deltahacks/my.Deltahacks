@@ -242,7 +242,7 @@ iframe {
     position: relative;
     z-index:40;
     width: 38vw;
-    padding-left:1vw;
+    padding-left:16%;
     border-radius:50px;
     box-shadow:  -1px 0px 2px 0px rgba(0,0,0,0.2);
     background: rgba(255,255,255,0.25);
@@ -253,15 +253,16 @@ iframe {
     margin-top:35%;
     margin-left:1vw;
     padding-right:1vw;
-    margin-bottom:50%;
+    margin-bottom:40%;
 }
 .back-vi{
     z-index:0;
     width:50%;
     position: absolute; 
     bottom: 0;
+    margin-left:10vw;
     float:right;
-    opacity:0.15;
+    opacity:0.1;
     /* background-image:url("../vi.png"); */
     /* background-repeat: no-repeat; */
     /* background-position: center; */
