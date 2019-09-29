@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 export interface ApplicationModel {
-  app: {} | AppContents;
+  app: AppContents;
 
   // this needs to be typed
   questions: any;
