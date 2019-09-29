@@ -1,7 +1,7 @@
 <template>
   <v-app class="dashboard background">
     <!-- <Navigation class="mobile"/> -->
-    <Navbar2 class="navbar1"/>
+    <Navbar2 class="navbar1" />
     <div class="container-status100">
       <div class="hide">
         <!-- RSVP Section (not on mobile! need to add) -->
@@ -11,15 +11,15 @@
           style="height:445px;padding:35px 55px 35px 55px;"
           v-if="step > 3"
         >
-          <h1
-            v-if="!response.rsvp && !hasResponded"
-            class="rtitle"
-          >🎉 Congratulations, you've been invited to DeltaHacks V!</h1>
-          <h1 v-if="response.rsvp" class="rtitle">😉 Awesome, see you there!</h1>
-          <h1
-            v-if="!response.rsvp && hasResponded"
-            class="rtitle"
-          >We'll miss you, but thanks for letting us know!</h1>
+          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
+            🎉 Congratulations, you've been invited to DeltaHacks V!
+          </h1>
+          <h1 v-if="response.rsvp" class="rtitle">
+            😉 Awesome, see you there!
+          </h1>
+          <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
+            We'll miss you, but thanks for letting us know!
+          </h1>
           <h3 class>Will you be attending?</h3>
           <div style="padding-top:10px;">
             <div style="padding-top:10px;">
@@ -28,19 +28,23 @@
                   large
                   color="success"
                   @click="toggleRSVP(true)"
-                  :depressed="(response.rsvp && hasResponded)"
+                  :depressed="response.rsvp && hasResponded"
                   class="button1"
-                >Yes!</v-btn>
+                >
+                  Yes!
+                </v-btn>
                 <v-btn
                   large
                   color="error"
                   @click="toggleRSVP(false)"
-                  :depressed="(!response.rsvp && hasResponded)"
+                  :depressed="!response.rsvp && hasResponded"
                   class="button2"
-                >No.</v-btn>
+                >
+                  No.
+                </v-btn>
               </div>
-              <br>
-              <br>
+              <br />
+              <br />
             </div>
             <!-- <label for="name" style='float:left'>
                             <strong>Will you be attending?*</strong>
@@ -57,7 +61,7 @@
                 <label for="name" style="float:left">
                   <strong>Will you need a bus?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-switch
                   @change="changeBus"
                   :label="response.bus ? 'Yes!' : 'No.'"
@@ -69,7 +73,7 @@
                 <label for="name" style="float:left">
                   <strong>Where are you coming from?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-select
                   @change="changeBus"
                   :persistent-hint="true"
@@ -79,10 +83,15 @@
                   :items="busLocations"
                 ></v-select>
               </div>
-              <br>
+              <br />
             </div>
             <div class="mx-auto gg" v-if="confirmation">
-              <v-chip style="border:none;float:left;overflow:wrap;" outline small color="#555">
+              <v-chip
+                style="border:none;float:left;overflow:wrap;"
+                outline
+                small
+                color="#555"
+              >
                 <v-icon left>check</v-icon>
                 <strong>Your response has been submitted.</strong>
               </v-chip>
@@ -94,34 +103,47 @@
         </div>
         <div class="wrap-status100" v-if="step <= 3">
           <div>
-            <h1 v-show="!genderCompleted" slot="activator" style="color: #F14D4C">
+            <h1
+              v-show="!genderCompleted"
+              slot="activator"
+              style="color: #F14D4C"
+            >
               Please go to
               <a href="/apply" class="currentStatus">your application</a>
               and complete an additional field.
             </h1>
             <h1 v-show="step === 0 && genderCompleted">
               You haven't started yet! Go
-              <a href="/apply" class="currentStatus">here</a> to begin.
+              <a href="/apply" class="currentStatus">here</a>
+              to begin.
             </h1>
-            <h1 v-show="step > 0 && genderCompleted">{{currentHeader}}</h1>
-            <br>
+            <h1 v-show="step > 0 && genderCompleted">{{ currentHeader }}</h1>
+            <br />
             <v-stepper alt-labels class="transp">
               <v-stepper-header>
-                <v-stepper-step step="1" :complete="step > 0">{{baseStep}}</v-stepper-step>
+                <v-stepper-step step="1" :complete="step > 0">
+                  {{ baseStep }}
+                </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="step > 0">Submitted</v-stepper-step>
+                <v-stepper-step step="2" :complete="step > 0">
+                  Submitted
+                </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="step > 0">Processing</v-stepper-step>
+                <v-stepper-step step="3" :complete="step > 0">
+                  Processing
+                </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="step > 0">Decision</v-stepper-step>
+                <v-stepper-step step="4" :complete="step > 0">
+                  Decision
+                </v-stepper-step>
               </v-stepper-header>
             </v-stepper>
           </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
+        <br />
+        <br />
+        <br />
+        <br />
         <div>
           <v-layout row wrap>
             <v-flex d-flex md3 :key="media.icon" v-for="media in social">
@@ -139,26 +161,40 @@
         <div class="wrap-status101" v-if="step <= 3">
           <h1 v-show="step === 0">
             You haven't started yet! Go
-            <a href="/apply" class="currentStatus">here</a> to begin.
+            <a href="/apply" class="currentStatus">here</a>
+            to begin.
           </h1>
-          <h1 v-show="step > 0">{{currentHeader}}</h1>
+          <h1 v-show="step > 0">{{ currentHeader }}</h1>
           <v-card-text></v-card-text>
           <v-stepper vertical class="wrap-status201">
-            <v-stepper-step :complete="step > 0" step="1">{{baseStep}}</v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="2">Submitted</v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="3">Processing</v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="4">Decision</v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="1">
+              {{ baseStep }}
+            </v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="2">
+              Submitted
+            </v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="3">
+              Processing
+            </v-stepper-step>
+            <v-stepper-step :complete="step > 0" step="4">
+              Decision
+            </v-stepper-step>
           </v-stepper>
         </div>
-        <div class="wrap-status101-accept wrap-status201-accept" v-if="step > 3">
-          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">🎉
-            <div id="mobileCol">Congratulations, you've been invited to DeltaHacks V!</div>
+        <div
+          class="wrap-status101-accept wrap-status201-accept"
+          v-if="step > 3"
+        >
+          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
+            🎉
+            <div id="mobileCol">
+              Congratulations, you've been invited to DeltaHacks V!
+            </div>
           </h1>
           <h1 v-if="response.rsvp" class="rtitle">Awesome, see you there!</h1>
-          <h1
-            v-if="!response.rsvp && hasResponded"
-            class="rtitle"
-          >We'll miss you, but thanks for letting us know!</h1>
+          <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
+            We'll miss you, but thanks for letting us know!
+          </h1>
           <h3 class>Will you be attending?</h3>
           <div style="padding-top:10px;">
             <div style="padding-top:10px;">
@@ -167,19 +203,23 @@
                   large
                   color="success"
                   @click="toggleRSVP(true)"
-                  :depressed="(response.rsvp && hasResponded)"
+                  :depressed="response.rsvp && hasResponded"
                   class="button1"
-                >Yes!</v-btn>
+                >
+                  Yes!
+                </v-btn>
                 <v-btn
                   large
                   color="error"
                   @click="toggleRSVP(false)"
-                  :depressed="(!response.rsvp && hasResponded)"
+                  :depressed="!response.rsvp && hasResponded"
                   class="button2"
-                >No.</v-btn>
+                >
+                  No.
+                </v-btn>
               </div>
-              <br>
-              <br>
+              <br />
+              <br />
             </div>
             <!-- <label for="name" style='float:left'>
                             <strong>Will you be attending?*</strong>
@@ -196,7 +236,7 @@
                 <label for="name" style="float:left">
                   <strong>Will you need a bus?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-switch
                   @change="changeBus"
                   :label="response.bus ? 'Yes!' : 'No.'"
@@ -208,7 +248,7 @@
                 <label for="name" style="float:left">
                   <strong>Where are you coming from?*</strong>
                 </label>
-                <br>
+                <br />
                 <v-select
                   @change="changeBus"
                   :persistent-hint="true"
@@ -221,7 +261,12 @@
             </div>
 
             <div class="mx-auto gg" v-if="confirmation">
-              <v-chip style="border:none;float:left;overflow:wrap;" outline small color="#555">
+              <v-chip
+                style="border:none;float:left;overflow:wrap;"
+                outline
+                small
+                color="#555"
+              >
                 <v-icon left>check</v-icon>
                 <strong>Your response has been submitted.</strong>
               </v-chip>
@@ -244,13 +289,8 @@
         </div>
       </div>
     </div>
-    <v-snackbar
-      v-model="feedback"
-      top
-      color="success"
-      right
-      :timeout="3000"
-    >Thanks! We've got your response.
+    <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
+      Thanks! We've got your response.
       <v-btn color="white" flat @click="feedback = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar
@@ -261,42 +301,46 @@
       right
       :timeout="10000"
     >
-      Could not establish connection to the server. Consider refreshing or attempting
-      to access the page on mobile. If the issue persists contact us at hello@deltahacks.com.
+      Could not establish connection to the server. Consider refreshing or
+      attempting to access the page on mobile. If the issue persists contact us
+      at hello@deltahacks.com.
       <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
     </v-snackbar>
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable no-unused-expressions */
-import { auth } from "firebase";
-import db from "../private/firebase_init";
-import Navbar from "@/components/Navbar.vue";
-import Navbar2 from "@/components/Navbar2.vue";
-import Navigation from "@/components/Navigation.vue";
-import { validationMixin } from "vuelidate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
-import { mapGetters } from "vuex";
-import { allUniversities } from "../private/data";
+/* eslint-disable no-shadow */
+import Navbar from '@/components/Navbar.vue';
+import Navbar2 from '@/components/Navbar2.vue';
+import Navigation from '@/components/Navigation.vue';
+import Vue from 'vue';
+import { auth } from 'firebase';
+import { validationMixin } from 'vuelidate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import { allUniversities } from '../private/data';
+import db from '../private/firebase_init';
+import { StatusModel } from '../types';
 
-export default {
+export default Vue.extend({
   mixins: [validationMixin],
-  name: "Status",
-  data() {
+  name: 'Status',
+  data(): StatusModel {
     return {
       genderCompleted: true,
       response: {
         rsvp: false,
         bus: false,
-        location: "",
-        email: auth().currentUser.email
+        location: '',
+        email: auth().currentUser!.email,
       },
       emptyResponse: {
         rsvp: false,
         bus: false,
-        location: "",
-        email: auth().currentUser.email
+        location: '',
+        email: auth().currentUser!.email,
       },
       criticalError: false,
       hasResponded: false,
@@ -304,105 +348,99 @@ export default {
       timeout: undefined,
       bus: false,
       busLocations: [
-        "University of Waterloo",
-        "University of Toronto",
-        "University of Western Ontario"
+        'University of Waterloo',
+        'University of Toronto',
+        'University of Western Ontario',
       ],
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
         {
-          link: "https://twitter.com/deltahacks",
-          icon: "fab fa-twitter"
+          link: 'https://twitter.com/deltahacks',
+          icon: 'fab fa-twitter',
         },
         {
-          link: "https://www.facebook.com/thedeltahacks/",
-          icon: "fab fa-facebook"
+          link: 'https://www.facebook.com/thedeltahacks/',
+          icon: 'fab fa-facebook',
         },
         {
-          link: "https://www.instagram.com/deltahacks/",
-          icon: "fab fa-instagram"
+          link: 'https://www.instagram.com/deltahacks/',
+          icon: 'fab fa-instagram',
         },
         {
-          link: "https://www.linkedin.com/company/deltahacks/",
-          icon: "fab fa-linkedin"
-        }
+          link: 'https://www.linkedin.com/company/deltahacks/',
+          icon: 'fab fa-linkedin',
+        },
       ],
       parent: this,
       picker: null,
-      date: "2000-01-01",
+      date: '2000-01-01',
       university: null,
       allUniversities,
       dropzoneOptions: {
-        url: "https://httpbin.org/post",
+        url: 'https://httpbin.org/post',
         thumbnailWidth: 150,
         maxFilesize: 0.5,
-        headers: { "My-Awesome-Header": "header value" },
+        headers: { 'My-Awesome-Header': 'header value' },
         addRemoveLinks: true,
-        acceptedFiles: "application/pdf"
+        acceptedFiles: 'application/pdf',
       },
       subheaders: [
-        "Applications are now closed.",
+        'Applications are now closed.',
         "Sorry we couldn't offer you a spot.",
-        "This application is under review.",
+        'This application is under review.',
         "Congratulations, you've been accepted!",
-        "Unfortunately we cannot offer you an invitation this time."
+        'Unfortunately we cannot offer you an invitation this time.',
       ],
       application: {
-        name: "",
-        email: "",
+        name: '',
+        email: '',
         school_year: null,
         shirt_size: null,
         dietary_restrictions: null,
         hackathons: null,
-        github: "",
-        linkedin: "",
-        website: "",
-        phone: "",
-        emergency_phone: ""
+        github: '',
+        linkedin: '',
+        website: '',
+        phone: '',
+        emergency_phone: '',
       },
-      links: ["Home", "About", "Contact"],
-      story: "",
+      links: ['Home', 'About', 'Contact'],
+      story: '',
       custom: true,
-      name: "",
+      name: '',
       step: 0,
-      email: "",
+      email: '',
       select: null,
       items: [
-        "First Year",
-        "Second Year",
-        "Third Year",
-        "Fourth Year",
-        "Fifth Year"
+        'First Year',
+        'Second Year',
+        'Third Year',
+        'Fourth Year',
+        'Fifth Year',
       ],
-      hackathons: ["This is my first one", "2", "3", "5+", "10+"],
-      food: ["Vegetarian", "Vegan", "Halal", "Gluten Free", "Kosher"],
-      shirts: ["XS", "S", "M", "L", "XL"],
-      checkbox: false
+      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
+      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
+      shirts: ['XS', 'S', 'M', 'L', 'XL'],
+      checkbox: false,
     };
-  },
-  validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    select: { required },
-    checkbox: { required }
   },
   components: {
     Navbar,
     Navigation,
-    Navbar2
+    Navbar2,
   },
   computed: {
-    baseStep() {
+    baseStep(): string {
       // console.log(this.step === 0);
       if (this.step === 0) {
-        return "Closed";
+        return 'Closed';
       }
-      return "Closed";
+      return 'Closed';
     },
-    currentHeader() {
+    currentHeader(): string {
       return this.subheaders[this.step - 1];
-    }
+    },
   },
   methods: {
     toggleRSVP(res) {
@@ -429,26 +467,26 @@ export default {
       }, 2000);
     },
     changeBus() {
-      if (!this.response.bus) this.response.location = "";
+      if (!this.response.bus) this.response.location = '';
       this.formChange();
     },
     async submitRSVP() {
-      const email = auth().currentUser.email;
-      const folder = this.response.rsvp ? "Yes" : "No";
-      const opposingFolder = !this.response.rsvp ? "Yes" : "No";
+      const { email } = auth().currentUser;
+      const folder = this.response.rsvp ? 'Yes' : 'No';
+      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
       const rsvpRef = db
-        .collection("hackathon")
-        .doc("DH5")
-        .collection("RSVP")
-        .doc("all");
+        .collection('hackathon')
+        .doc('DH5')
+        .collection('RSVP')
+        .doc('all');
       try {
-        let res = await rsvpRef
+        const res = await rsvpRef
           .collection(folder)
           .doc(email)
           .set(this.response);
-          this.feedback = true;
-          this.confirmation = true;
-      } catch(err) {
+        this.feedback = true;
+        this.confirmation = true;
+      } catch (err) {
         console.log(err);
       }
       rsvpRef
@@ -459,46 +497,46 @@ export default {
     updateStep(doc) {
       if (doc.exists) {
         switch (doc.data().status) {
-          case "in progress":
+          case 'in progress':
             this.step = 1;
             break;
-          case "submitted":
+          case 'submitted':
             this.step = 2;
             break;
-          case "pending":
-          case "actually rejected":
+          case 'pending':
+          case 'actually rejected':
             this.step = 2;
             break;
-          case "overflow":
-          case "overflow2":
-          case "accepted":
-          case "processing":
-          case "rejected":
-          case "round4":
+          case 'overflow':
+          case 'overflow2':
+          case 'accepted':
+          case 'processing':
+          case 'rejected':
+          case 'round4':
             this.step = 3;
             break;
-          case "round1":
-          case "round2":
-          case "round3":
+          case 'round1':
+          case 'round2':
+          case 'round3':
             this.step = 4;
             break;
           default:
             this.step = 0;
         }
       } else {
-        console.log("Document not found!");
+        console.log('Document not found!');
       }
     },
     checkGenderInput(email) {
       if (this.step <= 1) return;
-      db.collection("applications")
-        .doc("DH5")
-        .collection("in progress")
+      db.collection('applications')
+        .doc('DH5')
+        .collection('in progress')
         .doc(email)
         .onSnapshot(snap => {
           if (snap.exists) {
             const data = snap.data();
-            if (data.gender) {
+            if (data!.gender) {
               this.genderCompleted = true;
             } else {
               this.genderCompleted = false;
@@ -507,28 +545,29 @@ export default {
         });
     },
     async fillRSVP() {
-      const email = auth().currentUser.email;
-      const folder = this.response.rsvp ? "Yes" : "No";
-      const opposingFolder = !this.response.rsvp ? "Yes" : "No";
+      const { email } = auth().currentUser;
+      const folder = this.response.rsvp ? 'Yes' : 'No';
+      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
       const rsvpRef = db
-        .collection("hackathon")
-        .doc("DH5")
-        .collection("RSVP")
-        .doc("all")
-        .collection("Yes")
+        .collection('hackathon')
+        .doc('DH5')
+        .collection('RSVP')
+        .doc('all')
+        .collection('Yes')
         .doc(email);
-      let doc = rsvpRef.get();
+      const doc: any = rsvpRef.get();
       if (doc.exists) {
         const data = doc.data();
         this.response = data;
         this.confirmation = true;
         this.hasResponded = true;
       } else {
-        let doc = await db.collection("hackathon")
-          .doc("DH5")
-          .collection("RSVP")
-          .doc("all")
-          .collection("No")
+        const doc = await db
+          .collection('hackathon')
+          .doc('DH5')
+          .collection('RSVP')
+          .doc('all')
+          .collection('No')
           .doc(email)
           .get();
         if (doc.exists) {
@@ -536,14 +575,14 @@ export default {
           this.hasResponded = true;
         }
       }
-    }
+    },
   },
   async beforeMount() {
     // console.log('mounted');
-    const appEmail = auth().currentUser.email;
+    const appEmail = auth().currentUser!.email as string;
     // const genderStatus = await this.checkGenderInput(appEmail);
     try {
-      db.collection("users")
+      db.collection('users')
         .doc(appEmail)
         .onSnapshot(snap => {
           if (snap.exists) {
@@ -560,8 +599,8 @@ export default {
       console.error(err);
       this.criticalError = true;
     }
-  }
-};
+  },
+});
 </script>
 <style scoped src='../assets/css/status.css'>
 .regular {
@@ -569,7 +608,7 @@ export default {
   color: inherit;
 }
 #footertext {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 1.3em;
   float: left;

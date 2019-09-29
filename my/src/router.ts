@@ -12,7 +12,6 @@ import v404 from './views/404.vue';
 import Accepted from './components/Accepted.vue';
 import Rejected from './components/Rejected.vue';
 import FAQ from './views/FAQ.vue';
-import Closed from './views/Closed.vue';
 import db from './private/firebase_init';
 
 Vue.use(Router);
@@ -43,7 +42,8 @@ const router = new Router({
       name: 'Apply',
       component: Apply,
       meta: {
-        auth: true,
+        // uncomment later
+        // auth: true,
       },
     },
     {
@@ -96,13 +96,13 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
     // console.log('Protected route detected');
     Firebase.auth().onAuthStateChanged((user) => {
-    // If user is logged in
+      // If user is logged in
       if (user) {
-      // Proceed to next page
+        // Proceed to next page
         // console.log('Authorized user: ', user);
         next();
       } else {
-      // Otherwise redirect to login
+        // Otherwise redirect to login
         // console.log('Not authorized');
         next({ name: 'Login' });
       }
@@ -110,37 +110,40 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(rec => rec.meta.adminAuth)) {
     // console.log('Protected route detected');
     Firebase.auth().onAuthStateChanged((user) => {
-    // If user is logged in
+      // If user is logged in
       if (user) {
-      // Proceed to next page
+        // Proceed to next page
         // console.log('Authorized user2: ', user);
 
-        db.collection('admins').doc(user.email.toLocaleLowerCase()).get().then((doc) => {
-          if (doc.exists) {
-            // console.log('Document data:', doc.data());
-            next();
-          } else {
-            // console.log('Not an admin user!');
-            next({ name: 'Login' });
-          }
-        })
+        db.collection('admins')
+          .doc(user.email!.toLocaleLowerCase())
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              // console.log('Document data:', doc.data());
+              next();
+            } else {
+              // console.log('Not an admin user!');
+              next({ name: 'Login' });
+            }
+          })
           .catch((error) => {
             // console.log('Not an admin user!');
             next({ name: 'Login' });
           });
       } else {
-      // Otherwise redirect to login
+        // Otherwise redirect to login
         // console.log('Not authorized');
         next({ name: 'Login' });
       }
     });
   } else if (to.matched.some(rec => rec.meta.loginRedir)) {
     Firebase.auth().onAuthStateChanged((user) => {
-    // If user is logged in
+      // If user is logged in
       if (user) {
         next({ name: 'Status' });
       } else {
-      // Otherwise redirect to login
+        // Otherwise redirect to login
         // console.log('Not authorized');
         next();
       }

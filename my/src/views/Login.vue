@@ -58,21 +58,25 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import firebase from 'firebase';
+import Vue from 'vue';
+import { LoginModel } from '../types';
 
-export default {
+export default Vue.extend({
   name: 'Login',
-  data: () => ({
-    drawer: null,
-    email: null,
-    pass: null,
-    feedback: null,
-    loader: null,
-    loading: false,
-    loaderSignup: null,
-    loadingSignup: false,
-  }),
+  data(): LoginModel {
+    return {
+      drawer: null,
+      email: null,
+      pass: null,
+      feedback: null,
+      loader: null,
+      loading: false,
+      loaderSignup: null,
+      loadingSignup: false,
+    };
+  },
   methods: {
     signuppage() {
       this.$router.push({ name: 'Signup' });
@@ -88,16 +92,16 @@ export default {
           await firebase
             .auth()
             .signInWithEmailAndPassword(this.email, this.pass);
-            this.$router.push({ name: 'Status' });
-            console.log('logged in');
-            this.feedback = null;
-        } catch(error) {
+          this.$router.push({ name: 'Status' });
+          console.log('logged in');
+          this.feedback = null;
+        } catch (error) {
           // Handle Errors here.
           //   const errorCode = error.code;
           const errorMessage = error.message;
           this.feedback = errorMessage;
           console.log(errorMessage);
-        } 
+        }
       }
     },
   },
@@ -107,14 +111,14 @@ export default {
   },
   watch: {
     loader() {
-      const l = this.loader;
+      const l: any = this.loader;
       this[l] = !this[l];
 
-      setTimeout(() => (this[l] = false), 3000);
+      setTimeout(() => { this[l] = false; }, 3000);
       this.loader = null;
     },
   },
-};
+});
 </script>
 <style scoped src='../assets/css/login.css'>
 </style>
