@@ -2,7 +2,20 @@
   <div class="background">
     <div class="container">
       <h1 class="title">{{ title }}</h1>
-      <input class="field" :value="value" @input="onChange($event)" />
+      <v-text-field
+        v-if="inputType == 'text'"
+        class="field"
+        :value="value"
+        @input="onChange($event)"
+      ></v-text-field>
+      <v-select
+        v-else-if="inputType == 'single-select'"
+        :items="selectData"
+        prepend-icon="map"
+        single-line
+        :value="value"
+        @input="onChange($event)"
+      ></v-select>
     </div>
   </div>
 </template>
@@ -11,10 +24,10 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['title', 'value', 'requestUpdate'],
+  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData'],
   methods: {
     onChange(event) {
-      this.$emit('input', event.target.value);
+      this.$emit('input', event);
       this.requestUpdate();
     },
   },
@@ -40,9 +53,7 @@ export default Vue.extend({
   margin: 80px;
   background: transparent;
   border: transparent;
-  border-bottom: 1px solid white;
   width: 75%;
-  color: white;
   font-size: 1.5em;
 }
 
