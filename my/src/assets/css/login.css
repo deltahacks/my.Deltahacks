@@ -266,6 +266,11 @@ iframe {
     margin-left:1vw;
     padding-right:1vw;
     /* margin-bottom:35%; */
+    -webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-o-user-select: none;
+user-select: none;
 }
 .back-vi{
     z-index:0;
@@ -275,6 +280,11 @@ iframe {
     margin-left:9.4vw;
     float:right;
     opacity:0.1;
+    -webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-o-user-select: none;
+user-select: none;
 }
 .login100-form-logo {
     display: -webkit-box;
