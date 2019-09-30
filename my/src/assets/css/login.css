@@ -406,6 +406,7 @@ iframe {
     }
     .login100-form {
         width: 100%;
+    padding-left:23%;
     }
     .wrap-input100 {
         width: 60%;
@@ -414,12 +415,7 @@ iframe {
     
 
 .back-vi{
-    width:50%;
-    position: absolute; 
-    bottom: 0;
-    margin-left:34%;
-    float:right;
-    opacity:0.1;
+    margin-left:24.4vw;
 }
 }
 
