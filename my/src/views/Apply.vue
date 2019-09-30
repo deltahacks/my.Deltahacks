@@ -19,6 +19,8 @@
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
+        :inputType="question.fieldType"
+        :selectData="question.selectData"
         :requestUpdate="onFormChange"
         v-model="app[question.model[0]][question.model[1]]"
       />
@@ -190,7 +192,8 @@ export default Vue.extend({
       },
       {
         label: 'Where do you study?',
-        fieldType: 'text',
+        fieldType: 'single-select',
+        selectData: ['Waterloo', 'McMaster'],
         model: ['academics', 'school'],
       },
       {
