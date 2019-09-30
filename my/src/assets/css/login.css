@@ -131,10 +131,12 @@ iframe {
 
 /*//////////////////////////////////////////////////////////////////
 [ Welcome Header ]*/
-.spanText{
-    margin-left:13%;
-    padding-top:7%;
+
+.spanText {
+    margin-left: 13%;
+    padding-top: 7%;
 }
+
 .txt1 {
     font-family: "Open Sans";
     font-size: 2.5em;
@@ -142,19 +144,23 @@ iframe {
     text-decoration: none;
     color: white;
 }
+
 .txt2 {
     font-family: "Open Sans";
     font-size: 2.5em;
     font-weight: 400;
     text-decoration: none;
     color: white;
-}.txt3 {
+}
+
+.txt3 {
     font-family: "Open Sans";
     font-size: 2.5em;
     font-weight: 200;
     text-decoration: none;
     color: white;
 }
+
 .txt4 {
     font-family: "Open Sans";
     font-size: 1.1em;
@@ -162,6 +168,7 @@ iframe {
     text-decoration: none;
     color: white;
 }
+
 @media only screen and (max-width: 500px) {
     .welcomeheader {
         font-family: "Open Sans";
@@ -222,8 +229,8 @@ iframe {
 .wrap-login100 {
     width: 60vw;
     /* height: auto; */
-    min-height:52vh;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    min-height: 52vh;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     border-radius: 50px;
     overflow: hidden;
     background: lighten;
@@ -240,55 +247,58 @@ iframe {
 /*------------------------------------------------------------------
 [ Form ]*/
 
-
 .login100-pic img {
     max-width: 100%;
 }
+
 .card {
     position: relative;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
-  }
+}
 
 .login100-form {
     position: relative;
-    z-index:40;
+    z-index: 40;
     width: 38vw;
-    padding-top:1vh;
-    padding-left:14.5%;
-    border-radius:50px;
-    box-shadow:  -1px 0px 2px 0px rgba(0,0,0,0.2);
-    background: rgba(255,255,255,0.25);
+    padding-top: 1vh;
+    padding-left: 14.5%;
+    border-radius: 50px;
+    box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.25);
 }
-.sidebar{
+
+.sidebar {
     z-index: -10;
-    max-width:20vw;
-    max-height:24vh;
-    min-height:20vh;
-    margin-top:33%;
-    margin-left:1vw;
-    padding-right:1vw;
+    max-width: 20vw;
+    max-height: 24vh;
+    min-height: 20vh;
+    margin-top: 33%;
+    margin-left: 1vw;
+    padding-right: 1vw;
     /* margin-bottom:35%; */
     -webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--o-user-select: none;
-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
-.back-vi{
-    z-index:0;
-    width:50%;
-    position: absolute; 
+
+.back-vi {
+    z-index: 0;
+    width: 50%;
+    position: absolute;
     bottom: 0;
-    margin-left:10.4vw;
-    float:right;
-    opacity:0.1;
+    margin-left: 10.4vw;
+    float: right;
+    opacity: 0.1;
     -webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--o-user-select: none;
-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
+
 .login100-form-logo {
     display: -webkit-box;
     display: -webkit-flex;
@@ -329,7 +339,6 @@ user-select: none;
     color: white;
 }
 
-
 .input100 {
     font-family: Verdana;
     font-size: 18px;
@@ -355,12 +364,12 @@ user-select: none;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap; */
-  text-decoration: none;
-  justify-content: center;
-
+    text-decoration: none;
+    justify-content: center;
 }
 
-.login100-form-btn {
+
+/* .login100-form-btn {
     width: 10vw;
     height: 5vh;
     -moz-appearance: none;
@@ -382,43 +391,59 @@ user-select: none;
     box-shadow: 0 !important;
     border-radius: 10px;
     text-transform: none;
+} */
+
+.forgot100-btn {
+    margin-left: 21% !important;
 }
 
-.forgot100-form-btn {
-    margin-left:22%;
+.login100-btn {
+    position: relative;
+    font-family: "Open Sans";
     width: 10vw;
     height: 5vh;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    font-family: "Open Sans";
-    color: rgba(255, 255, 255, 0.9);
-    cursor: pointer;
+    outline: none;
+    margin-top: 17px;
+    color: white;
     font-size: 17px;
     font-weight: 300;
     text-align: center;
     text-decoration: none;
-    border: 0;
-    box-shadow: 0 !important;
-    border-radius: 10px;
-    text-transform: none;
+    background-color: rgba(81, 169, 185);
+    border: 1px solid rgb(65, 137, 150);
+    border-radius: 20px;
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
 }
-.backdiv{
+
+.login100-btn:hover {
+    color: white;
+    background-color: rgb(178, 215, 221, 0.5);
+    transition: 0.2s;
+}
+
+.login100-btn:active {
+    color: white;
+    background-color: rgb(178, 215, 221, 1);
+    transition: 0.2s;
+}
+
+.backdiv {
     position: absolute;
-    z-index:40;
-    margin-left:23%;
+    z-index: 40;
+    margin-left: 23%;
 }
-.forgotdiv{
+
+.forgotdiv {
     position: absolute;
-    z-index:40;
-    margin-left:16.5%;
+    z-index: 40;
+    margin-left: 16.5%;
 }
-.forgot{
+
+.forgot {
     height: 5vh;
     font-family: "Open Sans";
     color: rgba(255, 255, 255, 0.9999);
@@ -428,45 +453,69 @@ user-select: none;
     text-align: center;
     text-decoration: none;
     text-transform: none;
-    }
+}
 
 .login100-form-btn:hover {
     color: black !important;
-    background: rgba(255, 255, 255,0.7) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
 }
 
 @media only screen and (max-width: 960px) {
-    .sidebar,.card{
+    .sidebar,
+    .card {
         display: none;
     }
-    .wrap-login100{
+    .wrap-login100 {
         width: 90%;
+        min-height: 50vh;
     }
     .login100-form {
         width: 100%;
-    padding-left:23%;
+        padding-left: 23%;
     }
     .wrap-input100 {
         width: 60%;
-       
     }
-    .back-vi{
-        margin-left:24.4vw;
+    .back-vi {
+        margin-left: 24.4vw;
+    }
+    .spanText {
+        margin-left: -2%;
     }
 }
 
 @-webkit-keyframes animated {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }
+
 @-moz-keyframes animated {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }
+
 @keyframes animated {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }

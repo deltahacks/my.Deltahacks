@@ -36,10 +36,9 @@
           </v-alert> -->
           <div><br></div>
           <div class="container-login100-form-btn">
-            <v-btn :loading="loading" :disabled="loading" class="forgot100-form-btn" type="submit" @click.prevent="forgotPass()">
-              Submit
-              <!-- <v-icon right>lock_open</v-icon> -->
-            </v-btn>
+            <button class="login100-btn forgot100-btn">
+            Submit
+        </button>
           </div>
                  <div class="backdiv">
                    <br>
