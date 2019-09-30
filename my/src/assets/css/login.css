@@ -229,7 +229,7 @@ iframe {
 .wrap-login100 {
     /* width: 60vw; */
     /* height: auto; */
-    min-height: 52vh;
+    min-height: 55vh;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     border-radius: 50px;
     overflow: hidden;
@@ -262,8 +262,9 @@ iframe {
     position: relative;
     z-index: 40;
     width: 38vw;
+    min-height:53vh;
     padding-top: 1vh;
-    padding-left: 14.5%;
+    padding-left: 9vw;
     border-radius: 50px;
     box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.2);
     background: rgba(255, 255, 255, 0.25);
@@ -358,6 +359,7 @@ iframe {
 
 .container-login100-form-btn {
     padding: 5px;
+    padding-left:3px;
     width: 100%;
     /* display: -webkit-box;
   display: -webkit-flex;
@@ -401,7 +403,7 @@ iframe {
 .login100-btn {
     position: relative;
     font-family: "Open Sans";
-    width: 10vw;
+    width: 9vw;
     height: 5vh;
     outline: none;
     margin-top: 17px;
@@ -441,7 +443,7 @@ iframe {
 .forgotdiv {
     position: absolute;
     z-index: 40;
-    margin-left: 16.5%;
+    margin-left: 15%;
 }
 
 .forgot {
