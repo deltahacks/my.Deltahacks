@@ -34,10 +34,10 @@
             {{ feedback }}
           </v-alert>
           <div class="container-login100-form-btn">
-            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">login
+            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login
               <!-- <v-icon right>lock_open</v-icon> -->
             </v-btn>
-            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">register &nbsp;
+            <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Register &nbsp;
               <!-- <i class="fas fa-user-plus" /> -->
             </v-btn>
             <div class="forgotdiv">
