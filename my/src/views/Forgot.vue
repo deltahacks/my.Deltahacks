@@ -32,7 +32,7 @@
           <span class="txt4">Please enter your email and a link will be sent to it.</span>
           <br>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" color="#fff" id="login" v-model="email" type="email" required></v-text-field>
+            <v-text-field prepend-icon="email" @keypress.enter="loginf()" name="login" label="Email" color="#fff" id="login" v-model="email" type="email" required></v-text-field>
           </div>
           <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}

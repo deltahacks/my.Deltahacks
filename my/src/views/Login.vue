@@ -25,7 +25,7 @@
             </v-layout>
           </v-container>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" color="#fff" label="Email" id="login" v-model="email" type="email" required></v-text-field>
+            <v-text-field prepend-icon="email" @keypress.enter="loginf()" name="login" color="#fff" label="Email" id="login" v-model="email" type="email" required></v-text-field>
           </div>
           <div class="wrap-input100 validate-input" data-validate="Enter password">
             <v-text-field @keypress.enter="loginf()" prepend-icon="lock" name="password" label="Password" color="#fff" id="password" v-model="pass" type="password" required></v-text-field>
