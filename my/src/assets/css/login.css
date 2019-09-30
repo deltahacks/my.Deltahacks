@@ -152,6 +152,13 @@ iframe {
     text-decoration: none;
     color: white;
 }
+.txt4 {
+    font-family: "Open Sans";
+    font-size: 1.1em;
+    font-weight: 300;
+    text-decoration: none;
+    color: white;
+}
 @media only screen and (max-width: 500px) {
     .welcomeheader {
         font-family: "Open Sans";
@@ -362,6 +369,11 @@ iframe {
     box-shadow: 0 !important;
     border-radius: 10px;
     text-transform: none;
+}
+.backdiv{
+    position: absolute;
+    z-index:40;
+    margin-left:5%;
 }
 .forgotdiv{
     position: absolute;
