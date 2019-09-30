@@ -133,8 +133,9 @@ iframe {
 [ Welcome Header ]*/
 
 .spanText {
-    margin-left: 13%;
-    padding-top: 7%;
+    margin-left: -3vw;
+    padding-left:4.8vw;
+    padding-top: 4vh;
 }
 
 .txt1 {
@@ -229,7 +230,7 @@ iframe {
 .wrap-login100 {
     /* width: 60vw; */
     /* height: auto; */
-    min-height: 55vh;
+    min-height: 54vh;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     border-radius: 50px;
     overflow: hidden;
@@ -262,9 +263,10 @@ iframe {
     position: relative;
     z-index: 40;
     width: 38vw;
-    min-height:53vh;
+    min-height: 53vh;
     padding-top: 1vh;
     padding-left: 9vw;
+    padding-right: 1vw;
     border-radius: 50px;
     box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.2);
     background: rgba(255, 255, 255, 0.25);
@@ -397,7 +399,7 @@ iframe {
 } */
 
 .forgot100-btn {
-    margin-left: 21% !important;
+    margin-left: 6vw !important;
 }
 
 .login100-btn {
@@ -437,7 +439,7 @@ iframe {
 .backdiv {
     position: absolute;
     z-index: 40;
-    margin-left: 23%;
+    margin-left: 8.2vw;
 }
 
 .forgotdiv {
