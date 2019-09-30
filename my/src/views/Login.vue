@@ -25,34 +25,28 @@
             </v-layout>
           </v-container>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
+            <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" color="#fff" label="Email" id="login" v-model="email" type="email" required></v-text-field>
           </div>
           <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field @keypress.enter="loginf()" prepend-icon="lock" name="password" label="Password" id="password" v-model="pass" type="password" required></v-text-field>
+            <v-text-field @keypress.enter="loginf()" prepend-icon="lock" name="password" label="Password" color="#fff" id="password" v-model="pass" type="password" required></v-text-field>
           </div>
           <v-alert :value="feedback" type="error">
             {{ feedback }}
           </v-alert>
           <div class="container-login100-form-btn">
-            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">
-              login
-              <v-icon right>lock_open</v-icon>
+            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">login
+              <!-- <v-icon right>lock_open</v-icon> -->
             </v-btn>
-          </div>
-          <!-- <div style="font-size: 15px; text-align: center; color: #525251;">
-            Applications are now closed.
-          </div> -->
-          <div class="container-login100-form-btn">
             <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">register &nbsp;
-              <i class="fas fa-user-plus" />
+              <!-- <i class="fas fa-user-plus" /> -->
             </v-btn>
-          </div>
-          <div class="container-login100-form-btn">
-            <v-divider></v-divider><br>
-            <p style="color: black; cursor: pointer;" @click="forgotpage">
+            <div class="forgotdiv">
+              <br>
+            <a class="forgot" @click="forgotpage">
               Forgot Password?
-            </p>
-          </div>
+            </a>
+            </div>
+</div>          
         </form>
       </div>
     </div>

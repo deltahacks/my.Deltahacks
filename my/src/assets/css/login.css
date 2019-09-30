@@ -211,6 +211,8 @@ iframe {
 
 .wrap-login100 {
     width: 60vw;
+    /* height: auto; */
+    min-height:52vh;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     border-radius: 50px;
     overflow: hidden;
@@ -249,12 +251,13 @@ iframe {
     background: rgba(255,255,255,0.25);
 }
 .sidebar{
+    z-index: -10;
     width:20vw;
-    height:22vh;
-    margin-top:35%;
+    height:auto;
+    margin-top:33%;
     margin-left:1vw;
     padding-right:1vw;
-    margin-bottom:40%;
+    /* margin-bottom:35%; */
 }
 .back-vi{
     z-index:0;
@@ -344,26 +347,42 @@ iframe {
     -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    background-color: rgba(255, 255, 255, 0.25) !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
     font-family: "Open Sans";
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
     font-size: 17px;
     font-weight: 300;
     text-align: center;
     text-decoration: none;
     border: 0;
-    box-shadow: 0;
-    border-radius: 5px;
+    box-shadow: 0 !important;
+    border-radius: 10px;
     text-transform: none;
 }
+.forgotdiv{
+    position: absolute;
+    z-index:40;
+    margin-left:20%;
+}
+.forgot{
+    height: 5vh;
+    font-family: "Open Sans";
+    color: rgba(255, 255, 255, 0.9999);
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 300;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    }
 
 .login100-form-btn:hover {
     color: black !important;
-    background: rgba(255, 255, 255,0.25) !important;
+    background: rgba(255, 255, 255,0.7) !important;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 800px) {
     .sidebar,.card{
         display: none;
     }
@@ -373,6 +392,11 @@ iframe {
     .login100-form {
         width: 100%;
     }
+    .wrap-input100 {
+        width: 60%;
+       
+    }
+    
 
 .back-vi{
     width:50%;
