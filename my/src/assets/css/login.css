@@ -263,7 +263,7 @@ iframe {
     position: relative;
     z-index: 40;
     width: 38vw;
-    min-height: 53vh;
+    min-height: 54vh;
     padding-top: 1vh;
     padding-left: 9vw;
     padding-right: 1vw;
@@ -405,7 +405,7 @@ iframe {
 .login100-btn {
     position: relative;
     font-family: "Open Sans";
-    width: 9vw;
+    width: 35%;
     height: 5vh;
     outline: none;
     margin-top: 17px;
@@ -445,7 +445,7 @@ iframe {
 .forgotdiv {
     position: absolute;
     z-index: 40;
-    margin-left: 15%;
+    margin-left: 7vw;
 }
 
 .forgot {
