@@ -304,8 +304,10 @@ iframe {
 .wrap-input100 {
     width: 20vw;
     position: relative;
+    font-family: "Open Sans";
     color: white;
 }
+
 
 .input100 {
     font-family: Verdana;
