@@ -227,7 +227,7 @@ iframe {
 }
 
 .wrap-login100 {
-    width: 60vw;
+    /* width: 60vw; */
     /* height: auto; */
     min-height: 52vh;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -255,6 +255,7 @@ iframe {
     position: relative;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
+    width: 340px;
 }
 
 .login100-form {
@@ -270,11 +271,11 @@ iframe {
 
 .sidebar {
     z-index: -10;
-    max-width: 20vw;
-    max-height: 24vh;
-    min-height: 20vh;
-    margin-top: 33%;
-    margin-left: 1vw;
+    width: 320px;
+    /* max-height: 24vh;
+    min-height: 20vh; */
+    margin-top: 13vh;
+    margin-left: 1.5vw;
     padding-right: 1vw;
     /* margin-bottom:35%; */
     -webkit-user-select: none;
