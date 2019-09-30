@@ -466,9 +466,11 @@ iframe {
 }
 
 @media only screen and (max-width: 960px) {
-    .sidebar,
-    .card {
-        display: none;
+    .sidebar{
+        margin-top: 3vh;
+        width:85vw;
+        padding-left:4vw;
+        margin-bottom:3vh;
     }
     .wrap-login100 {
         width: 90%;
