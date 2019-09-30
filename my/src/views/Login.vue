@@ -15,15 +15,11 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span> -->
           <img src="../assets/vi.png" draggable="false" class="back-vi"/>
-          <v-container>
-            <v-layout>
-            <v-flex xs12>
+        <div class="spanText">
             <span class="txt1">
               my</span><span class="txt2">Delta</span><span class="txt3">Hacks
             </span>
-            </v-flex>
-            </v-layout>
-          </v-container>
+            </div>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field prepend-icon="email" @keypress.enter="loginf()" name="login" color="#fff" label="Email" id="login" v-model="email" type="email" required></v-text-field>
           </div>
