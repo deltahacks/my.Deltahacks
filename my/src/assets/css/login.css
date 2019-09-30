@@ -252,8 +252,9 @@ iframe {
 }
 .sidebar{
     z-index: -10;
-    width:20vw;
-    height:auto;
+    max-width:20vw;
+    max-height:24vh;
+    min-height:20vh;
     margin-top:33%;
     margin-left:1vw;
     padding-right:1vw;
@@ -264,7 +265,7 @@ iframe {
     width:50%;
     position: absolute; 
     bottom: 0;
-    margin-left:10vw;
+    margin-left:9.4vw;
     float:right;
     opacity:0.1;
 }
@@ -365,7 +366,7 @@ iframe {
 .forgotdiv{
     position: absolute;
     z-index:40;
-    margin-left:20%;
+    margin-left:17%;
 }
 .forgot{
     height: 5vh;
@@ -384,7 +385,7 @@ iframe {
     background: rgba(255, 255, 255,0.7) !important;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 960px) {
     .sidebar,.card{
         display: none;
     }
