@@ -212,7 +212,14 @@ export interface SnackBar {
   message: string;
 }
 
-type status = 'progress' | 'submitted';
+type status =
+  | 'in progress'
+  | 'submitted'
+  | 'marked'
+  | 'round1'
+  | 'round2'
+  | 'round3'
+  | 'rejected';
 
 type discovered_by =
   | ''
