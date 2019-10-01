@@ -9,6 +9,7 @@ export interface ApplicationModel {
 }
 
 export interface AppContents {
+  _: AppPrivate;
   name: {
     first: string;
     last: string;
@@ -65,6 +66,22 @@ export interface AppContents {
     filename: string;
     link: string;
   };
+}
+
+export interface AppPrivate {
+  index: number;
+  reviews: {
+    assignedTo: string[];
+    scores: Reviews[];
+  };
+  status: status;
+  time_initiated: Date;
+  time_submitted: Date;
+}
+
+export interface Reviews {
+  reviewer: string;
+  score: number;
 }
 
 export interface StatusModel {
@@ -194,6 +211,8 @@ export interface SnackBar {
   visible: boolean;
   message: string;
 }
+
+type status = 'progress' | 'submitted';
 
 type discovered_by =
   | ''

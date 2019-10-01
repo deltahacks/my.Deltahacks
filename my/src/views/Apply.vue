@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase, { firestore } from 'firebase';
+import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 
@@ -41,64 +41,7 @@ import { blankApplication } from '../data';
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: {
-        name: {
-          first: 'oi',
-          last: '',
-        },
-        contact: {
-          email: '',
-          phone: '',
-        },
-        first_submitted: new Date(),
-        academics: {
-          degree: '',
-          major: '',
-          graduating: '',
-          school: '',
-          year: '',
-        },
-        personal: {
-          birthday: new Date(),
-          gender: '',
-          race: '',
-        },
-        emergency: {
-          name: '',
-          phone: '',
-          relation: '',
-        },
-        documents: {
-          download_link: '',
-          filename: '',
-          id: '',
-        },
-        profiles: {
-          devpost: '',
-          github: '',
-          linkedin: '',
-          website: '',
-        },
-        responses: {
-          anything_else: '',
-          q1: '',
-          q2: '',
-          q3: '',
-          q4: '',
-          workshops: [],
-        },
-        logistics: {
-          discovered_by: '',
-          diet_restrictions: '',
-          shirt_size: '',
-          traveling_from: '',
-          hackathons_attended: 0,
-        },
-        resume: {
-          filename: '',
-          link: '',
-        },
-      },
+      app: blankApplication,
       questions: {},
       updateTimeout: null,
       snack: {
@@ -123,7 +66,7 @@ export default Vue.extend({
 
     updateAppProgress(): void {
       console.log('Updated!');
-      this.$store.state.db
+      this.getDB()
         .collection('DH6')
         .doc('applications')
         .collection('all')
@@ -161,11 +104,14 @@ export default Vue.extend({
 
     // grabs current (logged in) users unique identifier
     getUID: (): string => firebase.auth().currentUser!.email as string,
+    getDB(): firebase.firestore.Firestore {
+      return this.$store.state.db;
+    },
   },
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      this.app = app.data() as AppContents;
+      if (app.data()) this.app = app.data() as AppContents;
       console.log('Success');
     } catch (error) {
       // Create popup modal here warning user

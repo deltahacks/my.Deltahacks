@@ -1,6 +1,18 @@
+import { AppContents } from './types';
+
 /* eslint-disable import/prefer-default-export */
-export const blankApplication =
+export const blankApplication: AppContents =
 {
+  _: {
+    index: 0,
+    reviews: {
+      assignedTo: [],
+      scores: [],
+    },
+    status: 'progress',
+    time_initiated: new Date(),
+    time_submitted: new Date(),
+  },
   name: {
     first: '',
     last: '',
