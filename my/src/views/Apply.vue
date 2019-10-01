@@ -1,25 +1,42 @@
 <template>
   <v-app>
     <Nav />
+    <v-snackbar
+      top
+      right
+      :color="snack.color"
+      v-model="snack.visible"
+      :timeout="snack.timeout"
+    >
+      {{ snack.message }}
+      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+        Close
+      </v-btn>
+    </v-snackbar>
     <form action="">
       <Card
         class="card"
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
+        :inputType="question.fieldType"
+        :selectData="question.selectData"
+        :requestUpdate="onFormChange"
         v-model="app[question.model[0]][question.model[1]]"
       />
     </form>
+    <button @click="resetApplication">RESET</button>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase from 'firebase';
-import { ApplicationModel, AppContents } from '../types';
-
+import firebase, { firestore } from 'firebase';
 import Nav from '@/components/Nav.vue';
-import Card from '../components/Card.vue';
+import Card from '@/components/Card.vue';
+
+import { ApplicationModel, AppContents } from '../types';
+import { blankApplication } from '../data';
 
 export default Vue.extend({
   data(): ApplicationModel {
@@ -83,6 +100,14 @@ export default Vue.extend({
         },
       },
       questions: {},
+      updateTimeout: null,
+      snack: {
+        color: 'success',
+        btnColor: 'white',
+        timeout: 3000,
+        visible: false,
+        message: 'Progress saved!',
+      },
     };
   },
   components: {
@@ -91,13 +116,30 @@ export default Vue.extend({
   },
   methods: {
     // updates in progress application
-    updateAppProgress(): void {},
+    onFormChange() {
+      if (this.updateTimeout) clearTimeout(this.updateTimeout);
+      this.updateTimeout = setTimeout(this.updateAppProgress, 4000);
+    },
+
+    updateAppProgress(): void {
+      console.log('Updated!');
+      this.$store.state.db
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .doc(this.getUID())
+        .set(this.app);
+      this.snack.visible = true;
+    },
 
     // actually submits application
     submitApp(): void {},
 
     // clears all fields in the application
-    resetApplication(): void {},
+    resetApplication(): void {
+      this.app = blankApplication as AppContents;
+      this.updateAppProgress();
+    },
 
     // does what it says
     redirectAfterSubmit(): void {
@@ -110,22 +152,24 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection(this.$store.state.hackathon)
+        .collection('DH6')
         .doc('applications')
         .collection('all')
-        .doc('test@test.com')
+        .doc(this.getUID())
         .get();
     },
 
     // grabs current (logged in) users unique identifier
-    getUID: (): string | null => firebase.auth().currentUser!.email,
+    getUID: (): string => firebase.auth().currentUser!.email as string,
   },
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      //this.app = app.data() as AppContents;
+      this.app = app.data() as AppContents;
+      console.log('Success');
     } catch (error) {
-      console.log('Error tying to fetch data: ', error);
+      // Create popup modal here warning user
+      console.log('Unable to fetch, trying again...');
     }
   },
   mounted(): void {
@@ -148,7 +192,8 @@ export default Vue.extend({
       },
       {
         label: 'Where do you study?',
-        fieldType: 'text',
+        fieldType: 'single-select',
+        selectData: ['Waterloo', 'McMaster'],
         model: ['academics', 'school'],
       },
       {

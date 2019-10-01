@@ -2,11 +2,20 @@
   <div class="background">
     <div class="container">
       <h1 class="title">{{ title }}</h1>
-      <input
+      <v-text-field
+        v-if="inputType == 'text'"
         class="field"
         :value="value"
-        @input="$emit('input', $event.target.value)"
-      />
+        @input="onChange($event)"
+      ></v-text-field>
+      <v-select
+        v-else-if="inputType == 'single-select'"
+        :items="selectData"
+        prepend-icon="map"
+        single-line
+        :value="value"
+        @input="onChange($event)"
+      ></v-select>
     </div>
   </div>
 </template>
@@ -15,8 +24,13 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'Card',
-  props: ['title', 'value'],
+  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData'],
+  methods: {
+    onChange(event) {
+      this.$emit('input', event);
+      this.requestUpdate();
+    },
+  },
 });
 </script>
 
@@ -39,9 +53,7 @@ export default Vue.extend({
   margin: 80px;
   background: transparent;
   border: transparent;
-  border-bottom: 1px solid white;
   width: 75%;
-  color: white;
   font-size: 1.5em;
 }
 

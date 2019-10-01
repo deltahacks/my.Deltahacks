@@ -4,33 +4,72 @@
       <div class="wrap-signup100">
         <form class="signup100-form validate-form">
           <span class="signup100-form-logo">
-            <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
+            <img
+              src="@/assets/logo.png"
+              height="90"
+              width="90"
+              alt="DeltaHacks Logo"
+            />
           </span>
           <span class="welcomeheader">
             DeltaHacks Signup
           </span>
-          <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="vuex_email"></v-text-field>
+          <div
+            class="wrap-input100 validate-input"
+            data-validate="Enter username"
+          >
+            <v-text-field
+              prepend-icon="email"
+              name="email"
+              label="Email"
+              type="email"
+              v-model="vuex_email"
+            ></v-text-field>
           </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" @keypress.enter="signUpFirebase" v-model="vuex_password"></v-text-field>
+          <div
+            class="wrap-input100 validate-input"
+            data-validate="Enter password"
+          >
+            <v-text-field
+              prepend-icon="lock"
+              name="password"
+              label="Password"
+              id="password"
+              type="password"
+              @keypress.enter="signUpFirebase"
+              v-model="vuex_password"
+            ></v-text-field>
           </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field prepend-icon="lock" name="password2" label="Retype Password" id="password2" type="password" @keypress.enter="signUpFirebase" v-model="password_repeat"></v-text-field>
+          <div
+            class="wrap-input100 validate-input"
+            data-validate="Enter password"
+          >
+            <v-text-field
+              prepend-icon="lock"
+              name="password2"
+              label="Retype Password"
+              id="password2"
+              type="password"
+              @keypress.enter="signUpFirebase"
+              v-model="password_repeat"
+            ></v-text-field>
           </div>
           <div class="container-signup100-form-btn">
             <v-alert :value="feedback" type="error">
               {{ feedback }}
             </v-alert>
-            <v-btn class="signup100-form-btn" @click.prevent="signUpFirebase">Signup &nbsp;
+            <v-btn class="signup100-form-btn" @click.prevent="signUpFirebase">
+              Signup &nbsp;
               <i class="fas fa-user-plus" />
             </v-btn>
           </div>
-          <br>
+          <br />
           <div class="container-login100-form-btn">
-            <v-divider></v-divider><br>
+            <v-divider></v-divider>
+            <br />
             <p style="color: #525251; cursor: pointer;" @click="loginpage">
-              <i class="fas fa-arrow-left" /> Go Back
+              <i class="fas fa-arrow-left" />
+              Go Back
             </p>
           </div>
         </form>
@@ -78,7 +117,10 @@ export default Vue.extend({
         try {
           const user = await firebase
             .auth()
-            .createUserWithEmailAndPassword(this.vuex_email, this.vuex_password);
+            .createUserWithEmailAndPassword(
+              this.vuex_email,
+              this.vuex_password,
+            );
           // console.log(user.user.uid, 'ID');
           // console.log(this.$store.state.db, 'DB');
           this.$store.state.db
@@ -88,15 +130,13 @@ export default Vue.extend({
               email: this.vuex_email,
               // geo: this.geo,
               user_id: user.user!.uid,
-              ip: ipp,
+              ip: null,
               is_admin: false,
             });
-          const response = await axios
-            .get('https://api.ipify.org?format=json');
+          const response = await axios.get('https://api.ipify.org?format=json');
           // console.log(response.data.ip);
           const ipp = response.data.ip;
-          const data = await axios
-            .get(`https://ipapi.co/${ipp}/json/`);
+          const data = await axios.get(`https://ipapi.co/${ipp}/json/`);
           // console.log(data.data);
           this.geo = data.data;
           this.$store.state.db
