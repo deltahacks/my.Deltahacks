@@ -18,7 +18,7 @@ export interface AppContents {
     email: string;
     phone: string;
   };
-  first_submitted: Date;
+  first_submitted: firebase.firestore.Timestamp;
   academics: {
     degree: degree;
     major: string;
@@ -27,7 +27,7 @@ export interface AppContents {
     year: year;
   };
   personal: {
-    birthday: Date;
+    birthday: firebase.firestore.Timestamp;
     gender: gender;
     race: race;
   };
@@ -75,8 +75,8 @@ export interface AppPrivate {
     scores: Reviews[];
   };
   status: status;
-  time_initiated: Date;
-  time_submitted: Date;
+  time_initiated: firebase.firestore.Timestamp;
+  time_submitted: firebase.firestore.Timestamp;
 }
 
 export interface Reviews {
@@ -148,7 +148,7 @@ export interface ApplyState {
   loadingMessage: string;
   bannerColor: string;
   bannerMessage: string;
-  current_time: Date;
+  current_time: firebase.firestore.Timestamp;
   // Todo: type this as a Firestore object
   appFirestorePath: any;
   applicationStatus: applicationStatus;

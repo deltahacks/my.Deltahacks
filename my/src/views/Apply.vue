@@ -143,7 +143,7 @@ export default Vue.extend({
       },
       {
         label: "What's your birthday?",
-        fieldType: 'text',
+        fieldType: 'date',
         model: ['personal', 'birthday'],
       },
       {
@@ -171,6 +171,11 @@ export default Vue.extend({
         label: 'And when do you expect to graduate?',
         fieldType: 'text',
         model: ['academics', 'graduating'],
+      },
+      {
+        label: 'This is a test',
+        fieldType: 'date',
+        model: ['personal', 'birthday'],
       },
     ];
   },
