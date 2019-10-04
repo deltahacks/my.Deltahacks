@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="background">
     <Nav />
     <v-snackbar
       top
@@ -171,5 +171,50 @@ export default Vue.extend({
 .card {
   margin: 10px 10px 10px 10px;
 }
+
+.background {
+    background: linear-gradient(270deg, #1a7fc3, #39bc82);
+    background-size: 200% 200%;
+    -webkit-animation: animated 25s ease infinite;
+    -moz-animation: animated 25s ease infinite;
+    animation: animated 25s ease infinite;
+}
+
+@-webkit-keyframes animated {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes animated {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes animated {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
 </style>
 
