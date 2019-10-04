@@ -25,8 +25,10 @@
         v-model="app[question.model[0]][question.model[1]]"
       />
     </form>
-    <button @click="resetApplication">RESET</button>
-    <button @click="resetApplication">Submit</button>
+    <div class="action-buttons">
+    <v-btn large @click="resetApplication">RESET</v-btn>
+    <v-btn large @click="submitApp">Submit</v-btn>
+    </div>
   </v-app>
 </template>
 
@@ -83,6 +85,8 @@ export default Vue.extend({
     // actually submits application
     submitApp(): void {
       this.app._.status = 'submitted';
+      this.snack.message = 'Application submitted';
+      this.snack.color = 'success';
       this.updateAppProgress();
     },
 
@@ -185,6 +189,10 @@ export default Vue.extend({
 <style scoped>
 .card {
   margin: 10px 10px 10px 10px;
+}
+
+.action-buttons {
+  margin: 0 auto;
 }
 
 .background {

@@ -1,5 +1,5 @@
-import { AppContents } from './types';
 import firebase from 'firebase';
+import { AppContents } from './types';
 
 /* eslint-disable import/prefer-default-export */
 export const blankApplication: AppContents =
@@ -77,5 +77,5 @@ export const months: string[] = ['January', 'Febuary', 'March', 'April', 'May', 
 export const years: number[] = [];
 export const days: number[] = [];
 
-for (let i = 1980; i < 2020; i++) years.push(i);
+for (let i = 2019; i >= 1980; i--) years.push(i);
 for (let i = 0; i <= 31; i++) days.push(i);
