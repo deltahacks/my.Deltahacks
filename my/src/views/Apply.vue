@@ -26,12 +26,13 @@
       />
     </form>
     <button @click="resetApplication">RESET</button>
+    <button @click="resetApplication">Submit</button>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase, { firestore } from 'firebase';
+import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 
@@ -41,64 +42,7 @@ import { blankApplication } from '../data';
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: {
-        name: {
-          first: '',
-          last: '',
-        },
-        contact: {
-          email: '',
-          phone: '',
-        },
-        first_submitted: new Date(),
-        academics: {
-          degree: '',
-          major: '',
-          graduating: '',
-          school: '',
-          year: '',
-        },
-        personal: {
-          birthday: new Date(),
-          gender: '',
-          race: '',
-        },
-        emergency: {
-          name: '',
-          phone: '',
-          relation: '',
-        },
-        documents: {
-          download_link: '',
-          filename: '',
-          id: '',
-        },
-        profiles: {
-          devpost: '',
-          github: '',
-          linkedin: '',
-          website: '',
-        },
-        responses: {
-          anything_else: '',
-          q1: '',
-          q2: '',
-          q3: '',
-          q4: '',
-          workshops: [],
-        },
-        logistics: {
-          discovered_by: '',
-          diet_restrictions: '',
-          shirt_size: '',
-          traveling_from: '',
-          hackathons_attended: 0,
-        },
-        resume: {
-          filename: '',
-          link: '',
-        },
-      },
+      app: blankApplication,
       questions: {},
       updateTimeout: null,
       snack: {
@@ -118,12 +62,16 @@ export default Vue.extend({
     // updates in progress application
     onFormChange() {
       if (this.updateTimeout) clearTimeout(this.updateTimeout);
-      this.updateTimeout = setTimeout(this.updateAppProgress, 4000);
+      this.updateTimeout = setTimeout(() => {
+        this.snack.message = 'Progress saved!';
+        this.snack.color = 'success';
+        this.updateAppProgress();
+      }, 4000);
     },
 
     updateAppProgress(): void {
       console.log('Updated!');
-      this.$store.state.db
+      this.getDB()
         .collection('DH6')
         .doc('applications')
         .collection('all')
@@ -133,11 +81,16 @@ export default Vue.extend({
     },
 
     // actually submits application
-    submitApp(): void {},
+    submitApp(): void {
+      this.app._.status = 'submitted';
+      this.updateAppProgress();
+    },
 
     // clears all fields in the application
     resetApplication(): void {
       this.app = blankApplication as AppContents;
+      this.snack.message = 'Application reset!';
+      this.snack.color = 'warning';
       this.updateAppProgress();
     },
 
@@ -161,11 +114,14 @@ export default Vue.extend({
 
     // grabs current (logged in) users unique identifier
     getUID: (): string => firebase.auth().currentUser!.email as string,
+    getDB(): firebase.firestore.Firestore {
+      return this.$store.state.db;
+    },
   },
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      this.app = app.data() as AppContents;
+      if (app.data()) this.app = app.data() as AppContents;
       console.log('Success');
     } catch (error) {
       // Create popup modal here warning user
@@ -187,7 +143,7 @@ export default Vue.extend({
       },
       {
         label: "What's your birthday?",
-        fieldType: 'text',
+        fieldType: 'date',
         model: ['personal', 'birthday'],
       },
       {
@@ -215,6 +171,11 @@ export default Vue.extend({
         label: 'And when do you expect to graduate?',
         fieldType: 'text',
         model: ['academics', 'graduating'],
+      },
+      {
+        label: 'This is a test',
+        fieldType: 'date',
+        model: ['personal', 'birthday'],
       },
     ];
   },

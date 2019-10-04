@@ -1,6 +1,19 @@
+import { AppContents } from './types';
+import firebase from 'firebase';
+
 /* eslint-disable import/prefer-default-export */
-export const blankApplication =
+export const blankApplication: AppContents =
 {
+  _: {
+    index: 0,
+    reviews: {
+      assignedTo: [],
+      scores: [],
+    },
+    status: 'in progress',
+    time_initiated: firebase.firestore.Timestamp.fromDate(new Date()),
+    time_submitted: firebase.firestore.Timestamp.fromDate(new Date()),
+  },
   name: {
     first: '',
     last: '',
@@ -9,7 +22,7 @@ export const blankApplication =
     email: '',
     phone: '',
   },
-  first_submitted: new Date(),
+  first_submitted: firebase.firestore.Timestamp.fromDate(new Date()),
   academics: {
     degree: '',
     major: '',
@@ -18,7 +31,7 @@ export const blankApplication =
     year: '',
   },
   personal: {
-    birthday: new Date(),
+    birthday: firebase.firestore.Timestamp.fromDate(new Date()),
     gender: '',
     race: '',
   },
@@ -58,3 +71,11 @@ export const blankApplication =
     link: '',
   },
 };
+
+export const months: string[] = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July',
+  'August', 'September', 'October', 'November', 'December'];
+export const years: number[] = [];
+export const days: number[] = [];
+
+for (let i = 1980; i < 2020; i++) years.push(i);
+for (let i = 0; i <= 31; i++) days.push(i);

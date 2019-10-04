@@ -16,19 +16,66 @@
         :value="value"
         @input="onChange($event)"
       ></v-select>
+      <div
+        v-else-if="inputType == 'date'"
+        class="date-row"
+      >
+        <v-select
+          v-for="(input,i) in dates"
+          :key="i"
+          :items="input.options"
+          @input="onDate(input.label,$event)"
+          :label="input.label"
+          v-model="input.value"
+        ></v-select>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
+import firebase from 'firebase';
+import { months, years, days } from '../data';
 
 export default Vue.extend({
   props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData'],
+  data() {
+    return {
+      dates: [],
+    } as {dates: any};
+  },
   methods: {
     onChange(event) {
       this.$emit('input', event);
       this.requestUpdate();
+    },
+    onDate(type: string, value: any) {
+      if (type.toLowerCase() === 'year') {
+        this.$emit('input', firebase.firestore.Timestamp.fromDate(new Date(value, months.indexOf(this.dates[1].value), this.dates[2].value)));
+      } else if (type.toLowerCase() === 'month') {
+        this.$emit('input', firebase.firestore.Timestamp.fromDate(new Date(this.dates[0].value, months.indexOf(value), this.dates[2].value)));
+      } else {
+        this.$emit('input', firebase.firestore.Timestamp.fromDate(new Date(this.dates[0].value, months.indexOf(this.dates[1].value), value)));
+      }
+      this.requestUpdate();
+    },
+    updateDates() {
+      if (this.inputType === 'date') {
+        this.dates = [
+          { label: 'Year', options: years, value: new Date(this.value.toDate()).getFullYear() },
+          { label: 'Month', options: months, value: months[new Date(this.value.toDate()).getMonth()] },
+          { label: 'Day', options: days, value: new Date(this.value.toDate()).getDate() },
+        ];
+      }
+    },
+  },
+  mounted() {
+    this.updateDates();
+  },
+  watch: {
+    value(newVal, oldVal) {
+      this.updateDates();
     },
   },
 });
@@ -42,6 +89,14 @@ export default Vue.extend({
   color: white;
   margin: 50px;
   font-family: 'Montserrat';
+}
+
+.date-row {
+  display: flex;
+  flex-direction: row;
+}
+.date-row .v-input {
+  margin-right: 2%;
 }
 
 .container {
