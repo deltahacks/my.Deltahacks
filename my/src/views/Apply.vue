@@ -26,6 +26,7 @@
       />
     </form>
     <button @click="resetApplication">RESET</button>
+    <button @click="resetApplication">Submit</button>
   </v-app>
 </template>
 
@@ -61,7 +62,11 @@ export default Vue.extend({
     // updates in progress application
     onFormChange() {
       if (this.updateTimeout) clearTimeout(this.updateTimeout);
-      this.updateTimeout = setTimeout(this.updateAppProgress, 4000);
+      this.updateTimeout = setTimeout(() => {
+        this.snack.message = 'Progress saved!';
+        this.snack.color = 'success';
+        this.updateAppProgress();
+      }, 4000);
     },
 
     updateAppProgress(): void {
@@ -76,11 +81,16 @@ export default Vue.extend({
     },
 
     // actually submits application
-    submitApp(): void {},
+    submitApp(): void {
+      this.app._.status = 'submitted';
+      this.updateAppProgress();
+    },
 
     // clears all fields in the application
     resetApplication(): void {
       this.app = blankApplication as AppContents;
+      this.snack.message = 'Application reset!';
+      this.snack.color = 'warning';
       this.updateAppProgress();
     },
 
