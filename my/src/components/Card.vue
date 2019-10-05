@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <div class="container">
+    <div class="container" v-scroll-reveal>
       <h1 class="question" id="title1">{{ title }}</h1>
       <v-text-field
         v-if="inputType == 'text'"
@@ -22,6 +22,15 @@
 
 <script>
 import Vue from 'vue';
+import VueScrollReveal from 'vue-scroll-reveal';
+Vue.use(VueScrollReveal, {
+  class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
+  duration: 1000,
+  scale: 1.35,
+  distance: '10px',
+  mobile: true,
+  reset: true,
+});
 
 export default Vue.extend({
   props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData'],
