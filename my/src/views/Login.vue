@@ -1,58 +1,140 @@
 <template>
   <div class="limiter">
-
     <head>
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+      <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+        integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous"
+      />
     </head>
     <div class="container-login100 background">
       <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <div class="wrap-login100">
+        <div class="card">
+          <img
+            src="../assets/sidebar.png"
+            draggable="false"
+            alt="Sidebar+Logo"
+            class="sidebar"
+          />
+        </div>
         <form class="login100-form validate-form">
-          <span class="login100-form-logo">
+          <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
-          </span>
-          <v-container>
-            <v-layout>
-            <v-flex xs12>
-            <span class="welcomeheader">
-              myDeltaHacks
+        </span>-->
+          <img src="../assets/vi.png" draggable="false" class="back-vi" />
+          <template v-if="counter === 0">
+            <div class="spanText">
+              <span class="txt1">my</span>
+              <span class="txt2">Delta</span>
+              <span class="txt3">Hacks</span>
+            </div>
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Enter username"
+            >
+              <v-text-field
+                prepend-icon="email"
+                @keypress.enter="loginf()"
+                name="login"
+                color="#fff"
+                label="Email"
+                id="login"
+                v-model="email"
+                type="email"
+                required
+              ></v-text-field>
+            </div>
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Enter password"
+            >
+              <v-text-field
+                @keypress.enter="loginf()"
+                prepend-icon="lock"
+                name="password"
+                label="Password"
+                color="#fff"
+                id="password"
+                v-model="pass"
+                type="password"
+                required
+              ></v-text-field>
+            </div>
+            <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
+            <div class="container-login100-form-btn">
+              <button @click.prevent="login" type="submit" class="login100-btn">
+                Login
+              </button>
+              <button type="submit2" class="login100-btn">Register</button>
+              <!-- <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login -->
+              <!-- <v-icon right>lock_open</v-icon> -->
+              <!-- </v-btn> -->
+              <!-- <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Register &nbsp; -->
+              <!-- <i class="fas fa-user-plus" /> -->
+              <!-- </v-btn> -->
+              <div class="forgotdiv">
+                <br />
+                <a class="forgot" v-on:click="counter = 1">Forgot Password?</a>
+              </div>
+            </div>
+          </template>
+          <template v-else-if="counter === 1">
+            <div class="spanText">
+              <span class="txt1">
+                Forgot
+              </span>
+              <span class="txt2">Pass</span>
+              <span class="txt3">word</span>
+            </div>
+            <br />
+            <span class="txt4">
+              Please enter your email and a link will be sent to it.
             </span>
-            </v-flex>
-            </v-layout>
-          </v-container>
-          <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field @keypress.enter="loginf()" prepend-icon="lock" name="password" label="Password" id="password" v-model="pass" type="password" required></v-text-field>
-          </div>
-          <v-alert :value="feedback" type="error">
+            <br />
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Enter username"
+            >
+              <v-text-field
+                prepend-icon="email"
+                @keypress.enter="loginf()"
+                name="login"
+                label="Email"
+                color="#fff"
+                id="login"
+                v-model="email"
+                type="email"
+                required
+              ></v-text-field>
+            </div>
+            <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
-          </v-alert>
-          <div class="container-login100-form-btn">
-            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">
-              LOGIN
-              <v-icon right>lock_open</v-icon>
-            </v-btn>
-          </div>
-          <div style="font-size: 15px; text-align: center; color: #525251;">
-            Applications are now closed.
-          </div>
-          <div class="container-login100-form-btn">
-            <!-- <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Signup &nbsp;
-              <i class="fas fa-user-plus" />
-            </v-btn> -->
-          </div>
-          <div class="container-login100-form-btn">
-            <v-divider></v-divider><br>
-            <p style="color: blue; cursor: pointer;" @click="forgotpage">
-              Forgot Password?
-            </p>
-          </div>
+          </v-alert> -->
+            <div><br /></div>
+            <div class="container-login100-form-btn">
+              <button class="login100-btn forgot100-btn">
+                Submit
+              </button>
+            </div>
+            <div class="forgotdiv">
+              <br />
+              <a class="forgot" v-on:click="counter = 0">
+                <i class="fas fa-arrow-left" />
+                Go Back
+              </a>
+            </div>
+          </template>
         </form>
       </div>
     </div>
   </div>
+</template>
+      </form>
+    </div>
+  </div>
+</div>
 </template>
 <script lang="ts">
 import firebase from 'firebase';
@@ -63,6 +145,7 @@ export default Vue.extend({
   name: 'Login',
   data(): LoginModel {
     return {
+      counter: 0,
       drawer: null,
       email: null,
       pass: null,
@@ -110,7 +193,9 @@ export default Vue.extend({
       const l: any = this.loader;
       this[l] = !this[l];
 
-      setTimeout(() => { this[l] = false; }, 3000);
+      setTimeout(() => {
+        this[l] = false;
+      }, 3000);
       this.loader = null;
     },
   },

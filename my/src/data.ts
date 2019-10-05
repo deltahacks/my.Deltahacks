@@ -1,9 +1,8 @@
 import firebase from 'firebase';
-import { AppContents } from './types';
+import {AppContents} from './types';
 
 /* eslint-disable import/prefer-default-export */
-export const blankApplication: AppContents =
-{
+export const blankApplication: AppContents = {
   _: {
     index: 0,
     reviews: {
@@ -72,8 +71,120 @@ export const blankApplication: AppContents =
   },
 };
 
-export const months: string[] = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July',
-  'August', 'September', 'October', 'November', 'December'];
+export const applicationQuestions: any = [
+  {
+    label: "What's your first name?",
+    fieldType: 'text',
+    model: ['name', 'first'],
+  },
+  {
+    label: 'And your last name?',
+    fieldType: 'text',
+    model: ['name', 'last'],
+  },
+  {
+    label: "What's your birthday?",
+    fieldType: 'date',
+    model: ['personal', 'birthday'],
+  },
+  {
+    label: 'Where do you study?',
+    fieldType: 'single-select',
+    selectData: ['Waterloo', 'McMaster'],
+    model: ['academics', 'school'],
+  },
+  {
+    label: 'And what do you study?',
+    fieldType: 'text',
+    model: ['academics', 'major'],
+  },
+  {
+    label: 'What degree are you pursuing?',
+    fieldType: 'multi-select',
+    model: ['academics', 'degree'],
+  },
+  {
+    label: 'What year are you in?',
+    fieldType: 'text',
+    model: ['academics', 'year'],
+  },
+  {
+    label: 'And when do you expect to graduate?',
+    fieldType: 'text',
+    model: ['academics', 'graduating'],
+  },
+  {
+    label: 'Which ethnic background do you identify with?',
+    fieldType: 'text',
+    model: ['personal', 'race'],
+  },
+  {
+    label: "What's your LinkedIn?",
+    fieldType: 'text',
+    model: ['profiles', 'linkedin'],
+  },
+  {
+    label: "What's your personal website?",
+    fieldType: 'text',
+    model: ['profiles', 'website'],
+  },
+  {
+    label: 'Devpost?',
+    fieldType: 'text',
+    model: ['profiles', 'devpost'],
+  },
+  {
+    label: 'Link us to any other profiles you have',
+    fieldType: 'text',
+    model: ['profiles', 'devpost'],
+  },
+  {
+    label: 'What number can we reach you at?',
+    fieldType: 'text',
+    model: ['contact', 'phone'],
+  },
+  {
+    label: 'Do you have any dietary restrictions??',
+    fieldType: 'text',
+    model: ['logistics', 'diet_restrictions'],
+  },
+  {
+    label: 'Which size shirt do you wear?',
+    fieldType: 'text',
+    model: ['logistics', 'shirt_size'],
+  },
+  {
+    label: 'How many hackathons have you been to?',
+    fieldType: 'text',
+    model: ['logistics', 'hackathons_attended'],
+  },
+  {
+    label: 'How did you hear about DeltaHacks?',
+    fieldType: 'text',
+    model: ['logistics', 'discovered_by'],
+  },
+  {
+    label:
+      'Is there anything else you want to tell us? It could be anything at all!',
+    fieldType: 'text',
+    model: ['responses', 'anything_else'],
+  },
+];
+
+export const months: string[] = [
+  'January',
+  'Febuary',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 export const years: number[] = [];
 export const days: number[] = [];
 

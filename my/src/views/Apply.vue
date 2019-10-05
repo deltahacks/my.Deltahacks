@@ -32,7 +32,7 @@ import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 
 import { ApplicationModel, AppContents } from '../types';
-import { blankApplication } from '../data';
+import { blankApplication, applicationQuestions } from '../data';
 import VueScrollReveal from 'vue-scroll-reveal';
 Vue.use(VueScrollReveal, {
   class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
@@ -45,7 +45,64 @@ Vue.use(VueScrollReveal, {
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: blankApplication,
+      app: {
+        name: {
+          first: '',
+          last: '',
+        },
+        contact: {
+          email: '',
+          phone: '',
+        },
+        first_submitted: new Date(),
+        academics: {
+          degree: '',
+          major: '',
+          graduating: '',
+          school: '',
+          year: '',
+        },
+        personal: {
+          birthday: new Date(),
+          gender: '',
+          race: '',
+        },
+        emergency: {
+          name: '',
+          phone: '',
+          relation: '',
+        },
+        documents: {
+          download_link: '',
+          filename: '',
+          id: '',
+        },
+        profiles: {
+          devpost: '',
+          github: '',
+          linkedin: '',
+          website: '',
+        },
+        responses: {
+          anything_else: '',
+          q1: '',
+          q2: '',
+          q3: '',
+          q4: '',
+          workshops: [],
+        },
+        logistics: {
+          discovered_by: '',
+          diet_restrictions: '',
+          shirt_size: '',
+          traveling_from: '',
+          hackathons_attended: 0,
+        },
+        resume: {
+          filename: '',
+          link: '',
+        },
+      },
       questions: {},
       updateTimeout: null,
       snack: {
@@ -188,6 +245,7 @@ export default Vue.extend({
         model: ['personal', 'birthday'],
       },
     ];
+    this.questions = applicationQuestions;
   },
 });
 </script>

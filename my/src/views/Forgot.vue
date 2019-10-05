@@ -12,34 +12,41 @@
     <div class="container-login100 background">
       <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <div class="wrap-login100">
+          <div class="card">
+          <img src="../assets/sidebar.png" draggable="false" alt="Sidebar+Logo" class="sidebar">
+        </div>
         <form class="login100-form validate-form">
-          <span class="login100-form-logo">
+          <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
-          </span>
-          <span class="welcomeheader">
-            Forgot
-          </span>
-          <p>Please enter your email and a link will be sent to it.</p>
+          </span> -->
+          <img src="../assets/vi.png" draggable="false" class="back-vi"/>
+            <div class="spanText">
+            <span class="txt1">
+              Forgot </span><span class="txt2">Pass</span><span class="txt3">word
+            </span>
+           </div>
+           <br>
+          <span class="txt4">Please enter your email and a link will be sent to it.</span>
+          <br>
           <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field prepend-icon="person" @keypress.enter="loginf()" name="login" label="Email" id="login" v-model="email" type="email" required></v-text-field>
+            <v-text-field prepend-icon="email" @keypress.enter="loginf()" name="login" label="Email" color="#fff" id="login" v-model="email" type="email" required></v-text-field>
           </div>
           <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
           </v-alert> -->
           <div><br></div>
           <div class="container-login100-form-btn">
-            <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="forgotPass()">
-              Submit
-              <v-icon right>lock_open</v-icon>
-            </v-btn>
+            <button class="login100-btn forgot100-btn">
+            Submit
+        </button>
           </div>
-          <br>
-          <div class="container-login100-form-btn">
-            <v-divider></v-divider><br>
-            <p style="color: #525251; cursor: pointer;" @click="loginpage">
-              <i class="fas fa-arrow-left" /> Go Back
-            </p>
-          </div>
+                 <div class="backdiv">
+                   <br>
+            <a class="forgot" @click="loginpage">
+                <i class="fas fa-arrow-left" /> Go Back
+            </a>
+            </div>
+         
         </form>
       </div>
     </div>
