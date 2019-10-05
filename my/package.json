@@ -29,6 +29,7 @@
     "vue-paginate": "^3.6.0",
     "vue-progressbar": "^0.7.5",
     "vue-router": "^3.0.1",
+    "vue-scroll-reveal": "^1.0.11",
     "vue-slider-component": "^2.7.1",
     "vue-status-indicator": "^1.1.0",
     "vue2-dropzone": "^3.2.2",
