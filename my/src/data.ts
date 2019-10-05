@@ -88,6 +88,12 @@ export const applicationQuestions: any = [
     model: ['personal', 'birthday'],
   },
   {
+    label: "What's your gender?",
+    fieldType: 'radio-select',
+    selectData: ['Male', 'Female', 'Other'],
+    model: ['personal', 'gender'],
+  },
+  {
     label: 'Where do you study?',
     fieldType: 'single-select',
     selectData: ['Waterloo', 'McMaster'],

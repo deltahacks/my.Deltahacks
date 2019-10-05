@@ -1,9 +1,17 @@
 <template>
   <v-app class="background">
     <Nav />
-    <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
+    <v-snackbar
+      top
+      right
+      :color="snack.color"
+      v-model="snack.visible"
+      :timeout="snack.timeout"
+    >
       {{ snack.message }}
-      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
+      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+        Close
+      </v-btn>
     </v-snackbar>
     <form action>
       <Card
@@ -192,59 +200,6 @@ export default Vue.extend({
   },
   mounted(): void {
     // populate autofill data here
-    this.questions = [
-      {
-        label: "What's your first name?",
-        fieldType: 'text',
-        model: ['name', 'first'],
-      },
-      {
-        label: 'And your last name?',
-        fieldType: 'text',
-        model: ['name', 'last'],
-      },
-      // {
-      //   label: 'What is your gender?',
-      //   fieldType: 'radio-select',
-      // },
-      {
-        label: "What's your birthday?",
-        fieldType: 'date',
-        model: ['personal', 'birthday'],
-      },
-      {
-        label: 'Where do you study?',
-        fieldType: 'single-select',
-        selectData: ['Waterloo', 'McMaster'],
-        model: ['academics', 'school'],
-      },
-      {
-        label: 'And what do you study?',
-        fieldType: 'text',
-        model: ['academics', 'major'],
-      },
-      {
-        label: 'What degree are you pursuing?',
-        fieldType: 'radio-select',
-        selectData: ['Male', 'Female', 'Other'],
-        model: ['academics', 'degree'],
-      },
-      {
-        label: 'What year are you in?',
-        fieldType: 'text',
-        model: ['academics', 'year'],
-      },
-      {
-        label: 'And when do you expect to graduate?',
-        fieldType: 'text',
-        model: ['academics', 'graduating'],
-      },
-      {
-        label: 'This is a test',
-        fieldType: 'date',
-        model: ['personal', 'birthday'],
-      },
-    ];
     this.questions = applicationQuestions;
   },
 });

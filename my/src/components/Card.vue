@@ -18,10 +18,10 @@
       ></v-select>
       <div v-else-if="inputType == 'date'" class="date-row">
         <v-select
-          v-for="(input,i) in dates"
+          v-for="(input, i) in dates"
           :key="i"
           :items="input.options"
-          @input="onDate(input.label,$event)"
+          @input="onDate(input.label, $event)"
           :label="input.label"
           v-model="input.value"
         ></v-select>
@@ -63,9 +63,9 @@ export default Vue.extend({
             new Date(
               value,
               months.indexOf(this.dates[1].value),
-              this.dates[2].value
-            )
-          )
+              this.dates[2].value,
+            ),
+          ),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
@@ -74,9 +74,9 @@ export default Vue.extend({
             new Date(
               this.dates[0].value,
               months.indexOf(value),
-              this.dates[2].value
-            )
-          )
+              this.dates[2].value,
+            ),
+          ),
         );
       } else {
         this.$emit(
@@ -85,9 +85,9 @@ export default Vue.extend({
             new Date(
               this.dates[0].value,
               months.indexOf(this.dates[1].value),
-              value
-            )
-          )
+              value,
+            ),
+          ),
         );
       }
       this.requestUpdate();
