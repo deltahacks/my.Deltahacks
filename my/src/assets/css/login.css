@@ -256,6 +256,9 @@ iframe {
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     width: 340px;
+    display: flex;
+    align-items: center;
+    text-align:center;
 }
 
 .login100-form {
@@ -263,7 +266,8 @@ iframe {
     z-index: 40;
     width: 38vw;
     min-height: 54vh;
-    padding-top: 1vh;
+    /* padding-top:1%;
+    padding-bottom:1%; */
     /* padding-right: 1vw; */
     border-radius: 50px;
     box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.2);
@@ -271,14 +275,14 @@ iframe {
     text-align:center;
 }
 
-.sidebar {
+.sidebar {    
+    text-align:center;
     z-index: -10;
-    width: 320px;
+    width: 280px;
     /* max-height: 24vh;
     min-height: 20vh; */
-    margin-top: 13vh;
-    margin-left: 1.5vw;
-    padding-right: 1vw;
+    /* margin-top: 13vh; */
+    margin:auto;
     /* margin-bottom:35%; */
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -423,8 +427,8 @@ iframe {
     transition: 0.1s ease-in-out;
     cursor: pointer;
     -webkit-appearance: none;
-    margin-right: 0.5vw;
-    margin-left: 0.5vw;
+    /* margin-right: 0.5vw; */
+    /* margin-left: 0.5vw; */
 }
 
 .login100-btn:hover {
@@ -469,12 +473,13 @@ iframe {
     background: rgba(255, 255, 255, 0.7) !important;
 }
 
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 800px) {
     .sidebar{
-        width:75vw;
-        padding-left:13vw;
         margin-top:5vh;
         margin-bottom:5vh;
+    }
+    .card{
+        margin:auto;
     }
     .wrap-login100 {
         width: 90%;
@@ -500,9 +505,7 @@ iframe {
         /* padding-left:20%; */
         margin:auto;
     }
-    .back-vi {
-        /* margin-left: 44.7vw; */
-    }
+
     .forgotdiv {
         margin:auto;
     }
