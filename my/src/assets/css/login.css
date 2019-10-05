@@ -445,9 +445,8 @@ iframe {
 }
 
 .backdiv {
-    position: absolute;
-    z-index: 40;
-    margin-left: 8.2vw;
+    position: relative;
+    margin:auto;
 }
 
 .forgotdiv {
