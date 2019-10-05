@@ -16,10 +16,7 @@
         :value="value"
         @input="onChange($event)"
       ></v-select>
-      <div
-        v-else-if="inputType == 'date'"
-        class="date-row"
-      >
+      <div v-else-if="inputType == 'date'" class="date-row">
         <v-select
           v-for="(input,i) in dates"
           :key="i"
@@ -43,7 +40,7 @@ export default Vue.extend({
   data() {
     return {
       dates: [],
-    } as {dates: any};
+    } as { dates: any };
   },
   methods: {
     onChange(event) {
@@ -52,20 +49,59 @@ export default Vue.extend({
     },
     onDate(type: string, value: any) {
       if (type.toLowerCase() === 'year') {
-        this.$emit('input', firebase.firestore.Timestamp.fromDate(new Date(value, months.indexOf(this.dates[1].value), this.dates[2].value)));
+        this.$emit(
+          'input',
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              value,
+              months.indexOf(this.dates[1].value),
+              this.dates[2].value
+            )
+          )
+        );
       } else if (type.toLowerCase() === 'month') {
-        this.$emit('input', firebase.firestore.Timestamp.fromDate(new Date(this.dates[0].value, months.indexOf(value), this.dates[2].value)));
+        this.$emit(
+          'input',
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              this.dates[0].value,
+              months.indexOf(value),
+              this.dates[2].value
+            )
+          )
+        );
       } else {
-        this.$emit('input', firebase.firestore.Timestamp.fromDate(new Date(this.dates[0].value, months.indexOf(this.dates[1].value), value)));
+        this.$emit(
+          'input',
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              this.dates[0].value,
+              months.indexOf(this.dates[1].value),
+              value
+            )
+          )
+        );
       }
       this.requestUpdate();
     },
     updateDates() {
       if (this.inputType === 'date') {
         this.dates = [
-          { label: 'Year', options: years, value: new Date(this.value.toDate()).getFullYear() },
-          { label: 'Month', options: months, value: months[new Date(this.value.toDate()).getMonth()] },
-          { label: 'Day', options: days, value: new Date(this.value.toDate()).getDate() },
+          {
+            label: 'Year',
+            options: years,
+            value: new Date(this.value.toDate()).getFullYear(),
+          },
+          {
+            label: 'Month',
+            options: months,
+            value: months[new Date(this.value.toDate()).getMonth()],
+          },
+          {
+            label: 'Day',
+            options: days,
+            value: new Date(this.value.toDate()).getDate(),
+          },
         ];
       }
     },
@@ -100,10 +136,10 @@ export default Vue.extend({
 }
 
 .container {
-  color: white;
+  color: white !important;
   padding: 50px;
   text-align: center;
-  background-color: rgba(123, 131, 126, 0.2);
+  background-color: rgba(255, 255, 255, 0.15);
   border-radius: 50px;
   height: 400px;
   width: 50%;
@@ -112,8 +148,7 @@ export default Vue.extend({
 
 .field {
   margin: 80px auto;
-  color: lightgrey;
-  background: transparent;
+  color: white;
   border: transparent;
   width: 75%;
   font-size: 2.5em;
@@ -128,50 +163,52 @@ export default Vue.extend({
 
 @media only screen and (max-width: 850px) {
   .container {
-  color: white;
-  padding: 50px;
-  text-align: center;
-  background-color: rgba(53, 61, 56, 0.2);
-  border-radius: 50px;
-  height: 400px;
-  width: 80%;
-  margin: 50px auto;
+    color: white;
+    padding: 50px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    height: 400px;
+    width: 80%;
+    margin: 50px auto;
+  }
+  .question {
+    font-size: 2em;
+    font-weight: 300;
+    color: white;
+    margin: 50px;
+  }
 }
-.question {
-  font-size: 2em;
-  font-weight: 300;
-  color: white;
-  margin: 50px;
-}
-}
-.theme--light.v-input:not(.v-input--is-disabled) input, .theme--light.v-input:not(.v-input--is-disabled) textarea {
-    color: lightgrey !important;
+.theme--light.v-input:not(.v-input--is-disabled) input,
+.theme--light.v-input:not(.v-input--is-disabled) textarea {
+  color: white !important;
 }
 
 @media only screen and (max-width: 400px) {
   .container {
-  color: white;
-  padding: 50px;
-  text-align: center;
-  background-color: rgba(53, 61, 56, 0.452);
-  border-radius: 50px;
-  height: 400px;
-  width: 90%;
-  margin: 50px auto;
-}
-.question {
-  font-size: 1.5em;
-  font-weight: 300;
-  color: white;
-  margin: 20px;
-}
-.field {
-  margin: 100px auto;
-  background: transparent;
-  border: transparent;
-  width: 75%;
-  font-size: 1.5em;
-}
+    color: white;
+    padding: 50px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    height: 400px;
+    width: 90%;
+    margin: 50px auto;
+  }
+  .question {
+    font-size: 1.5em;
+    font-weight: 300;
+    color: white;
+    margin: 20px;
+  }
+  .field {
+    margin: 100px auto;
+    background: transparent;
+    border: transparent;
+    border-color: white;
+    width: 75%;
+    font-size: 1.5em;
+  }
 }
 </style>
 

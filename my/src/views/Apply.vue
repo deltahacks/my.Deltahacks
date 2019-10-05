@@ -1,20 +1,13 @@
 <template>
   <v-app class="background">
     <Nav />
-    <v-snackbar
-      top
-      right
-      :color="snack.color"
-      v-model="snack.visible"
-      :timeout="snack.timeout"
-    >
+    <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
       {{ snack.message }}
-      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
-        Close
-      </v-btn>
+      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
     </v-snackbar>
-    <form action="">
+    <form action>
       <Card
+        v-scroll-reveal
         class="card"
         v-for="(question, i) in questions"
         :key="i"
@@ -26,8 +19,8 @@
       />
     </form>
     <div class="action-buttons">
-    <v-btn large @click="resetApplication">RESET</v-btn>
-    <v-btn large @click="submitApp">Submit</v-btn>
+      <v-btn large @click="resetApplication">RESET</v-btn>
+      <v-btn large @click="submitApp">Submit</v-btn>
     </div>
   </v-app>
 </template>
@@ -40,6 +33,14 @@ import Card from '@/components/Card.vue';
 
 import { ApplicationModel, AppContents } from '../types';
 import { blankApplication } from '../data';
+import VueScrollReveal from 'vue-scroll-reveal';
+Vue.use(VueScrollReveal, {
+  class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
+  duration: 1000,
+  scale: 1.35,
+  distance: '10px',
+  mobile: true,
+});
 
 export default Vue.extend({
   data(): ApplicationModel {
@@ -196,48 +197,47 @@ export default Vue.extend({
 }
 
 .background {
-    background: linear-gradient(270deg, #1a7fc3, #39bc82);
-    background-size: 200% 200%;
-    -webkit-animation: animated 25s ease infinite;
-    -moz-animation: animated 25s ease infinite;
-    animation: animated 25s ease infinite;
+  background: linear-gradient(270deg, #1a7fc3, #39bc82);
+  background-size: 200% 200%;
+  -webkit-animation: animated 25s ease infinite;
+  -moz-animation: animated 25s ease infinite;
+  animation: animated 25s ease infinite;
 }
 
 @-webkit-keyframes animated {
-    0% {
-        background-position: 0% 50%
-    }
-    50% {
-        background-position: 100% 50%
-    }
-    100% {
-        background-position: 0% 50%
-    }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @-moz-keyframes animated {
-    0% {
-        background-position: 0% 50%
-    }
-    50% {
-        background-position: 100% 50%
-    }
-    100% {
-        background-position: 0% 50%
-    }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes animated {
-    0% {
-        background-position: 0% 50%
-    }
-    50% {
-        background-position: 100% 50%
-    }
-    100% {
-        background-position: 0% 50%
-    }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
 </style>
 
