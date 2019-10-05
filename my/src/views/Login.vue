@@ -63,7 +63,7 @@
           <!-- </v-btn> -->
           <div class="forgotdiv">
             <br />
-            <a class="forgot" v-on:click="counter=1">Forgot Pasnsword?</a>
+            <a class="forgot" v-on:click="counter=1">Forgot Password?</a>
           </div>
         </div>
         </template>
