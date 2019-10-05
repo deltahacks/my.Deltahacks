@@ -134,7 +134,7 @@ iframe {
 
 .spanText {
     margin:auto;
-    padding-top: 4vh;
+    padding-top: 7vh;
 }
 
 .txt1 {
@@ -273,6 +273,7 @@ iframe {
     box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.2);
     background: rgba(255, 255, 255, 0.25);
     text-align:center;
+    padding-bottom:2vh;
 }
 
 .sidebar {    
@@ -485,29 +486,11 @@ iframe {
         width: 90%;
         min-height: 50vh;
     }
-    .spanText{
-        /* margin-left:-5vh !important; */
-        /* padding-left:20%; */
-        margin:auto;
-        }
-    .txt1 {
-        font-size: 1.5em;
-        font-weight: 100;
-    }.txt1 {
-        font-size: 1.5em;
-        font-weight: 100;
-    }
     .login100-form {
         width: 100%;
     }
     .wrap-input100 {
         width: 80%;
-        /* padding-left:20%; */
-        margin:auto;
-    }
-
-    .forgotdiv {
-        margin:auto;
     }
     .container-login100-form-btn {
         /* padding-left:20%; */
