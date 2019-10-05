@@ -1,88 +1,60 @@
 <template>
-  <v-app>
+  <v-app class="background">
     <Nav />
-    <form action="">
+    <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
+      {{ snack.message }}
+      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
+    </v-snackbar>
+    <form action>
       <Card
+        v-scroll-reveal
         class="card"
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
+        :inputType="question.fieldType"
+        :selectData="question.selectData"
+        :requestUpdate="onFormChange"
         v-model="app[question.model[0]][question.model[1]]"
       />
     </form>
+    <div class="action-buttons">
+      <v-btn large @click="resetApplication">RESET</v-btn>
+      <v-btn large @click="submitApp">Submit</v-btn>
+    </div>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase from 'firebase';
-import { ApplicationModel, AppContents } from '../types';
-
+import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
-import Card from '../components/Card.vue';
+import Card from '@/components/Card.vue';
+
+import { ApplicationModel, AppContents } from '../types';
+import { blankApplication } from '../data';
+import VueScrollReveal from 'vue-scroll-reveal';
+Vue.use(VueScrollReveal, {
+  class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
+  duration: 1000,
+  scale: 1.35,
+  distance: '10px',
+  mobile: true,
+});
 
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: {
-        name: {
-          first: 'oi',
-          last: '',
-        },
-        contact: {
-          email: '',
-          phone: '',
-        },
-        first_submitted: new Date(),
-        academics: {
-          degree: '',
-          major: '',
-          graduating: '',
-          school: '',
-          year: '',
-        },
-        personal: {
-          birthday: new Date(),
-          gender: '',
-          race: '',
-        },
-        emergency: {
-          name: '',
-          phone: '',
-          relation: '',
-        },
-        documents: {
-          download_link: '',
-          filename: '',
-          id: '',
-        },
-        profiles: {
-          devpost: '',
-          github: '',
-          linkedin: '',
-          website: '',
-        },
-        responses: {
-          anything_else: '',
-          q1: '',
-          q2: '',
-          q3: '',
-          q4: '',
-          workshops: [],
-        },
-        logistics: {
-          discovered_by: '',
-          diet_restrictions: '',
-          shirt_size: '',
-          traveling_from: '',
-          hackathons_attended: 0,
-        },
-        resume: {
-          filename: '',
-          link: '',
-        },
-      },
+      app: blankApplication,
       questions: {},
+      updateTimeout: null,
+      snack: {
+        color: 'success',
+        btnColor: 'white',
+        timeout: 3000,
+        visible: false,
+        message: 'Progress saved!',
+      },
     };
   },
   components: {
@@ -91,13 +63,41 @@ export default Vue.extend({
   },
   methods: {
     // updates in progress application
-    updateAppProgress(): void {},
+    onFormChange() {
+      if (this.updateTimeout) clearTimeout(this.updateTimeout);
+      this.updateTimeout = setTimeout(() => {
+        this.snack.message = 'Progress saved!';
+        this.snack.color = 'success';
+        this.updateAppProgress();
+      }, 4000);
+    },
+
+    updateAppProgress(): void {
+      console.log('Updated!');
+      this.getDB()
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .doc(this.getUID())
+        .set(this.app);
+      this.snack.visible = true;
+    },
 
     // actually submits application
-    submitApp(): void {},
+    submitApp(): void {
+      this.app._.status = 'submitted';
+      this.snack.message = 'Application submitted';
+      this.snack.color = 'success';
+      this.updateAppProgress();
+    },
 
     // clears all fields in the application
-    resetApplication(): void {},
+    resetApplication(): void {
+      this.app = blankApplication as AppContents;
+      this.snack.message = 'Application reset!';
+      this.snack.color = 'warning';
+      this.updateAppProgress();
+    },
 
     // does what it says
     redirectAfterSubmit(): void {
@@ -110,22 +110,27 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection(this.$store.state.hackathon)
+        .collection('DH6')
         .doc('applications')
         .collection('all')
-        .doc('test@test.com')
+        .doc(this.getUID())
         .get();
     },
 
     // grabs current (logged in) users unique identifier
-    getUID: (): string | null => firebase.auth().currentUser!.email,
+    getUID: (): string => firebase.auth().currentUser!.email as string,
+    getDB(): firebase.firestore.Firestore {
+      return this.$store.state.db;
+    },
   },
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      //this.app = app.data() as AppContents;
+      if (app.data()) this.app = app.data() as AppContents;
+      console.log('Success');
     } catch (error) {
-      console.log('Error tying to fetch data: ', error);
+      // Create popup modal here warning user
+      console.log('Unable to fetch, trying again...');
     }
   },
   mounted(): void {
@@ -143,12 +148,13 @@ export default Vue.extend({
       },
       {
         label: "What's your birthday?",
-        fieldType: 'text',
+        fieldType: 'date',
         model: ['personal', 'birthday'],
       },
       {
         label: 'Where do you study?',
-        fieldType: 'text',
+        fieldType: 'single-select',
+        selectData: ['Waterloo', 'McMaster'],
         model: ['academics', 'school'],
       },
       {
@@ -171,6 +177,11 @@ export default Vue.extend({
         fieldType: 'text',
         model: ['academics', 'graduating'],
       },
+      {
+        label: 'This is a test',
+        fieldType: 'date',
+        model: ['personal', 'birthday'],
+      },
     ];
   },
 });
@@ -179,6 +190,54 @@ export default Vue.extend({
 <style scoped>
 .card {
   margin: 10px 10px 10px 10px;
+}
+
+.action-buttons {
+  margin: 0 auto;
+}
+
+.background {
+  background: linear-gradient(270deg, #1a7fc3, #39bc82);
+  background-size: 200% 200%;
+  -webkit-animation: animated 25s ease infinite;
+  -moz-animation: animated 25s ease infinite;
+  animation: animated 25s ease infinite;
+}
+
+@-webkit-keyframes animated {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-moz-keyframes animated {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes animated {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 </style>
 

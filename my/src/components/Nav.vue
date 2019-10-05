@@ -3,8 +3,10 @@
     <v-toolbar-title id="title">
       <img src="@/assets/logo.png" height="47px" alt="DeltaHacks Logo" />
     </v-toolbar-title>
-    <a href="/status" class="button button-hide">STATUS</a>&ensp;
-    <a href="/apply" class="button button-hide">APPLY</a>&ensp;
+    <a href="/status" class="button button-hide">STATUS</a>
+    &ensp;
+    <a href="/apply" class="button button-hide">APPLY</a>
+    &ensp;
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
@@ -27,7 +29,8 @@
         </v-list>
       </v-menu>
     </div>
-    <a @click.prevent="logout" class="button button-hide">LOGOUT</a>&ensp;
+    <a @click.prevent="logout" class="button button-hide">LOGOUT</a>
+    &ensp;
     <div class="text-xs-center mobile" style="margin-right:-40px;">
       <v-menu offset-y>
         <v-btn flat slot="activator" class="button" right>Menu</v-btn>
@@ -54,7 +57,7 @@ import firebase from 'firebase';
 export default Vue.extend({
   name: 'Navbar',
   components: {},
-  data(): {uid: firebase.User | null} {
+  data(): { uid: firebase.User | null } {
     return {
       uid: firebase.auth().currentUser,
     };
@@ -70,8 +73,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    uppercaseID() {
-      return this.uid.email.toUpperCase();
+    uppercaseID(): string {
+      return this.uid ? this.uid.email!.toUpperCase() : '';
     },
   },
 });
