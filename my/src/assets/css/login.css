@@ -133,7 +133,7 @@ iframe {
 [ Welcome Header ]*/
 
 .spanText {
-    padding-left:33%;
+    margin:auto;
     padding-top: 4vh;
 }
 
@@ -167,6 +167,10 @@ iframe {
     font-weight: 300;
     text-decoration: none;
     color: white;
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: break-all;
+    white-space: normal;
 }
 
 @media only screen and (max-width: 500px) {
@@ -260,10 +264,11 @@ iframe {
     width: 38vw;
     min-height: 54vh;
     padding-top: 1vh;
-    padding-right: 1vw;
+    /* padding-right: 1vw; */
     border-radius: 50px;
     box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.2);
     background: rgba(255, 255, 255, 0.25);
+    text-align:center;
 }
 
 .sidebar {
@@ -287,7 +292,7 @@ iframe {
     width: 50%;
     position: absolute;
     bottom: 0;
-    margin-left: 18.9vw;
+    /* margin-left: 18.9vw; */
     float: right;
     opacity: 0.1;
     -webkit-user-select: none;
@@ -331,12 +336,13 @@ iframe {
 [ Input ]*/
 
 .wrap-input100 {
-    width: 30vw;
+    width: 20vw;
     position: relative;
     font-family: "Open Sans";
     color: white;
-    padding-left:25%;
+    /* padding-left:25%; */
     /* margin-right:-35%; */
+    margin:auto;
 }
 
 .input100 {
@@ -357,8 +363,9 @@ iframe {
 
 .container-login100-form-btn {
     padding: 5px;
-    padding-left:23%;
+    /* padding-left:23%; */
     width: 100%;
+    margin:auto;
     /* display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -395,13 +402,13 @@ iframe {
 } */
 
 .forgot100-btn {
-    padding-left: 15%;
+    margin:auto;
 }
 
 .login100-btn {
     position: relative;
     font-family: "Open Sans";
-    width: 35%;
+    width: 25%;
     height: 5vh;
     outline: none;
     margin-top: 17px;
@@ -439,9 +446,9 @@ iframe {
 }
 
 .forgotdiv {
-    position: absolute;
-    z-index: 40;
-    margin-left: 17%;
+    position: relative;
+    /* z-index: 40; */
+    margin:auto;
 }
 
 .forgot {
@@ -454,6 +461,7 @@ iframe {
     text-align: center;
     text-decoration: none;
     text-transform: none;
+    margin:auto;
 }
 
 .login100-form-btn:hover {
@@ -465,7 +473,6 @@ iframe {
     .sidebar{
         width:75vw;
         padding-left:13vw;
-
         margin-top:5vh;
         margin-bottom:5vh;
     }
@@ -475,18 +482,13 @@ iframe {
     }
     .spanText{
         /* margin-left:-5vh !important; */
-        padding-left:20%;
+        /* padding-left:20%; */
+        margin:auto;
         }
     .txt1 {
-        
         font-size: 1.5em;
         font-weight: 100;
     }.txt1 {
-        
-        font-size: 1.5em;
-        font-weight: 300;
-    }.txt1 {
-        
         font-size: 1.5em;
         font-weight: 100;
     }
@@ -495,16 +497,19 @@ iframe {
     }
     .wrap-input100 {
         width: 80%;
-        padding-left:20%;
+        /* padding-left:20%; */
+        margin:auto;
     }
     .back-vi {
-        margin-left: 44.7vw;
+        /* margin-left: 44.7vw; */
     }
     .forgotdiv {
-        margin-left: 10%;
+        margin:auto;
     }
     .container-login100-form-btn {
-        padding-left:20%;}
+        /* padding-left:20%; */
+        margin:auto;
+    }
 }
 
 @-webkit-keyframes animated {
