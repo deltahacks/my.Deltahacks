@@ -1,9 +1,17 @@
 <template>
   <v-app class="background">
     <Nav />
-    <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
+    <v-snackbar
+      top
+      right
+      :color="snack.color"
+      v-model="snack.visible"
+      :timeout="snack.timeout"
+    >
       {{ snack.message }}
-      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
+      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+        Close
+      </v-btn>
     </v-snackbar>
     <form action>
       <Card
@@ -32,7 +40,7 @@ import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 
 import { ApplicationModel, AppContents } from '../types';
-import { blankApplication } from '../data';
+import { blankApplication, applicationQuestions } from '../data';
 import VueScrollReveal from 'vue-scroll-reveal';
 Vue.use(VueScrollReveal, {
   class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
@@ -45,7 +53,64 @@ Vue.use(VueScrollReveal, {
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: blankApplication,
+      app: {
+        name: {
+          first: '',
+          last: '',
+        },
+        contact: {
+          email: '',
+          phone: '',
+        },
+        first_submitted: new Date(),
+        academics: {
+          degree: '',
+          major: '',
+          graduating: '',
+          school: '',
+          year: '',
+        },
+        personal: {
+          birthday: new Date(),
+          gender: '',
+          race: '',
+        },
+        emergency: {
+          name: '',
+          phone: '',
+          relation: '',
+        },
+        documents: {
+          download_link: '',
+          filename: '',
+          id: '',
+        },
+        profiles: {
+          devpost: '',
+          github: '',
+          linkedin: '',
+          website: '',
+        },
+        responses: {
+          anything_else: '',
+          q1: '',
+          q2: '',
+          q3: '',
+          q4: '',
+          workshops: [],
+        },
+        logistics: {
+          discovered_by: '',
+          diet_restrictions: '',
+          shirt_size: '',
+          traveling_from: '',
+          hackathons_attended: 0,
+        },
+        resume: {
+          filename: '',
+          link: '',
+        },
+      },
       questions: {},
       updateTimeout: null,
       snack: {
@@ -135,54 +200,7 @@ export default Vue.extend({
   },
   mounted(): void {
     // populate autofill data here
-    this.questions = [
-      {
-        label: "What's your first name?",
-        fieldType: 'text',
-        model: ['name', 'first'],
-      },
-      {
-        label: 'And your last name?',
-        fieldType: 'text',
-        model: ['name', 'last'],
-      },
-      {
-        label: "What's your birthday?",
-        fieldType: 'date',
-        model: ['personal', 'birthday'],
-      },
-      {
-        label: 'Where do you study?',
-        fieldType: 'single-select',
-        selectData: ['Waterloo', 'McMaster'],
-        model: ['academics', 'school'],
-      },
-      {
-        label: 'And what do you study?',
-        fieldType: 'text',
-        model: ['academics', 'major'],
-      },
-      {
-        label: 'What degree are you pursuing?',
-        fieldType: 'multi-select',
-        model: ['academics', 'degree'],
-      },
-      {
-        label: 'What year are you in?',
-        fieldType: 'text',
-        model: ['academics', 'year'],
-      },
-      {
-        label: 'And when do you expect to graduate?',
-        fieldType: 'text',
-        model: ['academics', 'graduating'],
-      },
-      {
-        label: 'This is a test',
-        fieldType: 'date',
-        model: ['personal', 'birthday'],
-      },
-    ];
+    this.questions = applicationQuestions;
   },
 });
 </script>
