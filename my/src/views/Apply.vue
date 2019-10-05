@@ -1,9 +1,17 @@
 <template>
   <v-app class="background">
     <Nav />
-    <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
+    <v-snackbar
+      top
+      right
+      :color="snack.color"
+      v-model="snack.visible"
+      :timeout="snack.timeout"
+    >
       {{ snack.message }}
-      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
+      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+        Close
+      </v-btn>
     </v-snackbar>
     <form action>
       <Card
@@ -45,7 +53,64 @@ Vue.use(VueScrollReveal, {
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: blankApplication,
+      app: {
+        name: {
+          first: '',
+          last: '',
+        },
+        contact: {
+          email: '',
+          phone: '',
+        },
+        first_submitted: new Date(),
+        academics: {
+          degree: '',
+          major: '',
+          graduating: '',
+          school: '',
+          year: '',
+        },
+        personal: {
+          birthday: new Date(),
+          gender: '',
+          race: '',
+        },
+        emergency: {
+          name: '',
+          phone: '',
+          relation: '',
+        },
+        documents: {
+          download_link: '',
+          filename: '',
+          id: '',
+        },
+        profiles: {
+          devpost: '',
+          github: '',
+          linkedin: '',
+          website: '',
+        },
+        responses: {
+          anything_else: '',
+          q1: '',
+          q2: '',
+          q3: '',
+          q4: '',
+          workshops: [],
+        },
+        logistics: {
+          discovered_by: '',
+          diet_restrictions: '',
+          shirt_size: '',
+          traveling_from: '',
+          hackathons_attended: 0,
+        },
+        resume: {
+          filename: '',
+          link: '',
+        },
+      },
       questions: {},
       updateTimeout: null,
       snack: {
@@ -178,9 +243,34 @@ export default Vue.extend({
         model: ['academics', 'graduating'],
       },
       {
-        label: 'This is a test',
-        fieldType: 'date',
-        model: ['personal', 'birthday'],
+        label: 'Which ethnic background do you identify with?',
+        fieldType: 'text',
+        model: ['personal', 'race'],
+      },
+      {
+        label: "What's your LinkedIn?",
+        fieldType: 'text',
+        model: ['profiles', 'linkedin'],
+      },
+      {
+        label: "What's your personal website?",
+        fieldType: 'text',
+        model: ['profiles', 'website'],
+      },
+      {
+        label: 'Devpost?',
+        fieldType: 'text',
+        model: ['profiles', 'devpost'],
+      },
+      {
+        label: 'Link us to any other profiles you have',
+        fieldType: 'text',
+        model: ['profiles', 'devpost'],
+      },
+      {
+        label: 'What number can we reach you at?',
+        fieldType: 'text',
+        model: ['contact', 'phone'],
       },
     ];
   },
