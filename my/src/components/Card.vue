@@ -27,12 +27,10 @@
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
-        <input type="radio" name="size" id="size_1" value="small" />
-        <label for="size_1">Male</label>
-        <input type="radio" name="size" id="size_2" value="small" />
-        <label for="size_2">Female</label>
-        <input type="radio" name="size" id="size_3" value="small" />
-        <label for="size_3">Other</label>
+        <span v-for="(data, i) in selectData" :key="i">
+          <input type="radio" name="inputs" :id="data" :value="data" />
+          <label :for="data">{{ data }}</label>
+        </span>
       </div>
     </div>
   </div>
