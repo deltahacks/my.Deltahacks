@@ -19,8 +19,8 @@
       />
     </form>
     <div class="action-buttons">
-      <v-btn large @click="resetApplication">RESET</v-btn>
-      <v-btn large @click="submitApp">Submit</v-btn>
+      <!-- <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn> -->
+      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
     </div>
   </v-app>
 </template>
@@ -146,6 +146,10 @@ export default Vue.extend({
         fieldType: 'text',
         model: ['name', 'last'],
       },
+      // {
+      //   label: 'What is your gender?',
+      //   fieldType: 'radio-select',
+      // },
       {
         label: "What's your birthday?",
         fieldType: 'date',
@@ -164,7 +168,8 @@ export default Vue.extend({
       },
       {
         label: 'What degree are you pursuing?',
-        fieldType: 'multi-select',
+        fieldType: 'radio-select',
+        selectData: ['Male', 'Female', 'Other'],
         model: ['academics', 'degree'],
       },
       {
@@ -192,8 +197,28 @@ export default Vue.extend({
   margin: 10px 10px 10px 10px;
 }
 
+.act-btn {
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  font-family: Montserrat;
+  opacity: 0.99;
+  padding: 10px 42%;
+  color: white;
+  border-radius: 30px;
+  margin-right: 20px !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  transition: 0.1s ease-in-out;
+  cursor: pointer;
+  z-index: 10000;
+}
+
 .action-buttons {
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
+}
+
+v-snackbar {
+  background-color: red !important;
 }
 
 .background {

@@ -26,6 +26,14 @@
           v-model="input.value"
         ></v-select>
       </div>
+      <div v-else-if="inputType == 'radio-select'" class="radio-row">
+        <input type="radio" name="size" id="size_1" value="small" />
+        <label for="size_1">Male</label>
+        <input type="radio" name="size" id="size_2" value="small" />
+        <label for="size_2">Female</label>
+        <input type="radio" name="size" id="size_3" value="small" />
+        <label for="size_3">Other</label>
+      </div>
     </div>
   </div>
 </template>
@@ -156,9 +164,44 @@ export default Vue.extend({
   text-align: center !important;
 }
 
+.field.v-text-field {
+  color: red;
+}
+
 .field:focus {
   outline: none;
   /*   border-bottom: 2px solid white; */
+}
+
+.radio-row heading {
+  text-align: center;
+  font-size: 0.8em;
+}
+.radio-row {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.radio-row input[type='radio'] {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+.radio-row label {
+  margin: 0 2%;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  background-color: #454545;
+  color: white;
+  padding: 20px 40px;
+  border-radius: 3px;
+  transition: all 0.3s ease-out;
+}
+.radio-row input[type='radio']:checked + label {
+  background-color: #58ba83;
 }
 
 @media only screen and (max-width: 850px) {
