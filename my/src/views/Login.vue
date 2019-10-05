@@ -18,8 +18,8 @@
         <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
         </span>-->
-        <template v-if="counter === 0">
         <img src="../assets/vi.png" draggable="false" class="back-vi" />
+        <template v-if="counter === 0">
         <div class="spanText">
           <span class="txt1">my</span>
           <span class="txt2">Delta</span>
@@ -67,8 +67,7 @@
           </div>
         </div>
         </template>
-        <template v-else-if="counter === 1">
-             <img src="../assets/vi.png" draggable="false" class="back-vi"/>
+                     <template v-else-if="counter === 1">
             <div class="spanText">
             <span class="txt1">
               Forgot </span><span class="txt2">Pass</span><span class="txt3">word
@@ -89,7 +88,7 @@
             Submit
         </button>
           </div>
-                 <div class="backdiv">
+                 <div class="forgotdiv">
                    <br>
             <a class="forgot"  v-on:click="counter=0">
                 <i class="fas fa-arrow-left" /> Go Back
