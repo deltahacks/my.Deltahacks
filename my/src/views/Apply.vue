@@ -40,7 +40,7 @@ import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 
 import { ApplicationModel, AppContents } from '../types';
-import { blankApplication } from '../data';
+import { blankApplication, applicationQuestions } from '../data';
 import VueScrollReveal from 'vue-scroll-reveal';
 Vue.use(VueScrollReveal, {
   class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
@@ -200,79 +200,7 @@ export default Vue.extend({
   },
   mounted(): void {
     // populate autofill data here
-    this.questions = [
-      {
-        label: "What's your first name?",
-        fieldType: 'text',
-        model: ['name', 'first'],
-      },
-      {
-        label: 'And your last name?',
-        fieldType: 'text',
-        model: ['name', 'last'],
-      },
-      {
-        label: "What's your birthday?",
-        fieldType: 'date',
-        model: ['personal', 'birthday'],
-      },
-      {
-        label: 'Where do you study?',
-        fieldType: 'single-select',
-        selectData: ['Waterloo', 'McMaster'],
-        model: ['academics', 'school'],
-      },
-      {
-        label: 'And what do you study?',
-        fieldType: 'text',
-        model: ['academics', 'major'],
-      },
-      {
-        label: 'What degree are you pursuing?',
-        fieldType: 'multi-select',
-        model: ['academics', 'degree'],
-      },
-      {
-        label: 'What year are you in?',
-        fieldType: 'text',
-        model: ['academics', 'year'],
-      },
-      {
-        label: 'And when do you expect to graduate?',
-        fieldType: 'text',
-        model: ['academics', 'graduating'],
-      },
-      {
-        label: 'Which ethnic background do you identify with?',
-        fieldType: 'text',
-        model: ['personal', 'race'],
-      },
-      {
-        label: "What's your LinkedIn?",
-        fieldType: 'text',
-        model: ['profiles', 'linkedin'],
-      },
-      {
-        label: "What's your personal website?",
-        fieldType: 'text',
-        model: ['profiles', 'website'],
-      },
-      {
-        label: 'Devpost?',
-        fieldType: 'text',
-        model: ['profiles', 'devpost'],
-      },
-      {
-        label: 'Link us to any other profiles you have',
-        fieldType: 'text',
-        model: ['profiles', 'devpost'],
-      },
-      {
-        label: 'What number can we reach you at?',
-        fieldType: 'text',
-        model: ['contact', 'phone'],
-      },
-    ];
+    this.questions = applicationQuestions;
   },
 });
 </script>
