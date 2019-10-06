@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import {AppContents} from './types';
+import { AppContents } from './types';
 
 /* eslint-disable import/prefer-default-export */
 export const blankApplication: AppContents = {

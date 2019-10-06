@@ -165,6 +165,7 @@ export interface SignupModel {
 }
 
 export interface LoginModel {
+  counter: number;
   drawer: null;
   email: null | string;
   pass: null | string;

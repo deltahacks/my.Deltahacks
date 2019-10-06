@@ -57,35 +57,29 @@ export default Vue.extend({
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              value,
-              months.indexOf(this.dates[1].value),
-              this.dates[2].value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            value,
+            months.indexOf(this.dates[1].value),
+            this.dates[2].value,
+          )),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(value),
-              this.dates[2].value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(value),
+            this.dates[2].value,
+          )),
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(this.dates[1].value),
-              value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(this.dates[1].value),
+            value,
+          )),
         );
       }
       this.requestUpdate();
