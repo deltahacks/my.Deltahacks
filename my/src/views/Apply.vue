@@ -1,5 +1,5 @@
 <template>
-  <v-app class="background">
+  <div class="background">
     <Nav />
     <v-snackbar
       top
@@ -15,8 +15,8 @@
     </v-snackbar>
     <form action>
       <Card
-        v-scroll-reveal
         class="card"
+        v-scroll-reveal
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
@@ -30,7 +30,7 @@
       <!-- <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn> -->
       <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script lang="ts">
@@ -151,7 +151,7 @@ export default Vue.extend({
 
 <style scoped>
 .card {
-  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
 }
 
 .act-btn {
@@ -179,8 +179,13 @@ v-snackbar {
 }
 
 .background {
+  width: 100% !important;
+  min-width: 100vw;
+  height: 100%;
+  background-size: cover;
   background: linear-gradient(270deg, #1a7fc3, #39bc82);
-  background-size: 200% 200%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   -webkit-animation: animated 25s ease infinite;
   -moz-animation: animated 25s ease infinite;
   animation: animated 25s ease infinite;
