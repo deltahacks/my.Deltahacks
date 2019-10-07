@@ -1,6 +1,9 @@
 #title {
   font-family: "Roboto", Helvetica, sans-serif;
   font-weight: 700;
+  color: white;
+  margin-left: 60px;
+  display: inline-block;
 }
 #search {
   width: 300px;
@@ -63,4 +66,34 @@
   .button-hide {
     display: none;
   }
+}
+
+.rounded-box {
+  border-radius: 45px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  height: 80px;
+  margin: 50px;
+  background: linear-gradient( 
+    90deg,
+    #1EB8C9,
+    #1EB8C9 20px,
+    #EF4D67 20px,
+    #EF4D67 40px,
+    #FBD966 40px,
+    #FBD966 60px,
+    rgba(255, 255, 255, 0.2) 60px,
+    rgba(255, 255, 255, 0.2) 80px);
+}
+
+.heading{
+  font-family: "Roboto", Helvetica, sans-serif;
+  font-weight: 700;
+  color: white;
+  margin-left: 60px;
+  display: inline-block;
+}
+
+#name {
+  float: right;
 }

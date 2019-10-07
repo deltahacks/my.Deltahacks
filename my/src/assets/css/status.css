@@ -385,3 +385,49 @@ iframe {
   font: inherit;
   color: #15488a;
 }
+
+.gradient-background {
+  background-image: linear-gradient(-90deg, #8E65A9, #B97C68);
+}
+
+.grid-container {
+  margin: 0 30px 0 30px;
+  display: grid;
+  grid-template-columns: repeat(12, 4fr)
+}
+
+.welcome {
+  grid-column: span 6;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 10px 10px 10px 30px;
+}
+
+.welcome p {
+  color: white;
+  font-family: "Roboto", Helvetica, sans-serif;
+  margin-left: 50px;
+}
+
+.big {
+  font-size: 85px;
+  font-weight: 500;
+  margin-bottom: 0px;
+}
+
+.small {
+  font-size: 22px;
+  line-height: 1.2em;
+  font-weight: 200;
+  margin-bottom: 50px;
+  margin-right: 20px;
+}
+
+.pic {
+  grid-column: span 6;
+  border-radius: 40px;
+  background: black;
+  padding: 10px;
+  margin: 10px 30px 10px 10px;
+  height: 500ps;
+}

@@ -1,17 +1,7 @@
 <template>
-  <v-app class="dashboard gradient-background">
+  <v-app class="dashboard background">
     <!-- <Navigation class="mobile"/> -->
-    <Navbar2 />
-    <div class="grid-container">
-      <div class="welcome">
-        <p class="big">Welcome.</p>
-        <p class="small">Be a part of the hackathon for change.
-          We are looking forward to being able to meet with you in person.
-          Good luck with your application!</p>
-      </div>
-      <div class="pic">
-        </div>
-    </div>
+    <Navbar2 class="navbar1" />
     <div class="container-status100">
       <div class="hide">
         <!-- RSVP Section (not on mobile! need to add) -->
@@ -325,7 +315,6 @@
 import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
-import Card from '@/components/Card.vue';
 import Vue from 'vue';
 import { auth } from 'firebase';
 import { validationMixin } from 'vuelidate';
