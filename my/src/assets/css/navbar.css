@@ -84,6 +84,7 @@
     #FBD966 60px,
     rgba(255, 255, 255, 0.2) 60px,
     rgba(255, 255, 255, 0.2) 80px);
+  z-index: 1;
 }
 
 .heading{
@@ -96,4 +97,13 @@
 
 #name {
   float: right;
+}
+
+.rounded-logout {
+  border-radius: 45px;
+  background: rgba(255, 255, 255, 0.1);
+  background-color: red;
+  height: 80px;
+  z-index:0;
+  width:300px;
 }

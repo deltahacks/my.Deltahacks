@@ -1,10 +1,15 @@
 <template>
-  <div class="rounded-box">
-    <h1 id="title" class="heading">
-      Delta<span style="font-weight: 300">Hacks</span> VI
-    </h1>
-    <h1 id="name" class="heading">First<span style="font-weight: 300">Last</span></h1>
-    <!-- <a @click.prevent="logout" class="button button-hide">LOGOUT</a> -->
+  <div>
+    <div class="rounded-box">
+      <h1 id="title" class="heading">
+        Delta<span style="font-weight: 300">Hacks</span> VI
+      </h1>
+      <h1 id="name" class="heading">First<span style="font-weight: 300">Last</span></h1>
+      <!-- <a @click.prevent="logout" class="button button-hide">LOGOUT</a> -->
+    </div>
+    <div class="rounded-logout">
+      
+    </div>
   </div>
 
 </template>
