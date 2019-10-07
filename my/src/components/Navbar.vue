@@ -14,8 +14,7 @@
     <v-spacer></v-spacer>
     <div class="text-xs-center mobile">
       <v-menu offset-y>
-        <v-btn flat slot="activator" right>Menu</v-btn>
-&ensp;
+        <v-btn flat slot="activator" right>Menu</v-btn>&ensp;
         <v-list>
           <v-list-tile to="/stats">
             <v-list-tile-title v-if="c_user">Statistics</v-list-tile-title>
