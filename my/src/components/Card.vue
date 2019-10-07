@@ -1,5 +1,5 @@
 <template>
-  <div class="background">
+  <div>
     <div class="container">
       <h1 class="question" id="title1">{{ title }}</h1>
       <v-text-field
