@@ -70,10 +70,9 @@
 
 .rounded-box {
   border-radius: 45px;
-  background: rgba(255, 255, 255, 0.2);
   padding: 20px;
   height: 80px;
-  margin: 50px;
+  width: 90%;
   background: linear-gradient( 
     90deg,
     #1EB8C9,
@@ -84,7 +83,6 @@
     #FBD966 60px,
     rgba(255, 255, 255, 0.2) 60px,
     rgba(255, 255, 255, 0.2) 80px);
-  z-index: 1;
 }
 
 .heading{
@@ -99,11 +97,20 @@
   float: right;
 }
 
-.rounded-logout {
+#nav-box {
   border-radius: 45px;
   background: rgba(255, 255, 255, 0.1);
-  background-color: red;
   height: 80px;
-  z-index:0;
-  width:300px;
+  margin: 50px;
+  box-shadow: 5px 7px rgba(0,0,0, 0.1);
+  display: inline-block;
+}
+
+#logout {
+  float: right;
+  font-family: "Roboto", Helvetica, sans-serif;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 100px;
+  
 }
