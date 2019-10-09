@@ -505,7 +505,7 @@ iframe {
 
 .login100-btn:active {
   color: white;
-  background-color: rgb(236, 240, 241, 1);
+  background-color: rgb(236, 240, 241, 0.6);
   transition: 0.2s;
 }
 
