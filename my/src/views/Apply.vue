@@ -49,6 +49,7 @@ Vue.use(VueScrollReveal, {
   scale: 1.35,
   distance: '10px',
   mobile: true,
+  reset: true,
 });
 
 export default Vue.extend({
