@@ -76,28 +76,50 @@ export const applicationQuestions: any = [
     label: "What's your first name?",
     fieldType: 'text',
     model: ['name', 'first'],
+    name: 'first name',
+    requirements: {
+      required: true
+    }
   },
   {
     label: 'And your last name?',
     fieldType: 'text',
     model: ['name', 'last'],
+    name: 'last name',
+    requirements: {
+      required: true
+    }
   },
   {
     label: "What's your birthday?",
     fieldType: 'date',
     model: ['personal', 'birthday'],
+    name: 'birthday',
+    requirements: {
+      required: true
+    }
   },
   {
     label: "What's your gender?",
     fieldType: 'radio-select',
     selectData: ['Male', 'Female', 'Other'],
     model: ['personal', 'gender'],
+    name: 'gender',
+    requirements: {
+      required: true,
+      oneOf: ['Male', 'Female', 'Other']
+    }
   },
   {
     label: 'Where do you study?',
     fieldType: 'single-select',
     selectData: ['Waterloo', 'McMaster'],
     model: ['academics', 'school'],
+    name: 'school',
+    requirements: {
+      required: true,
+      oneOf: ['Waterloo', 'McMaster']
+    }
   },
   {
     label: 'And what do you study?',
@@ -153,6 +175,10 @@ export const applicationQuestions: any = [
     label: 'Do you have any dietary restrictions??',
     fieldType: 'text',
     model: ['logistics', 'diet_restrictions'],
+    name: 'dietary restrictions',
+    requirements: {
+      required: true
+    }
   },
   {
     label: 'Which size shirt do you wear?',

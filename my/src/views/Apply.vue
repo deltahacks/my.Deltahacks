@@ -20,10 +20,13 @@
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
+        :name="question.name || question.label"
         :inputType="question.fieldType"
         :selectData="question.selectData"
         :requestUpdate="onFormChange"
         v-model="app[question.model[0]][question.model[1]]"
+        v-validate="question.requirements"
+        :error="errors.first(question.name)"
       />
     </form>
     <div class="action-buttons">
@@ -39,6 +42,7 @@ import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
+import VeeValidate from 'vee-validate'
 
 import { ApplicationModel, AppContents } from '../types';
 import { blankApplication, applicationQuestions } from '../data';
@@ -50,6 +54,8 @@ Vue.use(VueScrollReveal, {
   distance: '10px',
   mobile: true,
 });
+
+Vue.use(VeeValidate);
 
 export default Vue.extend({
   data(): ApplicationModel {
@@ -93,7 +99,9 @@ export default Vue.extend({
     },
 
     // actually submits application
-    submitApp(): void {
+    async submitApp(): Promise<void> {
+      const x = await this.$validator.validateAll();
+      debugger
       this.app._.status = 'submitted';
       this.snack.message = 'Application submitted';
       this.snack.color = 'success';
@@ -114,7 +122,9 @@ export default Vue.extend({
     },
 
     // validates all fields before submission
-    validateBeforeSubmit(): void {},
+    validateBeforeSubmit(): void {
+      debugger
+    },
 
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {

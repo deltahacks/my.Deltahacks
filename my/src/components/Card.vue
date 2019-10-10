@@ -7,6 +7,7 @@
         class="field red--text"
         :value="value"
         @input="onChange($event)"
+        :error-messages="error"
       ></v-text-field>
       <v-select
         v-else-if="inputType == 'single-select'"
@@ -42,7 +43,7 @@ import firebase from 'firebase';
 import { months, years, days } from '../data';
 
 export default Vue.extend({
-  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData'],
+  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData', 'error'],
   data() {
     return {
       dates: [],
