@@ -60,12 +60,19 @@ export interface AppContents {
     diet_restrictions: string;
     shirt_size: shirt_size;
     traveling_from: string;
+    reimbursement: string;
     hackathons_attended: number;
   };
   resume: {
     filename: string;
     link: string;
   };
+  general: {
+    coffee: string;
+    team: string;
+    terms: string;
+    code: string;
+  }
 }
 
 export interface AppPrivate {
