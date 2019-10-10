@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <Nav />
+    <!-- <Nav /> -->
     <v-snackbar
       top
       right
@@ -26,9 +26,9 @@
         v-model="app[question.model[0]][question.model[1]]"
       />
     </form>
-    <div class="action-buttons">
-      <!-- <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn> -->
-      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
+    <div class="text-xs-center">
+      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn> <br>
+      <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn>
     </div>
   </div>
 </template>
@@ -161,19 +161,17 @@ export default Vue.extend({
   text-decoration: none;
   font-family: Montserrat;
   opacity: 0.99;
-  padding: 10px 42%;
+  padding: 10px 23%;
   color: white;
   border-radius: 30px;
-  margin-right: 20px !important;
   background-color: rgba(255, 255, 255, 0.15) !important;
   transition: 0.1s ease-in-out;
   cursor: pointer;
   z-index: 10000;
+  margin: 10px auto;
 }
 
-.action-buttons {
-  margin: 0 auto 50px auto;
-}
+
 
 v-snackbar {
   background-color: red !important;
@@ -192,40 +190,5 @@ v-snackbar {
   animation: animated 25s ease infinite;
 }
 
-/* @-webkit-keyframes animated {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@-moz-keyframes animated {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes animated {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-} */
 </style>
 
