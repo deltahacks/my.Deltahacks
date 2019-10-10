@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <!-- <Nav /> -->
+    <Nav />
     <v-snackbar
       top
       right
