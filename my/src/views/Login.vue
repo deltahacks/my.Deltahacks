@@ -19,6 +19,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
         </span>-->
         <img src="../assets/vi.png" draggable="false" class="back-vi" />
+        <div class="bigdiv">
         <template v-if="counter === 0">
           <div class="spanText">
             <span class="txt1">my</span>
@@ -106,6 +107,7 @@
             </a>
           </div>
         </template>
+        </div>
       </form>
     </div>
   </div>

@@ -130,7 +130,6 @@ iframe {
 
 .spanText {
   margin: auto;
-  padding-top: 7vh;
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 2s; /* Firefox < 16 */
   -ms-animation: fadein 2s; /* Internet Explorer */
@@ -275,8 +274,16 @@ iframe {
   border-radius: 50px;
   box-shadow: 1px 0px 2px 0px rgba(0, 0, 0, 0.2);
   background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   text-align: center;
-  padding-bottom: 2vh;
+}
+
+.bigdiv{
+  padding-top:20px;
+  padding-bottom:20px;
 }
 
 @keyframes fadein {
@@ -349,7 +356,7 @@ iframe {
   width: 50%;
   position: absolute;
   bottom: 0;
-  /* margin-left: 18.9vw; */
+  margin-left: 9.5vw;
   float: right;
   opacity: 0.1;
   -webkit-user-select: none;
@@ -472,7 +479,7 @@ iframe {
 .login100-btn {
   position: relative;
   font-family: "Open Sans";
-  width: 25%;
+  width: 9vw;
   height: 5vh;
   outline: none;
   margin-top: 17px;
@@ -488,8 +495,8 @@ iframe {
   transition: 0.1s ease-in-out;
   cursor: pointer;
   -webkit-appearance: none;
-  margin-right: 0.8vw;
-  margin-left: 0.8vw;
+  margin-right: 0.5vw;
+  margin-left: 0.5vw;
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 2s; /* Firefox < 16 */
   -ms-animation: fadein 2s; /* Internet Explorer */
@@ -554,6 +561,7 @@ iframe {
   .sidebar {
     margin-top: 5vh;
     margin-bottom: 5vh;
+    
   }
   .card {
     margin: auto;
@@ -577,6 +585,9 @@ iframe {
     display: block;
     margin: 2.5vh auto;
     width: 50%;
+  }
+  .back-vi {
+    margin-left: 22.3vw;
   }
 }
 
