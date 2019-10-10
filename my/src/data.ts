@@ -447,14 +447,22 @@ export const blankApplication: AppContents = {
 
 export const applicationQuestions: any = [
   {
-    label: "What's your first name?",
+    label: "What's your first name?*",
     fieldType: 'text',
     model: ['name', 'first'],
+    name: 'first name',
+    requirements: {
+      required: true,
+    }
   },
   {
-    label: 'And your last name?',
+    label: 'And your last name?*',
     fieldType: 'text',
     model: ['name', 'last'],
+    name: 'last name',
+    requirements: {
+      required: true,
+    }
   },
   {
     label: 'What number can we reach you at?',
@@ -462,11 +470,16 @@ export const applicationQuestions: any = [
     model: ['contact', 'phone'],
   },
   {
-    label: 'Where do you study?',
+    label: 'Where do you study?*',
     fieldType: 'single-select',
     selectData: allUniversities1,
     icon: 'fa-school',
     model: ['academics', 'school'],
+    name: 'school',
+    requirements: {
+      required: true,
+      oneOf: allUniversities1,
+    }
   },
   {
     label:
@@ -502,9 +515,13 @@ export const applicationQuestions: any = [
     model: ['academics', 'graduating'],
   },
   {
-    label: "What's your birthday?",
+    label: "What's your birthday?*",
     fieldType: 'date',
     model: ['personal', 'birthday'],
+    name: 'birthday',
+    requirements: {
+      required: true,
+    }
   },
   {
     label: 'Will you be 18 or older on January 18th, 2020?',
@@ -513,10 +530,15 @@ export const applicationQuestions: any = [
     model: ['academics', 'oldEnough'],
   },
   {
-    label: "What's your gender?",
+    label: "What's your gender?*",
     fieldType: 'radio-select',
     selectData: gender,
     model: ['personal', 'gender'],
+    name: 'gender',
+    requirements: {
+      required: true,
+      oneOf: gender,
+    }
   },
   {
     label: 'Which ethnic background do you identify with?',
@@ -588,11 +610,15 @@ export const applicationQuestions: any = [
     model: ['profiles', 'other'],
   },
   {
-    label: 'Do you have any dietary restrictions?',
+    label: 'Do you have any dietary restrictions?*',
     fieldType: 'combo-box',
     selectData: food,
     icon: 'fa-utensils',
     model: ['logistics', 'diet_restrictions'],
+    name: 'dietary restrictions',
+    requirements: {
+      required: true
+    }
   },
   {
     label: 'Which size shirt do you wear?',
