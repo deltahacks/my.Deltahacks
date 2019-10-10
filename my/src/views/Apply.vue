@@ -192,7 +192,7 @@ v-snackbar {
   animation: animated 25s ease infinite;
 }
 
-@-webkit-keyframes animated {
+/* @-webkit-keyframes animated {
   0% {
     background-position: 0% 50%;
   }
@@ -226,6 +226,6 @@ v-snackbar {
   100% {
     background-position: 0% 50%;
   }
-}
+} */
 </style>
 
