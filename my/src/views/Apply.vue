@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <!-- <Nav /> -->
+    <Nav />
     <v-snackbar
       top
       right
@@ -27,7 +27,8 @@
       />
     </form>
     <div class="text-xs-center">
-      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn> <br>
+      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
+      <br />
       <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn>
     </div>
   </div>
@@ -171,8 +172,6 @@ export default Vue.extend({
   margin: 10px auto;
 }
 
-
-
 v-snackbar {
   background-color: red !important;
 }
@@ -189,6 +188,5 @@ v-snackbar {
   -moz-animation: animated 25s ease infinite;
   animation: animated 25s ease infinite;
 }
-
 </style>
 
