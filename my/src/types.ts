@@ -61,6 +61,7 @@ export interface AppContents {
     shirt_size: shirt_size;
     traveling_from: string;
     reimbursement: string;
+    accomodations: string;
     hackathons_attended: number;
   };
   resume: {

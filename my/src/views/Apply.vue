@@ -1,4 +1,5 @@
 <template>
+<v-app>
   <div class="background">
     <Nav />
     <v-snackbar
@@ -16,7 +17,6 @@
     <form action>
       <Card
         class="card"
-        v-scroll-reveal
         v-for="(question, i) in questions"
         :key="i"
         :title="question.label"
@@ -32,6 +32,7 @@
       <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn>
     </div>
   </div>
+</v-app>
 </template>
 
 <script lang="ts">
