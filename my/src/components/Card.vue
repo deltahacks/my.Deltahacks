@@ -12,6 +12,7 @@
         v-else-if="inputType == 'single-select'"
         :items="selectData"
         prepend-icon="map"
+        class="v-select-single"
         single-line
         :value="value"
         @input="onChange($event)"
@@ -27,7 +28,7 @@
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
-        <span v-for="(data, i) in selectData" :key="i">
+        <span v-for="(data, i) in selectData" :key="i" class="radio-item">
           <input type="radio" name="inputs" :id="data" :value="data" @input="onChange($event.target.value)" />
           <label :for="data">{{ data }}</label>
         </span>
@@ -130,6 +131,7 @@ export default Vue.extend({
 .date-row {
   display: flex;
   flex-direction: row;
+  margin-bottom: 5%;
 }
 .date-row .v-input {
   margin-right: 2%;
@@ -144,6 +146,8 @@ export default Vue.extend({
   height: 100%;
   width: 50%;
   margin: 50px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .field {
@@ -179,6 +183,7 @@ export default Vue.extend({
   visibility: hidden;
   height: 0;
   width: 0;
+  margin-bottom: 10%;
 }
 
 .radio-row label {
@@ -189,44 +194,27 @@ export default Vue.extend({
   background-color: #454545;
   color: white;
   padding: 20px 40px;
-  border-radius: 3px;
+  border-radius: 10px;
   transition: all 0.3s ease-out;
 }
 .radio-row input[type='radio']:checked + label {
   background-color: #58ba83;
 }
 
-@media only screen and (max-width: 850px) {
-  .container {
-    color: white;
-    padding: 50px;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
-    height: 400px;
-    width: 80%;
-    margin: 50px auto;
-  }
-  .question {
-    font-size: 2em;
-    font-weight: 300;
-    color: white;
-    margin: 50px;
-  }
-}
 .theme--light.v-input:not(.v-input--is-disabled) input,
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
   color: white !important;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 960px) {
   .container {
     color: white;
     padding: 50px;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 50px;
-    height: 400px;
+    height: 100%;
+    min-height: 300px;
     width: 90%;
     margin: 50px auto;
   }
@@ -237,13 +225,37 @@ export default Vue.extend({
     margin: 20px;
   }
   .field {
-    margin: 100px auto;
+    margin: 0 auto;
+    padding-top: 10%;
     background: transparent;
     border: transparent;
     border-color: white;
     width: 75%;
     font-size: 1.5em;
   }
+
+  .v-select-single {
+    padding-top: 15%;
+  }
+
+  .date-row {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-top: 5%;
+    align-self: center;
+  }
+  .radio-row {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .radio-item {
+    margin-top: 30px;
+    height: 100%;
+  }
+
 }
 </style>
 
