@@ -69,20 +69,21 @@
 }
 
 .rounded-box {
-  border-radius: 45px;
-  padding: 20px;
-  height: 80px;
-  width: 90%;
+  border-radius: 25px;
+  padding: 10px;
+  height: 60px;
+  width: 88%;
   background: linear-gradient( 
     90deg,
     #1EB8C9,
-    #1EB8C9 20px,
+    #1EB8C9 10px,
+    #EF4D67 10px,
     #EF4D67 20px,
-    #EF4D67 40px,
-    #FBD966 40px,
-    #FBD966 60px,
-    rgba(255, 255, 255, 0.2) 60px,
-    rgba(255, 255, 255, 0.2) 80px);
+    #FBD966 20px,
+    #FBD966 30px,
+    rgba(255, 255, 255, 0.2) 30px,
+    rgba(255, 255, 255, 0.2) 40px);
+    box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 .heading{
@@ -95,22 +96,23 @@
 
 #name {
   float: right;
+  margin-right: 20px;
 }
 
 #nav-box {
-  border-radius: 45px;
+  border-radius: 25px;
   background: rgba(255, 255, 255, 0.1);
-  height: 80px;
+  height: 60px;
   margin: 50px;
-  box-shadow: 5px 7px rgba(0,0,0, 0.1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
 
 #logout {
   float: right;
   font-family: "Roboto", Helvetica, sans-serif;
-  font-weight: 700;
   color: white;
-  margin-bottom: 100px;
-  
+  font-size: 16px;
+  margin-top: 20px;
+  margin-right: 1em;
 }

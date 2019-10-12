@@ -403,31 +403,115 @@ iframe {
   margin: 10px 10px 10px 30px;
 }
 
-.welcome p {
+p {
   color: white;
   font-family: "Roboto", Helvetica, sans-serif;
-  margin-left: 50px;
 }
 
 .big {
-  font-size: 85px;
+  font-size: 4em;
   font-weight: 500;
   margin-bottom: 0px;
 }
 
 .small {
-  font-size: 22px;
+  font-size: 1.5em;
   line-height: 1.2em;
   font-weight: 200;
-  margin-bottom: 50px;
-  margin-right: 20px;
 }
 
-.pic {
-  grid-column: span 6;
-  border-radius: 40px;
-  background: black;
-  padding: 10px;
-  margin: 10px 30px 10px 10px;
-  height: 500ps;
+.wrap{
+	width:100%;		
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	
+	padding:8px;		
 }
+
+/*COLUMNS*/
+.col{
+	float:left;		
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;	
+	width:20%;
+	padding:8px;	
+}
+
+
+.col1{width:10%;}
+.col2{width:20%;}
+.col3{width:30%;}
+.col4{width:40%;}
+.col5{width:50%;}
+.col6{width:60%;}
+.col7{width:70%;}
+.col8{width:80%;}
+.col9{width:90%;}
+.col10{width:100%;}
+
+
+
+/*SUB-COLUMN*/
+.col .col{	padding:0; padding-left:0px;}
+.col .col ~ .col{padding-left:16px;}
+
+.col .col1{width:10%;}
+.col .col2{width:20%;}
+.col .col3{width:30%;}
+.col .col4{width:40%;}
+.col .col5{width:50%;}
+.col .col6{width:60%;}
+.col .col7{width:70%;}
+.col .col8{width:80%;}
+.col .col9{width:90%;}
+.col .col10{width:100%;}
+
+
+/*BOXES*/
+.box{
+  padding:1.5em;
+	width:100%; 
+	margin-bottom:12px; 
+	clear:both;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.2);
+	
+	background-position:center; 
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	
+	text-align:center;
+	color:#fff;	
+	
+	cursor:pointer;
+	
+	-webkit-transition: all 0.2s ease;
+	-moz-transition:    all 0.2s ease;
+	-o-transition:      all 0.2s ease;
+	-ms-transition:     all 0.2s ease;
+	transition:         all 0.2s ease;	
+}
+
+.box:hover{
+	-moz-transform: scale(0.98);
+	-webkit-transform: scale(0.98);
+	-o-transform: scale(0.98);
+	-ms-transform: scale(0.98);
+	transform: scale(0.98);	
+}
+
+
+.box1{height:50px;}
+.box2{height:100px;}
+.box3{height:150px;}
+.box4{height:200px;}
+.box5{height:250px;}
+.box6{height:300px;}
+.box7{height:350px;}
+.box8{height:400px;}
+.box9{height:450px;}
+.box10{height:500px;}

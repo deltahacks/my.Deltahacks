@@ -2,16 +2,36 @@
   <v-app class="dashboard gradient-background">
     <!-- <Navigation class="mobile"/> -->
     <Navbar2 />
-    <div class="grid-container">
-      <div class="welcome">
-        <p class="big">Welcome.</p>
-        <p class="small">Be a part of the hackathon for change.
-          We are looking forward to being able to meet with you in person.
-          Good luck with your application!</p>
+    <div class="container">
+      <div class="wrap"> 
+          <!--Column#1-->
+          <div class="col col4">
+                <div class="box box8">
+                  <p class="big">Welcome.</p>
+                  <p class="small">Be a part of the hackathon for change.
+                    We are looking forward to being able to meet with you in person.
+                    Good luck with your application!</p>
+                </div>
+                <div class="box box4"></div>
+          </div>
+          
+          <!--Column#2-->
+          <div class="col col6">
+              <div class="box box10"></div>        
+              
+              <div class="col col3">
+                  <div class="box box2"></div>
+              </div>
+              <div class="col col3">
+                  <div class="box box2"></div>
+              </div>
+              <div class="col col4">
+                  <div class="box box2"></div>
+              </div>
+          </div>
       </div>
-      <div class="pic">
-        </div>
-    </div>
+      </div>
+
     <div class="container-status100">
       <div class="hide">
         <!-- RSVP Section (not on mobile! need to add) -->
