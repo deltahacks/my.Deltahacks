@@ -28,7 +28,7 @@
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
         <span v-for="(data, i) in selectData" :key="i">
-          <input type="radio" name="inputs" :id="data" :value="data" />
+          <input type="radio" name="inputs" :id="data" :value="data" @input="onChange($event.target.value)" />
           <label :for="data">{{ data }}</label>
         </span>
       </div>
@@ -57,35 +57,29 @@ export default Vue.extend({
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              value,
-              months.indexOf(this.dates[1].value),
-              this.dates[2].value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            value,
+            months.indexOf(this.dates[1].value),
+            this.dates[2].value,
+          )),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(value),
-              this.dates[2].value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(value),
+            this.dates[2].value,
+          )),
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(this.dates[1].value),
-              value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(this.dates[1].value),
+            value,
+          )),
         );
       }
       this.requestUpdate();
