@@ -9,6 +9,7 @@ export interface ApplicationModel {
 }
 
 export interface AppContents {
+  _: AppPrivate;
   name: {
     first: string;
     last: string;
@@ -17,7 +18,7 @@ export interface AppContents {
     email: string;
     phone: string;
   };
-  first_submitted: Date;
+  first_submitted: firebase.firestore.Timestamp;
   academics: {
     degree: degree;
     major: string;
@@ -26,7 +27,7 @@ export interface AppContents {
     year: year;
   };
   personal: {
-    birthday: Date;
+    birthday: firebase.firestore.Timestamp;
     gender: gender;
     race: race;
   };
@@ -59,12 +60,36 @@ export interface AppContents {
     diet_restrictions: string;
     shirt_size: shirt_size;
     traveling_from: string;
+    reimbursement: string;
+    accomodations: string;
     hackathons_attended: number;
   };
   resume: {
     filename: string;
     link: string;
   };
+  general: {
+    coffee: string;
+    team: string;
+    terms: string;
+    code: string;
+  }
+}
+
+export interface AppPrivate {
+  index: number;
+  reviews: {
+    assignedTo: string[];
+    scores: Reviews[];
+  };
+  status: status;
+  time_initiated: firebase.firestore.Timestamp;
+  time_submitted: firebase.firestore.Timestamp;
+}
+
+export interface Reviews {
+  reviewer: string;
+  score: number;
 }
 
 export interface StatusModel {
@@ -131,7 +156,7 @@ export interface ApplyState {
   loadingMessage: string;
   bannerColor: string;
   bannerMessage: string;
-  current_time: Date;
+  current_time: firebase.firestore.Timestamp;
   // Todo: type this as a Firestore object
   appFirestorePath: any;
   applicationStatus: applicationStatus;
@@ -148,6 +173,7 @@ export interface SignupModel {
 }
 
 export interface LoginModel {
+  counter: number;
   drawer: null;
   email: null | string;
   pass: null | string;
@@ -194,6 +220,15 @@ export interface SnackBar {
   visible: boolean;
   message: string;
 }
+
+type status =
+  | 'in progress'
+  | 'submitted'
+  | 'marked'
+  | 'round1'
+  | 'round2'
+  | 'round3'
+  | 'rejected';
 
 type discovered_by =
   | ''
