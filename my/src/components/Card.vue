@@ -29,7 +29,7 @@
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
         <span v-for="(data, i) in selectData" :key="i" class="radio-item">
-          <input type="radio" name="inputs" :id="data" :value="data" @input="onChange($event.target.value)" />
+          <input type="radio" name="inputs" :id="data" :value="data" :checked="value===data" @input="onChange($event.target.value)" />
           <label :for="data">{{ data }}</label>
         </span>
       </div>

@@ -74,8 +74,8 @@ export const blankApplication: AppContents = {
     coffee: '',
     team: '',
     terms: '',
-    code: ''
-  }
+    code: '',
+  },
 };
 
 export const applicationQuestions: any = [
@@ -160,19 +160,19 @@ export const applicationQuestions: any = [
     model: ['logistics', 'hackathons_attended'],
   },
   {
-    label: "What does positive change mean to you? How do you see yourself \
-    incorporating positive change into your experience at DeltaHacks? (500 chars)",
+    label: 'What does positive change mean to you? How do you see yourself \
+    incorporating positive change into your experience at DeltaHacks? (500 chars)',
     fieldType: 'text',
     model: ['responses', 'q1'],
   },
   {
-    label: "Describe a time you had to teach a new skill to someone? (500 chars)",
+    label: 'Describe a time you had to teach a new skill to someone? (500 chars)',
     fieldType: 'text',
     model: ['responses', 'q2'],
   },
   {
-    label: "If you were stranded on a deserted island (with no way to escape) \
-     for a month, what 3 personal items would you want to have? (Assuming all of your living necessities were covered) (750 chars)",
+    label: 'If you were stranded on a deserted island (with no way to escape) \
+     for a month, what 3 personal items would you want to have? (Assuming all of your living necessities were covered) (750 chars)',
     fieldType: 'text',
     model: ['responses', 'q3'],
   },
@@ -231,25 +231,25 @@ export const applicationQuestions: any = [
     label: 'Do you require travel reimbursements?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['logistics', 'reimbursement']
+    model: ['logistics', 'reimbursement'],
   },
   {
     label: 'Would you like to be considered for a coffee chat?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'coffee']
+    model: ['general', 'coffee'],
   },
   {
     label: 'Do you require travel reimbursements?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['logistics', 'reimbursement']
+    model: ['logistics', 'reimbursement'],
   },
   {
     label: 'Do you already have a team?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'team']
+    model: ['general', 'team'],
   },
   {
     label: 'What is your \"role\" when going to hackathons?',
@@ -260,14 +260,14 @@ export const applicationQuestions: any = [
     label: 'Do you agree with the MLH terms and conditions? ',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'terms']
+    model: ['general', 'terms'],
   },
   {
     label: 'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy ',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'code']
+    model: ['general', 'code'],
   },
 ];
 
