@@ -409,6 +409,7 @@ export const blankApplication: AppContents = {
     github: '',
     linkedin: '',
     website: '',
+    other: '',
   },
   responses: {
     anything_else: '',
@@ -560,7 +561,7 @@ export const applicationQuestions: any = [
   {
     label: 'Link us to any other profiles you have',
     fieldType: 'text',
-    model: ['profiles', 'devpost'],
+    model: ['profiles', 'other'],
   },
   {
     label: 'Do you have any dietary restrictions?',
@@ -617,7 +618,7 @@ export const applicationQuestions: any = [
     model: ['general', 'team'],
   },
   {
-    label: 'What is your \"role\" when going to hackathons?',
+    label: 'What is your "role" when going to hackathons?',
     fieldType: 'text-area',
     model: ['general', 'role'],
   },

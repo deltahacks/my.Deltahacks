@@ -46,6 +46,7 @@ export interface AppContents {
     github?: string;
     linkedin?: string;
     website?: string;
+    other?: string;
   };
   responses: {
     anything_else?: string;
