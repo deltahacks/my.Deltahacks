@@ -1,5 +1,5 @@
 #title {
-  font-family: "Roboto", Helvetica, sans-serif;
+  font-family: Montserrat;
   font-weight: 700;
   color: white;
   margin-left: 60px;
@@ -87,7 +87,7 @@
 }
 
 .heading{
-  font-family: "Roboto", Helvetica, sans-serif;
+  font-family: Montserrat;
   font-weight: 700;
   color: white;
   margin-left: 60px;
@@ -103,14 +103,14 @@
   border-radius: 25px;
   background: rgba(255, 255, 255, 0.1);
   height: 60px;
-  margin: 50px;
+  margin: 50px 50px 0 50px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
 
 #logout {
   float: right;
-  font-family: "Roboto", Helvetica, sans-serif;
+  font-family: Montserrat;
   color: white;
   font-size: 16px;
   margin-top: 20px;
