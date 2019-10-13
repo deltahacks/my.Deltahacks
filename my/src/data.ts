@@ -544,6 +544,11 @@ export const applicationQuestions: any = [
     model: ['responses', 'anything_else'],
   },
   {
+    label: "What's your GitHub?",
+    fieldType: 'text',
+    model: ['profiles', 'github'],
+  },
+  {
     label: "What's your LinkedIn?",
     fieldType: 'text',
     model: ['profiles', 'linkedin'],
