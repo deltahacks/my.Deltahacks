@@ -78,7 +78,7 @@ export const applicationQuestions: any = [
     model: ['name', 'first'],
     name: 'first name',
     requirements: {
-      required: true
+      required: true,
     }
   },
   {
@@ -87,7 +87,7 @@ export const applicationQuestions: any = [
     model: ['name', 'last'],
     name: 'last name',
     requirements: {
-      required: true
+      required: true,
     }
   },
   {
@@ -96,7 +96,7 @@ export const applicationQuestions: any = [
     model: ['personal', 'birthday'],
     name: 'birthday',
     requirements: {
-      required: true
+      required: true,
     }
   },
   {
@@ -107,7 +107,7 @@ export const applicationQuestions: any = [
     name: 'gender',
     requirements: {
       required: true,
-      oneOf: true // Data consumer will use fields from selectData
+      oneOf: true, // Data consumer will use fields from selectData
     }
   },
   {
@@ -118,7 +118,7 @@ export const applicationQuestions: any = [
     name: 'school',
     requirements: {
       required: true,
-      oneOf: true // Data consumer will use fields from selectData
+      oneOf: true, // Data consumer will use fields from selectData
     }
   },
   {

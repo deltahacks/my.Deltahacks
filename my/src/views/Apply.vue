@@ -13,26 +13,33 @@
         Close
       </v-btn>
     </v-snackbar>
-    <form action>
-      <Card
-        v-scroll-reveal
-        class="card"
-        v-for="(question, i) in questions"
-        :key="i"
-        :title="question.label"
-        :name="question.name || question.label"
-        :inputType="question.fieldType"
-        :selectData="question.selectData"
-        :requestUpdate="onFormChange"
-        v-model="app[question.model[0]][question.model[1]]"
-        v-validate="question.requirements"
-        :error="errors.first(question.name)"
-      />
-    </form>
-    <div class="action-buttons">
-      <!-- <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn> -->
-      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
-    </div>
+    <ValidationObserver ref="form" v-slot="foo">
+      <form action>
+        <ValidationProvider 
+          v-for="(question, i) in questions" 
+          :key="i" 
+          :rules="question.requirements"
+          :name="question.name || question.label"
+          v-slot="{ errors }"
+        >
+          <Card
+            v-scroll-reveal
+            class="card"
+            :title="question.label"
+            :inputType="question.fieldType"
+            :selectData="question.selectData"
+            :requestUpdate="onFormChange"
+            v-model="app[question.model[0]][question.model[1]]"
+            :ref="question.name || question.label"
+            :error="errors[0]"
+          />
+        </ValidationProvider>
+      </form>
+      <div class="action-buttons">
+        <!-- <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn> -->
+        <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
+      </div>
+    </ValidationObserver>
   </v-app>
 </template>
 
@@ -42,7 +49,7 @@ import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
-import VeeValidate from 'vee-validate'
+import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full';
 
 import { ApplicationModel, AppContents } from '../types';
 import { blankApplication, applicationQuestions } from '../data';
@@ -55,7 +62,8 @@ Vue.use(VueScrollReveal, {
   mobile: true,
 });
 
-Vue.use(VeeValidate);
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 export default Vue.extend({
   data(): ApplicationModel {
@@ -100,10 +108,23 @@ export default Vue.extend({
 
     // actually submits application
     async submitApp(): Promise<void> {
-      const x = await this.$validator.validateAll();
-      this.app._.status = 'submitted';
-      this.snack.message = 'Application submitted';
-      this.snack.color = 'success';
+      const isValid = await (this.$refs.form as Vue & { validate: () => boolean }).validate();
+      if (!isValid) {
+        this.snack.message = 'Invalid field(s) on form';
+        this.snack.color = 'error';
+
+        // Find the first invalid field name and scroll to it
+        const { errors } = (this.$refs.form as any).ctx || { errors: [] };
+        const invalidFields = Object.entries(errors).find(([field, errors] : Array<any>) => errors.length);
+        if (invalidFields && invalidFields.length > 0) {
+          this.$refs[invalidFields[0]][0].$el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        this.app._.status = 'submitted';
+        this.snack.message = 'Application submitted';
+        this.snack.color = 'success';
+      }
+
       this.updateAppProgress();
     },
 
