@@ -611,12 +611,6 @@ export const applicationQuestions: any = [
     model: ['general', 'coffee'],
   },
   {
-    label: 'Do you require travel reimbursements?',
-    fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
-    model: ['logistics', 'reimbursement'],
-  },
-  {
     label: 'Do you already have a team?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
