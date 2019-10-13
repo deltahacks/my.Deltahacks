@@ -1,4 +1,13 @@
 <template>
+<div>
+ <template v-if="counter === 0">
+  <div class="container-hello100 background">
+    <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
+      <h1 class="hellotext">Hello.</h1>
+      <img src="../assets/vi2.png" draggable="false" class="hello-back-vi" />
+  </div>
+    </template>
+    <template v-else-if="counter === 1">
   <v-app class="dashboard background">
     <!-- <Navigation class="mobile"/> -->
     <Navbar2 class="navbar1" />
@@ -307,6 +316,8 @@
       <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
     </v-snackbar>
   </v-app>
+  </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -329,6 +340,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
+      counter:0,
       genderCompleted: true,
       response: {
         rsvp: false,
@@ -441,8 +453,20 @@ export default Vue.extend({
     currentHeader(): string {
       return this.subheaders[this.step - 1];
     },
+    changeHello(){
+      this.counter=1;
+      console.log("Happened");
+    }
+  },
+  mounted:function(){
+        this.method1() //method1 will execute at pageload
   },
   methods: {
+     method1:function(){
+      this.timeout = setTimeout(() => {
+        this.counter=1;
+      }, 1000);
+        },
     toggleRSVP(res) {
       this.hasResponded = true;
       this.response.rsvp = res;
