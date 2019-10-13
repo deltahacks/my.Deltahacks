@@ -8,6 +8,22 @@
         :value="value"
         @input="onChange($event)"
       ></v-text-field>
+      <div v-else-if="inputType == 'text-area'">
+      	<v-textarea
+      	  :value="value"
+      	  @input="onChange($event)"
+      	  counter="500"
+      	  auto-grow
+      	  v-validate="{ required: true, max: 500}"
+      	></v-textarea>
+      	<!-- <v-progress-linear
+      	            v-if="custom"
+      	            slot="progress"
+      	            :value="q1Progress"
+      	            :color="q1Color"
+      	            height="5"
+      	          ></v-progress-linear> -->
+      </div>
       <v-select
         v-else-if="inputType == 'single-select'"
         :items="selectData"
@@ -32,6 +48,25 @@
           <label :for="data">{{ data }}</label>
         </span>
       </div>
+      <div v-else-if="inputType == 'combo-box'">
+        <v-combobox
+        :items="selectData"
+        prepend-icon="map"
+        single-line
+        :value="value"
+        @input="onChange($event)"
+      ></v-combobox>
+      </div>
+      <div v-else-if="inputType == 'multi-select'">
+        <v-select
+        :items="selectData"
+        prepend-icon="map"
+        single-line
+        multiple
+        :value="value"
+        @input="onChange($event)"
+      ></v-select>
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +77,7 @@ import firebase from 'firebase';
 import { months, years, days } from '../data';
 
 export default Vue.extend({
-  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData'],
+  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData', 'textLimit'],
   data() {
     return {
       dates: [],
@@ -120,6 +155,11 @@ export default Vue.extend({
       this.updateDates();
     },
   },
+  computed: {
+    q1Progress() {
+      return Math.min(100, this.application.responses.q1.length / 5);
+    },
+  },
 });
 </script>
 
@@ -131,7 +171,9 @@ export default Vue.extend({
   color: white;
   margin: 50px;
   font-family: 'Montserrat';
+  text-align: center;
 }
+
 
 .date-row {
   display: flex;
