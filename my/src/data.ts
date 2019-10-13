@@ -172,7 +172,7 @@ export const applicationQuestions: any = [
     model: ['contact', 'phone'],
   },
   {
-    label: 'Do you have any dietary restrictions??',
+    label: 'Do you have any dietary restrictions?',
     fieldType: 'text',
     model: ['logistics', 'diet_restrictions'],
     name: 'dietary restrictions',

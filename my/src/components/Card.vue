@@ -32,6 +32,7 @@
           <input type="radio" name="inputs" :id="data" :value="data" />
           <label :for="data">{{ data }}</label>
         </span>
+        <div v-if="error" class="error--text">{{error}}</div>
       </div>
     </div>
   </div>
@@ -170,10 +171,17 @@ export default Vue.extend({
   text-align: center;
   font-size: 0.8em;
 }
+
 .radio-row {
+  --radio-button-height: 40px;
+  
   width: 100%;
   height: 100%;
   margin: 0 auto;
+}
+
+.radio-row span {
+  display: inline-block;
 }
 
 .radio-row input[type='radio'] {
@@ -183,18 +191,32 @@ export default Vue.extend({
 }
 
 .radio-row label {
-  margin: 0 2%;
+  margin: 0 15px;
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
   background-color: #454545;
   color: white;
-  padding: 20px 40px;
+  padding: 20px var(--radio-button-height);
   border-radius: 3px;
   transition: all 0.3s ease-out;
 }
+
 .radio-row input[type='radio']:checked + label {
   background-color: #58ba83;
+}
+
+.radio-row .error--text {
+  margin-top: calc(var(--radio-button-height) / 2);
+}
+
+/* Override Vuetify's default error color, since it doesn't contrast enough */
+.container >>> .error--text {
+  caret-color: #bb2e35d8 !important;
+  color: #bb2e35d8 !important;
+
+  font-size: 1.25rem !important;
+  font-family: 'Montserrat', 'Roboto'
 }
 
 @media only screen and (max-width: 850px) {
