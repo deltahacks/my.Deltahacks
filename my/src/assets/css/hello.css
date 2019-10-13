@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,600italic");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,300italic,600,600italic");
 html {
   height: 100%;
   font-family: Verdana, sans-serif, Agency FB;
@@ -42,11 +42,31 @@ html {
   animation: animated 25s ease infinite;
 }
 .hellotext{
-  font-family: Verdana;
+  font-family: Montserrat;
   font-size: 50px;
   /* line-height: 1.7; */
   font-weight:50;
   color:white;
+}
+
+.back-vi {
+  width: 20vw;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /* margin-left: 18.9vw; */
+  /* float: right; */
+  opacity: 0.2;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+@media only screen and (max-width: 800px) {
+  .back-vi {
+    width: 40vw;
+  }
 }
 @-webkit-keyframes animated {
   0% {

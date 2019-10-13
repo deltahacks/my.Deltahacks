@@ -10,8 +10,10 @@
   </head>
   <div class="container-login100 background">
     <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
-      <h1 class="hellotext">Hello</h1>
+      <h1 class="hellotext">Hello.</h1>
+     <img src="../assets/vi2.png" draggable="false" class="back-vi" />
   </div>
+  
 </div>
 </template>
 
