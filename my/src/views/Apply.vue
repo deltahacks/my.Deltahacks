@@ -35,11 +35,11 @@
           />
         </ValidationProvider>
       </form>
-      <div class="action-buttons">
-        <!-- <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn> -->
-        <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
-      </div>
     </ValidationObserver>
+    <div class="action-buttons">
+      <!-- <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn> -->
+      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
+    </div>
   </v-app>
 </template>
 
@@ -139,11 +139,6 @@ export default Vue.extend({
     // does what it says
     redirectAfterSubmit(): void {
       this.$router.push({ name: 'Status' });
-    },
-
-    // validates all fields before submission
-    validateBeforeSubmit(): void {
-      debugger
     },
 
     // Grabs the application from where its store in firebase

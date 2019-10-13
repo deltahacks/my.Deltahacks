@@ -73,7 +73,7 @@ export const blankApplication: AppContents = {
 
 export const applicationQuestions: any = [
   {
-    label: "What's your first name?",
+    label: "What's your first name?*",
     fieldType: 'text',
     model: ['name', 'first'],
     name: 'first name',
@@ -82,7 +82,7 @@ export const applicationQuestions: any = [
     }
   },
   {
-    label: 'And your last name?',
+    label: 'And your last name?*',
     fieldType: 'text',
     model: ['name', 'last'],
     name: 'last name',
@@ -91,7 +91,7 @@ export const applicationQuestions: any = [
     }
   },
   {
-    label: "What's your birthday?",
+    label: "What's your birthday?*",
     fieldType: 'date',
     model: ['personal', 'birthday'],
     name: 'birthday',
@@ -100,7 +100,7 @@ export const applicationQuestions: any = [
     }
   },
   {
-    label: "What's your gender?",
+    label: "What's your gender?*",
     fieldType: 'radio-select',
     selectData: ['Male', 'Female', 'Other'],
     model: ['personal', 'gender'],
@@ -111,7 +111,7 @@ export const applicationQuestions: any = [
     }
   },
   {
-    label: 'Where do you study?',
+    label: 'Where do you study?*',
     fieldType: 'single-select',
     selectData: ['Waterloo', 'McMaster'],
     model: ['academics', 'school'],
@@ -172,7 +172,7 @@ export const applicationQuestions: any = [
     model: ['contact', 'phone'],
   },
   {
-    label: 'Do you have any dietary restrictions?',
+    label: 'Do you have any dietary restrictions?*',
     fieldType: 'text',
     model: ['logistics', 'diet_restrictions'],
     name: 'dietary restrictions',
