@@ -430,6 +430,7 @@ iframe {
 
 .container-login100-form-btn {
   padding: 5px;
+  padding-top: 0px;
   /* padding-left:23%; */
   width: 100%;
   margin: auto;
@@ -482,7 +483,6 @@ iframe {
   width: 9vw;
   height: 5vh;
   outline: none;
-  margin-top: 17px;
   color: white;
   font-size: 17px;
   font-weight: 600;
@@ -495,6 +495,7 @@ iframe {
   transition: 0.1s ease-in-out;
   cursor: pointer;
   -webkit-appearance: none;
+  margin-top: 10px;
   margin-right: 0.5vw;
   margin-left: 0.5vw;
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
@@ -530,7 +531,6 @@ iframe {
   -o-animation: fadein 2s; /* Opera < 12.1 */
   animation: fadein 2s;
 }
-
 .forgot {
   height: 5vh;
   font-family: "Montserrat";
@@ -579,15 +579,23 @@ iframe {
   .container-login100-form-btn {
     /* padding-left:20%; */
     margin: auto;
+    margin-bottom:0;
+    padding-bottom:0;
   }
 
   .login100-btn {
     display: block;
     margin: 2.5vh auto;
     width: 50%;
+    margin-bottom:0;
+    padding-bottom:0;
   }
   .back-vi {
     margin-left: 22.3vw;
+  }
+  .forgotdiv {
+    margin-top: 0;
+    padding-top:0;
   }
 }
 
