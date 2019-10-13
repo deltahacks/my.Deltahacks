@@ -4,7 +4,6 @@ import Router from 'vue-router';
 import Firebase from 'firebase';
 import Signup from './views/Signup.vue';
 import Login from './views/Login.vue';
-import Hello from './views/Hello.vue';
 import Forgot from './views/Forgot.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
@@ -64,11 +63,6 @@ const router = new Router({
       path: '/404',
       name: 'v404',
       component: v404,
-    },
-    {
-      path: '/hello',
-      name: 'Hello',
-      component: Hello,
     },
     {
       path: '/accepted',

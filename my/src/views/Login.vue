@@ -8,6 +8,7 @@
       crossorigin="anonymous"
     />
   </head>
+  <template v-if="pcounter === 0">
   <div class="container-login100 background">
     <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
     <div class="wrap-login100">
@@ -20,7 +21,7 @@
         </span>-->
         <img src="../assets/vi.png" draggable="false" class="back-vi" />
         <div class="bigdiv">
-        <template v-if="counter === 0">
+        <template v-if="icounter === 0">
           <div class="spanText">
             <span class="txt1">my</span>
             <span class="txt2">Delta</span>
@@ -54,7 +55,7 @@
           </div>
           <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
           <div class="container-login100-form-btn">
-            <button @click.prevent="login" type="submit" class="login100-btn">Login</button>
+            <button @click.prevent="login" type="submit" class="login100-btn" v-on:click="pcounter = 1">Login</button>
             <!-- <button type="submit2" class="login100-btn">Register</button> -->
             <!-- <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login -->
             <!-- <v-icon right>lock_open</v-icon> -->
@@ -64,12 +65,12 @@
             <!-- </v-btn> -->
             <div class="forgotdiv">
               <br />
-              <a class="forgot" v-on:click="counter = 1">Create New Account</a><br>
-              <a class="forgot" v-on:click="counter = 2">Forgot Password?</a>
+              <a class="forgot" v-on:click="icounter = 1">Create New Account</a><br>
+              <a class="forgot" v-on:click="icounter = 2">Forgot Password?</a>
             </div>
           </div>
         </template>
-       <template v-else-if="counter === 1">
+       <template v-else-if="icounter === 1">
           <div class="spanText">
             <span class="txt1">Create </span>
             <span class="txt2">Account</span>
@@ -138,13 +139,13 @@
           </div>
           <div class="forgotdiv">
             <br />
-            <a class="forgot" v-on:click="counter = 0">
+            <a class="forgot" v-on:click="icounter = 0">
               <i class="fas fa-arrow-left" />
               Go Back
             </a>
           </div>
         </template>
-        <template v-else-if="counter === 2">
+        <template v-else-if="icounter === 2">
           <div class="spanText">
             <span class="txt1">Forgot </span>
             <span class="txt2">Pass</span>
@@ -175,7 +176,7 @@
           </div>
           <div class="forgotdiv">
             <br />
-            <a class="forgot" v-on:click="counter = 0">
+            <a class="forgot" v-on:click="icounter = 0">
               <i class="fas fa-arrow-left" />
               Go Back
             </a>
@@ -185,6 +186,14 @@
       </form>
     </div>
   </div>
+  </template>
+  <template v-else-if="pcounter === 1">
+  <div class="container-hello100 background">
+    <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
+      <h1 class="hellotext">Hello.</h1>
+      <img src="../assets/vi2.png" draggable="false" class="hello-back-vi" />
+  </div>
+    </template>
 </div>
 </template>
 
@@ -197,7 +206,8 @@ export default Vue.extend({
   name: 'Login',
   data(): LoginModel {
     return {
-      counter: 0,
+      icounter: 0,
+      pcounter:0,
       drawer: null,
       email: null,
       pass: null,
