@@ -107,7 +107,7 @@ export const applicationQuestions: any = [
     name: 'gender',
     requirements: {
       required: true,
-      oneOf: ['Male', 'Female', 'Other']
+      oneOf: true // Data consumer will use fields from selectData
     }
   },
   {
@@ -118,7 +118,7 @@ export const applicationQuestions: any = [
     name: 'school',
     requirements: {
       required: true,
-      oneOf: ['Waterloo', 'McMaster']
+      oneOf: true // Data consumer will use fields from selectData
     }
   },
   {

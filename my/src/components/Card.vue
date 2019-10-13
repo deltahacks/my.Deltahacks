@@ -16,6 +16,7 @@
         single-line
         :value="value"
         @input="onChange($event)"
+        :error-messages="error"
       ></v-select>
       <div v-else-if="inputType == 'date'" class="date-row">
         <v-select

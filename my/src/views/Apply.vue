@@ -101,7 +101,6 @@ export default Vue.extend({
     // actually submits application
     async submitApp(): Promise<void> {
       const x = await this.$validator.validateAll();
-      debugger
       this.app._.status = 'submitted';
       this.snack.message = 'Application submitted';
       this.snack.color = 'success';
@@ -154,7 +153,15 @@ export default Vue.extend({
   },
   mounted(): void {
     // populate autofill data here
-    this.questions = applicationQuestions;
+    this.questions = applicationQuestions.map(question => {
+      const newQuestion = { ...question }
+      if (newQuestion.requirements && newQuestion.requirements.oneOf) {
+        // If a requirement is to choose one of several options, use the selectData as a list of valid choices
+        newQuestion.requirements.oneOf = newQuestion.selectData;
+      }
+
+      return newQuestion;
+    });
   },
 });
 </script>
