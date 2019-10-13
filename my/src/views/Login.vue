@@ -19,6 +19,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
         </span>-->
         <img src="../assets/vi.png" draggable="false" class="back-vi" />
+        <div class="bigdiv">
         <template v-if="counter === 0">
           <div class="spanText">
             <span class="txt1">my</span>
@@ -54,7 +55,7 @@
           <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
           <div class="container-login100-form-btn">
             <button @click.prevent="login" type="submit" class="login100-btn">Login</button>
-            <button type="submit2" class="login100-btn">Register</button>
+            <!-- <button type="submit2" class="login100-btn">Register</button> -->
             <!-- <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login -->
             <!-- <v-icon right>lock_open</v-icon> -->
             <!-- </v-btn> -->
@@ -63,13 +64,89 @@
             <!-- </v-btn> -->
             <div class="forgotdiv">
               <br />
-              <a class="forgot" v-on:click="counter = 1">Forgot Password?</a>
+              <a class="forgot" v-on:click="counter = 1">Create New Account</a><br>
+              <a class="forgot" v-on:click="counter = 2">Forgot Password?</a>
             </div>
           </div>
         </template>
-        <template v-else-if="counter === 1">
+       <template v-else-if="counter === 1">
           <div class="spanText">
-            <span class="txt1">Forgot</span>
+            <span class="txt1">Create </span>
+            <span class="txt2">Account</span>
+            <span class="txt3"></span>
+          </div>
+          <br />
+          <span class="txt4">Please fill in the following details</span>
+          <br />
+          <div class="wrap-input100 validate-input" data-validate="Enter username">
+            <v-text-field
+              prepend-icon="person"
+              @keypress.enter="loginf()"
+              name="fname"
+              label="Enter First Name"
+              color="#fff"
+              id="fname"
+              v-model="fname"
+              type="fname"
+              required
+            ></v-text-field>
+          </div>
+           <div class="wrap-input100 validate-input" data-validate="Enter username">
+            <v-text-field
+              prepend-icon="person"
+              @keypress.enter="loginf()"
+              name="lname"
+              label="Enter Last Name"
+              color="#fff"
+              id="lname"
+              v-model="lname"
+              type="lname"
+              required
+            ></v-text-field>
+          </div>
+           <div class="wrap-input100 validate-input" data-validate="Enter username">
+            <v-text-field
+              prepend-icon="email"
+              @keypress.enter="loginf()"
+              name="login"
+              label="Enter Email"
+              color="#fff"
+              id="login"
+              v-model="email"
+              type="email"
+              required
+            ></v-text-field>
+          </div>
+             <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <v-text-field
+              @keypress.enter="loginf()"
+              prepend-icon="lock"
+              name="password"
+              label="Enter a Password"
+              color="#fff"
+              id="password"
+              v-model="pass"
+              type="password"
+              required
+            ></v-text-field>
+          </div>
+          <!-- <v-alert :value="feedback" type="error">
+            {{ feedback }}
+          </v-alert>-->
+          <div class="container-login100-form-btn">
+            <button class="login100-btn forgot100-btn">Register</button>
+          </div>
+          <div class="forgotdiv">
+            <br />
+            <a class="forgot" v-on:click="counter = 0">
+              <i class="fas fa-arrow-left" />
+              Go Back
+            </a>
+          </div>
+        </template>
+        <template v-else-if="counter === 2">
+          <div class="spanText">
+            <span class="txt1">Forgot </span>
             <span class="txt2">Pass</span>
             <span class="txt3">word</span>
           </div>
@@ -92,9 +169,7 @@
           <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
           </v-alert>-->
-          <div>
-            <br />
-          </div>
+          
           <div class="container-login100-form-btn">
             <button class="login100-btn forgot100-btn">Submit</button>
           </div>
@@ -106,6 +181,7 @@
             </a>
           </div>
         </template>
+        </div>
       </form>
     </div>
   </div>
