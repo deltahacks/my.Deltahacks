@@ -56,16 +56,24 @@ export interface AppContents {
     workshops?: Array<string>;
   };
   logistics: {
-    discovered_by: string;
+    discovered_by: discovered_by;
     diet_restrictions: string;
     shirt_size: shirt_size;
     traveling_from: string;
+    reimbursement: string;
+    accomodations: string;
     hackathons_attended: number;
   };
   resume: {
     filename: string;
     link: string;
   };
+  general: {
+    coffee: string;
+    team: string;
+    terms: string;
+    code: string;
+  }
 }
 
 export interface AppPrivate {
