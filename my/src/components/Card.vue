@@ -136,23 +136,27 @@ export default Vue.extend({
     },
     updateDates() {
       if (this.inputType === 'date') {
-        this.dates = [
-          {
-            label: 'Year',
-            options: years,
-            value: new Date(this.value.toDate()).getFullYear(),
-          },
-          {
-            label: 'Month',
-            options: months,
-            value: months[new Date(this.value.toDate()).getMonth()],
-          },
-          {
-            label: 'Day',
-            options: days,
-            value: new Date(this.value.toDate()).getDate(),
-          },
-        ];
+        try {
+          this.dates = [
+            {
+              label: 'Year',
+              options: years,
+              value: new Date(this.value.toDate()).getFullYear(),
+            },
+            {
+              label: 'Month',
+              options: months,
+              value: months[new Date(this.value.toDate()).getMonth()],
+            },
+            {
+              label: 'Day',
+              options: days,
+              value: new Date(this.value.toDate()).getDate(),
+            },
+          ];
+        } catch (e) {
+          console.log('Date passed');
+        }
       }
     },
   },

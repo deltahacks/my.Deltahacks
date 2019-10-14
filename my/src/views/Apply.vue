@@ -84,35 +84,45 @@ export default Vue.extend({
       this.updateTimeout = setTimeout(() => {
         this.snack.message = 'Progress saved!';
         this.snack.color = 'success';
-        this.updateAppProgress();
+        this.updateAppProgress(false);
       }, 4000);
     },
 
-    updateAppProgress(): void {
-      console.log('Updated!');
-      this.getDB()
-        .collection('DH6')
-        .doc('applications')
-        .collection('all')
-        .doc(this.getUID())
-        .set(this.app);
+    updateAppProgress(submitting: boolean): void {
+      let submit = false;
+      if (submitting && this.app._.status !== 'submitted') {
+        this.app._.status = 'submitted';
+        this.snack.message = 'Application submitted';
+        this.snack.color = 'success';
+        submit = true;
+      }
+      if (this.app._.status !== 'submitted' || submit) {
+        this.getDB()
+          .collection('DH6')
+          .doc('applications')
+          .collection('all')
+          .doc(this.getUID())
+          .set(this.app);
+      } else {
+        this.snack.message = 'Submission error';
+        this.snack.color = 'danger';
+      }
       this.snack.visible = true;
     },
 
     // actually submits application
     submitApp(): void {
-      this.app._.status = 'submitted';
-      this.snack.message = 'Application submitted';
-      this.snack.color = 'success';
-      this.updateAppProgress();
+      this.updateAppProgress(true);
     },
 
     // clears all fields in the application
     resetApplication(): void {
-      this.app = blankApplication as AppContents;
-      this.snack.message = 'Application reset!';
-      this.snack.color = 'warning';
-      this.updateAppProgress();
+      if (this.app._.status !== 'submitted') {
+        this.app = blankApplication as AppContents;
+        this.snack.message = 'Application reset!';
+        this.snack.color = 'warning';
+      }
+      this.updateAppProgress(false);
     },
 
     // does what it says
