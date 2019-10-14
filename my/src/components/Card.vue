@@ -8,10 +8,27 @@
         :value="value"
         @input="onChange($event)"
       ></v-text-field>
+      <div v-else-if="inputType == 'text-area'">
+        <v-textarea
+          :value="value"
+          @input="onChange($event)"
+          counter="500"
+          auto-grow
+          v-validate="{ required: true, max: 500 }"
+        ></v-textarea>
+        <!-- <v-progress-linear
+                    v-if="custom"
+                    slot="progress"
+                    :value="q1Progress"
+                    :color="q1Color"
+                    height="5"
+                  ></v-progress-linear> -->
+      </div>
       <v-select
         v-else-if="inputType == 'single-select'"
         :items="selectData"
         prepend-icon="map"
+        class="v-select-single"
         single-line
         :value="value"
         @input="onChange($event)"
@@ -27,10 +44,36 @@
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
-        <span v-for="(data, i) in selectData" :key="i">
-          <input type="radio" name="inputs" :id="data" :value="data" />
+        <span v-for="(data, i) in selectData" :key="i" class="radio-item">
+          <input
+            type="radio"
+            name="inputs"
+            :id="data"
+            :value="data"
+            :checked="value === data"
+            @input="onChange($event.target.value)"
+          />
           <label :for="data">{{ data }}</label>
         </span>
+      </div>
+      <div v-else-if="inputType == 'combo-box'">
+        <v-combobox
+          :items="selectData"
+          prepend-icon="map"
+          single-line
+          :value="value"
+          @input="onChange($event)"
+        ></v-combobox>
+      </div>
+      <div v-else-if="inputType == 'multi-select'">
+        <v-select
+          :items="selectData"
+          prepend-icon="map"
+          single-line
+          multiple
+          :value="value"
+          @input="onChange($event)"
+        ></v-select>
       </div>
     </div>
   </div>
@@ -42,7 +85,14 @@ import firebase from 'firebase';
 import { months, years, days } from '../data';
 
 export default Vue.extend({
-  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData'],
+  props: [
+    'title',
+    'value',
+    'requestUpdate',
+    'inputType',
+    'selectData',
+    'textLimit',
+  ],
   data() {
     return {
       dates: [],
@@ -57,58 +107,56 @@ export default Vue.extend({
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              value,
-              months.indexOf(this.dates[1].value),
-              this.dates[2].value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            value,
+            months.indexOf(this.dates[1].value),
+            this.dates[2].value,
+          )),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(value),
-              this.dates[2].value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(value),
+            this.dates[2].value,
+          )),
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(this.dates[1].value),
-              value,
-            ),
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(this.dates[1].value),
+            value,
+          )),
         );
       }
       this.requestUpdate();
     },
     updateDates() {
       if (this.inputType === 'date') {
-        this.dates = [
-          {
-            label: 'Year',
-            options: years,
-            value: new Date(this.value.toDate()).getFullYear(),
-          },
-          {
-            label: 'Month',
-            options: months,
-            value: months[new Date(this.value.toDate()).getMonth()],
-          },
-          {
-            label: 'Day',
-            options: days,
-            value: new Date(this.value.toDate()).getDate(),
-          },
-        ];
+        try {
+          this.dates = [
+            {
+              label: 'Year',
+              options: years,
+              value: new Date(this.value.toDate()).getFullYear(),
+            },
+            {
+              label: 'Month',
+              options: months,
+              value: months[new Date(this.value.toDate()).getMonth()],
+            },
+            {
+              label: 'Day',
+              options: days,
+              value: new Date(this.value.toDate()).getDate(),
+            },
+          ];
+        } catch (e) {
+          console.log('Date passed');
+        }
       }
     },
   },
@@ -118,6 +166,11 @@ export default Vue.extend({
   watch: {
     value(newVal, oldVal) {
       this.updateDates();
+    },
+  },
+  computed: {
+    q1Progress() {
+      return Math.min(100, this.value.length / 5);
     },
   },
 });
@@ -131,11 +184,13 @@ export default Vue.extend({
   color: white;
   margin: 50px;
   font-family: 'Montserrat';
+  text-align: center;
 }
 
 .date-row {
   display: flex;
   flex-direction: row;
+  margin-bottom: 5%;
 }
 .date-row .v-input {
   margin-right: 2%;
@@ -150,6 +205,8 @@ export default Vue.extend({
   height: 100%;
   width: 50%;
   margin: 50px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .field {
@@ -185,6 +242,7 @@ export default Vue.extend({
   visibility: hidden;
   height: 0;
   width: 0;
+  margin-bottom: 10%;
 }
 
 .radio-row label {
@@ -195,44 +253,27 @@ export default Vue.extend({
   background-color: #454545;
   color: white;
   padding: 20px 40px;
-  border-radius: 3px;
+  border-radius: 10px;
   transition: all 0.3s ease-out;
 }
 .radio-row input[type='radio']:checked + label {
   background-color: #58ba83;
 }
 
-@media only screen and (max-width: 850px) {
-  .container {
-    color: white;
-    padding: 50px;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
-    height: 400px;
-    width: 80%;
-    margin: 50px auto;
-  }
-  .question {
-    font-size: 2em;
-    font-weight: 300;
-    color: white;
-    margin: 50px;
-  }
-}
 .theme--light.v-input:not(.v-input--is-disabled) input,
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
   color: white !important;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 960px) {
   .container {
     color: white;
     padding: 50px;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 50px;
-    height: 400px;
+    height: 100%;
+    min-height: 300px;
     width: 90%;
     margin: 50px auto;
   }
@@ -243,12 +284,35 @@ export default Vue.extend({
     margin: 20px;
   }
   .field {
-    margin: 100px auto;
+    margin: 0 auto;
+    padding-top: 10%;
     background: transparent;
     border: transparent;
     border-color: white;
     width: 75%;
     font-size: 1.5em;
+  }
+
+  .v-select-single {
+    padding-top: 15%;
+  }
+
+  .date-row {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-top: 5%;
+    align-self: center;
+  }
+  .radio-row {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .radio-item {
+    margin-top: 30px;
+    height: 100%;
   }
 }
 </style>

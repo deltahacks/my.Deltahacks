@@ -46,6 +46,7 @@ export interface AppContents {
     github?: string;
     linkedin?: string;
     website?: string;
+    other?: string;
   };
   responses: {
     anything_else?: string;
@@ -56,7 +57,7 @@ export interface AppContents {
     workshops?: Array<string>;
   };
   logistics: {
-    discovered_by: string;
+    discovered_by: discovered_by;
     diet_restrictions: string;
     shirt_size: shirt_size;
     traveling_from: string;

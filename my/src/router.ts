@@ -12,7 +12,7 @@ import v404 from './views/404.vue';
 import Accepted from './components/Accepted.vue';
 import Rejected from './components/Rejected.vue';
 import FAQ from './views/FAQ.vue';
-import db from './private/firebase_init';
+import db from './firebase_init';
 
 Vue.use(Router);
 
@@ -42,8 +42,7 @@ const router = new Router({
       name: 'Apply',
       component: Apply,
       meta: {
-        // uncomment later
-        // auth: true,
+        auth: true,
       },
     },
     {
@@ -87,6 +86,10 @@ const router = new Router({
       meta: {
         auth: true,
       },
+    },
+    {
+      path: '*',
+      component: v404,
     },
   ],
 });

@@ -1,5 +1,9 @@
 <template>
 <v-app>
+  <div v-if="app._.status === 'submitted'" class="submitted-face"/>
+  <div v-if="app._.status === 'submitted'" class="submitted-message">
+    Your application has been submitted! <br/> We’ll let you know as soon as we make a decision.
+  </div>
   <div class="background">
     <Nav />
     <v-snackbar
@@ -80,35 +84,45 @@ export default Vue.extend({
       this.updateTimeout = setTimeout(() => {
         this.snack.message = 'Progress saved!';
         this.snack.color = 'success';
-        this.updateAppProgress();
+        this.updateAppProgress(false);
       }, 4000);
     },
 
-    updateAppProgress(): void {
-      console.log('Updated!');
-      this.getDB()
-        .collection('DH6')
-        .doc('applications')
-        .collection('all')
-        .doc(this.getUID())
-        .set(this.app);
+    updateAppProgress(submitting: boolean): void {
+      let submit = false;
+      if (submitting && this.app._.status !== 'submitted') {
+        this.app._.status = 'submitted';
+        this.snack.message = 'Application submitted';
+        this.snack.color = 'success';
+        submit = true;
+      }
+      if (this.app._.status !== 'submitted' || submit) {
+        this.getDB()
+          .collection('DH6')
+          .doc('applications')
+          .collection('all')
+          .doc(this.getUID())
+          .set(this.app);
+      } else {
+        this.snack.message = 'Submission error';
+        this.snack.color = 'danger';
+      }
       this.snack.visible = true;
     },
 
     // actually submits application
     submitApp(): void {
-      this.app._.status = 'submitted';
-      this.snack.message = 'Application submitted';
-      this.snack.color = 'success';
-      this.updateAppProgress();
+      this.updateAppProgress(true);
     },
 
     // clears all fields in the application
     resetApplication(): void {
-      this.app = blankApplication as AppContents;
-      this.snack.message = 'Application reset!';
-      this.snack.color = 'warning';
-      this.updateAppProgress();
+      if (this.app._.status !== 'submitted') {
+        this.app = blankApplication as AppContents;
+        this.snack.message = 'Application reset!';
+        this.snack.color = 'warning';
+      }
+      this.updateAppProgress(false);
     },
 
     // does what it says
@@ -139,7 +153,6 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
       if (app.data()) this.app = app.data() as AppContents;
-      console.log('Success');
     } catch (error) {
       // Create popup modal here warning user
       console.log('Unable to fetch, trying again...');
@@ -155,6 +168,40 @@ export default Vue.extend({
 <style scoped>
 .card {
   padding: 10px 10px 10px 10px;
+}
+.submitted-face::before {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.submitted-face {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  z-index: 1000;
+  opacity: 0.6;
+  color: white;
+}
+.submitted-message {
+  width: 50%;
+  padding: 5%;
+  left: 50%;
+  top: 37.5%;
+  transform: translate(-50%, 0);
+  background-color: white;
+  position: fixed;
+  z-index: 2000;
+  border: 1px solid white;
+  border-radius: 20px;
+  opacity: 0.8;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  font-size: 18px;
 }
 
 .act-btn {
