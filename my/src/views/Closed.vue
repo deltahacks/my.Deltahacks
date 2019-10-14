@@ -1,19 +1,37 @@
 <template>
-    <v-app class="dashboard background" style="background-image: url('https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg2.jpg?raw=true');">
-        <Navbar2 class="navbar1" />
-        <div class='container-status100'>
-            <div class="wrap-apply100" >
-                <form @keyup="formChange" class="ff mx-auto " ref="form" @submit.prevent="validateBeforeSubmit" @submit="submitApplication">
-                    <h1 >DeltaHacks V applications are now closed!</h1>
-                    <p> If you've already submitted your application and would like to see it's current status, please go <a href="/status">here</a>.</p>
-                    <p> Still want a chance to hack at McMaster? DeltaHacks is hosting an <a :href="hackday_link">MLH Local Hack Day</a> on Dec 1st!</p>
-                </form>
-                  <div>
-                    <img href="@/assets/hackday.png"/>
-                  </div>
-            </div>
+  <v-app
+    class="dashboard background"
+    style="background-image: url('https://github.com/deltahacks/my.Deltahacks/blob/master/my/src/assets/Backgimg2.jpg?raw=true');"
+  >
+    <Navbar2 class="navbar1" />
+    <div class="container-status100">
+      <div class="wrap-apply100">
+        <form
+          @keyup="formChange"
+          class="ff mx-auto "
+          ref="form"
+          @submit.prevent="validateBeforeSubmit"
+          @submit="submitApplication"
+        >
+          <h1>DeltaHacks V applications are now closed!</h1>
+          <p>
+            If you've already submitted your application and would like to see
+            it's current status, please go
+            <a href="/status">here</a>
+            .
+          </p>
+          <p>
+            Still want a chance to hack at McMaster? DeltaHacks is hosting an
+            <a :href="hackday_link">MLH Local Hack Day</a>
+            on Dec 1st!
+          </p>
+        </form>
+        <div>
+          <img href="@/assets/hackday.png" />
         </div>
-        <!-- <v-layout row justify-center>
+      </div>
+    </div>
+    <!-- <v-layout row justify-center>
           <v-dialog v-model="deadline" persistent max-width="450" min-height="350">
             <v-card>
               <v-card-title class="mx-auto gg headline">Sorry, DeltaHacks V applications are now closed!</v-card-title>
@@ -22,8 +40,8 @@
             </v-card>
           </v-dialog>
         </v-layout> -->
-        <!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg" alt="Major League Hacking 2019 Hackathon Season" style="width:100%"></a> -->
-    </v-app>
+    <!-- <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg" alt="Major League Hacking 2019 Hackathon Season" style="width:100%"></a> -->
+  </v-app>
 </template>
 
 
@@ -45,13 +63,26 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { majors, allUniversities } from '../private/data';
+let allUniversities,
+  major = [];
 // import { setTimeout } from 'timers';
 
-const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview,
+);
 
 interface Data {
-  myFiles: any, loading: boolean, feedback: boolean, confirm: boolean, confirmClear: boolean, editing: boolean, deadline: boolean, existing_doc: any, hackday_link: string, contest_terms: string
+  myFiles: any;
+  loading: boolean;
+  feedback: boolean;
+  confirm: boolean;
+  confirmClear: boolean;
+  editing: boolean;
+  deadline: boolean;
+  existing_doc: any;
+  hackday_link: string;
+  contest_terms: string;
 }
 
 export default Vue.extend({
@@ -67,9 +98,10 @@ export default Vue.extend({
       editing: false,
       deadline: true, // Change this if applications are ever needed.
       existing_doc: undefined,
-      hackday_link: 'https://localhackday.mlh.io/lhd-2018/events/854-deltahacks',
+      hackday_link:
+        'https://localhackday.mlh.io/lhd-2018/events/854-deltahacks',
       contest_terms:
-                'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
+        'https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md',
     };
   },
   components: {
@@ -78,12 +110,9 @@ export default Vue.extend({
     // Navigation,
     Navbar2,
   },
-  computed: {
-  },
-  methods: {
-  },
-  beforeMount() {
-  },
+  computed: {},
+  methods: {},
+  beforeMount() {},
 });
 </script>
 

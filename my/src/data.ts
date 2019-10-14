@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import firebase from 'firebase';
-import { AppContents } from './types';
-
 /* eslint-disable import/prefer-default-export */
+
+import firebase from 'firebase';
+import {AppContents} from './types';
 
 const discovered_by: string[] = [
   'A friend',
@@ -12,7 +12,8 @@ const discovered_by: string[] = [
   'Posters',
   'Instagram',
   'Snapchat',
-  'Other'];
+  'Other',
+];
 
 const race = [
   'Black / African American',
@@ -32,7 +33,8 @@ const yearOfStudy = [
   'Third Year',
   'Fourth Year',
   'Fifth Year',
-  'Sixth Year'];
+  'Sixth Year',
+];
 
 const relation = [
   'Parent',
@@ -41,7 +43,8 @@ const relation = [
   'Partner',
   'Friend',
   'Guardian',
-  'Other'];
+  'Other',
+];
 
 const citites = [
   'Hamilton',
@@ -55,7 +58,8 @@ const citites = [
   'Burlington',
   'Brampton',
   'Markham',
-  'Milton'];
+  'Milton',
+];
 
 const shirt_size = ['XS', 'S', 'M', 'L', 'XL'];
 
@@ -72,9 +76,11 @@ const food = [
   'Kosher',
   'No Beef',
   'Lactose Intolerant',
-  'Gluten Free'];
+  'Gluten Free',
+];
 
-const allUniversities1 = ['McMaster University',
+const allUniversities1 = [
+  'McMaster University',
   'University of Waterloo',
   'University of Toronto',
   'University of Western Ontario',
@@ -316,7 +322,8 @@ const allUniversities1 = ['McMaster University',
   'Southeast Regional College',
   'St Peter’s College',
   'Western Academy Broadcasting College',
-  'Yukon College'];
+  'Yukon College',
+];
 
 const majorsList = [
   'Computer Science',
@@ -360,7 +367,6 @@ const workshops = [
   'Hardware hacking',
   'Computer Vision with OpenCV',
 ];
-
 
 export const blankApplication: AppContents = {
   _: {
@@ -462,7 +468,8 @@ export const applicationQuestions: any = [
     model: ['academics', 'school'],
   },
   {
-    label: 'Will you be enrolled in a university program or community college on January 18th, 2020?',
+    label:
+      'Will you be enrolled in a university program or community college on January 18th, 2020?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
@@ -520,19 +527,22 @@ export const applicationQuestions: any = [
     model: ['logistics', 'hackathons_attended'],
   },
   {
-    label: 'What does positive change mean to you? How do you see yourself \
+    label:
+      'What does positive change mean to you? How do you see yourself \
     incorporating positive change into your experience at DeltaHacks? (500 chars)',
     fieldType: 'text-area',
     textLimit: 500,
     model: ['responses', 'q1'],
   },
   {
-    label: 'Describe a time you had to teach a new skill to someone? (500 chars)',
+    label:
+      'Describe a time you had to teach a new skill to someone? (500 chars)',
     fieldType: 'text-area',
     model: ['responses', 'q2'],
   },
   {
-    label: 'If you were stranded on a deserted island (with no way to escape) \
+    label:
+      'If you were stranded on a deserted island (with no way to escape) \
      for a month, what 3 personal items would you want to have? (Assuming all of your living necessities were covered) (750 chars)',
     fieldType: 'text-area',
     model: ['responses', 'q3'],
@@ -628,7 +638,8 @@ export const applicationQuestions: any = [
     model: ['general', 'terms'],
   },
   {
-    label: 'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
+    label:
+      'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy ',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],

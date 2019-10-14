@@ -320,10 +320,9 @@ import { auth } from 'firebase';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import { allUniversities } from '../private/data';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
-
+let allUniversities = [];
 export default Vue.extend({
   mixins: [validationMixin],
   name: 'Status',

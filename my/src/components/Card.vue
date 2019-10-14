@@ -14,7 +14,7 @@
           @input="onChange($event)"
           counter="500"
           auto-grow
-          v-validate="{ required: true, max: 500}"
+          v-validate="{ required: true, max: 500 }"
         ></v-textarea>
         <!-- <v-progress-linear
                     v-if="custom"
@@ -45,28 +45,35 @@
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
         <span v-for="(data, i) in selectData" :key="i" class="radio-item">
-          <input type="radio" name="inputs" :id="data" :value="data" :checked="value===data" @input="onChange($event.target.value)" />
+          <input
+            type="radio"
+            name="inputs"
+            :id="data"
+            :value="data"
+            :checked="value === data"
+            @input="onChange($event.target.value)"
+          />
           <label :for="data">{{ data }}</label>
         </span>
       </div>
       <div v-else-if="inputType == 'combo-box'">
         <v-combobox
-        :items="selectData"
-        prepend-icon="map"
-        single-line
-        :value="value"
-        @input="onChange($event)"
-      ></v-combobox>
+          :items="selectData"
+          prepend-icon="map"
+          single-line
+          :value="value"
+          @input="onChange($event)"
+        ></v-combobox>
       </div>
       <div v-else-if="inputType == 'multi-select'">
         <v-select
-        :items="selectData"
-        prepend-icon="map"
-        single-line
-        multiple
-        :value="value"
-        @input="onChange($event)"
-      ></v-select>
+          :items="selectData"
+          prepend-icon="map"
+          single-line
+          multiple
+          :value="value"
+          @input="onChange($event)"
+        ></v-select>
       </div>
     </div>
   </div>
@@ -78,7 +85,14 @@ import firebase from 'firebase';
 import { months, years, days } from '../data';
 
 export default Vue.extend({
-  props: ['title', 'value', 'requestUpdate', 'inputType', 'selectData', 'textLimit'],
+  props: [
+    'title',
+    'value',
+    'requestUpdate',
+    'inputType',
+    'selectData',
+    'textLimit',
+  ],
   data() {
     return {
       dates: [],
@@ -93,29 +107,35 @@ export default Vue.extend({
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            value,
-            months.indexOf(this.dates[1].value),
-            this.dates[2].value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              value,
+              months.indexOf(this.dates[1].value),
+              this.dates[2].value,
+            ),
+          ),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            this.dates[0].value,
-            months.indexOf(value),
-            this.dates[2].value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              this.dates[0].value,
+              months.indexOf(value),
+              this.dates[2].value,
+            ),
+          ),
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            this.dates[0].value,
-            months.indexOf(this.dates[1].value),
-            value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              this.dates[0].value,
+              months.indexOf(this.dates[1].value),
+              value,
+            ),
+          ),
         );
       }
       this.requestUpdate();
@@ -152,7 +172,7 @@ export default Vue.extend({
   },
   computed: {
     q1Progress() {
-      return Math.min(100, this.application.responses.q1.length / 5);
+      return Math.min(100, this.value.length / 5);
     },
   },
 });
@@ -168,7 +188,6 @@ export default Vue.extend({
   font-family: 'Montserrat';
   text-align: center;
 }
-
 
 .date-row {
   display: flex;
@@ -297,7 +316,6 @@ export default Vue.extend({
     margin-top: 30px;
     height: 100%;
   }
-
 }
 </style>
 
