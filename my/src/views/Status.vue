@@ -5,7 +5,7 @@
       <div class="wrap"> 
           <!--Column#1-->
           <div class="col col6">
-                <div class="box box7">
+                <div class="box box6">
                   <p class="big">Welcome.</p>
                   <p class="small">Be a part of the hackathon for change.
                     We are looking forward to being able to meet with you in person.
@@ -13,7 +13,9 @@
                 </div>
                 <div class="box box4 status">
                   <div class="currentStatus">
-                    <h5>My Application Status</h5>
+                    <h2>My Application Status</h2>
+                    <v-icon> {{ emoticon }}</v-icon>
+                    <p>{{ currentHeader }}</p>
                     </div>
                   <div class="apply box4">
                     <a href="/apply" class="apply-btn">Apply</a>
@@ -22,7 +24,7 @@
           </div>
           <!--Column#2-->
           <div class="col col4">
-              <div class="box box9"></div>        
+              <div class="box box8"></div>        
               <div :key="media.icon" v-for="media in social">
                 <div class="col col2 social">
                   <div class="box box2">

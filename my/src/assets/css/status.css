@@ -406,18 +406,18 @@ iframe {
 p {
   color: white;
   font-family: Montserrat;
-  /* text-align: left; */
+  text-align: left;
 }
 
 .big {
-  font-size: 6em;
+  font-size: 8vw;
   font-weight: 700;
   padding: 5%;
   padding-bottom: 0px;
 }
 
 .small {
-  font-size: 1.5em;
+  font-size: 2vw;
   line-height: 1.2em;
   font-weight: 200;
   padding: 0% 5% 0 5%;
@@ -509,16 +509,16 @@ p {
 }
 
 
-.box1{height:50px;}
-.box2{height:100px;}
-.box3{height:150px;}
-.box4{height:205px;}
-.box5{height:250px;}
-.box6{height:300px;}
-.box7{height:350px;}
-.box8{height:400px;}
-.box9{height:450px;}
-.box10{height:500px;}
+.box1{height:5vw;}
+.box2{height:7vw;}
+.box3{height:15vw;}
+.box4{height:20vw;}
+.box5{height:25vw;}
+.box6{height:30vw;}
+.box7{height:35vw;}
+.box8{height:42vw;}
+.box9{height:45vw;}
+.box10{height:50vw;}
 
 
 .social {
@@ -535,14 +535,14 @@ p {
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1);
   text-align: center;
-  font-size: 4em;
+  font-size: 5vw;
   font-weight: 700;
-  padding-top: 0.8em;
+  padding-top: 6vw;
 }
 
 .theme--light.v-icon{
   color: white !important;
-  margin-top: 1.8em;
+  margin-top: 2.5vw;
 }
 
 .apply-btn {
@@ -555,7 +555,22 @@ p {
   float: right;
   font-family: Montserrat;
   color: white;
-  font-size: 16px;
-  margin-top: 2em;
-  margin-right: 17%;
+  margin-top: 4vw;
+  margin-right: 10%; 
+  height: inherit;
+  width:20vw;
+}
+
+@media only screen and (max-width: 900px) {
+
+  .col4{width:100%;}
+  .col6{width:100%;}
+  .big{font-size: 13vw;}
+  .small{font-size: 3vw;}
+  .apply{font-size: 8vw;}
+  .box2{height:12vw;}
+  .box4{height:25vw;}
+  .box6{height:45vw;}
+  .box8{height:65vw;}
+  .theme--light.v-icon{margin-top: 4vw;}
 }

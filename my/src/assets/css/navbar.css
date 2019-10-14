@@ -112,7 +112,19 @@
   float: right;
   font-family: Montserrat;
   color: white;
-  font-size: 16px;
+  font-size: 1vw;
   margin-top: 20px;
   margin-right: 1em;
+}
+
+h1 {
+  font-size: 2vw;
+}
+
+@media only screen and (max-width: 900px) {
+
+  .col4{width:100%;}
+  .col6{width:100%;}
+  .box2{height:10vw;}
+  
 }
