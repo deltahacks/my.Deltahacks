@@ -63,8 +63,9 @@ import { validationMixin } from 'vuelidate';
 import { Validator } from 'vee-validate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-let allUniversities,
-  major = [];
+
+let allUniversities;
+const major = [];
 // import { setTimeout } from 'timers';
 
 const FilePond = vueFilePond(

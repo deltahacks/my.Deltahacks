@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import firebase from 'firebase';
-import {AppContents} from './types';
+import { AppContents } from './types';
 
 const discovered_by: string[] = [
   'A friend',
