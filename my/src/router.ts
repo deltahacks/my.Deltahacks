@@ -87,6 +87,10 @@ const router = new Router({
         auth: true,
       },
     },
+    {
+      path: '*',
+      component: v404,
+    },
   ],
 });
 
