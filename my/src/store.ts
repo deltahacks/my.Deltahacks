@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase';
-import db from './private/firebase_init';
+import db from './firebase_init';
 
 // Use vuex with Vue
 Vue.use(Vuex);

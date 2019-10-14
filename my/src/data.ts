@@ -1,67 +1,67 @@
+/* eslint-disable camelcase */
 import firebase from 'firebase';
-import { AppContents } from './lets';
+import { AppContents } from './types';
 
 /* eslint-disable import/prefer-default-export */
 
-let discovered_by: string[];
-discovered_by = [
-  'A friend'
-, 'MLH'
-, 'Facebook'
-, 'Twitter'
-, 'Posters'
-, 'Instagram'
-, 'Snapchat'
-, 'Other'];
+const discovered_by: string[] = [
+  'A friend',
+  'MLH',
+  'Facebook',
+  'Twitter',
+  'Posters',
+  'Instagram',
+  'Snapchat',
+  'Other'];
 
-let race = [
-   'Black / African American'
-  , 'Hispanic'
-  , 'East Asian'
-  , 'South Asian'
-  , 'Middle Eastern'
-  , 'Native American'
-  , 'White / Caucasian'
-  , 'Multiple ethnicity / Other'
-  , 'Prefer not to say'
+const race = [
+  'Black / African American',
+  'Hispanic',
+  'East Asian',
+  'South Asian',
+  'Middle Eastern',
+  'Native American',
+  'White / Caucasian',
+  'Multiple ethnicity / Other',
+  'Prefer not to say',
 ];
 
-let yearOfStudy = [
-    'First Year'
-  , 'Second Year'
-  , 'Third Year'
-  , 'Fourth Year'
-  , 'Fifth Year'
-  , 'Sixth Year']
+const yearOfStudy = [
+  'First Year',
+  'Second Year',
+  'Third Year',
+  'Fourth Year',
+  'Fifth Year',
+  'Sixth Year'];
 
-let relation = [
-  'Parent'
-  , 'Grandparent'
-  , 'Sibling'
-  , 'Partner'
-  , 'Friend'
-  , 'Guardian'
-  , 'Other']
+const relation = [
+  'Parent',
+  'Grandparent',
+  'Sibling',
+  'Partner',
+  'Friend',
+  'Guardian',
+  'Other'];
 
-let citites = [
-   'Hamilton'
-  , 'Toronto'
-  , 'Waterloo'
-  , 'London'
-  , 'Montreal'
-  , 'Ottawa'
-  , 'Mississauga'
-  , 'Guelph'
-  , 'Burlington'
-  , 'Brampton'
-  , 'Markham'
-  , 'Milton']
+const citites = [
+  'Hamilton',
+  'Toronto',
+  'Waterloo',
+  'London',
+  'Montreal',
+  'Ottawa',
+  'Mississauga',
+  'Guelph',
+  'Burlington',
+  'Brampton',
+  'Markham',
+  'Milton'];
 
-let shirt_size = ['XS' , 'S' , 'M' , 'L' , 'XL'];
+const shirt_size = ['XS', 'S', 'M', 'L', 'XL'];
 
-let degree = ['Bachelors' , 'Masters' , 'PhD'];
+const degree = ['Bachelors', 'Masters', 'PhD'];
 
-let gender = ['Male', 'Female', 'Other'];
+const gender = ['Male', 'Female', 'Other'];
 
 const food = [
   'None',
@@ -359,7 +359,7 @@ const workshops = [
   'Intro to UI/UX design',
   'Hardware hacking',
   'Computer Vision with OpenCV',
-]
+];
 
 
 export const blankApplication: AppContents = {
@@ -409,6 +409,7 @@ export const blankApplication: AppContents = {
     github: '',
     linkedin: '',
     website: '',
+    other: '',
   },
   responses: {
     anything_else: '',
@@ -434,8 +435,8 @@ export const blankApplication: AppContents = {
     coffee: '',
     team: '',
     terms: '',
-    code: ''
-  }
+    code: '',
+  },
 };
 
 export const applicationQuestions: any = [
@@ -515,24 +516,24 @@ export const applicationQuestions: any = [
   {
     label: 'How many hackathons have you been to?',
     fieldType: 'single-select',
-    selectData: ['0','1','2','3','4','5','6','7','8','9','10+'],
+    selectData: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+'],
     model: ['logistics', 'hackathons_attended'],
   },
   {
-    label: "What does positive change mean to you? How do you see yourself \
-    incorporating positive change into your experience at DeltaHacks? (500 chars)",
+    label: 'What does positive change mean to you? How do you see yourself \
+    incorporating positive change into your experience at DeltaHacks? (500 chars)',
     fieldType: 'text-area',
     textLimit: 500,
     model: ['responses', 'q1'],
   },
   {
-    label: "Describe a time you had to teach a new skill to someone? (500 chars)",
+    label: 'Describe a time you had to teach a new skill to someone? (500 chars)',
     fieldType: 'text-area',
     model: ['responses', 'q2'],
   },
   {
-    label: "If you were stranded on a deserted island (with no way to escape) \
-     for a month, what 3 personal items would you want to have? (Assuming all of your living necessities were covered) (750 chars)",
+    label: 'If you were stranded on a deserted island (with no way to escape) \
+     for a month, what 3 personal items would you want to have? (Assuming all of your living necessities were covered) (750 chars)',
     fieldType: 'text-area',
     model: ['responses', 'q3'],
   },
@@ -541,6 +542,11 @@ export const applicationQuestions: any = [
       'Is there anything else you want to tell us? It could be anything at all!',
     fieldType: 'text-area',
     model: ['responses', 'anything_else'],
+  },
+  {
+    label: "What's your GitHub?",
+    fieldType: 'text',
+    model: ['profiles', 'github'],
   },
   {
     label: "What's your LinkedIn?",
@@ -560,7 +566,7 @@ export const applicationQuestions: any = [
   {
     label: 'Link us to any other profiles you have',
     fieldType: 'text',
-    model: ['profiles', 'devpost'],
+    model: ['profiles', 'other'],
   },
   {
     label: 'Do you have any dietary restrictions?',
@@ -596,28 +602,22 @@ export const applicationQuestions: any = [
     label: 'Do you require travel reimbursements?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['logistics', 'reimbursement']
+    model: ['logistics', 'reimbursement'],
   },
   {
     label: 'Would you like to be considered for a coffee chat?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'coffee']
-  },
-  {
-    label: 'Do you require travel reimbursements?',
-    fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
-    model: ['logistics', 'reimbursement']
+    model: ['general', 'coffee'],
   },
   {
     label: 'Do you already have a team?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'team']
+    model: ['general', 'team'],
   },
   {
-    label: 'What is your \"role\" when going to hackathons?',
+    label: 'What is your "role" when going to hackathons?',
     fieldType: 'text-area',
     model: ['general', 'role'],
   },
@@ -625,14 +625,14 @@ export const applicationQuestions: any = [
     label: 'Do you agree with the MLH terms and conditions? ',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'terms']
+    model: ['general', 'terms'],
   },
   {
     label: 'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy ',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
-    model: ['general', 'code']
+    model: ['general', 'code'],
   },
 ];
 

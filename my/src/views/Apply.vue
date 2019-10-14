@@ -1,5 +1,9 @@
 <template>
 <v-app>
+  <div v-if="app._.status === 'submitted'" class="submitted-face"/>
+  <div v-if="app._.status === 'submitted'" class="submitted-message">
+    Your application has been submitted! <br/> We’ll let you know as soon as we make a decision.
+  </div>
   <div class="background">
     <Nav />
     <v-snackbar
@@ -139,7 +143,7 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
       if (app.data()) this.app = app.data() as AppContents;
-      console.log('Success');
+      console.log(process.env);
     } catch (error) {
       // Create popup modal here warning user
       console.log('Unable to fetch, trying again...');
@@ -155,6 +159,40 @@ export default Vue.extend({
 <style scoped>
 .card {
   padding: 10px 10px 10px 10px;
+}
+.submitted-face::before {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.submitted-face {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  z-index: 1000;
+  opacity: 0.6;
+  color: white;
+}
+.submitted-message {
+  width: 50%;
+  padding: 5%;
+  left: 50%;
+  top: 37.5%;
+  transform: translate(-50%, 0);
+  background-color: white;
+  position: fixed;
+  z-index: 2000;
+  border: 1px solid white;
+  border-radius: 20px;
+  opacity: 0.8;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  font-size: 18px;
 }
 
 .act-btn {
