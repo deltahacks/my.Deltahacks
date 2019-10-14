@@ -143,7 +143,6 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
       if (app.data()) this.app = app.data() as AppContents;
-      console.log(process.env);
     } catch (error) {
       // Create popup modal here warning user
       console.log('Unable to fetch, trying again...');

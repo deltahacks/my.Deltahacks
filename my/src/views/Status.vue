@@ -426,8 +426,8 @@ export default Vue.extend({
     };
   },
   components: {
-    Navbar,
-    Navigation,
+    // Navbar,
+    // Navigation,
     Navbar2,
   },
   computed: {
