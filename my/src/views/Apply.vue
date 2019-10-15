@@ -144,10 +144,9 @@ export default Vue.extend({
 
         return
       }
-      
-      this.app._.status = 'submitted';
-      this.snack.message = 'Application submitted';
-      this.snack.color = 'success';
+      // If somebody is submitting their application, clear update queue to prevent extra updates from occuring after
+      // the application is submitted
+      if (this.updateTimeout) clearTimeout(this.updateTimeout);
 
       this.updateAppProgress(true);
     },
