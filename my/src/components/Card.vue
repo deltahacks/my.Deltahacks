@@ -315,5 +315,14 @@ export default Vue.extend({
     height: 100%;
   }
 }
+
+@media only screen and (max-width: 1280px) and (min-width: 961px) {
+  .container {
+    width: 70%;
+  }
+  .question {
+    font-size: 2.0em;
+  }
+}
 </style>
 
