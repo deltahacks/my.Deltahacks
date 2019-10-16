@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,300italic,600,600italic');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400&display=swap');
 html {
   height: 100%;
-  font-family: Verdana, sans-serif, Agency FB;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /*---------------------------------------------*/
 
 a {
-  font-family: Verdana;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
@@ -138,7 +138,7 @@ iframe {
 }
 
 .txt1 {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   font-size: 2.5em;
   font-weight: 100;
   text-decoration: none;
@@ -146,7 +146,7 @@ iframe {
 }
 
 .txt2 {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   font-size: 2.5em;
   font-weight: 400;
   text-decoration: none;
@@ -154,7 +154,7 @@ iframe {
 }
 
 .txt3 {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   font-size: 2.5em;
   font-weight: 200;
   text-decoration: none;
@@ -162,7 +162,7 @@ iframe {
 }
 
 .txt4 {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.1em;
   font-weight: 300;
   text-decoration: none;
@@ -180,7 +180,7 @@ iframe {
 
 @media only screen and (max-width: 500px) {
   .welcomeheader {
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
     font-size: 8vw;
     font-weight: 600;
     text-decoration: none;
@@ -232,7 +232,7 @@ iframe {
 .wrap-login100 {
   /* width: 60vw; */
   /* height: auto; */
-  min-height: 54vh;
+  min-height: 75vh;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   border-radius: 50px;
   overflow: hidden;
@@ -382,7 +382,7 @@ iframe {
 }
 
 .login100-form-title {
-  font-family: Verdana;
+  font-family: 'Montserrat', sans-serif;
   font-size: 30px;
   color: #fff;
   line-height: 1.2;
@@ -401,7 +401,7 @@ iframe {
 .wrap-input100 {
   width: 20vw;
   position: relative;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   color: white;
   /* padding-left:25%; */
   /* margin-right:-35%; */
@@ -414,7 +414,7 @@ iframe {
 }
 
 .input100 {
-  font-family: Verdana;
+  font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   color: #ffff00;
   line-height: 0.5;
@@ -479,7 +479,7 @@ iframe {
 
 .login100-btn {
   position: relative;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   width: 9vw;
   height: 5vh;
   outline: none;
@@ -533,7 +533,7 @@ iframe {
 }
 .forgot {
   height: 5vh;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   font-size: 17px;
