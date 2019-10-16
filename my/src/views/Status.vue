@@ -17,31 +17,30 @@
                     <v-icon> {{ emoticon }}</v-icon>
                     <p>{{ currentHeader }}</p>
                     </div>
-                  <div class="apply box5">
-                    <a href="/apply" class="apply-btn">Apply</a>
-                  </div>
+                  
+                    <a href="/apply" class="apply-btn"><div class="apply box5">Apply</div></a>
+                  
                 </div>
           </div>
           <!--Column#2-->
           <div class="col col4">
               <div class="box box11">
-                <transition name='fade'>
-                  <img name="slide" :src="images[currentNumber]" />
-                </transition>
-                <!-- <transition-group name='fade' tag='div'>
+                <transition name='fade' mode="out-in">
                   <div class="box box11" v-for="number in [currentNumber]" :key='number'>
-                    <img :src="currentImage"/>
+                    <img :src="images[currentNumber]"/>
                     </div>
-                </transition-group> -->
+                </transition>
               </div>
         
               <div :key="media.icon" v-for="media in social">
                 <div class="col col2 social">
-                  <div class="box box3">
-                      <button light icon :href="media.link">
-                        <v-icon size="24px">{{ media.icon }}</v-icon>
-                      </button>
-                  </div>
+                  <a  :href="media.link">
+                    <div class="box box3">
+                        <button light icon>
+                          <v-icon size="24px">{{ media.icon }}</v-icon>
+                        </button>
+                    </div>
+                  </a>
                 </div>
             </div>
           </div>
@@ -220,9 +219,6 @@ export default Vue.extend({
     currentHeader(): string {
       return this.subheaders[this.step - 1];
     },
-    // currentImage() {
-    //   return this.images[Math.abs(this.currentNumber) % this.images.length];
-    // },
   },
   methods: {
     toggleRSVP(res) {

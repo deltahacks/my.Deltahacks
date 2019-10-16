@@ -550,13 +550,14 @@ p {
   text-decoration: none;
   font: inherit;
   color: inherit;
+  margin: 0;
 }
 
 .currentStatus {
   float: right;
   font-family: Montserrat;
   color: white;
-  margin-top: 4vw;
+  margin-top: 3vw;
   margin-right: 1vw; 
   height: inherit;
   width: 25vw;
@@ -590,22 +591,21 @@ p {
   
 }
 
-/* .fade-enter-active, .fade-leave-active {
-  transition: all 2s ease;
-  overflow: hidden;
-  visibility: visible;
-  opacity: 1;
-  position: absolute;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  visibility: hidden;
-} */
-
 img {
   max-width: 100% !important;
   width: 100% !important;
   height: 100% !important;
   max-height: 100% !important;
   border-radius: 20px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 2s ease;
+}
+
+.fade-enter,
+.fade-leave-to
+{
+  opacity: 0;
 }
