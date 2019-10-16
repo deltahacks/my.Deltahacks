@@ -1,7 +1,7 @@
 <template>
 <v-app>
-  <div v-if="app._.status !== 'submitted'" class="submitted-face"/>
-  <div v-if="app._.status !== 'submitted'" class="submitted-message">
+  <div v-if="app._.status === 'submitted'" class="submitted-face"/>
+  <div v-if="app._.status === 'submitted'" class="submitted-message">
     Your application has been submitted! <br/> We’ll let you know as soon as we make a decision.
   </div>
   <div class="background">
