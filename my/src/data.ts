@@ -507,7 +507,7 @@ export const applicationQuestions: any = [
     model: ['personal', 'birthday'],
   },
   {
-    label: 'Will you be 18 or older on January 18th, 2020?',
+    label: 'Will you be 18 or older on January 25th, 2020?',
     fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
@@ -588,32 +588,18 @@ export const applicationQuestions: any = [
     model: ['profiles', 'other'],
   },
   {
-    label: 'Do you have any dietary restrictions?',
-    fieldType: 'combo-box',
-    selectData: food,
-    icon: 'fa-utensils',
-    model: ['logistics', 'diet_restrictions'],
-  },
-  {
-    label: 'Which size shirt do you wear?',
-    fieldType: 'single-select',
-    selectData: shirt_size,
-    icon: 'fa-tshirt',
-    model: ['logistics', 'shirt_size'],
-  },
-  {
-    label: 'How did you hear about DeltaHacks?',
-    fieldType: 'single-select',
-    selectData: discovered_by,
-    icon: 'fa-search',
-    model: ['logistics', 'discovered_by'],
-  },
-  {
     label: 'What workshops would you like to see at deltahacks 6?',
     fieldType: 'multi-select',
     selectData: workshops,
     icon: 'fa-wrench',
     model: ['responses', 'workshops'],
+  },
+  {
+    label: 'Would you like to be considered for a coffee chat?',
+    fieldType: 'single-select',
+    selectData: ['Yes', 'No'],
+    icon: 'fa-coffee',
+    model: ['general', 'coffee'],
   },
   {
     label: 'Where are you travelling from?',
@@ -630,11 +616,33 @@ export const applicationQuestions: any = [
     model: ['logistics', 'reimbursement'],
   },
   {
-    label: 'Would you like to be considered for a coffee chat?',
+    label: 'Do you have any dietary restrictions?',
+    fieldType: 'combo-box',
+    selectData: food,
+    icon: 'fa-utensils',
+    model: ['logistics', 'diet_restrictions'],
+  },
+  {
+    label: 'Do you require any special accomodations?',
+    fieldType: 'text',
+    model: ['logistics', 'accomodations'],
+  },
+  {
+    label: 'Please put in the name of an emergency contact',
+    fieldType: 'text',
+    model: ['emergency', 'name'],
+  },
+  {
+    label: 'What is your emergency contact\'s phone number?',
+    fieldType: 'text',
+    model: ['emergency', 'phone'],
+  },
+  {
+    label: 'Which size shirt do you wear?',
     fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
-    icon: 'fa-coffee',
-    model: ['general', 'coffee'],
+    selectData: shirt_size,
+    icon: 'fa-tshirt',
+    model: ['logistics', 'shirt_size'],
   },
   {
     label: 'Do you already have a team?',
@@ -647,13 +655,6 @@ export const applicationQuestions: any = [
     label: 'What is your "role" when going to hackathons?',
     fieldType: 'text-area',
     model: ['general', 'role'],
-  },
-  {
-    label: 'Do you agree with the MLH terms and conditions? ',
-    fieldType: 'single-select',
-    selectData: ['Agree'],
-    icon: 'fa-asterisk',
-    model: ['general', 'terms'],
   },
   {
     label:
