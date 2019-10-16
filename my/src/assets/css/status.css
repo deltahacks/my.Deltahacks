@@ -152,7 +152,7 @@ p {
 .theme--light.v-icon{
   color: white !important;
   margin-top: 2vw;
-  size: 2vw;
+  font-size: 2vw;
 }
 
 .apply-btn {
@@ -198,7 +198,7 @@ p {
   }
   .theme--light.v-icon{
     margin-top: 4vw;
-    size: 2vw;
+    font-size: 4vw;
   }
   img {
     width: 100%;
