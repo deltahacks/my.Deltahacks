@@ -18,20 +18,31 @@
         Close
       </v-btn>
     </v-snackbar>
-    <form action>
-      <Card
-        class="card"
-        v-for="(question, i) in questions"
-        :key="i"
-        :title="question.label"
-        :inputType="question.fieldType"
-        :selectData="question.selectData"
-        :textLimit="question.textLimit"
-        :icon="question.icon"
-        :requestUpdate="onFormChange"
-        v-model="app[question.model[0]][question.model[1]]"
-      />
-    </form>
+    <ValidationObserver ref="form">
+      <form action>
+        <ValidationProvider 
+          v-for="(question, i) in questions" 
+          :key="i" 
+          :rules="question.requirements"
+          :name="question.label"
+          v-slot="{ errors }"
+        >
+          <Card
+            v-scroll-reveal
+            class="card"
+            :title="question.label"
+            :inputType="question.fieldType"
+            :selectData="question.selectData"
+            :requestUpdate="onFormChange"
+            :textLimit="question.textLimit"
+            :icon="question.icon"
+            v-model="app[question.model[0]][question.model[1]]"
+            :ref="question.label"
+            :error="errors[0]"
+          />
+        </ValidationProvider>
+      </form>
+    </ValidationObserver>
     <div class="text-xs-center">
       <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
       <br />
@@ -48,6 +59,9 @@ import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
+import { oneOf, max } from 'vee-validate/dist/rules'
+
 import { ApplicationModel, AppContents } from '../types';
 import { blankApplication, applicationQuestions } from '../data';
 
@@ -59,6 +73,30 @@ Vue.use(VueScrollReveal, {
   mobile: true,
   reset: true,
 });
+
+extend('oneOf', {
+  validate: (value, options) => options.includes(value),
+  message: 'Invalid selection'
+});
+extend('max', {
+  validate: max.validate,
+  message: 'This field is too long'
+});
+extend('required', {
+  validate: value => !!value,
+  message: 'This field is required'
+});
+extend('link', {
+  validate: url => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
+  message: 'Invalid URL'
+});
+extend('mustBe', {
+  validate: (value, mustBeValue) => value === mustBeValue[0],
+  message: "Sorry, we're unable to accept applications without a \"Yes\" here!"
+});
+
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 export default Vue.extend({
   data(): ApplicationModel {
@@ -113,7 +151,26 @@ export default Vue.extend({
     },
 
     // actually submits application
-    submitApp(): void {
+    async submitApp(): Promise<void> {
+      const isValid = await (this.$refs.form as Vue & { validate: () => boolean }).validate();
+      if (!isValid) {
+        this.snack.message = 'Invalid field(s) on form';
+        this.snack.color = 'error';
+        this.snack.visible = true;
+
+        // Find the first invalid field name and scroll to it
+        const { errors } = (this.$refs.form as any).ctx || { errors: [] };
+        const invalidFields = Object.entries(errors).find(([field, errors] : Array<any>) => errors.length);
+        if (invalidFields && invalidFields.length > 0) {
+          this.$refs[invalidFields[0]][0].$el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        return
+      }
+      // If somebody is submitting their application, clear update queue to prevent extra updates from occuring after
+      // the application is submitted
+      if (this.updateTimeout) clearTimeout(this.updateTimeout);
+
       this.updateAppProgress(true);
     },
 
@@ -131,9 +188,6 @@ export default Vue.extend({
     redirectAfterSubmit(): void {
       this.$router.push({ name: 'Status' });
     },
-
-    // validates all fields before submission
-    validateBeforeSubmit(): void {},
 
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
@@ -161,7 +215,6 @@ export default Vue.extend({
     }
   },
   mounted(): void {
-    // populate autofill data here
     this.questions = applicationQuestions;
   },
 });

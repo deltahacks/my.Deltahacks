@@ -46,7 +46,7 @@ const relation = [
   'Other',
 ];
 
-const citites = [
+const cities = [
   'Hamilton',
   'Toronto',
   'Waterloo',
@@ -352,6 +352,20 @@ const majorsList = [
   'Other',
 ];
 
+const numberOfHackathons = [
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10+'
+];
+
 const workshops = [
   'NodeJs',
   'ReactJs/VueJs',
@@ -447,14 +461,16 @@ export const blankApplication: AppContents = {
 
 export const applicationQuestions: any = [
   {
-    label: "What's your first name?",
+    label: "What's your first name?*",
     fieldType: 'text',
     model: ['name', 'first'],
+    requirements: { required: true, },
   },
   {
-    label: 'And your last name?',
+    label: 'And your last name?*',
     fieldType: 'text',
     model: ['name', 'last'],
+    requirements: { required: true, },
   },
   {
     label: 'What number can we reach you at?',
@@ -462,98 +478,118 @@ export const applicationQuestions: any = [
     model: ['contact', 'phone'],
   },
   {
-    label: 'Where do you study?',
+    label: 'Where do you study?*',
     fieldType: 'single-select',
     selectData: allUniversities1,
     icon: 'fa-school',
     model: ['academics', 'school'],
+    requirements: {
+      required: true,
+      oneOf: allUniversities1,
+    }
   },
   {
     label:
-      'Will you be enrolled in a university program or community college on January 18th, 2020?',
+      'Will you be enrolled in a university program or community college on January 18th, 2020?*',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
+    requirements: { required: true, mustBe: 'Yes', },
   },
   {
-    label: 'What degree are you pursuing?',
+    label: 'What degree are you pursuing?*',
     fieldType: 'single-select',
     selectData: degree,
     icon: 'fa-certificate',
     model: ['academics', 'degree'],
+    requirements: { required: true, oneOf: degree, },
   },
   {
-    label: 'And what do you study?',
+    label: 'And what do you study?*',
     fieldType: 'single-select',
     selectData: majorsList,
     icon: 'fa-pencil-alt',
     model: ['academics', 'major'],
+    requirements: { required: true, oneOf: majorsList, },
   },
   {
-    label: 'What is your current year of study?',
+    label: 'What is your current year of study?*',
     fieldType: 'single-select',
     selectData: yearOfStudy,
     icon: 'fa-calendar',
     model: ['academics', 'year'],
+    requirements: { required: true, oneOf: yearOfStudy, },
   },
   {
-    label: 'And when do you expect to graduate?',
+    label: 'And when do you expect to graduate?*',
     fieldType: 'date',
     model: ['academics', 'graduating'],
+    // requirements: { required: true, },
   },
   {
-    label: "What's your birthday?",
+    label: "What's your birthday?*",
     fieldType: 'date',
     model: ['personal', 'birthday'],
+    requirements: { required: true, },
   },
   {
-    label: 'Will you be 18 or older on January 18th, 2020?',
+    label: 'Will you be 18 or older on January 18th, 2020?*',
     fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
+    requirements: { required: true, mustBe: 'Yes', },
   },
   {
-    label: "What's your gender?",
+    label: "What's your gender?*",
     fieldType: 'radio-select',
     selectData: gender,
     model: ['personal', 'gender'],
+    requirements: {
+      required: true,
+      oneOf: gender,
+    }
   },
   {
-    label: 'Which ethnic background do you identify with?',
+    label: 'Which ethnic background do you identify with?*',
     fieldType: 'single-select',
     selectData: race,
     icon: 'fa-user-circle',
     model: ['personal', 'race'],
+    requirements: { required: true, },
   },
   {
-    label: 'How many hackathons have you been to?',
+    label: 'How many hackathons have you been to?*',
     fieldType: 'single-select',
-    selectData: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+'],
+    selectData: numberOfHackathons,
     icon: 'fa-list-ol',
     model: ['logistics', 'hackathons_attended'],
+    requirements: { required: true, oneOf: numberOfHackathons },
   },
   {
     label:
       'What does positive change mean to you? How do you see yourself \
-    incorporating positive change into your experience at DeltaHacks? (500 chars)',
+    incorporating positive change into your experience at DeltaHacks?* (500 chars)',
     fieldType: 'text-area',
     textLimit: '500',
     model: ['responses', 'q1'],
+    requirements: { required: true, max: 500, },
   },
   {
     label:
-      'Describe a time you had to teach a new skill to someone? (500 chars)',
+      'Describe a time you had to teach a new skill to someone.* (500 chars)',
     fieldType: 'text-area',
     textLimit: "500",
     model: ['responses', 'q2'],
+    requirements: { required: true, max: 500, },
   },
   {
     label:
       'If you were stranded on a deserted island (with no way to escape) \
-     for a month, what 3 personal items would you want to have? (Assuming all of your living necessities were covered) (750 chars)',
+     for a month, what 3 personal items would you want to have?* (Assuming all of your living necessities were covered) (750 chars)',
     fieldType: 'text-area',
     textLimit: '750',
     model: ['responses', 'q3'],
+    requirements: { required: true, max: 750, },
   },
   {
     label:
@@ -561,26 +597,31 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: 200,
     model: ['responses', 'anything_else'],
+    requirements: { max: 500, },
   },
   {
     label: "What's your GitHub?",
     fieldType: 'text',
     model: ['profiles', 'github'],
+    requirements: { link: true },
   },
   {
     label: "What's your LinkedIn?",
     fieldType: 'text',
     model: ['profiles', 'linkedin'],
+    requirements: { link: true },
   },
   {
     label: "What's your personal website?",
     fieldType: 'text',
     model: ['profiles', 'website'],
+    requirements: { link: true },
   },
   {
     label: 'Devpost?',
     fieldType: 'text',
     model: ['profiles', 'devpost'],
+    requirements: { link: true },
   },
   {
     label: 'Link us to any other profiles you have',
@@ -588,18 +629,20 @@ export const applicationQuestions: any = [
     model: ['profiles', 'other'],
   },
   {
-    label: 'Do you have any dietary restrictions?',
+    label: 'Do you have any dietary restrictions?*',
     fieldType: 'combo-box',
     selectData: food,
     icon: 'fa-utensils',
     model: ['logistics', 'diet_restrictions'],
+    requirements: { required: true, oneOf: food },
   },
   {
-    label: 'Which size shirt do you wear?',
+    label: 'Which size shirt do you wear?*',
     fieldType: 'single-select',
     selectData: shirt_size,
     icon: 'fa-tshirt',
     model: ['logistics', 'shirt_size'],
+    requirements: { required: true, oneOf: shirt_size },
   },
   {
     label: 'How did you hear about DeltaHacks?',
@@ -607,34 +650,37 @@ export const applicationQuestions: any = [
     selectData: discovered_by,
     icon: 'fa-search',
     model: ['logistics', 'discovered_by'],
+    requirements: { required: true, oneOf: discovered_by },
   },
   {
-    label: 'What workshops would you like to see at deltahacks 6?',
+    label: 'What workshops would you like to see at DeltaHacks 6?',
     fieldType: 'multi-select',
     selectData: workshops,
     icon: 'fa-wrench',
     model: ['responses', 'workshops'],
   },
   {
-    label: 'Where are you travelling from?',
+    label: 'Where are you travelling from?*',
     fieldType: 'single-select',
-    selectData: citites,
+    selectData: cities,
     icon: 'fa-plane',
     model: ['logistics', 'traveling_from'],
+    requirements: { required: true, oneOf: cities },
   },
   {
-    label: 'Do you require travel reimbursements?',
+    label: 'Do you require travel reimbursements?*',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     icon: 'fa-ticket-alt',
     model: ['logistics', 'reimbursement'],
   },
   {
-    label: 'Would you like to be considered for a coffee chat?',
+    label: 'Would you like to be considered for a coffee chat?*',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     icon: 'fa-coffee',
     model: ['general', 'coffee'],
+    requirements: { required: true },
   },
   {
     label: 'Do you already have a team?',
@@ -649,20 +695,22 @@ export const applicationQuestions: any = [
     model: ['general', 'role'],
   },
   {
-    label: 'Do you agree with the MLH terms and conditions? ',
+    label: 'Do you agree with the MLH terms and conditions?*',
     fieldType: 'single-select',
     selectData: ['Agree'],
     icon: 'fa-asterisk',
     model: ['general', 'terms'],
+    requirements: { required: true, mustBe: 'Agree' },
   },
   {
     label:
       'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
-    administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy ',
+    administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy*',
     fieldType: 'single-select',
     selectData: ['Accept'],
     icon: 'fa-asterisk',
     model: ['general', 'code'],
+    requirements: { required: true, },
   },
 ];
 
