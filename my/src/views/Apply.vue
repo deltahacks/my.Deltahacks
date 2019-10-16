@@ -20,9 +20,9 @@
     </v-snackbar>
     <ValidationObserver ref="form">
       <form action>
-        <ValidationProvider 
-          v-for="(question, i) in questions" 
-          :key="i" 
+        <ValidationProvider
+          v-for="(question, i) in questions"
+          :key="i"
           :rules="question.requirements"
           :name="question.label"
           v-slot="{ errors }"
@@ -60,7 +60,7 @@ import Card from '@/components/Card.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
-import { oneOf, max } from 'vee-validate/dist/rules'
+import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
 import { blankApplication, applicationQuestions } from '../data';
@@ -76,23 +76,23 @@ Vue.use(VueScrollReveal, {
 
 extend('oneOf', {
   validate: (value, options) => options.includes(value),
-  message: 'Invalid selection'
+  message: 'Invalid selection',
 });
 extend('max', {
   validate: max.validate,
-  message: 'This field is too long'
+  message: 'This field is too long',
 });
 extend('required', {
   validate: value => !!value,
-  message: 'This field is required'
+  message: 'This field is required',
 });
 extend('link', {
   validate: url => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
-  message: 'Invalid URL'
+  message: 'Invalid URL',
 });
 extend('mustBe', {
   validate: (value, mustBeValue) => value === mustBeValue[0],
-  message: "Sorry, we're unable to accept applications without a \"Yes\" here!"
+  message: "Sorry, we're unable to accept applications without a \"Yes\" here!",
 });
 
 Vue.component('ValidationProvider', ValidationProvider);
@@ -165,7 +165,7 @@ export default Vue.extend({
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        return
+        return;
       }
       // If somebody is submitting their application, clear update queue to prevent extra updates from occuring after
       // the application is submitted

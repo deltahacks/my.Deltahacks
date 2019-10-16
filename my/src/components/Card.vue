@@ -12,7 +12,7 @@
         <v-textarea
           :value="value"
           @input="onChange($event)"
-          :counter="textLimit"          
+          :counter="textLimit"
           auto-grow
           :error-messages="error"
         ></v-textarea>
@@ -241,7 +241,7 @@ export default Vue.extend({
 
 .radio-row {
   --radio-button-height: 40px;
-  
+
   width: 100%;
   height: 100%;
   margin: 0 auto;
