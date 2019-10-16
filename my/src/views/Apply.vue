@@ -26,6 +26,7 @@
         :title="question.label"
         :inputType="question.fieldType"
         :selectData="question.selectData"
+        :textLimit="question.textLimit"
         :requestUpdate="onFormChange"
         v-model="app[question.model[0]][question.model[1]]"
       />

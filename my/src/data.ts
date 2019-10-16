@@ -531,13 +531,14 @@ export const applicationQuestions: any = [
       'What does positive change mean to you? How do you see yourself \
     incorporating positive change into your experience at DeltaHacks? (500 chars)',
     fieldType: 'text-area',
-    textLimit: 500,
+    textLimit: '500',
     model: ['responses', 'q1'],
   },
   {
     label:
       'Describe a time you had to teach a new skill to someone? (500 chars)',
     fieldType: 'text-area',
+    textLimit: "500",
     model: ['responses', 'q2'],
   },
   {
@@ -545,12 +546,14 @@ export const applicationQuestions: any = [
       'If you were stranded on a deserted island (with no way to escape) \
      for a month, what 3 personal items would you want to have? (Assuming all of your living necessities were covered) (750 chars)',
     fieldType: 'text-area',
+    textLimit: '750',
     model: ['responses', 'q3'],
   },
   {
     label:
       'Is there anything else you want to tell us? It could be anything at all!',
     fieldType: 'text-area',
+    textLimit: 200,
     model: ['responses', 'anything_else'],
   },
   {

@@ -4,7 +4,6 @@
       <h1 class="question" id="title1">{{ title }}</h1>
       <v-text-field
         v-if="inputType == 'text'"
-        class="field red--text"
         :value="value"
         @input="onChange($event)"
       ></v-text-field>
@@ -12,7 +11,7 @@
         <v-textarea
           :value="value"
           @input="onChange($event)"
-          counter="500"
+          :counter="textLimit"          
           auto-grow
           v-validate="{ required: true, max: 500 }"
         ></v-textarea>
