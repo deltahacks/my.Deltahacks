@@ -633,42 +633,13 @@ export const applicationQuestions: any = [
     model: ['profiles', 'other'],
   },
   {
-<<<<<<< HEAD
     label: 'What workshops would you like to see at deltahacks 6?',
-=======
-    label: 'Do you have any dietary restrictions?*',
-    fieldType: 'combo-box',
-    selectData: food,
-    icon: 'fa-utensils',
-    model: ['logistics', 'diet_restrictions'],
-    requirements: { required: true, oneOf: food },
-  },
-  {
-    label: 'Which size shirt do you wear?*',
-    fieldType: 'single-select',
-    selectData: shirt_size,
-    icon: 'fa-tshirt',
-    model: ['logistics', 'shirt_size'],
-    requirements: { required: true, oneOf: shirt_size },
-  },
-  {
-    label: 'How did you hear about DeltaHacks?',
-    fieldType: 'single-select',
-    selectData: discovered_by,
-    icon: 'fa-search',
-    model: ['logistics', 'discovered_by'],
-    requirements: { required: true, oneOf: discovered_by },
-  },
-  {
-    label: 'What workshops would you like to see at DeltaHacks 6?',
->>>>>>> master
     fieldType: 'multi-select',
     selectData: workshops,
     icon: 'fa-wrench',
     model: ['responses', 'workshops'],
   },
   {
-<<<<<<< HEAD
     label: 'Would you like to be considered for a coffee chat?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
@@ -677,9 +648,6 @@ export const applicationQuestions: any = [
   },
   {
     label: 'Where are you travelling from?',
-=======
-    label: 'Where are you travelling from?*',
->>>>>>> master
     fieldType: 'single-select',
     selectData: cities,
     icon: 'fa-plane',
@@ -694,7 +662,6 @@ export const applicationQuestions: any = [
     model: ['logistics', 'reimbursement'],
   },
   {
-<<<<<<< HEAD
     label: 'Do you have any dietary restrictions?',
     fieldType: 'combo-box',
     selectData: food,
@@ -722,14 +689,6 @@ export const applicationQuestions: any = [
     selectData: shirt_size,
     icon: 'fa-tshirt',
     model: ['logistics', 'shirt_size'],
-=======
-    label: 'Would you like to be considered for a coffee chat?*',
-    fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
-    icon: 'fa-coffee',
-    model: ['general', 'coffee'],
-    requirements: { required: true },
->>>>>>> master
   },
   {
     label: 'Do you already have a team?',
@@ -744,17 +703,6 @@ export const applicationQuestions: any = [
     model: ['general', 'role'],
   },
   {
-<<<<<<< HEAD
-=======
-    label: 'Do you agree with the MLH terms and conditions?*',
-    fieldType: 'single-select',
-    selectData: ['Agree'],
-    icon: 'fa-asterisk',
-    model: ['general', 'terms'],
-    requirements: { required: true, mustBe: 'Agree' },
-  },
-  {
->>>>>>> master
     label:
       'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy*',

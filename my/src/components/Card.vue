@@ -90,11 +90,7 @@ export default Vue.extend({
     'selectData',
     'textLimit',
     'icon',
-<<<<<<< HEAD
-    'textSize',
-=======
     'error',
->>>>>>> master
   ],
   data() {
     return {
@@ -279,8 +275,6 @@ export default Vue.extend({
 .radio-row input[type='radio']:checked + label {
   background-color: #58ba83;
 }
-<<<<<<< HEAD
-=======
 
 .radio-row .error--text {
   margin-top: calc(var(--radio-button-height) / 2);
@@ -303,7 +297,6 @@ export default Vue.extend({
   font-family: 'Font Awesome 5 Free'
 }
 
->>>>>>> master
 .theme--light.v-input:not(.v-input--is-disabled) input,
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
   color: white !important;
