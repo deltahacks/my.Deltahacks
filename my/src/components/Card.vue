@@ -226,14 +226,20 @@ export default Vue.extend({
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
 
-.file-desc {
-  font-size: 18px;
-  padding-bottom: 2%;
+.container >>> .filepond--panel {
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+.container >>> .filepond--panel-root {
+  height: 100% !important;
+}
+.container >>> .filepond--wrapper {
+  height: 130px !important;
 }
 
-.filepond--panel-root {
-  opacity: 0.5;
-  background-color: blue !important;
+.file-desc {
+  font-size: 17px;
+  padding-bottom: 2%;
 }
 
 .question {
