@@ -1,14 +1,14 @@
 <template>
 <div>
- <template v-if="counter === 0">
-  <div class="container-hello100 background">
+  <transition name="view">
+  <v-app key="1" v-if="counter === 0">
+    <div class="container-hello100 background">
     <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <h1 class="hellotext">Hello.</h1>
       <img src="../assets/vi2.png" draggable="false" class="hello-back-vi" />
-  </div>
-    </template>
-    <template v-else-if="counter === 1">
-  <v-app class="dashboard background">
+      </div>
+  </v-app>
+  <v-app key="2" v-if="counter === 1" class="dashboard background">
     <!-- <Navigation class="mobile"/> -->
     <Navbar2 class="navbar1" />
     <div class="container-status100">
@@ -316,7 +316,7 @@
       <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
     </v-snackbar>
   </v-app>
-  </template>
+  </transition>
   </div>
 </template>
 
@@ -453,10 +453,6 @@ export default Vue.extend({
     currentHeader(): string {
       return this.subheaders[this.step - 1];
     },
-    changeHello(){
-      this.counter=1;
-      console.log("Happened");
-    }
   },
   mounted:function(){
         this.method1() //method1 will execute at pageload
@@ -465,7 +461,8 @@ export default Vue.extend({
      method1:function(){
       this.timeout = setTimeout(() => {
         this.counter=1;
-      }, 1000);
+        console.log("Happened");
+      }, 2000);
         },
     toggleRSVP(res) {
       this.hasResponded = true;
@@ -678,4 +675,5 @@ export default Vue.extend({
 .no.border {
   border: none;
 }
+
 </style>

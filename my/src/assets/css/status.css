@@ -403,11 +403,6 @@ iframe {
   background-size: cover;
   position: relative;
   z-index: 1;
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 2s; /* Firefox < 16 */
-  -ms-animation: fadein 2s; /* Internet Explorer */
-  -o-animation: fadein 2s; /* Opera < 12.1 */
-  animation: fadein 2s;
 }
 
 .container-hello100::before {
@@ -428,6 +423,11 @@ iframe {
   /* line-height: 1.7; */
   font-weight:50;
   color:white;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+-moz-animation: fadein 2s; /* Firefox < 16 */
+-ms-animation: fadein 2s; /* Internet Explorer */
+-o-animation: fadein 2s; /* Opera < 12.1 */
+animation: fadein 2s;
 }
 
 .hello-back-vi {
@@ -537,4 +537,22 @@ iframe {
   to {
     opacity: 1;
   }
+}
+
+.view-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+  transform: 1s ease-out;
+}
+
+.view-enter,
+.view-leave-to
+{
+  opacity: 0.5
+}
+.view-enter-to,
+.view-leave
+/* .fade-leave-active in <2.1.8 */
+{
+  opacity: 1
 }
