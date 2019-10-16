@@ -284,7 +284,7 @@ export default Vue.extend({
     font-size: 1.5em;
     font-weight: 300;
     color: white;
-    margin: 20px 20px 50px 20px;
+    /* margin: 20px 20px 50px 20px; */
   }
   .field {
     margin: 40px auto;
