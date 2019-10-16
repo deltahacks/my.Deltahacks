@@ -695,6 +695,11 @@ export const applicationQuestions: any = [
     model: ['general', 'role'],
   },
   {
+    label: 'Upload Resume',
+    fieldType: 'file',
+    model: ['general', 'role'],
+  },
+  {
     label: 'Do you agree with the MLH terms and conditions?*',
     fieldType: 'single-select',
     selectData: ['Agree'],

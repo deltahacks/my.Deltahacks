@@ -79,14 +79,43 @@
           @input="onChange($event)"
         ></v-select>
       </div>
+      <div v-else-if="inputType === 'file'">
+        <div class="file-desc" v-if="resume.filename && resume.link">
+          Currently Uploaded: <a :href="resume.link">{{resume.filename }}</a>
+        </div>
+        <file-pond
+          @addfile="sendFile()"
+          :v-bind="myFiles"
+          name="resume"
+          ref="pond"
+          labelInvalidField="File is not PDF..."
+          label-idle="Drop resume here (PDF only)"
+          accepted-file-types="application/pdf"
+          :dropValidation="true"
+          v-bind:files="myFiles"
+          v-on:init="handleFilePondInit"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { Component } from 'vue';
 import firebase from 'firebase';
+
+import vueFilePond from 'vue-filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
 import { months, years, days } from '../data';
+
+const FilePond: Component = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview,
+);
 
 export default Vue.extend({
   props: [
@@ -98,11 +127,17 @@ export default Vue.extend({
     'textLimit',
     'icon',
     'error',
+    'upload',
+    'resume',
   ],
   data() {
     return {
       dates: [],
-    } as { dates: any };
+      myFiles: [],
+    } as { dates: any, myFiles: any };
+  },
+  components: {
+    FilePond,
   },
   methods: {
     onChange(event) {
@@ -165,6 +200,12 @@ export default Vue.extend({
         }
       }
     },
+    handleFilePondInit() {
+      console.log('Listening...');
+    },
+    async sendFile() {
+      this.upload(this.$refs.pond.getFile());
+    },
   },
   mounted() {
     this.updateDates();
@@ -184,6 +225,17 @@ export default Vue.extend({
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
+
+.file-desc {
+  font-size: 18px;
+  padding-bottom: 2%;
+}
+
+.filepond--panel-root {
+  opacity: 0.5;
+  background-color: blue !important;
+}
+
 .question {
   font-size: 2.5em;
   font-weight: 600;

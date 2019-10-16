@@ -39,6 +39,8 @@
             v-model="app[question.model[0]][question.model[1]]"
             :ref="question.label"
             :error="errors[0]"
+            :upload="uploadResume"
+            :resume="app.resume"
           />
         </ValidationProvider>
       </form>
@@ -197,6 +199,24 @@ export default Vue.extend({
         .collection('all')
         .doc(this.getUID())
         .get();
+    },
+
+    async uploadResume(doc) {
+      if (!doc) return;
+      const { filename, file, id } = doc;
+      const storeRef = firebase.storage().ref();
+      try {
+        const snapshot = await storeRef
+          .child(`hackathon/DH6/users/${this.getUID()}/Resume.pdf`)
+          .put(file);
+        const url = await snapshot.ref.getDownloadURL();
+
+        this.app.resume.filename = filename;
+        this.app.resume.link = url;
+        this.updateAppProgress(false);
+      } catch (err) {
+        console.log('File upload error');
+      }
     },
 
     // grabs current (logged in) users unique identifier
