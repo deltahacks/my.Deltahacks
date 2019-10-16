@@ -20,8 +20,8 @@ export default Vue.extend({
   data() {
     return {
       c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      current: 'DH V',
+      dhs: ['DH VI', 'DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH VI',
       drawer: null,
       items: [
         { title: 'Home', icon: 'dashboard' },

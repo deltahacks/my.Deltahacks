@@ -3,47 +3,44 @@
     <!-- <Navigation class="mobile"/> -->
     <Navbar2 />
       <div class="wrap">
-          <!--Column#1-->
-          <div class="col col6">
-                <div class="box box9">
-                  <p class="big">Welcome.</p>
-                  <p class="small">Be a part of the hackathon for change.
-                    We are looking forward to being able to meet with you in person.
-                    Good luck with your application!</p>
-                </div>
-                <div class="box box5 status">
-                  <div class="currentStatus">
-                    <h2>My Application Status</h2>
-                    <v-icon> {{ emoticon }}</v-icon>
-                    <p>{{ currentHeader }}</p>
-                    </div>
-                  
-                    <a href="/apply" class="apply-btn"><div class="apply box5">Apply</div></a>
-                  
-                </div>
+        <!--Column#1-->
+        <div class="col col6">
+          <div class="box box9">
+            <p class="big">Welcome.</p>
+            <p class="small">Be a part of the hackathon for change.
+              We are looking forward to being able to meet with you in person.
+              Good luck with your application!</p>
           </div>
-          <!--Column#2-->
-          <div class="col col4">
-              <div class="box box11">
-                <transition name='fade' mode="out-in">
-                  <div class="box box11" v-for="number in [currentNumber]" :key='number'>
-                    <img :src="images[currentNumber]"/>
-                    </div>
-                </transition>
+          <div class="box box5 status">
+            <div class="currentStatus">
+              <h2>My Application Status</h2>
+              <v-icon> {{ emoticon }}</v-icon>
+              <p>{{ currentHeader }}</p>
               </div>
-        
-              <div :key="media.icon" v-for="media in social">
-                <div class="col col2 social">
-                  <a  :href="media.link">
-                    <div class="box box3">
-                        <button light icon>
-                          <v-icon size="24px">{{ media.icon }}</v-icon>
-                        </button>
-                    </div>
-                  </a>
-                </div>
-            </div>
+              <a href="/apply" class="apply-btn"><div class="apply box5">Apply</div></a>
           </div>
+        </div>
+        <!--Column#2-->
+        <div class="col col4">
+            <div>
+              <transition name='fade' mode="out-in">
+                <div class="box box11" v-for="number in [currentNumber]" :key='number'>
+                  <img :src="images[currentNumber]"/>
+                  </div>
+              </transition>
+            </div>
+            <div :key="media.icon" v-for="media in social">
+              <div class="col col2 social">
+                <a :href="media.link">
+                  <div class="box box3">
+                    <button light icon>
+                      <v-icon size="24px">{{ media.icon }}</v-icon>
+                    </button>
+                  </div>
+                </a>
+              </div>
+          </div>
+        </div>
       </div>
 
     <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
@@ -73,13 +70,7 @@ import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
 import Card from '@/components/Card.vue';
-import Vue from 'vue';
-import { auth } from 'firebase';
-import { validationMixin } from 'vuelidate';
-import { required, maxLength, email } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
-import db from '../firebase_init';
-import { StatusModel } from '../types';
+
 import img1 from '@/assets/slideshow/IMG_3843.jpg';
 import img2 from '@/assets/slideshow/IMG_3851.jpg';
 import img3 from '@/assets/slideshow/IMG_3874.jpg';
@@ -93,6 +84,15 @@ import img10 from '@/assets/slideshow/IMG_3938.jpg';
 import img11 from '@/assets/slideshow/IMG_3943.jpg';
 import img12 from '@/assets/slideshow/IMG_3945.jpg';
 import img13 from '@/assets/slideshow/IMG_3948.jpg';
+
+import Vue from 'vue';
+import { auth } from 'firebase';
+import { validationMixin } from 'vuelidate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import db from '../firebase_init';
+import { StatusModel } from '../types';
+
 
 const allUniversities = [];
 export default Vue.extend({
@@ -359,10 +359,12 @@ export default Vue.extend({
       }
     },
     startRotation() {
-      if(this.currentNumber < this.images.length - 1) 
-        this.currentNumber++; 
-      else this.currentNumber = 0;
-      setTimeout(this.startRotation,3000);
+      if (this.currentNumber < this.images.length - 1) {
+        this.currentNumber++;
+      } else {
+        this.currentNumber = 0;
+      }
+      setTimeout(this.startRotation, 3000);
     },
   },
   async beforeMount() {
