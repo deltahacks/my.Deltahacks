@@ -700,7 +700,7 @@ export const applicationQuestions: any = [
     selectData: ['Agree'],
     icon: 'fa-asterisk',
     model: ['general', 'terms'],
-    requirements: { required: true, mustBe: 'Yes' },
+    requirements: { required: true, mustBe: 'Agree' },
   },
   {
     label:

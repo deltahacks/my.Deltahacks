@@ -291,6 +291,10 @@ export default Vue.extend({
   font-family: 'Material Icons'
 }
 
+.container >>> .v-icon.fa {
+  font-family: 'Font Awesome 5 Free'
+}
+
 .theme--light.v-input:not(.v-input--is-disabled) input,
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
   color: white !important;
