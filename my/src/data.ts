@@ -465,6 +465,7 @@ export const applicationQuestions: any = [
     label: 'Where do you study?',
     fieldType: 'single-select',
     selectData: allUniversities1,
+    icon: 'fa-school',
     model: ['academics', 'school'],
   },
   {
@@ -478,18 +479,21 @@ export const applicationQuestions: any = [
     label: 'What degree are you pursuing?',
     fieldType: 'single-select',
     selectData: degree,
+    icon: 'fa-certificate',
     model: ['academics', 'degree'],
   },
   {
     label: 'And what do you study?',
     fieldType: 'single-select',
     selectData: majorsList,
+    icon: 'fa-pencil-alt',
     model: ['academics', 'major'],
   },
   {
     label: 'What is your current year of study?',
     fieldType: 'single-select',
     selectData: yearOfStudy,
+    icon: 'fa-calendar',
     model: ['academics', 'year'],
   },
   {
@@ -504,7 +508,7 @@ export const applicationQuestions: any = [
   },
   {
     label: 'Will you be 18 or older on January 18th, 2020?',
-    fieldType: 'single-select',
+    fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
   },
@@ -518,12 +522,14 @@ export const applicationQuestions: any = [
     label: 'Which ethnic background do you identify with?',
     fieldType: 'single-select',
     selectData: race,
+    icon: 'fa-user-circle',
     model: ['personal', 'race'],
   },
   {
     label: 'How many hackathons have you been to?',
     fieldType: 'single-select',
     selectData: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+'],
+    icon: 'fa-list-ol',
     model: ['logistics', 'hackathons_attended'],
   },
   {
@@ -585,48 +591,56 @@ export const applicationQuestions: any = [
     label: 'Do you have any dietary restrictions?',
     fieldType: 'combo-box',
     selectData: food,
+    icon: 'fa-utensils',
     model: ['logistics', 'diet_restrictions'],
   },
   {
     label: 'Which size shirt do you wear?',
     fieldType: 'single-select',
     selectData: shirt_size,
+    icon: 'fa-tshirt',
     model: ['logistics', 'shirt_size'],
   },
   {
     label: 'How did you hear about DeltaHacks?',
     fieldType: 'single-select',
     selectData: discovered_by,
+    icon: 'fa-search',
     model: ['logistics', 'discovered_by'],
   },
   {
     label: 'What workshops would you like to see at deltahacks 6?',
     fieldType: 'multi-select',
     selectData: workshops,
+    icon: 'fa-wrench',
     model: ['responses', 'workshops'],
   },
   {
     label: 'Where are you travelling from?',
     fieldType: 'single-select',
     selectData: citites,
+    icon: 'fa-plane',
     model: ['logistics', 'traveling_from'],
   },
   {
     label: 'Do you require travel reimbursements?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
+    icon: 'fa-ticket-alt',
     model: ['logistics', 'reimbursement'],
   },
   {
     label: 'Would you like to be considered for a coffee chat?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
+    icon: 'fa-coffee',
     model: ['general', 'coffee'],
   },
   {
     label: 'Do you already have a team?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
+    icon: 'fa-users',
     model: ['general', 'team'],
   },
   {
@@ -637,7 +651,8 @@ export const applicationQuestions: any = [
   {
     label: 'Do you agree with the MLH terms and conditions? ',
     fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
+    selectData: ['Agree'],
+    icon: 'fa-asterisk',
     model: ['general', 'terms'],
   },
   {
@@ -645,7 +660,8 @@ export const applicationQuestions: any = [
       'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy ',
     fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
+    selectData: ['Accept'],
+    icon: 'fa-asterisk',
     model: ['general', 'code'],
   },
 ];

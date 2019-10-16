@@ -26,7 +26,7 @@
       <v-select
         v-else-if="inputType == 'single-select'"
         :items="selectData"
-        prepend-icon="map"
+        :prepend-icon="icon"
         class="v-select-single"
         single-line
         :value="value"
@@ -58,16 +58,17 @@
       <div v-else-if="inputType == 'combo-box'">
         <v-combobox
           :items="selectData"
-          prepend-icon="map"
+          :prepend-icon="icon"
           single-line
           :value="value"
+          :icon="icon"
           @input="onChange($event)"
         ></v-combobox>
       </div>
       <div v-else-if="inputType == 'multi-select'">
         <v-select
           :items="selectData"
-          prepend-icon="map"
+          :prepend-icon="icon"
           single-line
           multiple
           :value="value"
@@ -91,6 +92,7 @@ export default Vue.extend({
     'inputType',
     'selectData',
     'textLimit',
+    'icon',
   ],
   data() {
     return {
@@ -203,7 +205,7 @@ export default Vue.extend({
   border-radius: 50px;
   height: 100%;
   width: 50%;
-  margin: 50px auto;
+  margin: 50px auto 0px auto;
   display: flex;
   flex-direction: column;
 }

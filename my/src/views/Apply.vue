@@ -1,7 +1,7 @@
 <template>
 <v-app>
-  <div v-if="app._.status === 'submitted'" class="submitted-face"/>
-  <div v-if="app._.status === 'submitted'" class="submitted-message">
+  <div v-if="app._.status !== 'submitted'" class="submitted-face"/>
+  <div v-if="app._.status !== 'submitted'" class="submitted-message">
     Your application has been submitted! <br/> We’ll let you know as soon as we make a decision.
   </div>
   <div class="background">
@@ -27,6 +27,7 @@
         :inputType="question.fieldType"
         :selectData="question.selectData"
         :textLimit="question.textLimit"
+        :icon="question.icon"
         :requestUpdate="onFormChange"
         v-model="app[question.model[0]][question.model[1]]"
       />
@@ -168,7 +169,7 @@ export default Vue.extend({
 
 <style scoped>
 .card {
-  padding: 10px 10px 10px 10px;
+  padding: 10px 10px 0px 10px;
 }
 .submitted-face::before {
   opacity: 0;
