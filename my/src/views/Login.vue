@@ -78,7 +78,7 @@
           <br />
           <span class="txt4">Please fill in the following details</span>
           <br />
-          <div class="wrap-input100 validate-input" data-validate="Enter username">
+          <div class="wrap-input100 validate-input" v-if="data1 === 1" data-validate="Enter username">
             <v-text-field
               prepend-icon="person"
               @keypress.enter="loginf()"
@@ -91,7 +91,7 @@
               required
             ></v-text-field>
           </div>
-           <div class="wrap-input100 validate-input" data-validate="Enter username">
+           <div class="wrap-input100 validate-input" v-if="data1 === 1" data-validate="Enter username">
             <v-text-field
               prepend-icon="person"
               @keypress.enter="loginf()"
@@ -104,7 +104,7 @@
               required
             ></v-text-field>
           </div>
-           <div class="wrap-input100 validate-input" data-validate="Enter username">
+            <div class="wrap-input100 validate-input" v-if="data2 === 1" data-validate="Enter username">
             <v-text-field
               prepend-icon="email"
               @keypress.enter="loginf()"
@@ -120,7 +120,7 @@
               required
             ></v-text-field>
           </div>
-             <div class="wrap-input100 validate-input" data-validate="Enter password">
+             <div class="wrap-input100 validate-input" v-if="data2 === 1" data-validate="Enter password">
             <v-text-field
               @keypress.enter="loginf()"
               prepend-icon="lock"
@@ -137,11 +137,16 @@
             {{ feedback }}
           </v-alert>-->
           <div class="container-login100-form-btn">
-            <button class="login100-btn forgot100-btn">Register</button>
+            <button class="login100-btn forgot100-btn" v-if="data1===1" @click="data1=0,data2=1">Next</button>
+            <button class="login100-btn forgot100-btn" v-if="data2===1" >Register</button>
           </div>
           <div class="forgotdiv">
             <br />
-            <a class="forgot" v-on:click="counter = 0">
+            <a class="forgot" v-if="data1===1" v-on:click="counter = 0">
+              <i class="fas fa-arrow-left" />
+              Go Back
+            </a>
+            <a class="forgot" v-if="data2===1" v-on:click="data1=1,data2=0">
               <i class="fas fa-arrow-left" />
               Go Back
             </a>
@@ -201,6 +206,8 @@ export default Vue.extend({
   data(): LoginModel {
     return {
       counter: 0,
+      data1 : 1,
+      data2 : 0,
       drawer: null,
       email: null,
       pass: null,
