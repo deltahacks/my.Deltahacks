@@ -114,6 +114,9 @@
               id="login"
               v-model="email"
               type="email"
+              pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z0-9.-]{1,}[.]{1}[a-zA-Z0-9]{2,}"
+              oninvalid="setCustomValidity('Please enter a valid email')"
+              oninput="setCustomValidity('')"
               required
             ></v-text-field>
           </div>
@@ -169,7 +172,7 @@
           <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
           </v-alert>-->
-          
+
           <div class="container-login100-form-btn">
             <button class="login100-btn forgot100-btn">Submit</button>
           </div>
