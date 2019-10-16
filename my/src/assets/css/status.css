@@ -151,7 +151,8 @@ p {
 
 .theme--light.v-icon{
   color: white !important;
-  margin-top: 2.5vw;
+  margin-top: 2vw;
+  size: 2vw;
 }
 
 .apply-btn {
@@ -195,8 +196,10 @@ p {
     width: 30vw;
     font-size: 1.5vw;
   }
-  .theme--light.v-icon{margin-top: 4vw;}
-
+  .theme--light.v-icon{
+    margin-top: 4vw;
+    size: 2vw;
+  }
   img {
     width: 100%;
     height: auto;
@@ -211,11 +214,15 @@ img {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 2s ease;
+  opacity: 0.9;
+  transition: all 1s ease;
+  transition: opacity .3s;;
+  transition: opacity 2s ease-in-out;
 }
 
 .fade-enter,
 .fade-leave-to
 {
-  opacity: 0;
+  opacity: 0.1;
+  transition: opacity 1s ease-in-out;
 }

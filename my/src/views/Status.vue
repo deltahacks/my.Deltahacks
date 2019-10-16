@@ -34,7 +34,7 @@
                 <a :href="media.link">
                   <div class="box box3">
                     <button light icon>
-                      <v-icon size="24px">{{ media.icon }}</v-icon>
+                      <v-icon>{{ media.icon }}</v-icon>
                     </button>
                   </div>
                 </a>
