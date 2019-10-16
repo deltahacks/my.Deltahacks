@@ -533,11 +533,7 @@ export const applicationQuestions: any = [
     requirements: { required: true, },
   },
   {
-<<<<<<< HEAD
     label: 'Will you be 18 or older on January 25th, 2020?',
-=======
-    label: 'Will you be 18 or older on January 18th, 2020?*',
->>>>>>> master
     fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
