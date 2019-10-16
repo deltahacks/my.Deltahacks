@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="background">
   <transition name="view">
   <v-app key="1" v-if="counter === 0">
     <div class="container-hello100 background">
@@ -462,7 +462,7 @@ export default Vue.extend({
       this.timeout = setTimeout(() => {
         this.counter=1;
         console.log("Happened");
-      }, 2000);
+      }, 2500);
         },
     toggleRSVP(res) {
       this.hasResponded = true;
