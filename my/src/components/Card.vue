@@ -14,7 +14,7 @@
           @input="onChange($event)"
           :counter="textLimit"          
           auto-grow
-          v-validate="{ required: true, max: 500 }"
+          :error-messages="error"
         ></v-textarea>
         <!-- <v-progress-linear
                     v-if="custom"
@@ -42,6 +42,7 @@
           @input="onDate(input.label, $event)"
           :label="input.label"
           v-model="input.value"
+          :error-messages="error"
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
@@ -284,6 +285,10 @@ export default Vue.extend({
 
   font-size: 1.25rem !important;
   font-family: 'Montserrat', 'Roboto'
+}
+
+.container >>> .v-icon.material-icons {
+  font-family: 'Material Icons'
 }
 
 .theme--light.v-input:not(.v-input--is-disabled) input,

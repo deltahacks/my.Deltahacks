@@ -18,13 +18,13 @@
         Close
       </v-btn>
     </v-snackbar>
-    <ValidationObserver ref="form" v-slot="foo">
+    <ValidationObserver ref="form">
       <form action>
         <ValidationProvider 
           v-for="(question, i) in questions" 
           :key="i" 
           :rules="question.requirements"
-          :name="question.name || question.label"
+          :name="question.label"
           v-slot="{ errors }"
         >
           <Card
@@ -37,7 +37,7 @@
             :textLimit="question.textLimit"
             :icon="question.icon"
             v-model="app[question.model[0]][question.model[1]]"
-            :ref="question.name || question.label"
+            :ref="question.label"
             :error="errors[0]"
           />
         </ValidationProvider>
@@ -58,7 +58,9 @@ import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
-import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full';
+
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
+import { oneOf, max } from 'vee-validate/dist/rules'
 
 import { ApplicationModel, AppContents } from '../types';
 import { blankApplication, applicationQuestions } from '../data';
@@ -70,6 +72,27 @@ Vue.use(VueScrollReveal, {
   distance: '10px',
   mobile: true,
   reset: true,
+});
+
+extend('oneOf', {
+  validate: (value, options) => options.includes(value),
+  message: 'Invalid selection'
+});
+extend('max', {
+  validate: max.validate,
+  message: 'This field is too long'
+});
+extend('required', {
+  validate: value => !!value,
+  message: 'This field is required'
+});
+extend('link', {
+  validate: url => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
+  message: 'Invalid URL'
+});
+extend('mustBe', {
+  validate: (value, mustBeValue) => value === mustBeValue[0],
+  message: "Sorry, we're unable to accept applications without a \"Yes\" here!"
 });
 
 Vue.component('ValidationProvider', ValidationProvider);
