@@ -16,13 +16,6 @@
           auto-grow
           :error-messages="error"
         ></v-textarea>
-        <!-- <v-progress-linear
-                    v-if="custom"
-                    slot="progress"
-                    :value="q1Progress"
-                    :color="q1Color"
-                    height="5"
-                  ></v-progress-linear> -->
       </div>
       <v-select
         v-else-if="inputType == 'single-select'"
@@ -144,6 +137,12 @@ export default Vue.extend({
       this.$emit('input', event);
       this.requestUpdate();
     },
+    textFunction(s) {
+      if (s == "large") {
+        return "largeText"
+      }
+      console.log(s)
+    },
     onDate(type: string, value: any) {
       if (type.toLowerCase() === 'year') {
         this.$emit(
@@ -215,11 +214,6 @@ export default Vue.extend({
       this.updateDates();
     },
   },
-  computed: {
-    q1Progress() {
-      return Math.min(100, this.value.length / 5);
-    },
-  },
 });
 </script>
 
@@ -271,8 +265,16 @@ export default Vue.extend({
   margin: 50px auto 0px auto;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-
+/* .theme--light.v-input:not(.v-input--is-disabled) {
+    font-size: 1.7em;
+    text-align: center !important;
+} */
+.v-input {
+  font-size: 1.7em;
+  text-align: right;
+}
 .field {
   margin: 80px auto;
   color: white;
@@ -374,10 +376,10 @@ export default Vue.extend({
     font-size: 1.5em;
     font-weight: 300;
     color: white;
-    margin: 20px;
+    /* margin: 20px 20px 50px 20px; */
   }
   .field {
-    margin: 0 auto;
+    margin: 40px auto;
     padding-top: 10%;
     background: transparent;
     border: transparent;
@@ -385,7 +387,6 @@ export default Vue.extend({
     width: 75%;
     font-size: 1.5em;
   }
-
   .v-select-single {
     padding-top: 15%;
   }
