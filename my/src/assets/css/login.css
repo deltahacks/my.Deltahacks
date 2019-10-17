@@ -232,7 +232,7 @@ iframe {
 .wrap-login100 {
   /* width: 60vw; */
   /* height: auto; */
-  min-height: 75vh;
+  min-height: 54vh;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   border-radius: 50px;
   overflow: hidden;
