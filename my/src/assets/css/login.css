@@ -148,7 +148,7 @@ iframe {
 .txt2 {
   font-family: 'Montserrat', sans-serif;
   font-size: 2.5em;
-  font-weight: 400;
+  font-weight: 600;
   text-decoration: none;
   color: white;
 }
@@ -156,7 +156,7 @@ iframe {
 .txt3 {
   font-family: 'Montserrat', sans-serif;
   font-size: 2.5em;
-  font-weight: 200;
+  font-weight: 100;
   text-decoration: none;
   color: white;
 }
@@ -224,9 +224,9 @@ iframe {
 .background {
   background: linear-gradient(270deg, #1a7fc3, #39bc82);
   background-size: 200% 200%;
-  -webkit-animation: animated 25s ease infinite;
-  -moz-animation: animated 25s ease infinite;
-  animation: animated 25s ease infinite;
+  -webkit-animation: animated 10s ease infinite;
+  -moz-animation: animated 10s ease infinite;
+  animation: animated 10s ease infinite;
 }
 
 .wrap-login100 {
@@ -257,7 +257,7 @@ iframe {
   position: relative;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  width: 340px;
+  width: 360px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -266,8 +266,8 @@ iframe {
 .login100-form {
   position: relative;
   z-index: 40;
-  width: 38vw;
-  min-height: 54vh;
+  width: 40vw;
+  min-height: 60vh;
   /* padding-top:1%;
     padding-bottom:1%; */
   /* padding-right: 1vw; */
@@ -358,7 +358,7 @@ iframe {
   bottom: 0;
   margin-left: 9.5vw;
   float: right;
-  opacity: 0.1;
+  opacity: 0.025;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -399,6 +399,7 @@ iframe {
 [ Input ]*/
 
 .wrap-input100 {
+  padding-top: 1vh;
   width: 20vw;
   position: relative;
   font-family: 'Montserrat', sans-serif;
@@ -475,6 +476,7 @@ iframe {
 
 .forgot100-btn {
   margin: auto;
+    
 }
 
 .login100-btn {
@@ -489,7 +491,6 @@ iframe {
   text-align: center;
   text-decoration: none;
   background-color: rgba(236, 240, 241, 0.2);
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   /* border: 1px solid rgb(65, 137, 150); */
   border-radius: 20px;
   transition: 0.1s ease-in-out;
@@ -563,30 +564,47 @@ iframe {
 }
 
 @media only screen and (max-width: 800px) {
+    
+    
+   .spanText{
+       padding-top: 5vh;
+   }
+    
   .sidebar {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
+      margin-top: 5vh;
+      margin-bottom: 5vh;
+      width: 200px;
   }
+    
   .card {
-    margin: auto;
+      margin: auto;
   }
+    
   .wrap-login100 {
-    width: 90%;
-    min-height: 50vh;
+      width: 90%;
+      min-height: 40vh;
   }
+    
   .login100-form {
-    width: 100%;
+      width: 100%;
   }
+    
   .wrap-input100 {
-    width: 80%;
+      width: 70%;
   }
+    
   .container-login100-form-btn {
     /* padding-left:20%; */
     margin: auto;
     margin-bottom: 0;
     padding-bottom: 0;
   }
-
+    
+  .forgotdiv{
+      margin-top: -2vh;
+      padding-bottom: 2vh;
+  }
+    
   .login100-btn {
     display: block;
     margin: 2.5vh auto;
