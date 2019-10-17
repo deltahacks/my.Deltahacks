@@ -1,55 +1,48 @@
 <template>
-<v-app>
-  <!-- <div v-if="app._.status === 'submitted'" class="submitted-face"/>
-  <div v-if="app._.status === 'submitted'" class="submitted-message"> -->
-    Your application has been submitted! <br/> We’ll let you know as soon as we make a decision.
-  </div>
-  <div class="background">
-    <Nav />
-    <v-snackbar
-      top
-      right
-      :color="snack.color"
-      v-model="snack.visible"
-      :timeout="snack.timeout"
-    >
-      {{ snack.message }}
-      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
-        Close
-      </v-btn>
-    </v-snackbar>
-    <ValidationObserver ref="form">
-      <form action>
-        <ValidationProvider 
-          v-for="(question, i) in questions" 
-          :key="i" 
-          :rules="question.requirements"
-          :name="question.label"
-          v-slot="{ errors }"
-        >
-          <Card
-            v-scroll-reveal
-            class="card"
-            :title="question.label"
-            :inputType="question.fieldType"
-            :selectData="question.selectData"
-            :requestUpdate="onFormChange"
-            :textLimit="question.textLimit"
-            :icon="question.icon"
-            v-model="app[question.model[0]][question.model[1]]"
-            :ref="question.label"
-            :error="errors[0]"
-          />
-        </ValidationProvider>
-      </form>
-    </ValidationObserver>
-    <div class="text-xs-center">
-      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
-      <br />
-      <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn>
+  <v-app>
+    <div v-if="app._.status === 'submitted'" class="submitted-face" />
+    <div v-if="app._.status === 'submitted'" class="submitted-message">
+      Your application has been submitted!
+      <br />We’ll let you know as soon as we make a decision.
     </div>
-  </div>
-</v-app>
+    <div class="background">
+      <Nav />
+      <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
+        {{ snack.message }}
+        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
+      </v-snackbar>
+      <ValidationObserver ref="form">
+        <form action>
+          <ValidationProvider
+            v-for="(question, i) in questions"
+            :key="i"
+            :rules="question.requirements"
+            :name="question.label"
+            v-slot="{ errors }"
+          >
+            <Card
+              v-scroll-reveal
+              class="card"
+              :title="question.label"
+              :inputType="question.fieldType"
+              :selectData="question.selectData"
+              :requestUpdate="onFormChange"
+              :textLimit="question.textLimit"
+              :icon="question.icon"
+              v-model="app[question.model[0]][question.model[1]]"
+              :ref="question.label"
+              :error="errors[0]"
+            />
+          </ValidationProvider>
+        </form>
+      </ValidationObserver>
+      <div class="text-xs-center">
+        <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
+        <br />
+        <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn>
+      </div>
+    </div>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -59,8 +52,12 @@ import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
-import { oneOf, max } from 'vee-validate/dist/rules'
+import {
+  ValidationProvider,
+  ValidationObserver,
+  extend,
+} from 'vee-validate/dist/vee-validate.full';
+import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
 import { blankApplication, applicationQuestions } from '../data';
@@ -76,23 +73,26 @@ Vue.use(VueScrollReveal, {
 
 extend('oneOf', {
   validate: (value, options) => options.includes(value),
-  message: 'Invalid selection'
+  message: 'Invalid selection',
 });
 extend('max', {
   validate: max.validate,
-  message: 'This field is too long'
+  message: 'This field is too long',
 });
 extend('required', {
   validate: value => !!value,
-  message: 'This field is required'
+  message: 'This field is required',
 });
 extend('link', {
-  validate: url => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
-  message: 'Invalid URL'
+  validate: url =>
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
+      url
+    ),
+  message: 'Invalid URL',
 });
 extend('mustBe', {
   validate: (value, mustBeValue) => value === mustBeValue[0],
-  message: "Sorry, we're unable to accept applications without a \"Yes\" here!"
+  message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
 Vue.component('ValidationProvider', ValidationProvider);
@@ -152,7 +152,9 @@ export default Vue.extend({
 
     // actually submits application
     async submitApp(): Promise<void> {
-      const isValid = await (this.$refs.form as Vue & { validate: () => boolean }).validate();
+      const isValid = await (this.$refs.form as Vue & {
+        validate: () => boolean;
+      }).validate();
       if (!isValid) {
         this.snack.message = 'Invalid field(s) on form';
         this.snack.color = 'error';
@@ -160,12 +162,17 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(([field, errors] : Array<any>) => errors.length);
+        const invalidFields = Object.entries(errors).find(
+          ([field, errors]: Array<any>) => errors.length
+        );
         if (invalidFields && invalidFields.length > 0) {
-          this.$refs[invalidFields[0]][0].$el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          this.$refs[invalidFields[0]][0].$el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
         }
 
-        return
+        return;
       }
       // If somebody is submitting their application, clear update queue to prevent extra updates from occuring after
       // the application is submitted
@@ -254,7 +261,7 @@ export default Vue.extend({
   border-radius: 20px;
   opacity: 0.8;
   text-align: center;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   font-size: 18px;
 }
