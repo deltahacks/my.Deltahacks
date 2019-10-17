@@ -455,7 +455,7 @@ export const blankApplication: AppContents = {
     coffee: '',
     team: '',
     terms: '',
-    code: '',
+    code: false,
   },
 };
 
@@ -703,23 +703,16 @@ export const applicationQuestions: any = [
     fieldType: 'file',
     model: ['general', 'role'],
   },
-  {
-    label: 'Do you agree with the MLH terms and conditions?*',
-    fieldType: 'single-select',
-    selectData: ['Agree'],
-    icon: 'fa-asterisk',
-    model: ['general', 'terms'],
-    requirements: { required: true, mustBe: 'Agree' },
-  },
+];
+
+export const authorizations: any = [
   {
     label:
       'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
-    administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy*',
-    fieldType: 'single-select',
-    selectData: ['Accept'],
-    icon: 'fa-asterisk',
+    administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the \
+    <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>. \
+    I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy*',
     model: ['general', 'code'],
-    requirements: { required: true },
   },
 ];
 
