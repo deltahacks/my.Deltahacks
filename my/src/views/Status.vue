@@ -22,13 +22,28 @@
         </div>
         <!--Column#2-->
         <div class="col col4">
-            <div>
-              <transition name='fade' mode="out-in">
+            <!-- <div> -->
+              <!-- <transition name='fade' mode="out-in">
                 <div class="box box11" v-for="number in [currentNumber]" :key='number'>
                   <img :src="images[currentNumber]"/>
                   </div>
-              </transition>
+              </transition> -->
+            <div class="box box11">
+              <img id="slideimg0" class="slide showMe" src="../assets/slideshow/IMG_3843.jpg">
+              <img id="slideimg1" class="slide" src="../assets/slideshow/IMG_3851.jpg">
+              <img id="slideimg2" class="slide" src="../assets/slideshow/IMG_3874.jpg">
+              <img id="slideimg3" class="slide" src="../assets/slideshow/IMG_3876.jpg">
+              <img id="slideimg4" class="slide" src="../assets/slideshow/IMG_3894.jpg">
+              <img id="slideimg5" class="slide" src="../assets/slideshow/IMG_3907.jpg">
+              <img id="slideimg6" class="slide" src="../assets/slideshow/IMG_3908.jpg">
+              <img id="slideimg7" class="slide" src="../assets/slideshow/IMG_3910.jpg">
+              <img id="slideimg8" class="slide" src="../assets/slideshow/IMG_3927.jpg">
+              <img id="slideimg9" class="slide" src="../assets/slideshow/IMG_3938.jpg">
+              <img id="slideimg10" class="slide" src="../assets/slideshow/IMG_3943.jpg">
+              <img id="slideimg11" class="slide" src="../assets/slideshow/IMG_3945.jpg">
+              <img id="slideimg12" class="slide" src="../assets/slideshow/IMG_3948.jpg">
             </div>
+            <!-- </div> -->
             <div :key="media.icon" v-for="media in social">
               <div class="col col2 social">
                 <a :href="media.link">
@@ -70,20 +85,6 @@ import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
 import Card from '@/components/Card.vue';
-
-import img1 from '@/assets/slideshow/IMG_3843.jpg';
-import img2 from '@/assets/slideshow/IMG_3851.jpg';
-import img3 from '@/assets/slideshow/IMG_3874.jpg';
-import img4 from '@/assets/slideshow/IMG_3876.jpg';
-import img5 from '@/assets/slideshow/IMG_3894.jpg';
-import img6 from '@/assets/slideshow/IMG_3907.jpg';
-import img7 from '@/assets/slideshow/IMG_3908.jpg';
-import img8 from '@/assets/slideshow/IMG_3910.jpg';
-import img9 from '@/assets/slideshow/IMG_3927.jpg';
-import img10 from '@/assets/slideshow/IMG_3938.jpg';
-import img11 from '@/assets/slideshow/IMG_3943.jpg';
-import img12 from '@/assets/slideshow/IMG_3945.jpg';
-import img13 from '@/assets/slideshow/IMG_3948.jpg';
 
 import Vue from 'vue';
 import { auth } from 'firebase';
@@ -198,9 +199,9 @@ export default Vue.extend({
       food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
       shirts: ['XS', 'S', 'M', 'L', 'XL'],
       checkbox: false,
-      images: [img1, img2, img3, img4, img5, img6,
-        img7, img8, img9, img10, img11, img12, img13],
-      currentNumber: 0,
+      timer: 0,
+      curImage: 0,
+      numImages: 13,
     };
   },
   components: {
@@ -215,9 +216,6 @@ export default Vue.extend({
         return 'Closed';
       }
       return 'Closed';
-    },
-    currentHeader(): string {
-      return this.subheaders[this.step - 1];
     },
   },
   methods: {
@@ -358,13 +356,31 @@ export default Vue.extend({
         }
       }
     },
-    startRotation() {
-      if (this.currentNumber < this.images.length - 1) {
-        this.currentNumber++;
-      } else {
-        this.currentNumber = 0;
+    nextImage() {
+      var e;
+      // remove showMe class from current image
+      e = document.getElementById("slideimg" + this.curImage);
+      this.removeClass(e, "showMe");
+      // compute next image
+      this.curImage++;
+      if (this.curImage > this.numImages - 1) {
+          this.curImage = 0;
       }
-      setTimeout(this.startRotation, 3000);
+      // add showMe class to next image
+      e = document.getElementById("slideimg" + this.curImage);
+      this.addClass(e, "showMe");
+    },
+    // helper method
+    addClass(elem, name) {
+      var c = elem.className;
+      if (c) c += " ";
+      c += name;
+      elem.className = c;
+    },
+    // helper method
+    removeClass(elem, name) {
+      var c = elem.className;
+      elem.className = c.replace(name, "").replace(/\s+/g, " ").replace(/^\s+|\s+$/g, "");
     },
   },
   async beforeMount() {
@@ -391,7 +407,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.startRotation();
+    this.timer = setInterval(this.nextImage, 4000);
   },
 });
 </script>

@@ -148,8 +148,9 @@ export interface StatusModel {
   food: string[];
   shirts: string[];
   checkbox: boolean;
-  images: any;
-  currentNumber: number;
+  timer: number,
+  curImage: number,
+  numImages: number,
 }
 
 export interface ApplyState {
