@@ -82,7 +82,7 @@
           name="resume"
           ref="pond"
           labelInvalidField="File is not PDF..."
-          label-idle="Drop resume here (PDF only)"
+          label-idle="Choose file or drop here"
           accepted-file-types="application/pdf"
           :dropValidation="true"
           v-bind:files="myFiles"
@@ -138,10 +138,10 @@ export default Vue.extend({
       this.requestUpdate();
     },
     textFunction(s) {
-      if (s == "large") {
-        return "largeText"
+      if (s == 'large') {
+        return 'largeText';
       }
-      console.log(s)
+      console.log(s);
     },
     onDate(type: string, value: any) {
       if (type.toLowerCase() === 'year') {
@@ -223,16 +223,25 @@ export default Vue.extend({
 .container >>> .filepond--panel {
   opacity: 0.6;
   margin-bottom: 20px;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 35px;
 }
-.container >>> .filepond--panel-root {
-  height: 100% !important;
+.container >>> .filepond--root {
+  height: 150px;
+  margin-bottom: 10px;
+  border-radius: 35px;
 }
-.container >>> .filepond--wrapper {
-  height: 130px !important;
+.container >>> .filepond--drop-label {
+  height: 150px;
+  color: white;
+  font-weight: 500;
+  font-size: 1.8em;
+  font-family: 'Montserrat';
+  border-radius: 35px;
 }
 
 .file-desc {
-  font-size: 17px;
+  font-size: 14px;
   padding-bottom: 2%;
 }
 
