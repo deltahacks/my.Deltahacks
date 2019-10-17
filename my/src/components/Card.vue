@@ -138,7 +138,7 @@ export default Vue.extend({
       this.requestUpdate();
     },
     textFunction(s) {
-      if (s == 'large') {
+      if (s === 'large') {
         return 'largeText';
       }
       console.log(s);
@@ -203,7 +203,7 @@ export default Vue.extend({
       console.log('Listening...');
     },
     async sendFile() {
-      this.upload(this.$refs.pond.getFile());
+      this.upload((this.$refs.pond as any).getFile());
     },
   },
   mounted() {
