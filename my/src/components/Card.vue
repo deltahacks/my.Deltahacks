@@ -180,7 +180,7 @@ export default Vue.extend({
               months.indexOf(this.dates[1].value),
               value
             )
-          )
+          ),
         );
       }
       this.requestUpdate();
