@@ -217,6 +217,9 @@ export default Vue.extend({
       }
       return 'Closed';
     },
+    currentHeader(): string {
+      return this.subheaders[this.step - 1];
+    },
   },
   methods: {
     toggleRSVP(res) {
@@ -357,30 +360,29 @@ export default Vue.extend({
       }
     },
     nextImage() {
-      var e;
       // remove showMe class from current image
-      e = document.getElementById("slideimg" + this.curImage);
-      this.removeClass(e, "showMe");
+      let e = document.getElementById(`slideimg${this.curImage}`);
+      this.removeClass(e, 'showMe');
       // compute next image
       this.curImage++;
       if (this.curImage > this.numImages - 1) {
-          this.curImage = 0;
+        this.curImage = 0;
       }
       // add showMe class to next image
-      e = document.getElementById("slideimg" + this.curImage);
-      this.addClass(e, "showMe");
+      e = document.getElementById(`slideimg${this.curImage}`);
+      this.addClass(e, 'showMe');
     },
     // helper method
     addClass(elem, name) {
-      var c = elem.className;
-      if (c) c += " ";
+      let c = elem.className;
+      if (c) c += ' ';
       c += name;
       elem.className = c;
     },
     // helper method
     removeClass(elem, name) {
-      var c = elem.className;
-      elem.className = c.replace(name, "").replace(/\s+/g, " ").replace(/^\s+|\s+$/g, "");
+      const c = elem.className;
+      elem.className = c.replace(name, '').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, ' ');
     },
   },
   async beforeMount() {
