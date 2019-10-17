@@ -2,14 +2,19 @@
   <div>
     <div class="container">
       <h1 class="question" id="title1">{{ title }}</h1>
-      <v-text-field v-if="inputType == 'text'" :value="value" @input="onChange($event)"></v-text-field>
+      <v-text-field
+        v-if="inputType == 'text'"
+        :value="value"
+        @input="onChange($event)"
+        :error-messages="error"
+      ></v-text-field>
       <div v-else-if="inputType == 'text-area'">
         <v-textarea
           :value="value"
           @input="onChange($event)"
           :counter="textLimit"
           auto-grow
-          v-validate="{ required: true, max: 500 }"
+          :error-messages="error"
         ></v-textarea>
       </div>
       <v-select
@@ -20,6 +25,7 @@
         single-line
         :value="value"
         @input="onChange($event)"
+        :error-messages="error"
       ></v-select>
       <div v-else-if="inputType == 'date'" class="date-row">
         <v-select
@@ -29,6 +35,7 @@
           @input="onDate(input.label, $event)"
           :label="input.label"
           v-model="input.value"
+          :error-messages="error"
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
@@ -43,6 +50,7 @@
           />
           <label :for="data">{{ data }}</label>
         </span>
+        <div v-if="error" class="error--text">{{error}}</div>
       </div>
       <div v-else-if="inputType == 'combo-box'">
         <v-combobox
@@ -82,7 +90,7 @@ export default Vue.extend({
     'selectData',
     'textLimit',
     'icon',
-    'textSize',
+    'error',
   ],
   data() {
     return {
@@ -180,7 +188,7 @@ export default Vue.extend({
   font-size: 2.5em;
   font-weight: 600;
   color: white;
-  margin: 50px;
+  margin: 0 0 50px;
   font-family: 'Montserrat';
   text-align: center;
 }
@@ -196,13 +204,13 @@ export default Vue.extend({
 
 .container {
   color: white !important;
-  padding: 50px;
+  padding: 10vh;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 50px;
   height: 100%;
   width: 50%;
-  margin: 50px auto 0px auto;
+  margin: 10vh auto 0px auto;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -238,10 +246,17 @@ export default Vue.extend({
   text-align: center;
   font-size: 0.8em;
 }
+
 .radio-row {
+  --radio-button-height: 40px;
+
   width: 100%;
   height: 100%;
   margin: 0 auto;
+}
+
+.radio-row span {
+  display: inline-block;
 }
 
 .radio-row input[type='radio'] {
@@ -252,7 +267,7 @@ export default Vue.extend({
 }
 
 .radio-row label {
-  margin: 0 2%;
+  margin: 0 15px;
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
@@ -260,12 +275,36 @@ export default Vue.extend({
   color: white;
   padding: 3vh 6vh;
   font-size: 18px;
+  padding: 20px var(--radio-button-height);
   border-radius: 10px;
   transition: all 0.3s ease-out;
 }
+
 .radio-row input[type='radio']:checked + label {
   background-color: rgba(255, 255, 255, 0.45);
 }
+
+.radio-row .error--text {
+  margin-top: calc(var(--radio-button-height) / 2);
+}
+
+/* Override Vuetify's default error color, since it doesn't contrast enough */
+.container >>> .error--text {
+  caret-color: #bb2e35d8 !important;
+  color: #bb2e35d8 !important;
+
+  font-size: 1.25rem !important;
+  font-family: 'Montserrat', 'Roboto';
+}
+
+.container >>> .v-icon.material-icons {
+  font-family: 'Material Icons';
+}
+
+.container >>> .v-icon.fa {
+  font-family: 'Font Awesome 5 Free';
+}
+
 .theme--light.v-input:not(.v-input--is-disabled) input,
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
   color: white !important;
@@ -281,7 +320,7 @@ export default Vue.extend({
     height: 100%;
     min-height: 300px;
     width: 90%;
-    margin: 50px auto;
+    margin: 25px auto;
   }
   .question {
     font-size: 1.5em;

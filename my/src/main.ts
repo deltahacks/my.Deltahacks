@@ -6,7 +6,6 @@ import 'vuetify/dist/vuetify.min.css';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import VeeValidate from 'vee-validate';
 import VueProgressBar from 'vue-progressbar';
 const VueAnalytics = require('vue-analytics').default;
 
@@ -15,7 +14,6 @@ Vue.use(VueProgressBar, {
   failedColor: 'red',
   height: '2px',
 });
-Vue.use(VeeValidate);
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
