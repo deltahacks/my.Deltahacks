@@ -2,16 +2,12 @@
   <div>
     <div class="container">
       <h1 class="question" id="title1">{{ title }}</h1>
-      <v-text-field
-        v-if="inputType == 'text'"
-        :value="value"
-        @input="onChange($event)"
-      ></v-text-field>
+      <v-text-field v-if="inputType == 'text'" :value="value" @input="onChange($event)"></v-text-field>
       <div v-else-if="inputType == 'text-area'">
         <v-textarea
           :value="value"
           @input="onChange($event)"
-          :counter="textLimit"          
+          :counter="textLimit"
           auto-grow
           v-validate="{ required: true, max: 500 }"
         ></v-textarea>
@@ -99,38 +95,44 @@ export default Vue.extend({
       this.requestUpdate();
     },
     textFunction(s) {
-      if (s == "large") {
-        return "largeText"
+      if (s == 'large') {
+        return 'largeText';
       }
-      console.log(s)
+      console.log(s);
     },
     onDate(type: string, value: any) {
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            value,
-            months.indexOf(this.dates[1].value),
-            this.dates[2].value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              value,
+              months.indexOf(this.dates[1].value),
+              this.dates[2].value
+            )
+          )
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            this.dates[0].value,
-            months.indexOf(value),
-            this.dates[2].value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              this.dates[0].value,
+              months.indexOf(value),
+              this.dates[2].value
+            )
+          )
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            this.dates[0].value,
-            months.indexOf(this.dates[1].value),
-            value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              this.dates[0].value,
+              months.indexOf(this.dates[1].value),
+              value
+            )
+          )
         );
       }
       this.requestUpdate();
@@ -254,14 +256,15 @@ export default Vue.extend({
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
-  background-color: #454545;
+  background-color: rgba(255, 255, 255, 0.15);
   color: white;
-  padding: 20px 40px;
+  padding: 3vh 6vh;
+  font-size: 18px;
   border-radius: 10px;
   transition: all 0.3s ease-out;
 }
 .radio-row input[type='radio']:checked + label {
-  background-color: #58ba83;
+  background-color: rgba(255, 255, 255, 0.45);
 }
 .theme--light.v-input:not(.v-input--is-disabled) input,
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
@@ -316,6 +319,10 @@ export default Vue.extend({
     margin-top: 30px;
     height: 100%;
   }
+  .radio-row label {
+    font-size: 13px;
+    padding: 2vh 5vh;
+  }
 }
 
 @media only screen and (max-width: 1280px) and (min-width: 961px) {
@@ -323,7 +330,7 @@ export default Vue.extend({
     width: 70%;
   }
   .question {
-    font-size: 2.0em;
+    font-size: 2em;
   }
 }
 </style>
