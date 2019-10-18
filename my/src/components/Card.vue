@@ -27,7 +27,7 @@
         @input="onChange($event)"
         :error-messages="error"
       ></v-select>
-      <div v-else-if="inputType == 'date'" class="date-row">
+      <div v-else-if="inputType == 'date' || inputType == 'date-grad'" class="date-row">
         <v-select
           v-for="(input, i) in dates"
           :key="i"
@@ -144,13 +144,14 @@ export default Vue.extend({
       return '';
     },
     onDate(type: string, value: any) {
+      const day = this.inputType === 'date' ? this.dates[2].value : 1;
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
           firebase.firestore.Timestamp.fromDate(new Date(
             value,
             months.indexOf(this.dates[1].value),
-            this.dates[2].value,
+            day,
           )),
         );
       } else if (type.toLowerCase() === 'month') {
@@ -159,7 +160,7 @@ export default Vue.extend({
           firebase.firestore.Timestamp.fromDate(new Date(
             this.dates[0].value,
             months.indexOf(value),
-            this.dates[2].value,
+            day,
           )),
         );
       } else {
@@ -175,25 +176,40 @@ export default Vue.extend({
       this.requestUpdate();
     },
     updateDates() {
-      if (this.inputType === 'date') {
+      if (this.inputType === 'date' || this.inputType === 'date-grad') {
         try {
-          this.dates = [
-            {
-              label: 'Year',
-              options: years,
-              value: new Date(this.value.toDate()).getFullYear(),
-            },
-            {
-              label: 'Month',
-              options: months,
-              value: months[new Date(this.value.toDate()).getMonth()],
-            },
-            {
-              label: 'Day',
-              options: days,
-              value: new Date(this.value.toDate()).getDate(),
-            },
-          ];
+          if (this.inputType === 'date') {
+            this.dates = [
+              {
+                label: 'Year',
+                options: years,
+                value: new Date(this.value.toDate()).getFullYear(),
+              },
+              {
+                label: 'Month',
+                options: months,
+                value: months[new Date(this.value.toDate()).getMonth()],
+              },
+              {
+                label: 'Day',
+                options: days,
+                value: new Date(this.value.toDate()).getDate(),
+              },
+            ];
+          } else if (this.inputType === 'date-grad') {
+            this.dates = [
+              {
+                label: 'Year',
+                options: years,
+                value: new Date(this.value.toDate()).getFullYear(),
+              },
+              {
+                label: 'Month',
+                options: months,
+                value: months[new Date(this.value.toDate()).getMonth()],
+              },
+            ];
+          }
         } catch (e) {
           console.log('Date passed');
         }

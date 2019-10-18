@@ -522,7 +522,7 @@ export const applicationQuestions: any = [
   },
   {
     label: 'And when do you expect to graduate?',
-    fieldType: 'date',
+    fieldType: 'date-grad',
     model: ['academics', 'graduating'],
     // requirements: { required: true, },
   },
@@ -735,5 +735,5 @@ export const months: string[] = [
 export const years: number[] = [];
 export const days: number[] = [];
 
-for (let i = 2019; i >= 1980; i--) years.push(i);
+for (let i = 2024; i >= 1980; i--) years.push(i);
 for (let i = 0; i <= 31; i++) days.push(i);
