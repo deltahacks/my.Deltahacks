@@ -1,294 +1,63 @@
 <template>
-  <v-app class="dashboard background">
+  <v-app class="dashboard gradient-background">
     <!-- <Navigation class="mobile"/> -->
-    <Navbar2 class="navbar1" />
-    <div class="container-status100">
-      <div class="hide">
-        <!-- RSVP Section (not on mobile! need to add) -->
-        <!-- was rushing to get demo working so hardcoded inline styling for some of rsvp element -->
-        <div
-          class="wrap-status100"
-          style="height:445px;padding:35px 55px 35px 55px;"
-          v-if="step > 3"
-        >
-          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
-            🎉 Congratulations, you've been invited to DeltaHacks V!
-          </h1>
-          <h1 v-if="response.rsvp" class="rtitle">
-            😉 Awesome, see you there!
-          </h1>
-          <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
-            We'll miss you, but thanks for letting us know!
-          </h1>
-          <h3 class>Will you be attending?</h3>
-          <div style="padding-top:10px;">
-            <div style="padding-top:10px;">
-              <div class="mx-auto gg" style="display:inline-block;">
-                <v-btn
-                  large
-                  color="success"
-                  @click="toggleRSVP(true)"
-                  :depressed="response.rsvp && hasResponded"
-                  class="button1"
-                >
-                  Yes!
-                </v-btn>
-                <v-btn
-                  large
-                  color="error"
-                  @click="toggleRSVP(false)"
-                  :depressed="!response.rsvp && hasResponded"
-                  class="button2"
-                >
-                  No.
-                </v-btn>
+    <Navbar2 />
+      <div class="wrap">
+        <!--Column#1-->
+        <div class="col col6">
+          <div class="box box9">
+            <p class="big">Welcome.</p>
+            <p class="small">Be a part of the hackathon for change.
+              We are looking forward to being able to meet with you in person.
+              Good luck with your application!</p>
+          </div>
+          <div class="box box5 status">
+            <div class="currentStatus">
+              <h2>My Application Status</h2>
+              <v-icon> {{ emoticon }}</v-icon>
+              <p>{{ currentHeader }}</p>
               </div>
-              <br />
-              <br />
-            </div>
-            <!-- <label for="name" style='float:left'>
-                            <strong>Will you be attending?*</strong>
-                        </label><br>
-            <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch>-->
-            <!-- Need Bus -->
-            <div
-              class="mx-auto gg"
-              style="display:inline-block;width:50% !important;"
-              v-show="response.rsvp"
-              transition="slide-x-transition"
-            >
-              <div>
-                <label for="name" style="float:left">
-                  <strong>Will you need a bus?*</strong>
-                </label>
-                <br />
-                <v-switch
-                  @change="changeBus"
-                  :label="response.bus ? 'Yes!' : 'No.'"
-                  v-model="response.bus"
-                ></v-switch>
-              </div>
-              <!-- Bus Location -->
-              <div>
-                <label for="name" style="float:left">
-                  <strong>Where are you coming from?*</strong>
-                </label>
-                <br />
-                <v-select
-                  @change="changeBus"
-                  :persistent-hint="true"
-                  :hint="busWarning"
-                  name="busLocation"
-                  v-model="response.location"
-                  :items="busLocations"
-                ></v-select>
-              </div>
-              <br />
-            </div>
-            <div class="mx-auto gg" v-if="confirmation">
-              <v-chip
-                style="border:none;float:left;overflow:wrap;"
-                outline
-                small
-                color="#555"
-              >
-                <v-icon left>check</v-icon>
-                <strong>Your response has been submitted.</strong>
-              </v-chip>
-            </div>
-            <!-- <div class="rspvButtons">
-                            <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
-            </div>-->
+              <a href="/apply" class="apply-btn"><div class="apply box5">Apply</div></a>
           </div>
         </div>
-        <div class="wrap-status100" v-if="step <= 3">
-          <div>
-            <h1
-              v-show="!genderCompleted"
-              slot="activator"
-              style="color: #F14D4C"
-            >
-              Please go to
-              <a href="/apply" class="currentStatus">your application</a>
-              and complete an additional field.
-            </h1>
-            <h1 v-show="step === 0 && genderCompleted">
-              You haven't started yet! Go
-              <a href="/apply" class="currentStatus">here</a>
-              to begin.
-            </h1>
-            <h1 v-show="step > 0 && genderCompleted">{{ currentHeader }}</h1>
-            <br />
-            <v-stepper alt-labels class="transp">
-              <v-stepper-header>
-                <v-stepper-step step="1" :complete="step > 0">
-                  {{ baseStep }}
-                </v-stepper-step>
-                <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="step > 0">
-                  Submitted
-                </v-stepper-step>
-                <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="step > 0">
-                  Processing
-                </v-stepper-step>
-                <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="step > 0">
-                  Decision
-                </v-stepper-step>
-              </v-stepper-header>
-            </v-stepper>
-          </div>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div>
-          <v-layout row wrap>
-            <v-flex d-flex md3 :key="media.icon" v-for="media in social">
-              <div>
-                <v-btn class="mx-3" dark icon :href="media.link">
-                  <v-icon size="24px">{{ media.icon }}</v-icon>
-                </v-btn>
+        <!--Column#2-->
+        <div class="col col4">
+            <!-- <div> -->
+              <!-- <transition name='fade' mode="out-in">
+                <div class="box box11" v-for="number in [currentNumber]" :key='number'>
+                  <img :src="images[currentNumber]"/>
+                  </div>
+              </transition> -->
+            <div class="box box11">
+              <img id="slideimg0" class="slide showMe" src="../assets/slideshow/IMG_3843.jpg">
+              <img id="slideimg1" class="slide" src="../assets/slideshow/IMG_3851.jpg">
+              <img id="slideimg2" class="slide" src="../assets/slideshow/IMG_3874.jpg">
+              <img id="slideimg3" class="slide" src="../assets/slideshow/IMG_3876.jpg">
+              <img id="slideimg4" class="slide" src="../assets/slideshow/IMG_3894.jpg">
+              <img id="slideimg5" class="slide" src="../assets/slideshow/IMG_3907.jpg">
+              <img id="slideimg6" class="slide" src="../assets/slideshow/IMG_3908.jpg">
+              <img id="slideimg7" class="slide" src="../assets/slideshow/IMG_3910.jpg">
+              <img id="slideimg8" class="slide" src="../assets/slideshow/IMG_3927.jpg">
+              <img id="slideimg9" class="slide" src="../assets/slideshow/IMG_3938.jpg">
+              <img id="slideimg10" class="slide" src="../assets/slideshow/IMG_3943.jpg">
+              <img id="slideimg11" class="slide" src="../assets/slideshow/IMG_3945.jpg">
+              <img id="slideimg12" class="slide" src="../assets/slideshow/IMG_3948.jpg">
+            </div>
+            <!-- </div> -->
+            <div :key="media.icon" v-for="media in social">
+              <div class="col col2 social">
+                <a :href="media.link">
+                  <div class="box box3">
+                    <button light icon>
+                      <v-icon>{{ media.icon }}</v-icon>
+                    </button>
+                  </div>
+                </a>
               </div>
-            </v-flex>
-          </v-layout>
+          </div>
         </div>
       </div>
 
-      <div class="mobile">
-        <div class="wrap-status101" v-if="step <= 3">
-          <h1 v-show="step === 0">
-            You haven't started yet! Go
-            <a href="/apply" class="currentStatus">here</a>
-            to begin.
-          </h1>
-          <h1 v-show="step > 0">{{ currentHeader }}</h1>
-          <v-card-text></v-card-text>
-          <v-stepper vertical class="wrap-status201">
-            <v-stepper-step :complete="step > 0" step="1">
-              {{ baseStep }}
-            </v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="2">
-              Submitted
-            </v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="3">
-              Processing
-            </v-stepper-step>
-            <v-stepper-step :complete="step > 0" step="4">
-              Decision
-            </v-stepper-step>
-          </v-stepper>
-        </div>
-        <div
-          class="wrap-status101-accept wrap-status201-accept"
-          v-if="step > 3"
-        >
-          <h1 v-if="!response.rsvp && !hasResponded" class="rtitle">
-            🎉
-            <div id="mobileCol">
-              Congratulations, you've been invited to DeltaHacks V!
-            </div>
-          </h1>
-          <h1 v-if="response.rsvp" class="rtitle">Awesome, see you there!</h1>
-          <h1 v-if="!response.rsvp && hasResponded" class="rtitle">
-            We'll miss you, but thanks for letting us know!
-          </h1>
-          <h3 class>Will you be attending?</h3>
-          <div style="padding-top:10px;">
-            <div style="padding-top:10px;">
-              <div class style="display:inline-block;">
-                <v-btn
-                  large
-                  color="success"
-                  @click="toggleRSVP(true)"
-                  :depressed="response.rsvp && hasResponded"
-                  class="button1"
-                >
-                  Yes!
-                </v-btn>
-                <v-btn
-                  large
-                  color="error"
-                  @click="toggleRSVP(false)"
-                  :depressed="!response.rsvp && hasResponded"
-                  class="button2"
-                >
-                  No.
-                </v-btn>
-              </div>
-              <br />
-              <br />
-            </div>
-            <!-- <label for="name" style='float:left'>
-                            <strong>Will you be attending?*</strong>
-                        </label><br>
-            <v-switch @change="changeRSVP" :label="response.rsvp ? 'Yes!' : 'No.'" v-model="response.rsvp"></v-switch>-->
-            <!-- Need Bus -->
-            <div
-              class
-              style="display:inline-block;width:80% !important;"
-              v-show="response.rsvp"
-              transition="slide-x-transition"
-            >
-              <div>
-                <label for="name" style="float:left">
-                  <strong>Will you need a bus?*</strong>
-                </label>
-                <br />
-                <v-switch
-                  @change="changeBus"
-                  :label="response.bus ? 'Yes!' : 'No.'"
-                  v-model="response.bus"
-                ></v-switch>
-              </div>
-              <!-- Bus Location -->
-              <div>
-                <label for="name" style="float:left">
-                  <strong>Where are you coming from?*</strong>
-                </label>
-                <br />
-                <v-select
-                  @change="changeBus"
-                  :persistent-hint="true"
-                  :hint="busWarning"
-                  name="busLocation"
-                  v-model="response.location"
-                  :items="busLocations"
-                ></v-select>
-              </div>
-            </div>
-
-            <div class="mx-auto gg" v-if="confirmation">
-              <v-chip
-                style="border:none;float:left;overflow:wrap;"
-                outline
-                small
-                color="#555"
-              >
-                <v-icon left>check</v-icon>
-                <strong>Your response has been submitted.</strong>
-              </v-chip>
-            </div>
-            <!-- <div class="rspvButtons">
-                            <v-btn class="button1" @click="submitRSVP">Submit</v-btn>
-            </div>-->
-          </div>
-        </div>
-        <div style="margin-top: 5%;">
-          <v-layout row wrap>
-            <v-flex d-flex md3 :key="media2.icon" v-for="media2 in social">
-              <div>
-                <v-btn class="mx-3" dark icon :href="media2.link">
-                  <v-icon size="24px">{{ media2.icon }}</v-icon>
-                </v-btn>
-              </div>
-            </v-flex>
-          </v-layout>
-        </div>
-      </div>
-    </div>
     <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
       Thanks! We've got your response.
       <v-btn color="white" flat @click="feedback = false">Close</v-btn>
@@ -315,6 +84,8 @@
 import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
 import Navigation from '@/components/Navigation.vue';
+import Card from '@/components/Card.vue';
+
 import Vue from 'vue';
 import { auth } from 'firebase';
 import { validationMixin } from 'vuelidate';
@@ -322,6 +93,7 @@ import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
+
 
 const allUniversities = [];
 export default Vue.extend({
@@ -370,6 +142,10 @@ export default Vue.extend({
         {
           link: 'https://www.linkedin.com/company/deltahacks/',
           icon: 'fab fa-linkedin',
+        },
+        {
+          link: 'https://www.linkedin.com/company/deltahacks/',
+          icon: 'fab fa-snapchat',
         },
       ],
       parent: this,
@@ -423,6 +199,9 @@ export default Vue.extend({
       food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
       shirts: ['XS', 'S', 'M', 'L', 'XL'],
       checkbox: false,
+      timer: 0,
+      curImage: 0,
+      numImages: 13,
     };
   },
   components: {
@@ -580,6 +359,31 @@ export default Vue.extend({
         }
       }
     },
+    nextImage() {
+      // remove showMe class from current image
+      let e = document.getElementById(`slideimg${this.curImage}`);
+      this.removeClass(e, 'showMe');
+      // compute next image
+      this.curImage++;
+      if (this.curImage > this.numImages - 1) {
+        this.curImage = 0;
+      }
+      // add showMe class to next image
+      e = document.getElementById(`slideimg${this.curImage}`);
+      this.addClass(e, 'showMe');
+    },
+    // helper method
+    addClass(elem, name) {
+      let c = elem.className;
+      if (c) c += ' ';
+      c += name;
+      elem.className = c;
+    },
+    // helper method
+    removeClass(elem, name) {
+      const c = elem.className;
+      elem.className = c.replace(name, '').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, ' ');
+    },
   },
   async beforeMount() {
     // console.log('mounted');
@@ -603,6 +407,9 @@ export default Vue.extend({
       console.error(err);
       this.criticalError = true;
     }
+  },
+  mounted() {
+    this.timer = setInterval(this.nextImage, 4000);
   },
 });
 </script>

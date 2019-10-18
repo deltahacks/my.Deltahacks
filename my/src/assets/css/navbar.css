@@ -1,6 +1,9 @@
 #title {
-  font-family: "Roboto", Helvetica, sans-serif;
+  font-family: Montserrat;
   font-weight: 700;
+  color: white;
+  margin-left: 60px;
+  display: inline-block;
 }
 #search {
   width: 300px;
@@ -63,4 +66,76 @@
   .button-hide {
     display: none;
   }
+}
+
+.rounded-box {
+  border-radius: 40px;
+  padding: 20px;
+  height: 100px;
+  width: 88%;
+  background: linear-gradient( 
+    90deg,
+    #1EB8C9,
+    #1EB8C9 15px,
+    #EF4D67 15px,
+    #EF4D67 30px,
+    #FBD966 30px,
+    #FBD966 45px,
+    rgba(255, 255, 255, 0.2) 45px,
+    rgba(255, 255, 255, 0.2) 45px);
+    box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.heading{
+  font-family: Montserrat;
+  font-weight: 700;
+  color: white;
+  margin-left: 60px;
+  display: inline-block;
+  font-size: 40px;
+}
+
+#name {
+  float: right;
+  margin-right: 20px;
+}
+
+#nav-box {
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  height: 100px;
+  margin: 3vw 50px 0 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+#logout {
+  float: right;
+  font-family: Montserrat;
+  color: white;
+  font-size: 18px;
+  margin-top: 40px;
+  margin-right: 2vw;
+}
+
+h1 {
+  font-size: 2vw;
+}
+
+@media only screen and (max-width: 900px) {
+
+  .rounded-box {
+    height: 60px;
+    padding: 10px;
+    width: 80%;
+  }
+  #nav-box {height:60px;
+    margin: 3vw;}
+  #name {display:none;}
+  .heading{font-size: 25px;}
+  #logout{  
+    margin-top: 20px;
+    font-size: 12px;
+  }
+  
 }
