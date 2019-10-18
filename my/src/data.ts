@@ -465,12 +465,14 @@ export const applicationQuestions: any = [
     fieldType: 'text',
     model: ['name', 'first'],
     requirements: { required: true },
+    csize: 'half',
   },
   {
     label: 'And your last name?*',
     fieldType: 'text',
     model: ['name', 'last'],
     requirements: { required: true },
+    csize: 'half',
   },
   {
     label: 'What number can we reach you at?',
