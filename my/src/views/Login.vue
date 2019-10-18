@@ -302,7 +302,7 @@ export default Vue.extend({
           await this.$store.state.db
             .collection('users')
             .doc(this.email)
-            .set({
+            .update({
               geo,
               user_id: user.user!.uid,
               ip: ipp,
