@@ -270,6 +270,7 @@ export default Vue.extend({
 
 .card {
   padding: 10px 10px 0px 10px;
+    display:inline;
 }
 .centrify{
     text-align:center;
