@@ -363,7 +363,7 @@ const numberOfHackathons = [
   '7',
   '8',
   '9',
-  '10+'
+  '10+',
 ];
 
 const workshops = [
@@ -464,13 +464,13 @@ export const applicationQuestions: any = [
     label: "What's your first name?*",
     fieldType: 'text',
     model: ['name', 'first'],
-    requirements: { required: true, },
+    requirements: { required: true },
   },
   {
     label: 'And your last name?*',
     fieldType: 'text',
     model: ['name', 'last'],
-    requirements: { required: true, },
+    requirements: { required: true },
   },
   {
     label: 'What number can we reach you at?',
@@ -486,7 +486,7 @@ export const applicationQuestions: any = [
     requirements: {
       required: true,
       oneOf: allUniversities1,
-    }
+    },
   },
   {
     label:
@@ -494,7 +494,7 @@ export const applicationQuestions: any = [
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
-    requirements: { required: true, mustBe: 'Yes', },
+    requirements: { required: true, mustBe: 'Yes' },
   },
   {
     label: 'What degree are you pursuing?*',
@@ -502,7 +502,7 @@ export const applicationQuestions: any = [
     selectData: degree,
     icon: 'fa-certificate',
     model: ['academics', 'degree'],
-    requirements: { required: true, oneOf: degree, },
+    requirements: { required: true, oneOf: degree },
   },
   {
     label: 'And what do you study?*',
@@ -510,7 +510,7 @@ export const applicationQuestions: any = [
     selectData: majorsList,
     icon: 'fa-pencil-alt',
     model: ['academics', 'major'],
-    requirements: { required: true, oneOf: majorsList, },
+    requirements: { required: true, oneOf: majorsList },
   },
   {
     label: 'What is your current year of study?*',
@@ -518,7 +518,7 @@ export const applicationQuestions: any = [
     selectData: yearOfStudy,
     icon: 'fa-calendar',
     model: ['academics', 'year'],
-    requirements: { required: true, oneOf: yearOfStudy, },
+    requirements: { required: true, oneOf: yearOfStudy },
   },
   {
     label: 'And when do you expect to graduate?*',
@@ -530,14 +530,14 @@ export const applicationQuestions: any = [
     label: "What's your birthday?*",
     fieldType: 'date',
     model: ['personal', 'birthday'],
-    requirements: { required: true, },
+    requirements: { required: true },
   },
   {
     label: 'Will you be 18 or older on January 25th, 2020?',
     fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
-    requirements: { required: true, mustBe: 'Yes', },
+    requirements: { required: true, mustBe: 'Yes' },
   },
   {
     label: "What's your gender?*",
@@ -547,7 +547,7 @@ export const applicationQuestions: any = [
     requirements: {
       required: true,
       oneOf: gender,
-    }
+    },
   },
   {
     label: 'Which ethnic background do you identify with?*',
@@ -555,7 +555,7 @@ export const applicationQuestions: any = [
     selectData: race,
     icon: 'fa-user-circle',
     model: ['personal', 'race'],
-    requirements: { required: true, },
+    requirements: { required: true },
   },
   {
     label: 'How many hackathons have you been to?*',
@@ -572,15 +572,15 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: '500',
     model: ['responses', 'q1'],
-    requirements: { required: true, max: 500, },
+    requirements: { required: true, max: 500 },
   },
   {
     label:
       'Describe a time you had to teach a new skill to someone.* (500 chars)',
     fieldType: 'text-area',
-    textLimit: "500",
+    textLimit: '500',
     model: ['responses', 'q2'],
-    requirements: { required: true, max: 500, },
+    requirements: { required: true, max: 500 },
   },
   {
     label:
@@ -589,7 +589,7 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: '750',
     model: ['responses', 'q3'],
-    requirements: { required: true, max: 750, },
+    requirements: { required: true, max: 750 },
   },
   {
     label:
@@ -597,7 +597,7 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: 200,
     model: ['responses', 'anything_else'],
-    requirements: { max: 500, },
+    requirements: { max: 500 },
   },
   {
     label: "What's your GitHub?",
@@ -699,6 +699,19 @@ export const applicationQuestions: any = [
     model: ['general', 'role'],
   },
   {
+    label: 'Upload Resume',
+    fieldType: 'file',
+    model: ['general', 'role'],
+  },
+  {
+    label: 'Do you agree with the MLH terms and conditions?*',
+    fieldType: 'single-select',
+    selectData: ['Agree'],
+    icon: 'fa-asterisk',
+    model: ['general', 'terms'],
+    requirements: { required: true, mustBe: 'Agree' },
+  },
+  {
     label:
       'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy*',
@@ -706,7 +719,7 @@ export const applicationQuestions: any = [
     selectData: ['Accept'],
     icon: 'fa-asterisk',
     model: ['general', 'code'],
-    requirements: { required: true, },
+    requirements: { required: true },
   },
 ];
 

@@ -12,7 +12,7 @@
         <v-textarea
           :value="value"
           @input="onChange($event)"
-          :counter="textLimit"          
+          :counter="textLimit"
           auto-grow
           :error-messages="error"
         ></v-textarea>
@@ -72,14 +72,43 @@
           @input="onChange($event)"
         ></v-select>
       </div>
+      <div v-else-if="inputType === 'file'">
+        <div class="file-desc" v-if="resume.filename && resume.link">
+          Currently Uploaded: <a :href="resume.link">{{resume.filename }}</a>
+        </div>
+        <file-pond
+          @addfile="sendFile()"
+          :v-bind="myFiles"
+          name="resume"
+          ref="pond"
+          labelInvalidField="File is not PDF..."
+          label-idle="Choose file or drop here"
+          accepted-file-types="application/pdf"
+          :dropValidation="true"
+          v-bind:files="myFiles"
+          v-on:init="handleFilePondInit"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { Component } from 'vue';
 import firebase from 'firebase';
+
+import vueFilePond from 'vue-filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
 import { months, years, days } from '../data';
+
+const FilePond: Component = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview,
+);
 
 export default Vue.extend({
   props: [
@@ -91,11 +120,17 @@ export default Vue.extend({
     'textLimit',
     'icon',
     'error',
+    'upload',
+    'resume',
   ],
   data() {
     return {
       dates: [],
-    } as { dates: any };
+      myFiles: [],
+    } as { dates: any, myFiles: any };
+  },
+  components: {
+    FilePond,
   },
   methods: {
     onChange(event) {
@@ -103,10 +138,10 @@ export default Vue.extend({
       this.requestUpdate();
     },
     textFunction(s) {
-      if (s == "large") {
-        return "largeText"
+      if (s === 'large') {
+        return 'largeText';
       }
-      console.log(s)
+      console.log(s);
     },
     onDate(type: string, value: any) {
       if (type.toLowerCase() === 'year') {
@@ -164,6 +199,12 @@ export default Vue.extend({
         }
       }
     },
+    handleFilePondInit() {
+      console.log('Listening...');
+    },
+    async sendFile() {
+      this.upload((this.$refs.pond as any).getFile());
+    },
   },
   mounted() {
     this.updateDates();
@@ -178,6 +219,32 @@ export default Vue.extend({
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
+
+.container >>> .filepond--panel {
+  opacity: 0.6;
+  margin-bottom: 20px;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 35px;
+}
+.container >>> .filepond--root {
+  height: 150px;
+  margin-bottom: 10px;
+  border-radius: 35px;
+}
+.container >>> .filepond--drop-label {
+  height: 150px;
+  color: white;
+  font-weight: 500;
+  font-size: 1.8em;
+  font-family: 'Montserrat';
+  border-radius: 35px;
+}
+
+.file-desc {
+  font-size: 14px;
+  padding-bottom: 2%;
+}
+
 .question {
   font-size: 2.5em;
   font-weight: 600;
@@ -243,7 +310,7 @@ export default Vue.extend({
 
 .radio-row {
   --radio-button-height: 40px;
-  
+
   width: 100%;
   height: 100%;
   margin: 0 auto;
