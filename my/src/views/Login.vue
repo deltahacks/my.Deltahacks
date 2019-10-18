@@ -14,7 +14,7 @@
       <div class="card">
         <img src="../assets/sidebar.png" draggable="false" alt="Sidebar+Logo" class="sidebar" />
       </div>
-      <form class="login100-form validate-form">
+      <form ref='form' class="login100-form validate-form">
         <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
         </span>-->
@@ -91,7 +91,7 @@
                 label="Enter First Name"
                 color="#fff"
                 id="fname"
-                v-model="fname"
+                v-model="fName"
                 type="fname"
                 required
               ></v-text-field>
@@ -108,7 +108,7 @@
                 label="Enter Last Name"
                 color="#fff"
                 id="lname"
-                v-model="lname"
+                v-model="lName"
                 type="lname"
                 required
               ></v-text-field>
@@ -154,12 +154,13 @@
             {{ feedback }}
             </v-alert>-->
             <div class="container-login100-form-btn">
+              <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
               <button
                 class="login100-btn forgot100-btn"
                 v-if="register_screen_1===1"
-                @click="register_screen_1=0,register_screen_2=1"
+                @click.prevent="registerNext()"
               >Next</button>
-              <button class="login100-btn forgot100-btn" v-if="register_screen_2===1">Register</button>
+              <button @click.prevent="signup()" class="login100-btn forgot100-btn" v-if="register_screen_2===1">Register</button>
             </div>
             <div class="forgotdiv">
               <br />
@@ -170,7 +171,7 @@
               <a
                 class="forgot"
                 v-if="register_screen_2===1"
-                v-on:click="register_screen_1=1,register_screen_2=0"
+                v-on:click="register_screen_1=1,register_screen_2=0,feedback=''"
               >
                 <i class="fas fa-arrow-left" />
                 Go Back
@@ -222,8 +223,9 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
+import firebase, { firestore } from 'firebase';
 import Vue from 'vue';
+import axios from 'axios';
 import { LoginModel } from '../types';
 
 export default Vue.extend({
@@ -234,9 +236,11 @@ export default Vue.extend({
       register_screen_1: 1,
       register_screen_2: 0,
       drawer: null,
-      email: null,
-      pass: null,
-      feedback: null,
+      email: '',
+      pass: '',
+      fName: '',
+      lName: '',
+      feedback: '',
       loader: null,
       loading: false,
       loaderSignup: null,
@@ -260,7 +264,7 @@ export default Vue.extend({
             .signInWithEmailAndPassword(this.email, this.pass);
           this.$router.push({ name: 'Status' });
           console.log('logged in');
-          this.feedback = null;
+          this.feedback = '';
         } catch (error) {
           // Handle Errors here.
           //   const errorCode = error.code;
@@ -269,6 +273,68 @@ export default Vue.extend({
           console.log(errorMessage);
         }
       }
+    },
+    async signup() {
+      if (this.getForm().checkValidity()) {
+        try {
+          const user = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(
+              this.email as string,
+              this.pass as string,
+            );
+          // console.log(user.user.uid, 'ID');
+          // console.log(this.$store.state.db, 'DB');
+          await this.$store.state.db
+            .collection('users')
+            .doc(this.email)
+            .set({
+              first: this.fName,
+              last: this.lName,
+              email: this.email,
+              time: firebase.firestore.Timestamp.fromDate(new Date()),
+              // geo: this.geo,
+              user_id: user.user!.uid,
+              ip: null,
+              is_admin: false,
+            });
+          const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json');
+          const ipp = response.data.ip;
+          const data = await axios.get(`https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`);
+          const geo = data.data;
+          await this.$store.state.db
+            .collection('users')
+            .doc(this.email)
+            .set({
+              email: this.email,
+              geo,
+              user_id: user.user!.uid,
+              ip: ipp,
+              is_admin: false,
+            });
+          await firebase.auth().currentUser!.sendEmailVerification();
+          this.counter = 0;
+          this.feedback = 'Please verify your email.';
+          console.log('Registered');
+        } catch (e) {
+          const errorMessage = e.message;
+          this.feedback = errorMessage;
+          console.log(errorMessage);
+        }
+      } else {
+        this.getForm().reportValidity();
+      }
+    },
+    registerNext() {
+      if (this.getForm().checkValidity()) {
+        this.register_screen_1 = 0;
+        this.register_screen_2 = 1;
+      } else {
+        this.getForm().reportValidity();
+      }
+    },
+    getForm(): HTMLFormElement {
+      return this.$refs.form as HTMLFormElement;
     },
   },
   mounted() {},
