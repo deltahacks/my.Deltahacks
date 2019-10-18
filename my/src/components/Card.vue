@@ -477,6 +477,11 @@ export default Vue.extend({
     width: 90%;
     margin: 50px auto;
   }
+  .halfstyle{
+  display: flex;
+  flex-direction: column;
+  max-width:100%;
+}
   .question {
     font-size: 1.5em;
     font-weight: 300;
