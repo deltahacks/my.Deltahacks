@@ -533,7 +533,7 @@ export const applicationQuestions: any = [
     requirements: { required: true },
   },
   {
-    label: 'Will you be 18 or older on January 25th, 2020?',
+    label: 'Will you be 18 or older on January 25th, 2020?*',
     fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
@@ -643,7 +643,7 @@ export const applicationQuestions: any = [
     model: ['general', 'coffee'],
   },
   {
-    label: 'Where are you travelling from?',
+    label: 'Where are you travelling from?*',
     fieldType: 'single-select',
     selectData: cities,
     icon: 'fa-plane',

@@ -283,8 +283,6 @@ export default Vue.extend({
               this.email as string,
               this.pass as string,
             );
-          // console.log(user.user.uid, 'ID');
-          // console.log(this.$store.state.db, 'DB');
           await this.$store.state.db
             .collection('users')
             .doc(this.email)
@@ -293,7 +291,6 @@ export default Vue.extend({
               last: this.lName,
               email: this.email,
               time: firebase.firestore.Timestamp.fromDate(new Date()),
-              // geo: this.geo,
               user_id: user.user!.uid,
               ip: null,
               is_admin: false,
@@ -306,14 +303,11 @@ export default Vue.extend({
             .collection('users')
             .doc(this.email)
             .set({
-              email: this.email,
               geo,
               user_id: user.user!.uid,
               ip: ipp,
-              is_admin: false,
             });
           await firebase.auth().currentUser!.sendEmailVerification();
-          this.counter = 0;
           this.feedback = 'Please verify your email.';
           console.log('Registered');
         } catch (e) {
