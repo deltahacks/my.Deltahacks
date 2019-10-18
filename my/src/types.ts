@@ -4,6 +4,7 @@ export interface ApplicationModel {
 
   // this needs to be typed
   questions: any;
+  authorizations: any;
   updateTimeout: any;
   snack: SnackBar;
 }
@@ -73,7 +74,7 @@ export interface AppContents {
     coffee: string;
     team: string;
     terms: string;
-    code: string;
+    code: boolean;
   }
 }
 

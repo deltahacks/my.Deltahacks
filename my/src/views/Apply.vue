@@ -22,7 +22,7 @@
       <form action>
         <ValidationProvider
           v-for="(question, i) in questions"
-          :key="i"
+          :key="'question_' + i"
           :rules="question.requirements"
           :name="question.label"
           v-slot="{ errors }"
@@ -43,13 +43,33 @@
             :resume="app.resume"
           />
         </ValidationProvider>
+        <ValidationProvider 
+          v-for="(authorization, i) in authorizations" 
+          :key="'authorization_' + i" 
+          :rules="{ mustBe: true }"
+          :name="authorization.label"
+          v-slot="{ errors }"
+        >
+          <Checkbox
+            v-model="app[authorization.model[0]][authorization.model[1]]"
+            :title="authorization.label"
+            :requestUpdate="onFormChange"
+            :ref="authorization.label"
+            :error="errors[0]"
+          />
+        </ValidationProvider>
       </form>
     </ValidationObserver>
-    <div class="text-xs-center">
-      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
-      <br />
-      <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn>
-    </div>
+    <v-container class="act-btn-group" text-xs-center>
+      <v-layout align-center justify-center row wrap>
+        <v-flex xs3>
+          <v-btn class="act-btn act-btn__reset" block large @click="resetApplication">Reset</v-btn>
+        </v-flex>
+        <v-flex xs9>
+          <v-btn class="act-btn act-btn__submit" block large @click="submitApp">Submit</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </v-app>
 </template>
@@ -59,13 +79,14 @@ import Vue from 'vue';
 import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
+import Checkbox from '@/components/Checkbox.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
 import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
-import { blankApplication, applicationQuestions } from '../data';
+import { blankApplication, applicationQuestions, authorizations } from '../data';
 
 Vue.use(VueScrollReveal, {
   class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
@@ -93,7 +114,8 @@ extend('link', {
   message: 'Invalid URL',
 });
 extend('mustBe', {
-  validate: (value, mustBeValue) => value === mustBeValue[0],
+  // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
+  validate: (value, mustBeValue) => { return mustBeValue.length > 0 ? value === mustBeValue[0] : !!value },
   message: "Sorry, we're unable to accept applications without a \"Yes\" here!",
 });
 
@@ -105,6 +127,7 @@ export default Vue.extend({
     return {
       app: blankApplication,
       questions: {},
+      authorizations: {},
       updateTimeout: null,
       snack: {
         color: 'success',
@@ -118,6 +141,7 @@ export default Vue.extend({
   components: {
     Card,
     Nav,
+    Checkbox,
   },
   methods: {
     // updates in progress application
@@ -236,6 +260,7 @@ export default Vue.extend({
   },
   mounted(): void {
     this.questions = applicationQuestions;
+    this.authorizations = authorizations;
   },
 });
 </script>
@@ -280,6 +305,24 @@ export default Vue.extend({
   font-size: 18px;
 }
 
+.act-btn-group {
+  width: 50%;
+
+  padding: 20px 0 40px 0;
+}
+
+@media only screen and (max-width: 960px) {
+  .act-btn-group {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 1280px) and (min-width: 961px) {
+  .act-btn-group {
+    width: 70%;
+  }
+}
+
 .act-btn {
   font-weight: bold;
   text-align: center;
@@ -289,11 +332,19 @@ export default Vue.extend({
   padding: 10px 23%;
   color: white;
   border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0.15) !important;
   transition: 0.1s ease-in-out;
   cursor: pointer;
   z-index: 10000;
-  margin: 10px auto;
+  width: 97.5%;
+}
+
+.act-btn__reset {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.act-btn__submit {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  float: right;
 }
 
 v-snackbar {
