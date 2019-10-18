@@ -1,6 +1,96 @@
 <template>
   <div>
-    <div class="container">
+    <div v-if="cstyle==='half'" class="container halfstyle">
+      <h1 class="question" id="title1">{{ title }}</h1>
+      <v-text-field
+        v-if="inputType == 'text'"
+        :value="value"
+        @input="onChange($event)"
+        :error-messages="error"
+      ></v-text-field>
+      <div v-else-if="inputType == 'text-area'">
+        <v-textarea
+          :value="value"
+          @input="onChange($event)"
+          :counter="textLimit"
+          auto-grow
+          :error-messages="error"
+        ></v-textarea>
+      </div>
+      <v-select
+        v-else-if="inputType == 'single-select'"
+        :items="selectData"
+        :prepend-icon="icon"
+        class="v-select-single"
+        single-line
+        :value="value"
+        @input="onChange($event)"
+        :error-messages="error"
+      ></v-select>
+      <div v-else-if="inputType == 'date'" class="date-row">
+        <v-select
+          v-for="(input, i) in dates"
+          :key="i"
+          :items="input.options"
+          @input="onDate(input.label, $event)"
+          :label="input.label"
+          v-model="input.value"
+          :error-messages="error"
+        ></v-select>
+      </div>
+      <div v-else-if="inputType == 'radio-select'" class="radio-row">
+        <span v-for="(data, i) in selectData" :key="i" class="radio-item">
+          <input
+            type="radio"
+            name="inputs"
+            :id="data"
+            :value="data"
+            :checked="value === data"
+            @input="onChange($event.target.value)"
+          />
+          <label :for="data">{{ data }}</label>
+        </span>
+        <div v-if="error" class="error--text">{{error}}</div>
+      </div>
+      <div v-else-if="inputType == 'combo-box'">
+        <v-combobox
+          :items="selectData"
+          :prepend-icon="icon"
+          single-line
+          :value="value"
+          :icon="icon"
+          @input="onChange($event)"
+        ></v-combobox>
+      </div>
+      <div v-else-if="inputType == 'multi-select'">
+        <v-select
+          :items="selectData"
+          :prepend-icon="icon"
+          single-line
+          multiple
+          :value="value"
+          @input="onChange($event)"
+        ></v-select>
+      </div>
+      <div v-else-if="inputType === 'file'">
+        <div class="file-desc" v-if="resume.filename && resume.link">
+          Currently Uploaded: <a :href="resume.link">{{resume.filename }}</a>
+        </div>
+        <file-pond
+          @addfile="sendFile()"
+          :v-bind="myFiles"
+          name="resume"
+          ref="pond"
+          labelInvalidField="File is not PDF..."
+          label-idle="Choose file or drop here"
+          accepted-file-types="application/pdf"
+          :dropValidation="true"
+          v-bind:files="myFiles"
+          v-on:init="handleFilePondInit"
+        />
+      </div>
+    </div>
+        <div v-else class="container">
       <h1 class="question" id="title1">{{ title }}</h1>
       <v-text-field
         v-if="inputType == 'text'"
@@ -275,6 +365,11 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.halfstyle{
+    max-width: 30vw;
+  height:60vh;
+  display: inline-flex;
 }
 /* .theme--light.v-input:not(.v-input--is-disabled) {
     font-size: 1.7em;
