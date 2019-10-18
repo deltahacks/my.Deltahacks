@@ -408,7 +408,7 @@ animation: fadein 2s;
 .view-enter,
 .view-leave-to
 {
-  opacity: 0.2
+  opacity: 0
 }
 .view-enter-to,
 .view-leave
