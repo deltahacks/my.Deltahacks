@@ -1,6 +1,10 @@
 
 .gradient-background {
-  background-image: linear-gradient(-90deg, #8E65A9, #B97C68);
+  background: linear-gradient(270deg, #1a7fc3, #39bc82);
+  background-size: 200% 200%;
+  -webkit-animation: animated 10s ease infinite;
+  -moz-animation: animated 10s ease infinite;
+  animation: animated 10s ease infinite;
 }
 
 .grid-container {
@@ -220,3 +224,40 @@ p {
   left: 0;
 }
 .showMe {opacity: 1;}
+
+
+@-webkit-keyframes animated {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-moz-keyframes animated {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes animated {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
