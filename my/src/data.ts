@@ -329,7 +329,7 @@ const majorsList = [
   'Computer Science',
   'Software Engineering',
   'Computer Engineering',
-  'Physcology',
+  'Psychology',
   'Music',
   'Civil Engineering',
   'Mechatronics Engineering',
@@ -348,7 +348,7 @@ const majorsList = [
   'Medicine',
   'Life Science',
   'Health Science',
-  'Engineering 1st Year',
+  'Undeclared',
   'Other',
 ];
 
@@ -461,13 +461,13 @@ export const blankApplication: AppContents = {
 
 export const applicationQuestions: any = [
   {
-    label: "What's your first name?*",
+    label: "What's your first name?",
     fieldType: 'text',
     model: ['name', 'first'],
     requirements: { required: true },
   },
   {
-    label: 'And your last name?*',
+    label: 'And your last name?',
     fieldType: 'text',
     model: ['name', 'last'],
     requirements: { required: true },
@@ -478,7 +478,7 @@ export const applicationQuestions: any = [
     model: ['contact', 'phone'],
   },
   {
-    label: 'Where do you study?*',
+    label: 'Where do you study?',
     fieldType: 'single-select',
     selectData: allUniversities1,
     icon: 'fa-school',
@@ -490,14 +490,14 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'Will you be enrolled in a university program or community college on January 18th, 2020?*',
+      'Are you currently enrolled or will be enrolled in a secondary program by January 25th, 2020?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
     requirements: { required: true, mustBe: 'Yes' },
   },
   {
-    label: 'What degree are you pursuing?*',
+    label: 'What degree are you pursuing?',
     fieldType: 'single-select',
     selectData: degree,
     icon: 'fa-certificate',
@@ -505,7 +505,7 @@ export const applicationQuestions: any = [
     requirements: { required: true, oneOf: degree },
   },
   {
-    label: 'And what do you study?*',
+    label: "What's your major?",
     fieldType: 'single-select',
     selectData: majorsList,
     icon: 'fa-pencil-alt',
@@ -513,7 +513,7 @@ export const applicationQuestions: any = [
     requirements: { required: true, oneOf: majorsList },
   },
   {
-    label: 'What is your current year of study?*',
+    label: 'What is your current year of study?',
     fieldType: 'single-select',
     selectData: yearOfStudy,
     icon: 'fa-calendar',
@@ -521,19 +521,19 @@ export const applicationQuestions: any = [
     requirements: { required: true, oneOf: yearOfStudy },
   },
   {
-    label: 'And when do you expect to graduate?*',
+    label: 'And when do you expect to graduate?',
     fieldType: 'date',
     model: ['academics', 'graduating'],
     // requirements: { required: true, },
   },
   {
-    label: "What's your birthday?*",
+    label: "What's your birthday?",
     fieldType: 'date',
     model: ['personal', 'birthday'],
     requirements: { required: true },
   },
   {
-    label: 'Will you be 18 or older on January 25th, 2020?*',
+    label: 'Will you be 18 or older on January 25th, 2020?',
     fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
@@ -618,7 +618,7 @@ export const applicationQuestions: any = [
     requirements: { link: true },
   },
   {
-    label: 'Devpost?',
+    label: "What's your devpost?",
     fieldType: 'text',
     model: ['profiles', 'devpost'],
     requirements: { link: true },
@@ -699,7 +699,7 @@ export const applicationQuestions: any = [
     model: ['general', 'role'],
   },
   {
-    label: 'Upload Resume',
+    label: 'Please upload your resumé',
     fieldType: 'file',
     model: ['general', 'role'],
   },
