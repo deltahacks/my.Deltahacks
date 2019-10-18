@@ -41,6 +41,7 @@
             :error="errors[0]"
             :upload="uploadResume"
             :resume="app.resume"
+            :cstyle="question.csize"
           />
         </ValidationProvider>
         <ValidationProvider 
