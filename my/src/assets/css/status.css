@@ -398,13 +398,13 @@ animation: fadein 2s;
 
 .view-enter-active,
 .view-leave-active {
-  transition: opacity 2.5s;
-  transform: 2.5s ease-in-out;
+  transition: opacity 2s;
+  transform: 2s ease-in-out;
 }
 
-.view-enter-active{
+/* .view-enter-active{
   transition-delay: 2.5s;
-}
+} */
 .view-enter,
 .view-leave-to
 {

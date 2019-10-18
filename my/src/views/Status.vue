@@ -1,6 +1,6 @@
 <template>
 <div class="background">
-    <transition name="view">
+    <transition name="view" mode="out-in">
         <v-app key="1" v-if="counter === 0">
            <div class="container-hello100 background">
     <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
@@ -244,7 +244,7 @@ export default Vue.extend({
       this.timeout = setTimeout(() => {
         this.counter=1;
         console.log("Happened");
-      }, 2500);
+      }, 2000);
         },
     toggleRSVP(res) {
       this.hasResponded = true;
