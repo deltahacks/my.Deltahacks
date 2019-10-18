@@ -7,6 +7,7 @@ export interface ApplicationModel {
   authorizations: any;
   updateTimeout: any;
   snack: SnackBar;
+  resetDialogue: boolean;
 }
 
 export interface AppContents {

@@ -141,7 +141,7 @@ export default Vue.extend({
       if (s === 'large') {
         return 'largeText';
       }
-      console.log(s);
+      return '';
     },
     onDate(type: string, value: any) {
       if (type.toLowerCase() === 'year') {
