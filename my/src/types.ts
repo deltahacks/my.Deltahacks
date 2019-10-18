@@ -175,6 +175,8 @@ export interface SignupModel {
 
 export interface LoginModel {
   counter: number;
+  register_screen_1: number;
+  register_screen_2: number;
   drawer: null;
   email: null | string;
   pass: null | string;
@@ -204,14 +206,14 @@ export interface ForgotModel {
   loadingSignup: boolean;
 }
 
-export interface AutofillData {}
+export interface AutofillData { }
 
 export interface FormValidation {
-  name: {required: any; maxLength: string};
-  email: {required: any; email: string};
-  select: {required: any};
-  checkbox: {required: any};
-  university: {in: any};
+  name: { required: any; maxLength: string };
+  email: { required: any; email: string };
+  select: { required: any };
+  checkbox: { required: any };
+  university: { in: any };
 }
 
 export interface SnackBar {
