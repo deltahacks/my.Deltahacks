@@ -20,175 +20,200 @@
         </span>-->
         <img src="../assets/vi.png" draggable="false" class="back-vi" />
         <div class="bigdiv">
-        <template v-if="counter === 0">
-          <div class="spanText">
-            <span class="txt1">my</span>
-            <span class="txt2">Delta</span>
-            <span class="txt3">Hacks</span>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field
-              prepend-icon="email"
-              @keypress.enter="loginf()"
-              name="login"
-              color="#fff"
-              label="Email"
-              id="login"
-              v-model="email"
-              type="email"
-              required
-            ></v-text-field>
-          </div>
-          <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <v-text-field
-              @keypress.enter="loginf()"
-              prepend-icon="lock"
-              name="password"
-              label="Password"
-              color="#fff"
-              id="password"
-              v-model="pass"
-              type="password"
-              required
-            ></v-text-field>
-          </div>
-          <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
-          <div class="container-login100-form-btn">
-            <button @click.prevent="login" type="submit" class="login100-btn">Login</button>
-            <!-- <button type="submit2" class="login100-btn">Register</button> -->
-            <!-- <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login -->
-            <!-- <v-icon right>lock_open</v-icon> -->
-            <!-- </v-btn> -->
-            <!-- <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Register &nbsp; -->
-            <!-- <i class="fas fa-user-plus" /> -->
-            <!-- </v-btn> -->
+          <template v-if="counter === 0">
+            <div class="spanText">
+              <span class="txt1">my</span>
+              <span class="txt2">Delta</span>
+              <span class="txt3">Hacks</span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Enter username">
+              <v-text-field
+                prepend-icon="email"
+                @keypress.enter="loginf()"
+                name="login"
+                color="#fff"
+                label="Email"
+                id="login"
+                v-model="email"
+                type="email"
+                required
+              ></v-text-field>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Enter password">
+              <v-text-field
+                @keypress.enter="loginf()"
+                prepend-icon="lock"
+                name="password"
+                label="Password"
+                color="#fff"
+                id="password"
+                v-model="pass"
+                type="password"
+                required
+              ></v-text-field>
+            </div>
+            <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
+            <div class="container-login100-form-btn">
+              <button @click.prevent="login" type="submit" class="login100-btn">Login</button>
+              <!-- <button type="submit2" class="login100-btn">Register</button> -->
+              <!-- <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login -->
+              <!-- <v-icon right>lock_open</v-icon> -->
+              <!-- </v-btn> -->
+              <!-- <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Register &nbsp; -->
+              <!-- <i class="fas fa-user-plus" /> -->
+              <!-- </v-btn> -->
+              <div class="forgotdiv">
+                <br />
+                <a class="forgot" v-on:click="counter = 1">Create New Account</a>
+                <br />
+                <a class="forgot" v-on:click="counter = 2">Forgot Password?</a>
+              </div>
+            </div>
+          </template>
+          <template v-else-if="counter === 1">
+            <div class="spanText">
+              <span class="txt1">Create</span>
+              <span class="txt2">Account</span>
+              <span class="txt3"></span>
+            </div>
+            <br />
+            <span class="txt4">Please fill in the following details</span>
+            <br />
+            <div
+              class="wrap-input100 validate-input"
+              v-if="register_screen_1 === 1"
+              data-validate="Enter username"
+            >
+              <v-text-field
+                prepend-icon="person"
+                @keypress.enter="loginf()"
+                name="fname"
+                label="Enter First Name"
+                color="#fff"
+                id="fname"
+                v-model="fname"
+                type="fname"
+                required
+              ></v-text-field>
+            </div>
+            <div
+              class="wrap-input100 validate-input"
+              v-if="register_screen_1 === 1"
+              data-validate="Enter username"
+            >
+              <v-text-field
+                prepend-icon="person"
+                @keypress.enter="loginf()"
+                name="lname"
+                label="Enter Last Name"
+                color="#fff"
+                id="lname"
+                v-model="lname"
+                type="lname"
+                required
+              ></v-text-field>
+            </div>
+            <div
+              class="wrap-input100 validate-input"
+              v-if="register_screen_2 === 1"
+              data-validate="Enter username"
+            >
+              <v-text-field
+                prepend-icon="email"
+                @keypress.enter="loginf()"
+                name="login"
+                label="Enter Email"
+                color="#fff"
+                id="login"
+                v-model="email"
+                type="email"
+                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z0-9.-]{1,}[.]{1}[a-zA-Z0-9]{2,}"
+                oninvalid="setCustomValidity('Please enter a valid email')"
+                oninput="setCustomValidity('')"
+                required
+              ></v-text-field>
+            </div>
+            <div
+              class="wrap-input100 validate-input"
+              v-if="register_screen_2 === 1"
+              data-validate="Enter password"
+            >
+              <v-text-field
+                @keypress.enter="loginf()"
+                prepend-icon="lock"
+                name="password"
+                label="Enter a Password"
+                color="#fff"
+                id="password"
+                v-model="pass"
+                type="password"
+                required
+              ></v-text-field>
+            </div>
+            <!-- <v-alert :value="feedback" type="error">
+            {{ feedback }}
+            </v-alert>-->
+            <div class="container-login100-form-btn">
+              <button
+                class="login100-btn forgot100-btn"
+                v-if="register_screen_1===1"
+                @click="register_screen_1=0,register_screen_2=1"
+              >Next</button>
+              <button class="login100-btn forgot100-btn" v-if="register_screen_2===1">Register</button>
+            </div>
             <div class="forgotdiv">
               <br />
-              <a class="forgot" v-on:click="counter = 1">Create New Account</a><br>
-              <a class="forgot" v-on:click="counter = 2">Forgot Password?</a>
+              <a class="forgot" v-if="register_screen_1===1" v-on:click="counter = 0">
+                <i class="fas fa-arrow-left" />
+                Go Back
+              </a>
+              <a
+                class="forgot"
+                v-if="register_screen_2===1"
+                v-on:click="register_screen_1=1,register_screen_2=0"
+              >
+                <i class="fas fa-arrow-left" />
+                Go Back
+              </a>
             </div>
-          </div>
-        </template>
-       <template v-else-if="counter === 1">
-          <div class="spanText">
-            <span class="txt1">Create </span>
-            <span class="txt2">Account</span>
-            <span class="txt3"></span>
-          </div>
-          <br />
-          <span class="txt4">Please fill in the following details</span>
-          <br />
-          <div class="wrap-input100 validate-input" v-if="data1 === 1" data-validate="Enter username">
-            <v-text-field
-              prepend-icon="person"
-              @keypress.enter="loginf()"
-              name="fname"
-              label="Enter First Name"
-              color="#fff"
-              id="fname"
-              v-model="fname"
-              type="fname"
-              required
-            ></v-text-field>
-          </div>
-           <div class="wrap-input100 validate-input" v-if="data1 === 1" data-validate="Enter username">
-            <v-text-field
-              prepend-icon="person"
-              @keypress.enter="loginf()"
-              name="lname"
-              label="Enter Last Name"
-              color="#fff"
-              id="lname"
-              v-model="lname"
-              type="lname"
-              required
-            ></v-text-field>
-          </div>
-            <div class="wrap-input100 validate-input" v-if="data2 === 1" data-validate="Enter username">
-            <v-text-field
-              prepend-icon="email"
-              @keypress.enter="loginf()"
-              name="login"
-              label="Enter Email"
-              color="#fff"
-              id="login"
-              v-model="email"
-              type="email"
-              pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z0-9.-]{1,}[.]{1}[a-zA-Z0-9]{2,}"
-              oninvalid="setCustomValidity('Please enter a valid email')"
-              oninput="setCustomValidity('')"
-              required
-            ></v-text-field>
-          </div>
-             <div class="wrap-input100 validate-input" v-if="data2 === 1" data-validate="Enter password">
-            <v-text-field
-              @keypress.enter="loginf()"
-              prepend-icon="lock"
-              name="password"
-              label="Enter a Password"
-              color="#fff"
-              id="password"
-              v-model="pass"
-              type="password"
-              required
-            ></v-text-field>
-          </div>
-          <!-- <v-alert :value="feedback" type="error">
-            {{ feedback }}
-          </v-alert>-->
-          <div class="container-login100-form-btn">
-            <button class="login100-btn forgot100-btn" v-if="data1===1" @click="data1=0,data2=1">Next</button>
-            <button class="login100-btn forgot100-btn" v-if="data2===1" >Register</button>
-          </div>
-          <div class="forgotdiv">
+          </template>
+          <template v-else-if="counter === 2">
+            <div class="spanText">
+              <span class="txt1">Forgot</span>
+              <span class="txt2">Pass</span>
+              <span class="txt3">word</span>
+            </div>
             <br />
-            <a class="forgot" v-if="data1===1" v-on:click="counter = 0">
-              <i class="fas fa-arrow-left" />
-              Go Back
-            </a>
-            <a class="forgot" v-if="data2===1" v-on:click="data1=1,data2=0">
-              <i class="fas fa-arrow-left" />
-              Go Back
-            </a>
-          </div>
-        </template>
-        <template v-else-if="counter === 2">
-          <div class="spanText">
-            <span class="txt1">Forgot </span>
-            <span class="txt2">Pass</span>
-            <span class="txt3">word</span>
-          </div>
-          <br />
-          <span class="txt4">Please enter your email and a link will be sent to it.</span>
-          <br />
-          <div class="wrap-input100 validate-input" data-validate="Enter username">
-            <v-text-field
-              prepend-icon="email"
-              @keypress.enter="loginf()"
-              name="login"
-              label="Email"
-              color="#fff"
-              id="login"
-              v-model="email"
-              type="email"
-              required
-            ></v-text-field>
-          </div>
-          <!-- <v-alert :value="feedback" type="error">
+            <span class="txt4">Please enter your email and a link will be sent to it.</span>
+            <br />
+            <div class="wrap-input100 validate-input" data-validate="Enter username">
+              <v-text-field
+                prepend-icon="email"
+                @keypress.enter="loginf()"
+                name="login"
+                label="Email"
+                color="#fff"
+                id="login"
+                v-model="email"
+                type="email"
+                required
+              ></v-text-field>
+            </div>
+            <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
-          </v-alert>-->
+            </v-alert>-->
 
-          <div class="container-login100-form-btn">
-            <button class="login100-btn forgot100-btn">Submit</button>
-          </div>
-          <div class="forgotdiv">
-            <br />
-            <a class="forgot" v-on:click="counter = 0">
-              <i class="fas fa-arrow-left" />
-              Go Back
-            </a>
-          </div>
-        </template>
+            <div class="container-login100-form-btn">
+              <button class="login100-btn forgot100-btn">Submit</button>
+            </div>
+            <div class="forgotdiv">
+              <br />
+              <a class="forgot" v-on:click="counter = 0">
+                <i class="fas fa-arrow-left" />
+                Go Back
+              </a>
+            </div>
+          </template>
         </div>
       </form>
     </div>
@@ -206,8 +231,8 @@ export default Vue.extend({
   data(): LoginModel {
     return {
       counter: 0,
-      data1 : 1,
-      data2 : 0,
+      register_screen_1: 1,
+      register_screen_2: 0,
       drawer: null,
       email: null,
       pass: null,
