@@ -212,6 +212,7 @@ export default Vue.extend({
     'error',
     'upload',
     'resume',
+    'cstyle',
   ],
   data() {
     return {
