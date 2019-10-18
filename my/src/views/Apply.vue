@@ -19,7 +19,7 @@
       </v-btn>
     </v-snackbar>
     <ValidationObserver ref="form">
-      <form action>
+      <form action class="centrify">
         <ValidationProvider
           v-for="(question, i) in questions"
           :key="'question_' + i"
@@ -270,6 +270,11 @@ export default Vue.extend({
 
 .card {
   padding: 10px 10px 0px 10px;
+}
+.centrify{
+    text-align:center;
+  align-content: center;
+  justify-content: center;
 }
 .submitted-face::before {
   opacity: 0;
