@@ -15,7 +15,7 @@ import firebase from 'firebase';
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'Navbar',
+  name: 'Navbar2',
   components: {},
   data() {
     return {

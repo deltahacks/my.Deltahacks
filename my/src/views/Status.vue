@@ -1,7 +1,6 @@
 <template>
   <v-app class="dashboard gradient-background">
-    <!-- <Navigation class="mobile"/> -->
-    <Navbar2 />
+    <Navbar2></Navbar2>
       <div class="wrap">
         <!--Column#1-->
         <div class="col col6">
@@ -14,7 +13,7 @@
           <div class="box box5 status">
             <div class="currentStatus">
               <h2>My Application Status</h2>
-              <v-icon> {{ emoticon }}</v-icon>
+              <div class="emote">{{ emoticon }}</div>
               <p>{{ currentHeader }}</p>
               </div>
               <a href="/apply" class="apply-btn"><div class="apply box5">Apply</div></a>
@@ -81,9 +80,7 @@
 <script lang="ts">
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-shadow */
-import Navbar from '@/components/Navbar.vue';
 import Navbar2 from '@/components/Navbar2.vue';
-import Navigation from '@/components/Navigation.vue';
 import Card from '@/components/Card.vue';
 
 import Vue from 'vue';
@@ -219,6 +216,14 @@ export default Vue.extend({
     },
     currentHeader(): string {
       return this.subheaders[this.step - 1];
+    },
+    emoticon(): string {
+      if (this.step - 1 === 3) {
+        return ':)';
+      } else if (this.step - 1 === 2) {
+        return ':|';
+      }
+      return ':(';
     },
   },
   methods: {
