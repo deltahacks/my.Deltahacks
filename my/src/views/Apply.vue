@@ -20,9 +20,9 @@
     </v-snackbar>
     <ValidationObserver ref="form">
       <form action>
-        <ValidationProvider 
-          v-for="(question, i) in questions" 
-          :key="i" 
+        <ValidationProvider
+          v-for="(question, i) in questions"
+          :key="'question_' + i"
           :rules="question.requirements"
           :name="question.label"
           v-slot="{ errors }"
@@ -39,15 +39,37 @@
             v-model="app[question.model[0]][question.model[1]]"
             :ref="question.label"
             :error="errors[0]"
+            :upload="uploadResume"
+            :resume="app.resume"
+          />
+        </ValidationProvider>
+        <ValidationProvider 
+          v-for="(authorization, i) in authorizations" 
+          :key="'authorization_' + i" 
+          :rules="{ mustBe: true }"
+          :name="authorization.label"
+          v-slot="{ errors }"
+        >
+          <Checkbox
+            v-model="app[authorization.model[0]][authorization.model[1]]"
+            :title="authorization.label"
+            :requestUpdate="onFormChange"
+            :ref="authorization.label"
+            :error="errors[0]"
           />
         </ValidationProvider>
       </form>
     </ValidationObserver>
-    <div class="text-xs-center">
-      <v-btn class="act-btn" large @click="submitApp">Submit</v-btn>
-      <br />
-      <v-btn class="act-btn" large @click="resetApplication">Reset</v-btn>
-    </div>
+    <v-container class="act-btn-group" text-xs-center>
+      <v-layout align-center justify-center row wrap>
+        <v-flex xs3>
+          <v-btn class="act-btn act-btn__reset" block large @click="resetApplication">Reset</v-btn>
+        </v-flex>
+        <v-flex xs9>
+          <v-btn class="act-btn act-btn__submit" block large @click="submitApp">Submit</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </v-app>
 </template>
@@ -57,13 +79,14 @@ import Vue from 'vue';
 import firebase, { firestore, FirebaseError } from 'firebase';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
+import Checkbox from '@/components/Checkbox.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
-import { oneOf, max } from 'vee-validate/dist/rules'
+import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
-import { blankApplication, applicationQuestions } from '../data';
+import { blankApplication, applicationQuestions, authorizations } from '../data';
 
 Vue.use(VueScrollReveal, {
   class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
@@ -76,23 +99,24 @@ Vue.use(VueScrollReveal, {
 
 extend('oneOf', {
   validate: (value, options) => options.includes(value),
-  message: 'Invalid selection'
+  message: 'Invalid selection',
 });
 extend('max', {
   validate: max.validate,
-  message: 'This field is too long'
+  message: 'This field is too long',
 });
 extend('required', {
   validate: value => !!value,
-  message: 'This field is required'
+  message: 'This field is required',
 });
 extend('link', {
   validate: url => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
-  message: 'Invalid URL'
+  message: 'Invalid URL',
 });
 extend('mustBe', {
-  validate: (value, mustBeValue) => value === mustBeValue[0],
-  message: "Sorry, we're unable to accept applications without a \"Yes\" here!"
+  // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
+  validate: (value, mustBeValue) => { return mustBeValue.length > 0 ? value === mustBeValue[0] : !!value },
+  message: "Sorry, we're unable to accept applications without a \"Yes\" here!",
 });
 
 Vue.component('ValidationProvider', ValidationProvider);
@@ -103,6 +127,7 @@ export default Vue.extend({
     return {
       app: blankApplication,
       questions: {},
+      authorizations: {},
       updateTimeout: null,
       snack: {
         color: 'success',
@@ -116,6 +141,7 @@ export default Vue.extend({
   components: {
     Card,
     Nav,
+    Checkbox,
   },
   methods: {
     // updates in progress application
@@ -128,13 +154,17 @@ export default Vue.extend({
       }, 4000);
     },
 
-    updateAppProgress(submitting: boolean): void {
+    async updateAppProgress(submitting: boolean) {
       let submit = false;
-      if (submitting && this.app._.status !== 'submitted') {
+      const verified = await (firebase.auth().currentUser as firebase.User).emailVerified;
+      if (submitting && this.app._.status !== 'submitted' && verified) {
         this.app._.status = 'submitted';
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
+      } else if (submitting && this.app._.status !== 'submitted' && !verified) {
+        this.snack.message = 'Please verify your email before submitting!';
+        this.snack.color = 'error';
       }
       if (this.app._.status !== 'submitted' || submit) {
         this.getDB()
@@ -145,7 +175,7 @@ export default Vue.extend({
           .set(this.app);
       } else {
         this.snack.message = 'Submission error';
-        this.snack.color = 'danger';
+        this.snack.color = 'error';
       }
       this.snack.visible = true;
     },
@@ -165,7 +195,7 @@ export default Vue.extend({
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        return
+        return;
       }
       // If somebody is submitting their application, clear update queue to prevent extra updates from occuring after
       // the application is submitted
@@ -199,6 +229,24 @@ export default Vue.extend({
         .get();
     },
 
+    async uploadResume(doc) {
+      if (!doc) return;
+      const { filename, file, id } = doc;
+      const storeRef = firebase.storage().ref();
+      try {
+        const snapshot = await storeRef
+          .child(`hackathon/DH6/users/${this.getUID()}/Resume.pdf`)
+          .put(file);
+        const url = await snapshot.ref.getDownloadURL();
+
+        this.app.resume.filename = filename;
+        this.app.resume.link = url;
+        this.updateAppProgress(false);
+      } catch (err) {
+        console.log('File upload error');
+      }
+    },
+
     // grabs current (logged in) users unique identifier
     getUID: (): string => firebase.auth().currentUser!.email as string,
     getDB(): firebase.firestore.Firestore {
@@ -216,11 +264,13 @@ export default Vue.extend({
   },
   mounted(): void {
     this.questions = applicationQuestions;
+    this.authorizations = authorizations;
   },
 });
 </script>
 
 <style scoped>
+
 .card {
   padding: 10px 10px 0px 10px;
 }
@@ -259,6 +309,24 @@ export default Vue.extend({
   font-size: 18px;
 }
 
+.act-btn-group {
+  width: 50%;
+
+  padding: 20px 0 40px 0;
+}
+
+@media only screen and (max-width: 960px) {
+  .act-btn-group {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 1280px) and (min-width: 961px) {
+  .act-btn-group {
+    width: 70%;
+  }
+}
+
 .act-btn {
   font-weight: bold;
   text-align: center;
@@ -268,11 +336,19 @@ export default Vue.extend({
   padding: 10px 23%;
   color: white;
   border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0.15) !important;
   transition: 0.1s ease-in-out;
   cursor: pointer;
   z-index: 10000;
-  margin: 10px auto;
+  width: 97.5%;
+}
+
+.act-btn__reset {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.act-btn__submit {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  float: right;
 }
 
 v-snackbar {

@@ -4,6 +4,7 @@ export interface ApplicationModel {
 
   // this needs to be typed
   questions: any;
+  authorizations: any;
   updateTimeout: any;
   snack: SnackBar;
 }
@@ -73,7 +74,7 @@ export interface AppContents {
     coffee: string;
     team: string;
     terms: string;
-    code: string;
+    code: boolean;
   }
 }
 
@@ -182,9 +183,11 @@ export interface LoginModel {
   register_screen_1: number;
   register_screen_2: number;
   drawer: null;
-  email: null | string;
-  pass: null | string;
-  feedback: null;
+  email: string;
+  pass: string;
+  fName: string;
+  lName: string;
+  feedback: string;
   loader: null | string;
   loading: false;
   loaderSignup: null;
