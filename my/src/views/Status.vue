@@ -1,5 +1,14 @@
 <template>
-  <v-app class="dashboard gradient-background">
+<div class="background">
+    <transition name="view">
+        <v-app key="1" v-if="counter === 0">
+           <div class="container-hello100 background">
+    <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
+      <h1 class="hellotext">Hello.</h1>
+      <img src="../assets/vi2.png" draggable="false" class="hello-back-vi" />
+      </div>
+  </v-app>
+  <v-app key="2" v-if="counter === 1" class="dashboard background">
     <!-- <Navigation class="mobile"/> -->
     <Navbar2 />
       <div class="wrap">
@@ -76,6 +85,8 @@
       <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
     </v-snackbar>
   </v-app>
+  </transition>
+  </div>
 </template>
 
 <script lang="ts">
@@ -101,6 +112,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
+      counter:0,
       genderCompleted: true,
       response: {
         rsvp: false,
@@ -222,6 +234,12 @@ export default Vue.extend({
     },
   },
   methods: {
+     method1:function(){
+      this.timeout = setTimeout(() => {
+        this.counter=1;
+        console.log("Happened");
+      }, 2500);
+        },
     toggleRSVP(res) {
       this.hasResponded = true;
       this.response.rsvp = res;
@@ -410,6 +428,7 @@ export default Vue.extend({
   },
   mounted() {
     this.timer = setInterval(this.nextImage, 4000);
+    this.method1() 
   },
 });
 </script>

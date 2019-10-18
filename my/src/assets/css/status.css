@@ -225,6 +225,72 @@ p {
 }
 .showMe {opacity: 1;}
 
+/* For Hello Page */
+.container-hello100 {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+}
+
+.container-hello100::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* background-color: rgba(255,255,255,0.8); */
+}
+
+.hellotext{
+  font-family: Montserrat;
+  font-size: 50px;
+  /* line-height: 1.7; */
+  font-weight:50;
+  color:white;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+-moz-animation: fadein 2s; /* Firefox < 16 */
+-ms-animation: fadein 2s; /* Internet Explorer */
+-o-animation: fadein 2s; /* Opera < 12.1 */
+animation: fadein 2s;
+}
+
+.hello-back-vi {
+  width: 20vw;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /* margin-left: 18.9vw; */
+  /* float: right; */
+  opacity: 0.2;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.background {
+  background: linear-gradient(270deg, #1a7fc3, #39bc82);
+  background-size: 200% 200%;
+  -webkit-animation: animated 25s ease infinite;
+  -moz-animation: animated 25s ease infinite;
+  animation: animated 25s ease infinite;
+}
+
 
 @-webkit-keyframes animated {
   0% {
@@ -260,4 +326,74 @@ p {
   100% {
     background-position: 0% 50%;
   }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.view-enter-active,
+.view-leave-active {
+  transition: opacity 2.5s;
+  transform: 2.5s ease-in-out;
+}
+
+.view-enter-active{
+  transition-delay: 2.5s;
+}
+.view-enter,
+.view-leave-to
+{
+  opacity: 0.2
+}
+.view-enter-to,
+.view-leave
+/* .fade-leave-active in <2.1.8 */
+{
+  opacity: 1
 }
