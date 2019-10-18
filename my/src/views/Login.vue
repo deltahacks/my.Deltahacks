@@ -293,7 +293,6 @@ export default Vue.extend({
               time: firebase.firestore.Timestamp.fromDate(new Date()),
               user_id: user.user!.uid,
               ip: null,
-              is_admin: false,
             });
           const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json');
           const ipp = response.data.ip;
