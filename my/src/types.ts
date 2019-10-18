@@ -23,7 +23,7 @@ export interface AppContents {
   academics: {
     degree: degree;
     major: string;
-    graduating: string;
+    graduating: firebase.firestore.Timestamp;
     school: string;
     year: year;
   };

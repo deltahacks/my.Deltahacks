@@ -59,7 +59,7 @@ const cities = [
   'Brampton',
   'Markham',
   'Milton',
-  'Other'
+  'Other',
 ];
 
 const shirt_size = ['XS', 'S', 'M', 'L', 'XL'];
@@ -379,8 +379,8 @@ const workshops = [
 
 const roles = [
   'Leader',
-  'Follower'
-]
+  'Follower',
+];
 
 export const blankApplication: AppContents = {
   _: {
@@ -405,7 +405,7 @@ export const blankApplication: AppContents = {
   academics: {
     degree: '',
     major: '',
-    graduating: '',
+    graduating: firebase.firestore.Timestamp.fromDate(new Date()),
     school: '',
     year: '',
   },

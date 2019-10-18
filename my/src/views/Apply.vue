@@ -43,9 +43,9 @@
             :resume="app.resume"
           />
         </ValidationProvider>
-        <ValidationProvider 
-          v-for="(authorization, i) in authorizations" 
-          :key="'authorization_' + i" 
+        <ValidationProvider
+          v-for="(authorization, i) in authorizations"
+          :key="'authorization_' + i"
           :rules="{ mustBe: true }"
           :name="authorization.label"
           v-slot="{ errors }"
@@ -115,7 +115,7 @@ extend('link', {
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
-  validate: (value, mustBeValue) => { return mustBeValue.length > 0 ? value === mustBeValue[0] : !!value },
+  validate: (value, mustBeValue) => (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: "Sorry, we're unable to accept applications without a \"Yes\" here!",
 });
 
