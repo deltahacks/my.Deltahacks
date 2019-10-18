@@ -5,7 +5,7 @@
       <h1 id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span> VI
       </h1>
-      <h1 id="name" class="heading">First<span style="font-weight: 300">Last</span></h1>
+      <h1 id="name" class="heading">{{ first }}<span style="font-weight: 300; padding-left: 7%;">{{ last }}</span></h1>
     </div>
   </div>
 </template>
@@ -13,6 +13,7 @@
 <script lang="ts">
 import firebase from 'firebase';
 import Vue from 'vue';
+import db from '../firebase_init';
 
 export default Vue.extend({
   name: 'Navbar2',
@@ -27,6 +28,8 @@ export default Vue.extend({
         { title: 'Home', icon: 'dashboard' },
         { title: 'About', icon: 'question_answer' },
       ],
+      first: 'Welcome',
+      last: '',
     };
   },
   methods: {
@@ -46,6 +49,23 @@ export default Vue.extend({
         console.log(e);
       }
     },
+  },
+  async beforeMount() {
+    // console.log('mounted');
+    const appEmail = firebase.auth().currentUser!.email as string;
+    // const genderStatus = await this.checkGenderInput(appEmail);
+    try {
+      db.collection('users')
+        .doc(appEmail)
+        .onSnapshot((snap) => {
+          if (snap.exists) {
+            this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
+            this.last = snap.data()!.first ? snap.data()!.last : '';
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
   },
 });
 </script>
