@@ -154,13 +154,17 @@ export default Vue.extend({
       }, 4000);
     },
 
-    updateAppProgress(submitting: boolean): void {
+    async updateAppProgress(submitting: boolean) {
       let submit = false;
-      if (submitting && this.app._.status !== 'submitted') {
+      const verified = await (firebase.auth().currentUser as firebase.User).emailVerified;
+      if (submitting && this.app._.status !== 'submitted' && verified) {
         this.app._.status = 'submitted';
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
+      } else if (submitting && this.app._.status !== 'submitted' && !verified) {
+        this.snack.message = 'Please verify your email before submitting!';
+        this.snack.color = 'error';
       }
       if (this.app._.status !== 'submitted' || submit) {
         this.getDB()
@@ -171,7 +175,7 @@ export default Vue.extend({
           .set(this.app);
       } else {
         this.snack.message = 'Submission error';
-        this.snack.color = 'danger';
+        this.snack.color = 'error';
       }
       this.snack.visible = true;
     },
