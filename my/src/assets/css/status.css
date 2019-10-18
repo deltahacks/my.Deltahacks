@@ -222,11 +222,13 @@ p {
     height: auto;
   }
   .emote {
+    left: 40%;
     width:30px;
     height:30px;
     border-radius:15px;
     font-size: 15px;
   }
+  .currentStatus{margin-top:3vw;}
 }
 
 .slide {
