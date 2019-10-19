@@ -45,7 +45,7 @@
         <span v-for="(data, i) in selectData" :key="i" class="radio-item">
           <input
             type="radio"
-            name="inputs"
+            :name="data"
             :id="data"
             :value="data"
             :checked="value === data"
@@ -323,7 +323,7 @@ export default Vue.extend({
 }
 
 .radio-row {
-  --radio-button-height: 40px;
+  --radio-button-height: 6vh;
 
   width: 100%;
   height: 100%;
@@ -346,15 +346,16 @@ export default Vue.extend({
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
-  background-color: #454545;
+  background-color: rgba(255, 255, 255, 0.15);
   color: white;
-  padding: 20px var(--radio-button-height);
+  padding: 3vh var(--radio-button-height);
+  font-size: 18px;
   border-radius: 10px;
   transition: all 0.3s ease-out;
 }
 
 .radio-row input[type='radio']:checked + label {
-  background-color: #58ba83;
+  background-color: rgba(255, 255, 255, 0.45);
 }
 
 .radio-row .error--text {
@@ -430,6 +431,10 @@ export default Vue.extend({
   .radio-item {
     margin-top: 30px;
     height: 100%;
+  }
+  .radio-row label {
+    font-size: 13px;
+    padding: 2vh 5vh;
   }
 }
 

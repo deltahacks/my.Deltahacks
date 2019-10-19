@@ -7,7 +7,7 @@
         VI
       </h1>
       <h1 id="name" class="heading">
-        {{ first }}<span style="font-weight: 300; padding-left: 7%;">{{ last }}</span>
+        {{ first }}<span style="font-weight: 300; padding-left: 4%;">{{ last }}</span>
       </h1>
     </div>
   </div>
@@ -39,7 +39,7 @@ export default Vue.extend({
   },
   methods: {
     tst() {
-      console.log('FUUUUUUUUUUUCK');
+      console.log('tst_error');
     },
     async logout() {
       console.log('logging out');

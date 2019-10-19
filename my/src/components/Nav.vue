@@ -1,53 +1,20 @@
 <template>
-  <v-toolbar class="toolbar" style="background-color:rgba(0,0,0,0.3)">
-    <v-toolbar-title id="title">
-      <img src="@/assets/logo.png" height="47px" alt="DeltaHacks Logo" />
-    </v-toolbar-title>
-    <a href="/status" class="button button-hide">STATUS</a>
-    &ensp;
-    <a href="/apply" class="button button-hide">APPLY</a>
-    &ensp;
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
-    <v-icon color="white" class="button-hide">person</v-icon>
-    <a href="/status" class="button button-hide">
-      {{ uppercaseID }}
-    </a>
-    <div class="text-xs-center">
-      <v-menu offset-y>
-        <v-avatar>
-          <v-icon color="white">account_circle</v-icon>
-        </v-avatar>
-        <v-list style="background-color:#85F8B5;">
-          <v-list-tile to="/">
-            <v-list-tile-title v-if="uid">Change Password</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile to="/login/forgot">
-            <v-list-tile-title v-if="uid">Forgot Password</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
+  <div id="nav-box">
+        <a class="btnbox1" id="logout" @click.prevent="logout">Log Out</a>
+     <a class="btnbox2" id="logout" href="../status">Status</a>
+    <div class="rounded-box extended">
+      <h1 id="title" class="heading">
+        Delta<span style="font-weight: 300">Hacks</span>
+        VI
+      </h1>
+      <h1 id="name" class="heading">
+        {{ first }}<span style="font-weight: 300; padding-left: 4%;">{{ last }}</span>
+      </h1>
     </div>
-    <a @click.prevent="logout" class="button button-hide">LOGOUT</a>
-    &ensp;
-    <div class="text-xs-center mobile" style="margin-right:-40px;">
-      <v-menu offset-y>
-        <v-btn flat slot="activator" class="button" right>Menu</v-btn>
-        <v-list style="background-color:rgba(255,255,255,0.7);">
-          <v-list-tile to="/status">
-            <v-list-tile-title v-if="uid">Status</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile to="/apply">
-            <v-list-tile-title v-if="uid">Apply</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile @click.prevent="logout" v-if="uid">
-            <v-list-tile-title>Logout</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-    </div>
-  </v-toolbar>
+    <a class="btnbox3" href="../status">
+                  <i class="fas fa-arrow-left" /> &nbsp Go Back To Status
+                </a>
+  </div>
 </template>
 
 <script lang="ts">
@@ -55,30 +22,93 @@ import Vue from 'vue';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import db from '../firebase_init';
 
 export default Vue.extend({
-  name: 'Navbar',
+  name: 'Nav',
   components: {},
-  data(): { uid: firebase.User | null } {
+  data() {
     return {
-      uid: firebase.auth().currentUser,
+      c_user: firebase.auth().currentUser,
+      dhs: ['DH VI', 'DH V', 'DH IV', 'DH III', 'DH II'],
+      current: 'DH VI',
+      drawer: null,
+      items: [
+        { title: 'Home', icon: 'dashboard' },
+        { title: 'About', icon: 'question_answer' },
+      ],
+      first: 'Welcome',
+      last: '',
     };
   },
   methods: {
+    tst() {
+      console.log('FUUUUUUUUUUUCK');
+    },
     async logout() {
+      console.log('logging out');
       try {
         await firebase.auth().signOut();
+        console.log('Logout successful');
         this.$router.push({ name: 'Login' });
-      } catch (error) {
-        console.log('Logout unsuccessful:', error);
+      } catch (e) {
+        console.log('Logout unsuccessful');
+        console.log(e);
       }
     },
   },
-  computed: {
-    uppercaseID(): string {
-      return this.uid ? this.uid.email!.toUpperCase() : '';
-    },
+  async beforeMount() {
+    // console.log('mounted');
+    const appEmail = firebase.auth().currentUser!.email as string;
+    // const genderStatus = await this.checkGenderInput(appEmail);
+    try {
+      db.collection('users')
+        .doc(appEmail)
+        .onSnapshot((snap) => {
+          if (snap.exists) {
+            this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
+            this.last = snap.data()!.first ? snap.data()!.last : '';
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
   },
 });
 </script>
-<style scoped src="../assets/css/navbar.css"></style>
+<style scoped src='../assets/css/navbar.css'>
+</style>
+<style>
+.extended{
+  width: 72vw !important;
+}
+.btnbox1{
+  font-weight:500!important;
+}
+.btnbox2{
+  font-weight:700!important;
+  text-decoration: none;
+  /* padding-left:-20px !important; */
+}
+.btnbox1:hover,.btnbox2:hover{
+  /* font-weight:500!important; */
+  color: rgb(190, 190, 190) !important;
+  transition: 0.5s !important;
+}
+.btnbox3{
+  width:97vw;
+  text-align: center;
+  display: none;
+  font-size: 1.1em;
+  padding-top: 10px;
+  padding-bottom:-40px;
+  padding-left:0px !important;
+  margin:0;
+  color: white !important;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+}
+.btnbox3:hover{
+cursor: pointer;
+}
+</style>

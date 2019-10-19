@@ -50,72 +50,85 @@
                 id="slideimg0"
                 class="slide showMe"
                 src="../assets/slideshow/IMG_3843.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg1"
                 class="slide"
                 src="../assets/slideshow/IMG_3851.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg2"
                 class="slide"
                 src="../assets/slideshow/IMG_3874.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg3"
                 class="slide"
                 src="../assets/slideshow/IMG_3876.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg4"
                 class="slide"
                 src="../assets/slideshow/IMG_3894.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg5"
                 class="slide"
                 src="../assets/slideshow/IMG_3907.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg6"
                 class="slide"
                 src="../assets/slideshow/IMG_3908.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg7"
                 class="slide"
                 src="../assets/slideshow/IMG_3910.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg8"
                 class="slide"
                 src="../assets/slideshow/IMG_3927.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg9"
                 class="slide"
                 src="../assets/slideshow/IMG_3938.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg10"
                 class="slide"
                 src="../assets/slideshow/IMG_3943.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg11"
                 class="slide"
                 src="../assets/slideshow/IMG_3945.jpg"
+                draggable="false"
               />
               <img
                 id="slideimg12"
                 class="slide"
                 src="../assets/slideshow/IMG_3948.jpg"
+                draggable="false"
               />
             </div>
             <!-- </div> -->
             <div :key="media.icon" v-for="media in social">
               <div class="col col2 social">
-                <a :href="media.link">
+                <a :href="media.link" target="_blank">
                   <div class="box box3">
                     <button light icon>
                       <v-icon>{{ media.icon }}</v-icon>

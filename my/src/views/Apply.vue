@@ -3,11 +3,10 @@
     <div v-if="app._.status === 'submitted'" class="submitted-face" />
     <div v-if="app._.status === 'submitted'" class="submitted-message">
       Your application has been submitted!
-      <br />
-      We’ll let you know as soon as we make a decision.
+      <br />We’ll let you know as soon as we make a decision.
     </div>
     <div class="background">
-      <Nav />
+      <Nav class="fit"/>
       <v-snackbar
         top
         right
@@ -16,9 +15,7 @@
         :timeout="snack.timeout"
       >
         {{ snack.message }}
-        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
-          Close
-        </v-btn>
+        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
       </v-snackbar>
       <ValidationObserver ref="form">
         <form action>
@@ -426,6 +423,10 @@ v-snackbar {
   -webkit-animation: animated 25s ease infinite;
   -moz-animation: animated 25s ease infinite;
   animation: animated 25s ease infinite;
+}
+
+.fit{
+  width: 92vw !important;
 }
 </style>
 
