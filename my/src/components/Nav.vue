@@ -11,7 +11,7 @@
         {{ first }}<span style="font-weight: 300; padding-left: 7%;">{{ last }}</span>
       </h1>
     </div>
-    <a class="btnbox3" href="../status">View Status Page</a>
+    <a class="btnbox3" href="../status">Go To Status Page</a>
   </div>
 </template>
 
