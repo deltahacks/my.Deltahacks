@@ -23,99 +23,55 @@
           <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
         </span>-->
-          <img src="../assets/vi.png" draggable="false" class="back-vi" />
-          <div class="bigdiv">
-            <template v-if="counter === 0">
-              <div class="spanText">
-                <span class="txt1">my</span>
-                <span class="txt2">Delta</span>
-                <span class="txt3">Hacks</span>
-              </div>
-              <div
-                class="wrap-input100 validate-input"
-                data-validate="Enter username"
-              >
-                <v-text-field
-                  prepend-icon="email"
-                  @keypress.enter="loginf()"
-                  name="login"
-                  color="#fff"
-                  label="Email"
-                  id="login"
-                  v-model="email"
-                  type="email"
-                  required
-                ></v-text-field>
-              </div>
-              <div
-                class="wrap-input100 validate-input"
-                data-validate="Enter password"
-              >
-                <v-text-field
-                  @keypress.enter="loginf()"
-                  prepend-icon="lock"
-                  name="password"
-                  label="Password"
-                  color="#fff"
-                  id="password"
-                  v-model="pass"
-                  type="password"
-                  required
-                ></v-text-field>
-              </div>
-              <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
-              <div class="container-login100-form-btn">
-                <button
-                  @click.prevent="login"
-                  type="submit"
-                  class="login100-btn"
-                >
-                  Login
-                </button>
-                <!-- <button type="submit2" class="login100-btn">Register</button> -->
-                <!-- <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login -->
-                <!-- <v-icon right>lock_open</v-icon> -->
-                <!-- </v-btn> -->
-                <!-- <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Register &nbsp; -->
-                <!-- <i class="fas fa-user-plus" /> -->
-                <!-- </v-btn> -->
-                <div class="forgotdiv">
-                  <br />
-                  <a class="forgot" v-on:click="counter = 1">
-                    Create New Account
-                  </a>
-                  <br />
-                  <a class="forgot" v-on:click="counter = 2">
-                    Forgot Password?
-                  </a>
-                </div>
-              </div>
-            </template>
-            <template v-else-if="counter === 1">
-              <div class="spanText">
-                <span class="txt1">Create </span>
-                <span class="txt2">Account</span>
-                <span class="txt3"></span>
-              </div>
-              <br />
-              <span class="txt4">Please fill in the following details</span>
-              <br />
-              <div
-                class="wrap-input100 validate-input"
-                v-if="register_screen_1 === 1"
-                data-validate="Enter username"
-              >
-                <v-text-field
-                  prepend-icon="person"
-                  @keypress.enter="loginf()"
-                  name="fname"
-                  label="Enter First Name"
-                  color="#fff"
-                  id="fname"
-                  v-model="fName"
-                  type="fname"
-                  required
-                ></v-text-field>
+        <img src="../assets/vi.png" draggable="false" class="back-vi" />
+        <div class="bigdiv">
+          <template v-if="counter === 0">
+            <div class="spanText">
+              <span class="txt1">my</span>
+              <span class="txt2">Delta</span>
+              <span class="txt3">Hacks</span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Enter username">
+              <v-text-field
+                prepend-icon="email"
+                @keypress.enter="loginf()"
+                name="login"
+                color="#fff"
+                label="Email"
+                id="login"
+                v-model="email"
+                type="email"
+                required
+              ></v-text-field>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Enter password">
+              <v-text-field
+                @keypress.enter="loginf()"
+                prepend-icon="lock"
+                name="password"
+                label="Password"
+                color="#fff"
+                id="password"
+                v-model="pass"
+                type="password"
+                required
+              ></v-text-field>
+            </div>
+            <v-alert class="alert-box" :value="feedback" type="error">{{ feedback }}</v-alert>
+            <div class="container-login100-form-btn">
+              <button @click.prevent="login" type="submit" class="login100-btn">Login</button>
+              <!-- <button type="submit2" class="login100-btn">Register</button> -->
+              <!-- <v-btn :loading="loading" :disabled="loading" class="login100-form-btn" type="submit" @click.prevent="login()">Login -->
+              <!-- <v-icon right>lock_open</v-icon> -->
+              <!-- </v-btn> -->
+              <!-- <v-btn :loading="loadingSignup" :disabled="loadingSignup" class="login100-form-btn" :href="source" target="_blank" slot="activator" @click="signuppage">Register &nbsp; -->
+              <!-- <i class="fas fa-user-plus" /> -->
+              <!-- </v-btn> -->
+              <div class="forgotdiv">
+                <br />
+                <a class="forgot" v-on:click="counter = 1">Create New Account</a>
+                <br />
+                <a class="forgot" v-on:click="counter = 2">Forgot Password?</a>
               </div>
               <div
                 class="wrap-input100 validate-input"
