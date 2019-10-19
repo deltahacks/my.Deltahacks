@@ -63,7 +63,7 @@
                   required
                 ></v-text-field>
               </div>
-              <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
+              <v-alert class="alert-box" :value="feedback" type="error">{{ feedback }}</v-alert>
               <div class="container-login100-form-btn">
                 <button
                   @click.prevent="login"
@@ -175,7 +175,7 @@
             {{ feedback }}
             </v-alert>-->
               <div class="container-login100-form-btn">
-                <v-alert :value="feedback" type="error">{{ feedback }}</v-alert>
+                <v-alert class="alert-box" :value="feedback" type="error">{{ feedback }}</v-alert>
                 <button
                   class="login100-btn forgot100-btn"
                   v-if="register_screen_1 === 1"
