@@ -17,7 +17,9 @@
         {{ snack.message }}
         <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
       </v-snackbar>
-             <div class="box">
+      <ValidationObserver ref="form">
+        <form action>
+          <div class="cardify">
               <p class="big">Apply here.</p>
               <p class="small">
                 Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it anytime before the deadline.<br><br>
@@ -25,8 +27,6 @@
                 Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event,<b> Jan 26, 2019</b>.
               </p>
             </div>
-      <ValidationObserver ref="form">
-        <form action>
           <ValidationProvider
             v-for="(question, i) in questions"
             :key="'question_' + i"
@@ -388,7 +388,6 @@ export default Vue.extend({
     width: 90%;
   }
   .box{
-     width: 100%;
      text-align: center;
   }
   .big{
@@ -398,6 +397,9 @@ export default Vue.extend({
   .small{
     padding-left:0;
     padding-right:0;
+  }
+  .cardify{
+    width: 90% !important;
   }
 }
 
@@ -453,10 +455,19 @@ v-snackbar {
 }
 
 
-.box{
-  font-family: 'Montserrat', sans-serif;
-  width: 93%;
-	color:#fff;	
+.cardify{
+  font-family: "Montserrat";
+     color: white !important;
+  padding: 50px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  height: 100%;
+  width: 50%;
+  margin: 50px auto 0px auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .big {
