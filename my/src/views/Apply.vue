@@ -397,6 +397,7 @@ export default Vue.extend({
   .small{
     padding-left:0;
     padding-right:0;
+    text-align:center !important;
   }
   .cardify{
     width: 90% !important;
@@ -464,7 +465,7 @@ v-snackbar {
   border-radius: 50px;
   height: 100%;
   width: 50%;
-  margin: 50px auto 0px auto;
+  margin: 50px auto 50px auto;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -483,6 +484,7 @@ v-snackbar {
   font-size: 1.6em;
   line-height: 1.3em;
   font-weight: 300;
+  text-align: left;
   /* padding: 0% 0% 0 5%; */
 }
 
