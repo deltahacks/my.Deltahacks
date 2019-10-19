@@ -154,12 +154,20 @@ export default Vue.extend({
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(value, months.indexOf(this.dates[1].value), day)),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            value,
+            months.indexOf(this.dates[1].value),
+            day,
+          )),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(this.dates[0].value, months.indexOf(value), day)),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(value),
+            day,
+          )),
         );
       } else {
         this.$emit(
