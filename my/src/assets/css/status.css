@@ -191,6 +191,8 @@ p {
   position: relative;
   font-size: 25px;
   margin: .5vw 0;
+  padding-top: 3px;
+  padding-left: 2px;
 }
 @media only screen and (max-width: 900px) {
 
