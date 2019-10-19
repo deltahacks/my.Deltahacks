@@ -464,7 +464,7 @@ v-snackbar {
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 50px;
   height: 100%;
-  width: 50%;
+  width: 49%;
   margin: 50px auto 50px auto;
   display: flex;
   flex-direction: column;
