@@ -19,6 +19,14 @@
       </v-snackbar>
       <ValidationObserver ref="form">
         <form action>
+          <div class="cardify">
+              <p class="big">Apply here.</p>
+              <p class="small">
+                Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it anytime before the deadline.<br><br>
+                No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.<br><br>
+                Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event,<b> Jan 25, 2020</b>.
+              </p>
+            </div>
           <ValidationProvider
             v-for="(question, i) in questions"
             :key="'question_' + i"
@@ -326,6 +334,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap');
+
 .sizefix {
   overflow-x: hidden !important;
 }
@@ -377,6 +387,21 @@ export default Vue.extend({
   .act-btn-group {
     width: 90%;
   }
+  .box{
+     text-align: center;
+  }
+  .big{
+    padding-left:0;
+    padding-right:0;
+  }
+  .small{
+    padding-left:0;
+    padding-right:0;
+    text-align:center !important;
+  }
+  .cardify{
+    width: 90% !important;
+  }
 }
 
 @media only screen and (max-width: 1280px) and (min-width: 961px) {
@@ -389,7 +414,7 @@ export default Vue.extend({
   font-weight: bold;
   text-align: center;
   text-decoration: none;
-  font-family: Montserrat;
+  font-family: 'Montserrat', sans-serif;
   opacity: 0.99;
   padding: 10px 23%;
   color: white;
@@ -429,5 +454,39 @@ v-snackbar {
 .fit{
   width: 92vw !important;
 }
+
+
+.cardify{
+  font-family: "Montserrat";
+     color: white !important;
+  padding: 50px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  height: 100%;
+  width: 49%;
+  margin: 50px auto 50px auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.big {
+  font-size: 2.5em;
+  font-weight: 600;
+  color: white;
+  /* margin: 50px; */
+  font-family: 'Montserrat';
+  text-align: center;
+}
+
+.small {
+  font-size: 1.6em;
+  line-height: 1.3em;
+  font-weight: 300;
+  text-align: left;
+  /* padding: 0% 0% 0 5%; */
+}
+
 </style>
 

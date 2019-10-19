@@ -406,7 +406,7 @@ export default Vue.extend({
     height: 100%;
     min-height: 300px;
     width: 90%;
-    margin: 50px auto;
+    margin: 10px auto;
   }
   .question {
     font-size: 1.5em;

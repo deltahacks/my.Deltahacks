@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap');
 
-.gradient-background {
-  background: linear-gradient(270deg, #1a7fc3, #39bc82);
-  background-size: 200% 200%;
-  -webkit-animation: animated 10s ease infinite;
-  -moz-animation: animated 10s ease infinite;
-  animation: animated 10s ease infinite;
-}
-
 .grid-container {
   margin: 0 30px 0 30px;
   display: grid;
