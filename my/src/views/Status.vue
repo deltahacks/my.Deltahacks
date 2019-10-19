@@ -219,7 +219,7 @@ export default Vue.extend({
           icon: 'fab fa-linkedin',
         },
         {
-          link: 'https://www.linkedin.com/company/deltahacks/',
+          link: 'https://www.snapchat.com/add/deltahacks/',
           icon: 'fab fa-snapchat',
         },
       ],
