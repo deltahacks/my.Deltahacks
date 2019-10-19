@@ -21,7 +21,7 @@
         </v-btn>
       </v-snackbar>
       <ValidationObserver ref="form">
-        <form action>
+        <form action class="centrify">
           <ValidationProvider
             v-for="(question, i) in questions"
             :key="'question_' + i"
@@ -43,6 +43,7 @@
               :error="errors[0]"
               :upload="uploadResume"
               :resume="app.resume"
+              :cstyle="question.csize"
             />
           </ValidationProvider>
           <ValidationProvider
