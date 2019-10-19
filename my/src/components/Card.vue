@@ -26,6 +26,8 @@
         :value="value"
         @input="onChange($event)"
         :error-messages="error"
+        dark
+        color="black"
       ></v-select>
       <div
         v-else-if="inputType == 'date' || inputType == 'date-grad'"
@@ -39,6 +41,8 @@
           :label="input.label"
           v-model="input.value"
           :error-messages="error"
+           dark
+        color="black"
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
@@ -73,6 +77,8 @@
           multiple
           :value="value"
           @input="onChange($event)"
+           dark
+        color="black"
         ></v-select>
       </div>
       <div v-else-if="inputType === 'file'">
