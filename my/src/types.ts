@@ -183,6 +183,7 @@ export interface LoginModel {
   counter: number;
   register_screen_1: number;
   register_screen_2: number;
+  register_screen_alert: number;
   drawer: null;
   email: string;
   pass: string;
