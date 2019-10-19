@@ -312,7 +312,6 @@ export default Vue.extend({
           this.app.name.first = profile.data()!.first;
         }
         if (profile.data()!.last && !this.app.name.last) {
-          console.log('x');
           this.app.name.last = profile.data()!.last;
         }
       }
@@ -330,7 +329,6 @@ export default Vue.extend({
       this.setName();
     } catch (error) {
       // Create popup modal here warning user
-      console.log(error);
       console.log('Unable to fetch, trying again...');
     }
   },
