@@ -305,7 +305,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    method1: function() {
+    method1() {
       this.timeout = setTimeout(() => {
         this.counter = 1;
         console.log('Happened');
@@ -403,7 +403,7 @@ export default Vue.extend({
         .doc('DH5')
         .collection('in progress')
         .doc(email)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
             if (data!.gender) {
@@ -485,7 +485,7 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             this.updateStep(snap);
             if (this.step > 1) this.checkGenderInput(appEmail);

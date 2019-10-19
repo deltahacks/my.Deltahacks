@@ -157,15 +157,13 @@ extend('required', {
 });
 extend('link', {
   validate: url =>
-    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
-      url,
-    ),
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
   message: 'Invalid URL',
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
   validate: (value, mustBeValue) =>
-    mustBeValue.length > 0 ? value === mustBeValue[0] : !!value,
+    (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
@@ -244,9 +242,7 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(
-          ([field, errors]: Array<any>) => errors.length,
-        );
+        const invalidFields = Object.entries(errors).find(([field, errors]: Array<any>) => errors.length);
         if (invalidFields && invalidFields.length > 0) {
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({
             behavior: 'smooth',
