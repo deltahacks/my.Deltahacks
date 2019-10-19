@@ -1,11 +1,11 @@
 <template>
   <v-toolbar dark class="toolbar">
-
     <v-spacer></v-spacer>
 
-    <a href="/" class="smaller delta"><img src="@/assets/logo.png" height=53px alt="DeltaHacks Logo"></a>
-    <v-toolbar-title id="title">
-    </v-toolbar-title>
+    <a href="/" class="smaller delta">
+      <img src="@/assets/logo.png" height="53px" alt="DeltaHacks Logo" />
+    </a>
+    <v-toolbar-title id="title"></v-toolbar-title>
 
     <v-spacer></v-spacer>
 
@@ -26,11 +26,16 @@
       <!-- <v-btn flat to="/">FAQ</v-btn> -->
       <!-- <v-btn flat @click.prevent="logout" v-if="c_user">Logout</v-btn> -->
     </v-toolbar-items>
-    <v-chip color="white" text-color="black" class="clickable, hide-chip" style="margin: 0px 40px">
+    <v-chip
+      color="white"
+      text-color="black"
+      class="clickable, hide-chip"
+      style="margin: 0px 40px"
+    >
       <v-avatar>
-        <v-icon large :color='rgba(255, 255, 0, 0.5)'>account_cidrcle</v-icon>
+        <v-icon large :color="rgba(255, 255, 0, 0.5)">account_cidrcle</v-icon>
       </v-avatar>
-      {{c_user.email}}
+      {{ c_user.email }}
     </v-chip>
     <!-- <v-chip  class="clickable " @click.prevent="logout " v-if="c_user ">
         Logout
@@ -43,11 +48,11 @@
 
         <v-list>
           <v-list-tile to="/status ">
-            <v-list-tile-title v-if="c_user ">Status</v-list-tile-title>
+            <v-list-tile-title v-if="c_user">Status</v-list-tile-title>
           </v-list-tile>
 
           <v-list-tile to="/apply ">
-            <v-list-tile-title v-if="c_user ">Apply</v-list-tile-title>
+            <v-list-tile-title v-if="c_user">Apply</v-list-tile-title>
           </v-list-tile>
 
           <!-- <v-list-tile to="/ ">
@@ -57,11 +62,9 @@
           <v-list-tile to="/ ">
             <v-list-tile-title>FAQ</v-list-tile-title>
           </v-list-tile> -->
-
         </v-list>
       </v-menu>
     </div>
-
   </v-toolbar>
 </template>
 
@@ -84,9 +87,7 @@ export default Vue.extend({
   methods: {
     async logout() {
       try {
-        await firebase
-          .auth()
-          .signOut();
+        await firebase.auth().signOut();
         this.$router.push({ name: 'Login' });
       } catch (err) {
         console.log(err);
@@ -97,7 +98,7 @@ export default Vue.extend({
 </script>
 <style>
 #title {
-  font-family: "Roboto", serif;
+  font-family: 'Roboto', serif;
   font-weight: 500;
 }
 

@@ -1,88 +1,115 @@
 <template>
-<v-app class="sizefix">
-  <div v-if="app._.status === 'submitted'" class="submitted-face"/>
-  <div v-if="app._.status === 'submitted'" class="submitted-message">
-    Your application has been submitted! <br/> We’ll let you know as soon as we make a decision.
-  </div>
-  <div class="background">
-    <Nav />
-    <v-snackbar
-      top
-      right
-      :color="snack.color"
-      v-model="snack.visible"
-      :timeout="snack.timeout"
-    >
-      {{ snack.message }}
-      <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
-        Close
-      </v-btn>
-    </v-snackbar>
-    <ValidationObserver ref="form">
-      <form action>
-        <ValidationProvider
-          v-for="(question, i) in questions"
-          :key="'question_' + i"
-          :rules="question.requirements"
-          :name="question.label"
-          v-slot="{ errors }"
-        >
-          <Card
-            v-scroll-reveal
-            class="card"
-            :title="question.label"
-            :inputType="question.fieldType"
-            :selectData="question.selectData"
-            :requestUpdate="onFormChange"
-            :textLimit="question.textLimit"
-            :icon="question.icon"
-            v-model="app[question.model[0]][question.model[1]]"
-            :ref="question.label"
-            :error="errors[0]"
-            :upload="uploadResume"
-            :resume="app.resume"
-          />
-        </ValidationProvider>
-        <ValidationProvider
-          v-for="(authorization, i) in authorizations"
-          :key="'authorization_' + i"
-          :rules="{ mustBe: true }"
-          :name="authorization.label"
-          v-slot="{ errors }"
-        >
-          <Checkbox
-            v-model="app[authorization.model[0]][authorization.model[1]]"
-            :title="authorization.label"
-            :requestUpdate="onFormChange"
-            :ref="authorization.label"
-            :error="errors[0]"
-          />
-        </ValidationProvider>
-      </form>
-    </ValidationObserver>
-    <v-dialog v-model="resetDialogue" max-width="290">
-      <v-card>
-        <v-card-title class="headline">Reset application?</v-card-title>
-        <v-card-text>Click "Reset" to reset your application. This action can't be undone.</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="secondary" text @click="resetDialogue = false">Cancel</v-btn>
-          <v-btn color="warning" text @click="resetDialogue = false,resetApplication()">Reset</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-container class="act-btn-group" text-xs-center>
-      <v-layout align-center justify-center row wrap>
-        <v-flex xs3>
-          <v-btn class="act-btn act-btn__reset" block large @click="resetDialogue=true">Reset</v-btn>
-        </v-flex>
-        <v-flex xs9>
-          <v-btn class="act-btn act-btn__submit" block large @click="submitApp">Submit</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
-</v-app>
+  <v-app class="sizefix">
+    <div v-if="app._.status === 'submitted'" class="submitted-face" />
+    <div v-if="app._.status === 'submitted'" class="submitted-message">
+      Your application has been submitted!
+      <br />
+      We’ll let you know as soon as we make a decision.
+    </div>
+    <div class="background">
+      <Nav />
+      <v-snackbar
+        top
+        right
+        :color="snack.color"
+        v-model="snack.visible"
+        :timeout="snack.timeout"
+      >
+        {{ snack.message }}
+        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+          Close
+        </v-btn>
+      </v-snackbar>
+      <ValidationObserver ref="form">
+        <form action>
+          <ValidationProvider
+            v-for="(question, i) in questions"
+            :key="'question_' + i"
+            :rules="question.requirements"
+            :name="question.label"
+            v-slot="{ errors }"
+          >
+            <Card
+              v-scroll-reveal
+              class="card"
+              :title="question.label"
+              :inputType="question.fieldType"
+              :selectData="question.selectData"
+              :requestUpdate="onFormChange"
+              :textLimit="question.textLimit"
+              :icon="question.icon"
+              v-model="app[question.model[0]][question.model[1]]"
+              :ref="question.label"
+              :error="errors[0]"
+              :upload="uploadResume"
+              :resume="app.resume"
+            />
+          </ValidationProvider>
+          <ValidationProvider
+            v-for="(authorization, i) in authorizations"
+            :key="'authorization_' + i"
+            :rules="{ mustBe: true }"
+            :name="authorization.label"
+            v-slot="{ errors }"
+          >
+            <Checkbox
+              v-model="app[authorization.model[0]][authorization.model[1]]"
+              :title="authorization.label"
+              :requestUpdate="onFormChange"
+              :ref="authorization.label"
+              :error="errors[0]"
+            />
+          </ValidationProvider>
+        </form>
+      </ValidationObserver>
+      <v-dialog v-model="resetDialogue" max-width="290">
+        <v-card>
+          <v-card-title class="headline">Reset application?</v-card-title>
+          <v-card-text>
+            Click "Reset" to reset your application. This action can't be
+            undone.
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="secondary" text @click="resetDialogue = false">
+              Cancel
+            </v-btn>
+            <v-btn
+              color="warning"
+              text
+              @click="(resetDialogue = false), resetApplication()"
+            >
+              Reset
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-container class="act-btn-group" text-xs-center>
+        <v-layout align-center justify-center row wrap>
+          <v-flex xs3>
+            <v-btn
+              class="act-btn act-btn__reset"
+              block
+              large
+              @click="resetDialogue = true"
+            >
+              Reset
+            </v-btn>
+          </v-flex>
+          <v-flex xs9>
+            <v-btn
+              class="act-btn act-btn__submit"
+              block
+              large
+              @click="submitApp"
+            >
+              Submit
+            </v-btn>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </div>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -93,11 +120,19 @@ import Card from '@/components/Card.vue';
 import Checkbox from '@/components/Checkbox.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
+import {
+  ValidationProvider,
+  ValidationObserver,
+  extend,
+} from 'vee-validate/dist/vee-validate.full';
 import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
-import { blankApplication, applicationQuestions, authorizations } from '../data';
+import {
+  blankApplication,
+  applicationQuestions,
+  authorizations,
+} from '../data';
 
 Vue.use(VueScrollReveal, {
   class: 'v-scroll-reveal', // A CSS class applied to elements with the v-scroll-reveal directive; useful for animation overrides.
@@ -121,13 +156,17 @@ extend('required', {
   message: 'This field is required',
 });
 extend('link', {
-  validate: url => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
+  validate: url =>
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
+      url,
+    ),
   message: 'Invalid URL',
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
-  validate: (value, mustBeValue) => (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
-  message: "Sorry, we're unable to accept applications without a \"Yes\" here!",
+  validate: (value, mustBeValue) =>
+    mustBeValue.length > 0 ? value === mustBeValue[0] : !!value,
+  message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
 Vue.component('ValidationProvider', ValidationProvider);
@@ -168,7 +207,8 @@ export default Vue.extend({
 
     async updateAppProgress(submitting: boolean) {
       let submit = false;
-      const verified = await (firebase.auth().currentUser as firebase.User).emailVerified;
+      const verified = await (firebase.auth().currentUser as firebase.User)
+        .emailVerified;
       if (submitting && this.app._.status !== 'submitted' && verified) {
         this.app._.status = 'submitted';
         this.snack.message = 'Application submitted';
@@ -194,7 +234,9 @@ export default Vue.extend({
 
     // actually submits application
     async submitApp(): Promise<void> {
-      const isValid = await (this.$refs.form as Vue & { validate: () => boolean }).validate();
+      const isValid = await (this.$refs.form as Vue & {
+        validate: () => boolean;
+      }).validate();
       if (!isValid) {
         this.snack.message = 'Invalid field(s) on form';
         this.snack.color = 'error';
@@ -202,9 +244,14 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(([field, errors] : Array<any>) => errors.length);
+        const invalidFields = Object.entries(errors).find(
+          ([field, errors]: Array<any>) => errors.length,
+        );
         if (invalidFields && invalidFields.length > 0) {
-          this.$refs[invalidFields[0]][0].$el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          this.$refs[invalidFields[0]][0].$el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
         }
 
         return;
@@ -282,8 +329,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.sizefix{
-  overflow-x:hidden !important;
+.sizefix {
+  overflow-x: hidden !important;
 }
 .card {
   padding: 10px 10px 0px 10px;
@@ -318,7 +365,7 @@ export default Vue.extend({
   border-radius: 20px;
   opacity: 0.8;
   text-align: center;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   font-size: 18px;
 }

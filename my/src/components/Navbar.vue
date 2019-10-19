@@ -1,9 +1,15 @@
 <template>
   <v-toolbar class="toolbar">
     <v-menu offset-y>
-      <v-btn class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
+      <v-btn class="bold" slot="activator" color="primary" dark>
+        {{ current }}
+      </v-btn>
       <v-list>
-        <v-list-tile v-for="(item, index) in dhs" :key="index" @click="current = item">
+        <v-list-tile
+          v-for="(item, index) in dhs"
+          :key="index"
+          @click="current = item"
+        >
           <v-list-tile-title class>{{ item }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
@@ -14,7 +20,8 @@
     <v-spacer></v-spacer>
     <div class="text-xs-center mobile">
       <v-menu offset-y>
-        <v-btn flat slot="activator" right>Menu</v-btn>&ensp;
+        <v-btn flat slot="activator" right>Menu</v-btn>
+        &ensp;
         <v-list>
           <v-list-tile to="/stats">
             <v-list-tile-title v-if="c_user">Statistics</v-list-tile-title>
@@ -43,9 +50,15 @@
       </v-menu>
     </div>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat to="/stats" v-if="c_user" class="green lighten-2">Statistics</v-btn>
-      <v-btn flat to="/status" v-if="c_user" class="blue lighten-3">Status</v-btn>
-      <v-btn flat to="/apply" v-if="c_user" class="red lighten-3">Apply Now</v-btn>
+      <v-btn flat to="/stats" v-if="c_user" class="green lighten-2">
+        Statistics
+      </v-btn>
+      <v-btn flat to="/status" v-if="c_user" class="blue lighten-3">
+        Status
+      </v-btn>
+      <v-btn flat to="/apply" v-if="c_user" class="red lighten-3">
+        Apply Now
+      </v-btn>
       <v-btn flat to="/dashboard" v-if="c_user">{{ c_user.email }}</v-btn>
       <v-btn flat to="/signup" v-if="!c_user">Signup</v-btn>
       <v-btn flat to="/login" v-if="!c_user">Login</v-btn>
