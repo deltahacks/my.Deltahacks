@@ -320,6 +320,7 @@ export default Vue.extend({
               ip: ipp,
             });
           await firebase.auth().currentUser!.sendEmailVerification();
+          this.register_screen_alert = 1;
           this.feedback = 'Please verify your email.';
           console.log('Registered');
         } catch (e) {
