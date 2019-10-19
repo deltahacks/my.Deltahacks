@@ -9,8 +9,6 @@ import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
 import Status from './views/Status.vue';
 import v404 from './views/404.vue';
-import Accepted from './components/Accepted.vue';
-import Rejected from './components/Rejected.vue';
 import FAQ from './views/FAQ.vue';
 import db from './firebase_init';
 
@@ -62,30 +60,6 @@ const router = new Router({
       path: '/404',
       name: 'v404',
       component: v404,
-    },
-    {
-      path: '/accepted',
-      name: 'Accepted',
-      component: Accepted,
-      meta: {
-        auth: true,
-      },
-    },
-    {
-      path: '/rejected',
-      name: 'Rejected',
-      component: Rejected,
-      meta: {
-        auth: true,
-      },
-    },
-    {
-      path: '/FAQ',
-      name: 'FAQ',
-      component: FAQ,
-      meta: {
-        auth: true,
-      },
     },
     {
       path: '*',
