@@ -215,26 +215,6 @@
                 </a>
               </div>
             </template>
-            <template v-else-if="counter === 2">
-              <div class="spanText">
-                <span class="txt1">Forgot</span>
-                <span class="txt2">Pass</span>
-                <span class="txt3">word</span>
-              </div>
-              <br />
-              <span class="txt4">
-                Please enter your email and a link will be sent to it.
-              </span>
-              <br />
-              <div
-                class="wrap-input100 validate-input"
-                data-validate="Enter username"
-              >
-                <i class="fas fa-arrow-left" />
-                Go Back
-              </a>
-            </div>
-          </template>
           <template v-else-if="counter === 2">
             <div class="spanText">
               <span class="txt1">Forgot</span>
