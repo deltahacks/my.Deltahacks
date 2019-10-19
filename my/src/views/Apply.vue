@@ -17,6 +17,14 @@
         {{ snack.message }}
         <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
       </v-snackbar>
+             <div class="box">
+              <p class="big">Apply here.</p>
+              <p class="small">
+                Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it anytime before the deadline.<br><br>
+                No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.<br><br>
+                Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event,<b> Jan 26, 2019</b>.
+              </p>
+            </div>
       <ValidationObserver ref="form">
         <form action>
           <ValidationProvider
@@ -326,6 +334,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap');
+
 .sizefix {
   overflow-x: hidden !important;
 }
@@ -389,7 +399,7 @@ export default Vue.extend({
   font-weight: bold;
   text-align: center;
   text-decoration: none;
-  font-family: Montserrat;
+  font-family: 'Montserrat', sans-serif;
   opacity: 0.99;
   padding: 10px 23%;
   color: white;
@@ -429,5 +439,26 @@ v-snackbar {
 .fit{
   width: 92vw !important;
 }
+
+
+.box{
+  font-family: 'Montserrat', sans-serif;
+  width: 93% !important;
+	color:#fff;	
+}
+
+.big {
+  font-size: 3em;
+  font-weight: 600;
+  padding: 30px 0 0 5%;
+}
+
+.small {
+  font-size: 1.6em;
+  line-height: 1.3em;
+  font-weight: 300;
+  padding: 0% 0% 0 5%;
+}
+
 </style>
 
