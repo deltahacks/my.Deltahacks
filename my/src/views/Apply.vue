@@ -1,5 +1,5 @@
 <template>
-<v-app>
+<v-app class="sizefix">
   <div v-if="app._.status === 'submitted'" class="submitted-face"/>
   <div v-if="app._.status === 'submitted'" class="submitted-message">
     Your application has been submitted! <br/> We’ll let you know as soon as we make a decision.
@@ -282,7 +282,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-
+.sizefix{
+  overflow-x:hidden !important;
+}
 .card {
   padding: 10px 10px 0px 10px;
 }
