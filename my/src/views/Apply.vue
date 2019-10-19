@@ -7,7 +7,7 @@
       We’ll let you know as soon as we make a decision.
     </div>
     <div class="background">
-      <Nav />
+      <Nav class="fit"/>
       <v-snackbar
         top
         right
@@ -427,6 +427,10 @@ v-snackbar {
   -webkit-animation: animated 25s ease infinite;
   -moz-animation: animated 25s ease infinite;
   animation: animated 25s ease infinite;
+}
+
+.fit{
+  width: 90vw !important;
 }
 </style>
 
