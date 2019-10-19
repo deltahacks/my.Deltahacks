@@ -505,6 +505,7 @@ export const applicationQuestions: any = [
     icon: 'fa-certificate',
     model: ['academics', 'degree'],
     requirements: { required: true, oneOf: degree },
+    csize: 'half',
   },
   {
     label: 'And what do you study?*',
@@ -513,6 +514,7 @@ export const applicationQuestions: any = [
     icon: 'fa-pencil-alt',
     model: ['academics', 'major'],
     requirements: { required: true, oneOf: majorsList },
+    csize: 'half',
   },
   {
     label: 'What is your current year of study?*',
@@ -533,6 +535,7 @@ export const applicationQuestions: any = [
     fieldType: 'date',
     model: ['personal', 'birthday'],
     requirements: { required: true },
+    csize: 'half',
   },
   {
     label: 'Will you be 18 or older on January 25th, 2020?',
@@ -540,6 +543,7 @@ export const applicationQuestions: any = [
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
     requirements: { required: true, mustBe: 'Yes' },
+    csize: 'half',
   },
   {
     label: "What's your gender?*",

@@ -361,15 +361,16 @@ export default Vue.extend({
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 50px;
   height: 100%;
-  width: 50%;
+  width: 55%;
   margin: 50px auto 0px auto;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 .halfstyle{
-    max-width: 30vw;
-  height:60vh;
+  min-width: 24vw;
+  max-width: 27vw;
+  height:65vh;
   display: inline-flex;
 }
 /* .theme--light.v-input:not(.v-input--is-disabled) {
