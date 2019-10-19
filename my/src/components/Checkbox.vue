@@ -12,7 +12,7 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['title', 'error', 'requestUpdate', 'error', 'value'],
+  props: ['title', 'error', 'requestUpdate', 'value'],
   data() {
     return { inputVal: this.value };
   },
