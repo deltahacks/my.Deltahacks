@@ -185,7 +185,7 @@
               <span class="txt3">word</span>
             </div>
             <br />
-            <span class="txt4">Please enter your email and a link will be sent to it.</span>
+            <p class="txt4">Please enter your email and a link will be sent to it.</p>
             <br />
             <div class="wrap-input100 validate-input" data-validate="Enter username">
               <v-text-field
