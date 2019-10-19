@@ -13,7 +13,7 @@
     </div>
     <a class="btnbox3" href="../status">
                   <i class="fas fa-arrow-left" /> &nbsp Go Back To Status
-                </a>>
+                </a>
   </div>
 </template>
 
@@ -78,7 +78,7 @@ export default Vue.extend({
 </style>
 <style>
 .extended{
-  width: 70vw !important;
+  width: 72vw !important;
 }
 .btnbox1{
   font-weight:500!important;

@@ -430,7 +430,7 @@ v-snackbar {
 }
 
 .fit{
-  width: 90vw !important;
+  width: 92vw !important;
 }
 </style>
 
