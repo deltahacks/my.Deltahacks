@@ -543,7 +543,7 @@ export const applicationQuestions: any = [
     requirements: {required: true, mustBe: 'Yes'},
   },
   {
-    label: "What's your gender?*",
+    label: "What's your gender?",
     fieldType: 'radio-select',
     selectData: gender,
     model: ['personal', 'gender'],
@@ -553,7 +553,7 @@ export const applicationQuestions: any = [
     },
   },
   {
-    label: 'Which ethnic background do you identify with?*',
+    label: 'Which ethnic background do you identify with?',
     fieldType: 'single-select',
     selectData: race,
     icon: 'fa-user-circle',
@@ -561,7 +561,7 @@ export const applicationQuestions: any = [
     requirements: {required: true},
   },
   {
-    label: 'How many hackathons have you been to?*',
+    label: 'How many hackathons have you been to?',
     fieldType: 'single-select',
     selectData: numberOfHackathons,
     icon: 'fa-list-ol',
@@ -571,15 +571,14 @@ export const applicationQuestions: any = [
   {
     label:
       'What does positive change mean to you? How do you see yourself \
-    incorporating positive change into your experience at DeltaHacks?* (500 chars)',
+    incorporating positive change into your experience at DeltaHacks?',
     fieldType: 'text-area',
     textLimit: '500',
     model: ['responses', 'q1'],
     requirements: {required: true, max: 500},
   },
   {
-    label:
-      'Describe a time you had to teach a new skill to someone.* (500 chars)',
+    label: 'Describe a time you had to teach a new skill to someone.',
     fieldType: 'text-area',
     textLimit: '500',
     model: ['responses', 'q2'],
@@ -587,8 +586,8 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'If you were stranded on a deserted island (with no way to escape) \
-     for a month, what 3 personal items would you want to have?* (Assuming all of your living necessities were covered) (750 chars)',
+      'If you were stranded on a deserted island, with no way to escape, \
+     for a month, what 3 personal items would you want to have?',
     fieldType: 'text-area',
     textLimit: '750',
     model: ['responses', 'q3'],
@@ -646,7 +645,7 @@ export const applicationQuestions: any = [
     model: ['general', 'coffee'],
   },
   {
-    label: 'Where are you travelling from?*',
+    label: 'Where are you travelling from?',
     fieldType: 'single-select',
     selectData: cities,
     icon: 'fa-plane',
@@ -654,7 +653,7 @@ export const applicationQuestions: any = [
     requirements: {required: true, oneOf: cities},
   },
   {
-    label: 'Do you require travel reimbursements?*',
+    label: 'Do you require travel reimbursements?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     icon: 'fa-ticket-alt',
@@ -716,7 +715,7 @@ export const authorizations: any = [
       'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>. \
-    I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy*',
+    I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy',
     model: ['general', 'code'],
   },
 ];
