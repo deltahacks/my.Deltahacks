@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap');
+
 #title {
-  font-family: Montserrat;
-  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   color: white;
   margin-left: 60px;
   display: inline-block;
@@ -35,7 +37,7 @@
     color 0.2s ease-in-out;
   float: left;
   background-color: transparent;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   border: none;
   /* border-radius: 30px; */
   box-shadow: inset 0 0 0 2px #fff;
@@ -43,7 +45,7 @@
   cursor: pointer;
   /* display: inline-block; */
   font-size: 1.25em;
-  font-weight: 700;
+  font-weight:600;
   line-height: 0;
   padding: 0 1.75em;
   text-align: center;
@@ -87,8 +89,8 @@
 }
 
 .heading{
-  font-family: Montserrat;
-  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   color: white;
   margin-left: 60px;
   display: inline-block;
@@ -111,13 +113,17 @@
 
 #logout {
   float: right;
-  font-family: Montserrat;
+  font-family: 'Montserrat', sans-serif;
   color: white;
-  font-size: 18px;
-  margin-top: 40px;
-  margin-right: 2vw;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 35px;
+  margin-right: 3vw;
 }
-
+#logout:hover {
+  font-size: 22px;
+  font-weight: 400;
+}
 h1 {
   font-size: 2vw;
 }

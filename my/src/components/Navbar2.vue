@@ -3,13 +3,11 @@
     <a id="logout" @click.prevent="logout">Log Out</a>
     <div class="rounded-box">
       <h1 id="title" class="heading">
-        Delta
-        <span style="font-weight: 300">Hacks</span>
+        Delta<span style="font-weight: 300">Hacks</span>
         VI
       </h1>
       <h1 id="name" class="heading">
-        {{ first }}
-        <span style="font-weight: 300; padding-left: 7%;">{{ last }}</span>
+        {{ first }}<span style="font-weight: 300; padding-left: 7%;">{{ last }}</span>
       </h1>
     </div>
   </div>
