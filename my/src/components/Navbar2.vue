@@ -37,7 +37,7 @@ export default Vue.extend({
   },
   methods: {
     tst() {
-      console.log('FUUUUUUUUUUUCK');
+      console.log('tst_error');
     },
     async logout() {
       console.log('logging out');
