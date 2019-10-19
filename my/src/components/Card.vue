@@ -45,7 +45,7 @@
         <span v-for="(data, i) in selectData" :key="i" class="radio-item">
           <input
             type="radio"
-            name="inputs"
+            :name="data"
             :id="data"
             :value="data"
             :checked="value === data"
