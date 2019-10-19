@@ -140,7 +140,7 @@ iframe {
 .txt1 {
   font-family: 'Montserrat', sans-serif;
   font-size: 2.5em;
-  font-weight: 100;
+  font-weight: 200;
   text-decoration: none;
   color: white;
 }
@@ -156,7 +156,7 @@ iframe {
 .txt3 {
   font-family: 'Montserrat', sans-serif;
   font-size: 2.5em;
-  font-weight: 100;
+  font-weight: 200;
   text-decoration: none;
   color: white;
 }
@@ -360,9 +360,9 @@ iframe {
   width: 50%;
   position: absolute;
   bottom: 0;
-  margin-left: 9.5vw;
+  margin-left: 10vw;
   float: right;
-  opacity: 0.025;
+  opacity: 0.06;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -615,6 +615,8 @@ iframe {
     width: 50%;
     margin-bottom: 0;
     padding-bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
   .back-vi {
     margin-left: 22.3vw;
@@ -659,4 +661,12 @@ iframe {
   100% {
     background-position: 0% 50%;
   }
+}
+
+.alert-box {
+  border-top: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  color: #c0392b;
+  font-weight: 600;
 }
