@@ -230,19 +230,34 @@
                 class="wrap-input100 validate-input"
                 data-validate="Enter username"
               >
-                <v-text-field
-                  prepend-icon="email"
-                  @keypress.enter="loginf()"
-                  name="login"
-                  label="Email"
-                  color="#fff"
-                  id="login"
-                  v-model="email"
-                  type="email"
-                  required
-                ></v-text-field>
-              </div>
-              <!-- <v-alert :value="feedback" type="error">
+                <i class="fas fa-arrow-left" />
+                Go Back
+              </a>
+            </div>
+          </template>
+          <template v-else-if="counter === 2">
+            <div class="spanText">
+              <span class="txt1">Forgot</span>
+              <span class="txt2">Pass</span>
+              <span class="txt3">word</span>
+            </div>
+            <br />
+            <p class="txt4">Please enter your email and a link will be sent to it.</p>
+            <br />
+            <div class="wrap-input100 validate-input" data-validate="Enter username">
+              <v-text-field
+                prepend-icon="email"
+                @keypress.enter="loginf()"
+                name="login"
+                label="Email"
+                color="#fff"
+                id="login"
+                v-model="email"
+                type="email"
+                required
+              ></v-text-field>
+            </div>
+            <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
             </v-alert>-->
 

@@ -43,9 +43,9 @@
             :resume="app.resume"
           />
         </ValidationProvider>
-        <ValidationProvider 
-          v-for="(authorization, i) in authorizations" 
-          :key="'authorization_' + i" 
+        <ValidationProvider
+          v-for="(authorization, i) in authorizations"
+          :key="'authorization_' + i"
           :rules="{ mustBe: true }"
           :name="authorization.label"
           v-slot="{ errors }"
@@ -60,10 +60,21 @@
         </ValidationProvider>
       </form>
     </ValidationObserver>
+    <v-dialog v-model="resetDialogue" max-width="290">
+      <v-card>
+        <v-card-title class="headline">Reset application?</v-card-title>
+        <v-card-text>Click "Reset" to reset your application. This action can't be undone.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="secondary" text @click="resetDialogue = false">Cancel</v-btn>
+          <v-btn color="warning" text @click="resetDialogue = false,resetApplication()">Reset</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-container class="act-btn-group" text-xs-center>
       <v-layout align-center justify-center row wrap>
         <v-flex xs3>
-          <v-btn class="act-btn act-btn__reset" block large @click="resetApplication">Reset</v-btn>
+          <v-btn class="act-btn act-btn__reset" block large @click="resetDialogue=true">Reset</v-btn>
         </v-flex>
         <v-flex xs9>
           <v-btn class="act-btn act-btn__submit" block large @click="submitApp">Submit</v-btn>
@@ -115,7 +126,7 @@ extend('link', {
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
-  validate: (value, mustBeValue) => { return mustBeValue.length > 0 ? value === mustBeValue[0] : !!value },
+  validate: (value, mustBeValue) => (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: "Sorry, we're unable to accept applications without a \"Yes\" here!",
 });
 
@@ -136,6 +147,7 @@ export default Vue.extend({
         visible: false,
         message: 'Progress saved!',
       },
+      resetDialogue: false,
     };
   },
   components: {
