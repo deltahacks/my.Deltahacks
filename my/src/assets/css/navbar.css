@@ -121,7 +121,8 @@
   margin-right: 3vw;
 }
 #logout:hover {
-  font-weight: 500;
+  color: rgb(190, 190, 190) !important;
+  transition: 0.5s !important;
 }
 
 h1 {
