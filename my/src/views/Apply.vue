@@ -456,7 +456,7 @@ v-snackbar {
 
 
 .cardify{
-  font-family: "Montserrat";
+  /* font-family: "Montserrat"; */
      color: white !important;
   padding: 50px;
   text-align: center;
