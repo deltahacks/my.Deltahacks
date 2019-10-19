@@ -128,7 +128,7 @@
             <!-- </div> -->
             <div :key="media.icon" v-for="media in social">
               <div class="col col2 social">
-                <a :href="media.link">
+                <a :href="media.link" target="_blank">
                   <div class="box box3">
                     <button light icon>
                       <v-icon>{{ media.icon }}</v-icon>
