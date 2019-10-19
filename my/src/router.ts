@@ -144,7 +144,13 @@ router.beforeEach((to, from, next) => {
     Firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
-        next({ name: 'Status' });
+        // console.log("Times", Firebase.auth().currentUser!.metadata.creationTime, Firebase.auth().currentUser!.metadata.lastSignInTime)
+        // Check if this is the first time the user has logged in and pass param to display splash screen
+        if (Firebase.auth().currentUser!.metadata.creationTime === Firebase.auth().currentUser!.metadata.lastSignInTime) 
+          next({ name: 'Status', params: {firstTime: 'yes'} });
+        else 
+          next({ name: 'Status' });
+        
       } else {
         // Otherwise redirect to login
         // console.log('Not authorized');

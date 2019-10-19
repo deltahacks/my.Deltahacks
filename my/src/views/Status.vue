@@ -1,56 +1,116 @@
 <template>
-<div class="background">
+  <div class="background">
     <transition name="view" mode="out-in">
-        <v-app key="1" v-if="counter === 0">
-           <div class="container-hello100 background">
-    <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
-      <h1 class="hellotext">Hello.</h1>
-      <img src="../assets/vi2.png" draggable="false" class="hello-back-vi" />
-      </div>
-  </v-app>
-  <v-app key="2" v-if="counter === 1" class="dashboard background">
-    <!-- <Navigation class="mobile"/> -->
-    <Navbar2 />
-      <div class="wrap">
-        <!--Column#1-->
-        <div class="col col6">
-          <div class="box box9">
-            <p class="big">Welcome.</p>
-            <p class="small">Be a part of the hackathon for change.
-              We are looking forward to being able to meet with you in person.
-              Good luck with your application!</p>
-          </div>
-          <div class="box box5 status">
-            <div class="currentStatus">
-              <h2>My Application Status</h2>
-              <div class="emote">{{ emoticon }}</div>
-              <p>{{ currentHeader }}</p>
-              </div>
-              <a href="/apply" class="apply-btn"><div class="apply box5">Apply</div></a>
-          </div>
+      <v-app key="1" v-if="counter === 0">
+        <div class="container-hello100 background">
+          <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
+          <h1 class="hellotext">Hello.</h1>
+          <img
+            src="../assets/vi2.png"
+            draggable="false"
+            class="hello-back-vi"
+          />
         </div>
-        <!--Column#2-->
-        <div class="col col4">
+      </v-app>
+      <v-app key="2" v-if="counter === 1" class="dashboard background">
+        <!-- <Navigation class="mobile"/> -->
+        <Navbar2 />
+        <div class="wrap">
+          <!--Column#1-->
+          <div class="col col6">
+            <div class="box box9">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                Be a part of the hackathon for change. We are looking forward to
+                being able to meet with you in person. Good luck with your
+                application!
+              </p>
+            </div>
+            <div class="box box5 status">
+              <div class="currentStatus">
+                <h2>My Application Status</h2>
+                <div class="emote">{{ emoticon }}</div>
+                <p>{{ currentHeader }}</p>
+              </div>
+              <a href="/apply" class="apply-btn">
+                <div class="apply box5">Apply</div>
+              </a>
+            </div>
+          </div>
+          <!--Column#2-->
+          <div class="col col4">
             <!-- <div> -->
-              <!-- <transition name='fade' mode="out-in">
+            <!-- <transition name='fade' mode="out-in">
                 <div class="box box11" v-for="number in [currentNumber]" :key='number'>
                   <img :src="images[currentNumber]"/>
                   </div>
               </transition> -->
             <div class="box box11">
-              <img id="slideimg0" class="slide showMe" src="../assets/slideshow/IMG_3843.jpg">
-              <img id="slideimg1" class="slide" src="../assets/slideshow/IMG_3851.jpg">
-              <img id="slideimg2" class="slide" src="../assets/slideshow/IMG_3874.jpg">
-              <img id="slideimg3" class="slide" src="../assets/slideshow/IMG_3876.jpg">
-              <img id="slideimg4" class="slide" src="../assets/slideshow/IMG_3894.jpg">
-              <img id="slideimg5" class="slide" src="../assets/slideshow/IMG_3907.jpg">
-              <img id="slideimg6" class="slide" src="../assets/slideshow/IMG_3908.jpg">
-              <img id="slideimg7" class="slide" src="../assets/slideshow/IMG_3910.jpg">
-              <img id="slideimg8" class="slide" src="../assets/slideshow/IMG_3927.jpg">
-              <img id="slideimg9" class="slide" src="../assets/slideshow/IMG_3938.jpg">
-              <img id="slideimg10" class="slide" src="../assets/slideshow/IMG_3943.jpg">
-              <img id="slideimg11" class="slide" src="../assets/slideshow/IMG_3945.jpg">
-              <img id="slideimg12" class="slide" src="../assets/slideshow/IMG_3948.jpg">
+              <img
+                id="slideimg0"
+                class="slide showMe"
+                src="../assets/slideshow/IMG_3843.jpg"
+              />
+              <img
+                id="slideimg1"
+                class="slide"
+                src="../assets/slideshow/IMG_3851.jpg"
+              />
+              <img
+                id="slideimg2"
+                class="slide"
+                src="../assets/slideshow/IMG_3874.jpg"
+              />
+              <img
+                id="slideimg3"
+                class="slide"
+                src="../assets/slideshow/IMG_3876.jpg"
+              />
+              <img
+                id="slideimg4"
+                class="slide"
+                src="../assets/slideshow/IMG_3894.jpg"
+              />
+              <img
+                id="slideimg5"
+                class="slide"
+                src="../assets/slideshow/IMG_3907.jpg"
+              />
+              <img
+                id="slideimg6"
+                class="slide"
+                src="../assets/slideshow/IMG_3908.jpg"
+              />
+              <img
+                id="slideimg7"
+                class="slide"
+                src="../assets/slideshow/IMG_3910.jpg"
+              />
+              <img
+                id="slideimg8"
+                class="slide"
+                src="../assets/slideshow/IMG_3927.jpg"
+              />
+              <img
+                id="slideimg9"
+                class="slide"
+                src="../assets/slideshow/IMG_3938.jpg"
+              />
+              <img
+                id="slideimg10"
+                class="slide"
+                src="../assets/slideshow/IMG_3943.jpg"
+              />
+              <img
+                id="slideimg11"
+                class="slide"
+                src="../assets/slideshow/IMG_3945.jpg"
+              />
+              <img
+                id="slideimg12"
+                class="slide"
+                src="../assets/slideshow/IMG_3948.jpg"
+              />
             </div>
             <!-- </div> -->
             <div :key="media.icon" v-for="media in social">
@@ -63,29 +123,35 @@
                   </div>
                 </a>
               </div>
+            </div>
           </div>
         </div>
-      </div>
 
-    <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
-      Thanks! We've got your response.
-      <v-btn color="white" flat @click="feedback = false">Close</v-btn>
-    </v-snackbar>
-    <v-snackbar
-      v-model="criticalError"
-      :auto-height="true"
-      top
-      color="error"
-      right
-      :timeout="10000"
-    >
-      Could not establish connection to the server. Consider refreshing or
-      attempting to access the page on mobile. If the issue persists contact us
-      at hello@deltahacks.com.
-      <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
-    </v-snackbar>
-  </v-app>
-  </transition>
+        <v-snackbar
+          v-model="feedback"
+          top
+          color="success"
+          right
+          :timeout="3000"
+        >
+          Thanks! We've got your response.
+          <v-btn color="white" flat @click="feedback = false">Close</v-btn>
+        </v-snackbar>
+        <v-snackbar
+          v-model="criticalError"
+          :auto-height="true"
+          top
+          color="error"
+          right
+          :timeout="10000"
+        >
+          Could not establish connection to the server. Consider refreshing or
+          attempting to access the page on mobile. If the issue persists contact
+          us at hello@deltahacks.com.
+          <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
+        </v-snackbar>
+      </v-app>
+    </transition>
   </div>
 </template>
 
@@ -103,14 +169,13 @@ import { mapGetters } from 'vuex';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
 
-
 const allUniversities = [];
 export default Vue.extend({
   mixins: [validationMixin],
   name: 'Status',
   data(): StatusModel {
     return {
-      counter:0,
+      counter: 0,
       genderCompleted: true,
       response: {
         rsvp: false,
@@ -240,12 +305,12 @@ export default Vue.extend({
     },
   },
   methods: {
-     method1:function(){
+    method1: function() {
       this.timeout = setTimeout(() => {
-        this.counter=1;
-        console.log("Happened");
+        this.counter = 1;
+        console.log('Happened');
       }, 2000);
-        },
+    },
     toggleRSVP(res) {
       this.hasResponded = true;
       this.response.rsvp = res;
@@ -338,7 +403,7 @@ export default Vue.extend({
         .doc('DH5')
         .collection('in progress')
         .doc(email)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             const data = snap.data();
             if (data!.gender) {
@@ -406,17 +471,21 @@ export default Vue.extend({
     // helper method
     removeClass(elem, name) {
       const c = elem.className;
-      elem.className = c.replace(name, '').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, ' ');
+      elem.className = c
+        .replace(name, '')
+        .replace(/\s+/g, ' ')
+        .replace(/^\s+|\s+$/g, ' ');
     },
   },
   async beforeMount() {
     // console.log('mounted');
     const appEmail = auth().currentUser!.email as string;
+    this.counter = this.$route.params.firstTime ? 0 : 1;
     // const genderStatus = await this.checkGenderInput(appEmail);
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             this.updateStep(snap);
             if (this.step > 1) this.checkGenderInput(appEmail);
@@ -434,7 +503,7 @@ export default Vue.extend({
   },
   mounted() {
     this.timer = setInterval(this.nextImage, 4000);
-    this.method1() 
+    this.method1();
   },
 });
 </script>
