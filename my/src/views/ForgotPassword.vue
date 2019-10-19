@@ -48,7 +48,9 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import Vue from 'vue';
 import { ForgetPasswordModel } from '../types';
 

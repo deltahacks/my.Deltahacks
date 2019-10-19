@@ -280,7 +280,9 @@
 </template>
 
 <script lang="ts">
-import firebase, { firestore } from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import Vue from 'vue';
 import axios from 'axios';
 import { LoginModel } from '../types';
@@ -365,13 +367,9 @@ export default Vue.extend({
               user_id: user.user!.uid,
               ip: null,
             });
-          const response = await axios.get(
-            'https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json',
-          );
+          const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json');
           const ipp = response.data.ip;
-          const data = await axios.get(
-            `https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`,
-          );
+          const data = await axios.get(`https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`);
           const geo = data.data;
           await this.$store.state.db
             .collection('users')

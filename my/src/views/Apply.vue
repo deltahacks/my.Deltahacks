@@ -119,7 +119,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase, { firestore, FirebaseError } from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import Checkbox from '@/components/Checkbox.vue';
@@ -162,15 +165,13 @@ extend('required', {
 });
 extend('link', {
   validate: url =>
-    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
-      url,
-    ),
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
   message: 'Invalid URL',
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
   validate: (value, mustBeValue) =>
-    mustBeValue.length > 0 ? value === mustBeValue[0] : !!value,
+    (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
@@ -249,9 +250,7 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(
-          ([field, errors]: Array<any>) => errors.length,
-        );
+        const invalidFields = Object.entries(errors).find(([field, errors]: Array<any>) => errors.length);
         if (invalidFields && invalidFields.length > 0) {
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({
             behavior: 'smooth',
@@ -276,6 +275,7 @@ export default Vue.extend({
         this.snack.color = 'warning';
       }
       this.updateAppProgress(false);
+      this.setName();
     },
 
     // does what it says
@@ -310,7 +310,20 @@ export default Vue.extend({
         console.log('File upload error');
       }
     },
-
+    async setName() {
+      const profile = await this.getDB()
+        .collection('users')
+        .doc(this.getUID())
+        .get();
+      if (profile.exists) {
+        if (profile.data()!.first && !this.app.name.first) {
+          this.app.name.first = profile.data()!.first;
+        }
+        if (profile.data()!.last && !this.app.name.last) {
+          this.app.name.last = profile.data()!.last;
+        }
+      }
+    },
     // grabs current (logged in) users unique identifier
     getUID: (): string => firebase.auth().currentUser!.email as string,
     getDB(): firebase.firestore.Firestore {
@@ -321,6 +334,7 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
       if (app.data()) this.app = app.data() as AppContents;
+      this.setName();
     } catch (error) {
       // Create popup modal here warning user
       console.log('Unable to fetch, trying again...');

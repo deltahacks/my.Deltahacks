@@ -18,8 +18,10 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
 import Vue from 'vue';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import db from '../firebase_init';
 
 export default Vue.extend({
@@ -62,7 +64,7 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
             this.last = snap.data()!.first ? snap.data()!.last : '';

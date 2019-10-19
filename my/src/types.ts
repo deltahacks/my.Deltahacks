@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import * as firebase from 'firebase/app';
+
 export interface ApplicationModel {
   app: AppContents;
 
