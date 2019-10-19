@@ -387,6 +387,18 @@ export default Vue.extend({
   .act-btn-group {
     width: 90%;
   }
+  .box{
+     width: 100%;
+     text-align: center;
+  }
+  .big{
+    padding-left:0;
+    padding-right:0;
+  }
+  .small{
+    padding-left:0;
+    padding-right:0;
+  }
 }
 
 @media only screen and (max-width: 1280px) and (min-width: 961px) {
@@ -443,7 +455,7 @@ v-snackbar {
 
 .box{
   font-family: 'Montserrat', sans-serif;
-  width: 93% !important;
+  width: 93%;
 	color:#fff;	
 }
 
