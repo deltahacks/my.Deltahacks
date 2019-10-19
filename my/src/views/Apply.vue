@@ -24,7 +24,7 @@
               <p class="small">
                 Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it anytime before the deadline.<br><br>
                 No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.<br><br>
-                Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event,<b> Jan 25, 2019</b>.
+                Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event,<b> Jan 25, 2020</b>.
               </p>
             </div>
           <ValidationProvider
