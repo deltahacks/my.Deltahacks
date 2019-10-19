@@ -475,7 +475,7 @@ export default Vue.extend({
     height: 100%;
     min-height: 300px;
     width: 90%;
-    margin: 50px auto;
+    margin: 20px auto;
   }
   .halfstyle{
   display: flex;
