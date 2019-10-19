@@ -6,8 +6,14 @@
       <br />We’ll let you know as soon as we make a decision.
     </div>
     <div class="background">
-      <Nav />
-      <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
+      <Nav class="fit"/>
+      <v-snackbar
+        top
+        right
+        :color="snack.color"
+        v-model="snack.visible"
+        :timeout="snack.timeout"
+      >
         {{ snack.message }}
         <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
       </v-snackbar>
@@ -418,6 +424,10 @@ v-snackbar {
   -webkit-animation: animated 25s ease infinite;
   -moz-animation: animated 25s ease infinite;
   animation: animated 25s ease infinite;
+}
+
+.fit{
+  width: 92vw !important;
 }
 </style>
 

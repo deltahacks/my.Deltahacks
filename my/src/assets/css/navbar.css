@@ -121,7 +121,8 @@
   margin-right: 3vw;
 }
 #logout:hover {
-  font-weight: 500;
+  color: rgb(190, 190, 190) !important;
+  transition: 0.5s !important;
 }
 
 h1 {
@@ -129,7 +130,16 @@ h1 {
 }
 
 @media only screen and (max-width: 900px) {
-
+  .btnbox2{
+    display: none;
+  }
+  .extended{
+    width: 80% !important;
+  }
+  .btnbox3{
+    display: block;
+    padding-left:-20px !important;
+  }
   .rounded-box {
     height: 60px;
     padding: 10px;
