@@ -450,7 +450,7 @@ v-snackbar {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 /* New gradient */
-  background: linear-gradient(269deg, #93278f, #ff8993, #6681ea, #43aaa2, #f26dab, #a254f2, #679fe4);
+  background: linear-gradient(269deg, #93278fc2, #ff8993c2, #6680eac2, #43aaa2c2, #f26dabc2, #a254f2c2, #679fe4c2);
   background-size: 1400% 1400%;
   -webkit-animation: AnimationName 220s ease infinite;
   -moz-animation: AnimationName 220s ease infinite;
