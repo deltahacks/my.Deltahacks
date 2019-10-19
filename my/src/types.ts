@@ -96,6 +96,7 @@ export interface Reviews {
 }
 
 export interface StatusModel {
+  counter: number;
   genderCompleted: boolean;
   response: {
     rsvp: boolean;
