@@ -452,9 +452,9 @@ v-snackbar {
 /* New gradient */
   background: linear-gradient(269deg, #93278f, #ff8993, #6681ea, #43aaa2, #f26dab, #a254f2, #679fe4);
   background-size: 1400% 1400%;
-  -webkit-animation: AnimationName 120s ease infinite;
-  -moz-animation: AnimationName 120s ease infinite;
-  animation: AnimationName 120s ease infinite;
+  -webkit-animation: AnimationName 220s ease infinite;
+  -moz-animation: AnimationName 220s ease infinite;
+  animation: AnimationName 220s ease infinite;
 }
 @-webkit-keyframes AnimationName {
    0%{background-position:0% 50%}
