@@ -7,6 +7,8 @@
         :value="value"
         @input="onChange($event)"
         :error-messages="error"
+        dark
+        color="black"
       ></v-text-field>
       <div v-else-if="inputType == 'text-area'">
         <v-textarea
@@ -15,6 +17,8 @@
           :counter="textLimit"
           auto-grow
           :error-messages="error"
+          dark
+          color="black"
         ></v-textarea>
       </div>
       <v-select
@@ -67,6 +71,8 @@
           :value="value"
           :icon="icon"
           @input="onChange($event)"
+          dark
+          color="black"
         ></v-combobox>
       </div>
       <div v-else-if="inputType == 'multi-select'">
