@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import db from './firebase_init';
 
 // Use vuex with Vue

@@ -162,7 +162,7 @@ import Navbar2 from '@/components/Navbar2.vue';
 import Card from '@/components/Card.vue';
 
 import Vue from 'vue';
-import { auth } from 'firebase';
+import { auth } from 'firebase/app';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';

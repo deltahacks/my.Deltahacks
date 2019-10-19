@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import { AppContents } from './types';
 
 const discovered_by: string[] = [

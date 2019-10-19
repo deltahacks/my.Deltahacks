@@ -114,7 +114,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase, { firestore, FirebaseError } from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import Checkbox from '@/components/Checkbox.vue';

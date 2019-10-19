@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-expressions */
 import Vue from 'vue';
 import Router from 'vue-router';
-import Firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import Login from './views/Login.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
@@ -59,7 +61,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
     // console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -73,7 +75,7 @@ router.beforeEach((to, from, next) => {
     });
   } else if (to.matched.some(rec => rec.meta.adminAuth)) {
     // console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -102,14 +104,14 @@ router.beforeEach((to, from, next) => {
       }
     });
   } else if (to.matched.some(rec => rec.meta.loginRedir)) {
-    Firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
-        // console.log("Times", Firebase.auth().currentUser!.metadata.creationTime, Firebase.auth().currentUser!.metadata.lastSignInTime)
+        // console.log("Times", firebase.auth().currentUser!.metadata.creationTime, firebase.auth().currentUser!.metadata.lastSignInTime)
         // Check if this is the first time the user has logged in and pass param to display splash screen
         if (
-          Firebase.auth().currentUser!.metadata.creationTime ===
-          Firebase.auth().currentUser!.metadata.lastSignInTime
+          firebase.auth().currentUser!.metadata.creationTime ===
+          firebase.auth().currentUser!.metadata.lastSignInTime
         ) { next({ name: 'Status', params: { firstTime: 'yes' } }); } else next({ name: 'Status' });
       } else {
         // Otherwise redirect to login
