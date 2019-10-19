@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import firebase from 'firebase';
-import {AppContents} from './types';
+import { AppContents } from './types';
 
 const discovered_by: string[] = [
   'A friend',
@@ -378,11 +378,8 @@ const workshops = [
 ];
 
 const roles = [
-  'Front-end',
-  'Back-end',
-  'iOS Development',
-  'Android Development',
-  'Game Development',
+  'Leader',
+  'Follower',
 ];
 
 export const blankApplication: AppContents = {
@@ -467,13 +464,13 @@ export const applicationQuestions: any = [
     label: "What's your first name?",
     fieldType: 'text',
     model: ['name', 'first'],
-    requirements: {required: true},
+    requirements: { required: true },
   },
   {
     label: 'And your last name?',
     fieldType: 'text',
     model: ['name', 'last'],
-    requirements: {required: true},
+    requirements: { required: true },
   },
   {
     label: 'What number can we reach you at?',
@@ -497,7 +494,7 @@ export const applicationQuestions: any = [
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
-    requirements: {required: true, mustBe: 'Yes'},
+    requirements: { required: true, mustBe: 'Yes' },
   },
   {
     label: 'What degree are you pursuing?',
@@ -505,7 +502,7 @@ export const applicationQuestions: any = [
     selectData: degree,
     icon: 'fa-certificate',
     model: ['academics', 'degree'],
-    requirements: {required: true, oneOf: degree},
+    requirements: { required: true, oneOf: degree },
   },
   {
     label: "What's your major?",
@@ -513,7 +510,7 @@ export const applicationQuestions: any = [
     selectData: majorsList,
     icon: 'fa-pencil-alt',
     model: ['academics', 'major'],
-    requirements: {required: true, oneOf: majorsList},
+    requirements: { required: true, oneOf: majorsList },
   },
   {
     label: 'What is your current year of study?',
@@ -521,7 +518,7 @@ export const applicationQuestions: any = [
     selectData: yearOfStudy,
     icon: 'fa-calendar',
     model: ['academics', 'year'],
-    requirements: {required: true, oneOf: yearOfStudy},
+    requirements: { required: true, oneOf: yearOfStudy },
   },
   {
     label: 'And when do you expect to graduate?',
@@ -533,14 +530,14 @@ export const applicationQuestions: any = [
     label: "What's your birthday?",
     fieldType: 'date',
     model: ['personal', 'birthday'],
-    requirements: {required: true},
+    requirements: { required: true },
   },
   {
     label: 'Will you be 18 or older on January 25th, 2020?',
     fieldType: 'radio-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'oldEnough'],
-    requirements: {required: true, mustBe: 'Yes'},
+    requirements: { required: true, mustBe: 'Yes' },
   },
   {
     label: "What's your gender?*",
@@ -558,7 +555,7 @@ export const applicationQuestions: any = [
     selectData: race,
     icon: 'fa-user-circle',
     model: ['personal', 'race'],
-    requirements: {required: true},
+    requirements: { required: true },
   },
   {
     label: 'How many hackathons have you been to?*',
@@ -566,7 +563,7 @@ export const applicationQuestions: any = [
     selectData: numberOfHackathons,
     icon: 'fa-list-ol',
     model: ['logistics', 'hackathons_attended'],
-    requirements: {required: true, oneOf: numberOfHackathons},
+    requirements: { required: true, oneOf: numberOfHackathons },
   },
   {
     label:
@@ -575,7 +572,7 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: '500',
     model: ['responses', 'q1'],
-    requirements: {required: true, max: 500},
+    requirements: { required: true, max: 500 },
   },
   {
     label:
@@ -583,7 +580,7 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: '500',
     model: ['responses', 'q2'],
-    requirements: {required: true, max: 500},
+    requirements: { required: true, max: 500 },
   },
   {
     label:
@@ -592,7 +589,7 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: '750',
     model: ['responses', 'q3'],
-    requirements: {required: true, max: 750},
+    requirements: { required: true, max: 750 },
   },
   {
     label:
@@ -600,31 +597,31 @@ export const applicationQuestions: any = [
     fieldType: 'text-area',
     textLimit: 200,
     model: ['responses', 'anything_else'],
-    requirements: {max: 500},
+    requirements: { max: 500 },
   },
   {
     label: "What's your GitHub?",
     fieldType: 'text',
     model: ['profiles', 'github'],
-    requirements: {link: true},
+    requirements: { link: true },
   },
   {
     label: "What's your LinkedIn?",
     fieldType: 'text',
     model: ['profiles', 'linkedin'],
-    requirements: {link: true},
+    requirements: { link: true },
   },
   {
     label: "What's your personal website?",
     fieldType: 'text',
     model: ['profiles', 'website'],
-    requirements: {link: true},
+    requirements: { link: true },
   },
   {
     label: "What's your devpost?",
     fieldType: 'text',
     model: ['profiles', 'devpost'],
-    requirements: {link: true},
+    requirements: { link: true },
   },
   {
     label: 'Link us to any other profiles you have',
@@ -651,7 +648,7 @@ export const applicationQuestions: any = [
     selectData: cities,
     icon: 'fa-plane',
     model: ['logistics', 'traveling_from'],
-    requirements: {required: true, oneOf: cities},
+    requirements: { required: true, oneOf: cities },
   },
   {
     label: 'Do you require travel reimbursements?*',
@@ -678,7 +675,7 @@ export const applicationQuestions: any = [
     model: ['emergency', 'name'],
   },
   {
-    label: "What is your emergency contact's phone number?",
+    label: 'What is your emergency contact\'s phone number?',
     fieldType: 'text',
     model: ['emergency', 'phone'],
   },
@@ -700,7 +697,7 @@ export const applicationQuestions: any = [
     label: 'What is your "role" when going to hackathons?',
     fieldType: 'single-select',
     selectData: roles,
-    icon: 'fa-users',
+    icon: 'fa-plane',
     model: ['general', 'role'],
   },
   {
