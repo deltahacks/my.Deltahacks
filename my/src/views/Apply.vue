@@ -267,6 +267,7 @@ export default Vue.extend({
         this.snack.color = 'warning';
       }
       this.updateAppProgress(false);
+      this.setName();
     },
 
     // does what it says
@@ -301,7 +302,21 @@ export default Vue.extend({
         console.log('File upload error');
       }
     },
-
+    async setName() {
+      const profile = await this.getDB()
+        .collection('users')
+        .doc(this.getUID())
+        .get();
+      if (profile.exists) {
+        if (profile.data()!.first && !this.app.name.first) {
+          this.app.name.first = profile.data()!.first;
+        }
+        if (profile.data()!.last && !this.app.name.last) {
+          console.log('x');
+          this.app.name.last = profile.data()!.last;
+        }
+      }
+    },
     // grabs current (logged in) users unique identifier
     getUID: (): string => firebase.auth().currentUser!.email as string,
     getDB(): firebase.firestore.Firestore {
@@ -312,8 +327,10 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
       if (app.data()) this.app = app.data() as AppContents;
+      this.setName();
     } catch (error) {
       // Create popup modal here warning user
+      console.log(error);
       console.log('Unable to fetch, trying again...');
     }
   },
