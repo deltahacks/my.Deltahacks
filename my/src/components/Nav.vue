@@ -1,7 +1,7 @@
 <template>
   <div id="nav-box">
         <a class="btnbox1" id="logout" @click.prevent="logout">Log Out</a>
-     <a class="btnbox2" id="logout" href="../status">My Status</a>
+     <a class="btnbox2" id="logout" href="../status">Status</a>
     <div class="rounded-box extended">
       <h1 id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
@@ -11,7 +11,9 @@
         {{ first }}<span style="font-weight: 300; padding-left: 7%;">{{ last }}</span>
       </h1>
     </div>
-    <a class="btnbox3" href="../status">Go To Status Page</a>
+    <a class="btnbox3" href="../status">
+                  <i class="fas fa-arrow-left" /> Go Back To Status
+                </a>>
   </div>
 </template>
 
@@ -83,6 +85,7 @@ export default Vue.extend({
 }
 .btnbox2{
   font-weight:700!important;
+  text-decoration: none;
   /* padding-left:-20px !important; */
 }
 .btnbox1:hover,.btnbox2:hover{
