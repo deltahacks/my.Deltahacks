@@ -473,7 +473,7 @@ v-snackbar {
 .big {
   font-size: 3em;
   font-weight: 600;
-  padding: 30px 0 0 5%;
+  padding: 0 0 0 5%;
 }
 
 .small {
