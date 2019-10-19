@@ -52,7 +52,7 @@
                 required
               ></v-text-field>
             </div>
-            <v-alert class="alert-box" :value="feedback" type="error">{{ feedback }}</v-alert>
+            <v-alert class="alert-box" :value="feedback" type="error" color="rgba(255, 255, 255, 0.1)">{{ feedback }}</v-alert>
             <div class="container-login100-form-btn">
               <button @click.prevent="login" type="submit" class="login100-btn">Login</button>
               <!-- <button type="submit2" class="login100-btn">Register</button> -->
@@ -153,8 +153,8 @@
             <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
             </v-alert>-->
+                          <v-alert v-if="register_screen_alert === 1" class="alert-box" :value="feedback" type="error" color="rgba(255, 255, 255, 0.1)">{{ feedback }}</v-alert>
             <div class="container-login100-form-btn">
-              <v-alert class="alert-box" :value="feedback" type="error">{{ feedback }}</v-alert>
               <button
                 class="login100-btn forgot100-btn"
                 v-if="register_screen_1 === 1"
@@ -243,6 +243,7 @@ export default Vue.extend({
       counter: 0,
       register_screen_1: 1,
       register_screen_2: 0,
+      register_screen_alert: 0,
       drawer: null,
       email: '',
       pass: '',
@@ -322,6 +323,7 @@ export default Vue.extend({
           this.feedback = 'Please verify your email.';
           console.log('Registered');
         } catch (e) {
+          this.register_screen_alert = 1;
           const errorMessage = e.message;
           this.feedback = errorMessage;
           console.log(errorMessage);
