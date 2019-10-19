@@ -9,9 +9,6 @@ import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
 import Status from './views/Status.vue';
 import v404 from './views/404.vue';
-import Accepted from './components/Accepted.vue';
-import Rejected from './components/Rejected.vue';
-import FAQ from './views/FAQ.vue';
 import db from './firebase_init';
 
 Vue.use(Router);
@@ -64,30 +61,6 @@ const router = new Router({
       component: v404,
     },
     {
-      path: '/accepted',
-      name: 'Accepted',
-      component: Accepted,
-      meta: {
-        auth: true,
-      },
-    },
-    {
-      path: '/rejected',
-      name: 'Rejected',
-      component: Rejected,
-      meta: {
-        auth: true,
-      },
-    },
-    {
-      path: '/FAQ',
-      name: 'FAQ',
-      component: FAQ,
-      meta: {
-        auth: true,
-      },
-    },
-    {
       path: '*',
       component: v404,
     },
@@ -98,7 +71,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
     // console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged((user) => {
+    Firebase.auth().onAuthStateChanged(user => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -107,12 +80,12 @@ router.beforeEach((to, from, next) => {
       } else {
         // Otherwise redirect to login
         // console.log('Not authorized');
-        next({ name: 'Login' });
+        next({name: 'Login'});
       }
     });
   } else if (to.matched.some(rec => rec.meta.adminAuth)) {
     // console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged((user) => {
+    Firebase.auth().onAuthStateChanged(user => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -121,30 +94,37 @@ router.beforeEach((to, from, next) => {
         db.collection('admins')
           .doc(user.email!.toLocaleLowerCase())
           .get()
-          .then((doc) => {
+          .then(doc => {
             if (doc.exists) {
               // console.log('Document data:', doc.data());
               next();
             } else {
               // console.log('Not an admin user!');
-              next({ name: 'Login' });
+              next({name: 'Login'});
             }
           })
-          .catch((error) => {
+          .catch(error => {
             // console.log('Not an admin user!');
-            next({ name: 'Login' });
+            next({name: 'Login'});
           });
       } else {
         // Otherwise redirect to login
         // console.log('Not authorized');
-        next({ name: 'Login' });
+        next({name: 'Login'});
       }
     });
   } else if (to.matched.some(rec => rec.meta.loginRedir)) {
-    Firebase.auth().onAuthStateChanged((user) => {
+    Firebase.auth().onAuthStateChanged(user => {
       // If user is logged in
       if (user) {
-        next({ name: 'Status' });
+        // console.log("Times", Firebase.auth().currentUser!.metadata.creationTime, Firebase.auth().currentUser!.metadata.lastSignInTime)
+        // Check if this is the first time the user has logged in and pass param to display splash screen
+        if (
+          Firebase.auth().currentUser!.metadata.creationTime ===
+          Firebase.auth().currentUser!.metadata.lastSignInTime
+        )
+          next({name: 'Status', params: {firstTime: 'yes'}});
+        else next({name: 'Status'});
       } else {
         // Otherwise redirect to login
         // console.log('Not authorized');

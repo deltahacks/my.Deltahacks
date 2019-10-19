@@ -7,6 +7,7 @@ export interface ApplicationModel {
   authorizations: any;
   updateTimeout: any;
   snack: SnackBar;
+  resetDialogue: boolean;
 }
 
 export interface AppContents {
@@ -23,7 +24,7 @@ export interface AppContents {
   academics: {
     degree: degree;
     major: string;
-    graduating: string;
+    graduating: firebase.firestore.Timestamp;
     school: string;
     year: year;
   };
@@ -95,6 +96,7 @@ export interface Reviews {
 }
 
 export interface StatusModel {
+  counter: number;
   genderCompleted: boolean;
   response: {
     rsvp: boolean;
@@ -182,9 +184,11 @@ export interface LoginModel {
   register_screen_1: number;
   register_screen_2: number;
   drawer: null;
-  email: null | string;
-  pass: null | string;
-  feedback: null;
+  email: string;
+  pass: string;
+  fName: string;
+  lName: string;
+  feedback: string;
   loader: null | string;
   loading: false;
   loaderSignup: null;

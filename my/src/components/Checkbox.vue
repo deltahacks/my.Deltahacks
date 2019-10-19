@@ -1,9 +1,6 @@
 <template>
   <div class="container">
-    <v-checkbox
-        :error-messages="error"
-        v-model="inputVal"
-    >
+    <v-checkbox :error-messages="error" v-model="inputVal">
       <template v-slot:label>
         <div v-html="title" />
       </template>
@@ -15,27 +12,20 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: [
-    'title',
-    'error',
-    'requestUpdate',
-    'error',
-    'value'
-  ],
+  props: ['title', 'error', 'requestUpdate', 'error', 'value'],
   data() {
-    return { inputVal: this.value }
+    return { inputVal: this.value };
   },
   watch: {
     inputVal(value) {
       this.$emit('input', value);
       this.requestUpdate();
-    }
+    },
   },
 });
 </script>
 
 <style scoped>
-
 .container {
   width: 50%;
 }
@@ -51,7 +41,7 @@ export default Vue.extend({
 
 .container >>> .v-label {
   font-size: 1.35rem !important;
-  color: rgba(0,0,0,.54);
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .container >>> .v-label a {
@@ -73,5 +63,4 @@ export default Vue.extend({
     width: 70%;
   }
 }
-
 </style>

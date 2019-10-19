@@ -117,7 +117,10 @@
         @input="onChange($event)"
         :error-messages="error"
       ></v-select>
-      <div v-else-if="inputType == 'date'" class="date-row">
+      <div
+        v-else-if="inputType == 'date' || inputType == 'date-grad'"
+        class="date-row"
+      >
         <v-select
           v-for="(input, i) in dates"
           :key="i"
@@ -140,7 +143,7 @@
           />
           <label :for="data">{{ data }}</label>
         </span>
-        <div v-if="error" class="error--text">{{error}}</div>
+        <div v-if="error" class="error--text">{{ error }}</div>
       </div>
       <div v-else-if="inputType == 'combo-box'">
         <v-combobox
@@ -164,7 +167,8 @@
       </div>
       <div v-else-if="inputType === 'file'">
         <div class="file-desc" v-if="resume.filename && resume.link">
-          Currently Uploaded: <a :href="resume.link">{{resume.filename }}</a>
+          Currently Uploaded:
+          <a :href="resume.link">{{ resume.filename }}</a>
         </div>
         <file-pond
           @addfile="sendFile()"
@@ -218,7 +222,7 @@ export default Vue.extend({
     return {
       dates: [],
       myFiles: [],
-    } as { dates: any, myFiles: any };
+    } as { dates: any; myFiles: any };
   },
   components: {
     FilePond,
@@ -232,59 +236,73 @@ export default Vue.extend({
       if (s === 'large') {
         return 'largeText';
       }
-      console.log(s);
+      return '';
     },
     onDate(type: string, value: any) {
+      const day = this.inputType === 'date' ? this.dates[2].value : 1;
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            value,
-            months.indexOf(this.dates[1].value),
-            this.dates[2].value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(value, months.indexOf(this.dates[1].value), day),
+          ),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            this.dates[0].value,
-            months.indexOf(value),
-            this.dates[2].value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(this.dates[0].value, months.indexOf(value), day),
+          ),
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
-            this.dates[0].value,
-            months.indexOf(this.dates[1].value),
-            value,
-          )),
+          firebase.firestore.Timestamp.fromDate(
+            new Date(
+              this.dates[0].value,
+              months.indexOf(this.dates[1].value),
+              value,
+            ),
+          ),
         );
       }
       this.requestUpdate();
     },
     updateDates() {
-      if (this.inputType === 'date') {
+      if (this.inputType === 'date' || this.inputType === 'date-grad') {
         try {
-          this.dates = [
-            {
-              label: 'Year',
-              options: years,
-              value: new Date(this.value.toDate()).getFullYear(),
-            },
-            {
-              label: 'Month',
-              options: months,
-              value: months[new Date(this.value.toDate()).getMonth()],
-            },
-            {
-              label: 'Day',
-              options: days,
-              value: new Date(this.value.toDate()).getDate(),
-            },
-          ];
+          if (this.inputType === 'date') {
+            this.dates = [
+              {
+                label: 'Year',
+                options: years,
+                value: new Date(this.value.toDate()).getFullYear(),
+              },
+              {
+                label: 'Month',
+                options: months,
+                value: months[new Date(this.value.toDate()).getMonth()],
+              },
+              {
+                label: 'Day',
+                options: days,
+                value: new Date(this.value.toDate()).getDate(),
+              },
+            ];
+          } else if (this.inputType === 'date-grad') {
+            this.dates = [
+              {
+                label: 'Year',
+                options: years,
+                value: new Date(this.value.toDate()).getFullYear(),
+              },
+              {
+                label: 'Month',
+                options: months,
+                value: months[new Date(this.value.toDate()).getMonth()],
+              },
+            ];
+          }
         } catch (e) {
           console.log('Date passed');
         }
@@ -314,7 +332,7 @@ export default Vue.extend({
 .container >>> .filepond--panel {
   opacity: 0.6;
   margin-bottom: 20px;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 35px;
 }
 .container >>> .filepond--root {
@@ -450,15 +468,15 @@ export default Vue.extend({
   color: #bb2e35d8 !important;
 
   font-size: 1.25rem !important;
-  font-family: 'Montserrat', 'Roboto'
+  font-family: 'Montserrat', 'Roboto';
 }
 
 .container >>> .v-icon.material-icons {
-  font-family: 'Material Icons'
+  font-family: 'Material Icons';
 }
 
 .container >>> .v-icon.fa {
-  font-family: 'Font Awesome 5 Free'
+  font-family: 'Font Awesome 5 Free';
 }
 
 .theme--light.v-input:not(.v-input--is-disabled) input,
@@ -526,7 +544,7 @@ export default Vue.extend({
     width: 70%;
   }
   .question {
-    font-size: 2.0em;
+    font-size: 2em;
   }
 }
 </style>
