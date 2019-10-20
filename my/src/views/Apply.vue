@@ -81,28 +81,16 @@
           </ValidationProvider>
         </form>
       </ValidationObserver>
-      <v-dialog v-model="resetDialogue" max-width="290">
-        <v-card>
-          <v-card-title class="headline">Reset application?</v-card-title>
-          <v-card-text>
-            Click "Reset" to reset your application. This action can't be
-            undone.
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="secondary" text @click="resetDialogue = false">
-              Cancel
-            </v-btn>
-            <v-btn
-              color="warning"
-              text
-              @click="(resetDialogue = false), resetApplication()"
-            >
-              Reset
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <Dialog
+        title="Reset Application"
+        body="Are you sure you want to reset your application? This action can't be undone."
+        v-model="resetDialogue"
+      >
+        <v-btn text @click="resetDialogue = false">Cancel</v-btn>
+        <v-btn color="warning" text @click="(resetDialogue = false), resetApplication()">
+          Reset
+        </v-btn>
+      </Dialog>
       <v-container class="act-btn-group" text-xs-center>
         <v-layout align-center justify-center row wrap>
           <v-flex xs3>
@@ -140,6 +128,7 @@ import 'firebase/storage';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import Checkbox from '@/components/Checkbox.vue';
+import Dialog from '@/components/Dialog.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
 import {
@@ -213,6 +202,7 @@ export default Vue.extend({
     Card,
     Nav,
     Checkbox,
+    Dialog,
   },
   methods: {
     // updates in progress application
