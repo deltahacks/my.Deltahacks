@@ -7,7 +7,7 @@
         VI
       </h1>
       <h1 id="name" class="heading">
-        {{ first }}<span style="font-weight: 300;">{{ last }}</span>
+        {{ first }}<span style="font-weight: 300; padding-left: 1%;">{{ last }}</span>
       </h1>
     </div>
   </div>
