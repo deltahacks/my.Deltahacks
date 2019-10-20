@@ -633,7 +633,7 @@ export const applicationQuestions: any = [
     model: ['profiles', 'other'],
   },
   {
-    label: 'What workshops would you like to see at Deltahacks VI?',
+    label: 'What workshops would you like to see at DeltaHacks VI?',
     fieldType: 'multi-select',
     selectData: workshops,
     icon: 'fa-wrench',
