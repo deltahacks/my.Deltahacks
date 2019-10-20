@@ -477,9 +477,9 @@ v-snackbar {
   backface-visibility: hidden;
   background: linear-gradient(269deg, #6D0169, #D9636D, #405BC4, #1D847C, #CC4785, #7C2ECC, #4179BE);
   background-size: 1400% 1400%;
-  -webkit-animation: AnimationName 120s ease infinite;
-  -moz-animation: AnimationName 120s ease infinite;
-  animation: AnimationName 120s ease infinite;
+  -webkit-animation: AnimationName 220s ease infinite;
+  -moz-animation: AnimationName 220s ease infinite;
+  animation: AnimationName 220s ease infinite;
 }
 @-webkit-keyframes AnimationName {
    0%{background-position:0% 50%}
