@@ -312,11 +312,11 @@ animation: fadein 2s;
 }
 
 .statusbackground{
-  background: linear-gradient(269deg, #fcb573, #5f71bc, #cd8871, #9d71bc);
+  background: linear-gradient(269deg, #865AA5, #5062AD, #CD8871, #865AA5);
 background-size: 800% 800%;
--webkit-animation: statusanimation 120s ease infinite;
--moz-animation: statusanimation 120s ease infinite;
-animation: statusanimation 120s ease infinite;}
+-webkit-animation: statusanimation 140s ease infinite;
+-moz-animation: statusanimation 140s ease infinite;
+animation: statusanimation 140s ease infinite;}
 @-webkit-keyframes statusanimation {
    0%{background-position:0% 50%}
    50%{background-position:100% 50%}
