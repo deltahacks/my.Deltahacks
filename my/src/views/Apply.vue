@@ -1,12 +1,13 @@
 <template>
   <v-app class="sizefix">
-    <div v-if="app._.status === 'submitted'" class="submitted-face" />
-    <div v-if="app._.status === 'submitted'" class="submitted-message">
+    <div v-if="app._.status !== 'in progress'" class="submitted-face" />
+    <div v-if="app._.status !== 'in progress'" class="submitted-message">
       Your application has been submitted!
-      <br />We’ll let you know as soon as we make a decision.
+      <br />
+      We’ll let you know as soon as we make a decision.
     </div>
     <div class="background">
-      <Nav class="fit"/>
+      <Nav class="fit" />
       <v-snackbar
         top
         right
@@ -15,18 +16,31 @@
         :timeout="snack.timeout"
       >
         {{ snack.message }}
-        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
+        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+          Close
+        </v-btn>
       </v-snackbar>
       <ValidationObserver ref="form">
         <form action>
           <div class="cardify">
-              <p class="big">Apply here.</p>
-              <p class="small">
-                Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it anytime before the deadline.<br><br>
-                No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.<br><br>
-                Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event,<b> Jan 25, 2020</b>.
-              </p>
-            </div>
+            <p class="big">Apply here.</p>
+            <p class="small">
+              Please fill out this application form to the best of your
+              abilities. This form will autosave, you can come back to submit it
+              anytime before the deadline.
+              <br />
+              <br />
+              No programming experience? That's okay! We're just looking for
+              well thought out answers. You'll get an email when we've made a
+              decision.
+              <br />
+              <br />
+              Are you a high school student? You're eligible to attend - as long
+              as you're 18 or older on the day of the event,
+              <b>Jan 25, 2020</b>
+              .
+            </p>
+          </div>
           <ValidationProvider
             v-for="(question, i) in questions"
             :key="'question_' + i"
@@ -67,28 +81,26 @@
           </ValidationProvider>
         </form>
       </ValidationObserver>
-      <v-dialog v-model="resetDialogue" max-width="290">
-        <v-card>
-          <v-card-title class="headline">Reset application?</v-card-title>
-          <v-card-text>
-            Click "Reset" to reset your application. This action can't be
-            undone.
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="secondary" text @click="resetDialogue = false">
-              Cancel
-            </v-btn>
-            <v-btn
-              color="warning"
-              text
-              @click="(resetDialogue = false), resetApplication()"
-            >
-              Reset
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <Dialog
+        title="Reset Application"
+        body="Are you sure you want to reset your application? This action can't be undone."
+        v-model="resetDialogue"
+      >
+        <v-btn text @click="resetDialogue = false">Cancel</v-btn>
+        <v-btn color="warning" text @click="(resetDialogue = false), resetApplication()">
+          Reset
+        </v-btn>
+      </Dialog>
+      <Dialog
+        title="Submit Application"
+        body="Are you sure you want to submit your application? You can't go back and edit it after."
+        v-model="submitDialogue"
+      >
+        <v-btn text @click="submitDialogue = false">Cancel</v-btn>
+        <v-btn color="warning" text @click="(submitDialogue = false), submitApp()">
+          Submit
+        </v-btn>
+      </Dialog>
       <v-container class="act-btn-group" text-xs-center>
         <v-layout align-center justify-center row wrap>
           <v-flex xs3>
@@ -106,7 +118,7 @@
               class="act-btn act-btn__submit"
               block
               large
-              @click="submitApp"
+              @click="submitDialogue = true"
             >
               Submit
             </v-btn>
@@ -119,10 +131,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase, { firestore, FirebaseError } from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import Checkbox from '@/components/Checkbox.vue';
+import Dialog from '@/components/Dialog.vue';
 import VueScrollReveal from 'vue-scroll-reveal';
 
 import {
@@ -134,7 +150,7 @@ import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
 import {
-  blankApplication,
+  getBlankApplication,
   applicationQuestions,
   authorizations,
 } from '../data';
@@ -162,15 +178,13 @@ extend('required', {
 });
 extend('link', {
   validate: url =>
-    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
-      url,
-    ),
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
   message: 'Invalid URL',
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
   validate: (value, mustBeValue) =>
-    mustBeValue.length > 0 ? value === mustBeValue[0] : !!value,
+    (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
@@ -180,7 +194,7 @@ Vue.component('ValidationObserver', ValidationObserver);
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: blankApplication,
+      app: getBlankApplication(),
       questions: {},
       authorizations: {},
       updateTimeout: null,
@@ -192,12 +206,14 @@ export default Vue.extend({
         message: 'Progress saved!',
       },
       resetDialogue: false,
+      submitDialogue: false,
     };
   },
   components: {
     Card,
     Nav,
     Checkbox,
+    Dialog,
   },
   methods: {
     // updates in progress application
@@ -214,16 +230,16 @@ export default Vue.extend({
       let submit = false;
       const verified = await (firebase.auth().currentUser as firebase.User)
         .emailVerified;
-      if (submitting && this.app._.status !== 'submitted' && verified) {
+      if (submitting && this.app._.status === 'in progress' && verified) {
         this.app._.status = 'submitted';
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
-      } else if (submitting && this.app._.status !== 'submitted' && !verified) {
+      } else if (submitting && this.app._.status === 'in progress' && !verified) {
         this.snack.message = 'Please verify your email before submitting!';
         this.snack.color = 'error';
       }
-      if (this.app._.status !== 'submitted' || submit) {
+      if (this.app._.status === 'in progress' || submit) {
         this.getDB()
           .collection('DH6')
           .doc('applications')
@@ -249,9 +265,7 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(
-          ([field, errors]: Array<any>) => errors.length,
-        );
+        const invalidFields = Object.entries(errors).find(([field, errors]: Array<any>) => errors.length);
         if (invalidFields && invalidFields.length > 0) {
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({
             behavior: 'smooth',
@@ -270,12 +284,13 @@ export default Vue.extend({
 
     // clears all fields in the application
     resetApplication(): void {
-      if (this.app._.status !== 'submitted') {
-        this.app = blankApplication as AppContents;
+      if (this.app._.status === 'in progress') {
+        this.app = getBlankApplication() as AppContents;
         this.snack.message = 'Application reset!';
         this.snack.color = 'warning';
       }
       this.updateAppProgress(false);
+      this.setName();
     },
 
     // does what it says
@@ -310,7 +325,20 @@ export default Vue.extend({
         console.log('File upload error');
       }
     },
-
+    async setName() {
+      const profile = await this.getDB()
+        .collection('users')
+        .doc(this.getUID())
+        .get();
+      if (profile.exists) {
+        if (profile.data()!.first && !this.app.name.first) {
+          this.app.name.first = profile.data()!.first;
+        }
+        if (profile.data()!.last && !this.app.name.last) {
+          this.app.name.last = profile.data()!.last;
+        }
+      }
+    },
     // grabs current (logged in) users unique identifier
     getUID: (): string => firebase.auth().currentUser!.email as string,
     getDB(): firebase.firestore.Firestore {
@@ -321,6 +349,7 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
       if (app.data()) this.app = app.data() as AppContents;
+      this.setName();
     } catch (error) {
       // Create popup modal here warning user
       console.log('Unable to fetch, trying again...');
@@ -379,7 +408,7 @@ export default Vue.extend({
 
 .act-btn-group {
   width: 50%;
-
+  z-index: 10;
   padding: 20px 0 40px 0;
 }
 
@@ -387,20 +416,21 @@ export default Vue.extend({
   .act-btn-group {
     width: 90%;
   }
-  .box{
-     text-align: center;
+  .box {
+    text-align: center;
   }
-  .big{
-    padding-left:0;
-    padding-right:0;
+  .big {
+    padding-left: 0;
+    padding-right: 0;
   }
-  .small{
-    padding-left:0;
-    padding-right:0;
-    text-align:center !important;
+  .small {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center !important;
   }
+  
   .cardify{
-    width: 90% !important;
+    width: 85vw !important;
   }
 }
 
@@ -421,7 +451,7 @@ export default Vue.extend({
   border-radius: 30px;
   transition: 0.1s ease-in-out;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 100;
   width: 97.5%;
 }
 
@@ -472,14 +502,13 @@ v-snackbar {
 100%{background-position:0% 50%}
 }
 
-.fit{
+.fit {
   width: 92vw !important;
 }
 
-
-.cardify{
-  font-family: "Montserrat";
-     color: white !important;
+.cardify {
+  font-family: 'Montserrat';
+  color: white !important;
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
@@ -508,6 +537,5 @@ v-snackbar {
   text-align: left;
   /* padding: 0% 0% 0 5%; */
 }
-
 </style>
 

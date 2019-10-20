@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import * as firebase from 'firebase/app';
+
 export interface ApplicationModel {
   app: AppContents;
 
@@ -8,6 +10,7 @@ export interface ApplicationModel {
   updateTimeout: any;
   snack: SnackBar;
   resetDialogue: boolean;
+  submitDialogue: boolean;
 }
 
 export interface AppContents {
@@ -126,34 +129,17 @@ export interface StatusModel {
   allUniversities: string[];
   dropzoneOptions: any;
   subheaders: string[];
-  application: {
-    name: string;
-    email: string;
-    school_year: any;
-    shirt_size: any;
-    dietary_restrictions: any;
-    hackathons: any;
-    github: string;
-    linkedin: string;
-    website: string;
-    phone: string;
-    emergency_phone: string;
-  };
   links: string[];
   story: string;
   custom: boolean;
   name: string;
   step: number;
   email: string;
-  select: any;
-  items: string[];
-  hackathons: string[];
-  food: string[];
-  shirts: string[];
   checkbox: boolean;
   timer: number;
   curImage: number;
   numImages: number;
+  resent: boolean;
 }
 
 export interface ApplyState {

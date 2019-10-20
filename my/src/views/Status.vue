@@ -30,7 +30,7 @@
               <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
-                <p>{{ currentHeader }}</p>
+                <p>{{ currentHeader }}<a @click.prevent="resend()" style="padding-left: 20px;" v-if="!isVerified() && !resent">Resend Email</a></p>
               </div>
               <a href="/apply" class="apply-btn">
                 <div class="apply box5">Apply</div>
@@ -175,7 +175,7 @@ import Navbar2 from '@/components/Navbar2.vue';
 import Card from '@/components/Card.vue';
 
 import Vue from 'vue';
-import { auth } from 'firebase';
+import { auth } from 'firebase/app';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
@@ -251,74 +251,51 @@ export default Vue.extend({
       },
       subheaders: [
         'Applications are now closed.',
-        "Sorry we couldn't offer you a spot.",
+        'Application unsubmitted',
+        'In progress',
         'This application is under review.',
         "Congratulations, you've been accepted!",
+        "Sorry we couldn't offer you a spot.",
         'Unfortunately we cannot offer you an invitation this time.',
       ],
-      application: {
-        name: '',
-        email: '',
-        school_year: null,
-        shirt_size: null,
-        dietary_restrictions: null,
-        hackathons: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        phone: '',
-        emergency_phone: '',
-      },
       links: ['Home', 'About', 'Contact'],
       story: '',
       custom: true,
       name: '',
       step: 0,
       email: '',
-      select: null,
-      items: [
-        'First Year',
-        'Second Year',
-        'Third Year',
-        'Fourth Year',
-        'Fifth Year',
-      ],
-      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-      shirts: ['XS', 'S', 'M', 'L', 'XL'],
       checkbox: false,
       timer: 0,
       curImage: 0,
       numImages: 13,
+      resent: false,
     };
   },
   components: {
-    // Navbar,
-    // Navigation,
     Navbar2,
   },
   computed: {
-    baseStep(): string {
-      // console.log(this.step === 0);
-      if (this.step === 0) {
-        return 'Closed';
-      }
-      return 'Closed';
-    },
     currentHeader(): string {
-      return this.subheaders[this.step - 1];
+      if (!auth().currentUser!.emailVerified) {
+        return 'Please check your email and activate your account.';
+      }
+      return this.subheaders[this.step];
     },
     emoticon(): string {
-      if (this.step - 1 === 3) {
-        return ':)';
-      } else if (this.step - 1 === 2) {
-        return ':|';
+      switch (this.step) {
+        case 0:
+          return ':(';
+        case 1:
+          return ':|';
+        case 5:
+          return ':(';
+        default:
+          return ':)';
       }
-      return ':(';
     },
   },
   methods: {
-    method1: function() {
+    method1() {
       this.timeout = setTimeout(() => {
         this.counter = 1;
         console.log('Happened');
@@ -377,53 +354,33 @@ export default Vue.extend({
         .doc(email || 'test@test.com')
         .delete();
     },
-    updateStep(doc) {
-      if (doc.exists) {
-        switch (doc.data().status) {
-          case 'in progress':
-            this.step = 1;
-            break;
-          case 'submitted':
-            this.step = 2;
-            break;
-          case 'pending':
-          case 'actually rejected':
-            this.step = 2;
-            break;
-          case 'overflow':
-          case 'overflow2':
-          case 'accepted':
-          case 'processing':
-          case 'rejected':
-          case 'round4':
-            this.step = 3;
-            break;
-          case 'round1':
-          case 'round2':
-          case 'round3':
-            this.step = 4;
-            break;
-          default:
-            this.step = 0;
-        }
-      } else {
-        console.log('Document not found!');
-      }
-    },
-    checkGenderInput(email) {
-      if (this.step <= 1) return;
-      db.collection('applications')
-        .doc('DH5')
-        .collection('in progress')
+    updateStep(email) {
+      db.collection('DH6')
+        .doc('applications')
+        .collection('all')
         .doc(email)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
-            if (data!.gender) {
-              this.genderCompleted = true;
-            } else {
-              this.genderCompleted = false;
+            switch (data!._.status) {
+              case 'in progress':
+                this.step = 2;
+                break;
+              case 'submitted':
+                this.step = 3;
+                break;
+              case 'accepted':
+                this.step = 4;
+                break;
+              case 'rejected':
+                this.step = 5;
+                break;
+              default:
+                this.step = 0;
             }
+          } else {
+            // application not started
+            this.step = 1;
           }
         });
     },
@@ -489,6 +446,15 @@ export default Vue.extend({
         .replace(/\s+/g, ' ')
         .replace(/^\s+|\s+$/g, ' ');
     },
+    resend() {
+      this.resent = true;
+      console.log(this.resent);
+      console.log(this.isVerified());
+      auth().currentUser!.sendEmailVerification()
+        .then(() => console.log('Resent'))
+        .catch(e => console.log('Resend problem'));
+    },
+    isVerified: () => auth().currentUser!.emailVerified,
   },
   async beforeMount() {
     // console.log('mounted');
@@ -498,10 +464,10 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
-            this.updateStep(snap);
-            if (this.step > 1) this.checkGenderInput(appEmail);
+            this.updateStep(appEmail);
+            // if (this.step > 1) this.checkGenderInput(appEmail);
             if (this.step > 3) {
               this.fillRSVP();
             }
@@ -517,6 +483,9 @@ export default Vue.extend({
   mounted() {
     this.timer = setInterval(this.nextImage, 4000);
     this.method1();
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 });
 </script>

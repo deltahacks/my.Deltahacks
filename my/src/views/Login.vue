@@ -39,12 +39,13 @@
                   prepend-icon="email"
                   @keypress.enter="loginf()"
                   name="login"
-                  color="#fff"
+                  color="#778899"
                   label="Email"
                   id="login"
                   v-model="email"
                   type="email"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -56,11 +57,12 @@
                   prepend-icon="lock"
                   name="password"
                   label="Password"
-                  color="#fff"
+                  color="#778899"
                   id="password"
                   v-model="pass"
                   type="password"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <v-alert
@@ -117,11 +119,12 @@
                   @keypress.enter="loginf()"
                   name="fname"
                   label="Enter First Name"
-                  color="#fff"
+                  color="#778899"
                   id="fname"
                   v-model="fName"
                   type="fname"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -134,11 +137,12 @@
                   @keypress.enter="loginf()"
                   name="lname"
                   label="Enter Last Name"
-                  color="#fff"
+                  color="#778899"
                   id="lname"
                   v-model="lName"
                   type="lname"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -151,7 +155,7 @@
                   @keypress.enter="loginf()"
                   name="login"
                   label="Enter Email"
-                  color="#fff"
+                  color="#778899"
                   id="login"
                   v-model="email"
                   type="email"
@@ -159,6 +163,7 @@
                   oninvalid="setCustomValidity('Please enter a valid email')"
                   oninput="setCustomValidity('')"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -171,11 +176,12 @@
                   prepend-icon="lock"
                   name="password"
                   label="Enter a Password"
-                  color="#fff"
+                  color="#778899"
                   id="password"
                   v-model="pass"
                   type="password"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <!-- <v-alert :value="feedback" type="error">
@@ -250,23 +256,32 @@
                   @keypress.enter="loginf()"
                   name="login"
                   label="Email"
-                  color="#fff"
+                  color="#778899"
                   id="login"
                   v-model="email"
                   type="email"
                   required
+                  dark
                 ></v-text-field>
               </div>
+              <v-alert
+                :v-if="counter === 2"
+                class="alert-box"
+                :value="feedback"
+                type="error"
+                color="rgba(255, 255, 255, 0.1)"
+              >
+                {{ feedback }}
+              </v-alert>
               <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
             </v-alert>-->
-
               <div class="container-login100-form-btn">
-                <button class="login100-btn forgot100-btn">Submit</button>
+                <button @click.prevent="reset()" class="login100-btn forgot100-btn">Reset</button>
               </div>
               <div class="forgotdiv">
                 <br />
-                <a class="forgot" v-on:click="counter = 0">
+                <a class="forgot" v-on:click="counter = 0, feedback=''">
                   <i class="fas fa-arrow-left" />
                   Go Back
                 </a>
@@ -280,7 +295,9 @@
 </template>
 
 <script lang="ts">
-import firebase, { firestore } from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import Vue from 'vue';
 import axios from 'axios';
 import { LoginModel } from '../types';
@@ -365,13 +382,9 @@ export default Vue.extend({
               user_id: user.user!.uid,
               ip: null,
             });
-          const response = await axios.get(
-            'https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json',
-          );
+          const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json');
           const ipp = response.data.ip;
-          const data = await axios.get(
-            `https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`,
-          );
+          const data = await axios.get(`https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`);
           const geo = data.data;
           await this.$store.state.db
             .collection('users')
@@ -394,6 +407,17 @@ export default Vue.extend({
       } else {
         this.getForm().reportValidity();
       }
+    },
+    async reset() {
+      if (!this.getForm().checkValidity()) {
+        this.getForm().reportValidity();
+        return;
+      }
+      firebase.auth().sendPasswordResetEmail(this.email).then(() => {
+        this.feedback = 'Reset email sent.';
+      }).catch((error) => {
+        this.feedback = 'User with this email does not exist';
+      });
     },
     registerNext() {
       if (this.getForm().checkValidity()) {

@@ -7,14 +7,16 @@
         VI
       </h1>
       <h1 id="name" class="heading">
-        {{ first }}<span style="font-weight: 300; padding-left: 4%;">{{ last }}</span>
+        {{ first }}<span style="font-weight: 300; padding-left: 1%;">{{ last }}</span>
       </h1>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import Vue from 'vue';
 import db from '../firebase_init';
 
@@ -58,7 +60,7 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
             this.last = snap.data()!.first ? snap.data()!.last : '';

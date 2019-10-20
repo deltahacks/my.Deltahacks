@@ -7,6 +7,8 @@
         :value="value"
         @input="onChange($event)"
         :error-messages="error"
+        dark
+        color="#778899"
       ></v-text-field>
       <div v-else-if="inputType == 'text-area'">
         <v-textarea
@@ -15,6 +17,9 @@
           :counter="textLimit"
           auto-grow
           :error-messages="error"
+          dark
+          class="textareafix"
+          color="#778899"
         ></v-textarea>
       </div>
       <v-select
@@ -26,10 +31,13 @@
         :value="value"
         @input="onChange($event)"
         :error-messages="error"
+        dark
+        color="#778899"
       ></v-select>
       <div
         v-else-if="inputType == 'date' || inputType == 'date-grad'"
         class="date-row"
+        color="#778899"
       >
         <v-select
           v-for="(input, i) in dates"
@@ -39,6 +47,8 @@
           :label="input.label"
           v-model="input.value"
           :error-messages="error"
+           dark
+           color="#778899"
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
@@ -50,6 +60,7 @@
             :value="data"
             :checked="value === data"
             @input="onChange($event.target.value)"
+            color="#778899"
           />
           <label :for="data">{{ data }}</label>
         </span>
@@ -63,6 +74,8 @@
           :value="value"
           :icon="icon"
           @input="onChange($event)"
+          dark
+          color="#778899"
         ></v-combobox>
       </div>
       <div v-else-if="inputType == 'multi-select'">
@@ -73,6 +86,8 @@
           multiple
           :value="value"
           @input="onChange($event)"
+           dark
+           color="#778899"
         ></v-select>
       </div>
       <div v-else-if="inputType === 'file'">
@@ -91,6 +106,7 @@
           :dropValidation="true"
           v-bind:files="myFiles"
           v-on:init="handleFilePondInit"
+          color="#778899"
         />
       </div>
     </div>
@@ -99,7 +115,9 @@
 
 <script lang="ts">
 import Vue, { Component } from 'vue';
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 import vueFilePond from 'vue-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
@@ -152,35 +170,29 @@ export default Vue.extend({
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              value,
-              months.indexOf(this.dates[1].value),
-              day
-            )
-          )
+          firebase.firestore.Timestamp.fromDate(new Date(
+            value,
+            months.indexOf(this.dates[1].value),
+            day,
+          )),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(value),
-              day
-            )
-          )
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(value),
+            day,
+          )),
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(
-            new Date(
-              this.dates[0].value,
-              months.indexOf(this.dates[1].value),
-              value
-            )
-          ),
+          firebase.firestore.Timestamp.fromDate(new Date(
+            this.dates[0].value,
+            months.indexOf(this.dates[1].value),
+            value,
+          )),
         );
       }
       this.requestUpdate();
@@ -350,7 +362,7 @@ export default Vue.extend({
   visibility: hidden;
   height: 0;
   width: 0;
-  margin-bottom: 10%;
+  margin-bottom: 40%;
 }
 
 .radio-row label {
@@ -396,6 +408,10 @@ export default Vue.extend({
   color: white !important;
 }
 
+.textareafix{
+  font-size:1.3em !important;
+  /* line-height: 1.5rem !important; */
+}
 @media only screen and (max-width: 960px) {
   .container {
     color: white;
@@ -413,6 +429,8 @@ export default Vue.extend({
     font-weight: 300;
     color: white;
     /* margin: 20px 20px 50px 20px; */
+    margin:0;
+    padding: 50px 0 50px 0;
   }
   .field {
     margin: 40px auto;
@@ -458,5 +476,7 @@ export default Vue.extend({
     font-size: 2em;
   }
 }
+
+
 </style>
 
