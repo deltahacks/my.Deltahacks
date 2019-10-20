@@ -1,7 +1,7 @@
 <template>
   <v-app class="sizefix">
-    <div v-if="app._.status === 'submitted'" class="submitted-face" />
-    <div v-if="app._.status === 'submitted'" class="submitted-message">
+    <div v-if="app._.status !== 'in progress'" class="submitted-face" />
+    <div v-if="app._.status !== 'in progress'" class="submitted-message">
       Your application has been submitted!
       <br />
       We’ll let you know as soon as we make a decision.
@@ -179,15 +179,13 @@ extend('required', {
 });
 extend('link', {
   validate: url =>
-    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
-      url,
-    ),
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
   message: 'Invalid URL',
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
   validate: (value, mustBeValue) =>
-    mustBeValue.length > 0 ? value === mustBeValue[0] : !!value,
+    (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
@@ -231,16 +229,16 @@ export default Vue.extend({
       let submit = false;
       const verified = await (firebase.auth().currentUser as firebase.User)
         .emailVerified;
-      if (submitting && this.app._.status !== 'submitted' && verified) {
+      if (submitting && this.app._.status === 'in progress' && verified) {
         this.app._.status = 'submitted';
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
-      } else if (submitting && this.app._.status !== 'submitted' && !verified) {
+      } else if (submitting && this.app._.status === 'in progress' && !verified) {
         this.snack.message = 'Please verify your email before submitting!';
         this.snack.color = 'error';
       }
-      if (this.app._.status !== 'submitted' || submit) {
+      if (this.app._.status === 'in progress' || submit) {
         this.getDB()
           .collection('DH6')
           .doc('applications')
@@ -266,9 +264,7 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(
-          ([field, errors]: Array<any>) => errors.length,
-        );
+        const invalidFields = Object.entries(errors).find(([field, errors]: Array<any>) => errors.length);
         if (invalidFields && invalidFields.length > 0) {
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({
             behavior: 'smooth',
@@ -287,7 +283,7 @@ export default Vue.extend({
 
     // clears all fields in the application
     resetApplication(): void {
-      if (this.app._.status !== 'submitted') {
+      if (this.app._.status === 'in progress') {
         this.app = blankApplication as AppContents;
         this.snack.message = 'Application reset!';
         this.snack.color = 'warning';
@@ -411,7 +407,7 @@ export default Vue.extend({
 
 .act-btn-group {
   width: 50%;
-
+  z-index: 10;
   padding: 20px 0 40px 0;
 }
 
@@ -453,7 +449,7 @@ export default Vue.extend({
   border-radius: 30px;
   transition: 0.1s ease-in-out;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 100;
   width: 97.5%;
 }
 
