@@ -257,16 +257,24 @@
                   required
                 ></v-text-field>
               </div>
+              <v-alert
+                :v-if="counter === 2"
+                class="alert-box"
+                :value="feedback"
+                type="error"
+                color="rgba(255, 255, 255, 0.1)"
+              >
+                {{ feedback }}
+              </v-alert>
               <!-- <v-alert :value="feedback" type="error">
             {{ feedback }}
             </v-alert>-->
-
               <div class="container-login100-form-btn">
-                <button class="login100-btn forgot100-btn">Submit</button>
+                <button @click.prevent="reset()" class="login100-btn forgot100-btn">Reset</button>
               </div>
               <div class="forgotdiv">
                 <br />
-                <a class="forgot" v-on:click="counter = 0">
+                <a class="forgot" v-on:click="counter = 0, feedback=''">
                   <i class="fas fa-arrow-left" />
                   Go Back
                 </a>
@@ -392,6 +400,17 @@ export default Vue.extend({
       } else {
         this.getForm().reportValidity();
       }
+    },
+    async reset() {
+      if (!this.getForm().checkValidity()) {
+        this.getForm().reportValidity();
+        return;
+      }
+      firebase.auth().sendPasswordResetEmail(this.email).then(() => {
+        this.feedback = 'Reset email sent.';
+      }).catch((error) => {
+        this.feedback = 'User with this email does not exist';
+      });
     },
     registerNext() {
       if (this.getForm().checkValidity()) {

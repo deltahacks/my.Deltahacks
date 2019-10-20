@@ -518,6 +518,9 @@ export default Vue.extend({
     this.timer = setInterval(this.nextImage, 4000);
     this.method1();
   },
+  beforeDestroy () {
+    clearInterval(this.timer);
+  },
 });
 </script>
 <style scoped src='../assets/css/status.css'>

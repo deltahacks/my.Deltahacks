@@ -12,7 +12,7 @@
       </h1>
     </div>
     <a class="btnbox3" href="../status">
-                  <i class="fas fa-arrow-left" /> &nbsp Go Back To Status
+                  <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
                 </a>
   </div>
 </template>
