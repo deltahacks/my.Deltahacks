@@ -362,7 +362,7 @@ export default Vue.extend({
   visibility: hidden;
   height: 0;
   width: 0;
-  margin-bottom: 10%;
+  margin-bottom: 40%;
 }
 
 .radio-row label {
