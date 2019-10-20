@@ -151,7 +151,7 @@ import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
 import {
-  blankApplication,
+  getBlankApplication,
   applicationQuestions,
   authorizations,
 } from '../data';
@@ -195,7 +195,7 @@ Vue.component('ValidationObserver', ValidationObserver);
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: blankApplication,
+      app: getBlankApplication(),
       questions: {},
       authorizations: {},
       updateTimeout: null,
@@ -284,7 +284,7 @@ export default Vue.extend({
     // clears all fields in the application
     resetApplication(): void {
       if (this.app._.status === 'in progress') {
-        this.app = blankApplication as AppContents;
+        this.app = getBlankApplication() as AppContents;
         this.snack.message = 'Application reset!';
         this.snack.color = 'warning';
       }
