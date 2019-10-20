@@ -7,6 +7,7 @@
         :value="value"
         @input="onChange($event)"
         :error-messages="error"
+        dark
       ></v-text-field>
       <div v-else-if="inputType == 'text-area'">
         <v-textarea
@@ -15,6 +16,8 @@
           :counter="textLimit"
           auto-grow
           :error-messages="error"
+          dark
+          class="textareafix"
         ></v-textarea>
       </div>
       <v-select
@@ -26,6 +29,7 @@
         :value="value"
         @input="onChange($event)"
         :error-messages="error"
+        dark
       ></v-select>
       <div
         v-else-if="inputType == 'date' || inputType == 'date-grad'"
@@ -39,6 +43,7 @@
           :label="input.label"
           v-model="input.value"
           :error-messages="error"
+           dark
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
@@ -63,6 +68,7 @@
           :value="value"
           :icon="icon"
           @input="onChange($event)"
+          dark
         ></v-combobox>
       </div>
       <div v-else-if="inputType == 'multi-select'">
@@ -73,6 +79,7 @@
           multiple
           :value="value"
           @input="onChange($event)"
+           dark
         ></v-select>
       </div>
       <div v-else-if="inputType === 'file'">
@@ -392,6 +399,10 @@ export default Vue.extend({
   color: white !important;
 }
 
+.textareafix{
+  font-size:1.3em !important;
+  /* line-height: 1.5rem !important; */
+}
 @media only screen and (max-width: 960px) {
   .container {
     color: white;
@@ -454,5 +465,7 @@ export default Vue.extend({
     font-size: 2em;
   }
 }
+
+
 </style>
 
