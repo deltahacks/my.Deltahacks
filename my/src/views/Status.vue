@@ -30,7 +30,7 @@
               <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
-                <p>{{ currentHeader }}</p>
+                <p>{{ currentHeader }}<a @click.prevent="resend()" style="padding-left: 20px;" v-if="!isVerified() && !resent">Resend Email</a></p>
               </div>
               <a href="/apply" class="apply-btn">
                 <div class="apply box5">Apply</div>
@@ -268,6 +268,7 @@ export default Vue.extend({
       timer: 0,
       curImage: 0,
       numImages: 13,
+      resent: false,
     };
   },
   components: {
@@ -275,6 +276,9 @@ export default Vue.extend({
   },
   computed: {
     currentHeader(): string {
+      if (!auth().currentUser!.emailVerified) {
+        return 'Please check your email and activate your account.';
+      }
       return this.subheaders[this.step];
     },
     emoticon(): string {
@@ -442,6 +446,15 @@ export default Vue.extend({
         .replace(/\s+/g, ' ')
         .replace(/^\s+|\s+$/g, ' ');
     },
+    resend() {
+      this.resent = true;
+      console.log(this.resent);
+      console.log(this.isVerified());
+      auth().currentUser!.sendEmailVerification()
+        .then(() => console.log('Resent'))
+        .catch(e => console.log('Resend problem'));
+    },
+    isVerified: () => auth().currentUser!.emailVerified,
   },
   async beforeMount() {
     // console.log('mounted');
@@ -471,7 +484,7 @@ export default Vue.extend({
     this.timer = setInterval(this.nextImage, 4000);
     this.method1();
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.timer);
   },
 });

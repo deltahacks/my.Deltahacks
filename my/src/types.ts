@@ -138,6 +138,7 @@ export interface StatusModel {
   timer: number;
   curImage: number;
   numImages: number;
+  resent: boolean;
 }
 
 export interface ApplyState {
