@@ -10,6 +10,7 @@ export interface ApplicationModel {
   updateTimeout: any;
   snack: SnackBar;
   resetDialogue: boolean;
+  submitDialogue: boolean;
 }
 
 export interface AppContents {
