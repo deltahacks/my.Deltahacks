@@ -17,6 +17,7 @@
           auto-grow
           :error-messages="error"
           dark
+          class="textareafix"
         ></v-textarea>
       </div>
       <v-select
@@ -398,6 +399,10 @@ export default Vue.extend({
   color: white !important;
 }
 
+.textareafix{
+  font-size:1.3em !important;
+  /* line-height: 1.5rem !important; */
+}
 @media only screen and (max-width: 960px) {
   .container {
     color: white;
@@ -460,6 +465,7 @@ export default Vue.extend({
     font-size: 2em;
   }
 }
+
 
 </style>
 
