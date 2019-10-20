@@ -612,10 +612,10 @@ export const applicationQuestions: any = [
 export const authorizations: any = [
   {
     label:
-      'I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
+      '<p style="color: white;">I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>. \
-    I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy',
+    I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy</p>',
     model: ['general', 'code'],
   },
 ];

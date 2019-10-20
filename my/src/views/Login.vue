@@ -103,7 +103,7 @@
             <template v-else-if="counter === 1">
               <div class="spanText">
                 <span class="txt1">Create</span>
-                <span class="txt2"> Account</span>
+                <span class="txt2">Account</span>
                 <span class="txt3"></span>
               </div>
               <br />
@@ -239,7 +239,7 @@
             <template v-else-if="counter === 2">
               <div class="spanText">
                 <span class="txt1">Forgot</span>
-                <span class="txt2"> Pass</span>
+                <span class="txt2">Pass</span>
                 <span class="txt3">word</span>
               </div>
               <br />
