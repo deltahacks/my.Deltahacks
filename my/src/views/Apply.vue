@@ -3,10 +3,11 @@
     <div v-if="app._.status === 'submitted'" class="submitted-face" />
     <div v-if="app._.status === 'submitted'" class="submitted-message">
       Your application has been submitted!
-      <br />We’ll let you know as soon as we make a decision.
+      <br />
+      We’ll let you know as soon as we make a decision.
     </div>
     <div class="background">
-      <Nav class="fit"/>
+      <Nav class="fit" />
       <v-snackbar
         top
         right
@@ -15,18 +16,31 @@
         :timeout="snack.timeout"
       >
         {{ snack.message }}
-        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
+        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
+          Close
+        </v-btn>
       </v-snackbar>
       <ValidationObserver ref="form">
         <form action>
           <div class="cardify">
-              <p class="big">Apply here.</p>
-              <p class="small">
-                Please fill out this application form to the best of your abilities. This form will autosave, you can come back to submit it anytime before the deadline.<br><br>
-                No programming experience? That's okay! We're just looking for well thought out answers. The more thought out your answers, the greater your chance of getting accepted. Only the questions under "Application Questions" will be judged. You'll get an email when we've made a decision.<br><br>
-                Are you a high school student? You're eligible to attend - as long as you're 18 or older on the day of the event,<b> Jan 25, 2020</b>.
-              </p>
-            </div>
+            <p class="big">Apply here.</p>
+            <p class="small">
+              Please fill out this application form to the best of your
+              abilities. This form will autosave, you can come back to submit it
+              anytime before the deadline.
+              <br />
+              <br />
+              No programming experience? That's okay! We're just looking for
+              well thought out answers. You'll get an email when we've made a
+              decision.
+              <br />
+              <br />
+              Are you a high school student? You're eligible to attend - as long
+              as you're 18 or older on the day of the event,
+              <b>Jan 25, 2020</b>
+              .
+            </p>
+          </div>
           <ValidationProvider
             v-for="(question, i) in questions"
             :key="'question_' + i"
@@ -165,13 +179,15 @@ extend('required', {
 });
 extend('link', {
   validate: url =>
-    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
+      url,
+    ),
   message: 'Invalid URL',
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
   validate: (value, mustBeValue) =>
-    (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
+    mustBeValue.length > 0 ? value === mustBeValue[0] : !!value,
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
@@ -250,7 +266,9 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(([field, errors]: Array<any>) => errors.length);
+        const invalidFields = Object.entries(errors).find(
+          ([field, errors]: Array<any>) => errors.length,
+        );
         if (invalidFields && invalidFields.length > 0) {
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({
             behavior: 'smooth',
@@ -401,19 +419,19 @@ export default Vue.extend({
   .act-btn-group {
     width: 90%;
   }
-  .box{
-     text-align: center;
+  .box {
+    text-align: center;
   }
-  .big{
-    padding-left:0;
-    padding-right:0;
+  .big {
+    padding-left: 0;
+    padding-right: 0;
   }
-  .small{
-    padding-left:0;
-    padding-right:0;
-    text-align:center !important;
+  .small {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center !important;
   }
-  .cardify{
+  .cardify {
     width: 90% !important;
   }
 }
@@ -465,14 +483,13 @@ v-snackbar {
   animation: animated 25s ease infinite;
 }
 
-.fit{
+.fit {
   width: 92vw !important;
 }
 
-
-.cardify{
-  font-family: "Montserrat";
-     color: white !important;
+.cardify {
+  font-family: 'Montserrat';
+  color: white !important;
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
@@ -501,6 +518,5 @@ v-snackbar {
   text-align: left;
   /* padding: 0% 0% 0 5%; */
 }
-
 </style>
 
