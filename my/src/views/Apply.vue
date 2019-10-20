@@ -478,21 +478,21 @@ v-snackbar {
   /* background: linear-gradient(269deg, #6D0169, #D9636D, #405BC4, #1D847C, #7C2ECC, #4179BE); */
   background: linear-gradient(269deg, #7C1078, #E8727C, #4F6AD3, #2C938B, #8B3DDB, #5088CD);
   background-size: 1400% 1400%;
-  -webkit-animation: AnimationName 180s ease infinite;
-  -moz-animation: AnimationName 180s ease infinite;
-  animation: AnimationName 180s ease infinite;
+  -webkit-animation: ApplyAnimation 180s ease infinite;
+  -moz-animation: ApplyAnimation 180s ease infinite;
+  animation: ApplyAnimation 180s ease infinite;
 }
-@-webkit-keyframes AnimationName {
+@-webkit-keyframes ApplyAnimation {
    0%{background-position:0% 50%}
    50%{background-position:100% 51%}
    100%{background-position:0% 50%}
 }
-@-moz-keyframes AnimationName {
+@-moz-keyframes ApplyAnimation {
    0%{background-position:0% 50%}
    50%{background-position:100% 51%}
    100%{background-position:0% 50%}
 }
-@keyframes AnimationName {
+@keyframes ApplyAnimation {
 0%{background-position:0% 50%}
 50%{background-position:100% 51%}
 100%{background-position:0% 50%}
