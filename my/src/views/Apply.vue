@@ -91,6 +91,16 @@
           Reset
         </v-btn>
       </Dialog>
+      <Dialog
+        title="Submit Application"
+        body="Are you sure you want to submit your application? You can't go back and edit it after."
+        v-model="submitDialogue"
+      >
+        <v-btn text @click="submitDialogue = false">Cancel</v-btn>
+        <v-btn color="warning" text @click="(submitDialogue = false), submitApp()">
+          Submit
+        </v-btn>
+      </Dialog>
       <v-container class="act-btn-group" text-xs-center>
         <v-layout align-center justify-center row wrap>
           <v-flex xs3>
@@ -108,7 +118,7 @@
               class="act-btn act-btn__submit"
               block
               large
-              @click="submitApp"
+              @click="submitDialogue = true"
             >
               Submit
             </v-btn>
@@ -196,6 +206,7 @@ export default Vue.extend({
         message: 'Progress saved!',
       },
       resetDialogue: false,
+      submitDialogue: false,
     };
   },
   components: {
