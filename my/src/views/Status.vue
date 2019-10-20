@@ -12,7 +12,7 @@
           />
         </div>
       </v-app>
-      <v-app key="2" v-if="counter === 1" class="dashboard background">
+      <v-app key="2" v-if="counter === 1" class="dashboard statusbackground">
         <!-- <Navigation class="mobile"/> -->
         <Navbar2 />
         <div class="wrap">
