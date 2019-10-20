@@ -285,7 +285,7 @@ const roles = [
   'Game Development',
 ];
 
-export const blankApplication: AppContents = {
+export const getBlankApplication = () : AppContents => ({
   _: {
     index: 0,
     reviews: {
@@ -360,7 +360,7 @@ export const blankApplication: AppContents = {
     terms: '',
     code: false,
   },
-};
+});
 
 export const applicationQuestions: any = [
   {
