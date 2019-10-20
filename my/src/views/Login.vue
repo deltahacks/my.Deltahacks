@@ -39,12 +39,13 @@
                   prepend-icon="email"
                   @keypress.enter="loginf()"
                   name="login"
-                  color="#fff"
+                  color="black"
                   label="Email"
                   id="login"
                   v-model="email"
                   type="email"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -56,11 +57,12 @@
                   prepend-icon="lock"
                   name="password"
                   label="Password"
-                  color="#fff"
+                  color="black"
                   id="password"
                   v-model="pass"
                   type="password"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <v-alert
@@ -101,7 +103,7 @@
             <template v-else-if="counter === 1">
               <div class="spanText">
                 <span class="txt1">Create</span>
-                <span class="txt2">Account</span>
+                <span class="txt2"> Account</span>
                 <span class="txt3"></span>
               </div>
               <br />
@@ -117,11 +119,12 @@
                   @keypress.enter="loginf()"
                   name="fname"
                   label="Enter First Name"
-                  color="#fff"
+                  color="black"
                   id="fname"
                   v-model="fName"
                   type="fname"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -134,11 +137,12 @@
                   @keypress.enter="loginf()"
                   name="lname"
                   label="Enter Last Name"
-                  color="#fff"
+                  color="black"
                   id="lname"
                   v-model="lName"
                   type="lname"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -151,7 +155,7 @@
                   @keypress.enter="loginf()"
                   name="login"
                   label="Enter Email"
-                  color="#fff"
+                  color="black"
                   id="login"
                   v-model="email"
                   type="email"
@@ -159,6 +163,7 @@
                   oninvalid="setCustomValidity('Please enter a valid email')"
                   oninput="setCustomValidity('')"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <div
@@ -171,11 +176,12 @@
                   prepend-icon="lock"
                   name="password"
                   label="Enter a Password"
-                  color="#fff"
+                  color="black"
                   id="password"
                   v-model="pass"
                   type="password"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <!-- <v-alert :value="feedback" type="error">
@@ -233,7 +239,7 @@
             <template v-else-if="counter === 2">
               <div class="spanText">
                 <span class="txt1">Forgot</span>
-                <span class="txt2">Pass</span>
+                <span class="txt2"> Pass</span>
                 <span class="txt3">word</span>
               </div>
               <br />
@@ -250,11 +256,12 @@
                   @keypress.enter="loginf()"
                   name="login"
                   label="Email"
-                  color="#fff"
+                  color="black"
                   id="login"
                   v-model="email"
                   type="email"
                   required
+                  dark
                 ></v-text-field>
               </div>
               <v-alert
