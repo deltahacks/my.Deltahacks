@@ -356,33 +356,33 @@ export default Vue.extend({
     },
     updateStep(email) {
       db.collection('DH6')
-      .doc('applications')
-      .collection('all')
-      .doc(email)
-      .onSnapshot((snap) => {
-        if (snap.exists) {
-          const data = snap.data();
-          switch (data!._.status) {
-            case 'in progress':
-              this.step = 2;
-              break;
-            case 'submitted':
-              this.step = 3;
-              break;
-            case 'accepted':
-              this.step = 4;
-              break;
-            case 'rejected':
-              this.step = 5;
-              break;
-            default:
-              this.step = 0;
+        .doc('applications')
+        .collection('all')
+        .doc(email)
+        .onSnapshot((snap) => {
+          if (snap.exists) {
+            const data = snap.data();
+            switch (data!._.status) {
+              case 'in progress':
+                this.step = 2;
+                break;
+              case 'submitted':
+                this.step = 3;
+                break;
+              case 'accepted':
+                this.step = 4;
+                break;
+              case 'rejected':
+                this.step = 5;
+                break;
+              default:
+                this.step = 0;
+            }
+          } else {
+            // application not started
+            this.step = 1;
           }
-        } else {
-          // application not started
-          this.step = 1;
-        }
-      });
+        });
     },
     async fillRSVP() {
       const { email } = auth().currentUser!;
