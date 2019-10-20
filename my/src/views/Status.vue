@@ -251,41 +251,19 @@ export default Vue.extend({
       },
       subheaders: [
         'Applications are now closed.',
-        "Sorry we couldn't offer you a spot.",
+        'Application unsubmitted',
+        'In progress',
         'This application is under review.',
         "Congratulations, you've been accepted!",
+        "Sorry we couldn't offer you a spot.",
         'Unfortunately we cannot offer you an invitation this time.',
       ],
-      application: {
-        name: '',
-        email: '',
-        school_year: null,
-        shirt_size: null,
-        dietary_restrictions: null,
-        hackathons: null,
-        github: '',
-        linkedin: '',
-        website: '',
-        phone: '',
-        emergency_phone: '',
-      },
       links: ['Home', 'About', 'Contact'],
       story: '',
       custom: true,
       name: '',
       step: 0,
       email: '',
-      select: null,
-      items: [
-        'First Year',
-        'Second Year',
-        'Third Year',
-        'Fourth Year',
-        'Fifth Year',
-      ],
-      hackathons: ['This is my first one', '2', '3', '5+', '10+'],
-      food: ['Vegetarian', 'Vegan', 'Halal', 'Gluten Free', 'Kosher'],
-      shirts: ['XS', 'S', 'M', 'L', 'XL'],
       checkbox: false,
       timer: 0,
       curImage: 0,
@@ -293,28 +271,23 @@ export default Vue.extend({
     };
   },
   components: {
-    // Navbar,
-    // Navigation,
     Navbar2,
   },
   computed: {
-    baseStep(): string {
-      // console.log(this.step === 0);
-      if (this.step === 0) {
-        return 'Closed';
-      }
-      return 'Closed';
-    },
     currentHeader(): string {
-      return this.subheaders[this.step - 1];
+      return this.subheaders[this.step];
     },
     emoticon(): string {
-      if (this.step - 1 === 3) {
-        return ':)';
-      } else if (this.step - 1 === 2) {
-        return ':|';
+      switch (this.step) {
+        case 0:
+          return ':(';
+        case 1:
+          return ':|';
+        case 5:
+          return ':(';
+        default:
+          return ':)';
       }
-      return ':(';
     },
   },
   methods: {
@@ -377,55 +350,35 @@ export default Vue.extend({
         .doc(email || 'test@test.com')
         .delete();
     },
-    updateStep(doc) {
-      if (doc.exists) {
-        switch (doc.data().status) {
-          case 'in progress':
-            this.step = 1;
-            break;
-          case 'submitted':
-            this.step = 2;
-            break;
-          case 'pending':
-          case 'actually rejected':
-            this.step = 2;
-            break;
-          case 'overflow':
-          case 'overflow2':
-          case 'accepted':
-          case 'processing':
-          case 'rejected':
-          case 'round4':
-            this.step = 3;
-            break;
-          case 'round1':
-          case 'round2':
-          case 'round3':
-            this.step = 4;
-            break;
-          default:
-            this.step = 0;
-        }
-      } else {
-        console.log('Document not found!');
-      }
-    },
-    checkGenderInput(email) {
-      if (this.step <= 1) return;
-      db.collection('applications')
-        .doc('DH5')
-        .collection('in progress')
-        .doc(email)
-        .onSnapshot((snap) => {
-          if (snap.exists) {
-            const data = snap.data();
-            if (data!.gender) {
-              this.genderCompleted = true;
-            } else {
-              this.genderCompleted = false;
-            }
+    updateStep(email) {
+      db.collection('DH6')
+      .doc('applications')
+      .collection('all')
+      .doc(email)
+      .onSnapshot((snap) => {
+        if (snap.exists) {
+          const data = snap.data();
+          switch (data!._.status) {
+            case 'in progress':
+              this.step = 2;
+              break;
+            case 'submitted':
+              this.step = 3;
+              break;
+            case 'accepted':
+              this.step = 4;
+              break;
+            case 'rejected':
+              this.step = 5;
+              break;
+            default:
+              this.step = 0;
           }
-        });
+        } else {
+          // application not started
+          this.step = 1;
+        }
+      });
     },
     async fillRSVP() {
       const { email } = auth().currentUser!;
@@ -500,8 +453,8 @@ export default Vue.extend({
         .doc(appEmail)
         .onSnapshot((snap) => {
           if (snap.exists) {
-            this.updateStep(snap);
-            if (this.step > 1) this.checkGenderInput(appEmail);
+            this.updateStep(appEmail);
+            // if (this.step > 1) this.checkGenderInput(appEmail);
             if (this.step > 3) {
               this.fillRSVP();
             }
