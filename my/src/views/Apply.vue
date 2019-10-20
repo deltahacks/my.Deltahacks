@@ -414,7 +414,7 @@ export default Vue.extend({
     text-align:center !important;
   }
   .cardify{
-    width: 90% !important;
+    width: 85vw !important;
   }
 }
 
