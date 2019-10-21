@@ -80,6 +80,7 @@ const food = [
   'No Beef',
   'Lactose Intolerant',
   'Gluten Free',
+  'Other (Type your own)',
 ];
 
 const allUniversities1 = [
