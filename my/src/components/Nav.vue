@@ -8,7 +8,7 @@
         VI
       </h1>
       <h1 id="name" class="heading">
-        {{ first }}<span style="font-weight: 300; padding-left: 1%;">{{ last }}</span>
+        {{ first }}<span style="font-weight: 300; padding-left: 1%;" v-if="(first.length + last.length) < 24">{{ last }}</span>
       </h1>
     </div>
     <a class="btnbox3" href="../status">
