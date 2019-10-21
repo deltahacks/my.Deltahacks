@@ -6,6 +6,12 @@
   color: white;
   margin-left: 60px;
   display: inline-block;
+  text-decoration: none;
+  transition: 0.5s;
+  cursor: pointer;
+}
+#title:hover {
+  opacity: 0.6;
 }
 #search {
   width: 300px;
