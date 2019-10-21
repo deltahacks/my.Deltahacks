@@ -284,13 +284,13 @@ export default Vue.extend({
     emoticon(): string {
       switch (this.step) {
         case 0:
-          return ':(';
+          return '😃';
         case 1:
           return ':|';
         case 5:
           return ':(';
         default:
-          return ':)';
+          return '😃';
       }
     },
   },
