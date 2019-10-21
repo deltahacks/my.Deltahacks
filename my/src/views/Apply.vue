@@ -3,22 +3,13 @@
     <div v-if="app._.status !== 'in progress'" class="submitted-face" />
     <div v-if="app._.status !== 'in progress'" class="submitted-message">
       Your application has been submitted!
-      <br />
-      We’ll let you know as soon as we make a decision.
+      <br />We’ll let you know as soon as we make a decision.
     </div>
     <div class="background">
       <Nav class="fit" />
-      <v-snackbar
-        top
-        right
-        :color="snack.color"
-        v-model="snack.visible"
-        :timeout="snack.timeout"
-      >
+      <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
         {{ snack.message }}
-        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">
-          Close
-        </v-btn>
+        <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
       </v-snackbar>
       <ValidationObserver ref="form">
         <form action>
@@ -29,13 +20,11 @@
               abilities. This form will autosave, you can come back to submit it
               anytime before the deadline.
               <br />
-              <br />
-              No programming experience? That's okay! We're just looking for
+              <br />No programming experience? That's okay! We're just looking for
               well thought out answers. You'll get an email when we've made a
               decision.
               <br />
-              <br />
-              Are you a high school student? You're eligible to attend - as long
+              <br />Are you a high school student? You're eligible to attend - as long
               as you're 18 or older on the day of the event,
               <b>Jan 25, 2020</b>
               .
@@ -87,9 +76,7 @@
         v-model="resetDialogue"
       >
         <v-btn text @click="resetDialogue = false">Cancel</v-btn>
-        <v-btn color="warning" text @click="(resetDialogue = false), resetApplication()">
-          Reset
-        </v-btn>
+        <v-btn color="warning" text @click="(resetDialogue = false), resetApplication()">Reset</v-btn>
       </Dialog>
       <Dialog
         title="Submit Application"
@@ -97,31 +84,15 @@
         v-model="submitDialogue"
       >
         <v-btn text @click="submitDialogue = false">Cancel</v-btn>
-        <v-btn color="warning" text @click="(submitDialogue = false), submitApp()">
-          Submit
-        </v-btn>
+        <v-btn color="warning" text @click="(submitDialogue = false), submitApp()">Submit</v-btn>
       </Dialog>
       <v-container class="act-btn-group" text-xs-center>
         <v-layout align-center justify-center row wrap>
           <v-flex xs3>
-            <v-btn
-              class="act-btn act-btn__reset"
-              block
-              large
-              @click="resetDialogue = true"
-            >
-              Reset
-            </v-btn>
+            <v-btn class="act-btn act-btn__reset" block large @click="resetDialogue = true">Reset</v-btn>
           </v-flex>
           <v-flex xs9>
-            <v-btn
-              class="act-btn act-btn__submit"
-              block
-              large
-              @click="submitDialogue = true"
-            >
-              Submit
-            </v-btn>
+            <v-btn class="act-btn act-btn__submit" block large @click="submitDialogue = true">Submit</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -178,13 +149,15 @@ extend('required', {
 });
 extend('link', {
   validate: url =>
-    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(url),
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(
+      url
+    ),
   message: 'Invalid URL',
 });
 extend('mustBe', {
   // If mustBe is true, then the value passed is an empty array, so we coerce the value to a boolean
   validate: (value, mustBeValue) =>
-    (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
+    mustBeValue.length > 0 ? value === mustBeValue[0] : !!value,
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
@@ -232,11 +205,17 @@ export default Vue.extend({
         .emailVerified;
       if (submitting && this.app._.status === 'in progress' && verified) {
         this.app._.status = 'submitted';
-        this.app._.time_submitted = firebase.firestore.Timestamp.fromDate(new Date());
+        this.app._.time_submitted = firebase.firestore.Timestamp.fromDate(
+          new Date()
+        );
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
-      } else if (submitting && this.app._.status === 'in progress' && !verified) {
+      } else if (
+        submitting &&
+        this.app._.status === 'in progress' &&
+        !verified
+      ) {
         this.snack.message = 'Please verify your email before submitting!';
         this.snack.color = 'error';
       }
@@ -266,7 +245,9 @@ export default Vue.extend({
 
         // Find the first invalid field name and scroll to it
         const { errors } = (this.$refs.form as any).ctx || { errors: [] };
-        const invalidFields = Object.entries(errors).find(([field, errors]: Array<any>) => errors.length);
+        const invalidFields = Object.entries(errors).find(
+          ([field, errors]: Array<any>) => errors.length
+        );
         if (invalidFields && invalidFields.length > 0) {
           this.$refs[invalidFields[0]][0].$el.scrollIntoView({
             behavior: 'smooth',
@@ -430,7 +411,7 @@ export default Vue.extend({
     text-align: center !important;
   }
 
-  .cardify{
+  .cardify {
     width: 85vw !important;
   }
 }
@@ -457,7 +438,7 @@ export default Vue.extend({
 }
 
 .act-btn__reset {
-  background-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .act-btn__submit {
@@ -477,26 +458,52 @@ v-snackbar {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   /* background: linear-gradient(269deg, #6D0169, #D9636D, #405BC4, #1D847C, #7C2ECC, #4179BE); */
-  background: linear-gradient(269deg, #7C1078, #E8727C, #4F6AD3, #2C938B, #8B3DDB, #5088CD);
+  background: linear-gradient(
+    269deg,
+    #7c1078,
+    #e8727c,
+    #4f6ad3,
+    #2c938b,
+    #8b3ddb,
+    #5088cd
+  );
   background-size: 1400% 1400%;
   -webkit-animation: ApplyAnimation 180s ease infinite;
   -moz-animation: ApplyAnimation 180s ease infinite;
   animation: ApplyAnimation 180s ease infinite;
 }
 @-webkit-keyframes ApplyAnimation {
-   0%{background-position:0% 50%}
-   50%{background-position:100% 51%}
-   100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 51%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @-moz-keyframes ApplyAnimation {
-   0%{background-position:0% 50%}
-   50%{background-position:100% 51%}
-   100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 51%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @keyframes ApplyAnimation {
-0%{background-position:0% 50%}
-50%{background-position:100% 51%}
-100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 51%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 .fit {
   width: 92vw !important;

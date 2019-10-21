@@ -5,11 +5,7 @@
         <div class="container-hello100 background">
           <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
           <h1 class="hellotext">{{ splashMessage }}</h1>
-          <img
-            src="../assets/vi2.png"
-            draggable="false"
-            class="hello-back-vi"
-          />
+          <img src="../assets/vi2.png" draggable="false" class="hello-back-vi" />
         </div>
       </v-app>
       <v-app key="2" v-if="counter === 1" class="dashboard statusbackground">
@@ -34,11 +30,8 @@
                   {{ currentHeader }}
                   <a
                     @click.prevent="resend()"
-                    style="padding-left: 20px;"
                     v-if="!isVerified() && !resent"
-                  >
-                    Resend Email
-                  </a>
+                  >Resend Email</a>
                 </p>
               </div>
               <a href="/apply" class="apply-btn">
@@ -53,7 +46,7 @@
                 <div class="box box11" v-for="number in [currentNumber]" :key='number'>
                   <img :src="images[currentNumber]"/>
                   </div>
-              </transition> -->
+            </transition>-->
             <div class="box box11">
               <img
                 id="slideimg0"
@@ -149,13 +142,7 @@
           </div>
         </div>
 
-        <v-snackbar
-          v-model="feedback"
-          top
-          color="success"
-          right
-          :timeout="3000"
-        >
+        <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
           Thanks! We've got your response.
           <v-btn color="white" flat @click="feedback = false">Close</v-btn>
         </v-snackbar>

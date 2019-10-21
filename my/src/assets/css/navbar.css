@@ -6,6 +6,12 @@
   color: white;
   margin-left: 60px;
   display: inline-block;
+  text-decoration: none;
+  transition: 0.5s;
+  cursor: pointer;
+}
+#title:hover {
+  opacity: 0.6;
 }
 #search {
   width: 300px;
@@ -45,7 +51,7 @@
   cursor: pointer;
   /* display: inline-block; */
   font-size: 1.25em;
-  font-weight:600;
+  font-weight: 600;
   line-height: 0;
   padding: 0 1.75em;
   text-align: center;
@@ -75,21 +81,22 @@
   padding: 20px;
   height: 100px;
   width: 88%;
-  background: linear-gradient( 
+  background: linear-gradient(
     90deg,
-    #1EB8C9,
-    #1EB8C9 15px,
-    #EF4D67 15px,
-    #EF4D67 30px,
-    #FBD966 30px,
-    #FBD966 45px,
+    #1eb8c9,
+    #1eb8c9 15px,
+    #ef4d67 15px,
+    #ef4d67 30px,
+    #fbd966 30px,
+    #fbd966 45px,
     rgba(255, 255, 255, 0.2) 45px,
-    rgba(255, 255, 255, 0.2) 45px);
-    box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    rgba(255, 255, 255, 0.2) 45px
+  );
+  box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
-.heading{
-  padding-top:4px;
+.heading {
+  padding-top: 4px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   color: white;
@@ -123,7 +130,7 @@
   transition: 0.5s !important;
 }
 #logout:hover {
-  color: rgb(0, 0, 0) !important;
+  opacity: 0.6 !important;
 }
 
 h1 {
@@ -131,28 +138,33 @@ h1 {
 }
 
 @media only screen and (max-width: 900px) {
-  .btnbox2{
+  .btnbox2 {
     display: none;
   }
-  .extended{
+  .extended {
     width: 80% !important;
   }
-  .btnbox3{
+  .btnbox3 {
     display: block;
-    padding-left:-20px !important;
+    padding-left: -20px !important;
   }
   .rounded-box {
     height: 60px;
     padding: 10px;
     width: 80%;
   }
-  #nav-box {height:60px;
-    margin: 3vw;}
-  #name {display:none;}
-  .heading{font-size: 25px;}
-  #logout{  
+  #nav-box {
+    height: 60px;
+    margin: 3vw;
+  }
+  #name {
+    display: none;
+  }
+  .heading {
+    font-size: 25px;
+  }
+  #logout {
     margin-top: 20px;
     font-size: 12px;
   }
-  
 }

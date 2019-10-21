@@ -2,10 +2,10 @@
   <div id="nav-box">
     <a id="logout" @click.prevent="logout">Log Out</a>
     <div class="rounded-box">
-      <h1 id="title" class="heading">
+      <a href="https://www.deltahacks.com" id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
         VI
-      </h1>
+      </a>
       <h1 id="name" class="heading">
         {{ first }}<span style="font-weight: 300">{{ last }}</span>
       </h1>
@@ -60,7 +60,7 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
             this.last = snap.data()!.first ? snap.data()!.last : '';
