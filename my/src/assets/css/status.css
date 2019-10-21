@@ -206,11 +206,11 @@ p {
   .small{font-size:3vw;}
   .apply{
     font-size: 8vw;
-    padding-top:4vw;
+    padding-top:4.5vh!important;
   }
   .wrap{padding:5px;}
   .box3{height:12vw;}
-  .box5{height:22vw;}
+  .box5{height:15vh;}
   .box9{height:40vw;}
   .box11{height:60vw;}
   .currentStatus{
@@ -235,7 +235,7 @@ p {
     font-size: 15px;
   }
   .bigmobile{
-    font-size: 15px !important;
+    font-size: 12px !important;
   }
   .currentStatus{margin-top:3vw;}
 }
