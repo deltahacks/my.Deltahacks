@@ -3,7 +3,7 @@
     <a class="btnbox1" id="logout" @click.prevent="logout">Log Out</a>
     <a class="btnbox2" id="logout" href="../status">Status</a>
     <div class="rounded-box extended">
-      <a href="https://www.deltahacks.com" id="title" class="heading">
+      <a href="https://www.deltahacks.com" target="_blank" id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
         VI
       </a>

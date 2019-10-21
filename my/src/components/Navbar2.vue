@@ -2,7 +2,7 @@
   <div id="nav-box">
     <a id="logout" @click.prevent="logout">Log Out</a>
     <div class="rounded-box">
-      <a href="https://www.deltahacks.com" id="title" class="heading">
+      <a href="https://www.deltahacks.com" target="_blank" id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
         VI
       </a>
