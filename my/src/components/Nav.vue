@@ -92,7 +92,7 @@ export default Vue.extend({
 }
 .btnbox1:hover,.btnbox2:hover{
   /* font-weight:500!important; */
-  color: rgb(190, 190, 190) !important;
+  color: rgb(0, 0, 0) !important;
   transition: 0.5s !important;
 }
 .btnbox3{

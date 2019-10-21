@@ -122,7 +122,7 @@
   transition: 0.5s !important;
 }
 #logout:hover {
-  color: rgb(190, 190, 190) !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 h1 {
