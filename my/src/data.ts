@@ -536,8 +536,9 @@ export const applicationQuestions: any = [
     requirements: {link: true},
   },
   {
-    label: 'Is there anything else interesting you would want us to know? (e.g. Personal Website, Codepen, Dribble, Youtube, etc)',
-    fieldType: 'text',
+    label: 'Is there anything else interesting you would want us to see? (e.g. Personal Website, Codepen, Dribble, Youtube, etc)',
+    fieldType: 'text-area',
+    textLimit: '200',
     model: ['profiles', 'other'],
   },
   {
