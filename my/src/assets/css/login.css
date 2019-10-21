@@ -480,7 +480,6 @@ iframe {
 
 .forgot100-btn {
   margin: auto;
-    
 }
 
 .login100-btn {
@@ -494,7 +493,8 @@ iframe {
   font-weight: 600;
   text-align: center;
   text-decoration: none;
-  background-color: rgba(236, 240, 241, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   /* border: 1px solid rgb(65, 137, 150); */
   border-radius: 20px;
   transition: 0.1s ease-in-out;
@@ -512,13 +512,13 @@ iframe {
 
 .login100-btn:hover {
   color: white;
-  background-color: rgb(236, 240, 241, 0.3);
+  background-color: rgb(255, 255, 255, 0.3);
   transition: 0.2s;
 }
 
 .login100-btn:active {
   color: white;
-  background-color: rgb(236, 240, 241, 0.6);
+  background-color: rgb(255, 255, 255, 0.6);
   transition: 0.2s;
 }
 
@@ -568,47 +568,45 @@ iframe {
 }
 
 @media only screen and (max-width: 800px) {
-    
-    
-   .spanText{
-       padding-top: 5vh;
-   }
-    
+  .spanText {
+    padding-top: 5vh;
+  }
+
   .sidebar {
-      margin-top: 5vh;
-      margin-bottom: 5vh;
-      width: 200px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 200px;
   }
-    
+
   .card {
-      margin: auto;
+    margin: auto;
   }
-    
+
   .wrap-login100 {
-      width: 90%;
-      min-height: 40vh;
+    width: 90%;
+    min-height: 40vh;
   }
-    
+
   .login100-form {
-      width: 100%;
+    width: 100%;
   }
-    
+
   .wrap-input100 {
-      width: 90%;
+    width: 90%;
   }
-    
+
   .container-login100-form-btn {
     /* padding-left:20%; */
     margin: auto;
     margin-bottom: 0;
     padding-bottom: 0;
   }
-    
-  .forgotdiv{
-      margin-top: -2vh;
-      padding-bottom: 2vh;
+
+  .forgotdiv {
+    margin-top: -2vh;
+    padding-bottom: 2vh;
   }
-    
+
   .login100-btn {
     display: block;
     margin: 2.5vh auto;
