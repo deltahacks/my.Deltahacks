@@ -4,7 +4,7 @@
       <v-app key="1" v-if="counter === 0">
         <div class="container-hello100 background">
           <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
-          <h1 class="hellotext">Hello.</h1>
+          <h1 class="hellotext">{{ splashMessage }}</h1>
           <img
             src="../assets/vi2.png"
             draggable="false"
@@ -30,7 +30,16 @@
               <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
-                <p class="bigmobile">{{ currentHeader }}<a @click.prevent="resend()" style="padding-left: 20px;" v-if="!isVerified() && !resent">Resend Email</a></p>
+                <p class="bigmobile">
+                  {{ currentHeader }}
+                  <a
+                    @click.prevent="resend()"
+                    style="padding-left: 20px;"
+                    v-if="!isVerified() && !resent"
+                  >
+                    Resend Email
+                  </a>
+                </p>
               </div>
               <a href="/apply" class="apply-btn">
                 <div class="apply box5">Apply</div>
@@ -269,6 +278,7 @@ export default Vue.extend({
       curImage: 0,
       numImages: 13,
       resent: false,
+      splashMessage: '',
     };
   },
   components: {
@@ -359,7 +369,7 @@ export default Vue.extend({
         .doc('applications')
         .collection('all')
         .doc(email)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             const data = snap.data();
             switch (data!._.status) {
@@ -450,7 +460,8 @@ export default Vue.extend({
       this.resent = true;
       console.log(this.resent);
       console.log(this.isVerified());
-      auth().currentUser!.sendEmailVerification()
+      auth()
+        .currentUser!.sendEmailVerification()
         .then(() => console.log('Resent'))
         .catch(e => console.log('Resend problem'));
     },
@@ -459,12 +470,13 @@ export default Vue.extend({
   async beforeMount() {
     // console.log('mounted');
     const appEmail = auth().currentUser!.email as string;
-    this.counter = this.$route.params.firstTime ? 0 : 1;
+    this.splashMessage =
+      this.$route.params.firstTime === 'yes' ? 'Hello.' : 'Hello, Again.';
     // const genderStatus = await this.checkGenderInput(appEmail);
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             this.updateStep(appEmail);
             // if (this.step > 1) this.checkGenderInput(appEmail);

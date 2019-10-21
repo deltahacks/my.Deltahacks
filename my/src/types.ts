@@ -79,7 +79,7 @@ export interface AppContents {
     team: string;
     terms: string;
     code: boolean;
-  }
+  };
 }
 
 export interface AppPrivate {
@@ -140,6 +140,7 @@ export interface StatusModel {
   curImage: number;
   numImages: number;
   resent: boolean;
+  splashMessage: string;
 }
 
 export interface ApplyState {
@@ -201,14 +202,14 @@ export interface ForgotModel {
   loadingSignup: boolean;
 }
 
-export interface AutofillData { }
+export interface AutofillData {}
 
 export interface FormValidation {
-  name: { required: any; maxLength: string };
-  email: { required: any; email: string };
-  select: { required: any };
-  checkbox: { required: any };
-  university: { in: any };
+  name: {required: any; maxLength: string};
+  email: {required: any; email: string};
+  select: {required: any};
+  checkbox: {required: any};
+  university: {in: any};
 }
 
 export interface SnackBar {
