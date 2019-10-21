@@ -504,14 +504,6 @@ export const applicationQuestions: any = [
     requirements: {required: true, max: 750},
   },
   {
-    label:
-      'Is there anything else you want to tell us? It could be anything at all!',
-    fieldType: 'text-area',
-    textLimit: 200,
-    model: ['responses', 'anything_else'],
-    requirements: {max: 500},
-  },
-  {
     label: "What's your GitHub?",
     fieldType: 'text',
     model: ['profiles', 'github'],
@@ -521,12 +513,6 @@ export const applicationQuestions: any = [
     label: "What's your LinkedIn?",
     fieldType: 'text',
     model: ['profiles', 'linkedin'],
-    requirements: {link: true},
-  },
-  {
-    label: "What's your personal website?",
-    fieldType: 'text',
-    model: ['profiles', 'website'],
     requirements: {link: true},
   },
   {
@@ -615,6 +601,14 @@ export const applicationQuestions: any = [
     selectData: roles,
     icon: 'fa-users',
     model: ['general', 'role'],
+  },
+  {
+    label:
+      'Is there anything else you want to tell us? It could be anything at all!',
+    fieldType: 'text-area',
+    textLimit: 200,
+    model: ['responses', 'anything_else'],
+    requirements: {max: 500},
   },
   {
     label: 'Please upload your resumé',
