@@ -272,10 +272,10 @@ const workshops = [
   'Web Development',
   'Intro to AR/VR',
   'Game Development',
+  'Interview Prep',
   'Intro to UI/UX Design',
   'Hardware Hacking',
   'Computer Vision with OpenCV',
-  'Other (Type your own)',
 ];
 
 const roles = [
