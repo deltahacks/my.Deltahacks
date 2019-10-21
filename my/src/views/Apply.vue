@@ -3,10 +3,12 @@
     <div v-if="app._.status !== 'in progress'" class="submitted-face" />
     <div v-if="app._.status !== 'in progress'" class="submitted-message">
       Your application has been submitted!
+      <br />We’ll let you know as soon as we make a decision.
       <br />
-      We’ll let you know as soon as we make a decision.
-      <br>
-      <a class="goback" href="../status"><i class="fas fa-arrow-left" /> &nbsp; Go Back To Status</a><br>
+      <a class="goback" href="../status">
+        <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
+      </a>
+      <br />
     </div>
     <div class="background">
       <Nav class="fit" />
@@ -443,10 +445,12 @@ export default Vue.extend({
 
 .act-btn__reset {
   background-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 .act-btn__submit {
   background-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
   float: right;
 }
 
@@ -545,7 +549,7 @@ v-snackbar {
   /* padding: 0% 0% 0 5%; */
 }
 
-.goback{
+.goback {
   font-family: 'Montserrat';
   text-decoration: none;
 }
