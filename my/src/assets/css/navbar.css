@@ -119,10 +119,10 @@
   font-weight: 600;
   margin-top: 35px;
   margin-right: 3vw;
+  transition: 0.5s !important;
 }
 #logout:hover {
   color: rgb(190, 190, 190) !important;
-  transition: 0.5s !important;
 }
 
 h1 {

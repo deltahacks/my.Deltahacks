@@ -147,10 +147,10 @@ p {
   font-weight: 500;
   padding-top: 2vw;
   text-decoration: none;
+  transition: 1s;
 }
 .apply:hover {
   color: gray;
-  transition: 1s;
 }
 .theme--light.v-icon{
   color: white !important;
