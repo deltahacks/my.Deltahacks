@@ -232,6 +232,7 @@ export default Vue.extend({
         .emailVerified;
       if (submitting && this.app._.status === 'in progress' && verified) {
         this.app._.status = 'submitted';
+        this.app._.time_submitted = firebase.firestore.Timestamp.fromDate(new Date());
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
@@ -428,7 +429,7 @@ export default Vue.extend({
     padding-right: 0;
     text-align: center !important;
   }
-  
+
   .cardify{
     width: 85vw !important;
   }
