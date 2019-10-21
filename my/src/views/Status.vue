@@ -356,7 +356,7 @@ export default Vue.extend({
         .doc('applications')
         .collection('all')
         .doc(email)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
             switch (data!._.status) {
@@ -463,7 +463,7 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             this.updateStep(appEmail);
             // if (this.step > 1) this.checkGenderInput(appEmail);

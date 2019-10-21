@@ -61,7 +61,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
     // console.log('Protected route detected');
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -70,12 +70,12 @@ router.beforeEach((to, from, next) => {
       } else {
         // Otherwise redirect to login
         // console.log('Not authorized');
-        next({name: 'Login'});
+        next({ name: 'Login' });
       }
     });
   } else if (to.matched.some(rec => rec.meta.adminAuth)) {
     // console.log('Protected route detected');
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -84,27 +84,27 @@ router.beforeEach((to, from, next) => {
         db.collection('admins')
           .doc(user.email!.toLocaleLowerCase())
           .get()
-          .then(doc => {
+          .then((doc) => {
             if (doc.exists) {
               // console.log('Document data:', doc.data());
               next();
             } else {
               // console.log('Not an admin user!');
-              next({name: 'Login'});
+              next({ name: 'Login' });
             }
           })
-          .catch(error => {
+          .catch((error) => {
             // console.log('Not an admin user!');
-            next({name: 'Login'});
+            next({ name: 'Login' });
           });
       } else {
         // Otherwise redirect to login
         // console.log('Not authorized');
-        next({name: 'Login'});
+        next({ name: 'Login' });
       }
     });
   } else if (to.matched.some(rec => rec.meta.loginRedir)) {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
         // console.log("Times", firebase.auth().currentUser!.metadata.creationTime, firebase.auth().currentUser!.metadata.lastSignInTime)
@@ -113,8 +113,8 @@ router.beforeEach((to, from, next) => {
           firebase.auth().currentUser!.metadata.creationTime ===
           firebase.auth().currentUser!.metadata.lastSignInTime
         ) {
-          next({name: 'Status', params: {firstTime: 'yes'}});
-        } else next({name: 'Status', params: {firstTime: 'no'}});
+          next({ name: 'Status', params: { firstTime: 'yes' } });
+        } else next({ name: 'Status', params: { firstTime: 'no' } });
       } else {
         // Otherwise redirect to login
         // console.log('Not authorized');
