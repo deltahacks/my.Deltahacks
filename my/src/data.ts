@@ -546,7 +546,7 @@ export const applicationQuestions: any = [
     model: ['responses', 'workshops'],
   },
   {
-    label: 'Would you like to be considered for a coffee chat?',
+    label: 'Would you like to be considered for a coffee chat with a sponsor?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     icon: 'fa-coffee',
