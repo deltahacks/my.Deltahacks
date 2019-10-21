@@ -1,19 +1,19 @@
 <template>
   <div id="nav-box">
-        <a class="btnbox1" id="logout" @click.prevent="logout">Log Out</a>
-     <a class="btnbox2" id="logout" href="../status">Status</a>
+    <a class="btnbox1" id="logout" @click.prevent="logout">Log Out</a>
+    <a class="btnbox2" id="logout" href="../status">Status</a>
     <div class="rounded-box extended">
       <h1 id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
         VI
       </h1>
       <h1 id="name" class="heading">
-        {{ first }}<span style="font-weight: 300; padding-left: 1%;" v-if="(first.length + last.length) < 24">{{ last }}</span>
+        {{ first }}<span style="font-weight: 300; padding-left: 1%;" v-if="(first.length + last.length) < 24" >{{ last }}</span>
       </h1>
     </div>
     <a class="btnbox3" href="../status">
-                  <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
-                </a>
+      <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
+    </a>
   </div>
 </template>
 
@@ -64,7 +64,7 @@ export default Vue.extend({
     try {
       db.collection('users')
         .doc(appEmail)
-        .onSnapshot((snap) => {
+        .onSnapshot(snap => {
           if (snap.exists) {
             this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
             this.last = snap.data()!.first ? snap.data()!.last : '';
@@ -79,36 +79,37 @@ export default Vue.extend({
 <style scoped src='../assets/css/navbar.css'>
 </style>
 <style>
-.extended{
+.extended {
   width: 72vw !important;
 }
-.btnbox1{
-  font-weight:500!important;
+.btnbox1 {
+  font-weight: 500 !important;
 }
-.btnbox2{
-  font-weight:700!important;
+.btnbox2 {
+  font-weight: 700 !important;
   text-decoration: none;
   /* padding-left:-20px !important; */
 }
-.btnbox1:hover,.btnbox2:hover{
+.btnbox1:hover,
+.btnbox2:hover {
   /* font-weight:500!important; */
-  color: rgb(0, 0, 0) !important;
+  opacity: 0.6 !important;
   transition: 0.5s !important;
 }
-.btnbox3{
-  width:97vw;
+.btnbox3 {
+  width: 97vw;
   text-align: center;
   display: none;
   font-size: 1.1em;
   padding-top: 10px;
-  padding-bottom:-40px;
-  padding-left:0px !important;
-  margin:0;
+  padding-bottom: -40px;
+  padding-left: 0px !important;
+  margin: 0;
   color: white !important;
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
 }
-.btnbox3:hover{
-cursor: pointer;
+.btnbox3:hover {
+  cursor: pointer;
 }
 </style>
