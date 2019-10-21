@@ -184,13 +184,15 @@ p {
 
 .emote {
   background: rgba(255, 255, 255, 0.2);
-  width:50px;height:50px;border-radius:25px;
+  width:50px;
+  /* height:50px; */
+  border-radius:50px;
   text-align:center;
-  left:45%;
+  left:43%;
   position: relative;
-  font-size: 25px;
-  margin: .5vw 0;
-  padding-top: 5px;
+  font-size: 30px;
+  margin: 1vw 0;
+  /* padding-top: 3px; */
   /* padding-left: 2px; */
 }
 @media only screen and (max-width: 900px) {
@@ -223,10 +225,10 @@ p {
     height: auto;
   }
   .emote {
-    left: 40%;
+    left: 37%;
     width:30px;
-    height:30px;
-    border-radius:15px;
+    /* height:30px; */
+    border-radius:50px;
     font-size: 15px;
   }
   .currentStatus{margin-top:3vw;}
