@@ -274,7 +274,7 @@ const workshops = [
   'Intro to UI/UX Design',
   'Hardware Hacking',
   'Computer Vision with OpenCV',
-  'Buzzwords',
+  'Other (Type your own)',
 ];
 
 const roles = [
