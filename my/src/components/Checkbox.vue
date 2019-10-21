@@ -35,6 +35,11 @@ export default Vue.extend({
   caret-color: #1976d2 !important;
 }
 
+.container >>> .error--text {
+  caret-color: #bb2e35d8 !important;
+  color: #bb2e35d8 !important;
+}
+
 .container >>> .v-input--selection-controls__input {
   margin-right: 25px;
 }
