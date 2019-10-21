@@ -8,6 +8,7 @@
         @input="onChange($event)"
         :error-messages="error"
         dark
+        class="montserratify"
         color="#000000"
       ></v-text-field>
       <div v-else-if="inputType == 'text-area'">
@@ -26,7 +27,7 @@
         v-else-if="inputType == 'single-select'"
         :items="selectData"
         :prepend-icon="icon"
-        class="v-select-single"
+        class="v-select-single montserratify"
         single-line
         :value="value"
         @input="onChange($event)"
@@ -48,11 +49,12 @@
           v-model="input.value"
           :error-messages="error"
            dark
+           class="montserratify"
            color="#000000"
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
-        <span v-for="(data, i) in selectData" :key="i" class="radio-item">
+        <span v-for="(data, i) in selectData" :key="i" class="radio-item montserratify">
           <input
             type="radio"
             :name="data"
@@ -61,6 +63,7 @@
             :checked="value === data"
             @input="onChange($event.target.value)"
             color="#000000"
+            class="montserratify"
           />
           <label :for="data">{{ data }}</label>
         </span>
@@ -76,6 +79,7 @@
           @input="onChange($event)"
           dark
           color="#000000"
+          class="montserratify"
         ></v-combobox>
       </div>
       <div v-else-if="inputType == 'multi-select'">
@@ -88,6 +92,7 @@
           @input="onChange($event)"
            dark
            color="#000000"
+           class="montserratify"
         ></v-select>
       </div>
       <div v-else-if="inputType === 'file'">
@@ -107,6 +112,7 @@
           v-bind:files="myFiles"
           v-on:init="handleFilePondInit"
           color="#000000"
+          class="montserratify"
         />
       </div>
     </div>
@@ -392,7 +398,7 @@ export default Vue.extend({
   color: #bb2e35d8 !important;
 
   font-size: 1.25rem !important;
-  font-family: 'Montserrat', 'Roboto';
+  font-family: 'Montserrat';
 }
 
 .container >>> .v-icon.material-icons {
@@ -410,7 +416,12 @@ export default Vue.extend({
 
 .textareafix{
   font-size:1.3em !important;
+  font-family: 'Montserrat' !important;
   /* line-height: 1.5rem !important; */
+}
+
+.montserratify{
+  font-family: 'Montserrat' !important;
 }
 @media only screen and (max-width: 960px) {
   .container {
