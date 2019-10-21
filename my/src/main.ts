@@ -9,6 +9,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import VueProgressBar from 'vue-progressbar';
+import '@fortawesome/fontawesome-free/css/all.css';
 const VueAnalytics = require('vue-analytics').default;
 
 Vue.use(VueProgressBar, {
