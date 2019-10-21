@@ -30,7 +30,7 @@
               <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
-                <p>
+                <p class="bigmobile">
                   {{ currentHeader }}
                   <a
                     @click.prevent="resend()"

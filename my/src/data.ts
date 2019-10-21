@@ -272,10 +272,10 @@ const workshops = [
   'Web Development',
   'Intro to AR/VR',
   'Game Development',
+  'Interview Prep',
   'Intro to UI/UX Design',
   'Hardware Hacking',
   'Computer Vision with OpenCV',
-  'Other (Type your own)',
 ];
 
 const roles = [
@@ -621,7 +621,7 @@ export const applicationQuestions: any = [
 export const authorizations: any = [
   {
     label:
-      '<p style="color: white;">I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
+      '<p style="color: white; font-family: Montserrat;">I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>. \
     I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy</p>',
