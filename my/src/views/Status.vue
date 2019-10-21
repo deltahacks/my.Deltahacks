@@ -30,7 +30,7 @@
               <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
-                <p>{{ currentHeader }}<a @click.prevent="resend()" style="padding-left: 20px;" v-if="!isVerified() && !resent">Resend Email</a></p>
+                <p class="bigmobile">{{ currentHeader }}<a @click.prevent="resend()" style="padding-left: 20px;" v-if="!isVerified() && !resent">Resend Email</a></p>
               </div>
               <a href="/apply" class="apply-btn">
                 <div class="apply box5">Apply</div>
