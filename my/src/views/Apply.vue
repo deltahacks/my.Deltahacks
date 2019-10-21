@@ -7,7 +7,8 @@
       <br />
       <a class="goback" href="../status">
         <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
-      </a>
+      </a><br>
+      <a class="logout" @click.prevent="logout">Logout</a>
       <br />
     </div>
     <div class="background">
@@ -194,7 +195,14 @@ export default Vue.extend({
     Dialog,
   },
   methods: {
-    // updates in progress application
+    async logout() {
+      try {
+        await firebase.auth().signOut();
+        this.$router.push({ name: 'Login' });
+      } catch (err) {
+        console.log(err);
+      }
+    },
     onFormChange() {
       if (this.updateTimeout) clearTimeout(this.updateTimeout);
       this.updateTimeout = setTimeout(() => {
@@ -551,6 +559,13 @@ v-snackbar {
 
 .goback {
   font-family: 'Montserrat';
+  text-decoration: none;
+  margin-top:50px !important;
+}
+.logout{
+  font-size:1.5em;
+  padding-left: 10px;
+    font-family: 'Montserrat';
   text-decoration: none;
 }
 </style>
