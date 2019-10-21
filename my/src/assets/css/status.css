@@ -188,6 +188,8 @@ p {
   /* height:50px; */
   border-radius:50px;
   text-align:center;
+  align-items: center;
+  justify-content: center;
   left:43%;
   position: relative;
   font-size: 30px;
