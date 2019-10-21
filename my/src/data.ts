@@ -278,14 +278,22 @@ const workshops = [
 ];
 
 const roles = [
+  'None',
   'Front-end',
   'Back-end',
+  'Design',
   'iOS Development',
   'Android Development',
+  'Hardware Hacking',
+  'Machine Learning',
+  'Graphics Programming',
+  'Data Analysis',
   'Game Development',
+  'Writer',
+  'Other',
 ];
 
-export const getBlankApplication = () : AppContents => ({
+export const getBlankApplication = (): AppContents => ({
   _: {
     index: 0,
     reviews: {
