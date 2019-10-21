@@ -584,11 +584,13 @@ export const applicationQuestions: any = [
     label: 'Please put in the name of an emergency contact',
     fieldType: 'text',
     model: ['emergency', 'name'],
+    requirements: { required: true, },
   },
   {
     label: "What is your emergency contact's phone number?",
     fieldType: 'text',
     model: ['emergency', 'phone'],
+    requirements: { required: true, },
   },
   {
     label: 'Which size shirt do you wear?',
@@ -596,6 +598,7 @@ export const applicationQuestions: any = [
     selectData: shirt_size,
     icon: 'fa-tshirt',
     model: ['logistics', 'shirt_size'],
+    requirements: { required: true, oneOf: shirt_size, },
   },
   {
     label: 'Do you already have a team?',
