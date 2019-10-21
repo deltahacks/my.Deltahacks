@@ -8,7 +8,7 @@
         @input="onChange($event)"
         :error-messages="error"
         dark
-        color="#778899"
+        color="#000000"
       ></v-text-field>
       <div v-else-if="inputType == 'text-area'">
         <v-textarea
@@ -19,7 +19,7 @@
           :error-messages="error"
           dark
           class="textareafix"
-          color="#778899"
+          color="#000000"
         ></v-textarea>
       </div>
       <v-select
@@ -32,12 +32,12 @@
         @input="onChange($event)"
         :error-messages="error"
         dark
-        color="#778899"
+        color="#000000"
       ></v-select>
       <div
         v-else-if="inputType == 'date' || inputType == 'date-grad'"
         class="date-row"
-        color="#778899"
+        color="#000000"
       >
         <v-select
           v-for="(input, i) in dates"
@@ -48,7 +48,7 @@
           v-model="input.value"
           :error-messages="error"
            dark
-           color="#778899"
+           color="#000000"
         ></v-select>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
@@ -60,7 +60,7 @@
             :value="data"
             :checked="value === data"
             @input="onChange($event.target.value)"
-            color="#778899"
+            color="#000000"
           />
           <label :for="data">{{ data }}</label>
         </span>
@@ -75,7 +75,7 @@
           :icon="icon"
           @input="onChange($event)"
           dark
-          color="#778899"
+          color="#000000"
         ></v-combobox>
       </div>
       <div v-else-if="inputType == 'multi-select'">
@@ -87,7 +87,7 @@
           :value="value"
           @input="onChange($event)"
            dark
-           color="#778899"
+           color="#000000"
         ></v-select>
       </div>
       <div v-else-if="inputType === 'file'">
@@ -106,7 +106,7 @@
           :dropValidation="true"
           v-bind:files="myFiles"
           v-on:init="handleFilePondInit"
-          color="#778899"
+          color="#000000"
         />
       </div>
     </div>
