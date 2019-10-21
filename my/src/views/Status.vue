@@ -286,9 +286,9 @@ export default Vue.extend({
         case 0:
           return '😃';
         case 1:
-          return ':|';
+          return '😐';
         case 5:
-          return ':(';
+          return '🙁';
         default:
           return '😃';
       }
