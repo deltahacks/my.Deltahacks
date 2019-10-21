@@ -197,6 +197,7 @@ p {
   /* padding-top: 3px; */
   /* padding-left: 2px; */
 }
+
 @media only screen and (max-width: 900px) {
 
   .col4{width:100%;}
@@ -228,10 +229,13 @@ p {
   }
   .emote {
     left: 37%;
-    width:30px;
+    width:25px;
     /* height:30px; */
     border-radius:50px;
     font-size: 15px;
+  }
+  .bigmobile{
+    font-size: 15px !important;
   }
   .currentStatus{margin-top:3vw;}
 }
