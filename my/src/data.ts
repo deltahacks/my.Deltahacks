@@ -291,6 +291,7 @@ const roles = [
   'Data Analysis',
   'Game Development',
   'Writer',
+  'Product Manager',
   'Other',
 ];
 
@@ -529,14 +530,15 @@ export const applicationQuestions: any = [
     requirements: {link: true},
   },
   {
-    label: "What's your devpost?",
+    label: "What's your Devpost?",
     fieldType: 'text',
     model: ['profiles', 'devpost'],
     requirements: {link: true},
   },
   {
-    label: 'Link us to any other profiles you have',
-    fieldType: 'text',
+    label: 'Is there anything else interesting you would want us to see? (e.g. Personal Website, Codepen, Dribble, Youtube, etc)',
+    fieldType: 'text-area',
+    textLimit: '200',
     model: ['profiles', 'other'],
   },
   {
@@ -608,7 +610,7 @@ export const applicationQuestions: any = [
     model: ['general', 'team'],
   },
   {
-    label: 'What is your "role" when going to hackathons?',
+    label: 'What area do you typically work in?',
     fieldType: 'single-select',
     selectData: roles,
     icon: 'fa-users',

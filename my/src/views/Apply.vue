@@ -31,7 +31,7 @@
               <br />
               <br />Are you a high school student? You're eligible to attend - as long
               as you're 18 or older on the day of the event,
-              <b>Jan 25, 2020</b>
+              <b>January 25, 2020</b>
               .
             </p>
           </div>
