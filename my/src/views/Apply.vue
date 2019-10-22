@@ -5,11 +5,12 @@
       Your application has been submitted!
       <br />We’ll let you know as soon as we make a decision.
       <br />
+      <div style="padding-top: 10px !important;">
       <a class="goback" href="../status">
         <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
       </a><br>
       <a class="logout" @click.prevent="logout">Logout</a>
-      <br />
+      </div>
     </div>
     <div class="background">
       <Nav class="fit" />
@@ -563,7 +564,8 @@ v-snackbar {
   margin-top:50px !important;
 }
 .logout{
-  font-size:1.5em;
+  font-size:1.3em;
+  padding-top:10px;
   padding-left: 10px;
     font-family: 'Montserrat';
   text-decoration: none;
