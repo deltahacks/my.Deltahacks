@@ -357,12 +357,6 @@ export default Vue.extend({
     async signup() {
       if (this.getForm().checkValidity()) {
         try {
-          const user = await firebase
-            .auth()
-            .createUserWithEmailAndPassword(
-              this.email as string,
-              this.pass as string,
-            );
           await this.$store.state.db
             .collection('users')
             .doc(this.email)
@@ -371,9 +365,14 @@ export default Vue.extend({
               last: this.lName,
               email: this.email,
               time: firebase.firestore.Timestamp.fromDate(new Date()),
-              user_id: user.user!.uid,
               ip: null,
             });
+          const user = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(
+              this.email as string,
+              this.pass as string,
+            );
           const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json');
           const ipp = response.data.ip;
           const data = await axios.get(`https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`);
