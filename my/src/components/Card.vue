@@ -131,7 +131,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
-import { months, years, days } from '../data';
+import { months, gradYears, birthYears, days } from '../data';
 
 const FilePond: Component = vueFilePond(
   FilePondPluginFileValidateType,
@@ -154,8 +154,9 @@ export default Vue.extend({
   data() {
     return {
       dates: [],
+      years: [],
       myFiles: [],
-    } as { dates: any; myFiles: any };
+    } as { dates: any; years: number[]; myFiles: any };
   },
   components: {
     FilePond,
@@ -210,7 +211,7 @@ export default Vue.extend({
             this.dates = [
               {
                 label: 'Year',
-                options: years,
+                options: this.years,
                 value: new Date(this.value.toDate()).getFullYear(),
               },
               {
@@ -228,7 +229,7 @@ export default Vue.extend({
             this.dates = [
               {
                 label: 'Year',
-                options: years,
+                options: this.years,
                 value: new Date(this.value.toDate()).getFullYear(),
               },
               {
@@ -251,6 +252,7 @@ export default Vue.extend({
     },
   },
   mounted() {
+    this.years = this.inputType === 'date' ? birthYears : gradYears;
     this.updateDates();
   },
   watch: {
