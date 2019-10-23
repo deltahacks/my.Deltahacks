@@ -253,6 +253,7 @@ export default Vue.extend({
         "Congratulations, you've been accepted!",
         "Sorry we couldn't offer you a spot.",
         'Unfortunately we cannot offer you an invitation this time.',
+        '',
       ],
       links: ['Home', 'About', 'Contact'],
       story: '',
@@ -295,7 +296,6 @@ export default Vue.extend({
     method1() {
       this.timeout = setTimeout(() => {
         this.counter = 1;
-        console.log('Happened');
       }, 2000);
     },
     toggleRSVP(res) {
@@ -471,6 +471,7 @@ export default Vue.extend({
               this.fillRSVP();
             }
           } else {
+            this.step = 7;
             console.log(`User ${appEmail} not found.`);
           }
         });
