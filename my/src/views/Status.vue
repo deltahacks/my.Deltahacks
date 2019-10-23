@@ -22,7 +22,7 @@
                 application!
               </p>
             </div>
-            <div class="box box5 status">
+            <div class="box box5 status desktop">
               <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
@@ -41,12 +41,6 @@
           </div>
           <!--Column#2-->
           <div class="col col4">
-            <!-- <div> -->
-            <!-- <transition name='fade' mode="out-in">
-                <div class="box box11" v-for="number in [currentNumber]" :key='number'>
-                  <img :src="images[currentNumber]"/>
-                  </div>
-            </transition>-->
             <div class="box box11">
               <img
                 id="slideimg0"
@@ -128,7 +122,7 @@
               />
             </div>
             <!-- </div> -->
-            <div :key="media.icon" v-for="media in social">
+            <div :key="media.icon" v-for="media in social" class="desktop">
               <div class="col col2 social">
                 <a :href="media.link" target="_blank">
                   <div class="box box3">
@@ -138,6 +132,33 @@
                   </div>
                 </a>
               </div>
+            </div>
+          </div>
+          <div class="box box5 status tablet">
+            <div class="currentStatus">
+              <h2>My Application Status</h2>
+              <div class="emote">{{ emoticon }}</div>
+              <p class="bigmobile">
+                {{ currentHeader }}
+                <a
+                  @click.prevent="resend()"
+                  v-if="!isVerified() && !resent"
+                >Resend Email</a>
+              </p>
+            </div>
+            <a href="/apply" class="apply-btn">
+              <div class="apply box5">Apply</div>
+            </a>
+          </div>
+          <div :key="media.icon" v-for="media in social" class="tablet">
+            <div class="col col2 social">
+              <a :href="media.link" target="_blank">
+                <div class="box box3">
+                  <button light icon>
+                    <v-icon>{{ media.icon }}</v-icon>
+                  </button>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -479,9 +500,9 @@ export default Vue.extend({
       this.criticalError = true;
     }
   },
-  mounted() {
-    this.timer = setInterval(this.nextImage, 4000);
+  async mounted() {
     this.method1();
+    this.timer = setInterval(this.nextImage, 4000);
   },
   beforeDestroy() {
     clearInterval(this.timer);

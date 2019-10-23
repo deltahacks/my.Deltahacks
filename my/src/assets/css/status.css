@@ -244,7 +244,6 @@ p {
 .emote {
   background: rgba(255, 255, 255, 0.2);
   width: 50px;
-  /* height:50px; */
   border-radius: 50px;
   text-align: center;
   align-items: center;
@@ -253,8 +252,10 @@ p {
   position: relative;
   font-size: 30px;
   margin: 1vw 0;
-  /* padding-top: 3px; */
-  /* padding-left: 2px; */
+}
+
+.tablet {
+  display: none;
 }
 
 @media only screen and (max-width: 900px) {
@@ -276,7 +277,7 @@ p {
   }
   .wrap{padding:5px;}
   .box3{height:12vw;}
-  .box5{height:15vh;}
+  .box5{height:20vh;}
   .box9{height:40vw;}
   .box11{height:60vw;}
   .currentStatus{
@@ -293,21 +294,71 @@ p {
     width: 100%;
     height: auto;
   }
-  .emote {
-    left: 37%;
-    width: 25px;
-    /* height:30px; */
-    border-radius: 50px;
-    font-size: 15px;
-  }
   .bigmobile{
     font-size: 12px !important;
   }
   .currentStatus {
-    margin-top: 3vw;
+    width: 30vw;
+    font-size: 1.5vw;
+  }
+  .emote{left: 30%;}
+}
+
+@media only screen and (max-width: 1630px) and (min-width: 1271px) {
+  /* .col4, .col6 {width:50%;} */
+  .desktop {display:none;}
+  /* .col6 {width: 40%;} */
+  .box11, .box9 {height: 25vw;}
+  .tablet {display:block;}
+  .box3 {height:12vw;}
+  .box5 {height: 18vw;}
+  .theme--light.v-icon {
+    margin-top: 4vw;
+    font-size: 5vw;
+  }
+  .big {
+    font-size: 6vw;
+  }
+  .small {
+    font-size: 2.5vw;
+  }
+  .apply {
+    font-size: 8vw;
+    padding-top:4.5vh!important;
+  }
+  .currentStatus {
+    width: 40vw;
+    font-size: 2vw;
   }
 }
 
+@media only screen and (max-width: 1270px) and (min-width: 901px) {
+  .col4, .col6 {width:50%;}
+  .desktop {display:none;}
+  /* .col6 {width: 40%;} */
+  .box11, .box9 {height: 35vw;}
+  .tablet {display:block;}
+  .box3 {height:12vw;}
+  .box5 {height: 18vw;}
+  .theme--light.v-icon {
+    margin-top: 4vw;
+    font-size: 5vw;
+  }
+  .big {
+    font-size: 6vw;
+  }
+  .small {
+    font-size: 2.5vw;
+  }
+  .apply {
+    font-size: 8vw;
+    padding-top:4.5vh!important;
+  }
+  .currentStatus {
+    width: 40vw;
+    font-size: 2vw;
+  }
+}
 .slide {
   opacity: 0;
   position: absolute;
