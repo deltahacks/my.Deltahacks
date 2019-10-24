@@ -304,35 +304,9 @@ p {
   .emote{left: 30%;}
 }
 
-@media only screen and (max-width: 1630px) and (min-width: 1271px) {
-  /* .col4, .col6 {width:50%;} */
-  .desktop {display:none;}
-  /* .col6 {width: 40%;} */
-  .box11, .box9 {height: 25vw;}
-  .tablet {display:block;}
-  .box3 {height:12vw;}
-  .box5 {height: 18vw;}
-  .theme--light.v-icon {
-    margin-top: 4vw;
-    font-size: 5vw;
-  }
-  .big {
-    font-size: 6vw;
-  }
-  .small {
-    font-size: 2.5vw;
-  }
-  .apply {
-    font-size: 8vw;
-    padding-top:4.5vh!important;
-  }
-  .currentStatus {
-    width: 40vw;
-    font-size: 2vw;
-  }
-}
 
-@media only screen and (max-width: 1270px) and (min-width: 901px) {
+
+@media only screen and (max-width: 1280px) and (min-width: 901px) {
   .col4, .col6 {width:50%;}
   .desktop {display:none;}
   /* .col6 {width: 40%;} */
