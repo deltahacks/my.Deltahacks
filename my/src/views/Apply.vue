@@ -432,7 +432,7 @@ export default Vue.extend({
     width: 70%;
   }
   .cardify {
-    width: 68% !important;
+    width: 67% !important;
   }
 }
 
