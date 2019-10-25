@@ -431,6 +431,9 @@ export default Vue.extend({
   .act-btn-group {
     width: 70%;
   }
+  .cardify {
+    width: 68% !important;
+  }
 }
 
 .act-btn {
