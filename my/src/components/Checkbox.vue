@@ -27,6 +27,8 @@ export default Vue.extend({
 
 <style scoped>
 .container {
+  padding-bottom: 12px;
+  padding-top: 12px;
   width: 50%;
 }
 
@@ -47,6 +49,12 @@ export default Vue.extend({
 .container >>> .v-label {
   font-size: 1.35rem !important;
   color: rgba(0, 0, 0, 0.54);
+}
+
+.container >>> .v-label p {
+  color: white;
+  font-family: Montserrat;
+  margin-bottom: 0;
 }
 
 .container >>> .v-label a {

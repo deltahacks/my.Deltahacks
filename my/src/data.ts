@@ -367,7 +367,7 @@ export const getBlankApplication = (): AppContents => ({
   general: {
     coffee: '',
     team: '',
-    terms: '',
+    termsAndConditions: false,
     code: false,
   },
 });
@@ -621,10 +621,20 @@ export const applicationQuestions: any = [
 export const authorizations: any = [
   {
     label:
-      '<p style="color: white; font-family: Montserrat;">I have read and agree to the MLH Code of Conduct. I authorize you to share my application/registration information for event administration, ranking, MLH \
+      '<p>I have read and agree to the \
+    <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">\
+    MLH Code of Conduct</a>.</p>',
+    model: ['general', 'termsAndConditions'],
+  },
+  {
+    label:
+      '<p>I authorize you to share my application/registration information for event administration, ranking, MLH \
     administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>. \
-    I further agree to the terms both the MLH Contest Terms and Conditions and the MLH Privacy Policy</p>',
+    I further agree to the terms both the \
+    <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">\
+    MLH Contest Terms and Conditions</a> and the \
+    <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>.</p>',
     model: ['general', 'code'],
   },
 ];

@@ -113,11 +113,13 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
+import VueScrollReveal from 'vue-scroll-reveal';
+import deepmerge from 'deepmerge';
+
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import Checkbox from '@/components/Checkbox.vue';
 import Dialog from '@/components/Dialog.vue';
-import VueScrollReveal from 'vue-scroll-reveal';
 
 import {
   ValidationProvider,
@@ -340,7 +342,9 @@ export default Vue.extend({
   async created(): Promise<any> {
     try {
       const app = await this.fetchFromFirebase();
-      if (app.data()) this.app = app.data() as AppContents;
+
+      // If there's items in the blank application not present in the online application, reconcile the two
+      if (app.data()) this.app = deepmerge(this.app, app.data()) as AppContents;
       this.setName();
     } catch (error) {
       // Create popup modal here warning user
