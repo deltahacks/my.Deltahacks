@@ -302,6 +302,11 @@ p {
     font-size: 1.5vw;
   }
   .emote{left: 30%;}
+  .statusbackground{
+    -webkit-animation: statusanimation 180s ease infinite !important;
+    -moz-animation: statusanimation 180s ease infinite !important;
+    animation: statusanimation 180s ease infinite !important;
+  }
 }
 
 
