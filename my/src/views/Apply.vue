@@ -32,7 +32,7 @@
               decision.
               <br />
               <br />Are you a high school student? You're eligible to attend - as long
-              as you're 18 or older on the day of the event,
+              as you're 18 or older on the day of the event -
               <b>January 25, 2020</b>
               .
             </p>
