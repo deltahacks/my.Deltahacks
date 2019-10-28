@@ -77,7 +77,7 @@ export interface AppContents {
   general: {
     coffee: string;
     team: string;
-    terms: string;
+    termsAndConditions: boolean;
     code: boolean;
   };
 }
