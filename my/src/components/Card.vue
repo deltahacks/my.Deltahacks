@@ -61,7 +61,7 @@
             :id="data"
             :value="data"
             :checked="value === data"
-            @input="onChange($event.target.value)"
+            @change="onChange($event.target.value)"
             color="#000000"
             class="montserratify"
           />
