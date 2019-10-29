@@ -189,12 +189,6 @@ export default Vue.extend({
       });
       return res;
     },
-    async fb() {
-      db.collection('applications')
-        .doc('DH5')
-        .collection('all')
-        .get();
-    },
     bigDiff(prop) {
       if (!prop || !prop.item.decision.reviewers[1]) return false;
       const M = 5; // The difference threshold you want to check for.
@@ -249,17 +243,6 @@ export default Vue.extend({
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
       Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
     },
-    async applicantCount() {
-      let size = 0;
-
-      const snap = await db
-        .collection(this.hackathon)
-        .doc('applications')
-        .collection('all')
-        .get();
-      size = 5;
-      return 5;
-    },
     getAgeFromDate(bday: firebase.firestore.Timestamp): number {
       let bdayDate;
       try {
@@ -277,17 +260,6 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    const parent = this;
-    /*
-    const snap = await db
-      .collection('statistics')
-      .doc(this.hackathon)
-      .get();
-    console.log(this.rowsPerPage);
-    // console.log(snap.data().applications);
-    this.numApplicants = Math.ceil(snap.data()!.applications / this.rowsPerPage);
-    console.log('Number apps: ', this.numApplicants);
-    */
     if (!this.applications[this.page - 1]) {
       console.log('In mount fill');
       const result = await db
