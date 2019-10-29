@@ -96,6 +96,7 @@ export default Vue.extend({
       rowsPerPage: 50,
       numApplicants: 0,
       applications: {},
+      currentSet: [],
       peeps: [],
       current: 'All Applicants',
       items: [
@@ -212,22 +213,32 @@ export default Vue.extend({
     },
     async nextPage() {
       console.log('Page is: ', this.page);
+      const startPoint = (this.page - 1) * this.rowsPerPage;
+      console.log(startPoint);
       if (!this.applications[`${this.page - 1}`]) {
         console.log('Getting next page');
         const result = await db
           .collection(this.hackathon)
           .doc('applications')
           .collection('all')
-          .orderBy('index')
-          .where(...(this.restriction as [any, any, any]))
+          .orderBy('_.time_submitted')
+          .startAfter((this.currentSet[this.currentSet.length - 1] as any)._.time_submitted)
+          .where('_.status', '==', 'submitted')
           .limit(this.rowsPerPage)
-          .startAfter((this.page - 1) * this.rowsPerPage)
           .get();
         // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+        console.log(`LENGTH: ${result.docs.length}`);
+        console.log(result.docs[0].data());
+        const resultsToUse = result.docs.map((doc) => {
+          const docData = doc.data();
+          docData.contact.email = doc.id;
+          return docData;
+        });
+        this.currentSet = resultsToUse;
         Vue.set(
           this.applications,
           this.page - 1,
-          result.docs.map(a => a.data()),
+          resultsToUse,
         );
       }
     },
@@ -237,8 +248,7 @@ export default Vue.extend({
         .collection(this.hackathon)
         .doc('applications')
         .collection('all')
-        .orderBy('index')
-        .where(...(this.restriction as [any, any, any]))
+        .where('_.status', '==', 'submitted')
         .limit(this.rowsPerPage)
         .get();
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
@@ -259,6 +269,13 @@ export default Vue.extend({
       const ageDate = new Date(ageDifMs); // miliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970);
     },
+    async setNumApplicants() {
+      const stats = await
+      db.collection('DH6')
+        .doc('statistics')
+        .get();
+      this.numApplicants = Math.ceil(stats.data()!.applications / this.rowsPerPage);
+    },
   },
   async mounted() {
     if (!this.applications[this.page - 1]) {
@@ -267,15 +284,17 @@ export default Vue.extend({
         .collection(this.hackathon)
         .doc('applications')
         .collection('all')
+        .orderBy('_.time_submitted')
         .where('_.status', '==', 'submitted')
         .limit(this.rowsPerPage)
         .get();
-      console.log('r123', result.docs);
       const resultsToUse = result.docs.map((doc) => {
         const docData = doc.data();
         docData.contact.email = doc.id;
         return docData;
       });
+      await this.setNumApplicants();
+      this.currentSet = resultsToUse;
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
       Vue.set(this.applications, this.page - 1, resultsToUse);
     }
