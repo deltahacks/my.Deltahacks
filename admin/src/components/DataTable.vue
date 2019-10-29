@@ -26,7 +26,7 @@
       :headers="headers"
       :items="applications[page - 1]"
       hide-actions
-      item-key="email"
+      item-key="contact.email"
     >
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
@@ -190,21 +190,22 @@ export default Vue.extend({
       return res;
     },
     bigDiff(prop) {
-      if (!prop || !prop.item.decision.reviewers[1]) return false;
+      if (!prop || !prop.item._.reviews.scores[1]) return false;
       const M = 5; // The difference threshold you want to check for.
-      const { reviewers } = prop.item.decision;
-      let maxDiff = Math.abs(reviewers[1].score - reviewers[0].score);
-      const minEle = Math.min(...reviewers.map(r => r.score));
+      const { scores } = prop.item._;
+      let maxDiff = Math.abs(scores[1].score - scores[0].score);
+      const minEle = Math.min(...scores.map(r => r.score));
 
-      for (let i = 0; i < reviewers.length; i++) {
-        const current = Math.abs(reviewers[i].score - minEle);
+      for (let i = 0; i < scores.length; i++) {
+        const current = Math.abs(scores[i].score - minEle);
         if (current > maxDiff) maxDiff = current;
       }
 
       return maxDiff >= M;
     },
     selectRow(e, props) {
-      props.item.decision.reviewers.forEach(r => console.log(r.score));
+      props.item._.reviews.scores.forEach(r => console.log(r.score));
+      console.log(props);
       props.expanded = !props.expanded;
       const offset = 50 * props.index;
       window.scrollTo(0, window.screen.height / 2 + offset);
