@@ -260,15 +260,10 @@ export default Vue.extend({
       size = 5;
       return 5;
     },
-    getAgeFromDate(bday): number {
-      const b2 = new Date(
-        bday.slice(4),
-        bday.slice(2, 4) - 1,
-        bday.slice(0, 2),
-      );
-      // console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
+    getAgeFromDate(bday: firebase.firestore.Timestamp): number {
+      const bdayDate = bday.toDate();
       const current = new Date();
-      return this.calculateAge(b2);
+      return this.calculateAge(bdayDate);
     },
     calculateAge(birthday: Date): number {
       // birthday is a date
