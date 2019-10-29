@@ -35,7 +35,7 @@
           <td class="text-xs-left">{{ props.item.academics.school }}</td>
           <td
             class="text-xs-left"
-          >{{ new Date(props.item._.time_submitted.date).toLocaleDateString("en-US") }}</td>
+          >{{ props.item._.time_submitted.toDate().toLocaleDateString("en-US") }}</td>
           <td class="text-xs-left">{{ props.item.contact.phone }}</td>
           <td class="text-xs-left">{{ getAgeFromDate(props.item.personal.birthday) }}</td>
           <td
