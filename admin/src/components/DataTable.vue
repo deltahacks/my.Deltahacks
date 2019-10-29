@@ -31,18 +31,18 @@
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
           <td class="text-md-left">{{ props.item.name.first + ' ' + props.item.name.last}}</td>
-          <!-- <td class="text-md-left">{{ props.item.email }}</td> -->
+          <td class="text-md-left">{{ props.item.contact.email }}</td>
           <td class="text-xs-left">{{ props.item.academics.school }}</td>
           <td
             class="text-xs-left"
-          >{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
-          <td class="text-xs-left">{{ props.item.phone }}</td>
+          >{{ new Date(props.item._.time_submitted.date).toLocaleDateString("en-US") }}</td>
+          <td class="text-xs-left">{{ props.item.contact.phone }}</td>
           <td class="text-xs-left">{{ getAgeFromDate(props.item.personal.birthday) }}</td>
           <td
             class="text-xs-left"
             id="numRevs"
-            :title="props.item.decision.assignedTo ? assignmentToName(props.item.decision.assignedTo) : 'unassigned'"
-          >{{ props.item.decision.reviewers.length }}/3</td>
+            :title="props.item._.reviews.assignedTo.length ? assignmentToName(props.item._.reviews.assignedTo) : 'unassigned'"
+          >{{ props.item._.reviews.scores.length }}/3</td>
 
           <td class="text-xs-right">
             <status-indicator
@@ -50,11 +50,11 @@
               negative
             ></status-indicator>
             <status-indicator
-              v-else-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
+              v-else-if="props.item._.reviews.scores.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
               active
             ></status-indicator>
             <status-indicator
-              v-else-if="props.item.decision.assignedTo && props.item.decision.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())"
+              v-else-if="props.item._.reviews.assignedTo && props.item._.reviews.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())"
               intermediary
             ></status-indicator>
             <status-indicator v-else semi></status-indicator>
@@ -67,7 +67,7 @@
           id="dropdown"
           :usrname="props.item.name"
           :applicant="props.item"
-          :isReviewed="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
+          :isReviewed="props.item._.reviews.scores.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
           :random="3"
         />
       </template>
@@ -261,8 +261,12 @@ export default Vue.extend({
       return 5;
     },
     getAgeFromDate(bday: firebase.firestore.Timestamp): number {
-      const bdayDate = bday.toDate();
-      const current = new Date();
+      let bdayDate;
+      try {
+        bdayDate = bday.toDate();
+      } catch (e) {
+        return 1;
+      }
       return this.calculateAge(bdayDate);
     },
     calculateAge(birthday: Date): number {
@@ -294,9 +298,13 @@ export default Vue.extend({
         .limit(this.rowsPerPage)
         .get();
       console.log('r123', result.docs);
-      console.log(result.docs[0].data());
+      const resultsToUse = result.docs.map((doc) => {
+        const docData = doc.data();
+        docData.contact.email = doc.id;
+        return docData;
+      });
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+      Vue.set(this.applications, this.page - 1, resultsToUse);
     }
   },
 });
