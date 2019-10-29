@@ -419,7 +419,7 @@ export const applicationQuestions: any = [
   },
   {
     label: "What's your major?",
-    fieldType: 'single-select',
+    fieldType: 'combo-box',
     selectData: majorsList,
     icon: 'fa-pencil-alt',
     model: ['academics', 'major'],
