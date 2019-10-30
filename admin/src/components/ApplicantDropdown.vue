@@ -153,9 +153,9 @@
           :dot-size="30"
         ></vue-slider>
         <v-btn
+          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer"
           color="success"
           class="button2"
-          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer"
           @click="updateApplicationScore"
         >SUBMIT SCORE</v-btn>
         <v-btn
@@ -242,22 +242,6 @@ export default Vue.extend({
   components: {
     vueSlider,
   },
-  /*
-  created: {
-    hasResume() {
-      // console.log(this.applicant);
-      const app = this.applicant;
-      return app.documents && app.documents.length !== 0;
-    },
-  },
-  */
-  mounted() {
-    // console.log('Sub', this.isReviewed, this.applicant, this.random);
-    /*         this.score = this.applicant.decision.reviewers.find(
-            obj => obj.reviewer === this.$store.state.firebase.auth().currentUser.email
-        ).score; */
-    // console.log('Docs', this.applicant.documents);
-  },
   methods: {
     decisionStats() {
       const resstr = {};
@@ -271,39 +255,29 @@ export default Vue.extend({
       // console.log('Updating score', this.$store.state.test);
       try {
         const userApplication = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
+          .collection('DH6')
+          .doc('applications')
+          .collection('all')
+          .doc(this.applicant.contact.email)
           .get();
-
-        const aaa = this.$store.state.test;
-        // console.log(
-        //     aaa,
-        //     this.$store.state.firebase.auth().currentUser.email,
-        //     userApplication.data().decision
-        // );
-        const decision = { ...userApplication.data().decision };
-        const reviews = userApplication.data().decision.reviews + 1;
-        const { reviewers } = userApplication.data().decision;
-        reviewers.push({
+        const applicantData = userApplication.data();
+        applicantData._.reviews.total = applicantData._.reviews.total ? applicantData._.reviews.total + 1 : 1;
+        applicantData._.reviews.scores.push({
           score: this.score,
           reviewer: this.$store.state.firebase.auth().currentUser.email,
         });
-        decision.reviews = reviews;
-        decision.reviewers = reviewers;
         // console.log('decision', decision);
         const uploadScore = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
-          .doc(this.applicant.email)
-          .update({ decision });
+          .collection('DH6')
+          .doc('applications')
+          .collection('all')
+          .doc(this.applicant.contact.email)
+          .update({ _: { reviews: applicantData._.reviews, ...applicantData._ } });
         this.isReviewed = true;
         // this.refetchCurrentPage();
         console.log(
           'Review sent, you can chill: ',
-          `${userApplication.data().name} ${userApplication.data().lastname}`,
+          `${userApplication.data().name.first} ${userApplication.data().name.last}`,
         );
       } catch (err) {
         console.log('Error getting user app: ', err);
@@ -312,14 +286,12 @@ export default Vue.extend({
     async deleteApplicant(applicant) {
       try {
         const decisionDelete = await this.$store.state.db
-          .collection('decisions')
-          .doc('DH5')
-          .collection('pending')
+          .collection('DH6')
+          .doc('applications')
+          .collection('all')
           .doc(applicant)
           .delete();
-        this.usrname = `(DELETED) ${this.usrname}`;
         this.feedback = true;
-        // console.log('Sucessful deletion: ', applicationDelete, decisionDelete);
       } catch (err) {
         console.log('Error deleting application: ', err);
       }
