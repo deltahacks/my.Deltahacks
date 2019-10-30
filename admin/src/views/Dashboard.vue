@@ -368,15 +368,15 @@ export default Vue.extend({
       this.loading = false;
     }
 
-    db.collection('statistics')
-      .doc('DH5')
+    db.collection('DH6')
+      .doc('statistics')
       .onSnapshot((doc) => {
         if (doc) {
-          const universityStats = doc.data()!.applicationStats.universities;
+          // const universityStats = doc.data()!.applicationStats.universities;
           this.applicationCount = doc.data()!.applications;
-          (this.$refs.universities as any).changeData(
-            this.processField(this.filterData(universityStats), 'Universities'),
-          );
+          // (this.$refs.universities as any).changeData(
+          //   this.processField(this.filterData(universityStats), 'Universities'),
+          // );
         }
       });
     const authRes = await db
