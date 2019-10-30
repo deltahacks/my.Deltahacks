@@ -110,7 +110,7 @@
                       <v-card-text>{{ applicant.personal.race }}</v-card-text>
                       <v-card-text>{{ applicant.logistics.traveling_from }}</v-card-text>
                       <v-card-text>{{ applicant.logistics.discovered_by }}</v-card-text>
-                      <v-card-text>{{ applicant.emergency.name + ' - ' + applicant.emergency.relationship + ' - ' + applicant.emergency.phone }}</v-card-text>
+                      <v-card-text>{{ applicant.emergency.name + ' - ' + applicant.emergency.phone }}</v-card-text>
                       <v-card-text>{{ applicant.responses.workshops }}</v-card-text>
 
                       <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
