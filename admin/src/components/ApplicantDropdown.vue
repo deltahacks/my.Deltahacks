@@ -252,7 +252,6 @@ export default Vue.extend({
       console.log(this.applicant.name, resstr);
     },
     async updateApplicationScore() {
-      // console.log('Updating score', this.$store.state.test);
       try {
         const userApplication = await this.$store.state.db
           .collection('DH6')
@@ -273,8 +272,7 @@ export default Vue.extend({
           .collection('all')
           .doc(this.applicant.contact.email)
           .update({ _: { reviews: applicantData._.reviews, ...applicantData._ } });
-        this.isReviewed = true;
-        // this.refetchCurrentPage();
+        this.isReviewed = true; // I'll fix this eventually
         console.log(
           'Review sent, you can chill: ',
           `${userApplication.data().name.first} ${userApplication.data().name.last}`,
