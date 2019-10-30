@@ -241,8 +241,8 @@ export default Vue.extend({
           .collection(this.hackathon)
           .doc('applications')
           .collection('all')
-          .orderBy('_.time_submitted')
-          .startAfter((this.currentSet[this.currentSet.length - 1] as any)._.time_submitted)
+          .orderBy('_.index')
+          .startAfter(startPoint)
           .where('_.status', '==', 'submitted')
           .limit(this.rowsPerPage)
           .get();
@@ -303,7 +303,7 @@ export default Vue.extend({
         .collection(this.hackathon)
         .doc('applications')
         .collection('all')
-        .orderBy('_.time_submitted')
+        .orderBy('_.index')
         .where('_.status', '==', 'submitted')
         .limit(this.rowsPerPage)
         .get();
