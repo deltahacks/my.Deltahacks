@@ -87,9 +87,29 @@ import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
 import db from '../private/firebase_init';
 
+interface State {
+  page: number;
+  rowsPerPage: number;
+  numApplicants: number;
+  applications: any;
+  currentSet: any;
+  peeps: any;
+  current: string;
+  items: string[];
+  hackathon: string;
+  bucket: string;
+  restriction: [any, any, any];
+  defaultRestriction: [any, any, any];
+  buckets: any;
+  search: string;
+  rating: any;
+  expanded: any;
+  headers: any;
+}
+
 export default Vue.extend({
   name: 'DataTable',
-  data() {
+  data(): State {
     return {
       // lastVisible: null,
       page: 1,
@@ -101,10 +121,10 @@ export default Vue.extend({
       current: 'All Applicants',
       items: [
         'All Applicants',
-        'Assigned to Me',
-        'Accepted Applicants',
-        'Overflow Applicants',
-        'Rejected Applicants',
+        // 'Assigned to Me',
+        // 'Accepted Applicants',
+        // 'Overflow Applicants',
+        // 'Rejected Applicants',
       ],
       hackathon: 'DH6',
       bucket: 'pending',
@@ -234,7 +254,7 @@ export default Vue.extend({
           docData.contact.email = doc.id;
           return docData;
         });
-        this.currentSet = resultsToUse;
+        this.currentSet = resultsToUse as any;
         Vue.set(
           this.applications,
           this.page - 1,
@@ -279,7 +299,6 @@ export default Vue.extend({
   },
   async mounted() {
     if (!this.applications[this.page - 1]) {
-      console.log('In mount fill');
       const result = await db
         .collection(this.hackathon)
         .doc('applications')
@@ -294,7 +313,7 @@ export default Vue.extend({
         return docData;
       });
       await this.setNumApplicants();
-      this.currentSet = resultsToUse;
+      this.currentSet = resultsToUse as any;
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
       Vue.set(this.applications, this.page - 1, resultsToUse);
     }
