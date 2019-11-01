@@ -26,23 +26,23 @@
       :headers="headers"
       :items="applications[page - 1]"
       hide-actions
-      item-key="email"
+      item-key="contact.email"
     >
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
-          <td class="text-md-left">{{ props.item.name + ' ' + props.item.lastname}}</td>
-          <td class="text-md-left">{{ props.item.email }}</td>
-          <td class="text-xs-left">{{ props.item.university }}</td>
+          <td class="text-md-left">{{ props.item.name.first + ' ' + props.item.name.last}}</td>
+          <td class="text-md-left">{{ props.item.contact.email }}</td>
+          <td class="text-xs-left">{{ props.item.academics.school }}</td>
           <td
             class="text-xs-left"
-          >{{ new Date(props.item.first_submitted.date).toLocaleDateString("en-US") }}</td>
-          <td class="text-xs-left">{{ props.item.phone }}</td>
-          <td class="text-xs-left">{{ getAgeFromDate(props.item.birthday) }}</td>
+          >{{ props.item._.time_submitted.toDate().toLocaleDateString("en-US") }}</td>
+          <td class="text-xs-left">{{ props.item.contact.phone }}</td>
+          <td class="text-xs-left">{{ getAgeFromDate(props.item.personal.birthday) }}</td>
           <td
             class="text-xs-left"
             id="numRevs"
-            :title="props.item.decision.assignedTo ? assignmentToName(props.item.decision.assignedTo) : 'unassigned'"
-          >{{ props.item.decision.reviewers.length }}/3</td>
+            :title="props.item._.reviews.assignedTo.length ? assignmentToName(props.item._.reviews.assignedTo) : 'unassigned'"
+          >{{ props.item._.reviews.scores.length }}/3</td>
 
           <td class="text-xs-right">
             <status-indicator
@@ -50,11 +50,11 @@
               negative
             ></status-indicator>
             <status-indicator
-              v-else-if="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
+              v-else-if="props.item._.reviews.scores.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
               active
             ></status-indicator>
             <status-indicator
-              v-else-if="props.item.decision.assignedTo && props.item.decision.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())"
+              v-else-if="props.item._.reviews.assignedTo && props.item._.reviews.assignedTo.includes($store.state.firebase.auth().currentUser.email.toLowerCase())"
               intermediary
             ></status-indicator>
             <status-indicator v-else semi></status-indicator>
@@ -67,7 +67,7 @@
           id="dropdown"
           :usrname="props.item.name"
           :applicant="props.item"
-          :isReviewed="props.item.decision.reviewers.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
+          :isReviewed="props.item._.reviews.scores.some(e => e.reviewer == $store.state.firebase.auth().currentUser.email)"
           :random="3"
         />
       </template>
@@ -87,162 +87,46 @@ import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
 import db from '../private/firebase_init';
 
+interface State {
+  page: number;
+  rowsPerPage: number;
+  numApplicants: number;
+  applications: any;
+  currentSet: any;
+  peeps: any;
+  current: string;
+  items: string[];
+  hackathon: string;
+  bucket: string;
+  restriction: [any, any, any];
+  defaultRestriction: [any, any, any];
+  buckets: any;
+  search: string;
+  rating: any;
+  expanded: any;
+  headers: any;
+}
+
 export default Vue.extend({
   name: 'DataTable',
-  methods: {
-    // ...mapMutations(['update_DataTable_lastVisible']),
-    onChangeBucket(item) {
-      this.current = item;
-      switch (item) {
-        case 'All Applicants':
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
-          break;
-        case 'Assigned to Me':
-          this.restriction = [
-            'decision.assignedTo',
-            'array-contains',
-
-            this.$store.state.firebase.auth().currentUser.email,
-          ];
-          this.refetchCurrentPage();
-          break;
-        case 'Accepted Applicants':
-          this.bucket = 'round1';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
-          break;
-        case 'Overflow Applicants':
-          this.bucket = 'overflow';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
-          break;
-        case 'Rejected Applicants':
-          this.bucket = 'rejected';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
-          break;
-        default:
-          break;
-      }
-    },
-    assignmentToName(emails) {
-      let res = '';
-      emails.forEach((val) => {
-        res += `${this.$store.state.allAdmins[val]}, `;
-      });
-      return res;
-    },
-    async fb() {
-      db.collection('applications')
-        .doc('DH5')
-        .collection('all')
-        .get();
-    },
-    bigDiff(prop) {
-      if (!prop || !prop.item.decision.reviewers[1]) return false;
-      const M = 5; // The difference threshold you want to check for.
-      const { reviewers } = prop.item.decision;
-      let maxDiff = Math.abs(reviewers[1].score - reviewers[0].score);
-      const minEle = Math.min(...reviewers.map(r => r.score));
-
-      for (let i = 0; i < reviewers.length; i++) {
-        const current = Math.abs(reviewers[i].score - minEle);
-        if (current > maxDiff) maxDiff = current;
-      }
-
-      return maxDiff >= M;
-    },
-    selectRow(e, props) {
-      props.item.decision.reviewers.forEach(r => console.log(r.score));
-      props.expanded = !props.expanded;
-      const offset = 50 * props.index;
-      window.scrollTo(0, window.screen.height / 2 + offset);
-    },
-    async nextPage() {
-      console.log('Page is: ', this.page);
-      if (!this.applications[`${this.page - 1}`]) {
-        console.log('Getting next page');
-        const result = await db
-          .collection(this.collection)
-          .doc(this.hackathon)
-          .collection(this.bucket)
-          .orderBy('index')
-          .where(...(this.restriction as [any, any, any]))
-          .limit(this.rowsPerPage)
-          .startAfter((this.page - 1) * this.rowsPerPage)
-          .get();
-        // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-        Vue.set(
-          this.applications,
-          this.page - 1,
-          result.docs.map(a => a.data()),
-        );
-      }
-    },
-    async refetchCurrentPage() {
-      console.log('In mount fill');
-      const result = await db
-        .collection(this.collection)
-        .doc(this.hackathon)
-        .collection(this.bucket)
-        .orderBy('index')
-        .where(...(this.restriction as [any, any, any]))
-        .limit(this.rowsPerPage)
-        .get();
-      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
-    },
-    async applicantCount() {
-      let size = 0;
-
-      const snap = await db
-        .collection(this.collection)
-        .doc(this.hackathon)
-        .collection(this.bucket)
-        .get();
-      size = 5;
-      return 5;
-    },
-    getAgeFromDate(bday): number {
-      const b2 = new Date(
-        bday.slice(4),
-        bday.slice(2, 4) - 1,
-        bday.slice(0, 2),
-      );
-      // console.log('BDAAAY', b2, bday.slice(0, 2), bday.slice(2, 4) - 1, bday.slice(4));
-      const current = new Date();
-      return this.calculateAge(b2);
-    },
-    calculateAge(birthday: Date): number {
-      // birthday is a date
-      const ageDifMs = Date.now() - birthday.getTime();
-      const ageDate = new Date(ageDifMs); // miliseconds from epoch
-      return Math.abs(ageDate.getUTCFullYear() - 1970);
-    },
-  },
-  components: {
-    ApplicantDropdown,
-    StatusIndicator,
-  },
-  data() {
+  data(): State {
     return {
       // lastVisible: null,
       page: 1,
       rowsPerPage: 50,
       numApplicants: 0,
       applications: {},
+      currentSet: [],
       peeps: [],
       current: 'All Applicants',
       items: [
         'All Applicants',
-        'Assigned to Me',
-        'Accepted Applicants',
-        'Overflow Applicants',
-        'Rejected Applicants',
+        // 'Assigned to Me',
+        // 'Accepted Applicants',
+        // 'Overflow Applicants',
+        // 'Rejected Applicants',
       ],
-      collection: 'decisions',
-      hackathon: 'DH5',
+      hackathon: 'DH6',
       bucket: 'pending',
       restriction: ['index', '>=', 0] as [any, any, any],
       defaultRestriction: ['index', '>=', 0] as [any, any, any],
@@ -279,35 +163,161 @@ export default Vue.extend({
       ],
     };
   },
-  async mounted() {
-    const parent = this;
-    const snap = await db
-      .collection('statistics')
-      .doc(this.hackathon)
-      .get();
-    console.log(this.rowsPerPage);
-    // console.log(snap.data().applications);
-    this.numApplicants = Math.ceil(snap.data().applications / this.rowsPerPage);
-    console.log('Number apps: ', this.numApplicants);
+  components: {
+    ApplicantDropdown,
+    StatusIndicator,
+  },
+  methods: {
+    // ...mapMutations(['update_DataTable_lastVisible']),
+    onChangeBucket(item) {
+      this.current = item;
+      switch (item) {
+        case 'All Applicants':
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+        case 'Assigned to Me':
+          this.restriction = [
+            'decision.assignedTo',
+            'array-contains',
+            this.$store.state.firebase.auth().currentUser.email,
+          ];
+          this.refetchCurrentPage();
+          break;
+        case 'Accepted Applicants':
+          this.bucket = 'round1';
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+        case 'Overflow Applicants':
+          this.bucket = 'overflow';
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+        case 'Rejected Applicants':
+          this.bucket = 'rejected';
+          this.restriction = this.defaultRestriction;
+          this.refetchCurrentPage();
+          break;
+        default:
+          break;
+      }
+    },
+    assignmentToName(emails) {
+      let res = '';
+      emails.forEach((val) => {
+        res += `${this.$store.state.allAdmins[val]}, `;
+      });
+      return res;
+    },
+    bigDiff(prop) {
+      if (!prop || !prop.item._.reviews.scores[1]) return false;
+      const M = 5; // The difference threshold you want to check for.
+      const { scores } = prop.item._;
+      let maxDiff = Math.abs(scores[1].score - scores[0].score);
+      const minEle = Math.min(...scores.map(r => r.score));
 
-    if (!this.applications[this.page - 1]) {
+      for (let i = 0; i < scores.length; i++) {
+        const current = Math.abs(scores[i].score - minEle);
+        if (current > maxDiff) maxDiff = current;
+      }
+
+      return maxDiff >= M;
+    },
+    selectRow(e, props) {
+      props.item._.reviews.scores.forEach(r => console.log(r.score));
+      console.log(props);
+      props.expanded = !props.expanded;
+      const offset = 50 * props.index;
+      window.scrollTo(0, window.screen.height / 2 + offset);
+    },
+    async nextPage() {
+      console.log('Page is: ', this.page);
+      const startPoint = (this.page - 1) * this.rowsPerPage;
+      console.log(startPoint);
+      if (!this.applications[`${this.page - 1}`]) {
+        console.log('Getting next page');
+        const result = await db
+          .collection(this.hackathon)
+          .doc('applications')
+          .collection('all')
+          .orderBy('_.index')
+          .startAfter(startPoint)
+          .where('_.status', '==', 'submitted')
+          .limit(this.rowsPerPage)
+          .get();
+        // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+        console.log(`LENGTH: ${result.docs.length}`);
+        console.log(result.docs[0].data());
+        const resultsToUse = result.docs.map((doc) => {
+          const docData = doc.data();
+          docData.contact.email = doc.id;
+          return docData;
+        });
+        this.currentSet = resultsToUse as any;
+        Vue.set(
+          this.applications,
+          this.page - 1,
+          resultsToUse,
+        );
+      }
+    },
+    async refetchCurrentPage() {
       console.log('In mount fill');
       const result = await db
-        .collection(this.collection)
-        .doc(this.hackathon)
-        .collection(this.bucket)
-        .orderBy('index')
-        .where(...(this.restriction as [any, any, any]))
+        .collection(this.hackathon)
+        .doc('applications')
+        .collection('all')
+        .where('_.status', '==', 'submitted')
         .limit(this.rowsPerPage)
         .get();
-      console.log('r123', result);
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
       Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+    },
+    getAgeFromDate(bday: firebase.firestore.Timestamp): number {
+      let bdayDate;
+      try {
+        bdayDate = bday.toDate();
+      } catch (e) {
+        return 1;
+      }
+      return this.calculateAge(bdayDate);
+    },
+    calculateAge(birthday: Date): number {
+      // birthday is a date
+      const ageDifMs = Date.now() - birthday.getTime();
+      const ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
+    },
+    async setNumApplicants() {
+      const stats = await
+      db.collection('DH6')
+        .doc('statistics')
+        .get();
+      this.numApplicants = Math.ceil(stats.data()!.applications / this.rowsPerPage);
+    },
+  },
+  async mounted() {
+    if (!this.applications[this.page - 1]) {
+      const result = await db
+        .collection(this.hackathon)
+        .doc('applications')
+        .collection('all')
+        .orderBy('_.index')
+        .where('_.status', '==', 'submitted')
+        .limit(this.rowsPerPage)
+        .get();
+      const resultsToUse = result.docs.map((doc) => {
+        const docData = doc.data();
+        docData.contact.email = doc.id;
+        return docData;
+      });
+      await this.setNumApplicants();
+      this.currentSet = resultsToUse as any;
+      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
+      Vue.set(this.applications, this.page - 1, resultsToUse);
     }
   },
-  /*  computed: {
-        lastVisible: 'DataTable.lastVisible',
-    }, */
 });
 </script>
 

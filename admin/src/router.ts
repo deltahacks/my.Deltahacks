@@ -138,9 +138,10 @@ router.beforeEach((to, from, next) => {
       }
     });
   } else if (to.matched.some(rec => rec.meta.loginRedir)) {
-    Firebase.auth().onAuthStateChanged(user => {
+    Firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
+        next({ name: 'Dashboard' });
         next({name: 'Dashboard'});
       } else {
         // Otherwise redirect to login
