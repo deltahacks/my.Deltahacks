@@ -406,8 +406,8 @@ export default Vue.extend({
     this.setAllData();
     this.setCheckInData();
     db
-      .collection('statistics')
-      .doc('DH5')
+      .collection('DH6')
+      .doc('statistics')
       .onSnapshot((doc: DocumentSnapshot) => {
         console.log(doc.data());
         if (doc.exists) {
@@ -417,158 +417,157 @@ export default Vue.extend({
       });
     this.initAgeChart();
   },
-  computed: {
-    total(): number {
-      const { accepted, rejected, pending } = this.decisions;
-      return accepted + rejected! + pending;
-    },
-    pending(): number {
-      return this.inProgress - this.submitted;
-    },
-    accepted(): number {
-      const {
-        round1, round2, round3, round4, round5,
-      } = this.decisions;
-      return round1! + round2! + round3! + round4! + round5!;
-    },
-    safeCheckIn(): number {
-      console.log(this.checkedIn, this.mentors, this.sponsors);
-      return this.checkedIn - this.mentors - this.sponsors;
-    },
-  },
+  // computed: {
+  //   total(): number {
+  //     const { accepted, rejected, pending } = this.decisions;
+  //     return accepted + rejected! + pending;
+  //   },
+  //   pending(): number {
+  //     return this.inProgress - this.submitted;
+  //   },
+  //   accepted(): number {
+  //     const {
+  //       round1, round2, round3, round4, round5,
+  //     } = this.decisions;
+  //     return round1! + round2! + round3! + round4! + round5!;
+  //   },
+  //   safeCheckIn(): number {
+  //     console.log(this.checkedIn, this.mentors, this.sponsors);
+  //     return this.checkedIn - this.mentors - this.sponsors;
+  //   },
+  // },
   methods: {
     setCheckInData() {
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Mentors')
-        .onSnapshot((snap) => {
-          this.mentors = snap.docs.length;
+      db.collection('DH6')
+        .doc('statistics')
+        .onSnapshot((doc) => {
+          this.mentors = doc.data()!.mentors;
         });
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
-        .onSnapshot((snap) => {
-          this.checkedIn = snap.docs.length;
-        });
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Sponsors')
-        .onSnapshot((snap) => {
-          this.sponsors = snap.docs.length;
-        });
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('Walkins')
-        .onSnapshot((snap) => {
-          this.walkins = snap.docs.length;
-        });
+      // db.collection('hackathon')
+      //   .doc('DH5')
+      //   .collection('Checked In')
+      //   .onSnapshot((snap) => {
+      //     this.checkedIn = snap.docs.length;
+      //   });
+      // db.collection('hackathon')
+      //   .doc('DH5')
+      //   .collection('Sponsors')
+      //   .onSnapshot((snap) => {
+      //     this.sponsors = snap.docs.length;
+      //   });
+      // db.collection('hackathon')
+      //   .doc('DH5')
+      //   .collection('Walkins')
+      //   .onSnapshot((snap) => {
+      //     this.walkins = snap.docs.length;
+      //   });
     },
-    async getRSVP() {
-      return new Promise(async (resolve, reject) => {
-        const snap = await db.collection('hackathon')
-          .doc('DH5')
-          .collection('RSVP')
-          .doc('all')
-          .collection('Yes')
-          .get();
+    // async getRSVP() {
+    //   return new Promise(async (resolve, reject) => {
+    //     const snap = await db.collection('hackathon')
+    //       .doc('DH5')
+    //       .collection('RSVP')
+    //       .doc('all')
+    //       .collection('Yes')
+    //       .get();
 
-        const out = {};
-        snap.docs.forEach((doc) => {
-          const data = doc.data();
-          out[data.email] = true;
-          resolve(out);
-        });
-      });
-    },
+    //     const out = {};
+    //     snap.docs.forEach((doc) => {
+    //       const data = doc.data();
+    //       out[data.email] = true;
+    //       resolve(out);
+    //     });
+    //   });
+    // },
     setAllData() {
-      this.setDecisionListeners();
+      // this.setDecisionListeners();
       // this.setCheckedInGraph();
       this.setMiscStatistics();
-      this.setRSVPData();
+      // this.setRSVPData();
     },
-    initAgeChart() {
-      db.collection('applications')
-        .doc('DH5')
-        .collection('submitted')
-        .onSnapshot((snap) => {
-          this.updateAgeData(snap);
-        });
-    },
-    parseDateField(date: string): Date {
-      const day = date.slice(0, 2);
-      const month = date.slice(2, 4);
-      const year = date.slice(4, date.length);
-      const parsed = `${month}/${day}/${year}`;
-      return new Date(parsed);
-    },
-    createDate(current, year): Date {
-      return new Date(current.setFullYear(year));
-    },
-    updateAgeData(snap) {
-      const ages = {
-        '18-': 0,
-        19: 0,
-        20: 0,
-        21: 0,
-        22: 0,
-        23: 0,
-        '24+': 0,
-      };
-      snap.docs.forEach((doc) => {
-        const data = doc.data();
-        const birthday = this.parseDateField(data.birthday);
-        ages[this.getAgeFromDate(birthday)] += 1;
-      });
-      this.setAgePanels(ages);
-    },
-    getAgeFromDate(bday): string {
-      const current = new Date();
-      if (bday > this.createDate(current, current.getFullYear() - 19)) {
-        return '18-';
-      }
-      if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '19';
-      }
-      if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '20';
-      }
-      if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '21';
-      }
-      if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '22';
-      }
-      if (bday > this.createDate(current, current.getFullYear() - 1)) {
-        return '23';
-      }
-      return '24+';
-    },
-    async setAgePanels(data) {
-      // const { data } = await this.getAgeData();
-      (this.$refs.ages as any).changeData({
-        labels: ['18', '19', '20', '21', '22', '23+'],
-        datasets: [
-          {
-            label: 'Age Distribution (All)',
-            backgroundColor: this.colors,
-            data: Object.values(data),
-          },
-        ],
-      });
-    },
+    // initAgeChart() {
+    //   db.collection('applications')
+    //     .doc('DH5')
+    //     .collection('submitted')
+    //     .onSnapshot((snap) => {
+    //       this.updateAgeData(snap);
+    //     });
+    // },
+    // parseDateField(date: string): Date {
+    //   const day = date.slice(0, 2);
+    //   const month = date.slice(2, 4);
+    //   const year = date.slice(4, date.length);
+    //   const parsed = `${month}/${day}/${year}`;
+    //   return new Date(parsed);
+    // },
+    // createDate(current, year): Date {
+    //   return new Date(current.setFullYear(year));
+    // },
+    // updateAgeData(snap) {
+    //   const ages = {
+    //     '18-': 0,
+    //     19: 0,
+    //     20: 0,
+    //     21: 0,
+    //     22: 0,
+    //     23: 0,
+    //     '24+': 0,
+    //   };
+    //   snap.docs.forEach((doc) => {
+    //     const data = doc.data();
+    //     const birthday = this.parseDateField(data.birthday);
+    //     ages[this.getAgeFromDate(birthday)] += 1;
+    //   });
+    //   this.setAgePanels(ages);
+    // },
+    // getAgeFromDate(bday): string {
+    //   const current = new Date();
+    //   if (bday > this.createDate(current, current.getFullYear() - 19)) {
+    //     return '18-';
+    //   }
+    //   if (bday > this.createDate(current, current.getFullYear() - 1)) {
+    //     return '19';
+    //   }
+    //   if (bday > this.createDate(current, current.getFullYear() - 1)) {
+    //     return '20';
+    //   }
+    //   if (bday > this.createDate(current, current.getFullYear() - 1)) {
+    //     return '21';
+    //   }
+    //   if (bday > this.createDate(current, current.getFullYear() - 1)) {
+    //     return '22';
+    //   }
+    //   if (bday > this.createDate(current, current.getFullYear() - 1)) {
+    //     return '23';
+    //   }
+    //   return '24+';
+    // },
+    // async setAgePanels(data) {
+    //   // const { data } = await this.getAgeData();
+    //   (this.$refs.ages as any).changeData({
+    //     labels: ['18', '19', '20', '21', '22', '23+'],
+    //     datasets: [
+    //       {
+    //         label: 'Age Distribution (All)',
+    //         backgroundColor: this.colors,
+    //         data: Object.values(data),
+    //       },
+    //     ],
+    //   });
+    // },
     // for updating statistics with accepted info, careful about overriding.
-    async setAcceptedStats(data) {
-      const snap = await db.collection('statistics')
-        .doc('DH5')
-        .get();
+    // async setAcceptedStats(data) {
+    //   const snap = await db.collection('statistics')
+    //     .doc('DH5')
+    //     .get();
 
-      const current = snap.data();
-      Object.keys(data).forEach((key) => {
-        current!.applicationStats[key] = data[key];
-      });
+    //   const current = snap.data();
+    //   Object.keys(data).forEach((key) => {
+    //     current!.applicationStats[key] = data[key];
+    //   });
       // console.log(current);
       // db.collection('statistics').doc('DH5').set(current);
-    },
+    // },
     // for updating statistics, not used in standard page.
     processApplication(stats, app) {
       const safeAdd = (obj, section, index) => {
@@ -586,19 +585,19 @@ export default Vue.extend({
         obj[data.email] = true;
       });
     },
-    async setDecisionListeners(init = false) {
-      const info = {};
+    // async setDecisionListeners(init = false) {
+    //   const info = {};
       // db.collection('decisions').doc('DH5').collection('round1')
       //   .onSnapshot((snap) => {
       //     this.decisions.round1 = snap.docs.length;
       //     this.setDecisionPanels();
       //   });
-      db.collection('applications')
-        .doc('DH5')
-        .collection('submitted')
-        .onSnapshot((snap) => {
-          this.submitted = snap.docs.length;
-        });
+      // db.collection('applications')
+      //   .doc('DH5')
+      //   .collection('submitted')
+      //   .onSnapshot((snap) => {
+      //     this.submitted = snap.docs.length;
+      //   });
       // db.collection('decisions').doc('DH5').collection('round2')
       //               .onSnapshot((snap) => {
       //                   this.decisions.round2 = snap.docs.length;
@@ -620,98 +619,98 @@ export default Vue.extend({
       //                   this.decisions.round5 = snap.docs.length;
       //                   this.setDecisionPanels();
       //               });
-      await db
-        .collection('decisions')
-        .doc('DH5')
-        .collection('pending')
-        .onSnapshot((snap) => {
-          this.aggregateAccepted(info, snap);
-        });
-      db.collection('decisions')
-        .doc('DH5')
-        .collection('actually rejected')
-        .onSnapshot((snap) => {
-          this.decisions.rejected = snap.docs.length;
-          this.aggregateAccepted(info, snap);
-          this.setDecisionPanels();
-        });
-    },
-    setRSVPData() {
-      db.collection('hackathon')
-        .doc('DH5')
-        .collection('RSVP')
-        .doc('all')
-        .collection('Yes')
-        .onSnapshot((snap) => {
-          this.rsvp = snap.docs.length;
-          // set rsvp data.
-          this.bus_passengers = 0;
-          this.pickups = {
-            'University of Waterloo': 0,
-            'University of Toronto': 0,
-            'University of Western Ontario': 0,
-          };
-          snap.docs.forEach((doc: DocumentSnapshot) => {
-            const current = doc.data();
-            if (current && current.bus) {
-              this.bus_passengers += 1;
-              this.pickups[current.location] += 1;
-            }
-          });
-          this.redrawRSVP();
-        });
-    },
-    redrawRSVP() {
-      (this.$refs.bus_locations as any).changeData({
-        labels: ['U of Waterloo', 'U of Toronto', 'U of Western'],
-        datasets: [
-          {
-            label: 'Bus Location Distribution',
-            backgroundColor: this.colors,
-            data: [
-              this.pickups['University of Waterloo'],
-              this.pickups['University of Toronto'],
-              this.pickups['University of Western Ontario'],
-            ],
-          },
-        ],
-      });
-    },
-    setDecisionPanels() {
-      (this.$refs.decisions as any).changeData({
-        labels: ['Accepted', 'Overflow'],
-        datasets: [
-          {
-            label: 'Applicant Distribution',
-            backgroundColor: this.colors,
-            data: [this.accepted, this.decisions.overflow],
-          },
-        ],
-      });
-    },
+    //   await db
+    //     .collection('decisions')
+    //     .doc('DH5')
+    //     .collection('pending')
+    //     .onSnapshot((snap) => {
+    //       this.aggregateAccepted(info, snap);
+    //     });
+    //   db.collection('decisions')
+    //     .doc('DH5')
+    //     .collection('actually rejected')
+    //     .onSnapshot((snap) => {
+    //       this.decisions.rejected = snap.docs.length;
+    //       this.aggregateAccepted(info, snap);
+    //       this.setDecisionPanels();
+    //     });
+    // },
+    // setRSVPData() {
+    //   db.collection('hackathon')
+    //     .doc('DH5')
+    //     .collection('RSVP')
+    //     .doc('all')
+    //     .collection('Yes')
+    //     .onSnapshot((snap) => {
+    //       this.rsvp = snap.docs.length;
+    //       // set rsvp data.
+    //       this.bus_passengers = 0;
+    //       this.pickups = {
+    //         'University of Waterloo': 0,
+    //         'University of Toronto': 0,
+    //         'University of Western Ontario': 0,
+    //       };
+    //       snap.docs.forEach((doc: DocumentSnapshot) => {
+    //         const current = doc.data();
+    //         if (current && current.bus) {
+    //           this.bus_passengers += 1;
+    //           this.pickups[current.location] += 1;
+    //         }
+    //       });
+    //       this.redrawRSVP();
+    //     });
+    // },
+    // redrawRSVP() {
+    //   (this.$refs.bus_locations as any).changeData({
+    //     labels: ['U of Waterloo', 'U of Toronto', 'U of Western'],
+    //     datasets: [
+    //       {
+    //         label: 'Bus Location Distribution',
+    //         backgroundColor: this.colors,
+    //         data: [
+    //           this.pickups['University of Waterloo'],
+    //           this.pickups['University of Toronto'],
+    //           this.pickups['University of Western Ontario'],
+    //         ],
+    //       },
+    //     ],
+    //   });
+    // },
+    // setDecisionPanels() {
+    //   (this.$refs.decisions as any).changeData({
+    //     labels: ['Accepted', 'Overflow'],
+    //     datasets: [
+    //       {
+    //         label: 'Applicant Distribution',
+    //         backgroundColor: this.colors,
+    //         data: [this.accepted, this.decisions.overflow],
+    //       },
+    //     ],
+    //   });
+    // },
     setMiscStatistics() {
       this.filterData(this.statistics.applicationStats.universities);
       (this.$refs.hackathons as any).changeData(
         this.processField(
-          this.statistics.applicationStats.hackathons_accepted,
+          this.statistics.applicationStats.hackathons,
           'Hackathons (Accepted)',
         ),
       );
       (this.$refs.majors as any).changeData(
         this.processField(
-          this.filterData(this.statistics.applicationStats.majors_accepted),
+          this.filterData(this.statistics.applicationStats.majors),
           'Majors (Accepted)',
         ),
       );
       (this.$refs.schoolYears as any).changeData(
         this.processField(
-          this.statistics.applicationStats.schoolYears_accepted,
+          this.statistics.applicationStats.school_years,
           'School Years (Accepted)',
         ),
       );
       (this.$refs.shirt_sizes as any).changeData(
         this.processField(
-          this.statistics.applicationStats.shirt_sizes_accepted,
+          this.statistics.applicationStats.shirt_sizes,
           'Shirt Size (Accepted)',
         ),
       );
@@ -724,7 +723,7 @@ export default Vue.extend({
       (this.$refs.dietary_restrictions as any).changeData(
         this.processField(
           this.filterData(
-            this.statistics.applicationStats.dietary_restrictions_accepted,
+            this.statistics.applicationStats.dietary_restrictions,
             12,
           ),
           'Food Restrictions (Accepted)',
@@ -733,7 +732,7 @@ export default Vue.extend({
       (this.$refs.location as any).changeData(
         this.processField(
           this.filterData(
-            this.statistics.applicationStats.transport_accepted,
+            this.statistics.applicationStats.travelling_from,
             12,
           ),
           'Coming From (Accepted)',
@@ -742,7 +741,7 @@ export default Vue.extend({
       (this.$refs.workshops as any).changeData(
         this.processField(
           this.filterData(
-            this.statistics.applicationStats.workshops_accepted,
+            this.statistics.applicationStats.workshops,
             12,
           ),
           'Workshops (Accepted)',
@@ -752,7 +751,7 @@ export default Vue.extend({
       (this.$refs.universities as any).changeData(
         this.processField(
           this.filterData(
-            this.statistics.applicationStats.universities_accepted,
+            this.statistics.applicationStats.universities,
           ),
           'Universities (Accepted)',
         ),
@@ -790,7 +789,7 @@ export default Vue.extend({
       };
     },
     getStatistics() {
-      const ref = db.collection('statistics').doc('DH5');
+      const ref = db.collection('DH6').doc('statistics');
       return new Promise(async (resolve, reject) => {
         const snap = await ref.get().catch(err => reject(err));
         if (snap) {

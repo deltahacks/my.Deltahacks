@@ -89,7 +89,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
     console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged((user) => {
+    Firebase.auth().onAuthStateChanged(user => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -98,37 +98,43 @@ router.beforeEach((to, from, next) => {
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');
-        next({ name: 'Login' });
+        next({name: 'Login'});
       }
     });
   } else if (to.matched.some(rec => rec.meta.adminAuth)) {
     console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged((user) => {
+    Firebase.auth().onAuthStateChanged(async user => {
       // If user is logged in
       if (user) {
         // Proceed to next page
-        console.log('Authorized user2: ', user);
+        console.log(
+          'Authorized user2: ',
+          user,
+          user.email!.toLocaleLowerCase(),
+        );
         try {
-          const doc = db
+          let doc = await db
             .collection('admins')
             .doc(user.email!.toLocaleLowerCase())
             .get();
+
+          console.log('DOCU', doc);
 
           if (doc.exists) {
             console.log('Document data:', doc.data());
             next();
           } else {
             console.log('Not an admin user!');
-            next({ name: 'Login' });
+            next({name: 'Login'});
           }
         } catch (err) {
-          console.log('Not an admin user!');
-          next({ name: 'Login' });
+          console.log('Caught Error! (Admin user)', err);
+          next({name: 'Login'});
         }
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');
-        next({ name: 'Login' });
+        next({name: 'Login'});
       }
     });
   } else if (to.matched.some(rec => rec.meta.loginRedir)) {
@@ -136,6 +142,7 @@ router.beforeEach((to, from, next) => {
       // If user is logged in
       if (user) {
         next({ name: 'Dashboard' });
+        next({name: 'Dashboard'});
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');
@@ -148,39 +155,42 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-/* // Check if admin only auth is required
+// Check if admin only auth is required
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.adminAuth)) {
     console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged((user) => {
-    // If user is logged in
+    Firebase.auth().onAuthStateChanged(user => {
+      // If user is logged in
       if (user) {
-      // Proceed to next page
+        // Proceed to next page
         console.log('Authorized user2: ', user);
 
-        db.collection('admins').doc(user.email.toLocaleLowerCase()).get().then((doc) => {
-          if (doc.exists) {
-            console.log('Document data:', doc.data());
-            next();
-          } else {
+        db.collection('admins')
+          .doc(user.email.toLocaleLowerCase())
+          .get()
+          .then(doc => {
+            if (doc.exists) {
+              console.log('Document data:', doc.data());
+              next();
+            } else {
+              console.log('Not an admin user!');
+              next({name: 'Login'});
+            }
+          })
+          .catch(error => {
             console.log('Not an admin user!');
-            next({ name: 'Login' });
-          }
-        })
-          .catch((error) => {
-            console.log('Not an admin user!');
-            next({ name: 'Login' });
+            next({name: 'Login'});
           });
       } else {
-      // Otherwise redirect to login
+        // Otherwise redirect to login
         console.log('Not authorized');
-        next({ name: 'Login' });
+        next({name: 'Login'});
       }
     });
   } else {
     console.log('No route guard');
     next();
   }
-}); */
+});
 
 export default router;
