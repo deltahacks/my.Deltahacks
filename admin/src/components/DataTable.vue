@@ -35,7 +35,7 @@
           <td class="text-xs-left">{{ props.item.academics.school }}</td>
           <td
             class="text-xs-left"
-          >{{ props.item._.time_submitted.toDate().toLocaleDateString("en-US") }}</td>
+          >{{ props.item._.time_submitted.seconds ? props.item._.time_submitted.toDate().toLocaleDateString("en-US"):props.item._.time_submitted.toLocaleDateString("en-US") }}</td>
           <td class="text-xs-left">{{ props.item.contact.phone }}</td>
           <td class="text-xs-left">{{ getAgeFromDate(props.item.personal.birthday) }}</td>
           <td
@@ -81,7 +81,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
-import { functions } from 'firebase';
+import { functions, firestore } from 'firebase';
 import { mapState, mapMutations } from 'vuex';
 import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
@@ -274,10 +274,13 @@ export default Vue.extend({
       // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
       Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
     },
-    getAgeFromDate(bday: firebase.firestore.Timestamp): number {
+    getAgeFromDate(bday): number {
       let bdayDate;
       try {
-        bdayDate = bday.toDate();
+        bdayDate = bday;
+        if (bday.seconds) {
+          bdayDate = new firestore.Timestamp(bday.seconds, bday.nanoseconds).toDate();
+        }
       } catch (e) {
         return 1;
       }
