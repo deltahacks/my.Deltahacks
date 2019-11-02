@@ -220,7 +220,7 @@ export default Vue.extend({
         .emailVerified;
       if (submitting && this.app._.status === 'in progress' && verified) {
         this.app._.status = 'submitted';
-        this.app._.time_submitted = firebase.firestore.Timestamp.fromDate(new Date());
+        this.app._.time_submitted = new Date();
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
