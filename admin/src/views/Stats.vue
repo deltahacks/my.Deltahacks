@@ -415,7 +415,7 @@ export default Vue.extend({
           this.setAllData();
         }
       });
-    this.initAgeChart();
+    // this.initAgeChart();
   },
   // computed: {
   //   total(): number {

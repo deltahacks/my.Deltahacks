@@ -51,6 +51,7 @@ export default Vue.extend({
       .collection('statistics')
       .doc('DH5')
       .onSnapshot((doc) => {
+        // @ts-ignore
         this.renderChart({
           labels: ['Toronto', 'McMaster', 'Waterloo', 'Western', 'Ryerson', 'York U'],
           datasets: [

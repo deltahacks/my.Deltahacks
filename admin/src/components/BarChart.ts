@@ -14,6 +14,7 @@ export default Vue.extend({
   props: ['data', 'options'],
   mounted() {
     if (this.data) {
+      // @ts-ignore
       this.renderChart(this.data, this.options);
     }
   },
@@ -21,6 +22,7 @@ export default Vue.extend({
     changeData(data) {
       if (!data) return;
       console.log(data);
+      // @ts-ignore
       this.renderChart(data, this.options);
     },
   },

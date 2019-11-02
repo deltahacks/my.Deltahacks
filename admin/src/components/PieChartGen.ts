@@ -25,6 +25,7 @@ export default Vue.extend({
         // eslint-disable-next-line no-underscore-dangle
         this.$data._chart.destroy();
       }
+      // @ts-ignore
       this.renderChart(data, this.options);
     },
   },

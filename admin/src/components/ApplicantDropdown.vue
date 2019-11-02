@@ -272,6 +272,7 @@ export default Vue.extend({
           .collection('all')
           .doc(this.applicant.contact.email)
           .update({ _: { reviews: applicantData._.reviews, ...applicantData._ } });
+        // @ts-ignore
         this.isReviewed = true; // I'll fix this eventually
         console.log(
           'Review sent, you can chill: ',

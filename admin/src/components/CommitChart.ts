@@ -51,6 +51,7 @@ export default Vue.extend({
         track[dateString] += 1;
       }
     });
+    // @ts-ignore
     this.renderChart({
       labels: Object.keys(track),
       datasets: [{
