@@ -1,6 +1,6 @@
 import { Pie, mixins } from 'vue-chartjs';
 import Vue from 'vue';
-import db from '../private/firebase_init';
+import db from '../firebase_init';
 
 const { reactiveProp } = mixins;
 

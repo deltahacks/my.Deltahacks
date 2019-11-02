@@ -33,7 +33,7 @@
 import firebase from 'firebase/app';
 import Vue from 'vue';
 import Navbar from '@/components/Navbar.vue';
-import db from '../private/firebase_init';
+import db from '../firebase_init';
 
 import DocumentData = firebase.firestore.DocumentData;
 

@@ -182,7 +182,7 @@ import IOdometer from 'vue-odometer';
 
 import functions from 'firebase/functions';
 import Vue from 'vue';
-import db from '../private/firebase_init';
+import db from '../firebase_init';
 import Navbar from '@/components/Navbar.vue';
 import BarChart from '../components/BarChart';
 import PieChart from '../components/PieChartGen';
@@ -565,8 +565,8 @@ export default Vue.extend({
     //   Object.keys(data).forEach((key) => {
     //     current!.applicationStats[key] = data[key];
     //   });
-      // console.log(current);
-      // db.collection('statistics').doc('DH5').set(current);
+    // console.log(current);
+    // db.collection('statistics').doc('DH5').set(current);
     // },
     // for updating statistics, not used in standard page.
     processApplication(stats, app) {
@@ -587,38 +587,38 @@ export default Vue.extend({
     },
     // async setDecisionListeners(init = false) {
     //   const info = {};
-      // db.collection('decisions').doc('DH5').collection('round1')
-      //   .onSnapshot((snap) => {
-      //     this.decisions.round1 = snap.docs.length;
-      //     this.setDecisionPanels();
-      //   });
-      // db.collection('applications')
-      //   .doc('DH5')
-      //   .collection('submitted')
-      //   .onSnapshot((snap) => {
-      //     this.submitted = snap.docs.length;
-      //   });
-      // db.collection('decisions').doc('DH5').collection('round2')
-      //               .onSnapshot((snap) => {
-      //                   this.decisions.round2 = snap.docs.length;
-      //                   this.setDecisionPanels();
-      //               });
-      // db.collection('decisions').doc('DH5').collection('round3')
-      //   .onSnapshot((snap) => {
-      //     console.log(snap.docs.length);
-      //     this.decisions.round3 = snap.docs.length;
-      //     this.setDecisionPanels();
-      //   });
-      // db.collection('decisions').doc('DH5').collection('round4')
-      //               .onSnapshot((snap) => {
-      //                   this.decisions.round4 = snap.docs.length;
-      //                   this.setDecisionPanels();
-      //               });
-      // db.collection('decisions').doc('DH5').collection('round5')
-      //               .onSnapshot((snap) => {
-      //                   this.decisions.round5 = snap.docs.length;
-      //                   this.setDecisionPanels();
-      //               });
+    // db.collection('decisions').doc('DH5').collection('round1')
+    //   .onSnapshot((snap) => {
+    //     this.decisions.round1 = snap.docs.length;
+    //     this.setDecisionPanels();
+    //   });
+    // db.collection('applications')
+    //   .doc('DH5')
+    //   .collection('submitted')
+    //   .onSnapshot((snap) => {
+    //     this.submitted = snap.docs.length;
+    //   });
+    // db.collection('decisions').doc('DH5').collection('round2')
+    //               .onSnapshot((snap) => {
+    //                   this.decisions.round2 = snap.docs.length;
+    //                   this.setDecisionPanels();
+    //               });
+    // db.collection('decisions').doc('DH5').collection('round3')
+    //   .onSnapshot((snap) => {
+    //     console.log(snap.docs.length);
+    //     this.decisions.round3 = snap.docs.length;
+    //     this.setDecisionPanels();
+    //   });
+    // db.collection('decisions').doc('DH5').collection('round4')
+    //               .onSnapshot((snap) => {
+    //                   this.decisions.round4 = snap.docs.length;
+    //                   this.setDecisionPanels();
+    //               });
+    // db.collection('decisions').doc('DH5').collection('round5')
+    //               .onSnapshot((snap) => {
+    //                   this.decisions.round5 = snap.docs.length;
+    //                   this.setDecisionPanels();
+    //               });
     //   await db
     //     .collection('decisions')
     //     .doc('DH5')

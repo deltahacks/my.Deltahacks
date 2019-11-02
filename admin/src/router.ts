@@ -6,7 +6,7 @@ import Firebase from 'firebase';
 import v404 from './views/404.vue';
 import Stats from './views/Stats.vue';
 import Login from './views/Login.vue';
-import db from './private/firebase_init';
+import db from './firebase_init';
 import Checkin from './views/Checkin.vue';
 import LiveDesk from './views/LiveDesk.vue';
 import Dashboard from './views/Dashboard.vue';
@@ -89,7 +89,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.auth)) {
     console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged(user => {
+    Firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -98,12 +98,12 @@ router.beforeEach((to, from, next) => {
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');
-        next({name: 'Login'});
+        next({ name: 'Login' });
       }
     });
   } else if (to.matched.some(rec => rec.meta.adminAuth)) {
     console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged(async user => {
+    Firebase.auth().onAuthStateChanged(async (user) => {
       // If user is logged in
       if (user) {
         // Proceed to next page
@@ -113,7 +113,7 @@ router.beforeEach((to, from, next) => {
           user.email!.toLocaleLowerCase(),
         );
         try {
-          let doc = await db
+          const doc = await db
             .collection('admins')
             .doc(user.email!.toLocaleLowerCase())
             .get();
@@ -125,16 +125,16 @@ router.beforeEach((to, from, next) => {
             next();
           } else {
             console.log('Not an admin user!');
-            next({name: 'Login'});
+            next({ name: 'Login' });
           }
         } catch (err) {
           console.log('Caught Error! (Admin user)', err);
-          next({name: 'Login'});
+          next({ name: 'Login' });
         }
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');
-        next({name: 'Login'});
+        next({ name: 'Login' });
       }
     });
   } else if (to.matched.some(rec => rec.meta.loginRedir)) {
@@ -142,7 +142,7 @@ router.beforeEach((to, from, next) => {
       // If user is logged in
       if (user) {
         next({ name: 'Dashboard' });
-        next({name: 'Dashboard'});
+        next({ name: 'Dashboard' });
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');
@@ -159,32 +159,32 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.adminAuth)) {
     console.log('Protected route detected');
-    Firebase.auth().onAuthStateChanged(user => {
+    Firebase.auth().onAuthStateChanged((user) => {
       // If user is logged in
       if (user) {
         // Proceed to next page
         console.log('Authorized user2: ', user);
 
         db.collection('admins')
-          .doc(user.email.toLocaleLowerCase())
+          .doc(user.email!.toLocaleLowerCase())
           .get()
-          .then(doc => {
+          .then((doc) => {
             if (doc.exists) {
               console.log('Document data:', doc.data());
               next();
             } else {
               console.log('Not an admin user!');
-              next({name: 'Login'});
+              next({ name: 'Login' });
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.log('Not an admin user!');
-            next({name: 'Login'});
+            next({ name: 'Login' });
           });
       } else {
         // Otherwise redirect to login
         console.log('Not authorized');
-        next({name: 'Login'});
+        next({ name: 'Login' });
       }
     });
   } else {

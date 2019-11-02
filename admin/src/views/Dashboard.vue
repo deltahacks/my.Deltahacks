@@ -102,7 +102,7 @@ import IOdometer from 'vue-odometer';
 import * as firebase from 'firebase/app';
 
 import Vue from 'vue';
-import db from '../private/firebase_init';
+import db from '../firebase_init';
 import Navbar from '@/components/Navbar.vue';
 import PieChart from '../components/PieChart';
 import PieChart2 from '../components/PieChartGen';

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
 import firebase from 'firebase';
-import db from './private/firebase_init';
+import db from './firebase_init';
 
 /* eslint-disable camelcase */
 

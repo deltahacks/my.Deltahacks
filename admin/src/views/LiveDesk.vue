@@ -163,7 +163,7 @@ import QR from 'qrcode';
 import pdf from 'jspdf';
 import firebase from 'firebase';
 import Vue from 'vue';
-import db from '../private/firebase_init';
+import db from '../firebase_init';
 import Navbar from '@/components/Navbar.vue';
 
 export default Vue.extend({
