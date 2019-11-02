@@ -108,7 +108,7 @@ import PieChart from '../components/PieChart';
 import PieChart2 from '../components/PieChartGen';
 import DataTable from '@/components/DataTable.vue';
 import CommitChart from '../components/CommitChart';
-import { allUniversities } from '../private/data';
+import { allUniversities } from '../data';
 
 import 'firebase/functions';
 import 'odometer/themes/odometer-theme-default.css';

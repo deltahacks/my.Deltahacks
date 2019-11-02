@@ -8,9 +8,9 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 import App from './App.vue';
 import store from './store';
 import router from './router';
-// eslint-disable-next-line camelcase
-import gmaps_key from './private/gmaps_init';
 import 'vuetify/dist/vuetify.min.css';
+// eslint-disable-next-line camelcase
+const gmaps_key = process.env.VUE_APP_GMAPS;
 
 Vue.use(VeeValidate);
 
