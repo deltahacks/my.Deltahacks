@@ -177,52 +177,56 @@ export default Vue.extend({
       if (type.toLowerCase() === 'year') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
+          new Date(
             value,
             months.indexOf(this.dates[1].value),
             day,
-          )),
+          ),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
+          new Date(
             this.dates[0].value,
             months.indexOf(value),
             day,
-          )),
+          ),
         );
       } else {
         this.$emit(
           'input',
-          firebase.firestore.Timestamp.fromDate(new Date(
+          new Date(
             this.dates[0].value,
             months.indexOf(this.dates[1].value),
             value,
-          )),
+          ),
         );
       }
       this.requestUpdate();
     },
-    updateDates() {
+    updateDates(mounted: boolean) {
       if (this.inputType === 'date' || this.inputType === 'date-grad') {
+        let use = this.value;
+        if (this.value.seconds) {
+          use = new firebase.firestore.Timestamp(this.value.seconds, this.value.nanoseconds).toDate();
+        }
         try {
           if (this.inputType === 'date') {
             this.dates = [
               {
                 label: 'Year',
                 options: this.years,
-                value: new Date(this.value.toDate()).getFullYear(),
+                value: new Date(use).getFullYear(),
               },
               {
                 label: 'Month',
                 options: months,
-                value: months[new Date(this.value.toDate()).getMonth()],
+                value: months[new Date(use).getMonth()],
               },
               {
                 label: 'Day',
                 options: days,
-                value: new Date(this.value.toDate()).getDate(),
+                value: new Date(use).getDate(),
               },
             ];
           } else if (this.inputType === 'date-grad') {
@@ -230,12 +234,12 @@ export default Vue.extend({
               {
                 label: 'Year',
                 options: this.years,
-                value: new Date(this.value.toDate()).getFullYear(),
+                value: new Date(use).getFullYear(),
               },
               {
                 label: 'Month',
                 options: months,
-                value: months[new Date(this.value.toDate()).getMonth()],
+                value: months[new Date(use).getMonth()],
               },
             ];
           }
@@ -253,11 +257,11 @@ export default Vue.extend({
   },
   mounted() {
     this.years = this.inputType === 'date' ? birthYears : gradYears;
-    this.updateDates();
+    this.updateDates(true);
   },
   watch: {
     value(newVal, oldVal) {
-      this.updateDates();
+      this.updateDates(false);
     },
   },
 });

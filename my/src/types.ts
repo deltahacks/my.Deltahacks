@@ -23,16 +23,16 @@ export interface AppContents {
     email: string;
     phone: string;
   };
-  first_submitted: firebase.firestore.Timestamp;
+  first_submitted: firebase.firestore.Timestamp | Date;
   academics: {
     degree: degree;
     major: string;
-    graduating: firebase.firestore.Timestamp;
+    graduating: firebase.firestore.Timestamp | Date;
     school: string;
     year: year;
   };
   personal: {
-    birthday: firebase.firestore.Timestamp;
+    birthday: firebase.firestore.Timestamp | Date;
     gender: gender;
     race: race;
   };
@@ -89,8 +89,8 @@ export interface AppPrivate {
     scores: Reviews[];
   };
   status: status;
-  time_initiated: firebase.firestore.Timestamp;
-  time_submitted: firebase.firestore.Timestamp;
+  time_initiated: firebase.firestore.Timestamp | Date;
+  time_submitted: firebase.firestore.Timestamp | Date;
 }
 
 export interface Reviews {
@@ -150,7 +150,7 @@ export interface ApplyState {
   loadingMessage: string;
   bannerColor: string;
   bannerMessage: string;
-  current_time: firebase.firestore.Timestamp;
+  current_time: firebase.firestore.Timestamp | Date;
   // Todo: type this as a Firestore object
   appFirestorePath: any;
   applicationStatus: applicationStatus;
