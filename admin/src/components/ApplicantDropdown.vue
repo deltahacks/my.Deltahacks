@@ -141,7 +141,7 @@
           </v-flex>
         </v-layout>
         <vue-slider
-          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer"
+          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer || !applicant._.reviews.assignedTo.includes(getAuth())"
           id="slider"
           v-model="score"
           :piecewise="false"
@@ -153,7 +153,7 @@
           :dot-size="30"
         ></vue-slider>
         <v-btn
-          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer"
+          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer || !applicant._.reviews.assignedTo.includes(getAuth())"
           color="success"
           class="button2"
           @click="updateApplicationScore"
@@ -204,6 +204,7 @@
 <script lang="ts">
 import vueSlider from 'vue-slider-component';
 import Vue from 'vue';
+import { firestore, auth } from 'firebase';
 
 export default Vue.extend({
   name: 'Applicant',
@@ -295,6 +296,9 @@ export default Vue.extend({
         console.log('Error deleting application: ', err);
       }
       this.dialog = false;
+    },
+    getAuth() {
+      return auth().currentUser!.email;
     },
   },
 });
