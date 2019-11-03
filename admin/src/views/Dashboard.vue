@@ -7,7 +7,7 @@
           <v-card color="white lighten-4" dark>
             <GmapMap
               id="gmap"
-              :center="{lat:43.6532, lng:-79.3832}"
+              :center="{ lat: 43.6532, lng: -79.3832 }"
               :zoom="7"
               map-type-id="terrain"
             >
@@ -18,7 +18,7 @@
                 :title="positions.names[index].email"
                 :clickable="true"
                 :draggable="false"
-                @click="center=m"
+                @click="center = m"
               />
             </GmapMap>
           </v-card>
@@ -27,7 +27,9 @@
           <v-layout row wrap>
             <v-flex d-flex>
               <v-card color="white lighten-4" dark>
-                <v-card-title primary class="title">Total Submissions:</v-card-title>
+                <v-card-title primary class="title">
+                  Total Submissions:
+                </v-card-title>
                 <v-card-text class="totalapps center">
                   <IOdometer class="iOdometer" :value="applicationCount" />
                 </v-card-text>
@@ -38,8 +40,12 @@
                 <v-flex d-flex xs12>
                   <v-card color="white lighten-4" dark>
                     <div class="tooltip">
-                      <span class="tooltiptext">Click only if you know what you're doing</span>
-                      <v-btn class="bold" color="orange" dark>Fake Firebase</v-btn>
+                      <span class="tooltiptext">
+                        Click only if you know what you're doing
+                      </span>
+                      <v-btn class="bold" color="orange" dark>
+                        Fake Firebase
+                      </v-btn>
                       <v-btn class="bold" color="blue" dark>Send Mail</v-btn>
                     </div>
                   </v-card>
@@ -47,7 +53,14 @@
                 <v-flex d-flex xs12>
                   <v-card color="white lighten-4" dark>
                     <v-menu offset-y>
-                      <v-btn slot="activator" color="error" depressed large dark id="debugger">
+                      <v-btn
+                        slot="activator"
+                        color="error"
+                        depressed
+                        large
+                        dark
+                        id="debugger"
+                      >
                         Debug
                         <v-icon right dark>cloud_upload</v-icon>
                       </v-btn>
@@ -57,7 +70,9 @@
                           :key="index"
                           @click="func.execute()"
                         >
-                          <v-list-tile-title>{{ func.title }}</v-list-tile-title>
+                          <v-list-tile-title>
+                            {{ func.title }}
+                          </v-list-tile-title>
                         </v-list-tile>
                       </v-list>
                     </v-menu>
@@ -87,8 +102,12 @@
     <v-dialog v-model="loading" persistent width="300">
       <v-card color="primary" dark>
         <v-card-text>
-          {{loadingMessage}}
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          {{ loadingMessage }}
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -233,11 +252,11 @@ export default Vue.extend({
                 // eslint-disable-next-line no-unused-expressions
                 inst.data().microsoft
                   ? console.log(
-                    `,${inst.data().name} ${inst.data().lastname},`,
-                    `${inst.data().email},`,
-                    `${inst.data().major},`,
-                    `${inst.data().university},`,
-                  )
+                      `,${inst.data().name} ${inst.data().lastname},`,
+                      `${inst.data().email},`,
+                      `${inst.data().major},`,
+                      `${inst.data().university},`,
+                    )
                   : false;
               }
               console.log('Miccrosoft count: ', finalcount + 95);
@@ -320,7 +339,7 @@ export default Vue.extend({
       // .doc(this.$store.state.firebase.auth().currentUser.email)
       .get();
     const revObj = {};
-    nameRes.docs.forEach((val) => {
+    nameRes.docs.forEach(val => {
       revObj[val.data().email] = val.data().name;
       if (
         val.data().email === this.$store.state.firebase.auth().currentUser.email
@@ -349,7 +368,7 @@ export default Vue.extend({
         .where('geo.latitude', '<', 1000000)
         .get();
 
-      doc.docs.forEach((val) => {
+      doc.docs.forEach(val => {
         // console.log('Vaal', val);
         this.positions.pos.push({
           lat: val.data().geo ? val.data().geo.latitude : 0,
@@ -370,7 +389,7 @@ export default Vue.extend({
 
     db.collection('DH6')
       .doc('statistics')
-      .onSnapshot((doc) => {
+      .onSnapshot(doc => {
         if (doc) {
           // const universityStats = doc.data()!.applicationStats.universities;
           this.applicationCount = doc.data()!.applications;
@@ -428,7 +447,7 @@ export default Vue.extend({
         i++;
       }
       out.Other = 0;
-      values.forEach((value) => {
+      values.forEach(value => {
         out.Other += value;
       });
       return out;
