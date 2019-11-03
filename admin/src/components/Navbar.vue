@@ -49,9 +49,10 @@ export default Vue.extend({
   components: {},
   data() {
     return {
-      current: 'DH V',
+      current: 'DH VI',
       c_user: firebase.auth().currentUser,
-      dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      // dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
+      dhs: ['DH VI'],
     };
   },
   methods: {
