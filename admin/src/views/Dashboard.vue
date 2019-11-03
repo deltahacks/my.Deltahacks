@@ -84,8 +84,7 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3 child-flex>
           <v-card color="white lighten-4" dark>
-            <!-- <pie-chart></pie-chart> -->
-            <pie-chart2 ref="universities" :options="{}"></pie-chart2>
+            <custom-angle-radial-chart :title="'Universities'" :categories="universities.categories" :data="universities.data" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -127,6 +126,11 @@ import PieChart from '../components/PieChart';
 import PieChart2 from '../components/PieChartGen';
 import DataTable from '@/components/DataTable.vue';
 import CommitChart from '../components/CommitChart';
+
+import CustomAngleRadialChart from '@/components/charts/CustomAngleRadial.vue';
+
+import { formatChartData } from '../helpers/utils';
+
 import { allUniversities } from '../data';
 
 import 'firebase/functions';
@@ -137,6 +141,7 @@ interface DashboardData {
   apps: string;
   loading: boolean;
   allUniversities: any;
+  applicationStats: any;
   applicationCount: number;
   loadingMessage: string;
   positions: { pos: any; names: any };
@@ -155,6 +160,7 @@ export default Vue.extend({
       apps: '245',
       loading: false,
       allUniversities,
+      applicationStats: {},
       applicationCount: 0,
       loadingMessage: 'Loading...',
       positions: { pos: [], names: [] },
@@ -329,6 +335,7 @@ export default Vue.extend({
     IOdometer,
     DataTable,
     CommitChart,
+    CustomAngleRadialChart
   },
   created() {
     this.$Progress.start();
@@ -392,6 +399,7 @@ export default Vue.extend({
       .onSnapshot(doc => {
         if (doc) {
           // const universityStats = doc.data()!.applicationStats.universities;
+          this.applicationStats = doc.data()!.applicationStats;
           this.applicationCount = doc.data()!.applications;
           // (this.$refs.universities as any).changeData(
           //   this.processField(this.filterData(universityStats), 'Universities'),
@@ -407,6 +415,9 @@ export default Vue.extend({
     console.log('auth res: ', authRes.data());
   },
   computed: {
+    universities: function() {
+      return formatChartData(this, ['applicationStats', 'universities'], { sort: true, limit: 4 });
+    },
     vuex_user_role: {
       get(): string {
         return this.$store.state.vuex_user_role;
