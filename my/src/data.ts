@@ -66,7 +66,7 @@ const cities = [
 
 const shirt_size = ['XS', 'S', 'M', 'L', 'XL'];
 
-const degree = ['Bachelors', 'Masters', 'PhD'];
+const degree = ['Bachelors', 'Masters', 'PhD', "Associate's", 'Certificate', 'Diploma'];
 
 const gender = ['Male', 'Female', 'Other'];
 
