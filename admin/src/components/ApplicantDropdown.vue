@@ -133,6 +133,8 @@
                     class="questionTitle"
                   >If you were stranded on a deserted island, with no way to escape, for a month, what 3 personal items would you want to have?*</v-card-title>
                   <v-card-text>{{ applicant.responses.q3 }}</v-card-text>
+                  <v-card-title class="questionTitle">Anything you'd like us to see?</v-card-title>
+                  <v-card-text>{{ applicant.profiles.other }}</v-card-text>
                   <v-card-title class="questionTitle">Anything else you'd like to tell us?</v-card-title>
                   <v-card-text>{{ applicant.responses.anything_else }}</v-card-text>
                 </v-card>
