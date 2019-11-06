@@ -523,7 +523,7 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'Is there anything else interesting you would want us to see? (e.g. Personal Website, Codepen, Dribble, Youtube, etc)',
+      'Is there anything else interesting you would want us to see? (e.g. Personal Website, Codepen, Dribbble, Youtube, etc)',
     fieldType: 'text-area',
     textLimit: '200',
     model: ['profiles', 'other'],
@@ -605,7 +605,7 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'Is there anything else you want to tell us? It could be anything at all!',
+      'Is there anything else interesting you would want us to know? i.e Something interesting about you (other clubs you\'re involved in, etc).',
     fieldType: 'text-area',
     textLimit: 200,
     model: ['responses', 'anything_else'],
