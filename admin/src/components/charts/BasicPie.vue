@@ -1,6 +1,6 @@
 <template>
   <div id="chart">
-    <apexchart type=pie width=350 height=350 :options="chartOptions" :series="series" />
+    <apexchart type=pie height=350 :options="chartOptions" :series="series" />
   </div>
 </template>
 
@@ -32,7 +32,8 @@ export default Vue.extend({
 				title: {
 					text: this.title,
 					align: 'center',
-					floating: true
+					floating: true,
+					margin: 30,
 				},
 			},
 		}
