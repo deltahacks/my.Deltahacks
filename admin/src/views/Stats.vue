@@ -107,59 +107,62 @@
             <pie-chart ref='decisions' :data='data' :options='{}' />
           </v-card>
         </v-flex>-->
+
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="ages" :options="options" />
+            <basic-pie-chart :title="'Universities'" :categories="universities.categories" :data="universities.data" :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <pie-chart ref="universities" :options="{}" />
+            <basic-bar-chart :title="'Hackathons (Accepted)'" :categories="numHackathons.categories" :data="numHackathons.data" :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="bus_locations" :options="options" />
+            <basic-bar-chart :title="'Majors (Accepted)'" :categories="majors.categories" :data="majors.data" :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="hackathons" :options="options" />
+            <basic-bar-chart :title="'School Years (Accepted)'" :categories="schoolYears.categories" :data="schoolYears.data" :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="majors" :options="options" />
+            <basic-bar-chart :title="'Shirt Sizes (Accepted)'" :categories="shirtSizes.categories" :data="shirtSizes.data" :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="schoolYears" :options="options" />
+            <basic-bar-chart :title="'Discovered By (All)'" :categories="discoveredBy.categories" :data="discoveredBy.data" :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="shirt_sizes" :options="options" />
+            <basic-bar-chart
+              :title="'Food Restrictions (Accepted)'"
+              :categories="dietaryRestrictions.categories"
+              :data="dietaryRestrictions.data"
+              :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="discovery" :options="options" />
+            <basic-bar-chart
+              :title="'Coming From (Accepted)'"
+              :categories="comingFrom.categories"
+              :data="comingFrom.data"
+              :colors="colors" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <bar-chart ref="dietary_restrictions" :options="options" />
-          </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md3>
-          <v-card color="white lighten-4" dark>
-            <bar-chart ref="location" :options="options" />
-          </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md3>
-          <v-card color="white lighten-4" dark>
-            <bar-chart ref="workshops" :options="options" />
+            <basic-bar-chart
+              :title="'Workshops (Accepted)'"
+              :categories="workshops.categories"
+              :data="workshops.data"
+              :colors="colors" />
           </v-card>
         </v-flex>
       </v-layout>
@@ -187,6 +190,11 @@ import Navbar from '@/components/Navbar.vue';
 import BarChart from '../components/BarChart';
 import PieChart from '../components/PieChartGen';
 import ApexChart from '@/components/ApexBar.vue';
+
+import { formatChartData } from '../helpers/utils';
+
+import BasicBarChart from '@/components/charts/BasicBar.vue';
+import BasicPieChart from '@/components/charts/BasicPie.vue';
 
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
@@ -399,23 +407,53 @@ export default Vue.extend({
     IOdometer,
     PieChart,
     BarChart,
+    BasicBarChart,
+    BasicPieChart,
     // ApexChart,
   },
   async beforeMount() {
-    this.statistics = await this.getStatistics();
-    this.setAllData();
-    this.setCheckInData();
+    (this as any).statistics = await (this as any).getStatistics();
+    // this.setAllData();
+    (this as any).setCheckInData();
     db
       .collection('DH6')
       .doc('statistics')
       .onSnapshot((doc: DocumentSnapshot) => {
-        console.log(doc.data());
         if (doc.exists) {
-          this.statistics = doc.data();
-          this.setAllData();
+          (this as any).statistics = doc.data();
+          // this.setAllData();
         }
       });
     // this.initAgeChart();
+  },
+  computed: {
+    numHackathons: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'hackathons']);
+    },
+    universities: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'universities'], { sort: true, limit: 10 });
+    },
+    majors: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'majors'], { sort: true, limit: 10 });
+    },
+    schoolYears: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'school_years'], { sort: true });
+    },
+    shirtSizes: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'shirt_sizes'], { sort: true });
+    },
+    discoveredBy: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'discovery'], { sort: true });
+    },
+    dietaryRestrictions: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'dietary_restrictions'], { sort: true, limit: 10 });
+    },
+    comingFrom: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'travelling_from'], { sort: true });
+    },
+    workshops: function() {
+      return formatChartData(this, ['statistics', 'applicationStats', 'workshops'], { sort: true });
+    },
   },
   // computed: {
   //   total(): number {
@@ -441,7 +479,7 @@ export default Vue.extend({
       db.collection('DH6')
         .doc('statistics')
         .onSnapshot((doc) => {
-          this.mentors = doc.data()!.mentors;
+          (this as any).mentors = doc.data()!.mentors;
         });
       // db.collection('hackathon')
       //   .doc('DH5')
@@ -479,12 +517,12 @@ export default Vue.extend({
     //     });
     //   });
     // },
-    setAllData() {
+    // setAllData() {
       // this.setDecisionListeners();
       // this.setCheckedInGraph();
-      this.setMiscStatistics();
+      // this.setMiscStatistics();
       // this.setRSVPData();
-    },
+    // },
     // initAgeChart() {
     //   db.collection('applications')
     //     .doc('DH5')
@@ -688,93 +726,6 @@ export default Vue.extend({
     //     ],
     //   });
     // },
-    setMiscStatistics() {
-      this.filterData(this.statistics.applicationStats.universities);
-      (this.$refs.hackathons as any).changeData(
-        this.processField(
-          this.statistics.applicationStats.hackathons,
-          'Hackathons (Accepted)',
-        ),
-      );
-      (this.$refs.majors as any).changeData(
-        this.processField(
-          this.filterData(this.statistics.applicationStats.majors),
-          'Majors (Accepted)',
-        ),
-      );
-      (this.$refs.schoolYears as any).changeData(
-        this.processField(
-          this.statistics.applicationStats.school_years,
-          'School Years (Accepted)',
-        ),
-      );
-      (this.$refs.shirt_sizes as any).changeData(
-        this.processField(
-          this.statistics.applicationStats.shirt_sizes,
-          'Shirt Size (Accepted)',
-        ),
-      );
-      (this.$refs.discovery as any).changeData(
-        this.processField(
-          this.statistics.applicationStats.discovery,
-          'Discovered By (All)',
-        ),
-      );
-      (this.$refs.dietary_restrictions as any).changeData(
-        this.processField(
-          this.filterData(
-            this.statistics.applicationStats.dietary_restrictions,
-            12,
-          ),
-          'Food Restrictions (Accepted)',
-        ),
-      );
-      (this.$refs.location as any).changeData(
-        this.processField(
-          this.filterData(
-            this.statistics.applicationStats.travelling_from,
-            12,
-          ),
-          'Coming From (Accepted)',
-        ),
-      );
-      (this.$refs.workshops as any).changeData(
-        this.processField(
-          this.filterData(
-            this.statistics.applicationStats.workshops,
-            12,
-          ),
-          'Workshops (Accepted)',
-        ),
-      );
-      // this.$refs.universities.changeData(this.statistics.applicationStats.universities);
-      (this.$refs.universities as any).changeData(
-        this.processField(
-          this.filterData(
-            this.statistics.applicationStats.universities,
-          ),
-          'Universities (Accepted)',
-        ),
-      );
-    },
-    // TODO: Improve the efficiency of this solution.
-    filterData(data, fields = 7) {
-      const N = fields; // Number of fields to show before collapsing into "Other"
-      const values: number[] = Object.values(data);
-      const keys = Object.keys(data);
-      const out = {} as any;
-      let i = 0;
-      while (i < 10) {
-        const mindex = values.indexOf(Math.max(...values));
-        out[keys[mindex]] = values[mindex];
-        values.splice(mindex, 1);
-        keys.splice(mindex, 1);
-        i++;
-      }
-      out.Other = 0;
-      values.forEach((value) => { out.Other += value; });
-      return out;
-    },
     apexProcessField(field, label) {
       const val = Object.values(field);
       return {
@@ -782,7 +733,7 @@ export default Vue.extend({
         datasets: [
           {
             label,
-            backgroundColor: this.colors,
+            backgroundColor: (this as any).colors,
             data: val,
           },
         ],
@@ -806,7 +757,7 @@ export default Vue.extend({
         datasets: [
           {
             label,
-            backgroundColor: this.colors,
+            backgroundColor: (this as any).colors,
             data: val,
           },
         ],

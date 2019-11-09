@@ -84,8 +84,7 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md3 child-flex>
           <v-card color="white lighten-4" dark>
-            <!-- <pie-chart></pie-chart> -->
-            <pie-chart2 ref="universities" :options="{}"></pie-chart2>
+            <custom-angle-radial-chart :title="'Universities'" :categories="universities.categories" :data="universities.data" />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -127,6 +126,11 @@ import PieChart from '../components/PieChart';
 import PieChart2 from '../components/PieChartGen';
 import DataTable from '@/components/DataTable.vue';
 import CommitChart from '../components/CommitChart';
+
+import CustomAngleRadialChart from '@/components/charts/CustomAngleRadial.vue';
+
+import { formatChartData } from '../helpers/utils';
+
 import { allUniversities } from '../data';
 
 import 'firebase/functions';
@@ -137,6 +141,7 @@ interface DashboardData {
   apps: string;
   loading: boolean;
   allUniversities: any;
+  applicationStats: any;
   applicationCount: number;
   loadingMessage: string;
   positions: { pos: any; names: any };
@@ -155,6 +160,7 @@ export default Vue.extend({
       apps: '245',
       loading: false,
       allUniversities,
+      applicationStats: {},
       applicationCount: 0,
       loadingMessage: 'Loading...',
       positions: { pos: [], names: [] },
@@ -329,6 +335,7 @@ export default Vue.extend({
     IOdometer,
     DataTable,
     CommitChart,
+    CustomAngleRadialChart
   },
   created() {
     this.$Progress.start();
@@ -336,28 +343,28 @@ export default Vue.extend({
   async mounted() {
     const nameRes = await db
       .collection('admins')
-      // .doc(this.$store.state.firebase.auth().currentUser.email)
+      // .doc((this as any).$store.state.firebase.auth().currentUser.email)
       .get();
     const revObj = {};
     nameRes.docs.forEach(val => {
       revObj[val.data().email] = val.data().name;
       if (
-        val.data().email === this.$store.state.firebase.auth().currentUser.email
+        val.data().email === (this as any).$store.state.firebase.auth().currentUser.email
       ) {
         // console.log('Changing role: ', val.data().role);
 
-        this.$store.state.vuex_user_role = val.data().role;
+        (this as any).$store.state.vuex_user_role = val.data().role;
       }
     });
-    this.$store.state.allAdmins = revObj;
-    this.$store.state.currentAdminUserName = this.$store.state.allAdmins[
-      this.$store.state.firebase.auth().currentUser.email
+    (this as any).$store.state.allAdmins = revObj;
+    (this as any).$store.state.currentAdminUserName = (this as any).$store.state.allAdmins[
+      (this as any).$store.state.firebase.auth().currentUser.email
     ];
     // console.log('NAMERES', nameRes.data());
-    this.activateModal(
+    (this as any).activateModal(
       `Welcome back ${
-        this.$store.state.currentAdminUserName
-          ? this.$store.state.currentAdminUserName.trim().split(/\s+/)[0]
+        (this as any).$store.state.currentAdminUserName
+          ? (this as any).$store.state.currentAdminUserName.trim().split(/\s+/)[0]
           : ''
       }!, Loading hackathon data...`,
     );
@@ -370,21 +377,21 @@ export default Vue.extend({
 
       doc.docs.forEach(val => {
         // console.log('Vaal', val);
-        this.positions.pos.push({
+        (this as any).positions.pos.push({
           lat: val.data().geo ? val.data().geo.latitude : 0,
           lng: val.data().geo ? val.data().geo.longitude : 0,
         });
-        this.positions.names.push({
+        (this as any).positions.names.push({
           email: val.data().email,
         });
         // console.log(val.data().geo);
-        this.$Progress.finish();
+        (this as any).$Progress.finish();
       });
-      this.loading = false;
+      (this as any).loading = false;
     } catch (err) {
       console.log('E307', err);
-      this.$Progress.fail();
-      this.loading = false;
+      (this as any).$Progress.fail();
+      (this as any).loading = false;
     }
 
     db.collection('DH6')
@@ -392,7 +399,8 @@ export default Vue.extend({
       .onSnapshot(doc => {
         if (doc) {
           // const universityStats = doc.data()!.applicationStats.universities;
-          this.applicationCount = doc.data()!.applications;
+          (this as any).applicationStats = doc.data()!.applicationStats;
+          (this as any).applicationCount = doc.data()!.applications;
           // (this.$refs.universities as any).changeData(
           //   this.processField(this.filterData(universityStats), 'Universities'),
           // );
@@ -400,35 +408,38 @@ export default Vue.extend({
       });
     const authRes = await db
       .collection('admins')
-      .doc(this.$store.state.firebase.auth().currentUser.email)
+      .doc((this as any).$store.state.firebase.auth().currentUser.email)
       .get();
 
-    this.$store.state.currentUserIsAuthorizedReviewer = authRes.data()!.authorizedReviewer;
+    (this as any).$store.state.currentUserIsAuthorizedReviewer = authRes.data()!.authorizedReviewer;
     console.log('auth res: ', authRes.data());
   },
   computed: {
+    universities: function() {
+      return formatChartData(this, ['applicationStats', 'universities'], { sort: true, limit: 4 });
+    },
     vuex_user_role: {
       get(): string {
-        return this.$store.state.vuex_user_role;
+        return (this as any).$store.state.vuex_user_role;
       },
       set(value: string) {
-        this.$store.commit('update_vuex_role', value);
+        (this as any).$store.commit('update_vuex_role', value);
       },
     },
     vuex_password: {
       get(): string {
-        return this.$store.state.vuex_password;
+        return (this as any).$store.state.vuex_password;
       },
       set(value: string) {
-        this.$store.commit('update_vuex_password', value);
+        (this as any).$store.commit('update_vuex_password', value);
       },
     },
     vuex_current_user: {
       get(): string {
-        return this.$store.state.vuex_current_user;
+        return (this as any).$store.state.vuex_current_user;
       },
       set(value: string) {
-        this.$store.commit('update_vuex_current_user', value);
+        (this as any).$store.commit('update_vuex_current_user', value);
       },
     },
   },
@@ -459,7 +470,7 @@ export default Vue.extend({
         datasets: [
           {
             label,
-            backgroundColor: this.colors,
+            backgroundColor: (this as any).colors,
             data: val,
           },
         ],
@@ -522,9 +533,9 @@ export default Vue.extend({
         console.log('An error occured: ', err);
       }
     },
-    activateModal(msg = 'Loading...') {
-      this.loading = true;
-      this.loadingMessage = msg;
+    activateModal(msg = 'Loading...') : void {
+      (this as any).loading = true;
+      (this as any).loadingMessage = msg;
     },
   },
 });
