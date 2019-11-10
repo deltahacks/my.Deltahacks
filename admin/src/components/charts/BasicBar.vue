@@ -21,7 +21,13 @@ export default Vue.extend({
 					bar: { barHeight: '100%', distributed: true, },
 				},
 				colors: this.colors,
-				xaxis: { categories: this.categories, },
+				xaxis: {
+					categories: this.categories,
+					labels: {
+						minHeight: 100,
+						maxHeight: 100,
+					}
+				},
 				title: {
 						text: this.title,
 						align: 'center',
