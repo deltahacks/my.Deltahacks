@@ -68,7 +68,6 @@
                         <v-list-tile
                           v-for="(func, index) in debugFunctions"
                           :key="index"
-                          @click="func.execute()"
                         >
                           <v-list-tile-title>
                             {{ func.title }}
@@ -258,11 +257,11 @@ export default Vue.extend({
                 // eslint-disable-next-line no-unused-expressions
                 inst.data().microsoft
                   ? console.log(
-                      `,${inst.data().name} ${inst.data().lastname},`,
-                      `${inst.data().email},`,
-                      `${inst.data().major},`,
-                      `${inst.data().university},`,
-                    )
+                    `,${inst.data().name} ${inst.data().lastname},`,
+                    `${inst.data().email},`,
+                    `${inst.data().major},`,
+                    `${inst.data().university},`,
+                  )
                   : false;
               }
               console.log('Miccrosoft count: ', finalcount + 95);
@@ -335,7 +334,7 @@ export default Vue.extend({
     IOdometer,
     DataTable,
     CommitChart,
-    CustomAngleRadialChart
+    CustomAngleRadialChart,
   },
   created() {
     this.$Progress.start();
@@ -346,7 +345,7 @@ export default Vue.extend({
       // .doc((this as any).$store.state.firebase.auth().currentUser.email)
       .get();
     const revObj = {};
-    nameRes.docs.forEach(val => {
+    nameRes.docs.forEach((val) => {
       revObj[val.data().email] = val.data().name;
       if (
         val.data().email === (this as any).$store.state.firebase.auth().currentUser.email
@@ -375,7 +374,7 @@ export default Vue.extend({
         .where('geo.latitude', '<', 1000000)
         .get();
 
-      doc.docs.forEach(val => {
+      doc.docs.forEach((val) => {
         // console.log('Vaal', val);
         (this as any).positions.pos.push({
           lat: val.data().geo ? val.data().geo.latitude : 0,
@@ -396,7 +395,7 @@ export default Vue.extend({
 
     db.collection('DH6')
       .doc('statistics')
-      .onSnapshot(doc => {
+      .onSnapshot((doc) => {
         if (doc) {
           // const universityStats = doc.data()!.applicationStats.universities;
           (this as any).applicationStats = doc.data()!.applicationStats;
@@ -415,7 +414,7 @@ export default Vue.extend({
     console.log('auth res: ', authRes.data());
   },
   computed: {
-    universities: function() {
+    universities() {
       return formatChartData(this, ['applicationStats', 'universities'], { sort: true, limit: 4 });
     },
     vuex_user_role: {
@@ -458,7 +457,7 @@ export default Vue.extend({
         i++;
       }
       out.Other = 0;
-      values.forEach(value => {
+      values.forEach((value) => {
         out.Other += value;
       });
       return out;
