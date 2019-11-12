@@ -73,7 +73,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-center">
-      <v-pagination id="pageButton" v-model="page" :length="numApplicants" circle @input="nextPage"></v-pagination>
+      <v-pagination id="pageButton" v-model="page" :length="numApplicants" :total-visible="15" circle @input="nextPage"></v-pagination>
     </div>
   </v-card>
 </template>
