@@ -152,13 +152,13 @@ export default Vue.extend({
       rating: null,
       expanded: {},
       headers: [
-        { text: 'Name', align: 'left', value: 'name' },
-        { text: 'Email', value: 'email' },
-        { text: 'University', value: 'university' },
+        { text: 'Name', align: 'left', value: 'name.first' },
+        { text: 'Email', value: 'contact.email' },
+        { text: 'University', value: 'academic.school' },
         { text: 'Applied (seconds)', value: 'applied' },
-        { text: 'Phone', value: 'phone' },
+        { text: 'Phone', value: 'contact.phone' },
         { text: 'Age', value: 'age' },
-        { text: 'Status', value: 'rate' },
+        { text: 'Status', value: '_.decision' },
         { text: '', value: 'rate' },
       ],
     };
@@ -333,8 +333,7 @@ export default Vue.extend({
   width: 100%;
 }
 
-#pageButton {
-  outline: 0;
-  border: none;
+#pageButton li button {
+  outline: none;
 }
 </style>
