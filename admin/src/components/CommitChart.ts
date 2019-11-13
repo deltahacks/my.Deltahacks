@@ -35,17 +35,16 @@ export default Vue.extend({
     const track = this.populateDateLabels(startFrom);
 
     const querySnapshot = await db
-      .collection('applications')
-      .doc('DH5')
-      .collection('submitted')
-      .orderBy('last_modified.unix')
+      .collection('DH6')
+      .doc('applications')
+      .collection('all')
+      .orderBy('_.time_initiated.seconds')
       .endAt(startFrom.getTime() / 1000)
       .get();
 
     querySnapshot.forEach((doc) => {
       const item = doc.data();
-      if (!item.last_modified) return;
-      const date = new Date(item.last_modified.date);
+      const date = new Date(item._.time_submitted.seconds * 1000);
       const dateString = date.toDateString();
       if (track[dateString] >= 0) {
         track[dateString] += 1;
