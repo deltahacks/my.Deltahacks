@@ -46,6 +46,16 @@
             </v-card>
           </v-card>
         </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color="white lighten-4">
+            <v-card-title primary-title>Total Applications</v-card-title>
+            <v-card color="white lighten-4" dark>
+              <v-card-text class="totalapps center">
+                <IOdometer class="iOdometer" :value="applicationCount" />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
 
         <v-flex d-flex xs12 sm6 md2>
           <v-card color="white lighten-4">
@@ -247,6 +257,7 @@ interface StatsData {
   colors: string[]; // Graphing colors array
   options: any; // Graphing options
   rsvp: number; // Stats - # of RSVP
+  applicationCount: number;
 }
 
 export default Vue.extend({
@@ -335,6 +346,7 @@ export default Vue.extend({
         checkedIn: 0,
         mentors: 0,
       },
+      applicationCount: 0,
       mentors: 0,
       sponsors: 0,
       checkedIn: 0,
@@ -415,6 +427,7 @@ export default Vue.extend({
     (this as any).statistics = await (this as any).getStatistics();
     // this.setAllData();
     (this as any).setCheckInData();
+    (this as any).countApplications();
     db
       .collection('DH6')
       .doc('statistics')
@@ -499,6 +512,11 @@ export default Vue.extend({
       //   .onSnapshot((snap) => {
       //     this.walkins = snap.docs.length;
       //   });
+    },
+    countApplications: function() {
+      db.collection('DH6').doc('applications').collection('all').get().then(snap => {
+        (this as any).applicationCount = snap.size
+      });
     },
     // async getRSVP() {
     //   return new Promise(async (resolve, reject) => {
