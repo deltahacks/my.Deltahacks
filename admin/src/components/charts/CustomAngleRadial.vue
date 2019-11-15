@@ -15,6 +15,7 @@ export default Vue.extend({
 	props: ['title', 'categories', 'data'],
 	data() {
 		return {
+			absoluteValues: this.data,
 			series: this.data,
 			chartOptions: {
 				plotOptions: {
@@ -55,8 +56,8 @@ export default Vue.extend({
 					offsetY: 10,
 					labels: { useSeriesColors: true, },
 					markers: { size: 0 },
-					formatter: function(seriesName, opts) {
-							return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+					formatter: (seriesName, opts) => {
+						return seriesName + ":  " + (this as any).absoluteValues[opts.seriesIndex]
 					},
 					itemMargin: { horizontal: 1, }
         },
@@ -81,7 +82,10 @@ export default Vue.extend({
 			this.chartOptions = Object.assign({}, this.chartOptions, { labels: newCategories });
 		},
 		data(newData) {
-			this.series = newData;
+			// Express series as percentages of the largest element
+			this.absoluteValues = newData;
+			const max = Math.max(...newData);
+			this.series = newData.map(elem => Math.round((elem / max) * 100));
 		}
 	}
 });
