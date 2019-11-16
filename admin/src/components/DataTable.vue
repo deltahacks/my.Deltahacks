@@ -63,7 +63,6 @@
       </template>
       <template slot="expand" slot-scope="props">
         <applicant-dropdown
-          v-bind="{refetchCurrentPage}"
           id="dropdown"
           :usrname="props.item.name"
           :applicant="props.item"
@@ -81,7 +80,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
-import { functions, firestore } from 'firebase';
+import { functions, firestore, auth } from 'firebase';
 import { mapState, mapMutations } from 'vuex';
 import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
@@ -98,8 +97,7 @@ interface State {
   items: string[];
   hackathon: string;
   bucket: string;
-  restriction: [any, any, any];
-  defaultRestriction: [any, any, any];
+  restriction: [string, firestore.WhereFilterOp, string | number];
   buckets: any;
   search: string;
   rating: any;
@@ -121,15 +119,13 @@ export default Vue.extend({
       current: 'All Applicants',
       items: [
         'All Applicants',
-        // 'Assigned to Me',
-        // 'Accepted Applicants',
-        // 'Overflow Applicants',
-        // 'Rejected Applicants',
+        'Assigned to Me',
+        'Accepted Applicants',
+        'Rejected Applicants',
       ],
       hackathon: 'DH6',
       bucket: 'pending',
-      restriction: ['index', '>=', 0] as [any, any, any],
-      defaultRestriction: ['index', '>=', 0] as [any, any, any],
+      restriction: ['_.status', '==', 'submitted'],
       buckets: [
         {
           title: 'Pending Applications',
@@ -173,31 +169,24 @@ export default Vue.extend({
       this.current = item;
       switch (item) {
         case 'All Applicants':
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
+          this.restriction = ['_.status', '==', 'submitted'];
+          this.changeScope();
           break;
         case 'Assigned to Me':
           this.restriction = [
-            'decision.assignedTo',
+            '_.reviews.assignedTo',
             'array-contains',
-            this.$store.state.firebase.auth().currentUser.email,
+            auth().currentUser!.email as string,
           ];
-          this.refetchCurrentPage();
+          this.changeScope();
           break;
         case 'Accepted Applicants':
-          this.bucket = 'round1';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
-          break;
-        case 'Overflow Applicants':
-          this.bucket = 'overflow';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
+          this.restriction = ['_.decision', '==', 'accepted'];
+          this.changeScope();
           break;
         case 'Rejected Applicants':
-          this.bucket = 'rejected';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
+          this.restriction = ['_.decision', '==', 'rejected'];
+          this.changeScope();
           break;
         default:
           break;
@@ -243,7 +232,7 @@ export default Vue.extend({
           .collection('all')
           .orderBy('_.index')
           .startAfter(startPoint)
-          .where('_.status', '==', 'submitted')
+          .where(...this.restriction)
           .limit(this.rowsPerPage)
           .get();
         // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
@@ -262,17 +251,35 @@ export default Vue.extend({
         );
       }
     },
-    async refetchCurrentPage() {
-      console.log('In mount fill');
+    async changeScope() {
+      let totalSize = 0;
+      if (this.current !== 'All Applicants') {
+        totalSize = (await db
+          .collection(this.hackathon)
+          .doc('applications')
+          .collection('all')
+          .orderBy('_.index')
+          .where(...this.restriction)
+          .get()).size;
+        this.numApplicants = Math.ceil(totalSize / this.rowsPerPage);
+      } else this.setNumApplicants();
       const result = await db
         .collection(this.hackathon)
         .doc('applications')
         .collection('all')
-        .where('_.status', '==', 'submitted')
+        .orderBy('_.index')
+        .where(...this.restriction)
         .limit(this.rowsPerPage)
         .get();
-      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+      const resultsToUse = result.docs.map((doc) => {
+        const docData = doc.data();
+        docData.contact.email = doc.id;
+        return docData;
+      });
+      this.currentSet = resultsToUse as any;
+      this.page = 1;
+      this.applications = [];
+      Vue.set(this.applications, this.page - 1, resultsToUse);
     },
     getAgeFromDate(bday): number {
       let bdayDate;
@@ -287,7 +294,6 @@ export default Vue.extend({
       return this.calculateAge(bdayDate);
     },
     calculateAge(birthday: Date): number {
-      // birthday is a date
       const ageDifMs = Date.now() - birthday.getTime();
       const ageDate = new Date(ageDifMs); // miliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -301,25 +307,7 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    if (!this.applications[this.page - 1]) {
-      const result = await db
-        .collection(this.hackathon)
-        .doc('applications')
-        .collection('all')
-        .orderBy('_.index')
-        .where('_.status', '==', 'submitted')
-        .limit(this.rowsPerPage)
-        .get();
-      const resultsToUse = result.docs.map((doc) => {
-        const docData = doc.data();
-        docData.contact.email = doc.id;
-        return docData;
-      });
-      await this.setNumApplicants();
-      this.currentSet = resultsToUse as any;
-      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-      Vue.set(this.applications, this.page - 1, resultsToUse);
-    }
+    this.changeScope();
   },
 });
 </script>
