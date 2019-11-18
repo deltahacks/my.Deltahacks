@@ -19,101 +19,110 @@
               <v-expansion-panel-content v-model="topcard">
                 <div slot="header" class="headline mb-0">Basic Info</div>
                 <v-card>
-                  <v-layout row wrap>
+                  <v-layout row wrap class='basic_info'>
                     <v-flex xs12 md6 lg6>
-                      <v-card-text>
-                        <h4>Name:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4>University:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4>Year:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4># of Previous Hackathons:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4>Major:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4>Degree:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4>Git Repo:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>LinkedIn:</b>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4>Website:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <h4>Devpost:</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>Dietary restrictions:</b>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>Shirt size:</b>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>Ethnicity:</b>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>Coming from:</b>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>Heard from:</b>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>Emergency contact:</b>
-                      </v-card-text>
-                      <v-card-text>
-                        <b>Workshops:</b>
-                      </v-card-text>
-                      <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
+                      <h4>Name:</h4>
                     </v-flex>
                     <v-flex xs12 md6 lg6>
-                      <v-card-text>{{ applicant.name.first + ' ' + applicant.name.last}}</v-card-text>
-                      <v-card-text>{{ applicant.academics.school }}</v-card-text>
-                      <v-card-text>{{ applicant.academics.year }}</v-card-text>
-                      <v-card-text>{{ applicant.logistics.hackathons_attended }}</v-card-text>
-                      <v-card-text>{{ applicant.academics.major }}</v-card-text>
-                      <v-card-text>{{ applicant.academics.degree }}</v-card-text>
-                      <v-card-text>
-                        <a
-                          v-bind:href="applicant.profiles.github"
-                          target="_blank"
-                        >{{ applicant.profiles.github == '' ? '-' : applicant.profiles.github }}</a>
-                      </v-card-text>
-                      <v-card-text>
-                        <a
-                          v-bind:href="applicant.profiles.linkedin"
-                          target="_blank"
-                        >{{ applicant.profiles.linkedin == '' ? '-' : applicant.profiles.linkedin }}</a>
-                      </v-card-text>
-                      <v-card-text>
-                        <a
-                          v-bind:href="applicant.profiles.website"
-                          target="_blank"
-                        >{{ applicant.profiles.website == '' ? '-' : applicant.profiles.website }}</a>
-                      </v-card-text>
-                      <v-card-text>
-                        <a
-                          v-bind:href="applicant.profiles.devpost"
-                          target="_blank"
-                        >{{ applicant.profiles.devpost == '' ? '-' : applicant.profiles.devpost }}</a>
-                      </v-card-text>
-                      <v-card-text>{{ applicant.logistics.diet_restrictions }}</v-card-text>
-                      <v-card-text>{{ applicant.logistics.shirt_size }}</v-card-text>
-                      <v-card-text>{{ applicant.personal.race }}</v-card-text>
-                      <v-card-text>{{ applicant.logistics.traveling_from }}</v-card-text>
-                      <v-card-text>{{ applicant.logistics.discovered_by }}</v-card-text>
-                      <v-card-text>{{ applicant.emergency.name + ' - ' + applicant.emergency.phone }}</v-card-text>
-                      <v-card-text>{{ applicant.responses.workshops }}</v-card-text>
-
-                      <!-- <v-card-text class="px-0 name">{{ ": " + applicant. }}</v-card-text> -->
+                      <p>{{ applicant.name.first + ' ' + applicant.name.last }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>University:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.academics.school }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Year:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.academics.year }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4># of Previous Hackathons:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.logistics.hackathons_attended }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Major:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.academics.major }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Degree:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.academics.degree }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Git Repo:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <a v-bind:href="applicant.profiles.github" target="_blank">
+                        {{ applicant.profiles.github == '' ? '-' : applicant.profiles.github }}
+                      </a>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>LinkedIn:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <a v-bind:href="applicant.profiles.linkedin" target="_blank">
+                        {{ applicant.profiles.linkedin == '' ? '-' : applicant.profiles.linkedin }}
+                      </a>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Website:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <a v-bind:href="applicant.profiles.website" target="_blank">
+                        {{ applicant.profiles.website == '' ? '-' : applicant.profiles.website }}
+                      </a>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Devpost:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <a v-bind:href="applicant.profiles.devpost" target="_blank">
+                        {{ applicant.profiles.devpost == '' ? '-' : applicant.profiles.devpost }}
+                      </a>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Dietary Restrictions:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.logistics.diet_restrictions }}</p>
+                    </v-flex>  
+                    <v-flex xs12 md6 lg6>
+                      <h4>Shirt Size:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.logistics.shirt_size }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Ethnicity:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.personal.race }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Coming From:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.logistics.traveling_from }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Emergency Contact:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.emergency.name + ' - ' + applicant.emergency.phone }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Workshops:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.responses.workshops }}</p>
                     </v-flex>
                   </v-layout>
                 </v-card>
@@ -310,6 +319,14 @@ export default Vue.extend({
 i {
   font-size: 3em;
   margin: 10px 20px;
+}
+
+.basic_info .flex {
+  padding: 4px 24px !important;
+}
+
+.basic_info .flex:nth-child(odd) {
+  flex-basis: 33%;
 }
 
 #datacard {
