@@ -24,8 +24,9 @@
       :dark="false"
       :search="search"
       :headers="headers"
-      :items="applications[page - 1]"
+      :items="applications[0]"
       hide-actions
+      :pagination.sync="pagination"
       item-key="contact.email"
     >
       <template slot="items" slot-scope="props">
@@ -35,7 +36,7 @@
           <td class="text-xs-left">{{ props.item.academics.school }}</td>
           <td
             class="text-xs-left"
-          >{{ props.item._.time_submitted.seconds ? props.item._.time_submitted.toDate().toLocaleDateString("en-US"):props.item._.time_submitted.toLocaleDateString("en-US") }}</td>
+          >{{ props.item._.time_submitted.seconds ? dateFromTimestamp(props.item._.time_submitted).toLocaleDateString("en-US"):props.item._.time_submitted.toLocaleDateString("en-US") }}</td>
           <td class="text-xs-left">{{ props.item.contact.phone }}</td>
           <td class="text-xs-left">{{ getAgeFromDate(props.item.personal.birthday) }}</td>
           <td
@@ -72,7 +73,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-center">
-      <v-pagination id="pageButton" v-model="page" :length="numApplicants" :total-visible="15" circle @input="nextPage"></v-pagination>
+      <v-pagination id="pageButton" v-model="pagination.page" :length="numApplicants" :total-visible="15" circle></v-pagination>
     </div>
   </v-card>
 </template>
@@ -87,7 +88,7 @@ import 'vue-status-indicator/styles.css';
 import db from '../firebase_init';
 
 interface State {
-  page: number;
+  pagination: any;
   rowsPerPage: number;
   numApplicants: number;
   applications: any;
@@ -110,7 +111,13 @@ export default Vue.extend({
   data(): State {
     return {
       // lastVisible: null,
-      page: 1,
+      pagination: {
+        descending: false,
+        page: 1,
+        rowsPerPage: 50,
+        sortBy: 'desc',
+        totalItems: 0,
+      },
       rowsPerPage: 50,
       numApplicants: 0,
       applications: {},
@@ -220,66 +227,26 @@ export default Vue.extend({
       const offset = 50 * props.index;
       window.scrollTo(0, window.screen.height / 2 + offset);
     },
-    async nextPage() {
-      console.log('Page is: ', this.page);
-      const startPoint = (this.page - 1) * this.rowsPerPage;
-      console.log(startPoint);
-      if (!this.applications[`${this.page - 1}`]) {
-        console.log('Getting next page');
-        const result = await db
-          .collection(this.hackathon)
-          .doc('applications')
-          .collection('all')
-          .orderBy('_.index')
-          .startAfter(startPoint)
-          .where(...this.restriction)
-          .limit(this.rowsPerPage)
-          .get();
-        // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-        console.log(`LENGTH: ${result.docs.length}`);
-        console.log(result.docs[0].data());
-        const resultsToUse = result.docs.map((doc) => {
-          const docData = doc.data();
-          docData.contact.email = doc.id;
-          return docData;
-        });
-        this.currentSet = resultsToUse as any;
-        Vue.set(
-          this.applications,
-          this.page - 1,
-          resultsToUse,
-        );
-      }
-    },
     async changeScope() {
-      let totalSize = 0;
-      if (this.current !== 'All Applicants') {
-        totalSize = (await db
-          .collection(this.hackathon)
-          .doc('applications')
-          .collection('all')
-          .orderBy('_.index')
-          .where(...this.restriction)
-          .get()).size;
-        this.numApplicants = Math.ceil(totalSize / this.rowsPerPage);
-      } else this.setNumApplicants();
       const result = await db
         .collection(this.hackathon)
         .doc('applications')
         .collection('all')
         .orderBy('_.index')
         .where(...this.restriction)
-        .limit(this.rowsPerPage)
         .get();
+      this.numApplicants = Math.ceil(result.size / this.rowsPerPage);
+      this.pagination.totalItems = this.numApplicants;
       const resultsToUse = result.docs.map((doc) => {
         const docData = doc.data();
         docData.contact.email = doc.id;
         return docData;
       });
+      console.log(resultsToUse);
       this.currentSet = resultsToUse as any;
-      this.page = 1;
+      this.pagination.page = 1;
       this.applications = [];
-      Vue.set(this.applications, this.page - 1, resultsToUse);
+      Vue.set(this.applications, 0, resultsToUse);
     },
     getAgeFromDate(bday): number {
       let bdayDate;
@@ -292,6 +259,9 @@ export default Vue.extend({
         return 1;
       }
       return this.calculateAge(bdayDate);
+    },
+    dateFromTimestamp(obj) {
+      return new firestore.Timestamp(obj.seconds, obj.nanoseconds).toDate();
     },
     calculateAge(birthday: Date): number {
       const ageDifMs = Date.now() - birthday.getTime();
