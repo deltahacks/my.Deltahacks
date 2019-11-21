@@ -16,7 +16,7 @@
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
-      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details @input="bruh()"></v-text-field>
     </v-card-title>
     <v-data-table
       v-bind:peeps="peeps"
@@ -28,6 +28,7 @@
       hide-actions
       :pagination.sync="pagination"
       item-key="contact.email"
+      ref="tableref"
     >
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
@@ -274,6 +275,11 @@ export default Vue.extend({
         .doc('statistics')
         .get();
       this.numApplicants = Math.ceil(stats.data()!.applications / this.rowsPerPage);
+    },
+    bruh() {
+      setTimeout(() => {
+        this.numApplicants = this.pagination.rowsPerPage ? Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage) : 0;
+      }, 10);
     },
   },
   async mounted() {
