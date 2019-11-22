@@ -480,7 +480,7 @@ export default Vue.extend({
       return formatChartData(this, ['statistics', 'applicationStats', 'workshops'], { sort: true });
     },
     averageWords: function() {
-      return formatChartData(this, ['averageWordCount'], { sort: true});
+      return formatChartData(this, ['averageWordCount'], { sort: true });
     },
   },
   // computed: {
@@ -533,39 +533,38 @@ export default Vue.extend({
         (this as any).applicationCount = snap.size
       });
     },
-     countWords: async function() {
+    countWords: async function () {
       try {
-        var totalWordsQ1 = 0;
-        var totalWordsQ2 = 0;
-        var totalWordsQ3 = 0;
-        var totalWordsAnythingElse = 0;
-        var totalSubmitted = 0;
+        let totalWordsQ1 = 0;
+        let totalWordsQ2 = 0;
+        let totalWordsQ3 = 0;
+        let totalWordsAnythingElse = 0;
+        let totalSubmitted = 0;
         const ref = await db.collection('DH6').doc('applications').collection('all').get();
-        for (var i = 0; i < ref.size; i ++){
+        for (let i = 0; i < ref.size; i++) {
           const object = ref.docs[i];
-          const subset = (({_document }) => ({_document}))(object); // Destructure the object
-        
-          if(subset._document.proto.fields._.mapValue.fields.status.stringValue == "submitted"){
+          const subset = (({ _document }) => ({ _document }))(object); // Destructure the object
+          if (subset._document.proto.fields._.mapValue.fields.status.stringValue === 'submitted') {
             // Extracting Q1 String then counting words
-            totalWordsQ1 += (this as any ).splitWord(subset._document.proto.fields.responses.mapValue.fields.q1.stringValue) 
-            totalWordsQ2 += (this as any ).splitWord(subset._document.proto.fields.responses.mapValue.fields.q2.stringValue)
-            totalWordsQ3 += (this as any ).splitWord(subset._document.proto.fields.responses.mapValue.fields.q3.stringValue)
-            totalWordsAnythingElse += (this as any ).splitWord(subset._document.proto.fields.responses.mapValue.fields.anything_else.stringValue)
+            totalWordsQ1 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q1.stringValue);
+            totalWordsQ2 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q2.stringValue);
+            totalWordsQ3 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q3.stringValue);
+            totalWordsAnythingElse += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.anything_else.stringValue);
             totalSubmitted += 1;
           }
           
         }
-        (this as any).averageWordCount = {"Question 1" : Math.round(totalWordsQ1 / totalSubmitted), 
-                                 "Question 2" : Math.round(totalWordsQ2 / totalSubmitted), 
-                                 "Question 3" : Math.round(totalWordsQ3 / totalSubmitted),
-                                 "Anything Else" : Math.round(totalWordsAnythingElse / totalSubmitted)
-                                  }
+        (this as any).averageWordCount = { 'Question 1': Math.round(totalWordsQ1 / totalSubmitted), 
+          'Question 2': Math.round(totalWordsQ2 / totalSubmitted),
+          'Question 3': Math.round(totalWordsQ3 / totalSubmitted),
+          'Anything Else': Math.round(totalWordsAnythingElse / totalSubmitted),
+        };
       } catch (err) {
         console.error(err);
       }
     },
-     splitWord: function(str) {
-       return str.split(' ').length;
+    splitWord: function (str) {
+      return str.split(' ').length;
      },
     // async getRSVP() {
     //   return new Promise(async (resolve, reject) => {
