@@ -219,7 +219,7 @@ import { firestore, auth } from 'firebase';
 
 export default Vue.extend({
   name: 'Applicant',
-  props: ['usrname', 'applicant', 'isReviewed', 'refetchCurrentPage'],
+  props: ['usrname', 'applicant', 'isReviewed'],
   data: () => ({
     dialog: false,
     currentPage: 0,
