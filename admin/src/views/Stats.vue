@@ -175,6 +175,15 @@
               :colors="colors" />
           </v-card>
         </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color="white lighten-4" dark>
+            <basic-bar-chart
+              :title="'Average Word Count for Responses'"
+              :categories="averageWords.categories"
+              :data="averageWords.data"
+              :colors="colors" />
+          </v-card>
+        </v-flex>
       </v-layout>
     </v-container>
     <v-dialog v-model="loading" persistent width="300">
@@ -258,6 +267,7 @@ interface StatsData {
   options: any; // Graphing options
   rsvp: number; // Stats - # of RSVP
   applicationCount: number;
+  averageWordCount: any;
 }
 
 export default Vue.extend({
@@ -352,6 +362,7 @@ export default Vue.extend({
       checkedIn: 0,
       walkins: 0,
       bus_passengers: 0,
+      averageWordCount: {},
       pickups: {
         'University of Waterloo': 0,
         'University of Toronto': 0,
@@ -428,6 +439,7 @@ export default Vue.extend({
     // this.setAllData();
     (this as any).setCheckInData();
     (this as any).countApplications();
+    (this as any).countWords();
     db
       .collection('DH6')
       .doc('statistics')
@@ -466,6 +478,9 @@ export default Vue.extend({
     },
     workshops: function() {
       return formatChartData(this, ['statistics', 'applicationStats', 'workshops'], { sort: true });
+    },
+    averageWords: function() {
+      return formatChartData(this, ['averageWordCount'], { sort: true });
     },
   },
   // computed: {
@@ -518,6 +533,39 @@ export default Vue.extend({
         (this as any).applicationCount = snap.size
       });
     },
+    countWords: async function () {
+      try {
+        let totalWordsQ1 = 0;
+        let totalWordsQ2 = 0;
+        let totalWordsQ3 = 0;
+        let totalWordsAnythingElse = 0;
+        let totalSubmitted = 0;
+        const ref = await db.collection('DH6').doc('applications').collection('all').get();
+        for (let i = 0; i < ref.size; i++) {
+          const object = ref.docs[i];
+          const subset = (({ _document }) => ({ _document }))(object); // Destructure the object
+          if (subset._document.proto.fields._.mapValue.fields.status.stringValue === 'submitted') {
+            // Extracting Q1 String then counting words
+            totalWordsQ1 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q1.stringValue);
+            totalWordsQ2 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q2.stringValue);
+            totalWordsQ3 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q3.stringValue);
+            totalWordsAnythingElse += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.anything_else.stringValue);
+            totalSubmitted += 1;
+          }
+          
+        }
+        (this as any).averageWordCount = { 'Question 1': Math.round(totalWordsQ1 / totalSubmitted), 
+          'Question 2': Math.round(totalWordsQ2 / totalSubmitted),
+          'Question 3': Math.round(totalWordsQ3 / totalSubmitted),
+          'Anything Else': Math.round(totalWordsAnythingElse / totalSubmitted),
+        };
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    splitWord: function (str) {
+      return str.split(' ').length;
+     },
     // async getRSVP() {
     //   return new Promise(async (resolve, reject) => {
     //     const snap = await db.collection('hackathon')
