@@ -423,7 +423,7 @@ export const applicationQuestions: any = [
     selectData: majorsList,
     icon: 'fa-pencil-alt',
     model: ['academics', 'major'],
-    requirements: { required: true, oneOf: majorsList },
+    requirements: { required: true },
   },
   {
     label: 'What is your current year of study?',
