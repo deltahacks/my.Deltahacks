@@ -428,8 +428,6 @@ export default Vue.extend({
   components: {
     Navbar,
     IOdometer,
-    PieChart,
-    BarChart,
     BasicBarChart,
     BasicPieChart,
     // ApexChart,
@@ -452,34 +450,34 @@ export default Vue.extend({
     // this.initAgeChart();
   },
   computed: {
-    numHackathons: function() {
+    numHackathons() {
       return formatChartData(this, ['statistics', 'applicationStats', 'hackathons']);
     },
-    universities: function() {
+    universities() {
       return formatChartData(this, ['statistics', 'applicationStats', 'universities'], { sort: true, limit: 10 });
     },
-    majors: function() {
+    majors() {
       return formatChartData(this, ['statistics', 'applicationStats', 'majors'], { sort: true, limit: 10 });
     },
-    schoolYears: function() {
+    schoolYears() {
       return formatChartData(this, ['statistics', 'applicationStats', 'school_years'], { sort: true });
     },
-    shirtSizes: function() {
+    shirtSizes() {
       return formatChartData(this, ['statistics', 'applicationStats', 'shirt_sizes'], { sort: true });
     },
-    discoveredBy: function() {
+    discoveredBy() {
       return formatChartData(this, ['statistics', 'applicationStats', 'discovery'], { sort: true });
     },
-    dietaryRestrictions: function() {
+    dietaryRestrictions() {
       return formatChartData(this, ['statistics', 'applicationStats', 'dietary_restrictions'], { sort: true, limit: 10 });
     },
-    comingFrom: function() {
+    comingFrom() {
       return formatChartData(this, ['statistics', 'applicationStats', 'travelling_from'], { sort: true });
     },
-    workshops: function() {
+    workshops() {
       return formatChartData(this, ['statistics', 'applicationStats', 'workshops'], { sort: true });
     },
-    averageWords: function() {
+    averageWords() {
       return formatChartData(this, ['averageWordCount'], { sort: true });
     },
   },
@@ -528,12 +526,13 @@ export default Vue.extend({
       //     this.walkins = snap.docs.length;
       //   });
     },
-    countApplications: function() {
-      db.collection('DH6').doc('applications').collection('all').get().then(snap => {
-        (this as any).applicationCount = snap.size
-      });
+    countApplications() {
+      db.collection('DH6').doc('applications').collection('all').get()
+        .then((snap) => {
+          (this as any).applicationCount = snap.size;
+        });
     },
-    countWords: async function () {
+    async countWords() {
       try {
         let totalWordsQ1 = 0;
         let totalWordsQ2 = 0;
@@ -552,9 +551,9 @@ export default Vue.extend({
             totalWordsAnythingElse += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.anything_else.stringValue);
             totalSubmitted += 1;
           }
-          
         }
-        (this as any).averageWordCount = { 'Question 1': Math.round(totalWordsQ1 / totalSubmitted), 
+        (this as any).averageWordCount = {
+          'Question 1': Math.round(totalWordsQ1 / totalSubmitted),
           'Question 2': Math.round(totalWordsQ2 / totalSubmitted),
           'Question 3': Math.round(totalWordsQ3 / totalSubmitted),
           'Anything Else': Math.round(totalWordsAnythingElse / totalSubmitted),
@@ -563,9 +562,9 @@ export default Vue.extend({
         console.error(err);
       }
     },
-    splitWord: function (str) {
+    splitWord(str) {
       return str.split(' ').length;
-     },
+    },
     // async getRSVP() {
     //   return new Promise(async (resolve, reject) => {
     //     const snap = await db.collection('hackathon')
@@ -584,10 +583,10 @@ export default Vue.extend({
     //   });
     // },
     // setAllData() {
-      // this.setDecisionListeners();
-      // this.setCheckedInGraph();
-      // this.setMiscStatistics();
-      // this.setRSVPData();
+    // this.setDecisionListeners();
+    // this.setCheckedInGraph();
+    // this.setMiscStatistics();
+    // this.setRSVPData();
     // },
     // initAgeChart() {
     //   db.collection('applications')

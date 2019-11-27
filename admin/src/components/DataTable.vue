@@ -203,7 +203,7 @@ export default Vue.extend({
     assignmentToName(emails) {
       let res = '';
       emails.forEach((val) => {
-        res += `${this.$store.state.allAdmins[val]}, `;
+        if (this.$store.state.allAdmins && this.$store.state.allAdmins[val]) { res += `${this.$store.state.allAdmins[val]}, `; }
       });
       return res;
     },
