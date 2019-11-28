@@ -330,6 +330,7 @@ export default Vue.extend({
     Navbar,
     // eslint-disable-next-line vue/no-unused-components
     PieChart,
+    // eslint-disable-next-line vue/no-unused-components
     PieChart2,
     IOdometer,
     DataTable,

@@ -130,6 +130,8 @@ export default Vue.extend({
         'Assigned to Me',
         'Accepted Applicants',
         'Rejected Applicants',
+        '1/3',
+        '2/3',
       ],
       hackathon: 'DH6',
       bucket: 'pending',
@@ -178,7 +180,7 @@ export default Vue.extend({
       switch (item) {
         case 'All Applicants':
           this.restriction = ['_.status', '==', 'submitted'];
-          this.changeScope();
+          this.changeScope([]);
           break;
         case 'Assigned to Me':
           this.restriction = [
@@ -186,15 +188,23 @@ export default Vue.extend({
             'array-contains',
             auth().currentUser!.email as string,
           ];
-          this.changeScope();
+          this.changeScope([]);
           break;
         case 'Accepted Applicants':
           this.restriction = ['_.decision', '==', 'accepted'];
-          this.changeScope();
+          this.changeScope([]);
           break;
         case 'Rejected Applicants':
           this.restriction = ['_.decision', '==', 'rejected'];
-          this.changeScope();
+          this.changeScope([]);
+          break;
+        case '1/3':
+          this.restriction = ['_.status', '==', 'submitted'];
+          this.changeScope(['1/3']);
+          break;
+        case '2/3':
+          this.restriction = ['_.status', '==', 'submitted'];
+          this.changeScope(['2/3']);
           break;
         default:
           break;
@@ -228,7 +238,7 @@ export default Vue.extend({
       const offset = 50 * props.index;
       window.scrollTo(0, window.screen.height / 2 + offset);
     },
-    async changeScope() {
+    async changeScope(customFilter: string[]) {
       const result = await db
         .collection(this.hackathon)
         .doc('applications')
@@ -236,14 +246,17 @@ export default Vue.extend({
         .orderBy('_.index')
         .where(...this.restriction)
         .get();
-      this.numApplicants = Math.ceil(result.size / this.rowsPerPage);
-      this.pagination.totalItems = this.numApplicants;
-      const resultsToUse = result.docs.map((doc) => {
+      let resultsToUse = result.docs.map((doc) => {
         const docData = doc.data();
         docData.contact.email = doc.id;
         return docData;
       });
-      console.log(resultsToUse);
+      if (customFilter.includes('1/3') || customFilter.includes('2/3')) {
+        const filter = customFilter.includes('1/3') ? 1 : 2;
+        resultsToUse = resultsToUse.filter(each => each._.reviews.scores.length === filter);
+      }
+      this.numApplicants = Math.ceil(resultsToUse.length / this.rowsPerPage);
+      this.pagination.totalItems = this.numApplicants;
       this.currentSet = resultsToUse as any;
       this.pagination.page = 1;
       this.applications = [];
@@ -283,7 +296,7 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    this.changeScope();
+    this.changeScope([]);
   },
 });
 </script>
