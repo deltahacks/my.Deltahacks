@@ -556,7 +556,7 @@ export default Vue.extend({
 }
 
 .iOdometer {
-  font-size: 3em;
+  font-size: 150%;
   margin: 0;
   color: #00ced1;
 }
