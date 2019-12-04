@@ -17,9 +17,7 @@
             <div class="box box9">
               <p class="big">Welcome.</p>
               <p class="small">
-                Be a part of the hackathon for change. We are looking forward to
-                being able to meet with you in person. Good luck with your
-                application!
+                {{ message }}
               </p>
             </div>
             <div class="box box5 status desktop">
@@ -306,10 +304,20 @@ export default Vue.extend({
           return '🙂';
         case 1:
           return '😐';
+        case 4:
+          return '👏';
         case 5:
           return '🙁';
         default:
           return '🙂';
+      }
+    },
+    message(): string {
+      switch (this.step){
+        case 4:
+          return 'Congratulations on being accepted to the hackathon for change!';
+        default:
+          return 'Be a part of the hackathon for change. We are looking forward to being able to meet with you in person. Good luck with your application!';
       }
     },
   },
