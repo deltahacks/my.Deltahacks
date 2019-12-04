@@ -83,6 +83,7 @@ export interface AppContents {
 }
 
 export interface AppPrivate {
+  decision?: string;
   index: number;
   reviews: {
     assignedTo: string[];

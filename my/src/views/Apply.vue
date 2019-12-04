@@ -1,7 +1,7 @@
 <template>
   <v-app class="sizefix">
     <div class="submitted-face" />
-    <div v-if="app._.status !== 'accepted'" class="submitted-message">
+    <div v-if="getStat() === 'inprogress'" class="submitted-message">
       Applications are now closed!
       <br />
       <p v-if="app._.status !== 'in progress'"> We’ll let you know as soon as we make a decision. </p>
@@ -12,7 +12,7 @@
       </a><br>
       </div>
     </div>
-    <div v-if="app._.status !== 'in progress' && app._.status !== 'accepted'" class="submitted-message">
+    <div v-if="getStat() === 'submitted'" class="submitted-message">
       Your application has been submitted!
       <br />We’ll let you know as soon as we make a decision.
       <br />
@@ -23,7 +23,7 @@
       <a class="logout" @click.prevent="logout">Logout</a>
       </div>
     </div>
-      <div v-if="app._.status == 'accepted'" class="submitted-message">
+      <div v-if="getStat() == 'accepted'" class="submitted-message">
       👏<br/>
       Congratulations, you've been accepted!
       <br />
@@ -219,6 +219,14 @@ export default Vue.extend({
     Dialog,
   },
   methods: {
+    getStat() {
+      if (this.app._.decision && this.app._.decision === 'round1') {
+        return 'accepted';
+      } else if (this.app._.status === 'submitted') {
+        return 'submitted';
+      }
+      return 'inprogress';
+    },
     async logout() {
       try {
         await firebase.auth().signOut();

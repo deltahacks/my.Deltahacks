@@ -313,7 +313,7 @@ export default Vue.extend({
       }
     },
     message(): string {
-      switch (this.step){
+      switch (this.step) {
         case 4:
           return 'Congratulations on being accepted to the hackathon for change!';
         default:
@@ -403,6 +403,9 @@ export default Vue.extend({
                 break;
               default:
                 this.step = 0;
+            }
+            if (data!._.decision && data!._.decision === 'round1') {
+              this.step = 4;
             }
           } else {
             // application not started
