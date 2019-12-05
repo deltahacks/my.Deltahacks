@@ -1,17 +1,6 @@
 <template>
   <v-app class="sizefix">
-    <div class="submitted-face" />
-    <div class="submitted-message">
-      Applications are now closed!
-      <br />
-      <p v-if="app._.status !== 'in progress'"> We’ll let you know as soon as we make a decision. </p>
-      <br />
-      <div style="padding-top: 10px !important;">
-      <a class="goback" href="../status">
-        <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
-      </a><br>
-      </div>
-    </div>
+    <div v-if="app._.status !== 'in progress'" class="submitted-face" />
     <div v-if="app._.status !== 'in progress'" class="submitted-message">
       Your application has been submitted!
       <br />We’ll let you know as soon as we make a decision.
@@ -102,7 +91,7 @@
         v-model="submitDialogue"
       >
         <v-btn text @click="submitDialogue = false">Cancel</v-btn>
-        <v-btn color="warning" text @click="(submitDialogue = false)">Submit</v-btn>
+        <v-btn color="warning" text @click="(submitDialogue = false), submitApp()">Submit</v-btn>
       </Dialog>
       <v-container class="act-btn-group" text-xs-center>
         <v-layout align-center justify-center row wrap>
