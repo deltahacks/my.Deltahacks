@@ -17,13 +17,42 @@
         <div class="wrap">
           <!--Column#1-->
           <div class="col col6">
-            <div class="box box9">
+            <div class="box box9" v-if="step <= 4">
               <p class="big">Welcome.</p>
               <p class="small">
                 Be a part of the hackathon for change. We are looking forward to
                 being able to meet with you in person. Good luck with your
                 application!
               </p>
+            </div>
+            <div class="box box9" v-if="step == 5">
+              <p class="big">Coming?</p>
+              <v-btn color="success" @click="step = 6" fab x-large dark>
+                Y
+              </v-btn>
+              <v-btn color="success" @click="step = 8" fab x-large dark>
+                N
+              </v-btn>
+            </div>
+            <div class="box box9" v-if="step == 6">
+              <p class="big">Bus?</p>
+                <v-select
+                  :items="busLocations"
+                  label="Outlined style"
+                  dense
+                  outlined
+                ></v-select>
+                <v-btn color="success" @click="step = 7" fab x-large dark>
+                  Next
+                </v-btn>
+            </div>
+            <div class="box box9" v-if="step == 7 || step == 8">
+              <p class="big">Confirmed</p>
+                RSVP'd: true/false
+                if true -> show location
+                <v-btn color="success" @click="step = 5" fab x-large dark>
+                  Change
+                </v-btn>
             </div>
             <div class="box box5 status desktop">
               <div class="currentStatus">
@@ -205,6 +234,7 @@ import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
+import { busCities } from '../data';
 
 const allUniversities = [];
 export default Vue.extend({
@@ -212,7 +242,6 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
-      accepted: false,
       counter: 0,
       genderCompleted: true,
       response: {
@@ -232,11 +261,7 @@ export default Vue.extend({
       confirmation: false,
       timeout: undefined,
       bus: false,
-      busLocations: [
-        'University of Waterloo',
-        'University of Toronto',
-        'University of Western Ontario',
-      ],
+      busLocations: busCities,
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
@@ -309,6 +334,7 @@ export default Vue.extend({
       return this.subheaders[this.step];
     },
     emoticon(): string {
+      console.log(this.step);
       switch (this.step) {
         case 0:
           return '🙂';
@@ -327,7 +353,7 @@ export default Vue.extend({
         this.counter = 1;
       }, 2000);
     },
-    // Step is state of the page 
+    // Step is state of the page
     updateStep(email) {
       db.collection('DH6')
         .doc('applications')
@@ -339,10 +365,10 @@ export default Vue.extend({
             if (data!._.status && data!._.status === 'in progress') this.step = 2;
             if (data!._.status && data!._.status === 'submitted') this.step = 3;
             // Check if user made it into any round & set to accepted
-            if (data!._.decision && data!._.decision.substring(0, 6) === 'round') this.step = 4;
-            if (data!._.decision && data!._.decision === 'rejected') this.step = 5;
-            if (data!._.RSVP && data!._.RSVP.coming) this.step = 7;
-            if (data!._.RSVP && data!._.RSVP.origin) this.step = 8;
+            if (data!._.decision && data!._.decision === 'rejected') this.step = 4;
+            if (data!._.decision && data!._.decision.substring(0, 5) === 'round') this.step = 5;
+            if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
+            if (data!._.RSVP && data!._.RSVP.origin) this.step = 7;
           } else {
             // application not started
             this.step = 1;

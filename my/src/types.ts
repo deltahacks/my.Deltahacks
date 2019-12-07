@@ -99,7 +99,6 @@ export interface Reviews {
 }
 
 export interface StatusModel {
-  accepted: boolean;
   counter: number;
   genderCompleted: boolean;
   response: {
@@ -286,6 +285,8 @@ type citites =
   | 'Brampton'
   | 'Markham'
   | 'Milton';
+
+type busCities = '' | 'Western' | 'Waterloo' | 'UofT' | 'UTSC/York';
 
 type shirt_size = '' | 'XS' | 'S' | 'M' | 'L' | 'XL';
 

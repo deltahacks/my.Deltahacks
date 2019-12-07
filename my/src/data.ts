@@ -295,6 +295,10 @@ const roles = [
   'Other',
 ];
 
+export const busCities = [
+  'Western', 'Waterloo', 'UofT', 'Scarborough/York',
+];
+
 export const getBlankApplication = (): AppContents => ({
   _: {
     index: -1,
