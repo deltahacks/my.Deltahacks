@@ -327,6 +327,7 @@ export default Vue.extend({
         this.counter = 1;
       }, 2000);
     },
+    // Step is state of the page 
     updateStep(email) {
       db.collection('DH6')
         .doc('applications')
@@ -335,22 +336,13 @@ export default Vue.extend({
         .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
-            switch (data!._.status) {
-              case 'in progress':
-                this.step = 2;
-                break;
-              case 'submitted':
-                this.step = 3;
-                break;
-              case 'accepted':
-                this.step = 4;
-                break;
-              case 'rejected':
-                this.step = 5;
-                break;
-              default:
-                this.step = 0;
-            }
+            if (data!._.status && data!._.status === 'in progress') this.step = 2;
+            if (data!._.status && data!._.status === 'submitted') this.step = 3;
+            // Check if user made it into any round & set to accepted
+            if (data!._.decision && data!._.decision.substring(0, 6) === 'round') this.step = 4;
+            if (data!._.decision && data!._.decision === 'rejected') this.step = 5;
+            if (data!._.RSVP && data!._.RSVP.coming) this.step = 7;
+            if (data!._.RSVP && data!._.RSVP.origin) this.step = 8;
           } else {
             // application not started
             this.step = 1;
