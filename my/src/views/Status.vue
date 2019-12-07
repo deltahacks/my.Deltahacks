@@ -242,6 +242,8 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
+      hackathon: "DH6",
+      accepted: false,
       counter: 0,
       genderCompleted: true,
       response: {
@@ -348,14 +350,36 @@ export default Vue.extend({
     },
   },
   methods: {
+    // Grabs the application from where its store in firebase
+    fetchFromFirebase(): Promise<any> {
+      return this.$store.state.db
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .doc(auth().currentUser!.email)
+        .get();
+    },
     splashTime() {
       this.timeout = setTimeout(() => {
         this.counter = 1;
       }, 2000);
     },
-    // Step is state of the page
-    updateStep(email) {
-      db.collection('DH6')
+    async updateRSVP(coming: boolean, origin: string) {
+      const app = await this.fetchFromFirebase();
+      let rsvp = {coming, origin}
+      if (app.data()) {
+        let appWithRSVP = app.data();
+        appWithRSVP._.RSVP = rsvp;
+        await db.collection(this.hackathon)
+        .doc('applications')
+        .collection('all')
+        .doc(auth().currentUser!.email as string)
+        .update(appWithRSVP);
+      }
+    },
+    // Step is state of the page 
+    updateStep(email: string) {
+      db.collection(this.hackathon)
         .doc('applications')
         .collection('all')
         .doc(email)
@@ -423,6 +447,7 @@ export default Vue.extend({
   async mounted() {
     this.splashTime();
     this.timer = setInterval(this.nextImage, 4000);
+    this.updateRSVP(false, 'the hammer');
   },
   beforeDestroy() {
     clearInterval(this.timer);

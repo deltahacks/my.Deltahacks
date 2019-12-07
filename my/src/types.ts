@@ -99,6 +99,8 @@ export interface Reviews {
 }
 
 export interface StatusModel {
+  hackathon: string;
+  accepted: boolean;
   counter: number;
   genderCompleted: boolean;
   response: {
