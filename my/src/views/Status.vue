@@ -51,7 +51,7 @@
             <div class="box box9" v-if="step === 7">
               <p class="big">Confirmed</p>
                 RSVP'd: {{ rsvp.coming }}
-                if true -> show location
+                <p v-if="rsvp.coming">Location: {{rsvp.origin}}</p>
                 <v-btn color="success" @click="() => step = 5" fab x-large dark>
                   Change
                 </v-btn>
