@@ -143,6 +143,8 @@ export interface StatusModel {
   numImages: number;
   resent: boolean;
   splashMessage: string;
+  busSelected: string;
+  rsvp: {coming: boolean, origin: string};
 }
 
 export interface ApplyState {

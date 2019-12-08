@@ -25,32 +25,34 @@
                 application!
               </p>
             </div>
-            <div class="box box9" v-if="step == 5">
+            <div class="box box9" v-if="step === 5">
               <p class="big">Coming?</p>
-              <v-btn color="success" @click="step = 6" fab x-large dark>
+              <v-btn color="success" @click="() => step = 6" fab x-large dark>
                 Y
               </v-btn>
-              <v-btn color="success" @click="step = 8" fab x-large dark>
+              <v-btn color="success" @click="() => { updateRSVP(true, false), step = 7 }" fab x-large dark>
                 N
               </v-btn>
             </div>
-            <div class="box box9" v-if="step == 6">
+            <div class="box box9" v-if="step === 6">
               <p class="big">Bus?</p>
                 <v-select
                   :items="busLocations"
                   label="Outlined style"
+                  v-model="busSelected"
                   dense
                   outlined
+                  @change="logMe(busSelected)"
                 ></v-select>
-                <v-btn color="success" @click="step = 7" fab x-large dark>
+                <v-btn color="success" @click=" () => { updateRSVP(true, true, busSelected), step = 7 }" fab x-large dark>
                   Next
                 </v-btn>
             </div>
-            <div class="box box9" v-if="step == 7 || step == 8">
+            <div class="box box9" v-if="step === 7">
               <p class="big">Confirmed</p>
-                RSVP'd: true/false
+                RSVP'd: {{ rsvp.coming }}
                 if true -> show location
-                <v-btn color="success" @click="step = 5" fab x-large dark>
+                <v-btn color="success" @click="() => step = 5" fab x-large dark>
                   Change
                 </v-btn>
             </div>
@@ -242,7 +244,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
-      hackathon: "DH6",
+      hackathon: 'DH6',
       accepted: false,
       counter: 0,
       genderCompleted: true,
@@ -306,9 +308,10 @@ export default Vue.extend({
         'Application unsubmitted',
         'In progress',
         'This application is under review.',
-        "Congratulations, you've been accepted!",
         "Sorry we couldn't offer you a spot.",
-        'Unfortunately we cannot offer you an invitation this time.',
+        "Congratulations, you've been accepted!",
+        "Congratulations, you've been accepted!",
+        "Congratulations, you've been accepted!",
         '',
       ],
       links: ['Home', 'About', 'Contact'],
@@ -323,6 +326,8 @@ export default Vue.extend({
       numImages: 13,
       resent: false,
       splashMessage: '',
+      busSelected: '',
+      rsvp: { coming: false, origin: '' },
     };
   },
   components: {
@@ -342,7 +347,7 @@ export default Vue.extend({
           return '🙂';
         case 1:
           return '😐';
-        case 5:
+        case 4:
           return '🙁';
         default:
           return '🙂';
@@ -364,20 +369,24 @@ export default Vue.extend({
         this.counter = 1;
       }, 2000);
     },
-    async updateRSVP(coming: boolean, origin: string) {
+    async updateRSVP(update: boolean, coming: boolean = false, origin: string = '') {
       const app = await this.fetchFromFirebase();
-      let rsvp = {coming, origin}
-      if (app.data()) {
-        let appWithRSVP = app.data();
+      const appWithRSVP = app.data();
+      const rsvp = { coming, origin };
+      if (update && app.data()) {
         appWithRSVP._.RSVP = rsvp;
         await db.collection(this.hackathon)
-        .doc('applications')
-        .collection('all')
-        .doc(auth().currentUser!.email as string)
-        .update(appWithRSVP);
+          .doc('applications')
+          .collection('all')
+          .doc(auth().currentUser!.email as string)
+          .update(appWithRSVP);
       }
+      this.rsvp = (appWithRSVP) ? appWithRSVP._.RSVP : { coming: false, origin: '' };
     },
-    // Step is state of the page 
+    logMe(x) {
+      console.log(x);
+    },
+    // Step is state of the page
     updateStep(email: string) {
       db.collection(this.hackathon)
         .doc('applications')
@@ -392,7 +401,7 @@ export default Vue.extend({
             if (data!._.decision && data!._.decision === 'rejected') this.step = 4;
             if (data!._.decision && data!._.decision.substring(0, 5) === 'round') this.step = 5;
             if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
-            if (data!._.RSVP && data!._.RSVP.origin) this.step = 7;
+            if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
           } else {
             // application not started
             this.step = 1;
@@ -447,7 +456,7 @@ export default Vue.extend({
   async mounted() {
     this.splashTime();
     this.timer = setInterval(this.nextImage, 4000);
-    this.updateRSVP(false, 'the hammer');
+    this.updateRSVP(false);
   },
   beforeDestroy() {
     clearInterval(this.timer);
