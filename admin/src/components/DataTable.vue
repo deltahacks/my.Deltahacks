@@ -16,7 +16,7 @@
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
-      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details @input="bruh()"></v-text-field>
     </v-card-title>
     <v-data-table
       v-bind:peeps="peeps"
@@ -24,9 +24,11 @@
       :dark="false"
       :search="search"
       :headers="headers"
-      :items="applications[page - 1]"
+      :items="applications[0]"
       hide-actions
+      :pagination.sync="pagination"
       item-key="contact.email"
+      ref="tableref"
     >
       <template slot="items" slot-scope="props">
         <tr @click="selectRow($event, props)">
@@ -35,7 +37,7 @@
           <td class="text-xs-left">{{ props.item.academics.school }}</td>
           <td
             class="text-xs-left"
-          >{{ props.item._.time_submitted.seconds ? props.item._.time_submitted.toDate().toLocaleDateString("en-US"):props.item._.time_submitted.toLocaleDateString("en-US") }}</td>
+          >{{ props.item._.time_submitted.seconds ? dateFromTimestamp(props.item._.time_submitted).toLocaleDateString("en-US"):props.item._.time_submitted.toLocaleDateString("en-US") }}</td>
           <td class="text-xs-left">{{ props.item.contact.phone }}</td>
           <td class="text-xs-left">{{ getAgeFromDate(props.item.personal.birthday) }}</td>
           <td
@@ -63,7 +65,6 @@
       </template>
       <template slot="expand" slot-scope="props">
         <applicant-dropdown
-          v-bind="{refetchCurrentPage}"
           id="dropdown"
           :usrname="props.item.name"
           :applicant="props.item"
@@ -73,7 +74,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-center">
-      <v-pagination id="pageButton" v-model="page" :length="numApplicants" :total-visible="15" circle @input="nextPage"></v-pagination>
+      <v-pagination id="pageButton" v-model="pagination.page" :length="numApplicants" :total-visible="15" circle></v-pagination>
     </div>
   </v-card>
 </template>
@@ -81,14 +82,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import { StatusIndicator } from 'vue-status-indicator';
-import { functions, firestore } from 'firebase';
+import { functions, firestore, auth } from 'firebase';
 import { mapState, mapMutations } from 'vuex';
 import ApplicantDropdown from '@/components/ApplicantDropdown.vue';
 import 'vue-status-indicator/styles.css';
 import db from '../firebase_init';
 
 interface State {
-  page: number;
+  pagination: any;
   rowsPerPage: number;
   numApplicants: number;
   applications: any;
@@ -98,8 +99,7 @@ interface State {
   items: string[];
   hackathon: string;
   bucket: string;
-  restriction: [any, any, any];
-  defaultRestriction: [any, any, any];
+  restriction: [string, firestore.WhereFilterOp, string | number];
   buckets: any;
   search: string;
   rating: any;
@@ -112,7 +112,13 @@ export default Vue.extend({
   data(): State {
     return {
       // lastVisible: null,
-      page: 1,
+      pagination: {
+        descending: false,
+        page: 1,
+        rowsPerPage: 50,
+        sortBy: 'desc',
+        totalItems: 0,
+      },
       rowsPerPage: 50,
       numApplicants: 0,
       applications: {},
@@ -121,15 +127,15 @@ export default Vue.extend({
       current: 'All Applicants',
       items: [
         'All Applicants',
-        // 'Assigned to Me',
-        // 'Accepted Applicants',
-        // 'Overflow Applicants',
-        // 'Rejected Applicants',
+        'Assigned to Me',
+        'Accepted Applicants',
+        'Rejected Applicants',
+        '1/3',
+        '2/3',
       ],
       hackathon: 'DH6',
       bucket: 'pending',
-      restriction: ['index', '>=', 0] as [any, any, any],
-      defaultRestriction: ['index', '>=', 0] as [any, any, any],
+      restriction: ['_.status', '==', 'submitted'],
       buckets: [
         {
           title: 'Pending Applications',
@@ -173,31 +179,32 @@ export default Vue.extend({
       this.current = item;
       switch (item) {
         case 'All Applicants':
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
+          this.restriction = ['_.status', '==', 'submitted'];
+          this.changeScope([]);
           break;
         case 'Assigned to Me':
           this.restriction = [
-            'decision.assignedTo',
+            '_.reviews.assignedTo',
             'array-contains',
-            this.$store.state.firebase.auth().currentUser.email,
+            auth().currentUser!.email as string,
           ];
-          this.refetchCurrentPage();
+          this.changeScope([]);
           break;
         case 'Accepted Applicants':
-          this.bucket = 'round1';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
-          break;
-        case 'Overflow Applicants':
-          this.bucket = 'overflow';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
+          this.restriction = ['_.decision', '==', 'accepted'];
+          this.changeScope([]);
           break;
         case 'Rejected Applicants':
-          this.bucket = 'rejected';
-          this.restriction = this.defaultRestriction;
-          this.refetchCurrentPage();
+          this.restriction = ['_.decision', '==', 'rejected'];
+          this.changeScope([]);
+          break;
+        case '1/3':
+          this.restriction = ['_.status', '==', 'submitted'];
+          this.changeScope(['1/3']);
+          break;
+        case '2/3':
+          this.restriction = ['_.status', '==', 'submitted'];
+          this.changeScope(['2/3']);
           break;
         default:
           break;
@@ -206,7 +213,7 @@ export default Vue.extend({
     assignmentToName(emails) {
       let res = '';
       emails.forEach((val) => {
-        res += `${this.$store.state.allAdmins[val]}, `;
+        if (this.$store.state.allAdmins && this.$store.state.allAdmins[val]) { res += `${this.$store.state.allAdmins[val]}, `; }
       });
       return res;
     },
@@ -231,48 +238,29 @@ export default Vue.extend({
       const offset = 50 * props.index;
       window.scrollTo(0, window.screen.height / 2 + offset);
     },
-    async nextPage() {
-      console.log('Page is: ', this.page);
-      const startPoint = (this.page - 1) * this.rowsPerPage;
-      console.log(startPoint);
-      if (!this.applications[`${this.page - 1}`]) {
-        console.log('Getting next page');
-        const result = await db
-          .collection(this.hackathon)
-          .doc('applications')
-          .collection('all')
-          .orderBy('_.index')
-          .startAfter(startPoint)
-          .where('_.status', '==', 'submitted')
-          .limit(this.rowsPerPage)
-          .get();
-        // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-        console.log(`LENGTH: ${result.docs.length}`);
-        console.log(result.docs[0].data());
-        const resultsToUse = result.docs.map((doc) => {
-          const docData = doc.data();
-          docData.contact.email = doc.id;
-          return docData;
-        });
-        this.currentSet = resultsToUse as any;
-        Vue.set(
-          this.applications,
-          this.page - 1,
-          resultsToUse,
-        );
-      }
-    },
-    async refetchCurrentPage() {
-      console.log('In mount fill');
+    async changeScope(customFilter: string[]) {
       const result = await db
         .collection(this.hackathon)
         .doc('applications')
         .collection('all')
-        .where('_.status', '==', 'submitted')
-        .limit(this.rowsPerPage)
+        .orderBy('_.index')
+        .where(...this.restriction)
         .get();
-      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-      Vue.set(this.applications, this.page - 1, result.docs.map(a => a.data()));
+      let resultsToUse = result.docs.map((doc) => {
+        const docData = doc.data();
+        docData.contact.email = doc.id;
+        return docData;
+      });
+      if (customFilter.includes('1/3') || customFilter.includes('2/3')) {
+        const filter = customFilter.includes('1/3') ? 1 : 2;
+        resultsToUse = resultsToUse.filter(each => each._.reviews.scores.length === filter);
+      }
+      this.numApplicants = Math.ceil(resultsToUse.length / this.rowsPerPage);
+      this.pagination.totalItems = this.numApplicants;
+      this.currentSet = resultsToUse as any;
+      this.pagination.page = 1;
+      this.applications = [];
+      Vue.set(this.applications, 0, resultsToUse);
     },
     getAgeFromDate(bday): number {
       let bdayDate;
@@ -286,8 +274,10 @@ export default Vue.extend({
       }
       return this.calculateAge(bdayDate);
     },
+    dateFromTimestamp(obj) {
+      return new firestore.Timestamp(obj.seconds, obj.nanoseconds).toDate();
+    },
     calculateAge(birthday: Date): number {
-      // birthday is a date
       const ageDifMs = Date.now() - birthday.getTime();
       const ageDate = new Date(ageDifMs); // miliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -299,27 +289,14 @@ export default Vue.extend({
         .get();
       this.numApplicants = Math.ceil(stats.data()!.applications / this.rowsPerPage);
     },
+    bruh() {
+      setTimeout(() => {
+        this.numApplicants = this.pagination.rowsPerPage ? Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage) : 0;
+      }, 10);
+    },
   },
   async mounted() {
-    if (!this.applications[this.page - 1]) {
-      const result = await db
-        .collection(this.hackathon)
-        .doc('applications')
-        .collection('all')
-        .orderBy('_.index')
-        .where('_.status', '==', 'submitted')
-        .limit(this.rowsPerPage)
-        .get();
-      const resultsToUse = result.docs.map((doc) => {
-        const docData = doc.data();
-        docData.contact.email = doc.id;
-        return docData;
-      });
-      await this.setNumApplicants();
-      this.currentSet = resultsToUse as any;
-      // this.update_DataTable_lastVisible(result.docs[result.docs.length - 1]);
-      Vue.set(this.applications, this.page - 1, resultsToUse);
-    }
+    this.changeScope([]);
   },
 });
 </script>

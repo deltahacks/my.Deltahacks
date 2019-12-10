@@ -93,7 +93,7 @@
                     </v-flex>
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.logistics.diet_restrictions }}</p>
-                    </v-flex>  
+                    </v-flex>
                     <v-flex xs12 md6 lg6>
                       <h4>Shirt Size:</h4>
                     </v-flex>
@@ -152,7 +152,7 @@
           </v-flex>
         </v-layout>
         <vue-slider
-          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer || !applicant._.reviews.assignedTo.includes(getAuth())"
+          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer"
           id="slider"
           v-model="score"
           :piecewise="false"
@@ -164,7 +164,7 @@
           :dot-size="30"
         ></vue-slider>
         <v-btn
-          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer || !applicant._.reviews.assignedTo.includes(getAuth())"
+          :disabled="applicant._.reviews.scores.length >= 3 || isReviewed || !$store.state.currentUserIsAuthorizedReviewer"
           color="success"
           class="button2"
           @click="updateApplicationScore"
@@ -219,7 +219,7 @@ import { firestore, auth } from 'firebase';
 
 export default Vue.extend({
   name: 'Applicant',
-  props: ['usrname', 'applicant', 'isReviewed', 'refetchCurrentPage'],
+  props: ['usrname', 'applicant', 'isReviewed'],
   data: () => ({
     dialog: false,
     currentPage: 0,
@@ -253,6 +253,9 @@ export default Vue.extend({
   }),
   components: {
     vueSlider,
+  },
+  mounted() {
+    console.log(this.$store.state.currentUserIsAuthorizedReviewer);
   },
   methods: {
     decisionStats() {

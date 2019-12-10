@@ -5,11 +5,14 @@
         <div class="container-hello100 background">
           <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
           <h1 class="hellotext">{{ splashMessage }}</h1>
-          <img src="../assets/vi2.png" draggable="false" class="hello-back-vi" />
+          <img
+            src="../assets/vi2.png"
+            draggable="false"
+            class="hello-back-vi"
+          />
         </div>
       </v-app>
       <v-app key="2" v-if="counter === 1" class="dashboard statusbackground">
-        <!-- <Navigation class="mobile"/> -->
         <Navbar2 />
         <div class="wrap">
           <!--Column#1-->
@@ -28,10 +31,9 @@
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
                   {{ currentHeader }}
-                  <a
-                    @click.prevent="resend()"
-                    v-if="!isVerified() && !resent"
-                  >Resend Email</a>
+                  <a @click.prevent="resend()" v-if="!isVerified() && !resent">
+                    Resend Email
+                  </a>
                 </p>
               </div>
               <a href="/apply" class="apply-btn">
@@ -140,10 +142,9 @@
               <div class="emote">{{ emoticon }}</div>
               <p class="bigmobile">
                 {{ currentHeader }}
-                <a
-                  @click.prevent="resend()"
-                  v-if="!isVerified() && !resent"
-                >Resend Email</a>
+                <a @click.prevent="resend()" v-if="!isVerified() && !resent">
+                  Resend Email
+                </a>
               </p>
             </div>
             <a href="/apply" class="apply-btn">
@@ -163,7 +164,13 @@
           </div>
         </div>
 
-        <v-snackbar v-model="feedback" top color="success" right :timeout="3000">
+        <v-snackbar
+          v-model="feedback"
+          top
+          color="success"
+          right
+          :timeout="3000"
+        >
           Thanks! We've got your response.
           <v-btn color="white" flat @click="feedback = false">Close</v-btn>
         </v-snackbar>
@@ -205,6 +212,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
+      accepted: false,
       counter: 0,
       genderCompleted: true,
       response: {
@@ -314,64 +322,12 @@ export default Vue.extend({
     },
   },
   methods: {
-    method1() {
+    splashTime() {
       this.timeout = setTimeout(() => {
         this.counter = 1;
       }, 2000);
     },
-    toggleRSVP(res) {
-      this.hasResponded = true;
-      this.response.rsvp = res;
-      if (!this.response.rsvp) {
-        this.response = this.emptyResponse;
-      }
-      this.formChange();
-    },
-    changeRSVP() {
-      if (!this.response.rsvp) {
-        this.response = this.emptyResponse;
-      }
-    },
-    formChange() {
-      this.confirmation = false;
-      if (this.timeout) {
-        clearTimeout(this.timeout);
-        this.timeout = null;
-      }
-      this.timeout = setTimeout(() => {
-        this.submitRSVP();
-      }, 2000);
-    },
-    changeBus() {
-      if (!this.response.bus) this.response.location = '';
-      this.formChange();
-    },
-    async submitRSVP() {
-      const { email } = auth().currentUser!;
-      const folder = this.response.rsvp ? 'Yes' : 'No';
-      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
-      const rsvpRef = db
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('RSVP')
-        .doc('all');
-      try {
-        const res = await rsvpRef
-          .collection(folder)
-          // TOD(null-check) implement better solution for when email is null
-          .doc(email || 'test@test.com')
-          .set(this.response);
-        this.feedback = true;
-        this.confirmation = true;
-      } catch (err) {
-        console.log(err);
-      }
-      rsvpRef
-        .collection(opposingFolder)
-        // TOD(null-check) implement better solution for when email is null
-        .doc(email || 'test@test.com')
-        .delete();
-    },
+    // Step is state of the page 
     updateStep(email) {
       db.collection('DH6')
         .doc('applications')
@@ -380,61 +336,18 @@ export default Vue.extend({
         .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
-            switch (data!._.status) {
-              case 'in progress':
-                this.step = 2;
-                break;
-              case 'submitted':
-                this.step = 3;
-                break;
-              case 'accepted':
-                this.step = 4;
-                break;
-              case 'rejected':
-                this.step = 5;
-                break;
-              default:
-                this.step = 0;
-            }
+            if (data!._.status && data!._.status === 'in progress') this.step = 2;
+            if (data!._.status && data!._.status === 'submitted') this.step = 3;
+            // Check if user made it into any round & set to accepted
+            if (data!._.decision && data!._.decision.substring(0, 6) === 'round') this.step = 4;
+            if (data!._.decision && data!._.decision === 'rejected') this.step = 5;
+            if (data!._.RSVP && data!._.RSVP.coming) this.step = 7;
+            if (data!._.RSVP && data!._.RSVP.origin) this.step = 8;
           } else {
             // application not started
             this.step = 1;
           }
         });
-    },
-    async fillRSVP() {
-      const { email } = auth().currentUser!;
-      const folder = this.response.rsvp ? 'Yes' : 'No';
-      const opposingFolder = !this.response.rsvp ? 'Yes' : 'No';
-      const rsvpRef = db
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('RSVP')
-        .doc('all')
-        .collection('Yes')
-        // TOD(null-check) implement better solution for when email is null
-        .doc(email || 'test@test.com');
-      const doc: any = rsvpRef.get();
-      if (doc.exists) {
-        const data = doc.data();
-        this.response = data;
-        this.confirmation = true;
-        this.hasResponded = true;
-      } else {
-        const doc = await db
-          .collection('hackathon')
-          .doc('DH5')
-          .collection('RSVP')
-          .doc('all')
-          .collection('No')
-          // TOD(null-check) implement better solution for when email is null
-          .doc(email || 'test@test.com')
-          .get();
-        if (doc.exists) {
-          this.confirmation = true;
-          this.hasResponded = true;
-        }
-      }
     },
     nextImage() {
       // remove showMe class from current image
@@ -476,33 +389,13 @@ export default Vue.extend({
     isVerified: () => auth().currentUser!.emailVerified,
   },
   async beforeMount() {
-    // console.log('mounted');
     const appEmail = auth().currentUser!.email as string;
     this.splashMessage =
       this.$route.params.firstTime === 'yes' ? 'Hello.' : 'Hello, Again.';
-    // const genderStatus = await this.checkGenderInput(appEmail);
-    try {
-      db.collection('users')
-        .doc(appEmail)
-        .onSnapshot((snap) => {
-          if (snap.exists) {
-            this.updateStep(appEmail);
-            // if (this.step > 1) this.checkGenderInput(appEmail);
-            if (this.step > 3) {
-              this.fillRSVP();
-            }
-          } else {
-            this.step = 7;
-            console.log(`User ${appEmail} not found.`);
-          }
-        });
-    } catch (err) {
-      console.error(err);
-      this.criticalError = true;
-    }
+    this.updateStep(appEmail);
   },
   async mounted() {
-    this.method1();
+    this.splashTime();
     this.timer = setInterval(this.nextImage, 4000);
   },
   beforeDestroy() {

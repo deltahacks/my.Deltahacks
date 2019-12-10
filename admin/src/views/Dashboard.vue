@@ -330,6 +330,7 @@ export default Vue.extend({
     Navbar,
     // eslint-disable-next-line vue/no-unused-components
     PieChart,
+    // eslint-disable-next-line vue/no-unused-components
     PieChart2,
     IOdometer,
     DataTable,
@@ -555,7 +556,7 @@ export default Vue.extend({
 }
 
 .iOdometer {
-  font-size: 3em;
+  font-size: 150%;
   margin: 0;
   color: #00ced1;
 }

@@ -99,6 +99,7 @@ export interface Reviews {
 }
 
 export interface StatusModel {
+  accepted: boolean;
   counter: number;
   genderCompleted: boolean;
   response: {
