@@ -26,19 +26,19 @@
               </p>
             </div>
             <div class="box box9" v-if="step === 5">
-              <p class="big">Coming?</p>
-              <v-btn color="success" @click="() => step = 6" fab x-large dark>
-                Y
+              <p class="big rsvp" style="font-size: 5vw">Will you be coming?</p>
+              <v-btn class="rsvp-btn" color="rgba(255,255,255,0.1)" @click="() => step = 6" fab x-large dark>
+                <p>Yes</p>
               </v-btn>
-              <v-btn color="success" @click="() => { updateRSVP(true, false), step = 7 }" fab x-large dark>
-                N
+              <v-btn class="rsvp-btn" color="rgba(255,255,255,0.1)" @click="() => { updateRSVP(true, false), step = 7 }" fab x-large dark>
+                <p>No</p>
               </v-btn>
             </div>
             <div class="box box9" v-if="step === 6">
               <p class="big">Bus?</p>
+              <p class="small" style="margin-top:-20px">Please select a stop below.</p>
                 <v-select
                   :items="busLocations"
-                  label="Outlined style"
                   v-model="busSelected"
                   dense
                   outlined

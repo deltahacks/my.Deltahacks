@@ -258,6 +258,38 @@ p {
   display: none;
 }
 
+.rsvp-btn {
+  border-radius: 50%;
+  width: 8vw;
+  height: 8vw;
+  padding-top: 10px;
+  color: white;
+  font-size: 1.5vw;
+  right: -16vw;
+  bottom: 100px;
+  text-transform: capitalize;
+  margin: 20px;
+}
+
+.rsvp-dropdown {
+  border-radius: 50%;
+  
+  width: 8vw;
+  color: white;
+  font-size: 1.5vw;
+  text-transform: capitalize;
+}
+.v-input {
+  border-radius: 25px;
+  background-color: rgba(255,255,255,0.5);
+  width: 50%;
+  left: 2vw;
+
+}
+
+.v-input__icon {
+  color: red;
+}
 @media only screen and (max-width: 900px) {
   .col4 {
     width: 100%;
@@ -307,6 +339,16 @@ p {
     -moz-animation: statusanimation 180s ease infinite !important;
     animation: statusanimation 180s ease infinite !important;
   }
+  .rsvp-btn {
+    width: 20vw;
+    height:20vw;
+    font-size: 4vw;
+    right: 0px;
+    bottom: 0px;
+  }
+  .rsvp {
+    text-align: center;
+  }
 }
 
 
@@ -336,6 +378,10 @@ p {
   .currentStatus {
     width: 40vw;
     font-size: 2vw;
+  }
+  .rsvp-btn {
+    right: 0px;
+    bottom: 0px;
   }
 }
 .slide {
