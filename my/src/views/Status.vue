@@ -27,12 +27,16 @@
             </div>
             <div class="box box9" v-if="step === 5">
               <p class="big rsvp" style="font-size: 5vw">Will you be coming?</p>
-              <v-btn class="rsvp-btn" color="rgba(255,255,255,0.1)" @click="() => step = 6" fab x-large dark>
-                <p>Yes</p>
-              </v-btn>
-              <v-btn class="rsvp-btn" color="rgba(255,255,255,0.1)" @click="() => { updateRSVP(true, false), step = 7 }" fab x-large dark>
-                <p>No</p>
-              </v-btn>
+                <a @click="() => step = 6">
+                  <div class="box box3 rsvp-btn">
+                    Yes
+                  </div>
+                </a>
+                <a @click="() => { updateRSVP(true, false), step = 7 }">
+                  <div class="box box3 rsvp-btn">
+                    No
+                  </div>
+                </a>
             </div>
             <div class="box box9" v-if="step === 6">
               <p class="big">Bus?</p>
@@ -47,9 +51,13 @@
                   append-icon="keyboard_arrow_down"
                   background-color="rgba(255,255,255,0.5)"
                 ></v-select>
-                <v-btn class="rsvp-btn next" color="rgba(255,255,255,0.1)"  @click=" () => { updateRSVP(true, true, busSelected), step = 7 }" fab x-large dark>
-                  Next
-                </v-btn>
+                <div class="col col2">
+                  <a @click=" () => { updateRSVP(true, true, busSelected), step = 7 }">
+                    <div class="box box3 next">
+                      Next
+                    </div>
+                  </a>
+                </div>
             </div>
             <div class="box box9" v-if="step === 7">
               <template v-if="rsvp.coming">
@@ -60,9 +68,13 @@
                 <p class="big">Can't make it.</p>
                 <p class="small" style="margin-top:-20px">We're sorry you can't make it. Hope to see you next time!</p>
               </template>
+              <div class="col col4">
                 <a @click="() => step = 5">
-                  <p class="small"><strong>Change Response</strong></p>
+                  <div class="box box2 change-response">
+                    <p class="small" style="text-align:center"><strong>Change Response</strong></p>
+                  </div>
                 </a>
+              </div>
             </div>
 
             <div class="box box5 status desktop">

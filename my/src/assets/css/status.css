@@ -259,16 +259,11 @@ p {
 }
 
 .rsvp-btn {
-  border-radius: 50%;
-  width: 8vw;
-  height: 8vw;
-  padding-top: 10px;
-  color: white;
+  height: 7vw;
   font-size: 1.5vw;
-  right: -16vw;
-  bottom: 100px;
-  text-transform: capitalize;
-  margin: 20px;
+  line-height: 7vw;
+  width: 49.5%;
+  margin: 1px;
 }
 
 .rsvp-dropdown {
@@ -285,15 +280,15 @@ p {
 }
 
 .next {
-  position: absolute;
-  width: 12vw;
-  height: 12vw;
-  top: 8vw;
-  left: 15vw;
-  margin-left: auto;
-  margin-right: auto;
+  bottom: 6vw;
+  left: 35vw;
+  line-height: 6vw;
+  font-size: 1.5vw;
 }
-
+.change-response {
+  width: 25vw;
+  margin: 1vw 15vw;
+}
 @media only screen and (max-width: 900px) {
   .col4 {
     width: 100%;
@@ -344,18 +339,21 @@ p {
     animation: statusanimation 180s ease infinite !important;
   }
   .rsvp-btn {
-    width: 20vw;
-    height:20vw;
-    font-size: 4vw;
-    right: 0px;
-    bottom: 0px;
-  }
-  .rsvp {
-    text-align: center;
+    width: 99%;
+    height: 14vw;
+    line-height: 12vw;
+    font-size: 3vw;
   }
   .next {
-    top: 10vw;
-    left: 60%;
+    width: 22vw;
+    margin:-18vw 0 0 25vw;
+    line-height: 12vw;
+    font-size: 3vw;
+  }
+  .change-response {
+    width: 40vw;
+    margin: 1vw 20vw;
+    height: 4vw;
   }
 }
 
@@ -386,12 +384,20 @@ p {
     font-size: 2vw;
   }
   .rsvp-btn {
-    right: 0px;
-    bottom: 0px;
+    width: 99%;
+    height: 8.5vw;
+    line-height: 8.5vw;
+    font-size: 2vw;
   }
-  .next{
-    left: 22vw;
-    top: 15vw;
+  .change-response {
+    width: 30vw;
+    margin: 5vw 7vw;
+  }
+  .next {
+    width: 22vw;
+    margin: 5vw 0 0 -52vw;
+    line-height: 12vw;
+    font-size: 3vw;
   }
 }
 .slide {
