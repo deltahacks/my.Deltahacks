@@ -273,23 +273,27 @@ p {
 
 .rsvp-dropdown {
   border-radius: 50%;
-  
   width: 8vw;
   color: white;
   font-size: 1.5vw;
   text-transform: capitalize;
 }
 .v-input {
-  border-radius: 25px;
-  background-color: rgba(255,255,255,0.5);
   width: 50%;
   left: 2vw;
-
+  border-radius: 10px;
 }
 
-.v-input__icon {
-  color: red;
+.next {
+  position: absolute;
+  width: 12vw;
+  height: 12vw;
+  top: 8vw;
+  left: 15vw;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 @media only screen and (max-width: 900px) {
   .col4 {
     width: 100%;
@@ -349,9 +353,11 @@ p {
   .rsvp {
     text-align: center;
   }
+  .next {
+    top: 10vw;
+    left: 60%;
+  }
 }
-
-
 
 @media only screen and (max-width: 1280px) and (min-width: 901px) {
   .col4, .col6 {width:50%;}
@@ -382,6 +388,10 @@ p {
   .rsvp-btn {
     right: 0px;
     bottom: 0px;
+  }
+  .next{
+    left: 22vw;
+    top: 15vw;
   }
 }
 .slide {

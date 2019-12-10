@@ -40,22 +40,31 @@
                 <v-select
                   :items="busLocations"
                   v-model="busSelected"
+                  filled
+                  rounded
                   dense
-                  outlined
-                  @change="logMe(busSelected)"
+                  solo
+                  append-icon="keyboard_arrow_down"
+                  background-color="rgba(255,255,255,0.5)"
                 ></v-select>
-                <v-btn color="success" @click=" () => { updateRSVP(true, true, busSelected), step = 7 }" fab x-large dark>
+                <v-btn class="rsvp-btn next" color="rgba(255,255,255,0.1)"  @click=" () => { updateRSVP(true, true, busSelected), step = 7 }" fab x-large dark>
                   Next
                 </v-btn>
             </div>
             <div class="box box9" v-if="step === 7">
-              <p class="big">Confirmed</p>
-                RSVP'd: {{ rsvp.coming }}
-                <p v-if="rsvp.coming">Location: {{rsvp.origin}}</p>
-                <v-btn color="success" @click="() => step = 5" fab x-large dark>
-                  Change
-                </v-btn>
+              <template v-if="rsvp.coming">
+                <p class="big">Confirmed.</p>
+                <p class="small" style="margin-top:-20px">We hope you're as excited as we are. See you soon!</p>
+              </template>
+              <template v-if="!rsvp.coming">
+                <p class="big">Can't make it.</p>
+                <p class="small" style="margin-top:-20px">We're sorry you can't make it. Hope to see you next time!</p>
+              </template>
+                <a @click="() => step = 5">
+                  <p class="small"><strong>Change Response</strong></p>
+                </a>
             </div>
+
             <div class="box box5 status desktop">
               <div class="currentStatus">
                 <h2>My Application Status</h2>
@@ -341,7 +350,6 @@ export default Vue.extend({
       return this.subheaders[this.step];
     },
     emoticon(): string {
-      console.log(this.step);
       switch (this.step) {
         case 0:
           return '🙂';
