@@ -259,11 +259,11 @@ p {
 }
 
 .rsvp-btn {
-  height: 7vw;
+  height: 6vw;
   font-size: 1.5vw;
-  line-height: 7vw;
-  width: 49.5%;
-  margin: 1px;
+  line-height: 6vw;
+  width: 30%;
+  margin-left: 30px;
 }
 
 .rsvp-dropdown {
@@ -273,6 +273,7 @@ p {
   font-size: 1.5vw;
   text-transform: capitalize;
 }
+
 .v-input {
   width: 50%;
   left: 2vw;
@@ -285,9 +286,16 @@ p {
   line-height: 6vw;
   font-size: 1.5vw;
 }
+
 .change-response {
   width: 25vw;
   margin: 1vw 15vw;
+  line-height: 3vw;
+  font-size: 1.5vw;
+}
+
+a {
+  font-family: 'Montserrat', sans-serif;
 }
 @media only screen and (max-width: 900px) {
   .col4 {
@@ -343,6 +351,7 @@ p {
     height: 14vw;
     line-height: 12vw;
     font-size: 3vw;
+    margin: 1px;
   }
   .next {
     width: 22vw;
@@ -352,8 +361,10 @@ p {
   }
   .change-response {
     width: 40vw;
-    margin: 1vw 20vw;
+    margin: 1vw 25vw;
     height: 4vw;
+    font-size: 3vw;
+    line-height: 4vw;
   }
 }
 
@@ -388,10 +399,11 @@ p {
     height: 8.5vw;
     line-height: 8.5vw;
     font-size: 2vw;
+    margin: 1px;
   }
   .change-response {
     width: 30vw;
-    margin: 5vw 7vw;
+    margin: 1vw 7vw;
   }
   .next {
     width: 22vw;

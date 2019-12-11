@@ -71,7 +71,7 @@
               <div class="col col4">
                 <a @click="() => step = 5">
                   <div class="box box2 change-response">
-                    <p class="small" style="text-align:center"><strong>Change Response</strong></p>
+                    Change Response
                   </div>
                 </a>
               </div>
