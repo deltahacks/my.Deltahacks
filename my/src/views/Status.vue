@@ -286,7 +286,7 @@ export default Vue.extend({
       confirmation: false,
       timeout: undefined,
       bus: false,
-      busLocations: busCities,
+      busLocations: busCities.concat(['Not busing']),
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
