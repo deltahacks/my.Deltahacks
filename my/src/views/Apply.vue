@@ -12,17 +12,6 @@
       </a><br>
       </div>
     </div>
-    <div v-if="app._.status !== 'in progress'" class="submitted-message">
-      Your application has been submitted!
-      <br />We’ll let you know as soon as we make a decision.
-      <br />
-      <div style="padding-top: 10px !important;">
-      <a class="goback" href="../status">
-        <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
-      </a><br>
-      <a class="logout" @click.prevent="logout">Logout</a>
-      </div>
-    </div>
     <div class="background">
       <Nav class="fit" />
       <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
