@@ -17,7 +17,7 @@
         <div class="wrap">
           <!--Column#1-->
           <div class="col col6">
-            <div class="box box9">
+            <div class="box box9" v-if="step <= 4">
               <p class="big">Welcome.</p>
               <p class="small">
                 Be a part of the hackathon for change. We are looking forward to
@@ -25,6 +25,58 @@
                 application!
               </p>
             </div>
+            <div class="box box9" v-if="step === 5">
+              <p class="big rsvp" style="font-size: 5vw">Will you be coming?</p>
+                <a @click="() => step = 6">
+                  <div class="box box3 rsvp-btn">
+                    Yes
+                  </div>
+                </a>
+                <a @click="() => { updateRSVP(true, false), step = 7 }">
+                  <div class="box box3 rsvp-btn">
+                    No
+                  </div>
+                </a>
+            </div>
+            <div class="box box9" v-if="step === 6">
+              <p class="big">Bus?</p>
+              <p class="small" style="margin-top:-20px">Please select a stop below.</p>
+                <v-select
+                  :items="busLocations"
+                  v-model="busSelected"
+                  filled
+                  rounded
+                  dense
+                  solo
+                  append-icon="keyboard_arrow_down"
+                  background-color="rgba(255,255,255,0.5)"
+                ></v-select>
+                <div class="col col2">
+                  <a @click=" () => { updateRSVP(true, true, busSelected), step = 7 }">
+                    <div class="box box3 next">
+                      Next
+                    </div>
+                  </a>
+                </div>
+            </div>
+            <div class="box box9" v-if="step === 7">
+              <template v-if="rsvp.coming">
+                <p class="big">Confirmed.</p>
+                <p class="small" style="margin-top:-20px">We hope you're as excited as we are. See you soon!</p>
+              </template>
+              <template v-if="!rsvp.coming">
+                <p class="big">Can't make it.</p>
+                <p class="small" style="margin-top:-20px">We're sorry you can't make it. Hope to see you next time!</p>
+              </template>
+              <div class="col col4">
+                <a @click="() => step = 5">
+                  <div class="box box2 change-response">
+                    Change Response
+                  </div>
+                </a>
+              </div>
+            </div>
+
             <div class="box box5 status desktop">
               <div class="currentStatus">
                 <h2>My Application Status</h2>
@@ -205,6 +257,7 @@ import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
+import { busCities } from '../data';
 
 const allUniversities = [];
 export default Vue.extend({
@@ -212,6 +265,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
+      hackathon: 'DH6',
       accepted: false,
       counter: 0,
       genderCompleted: true,
@@ -232,11 +286,7 @@ export default Vue.extend({
       confirmation: false,
       timeout: undefined,
       bus: false,
-      busLocations: [
-        'University of Waterloo',
-        'University of Toronto',
-        'University of Western Ontario',
-      ],
+      busLocations: busCities.concat(['Not busing']),
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
@@ -279,9 +329,10 @@ export default Vue.extend({
         'Application unsubmitted',
         'In progress',
         'This application is under review.',
-        "Congratulations, you've been accepted!",
         "Sorry we couldn't offer you a spot.",
-        'Unfortunately we cannot offer you an invitation this time.',
+        "Congratulations, you've been accepted!",
+        "Congratulations, you've been accepted!",
+        "Congratulations, you've been accepted!",
         '',
       ],
       links: ['Home', 'About', 'Contact'],
@@ -296,6 +347,8 @@ export default Vue.extend({
       numImages: 13,
       resent: false,
       splashMessage: '',
+      busSelected: 'Not busing',
+      rsvp: { coming: false, origin: '' },
     };
   },
   components: {
@@ -314,7 +367,7 @@ export default Vue.extend({
           return '🙂';
         case 1:
           return '😐';
-        case 5:
+        case 4:
           return '🙁';
         default:
           return '🙂';
@@ -322,14 +375,40 @@ export default Vue.extend({
     },
   },
   methods: {
+    // Grabs the application from where its store in firebase
+    fetchFromFirebase(): Promise<any> {
+      return this.$store.state.db
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .doc(auth().currentUser!.email)
+        .get();
+    },
     splashTime() {
       this.timeout = setTimeout(() => {
         this.counter = 1;
       }, 2000);
     },
-    // Step is state of the page 
-    updateStep(email) {
-      db.collection('DH6')
+    async updateRSVP(update: boolean, coming: boolean = false, origin: string = '') {
+      const app = await this.fetchFromFirebase();
+      const appWithRSVP = app.data();
+      const rsvp = { coming, origin };
+      if (update && app.data()) {
+        appWithRSVP._.RSVP = rsvp;
+        await db.collection(this.hackathon)
+          .doc('applications')
+          .collection('all')
+          .doc(auth().currentUser!.email as string)
+          .update(appWithRSVP);
+      }
+      this.rsvp = (appWithRSVP) ? appWithRSVP._.RSVP : { coming: false, origin: '' };
+    },
+    logMe(x) {
+      console.log(x);
+    },
+    // Step is state of the page
+    updateStep(email: string) {
+      db.collection(this.hackathon)
         .doc('applications')
         .collection('all')
         .doc(email)
@@ -339,10 +418,10 @@ export default Vue.extend({
             if (data!._.status && data!._.status === 'in progress') this.step = 2;
             if (data!._.status && data!._.status === 'submitted') this.step = 3;
             // Check if user made it into any round & set to accepted
-            if (data!._.decision && data!._.decision.substring(0, 6) === 'round') this.step = 4;
-            if (data!._.decision && data!._.decision === 'rejected') this.step = 5;
-            if (data!._.RSVP && data!._.RSVP.coming) this.step = 7;
-            if (data!._.RSVP && data!._.RSVP.origin) this.step = 8;
+            if (data!._.decision && data!._.decision === 'rejected') this.step = 4;
+            if (data!._.decision && data!._.decision.substring(0, 5) === 'round') this.step = 5;
+            if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
+            if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
           } else {
             // application not started
             this.step = 1;
@@ -397,6 +476,7 @@ export default Vue.extend({
   async mounted() {
     this.splashTime();
     this.timer = setInterval(this.nextImage, 4000);
+    this.updateRSVP(false);
   },
   beforeDestroy() {
     clearInterval(this.timer);

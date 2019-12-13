@@ -258,6 +258,45 @@ p {
   display: none;
 }
 
+.rsvp-btn {
+  height: 6vw;
+  font-size: 1.5vw;
+  line-height: 6vw;
+  width: 30%;
+  margin-left: 30px;
+}
+
+.rsvp-dropdown {
+  border-radius: 50%;
+  width: 8vw;
+  color: white;
+  font-size: 1.5vw;
+  text-transform: capitalize;
+}
+
+.v-input {
+  width: 50%;
+  left: 2vw;
+  border-radius: 10px;
+}
+
+.next {
+  bottom: 6vw;
+  left: 35vw;
+  line-height: 6vw;
+  font-size: 1.5vw;
+}
+
+.change-response {
+  width: 25vw;
+  margin: 1vw 15vw;
+  line-height: 3vw;
+  font-size: 1.5vw;
+}
+
+a {
+  font-family: 'Montserrat', sans-serif;
+}
 @media only screen and (max-width: 900px) {
   .col4 {
     width: 100%;
@@ -307,9 +346,27 @@ p {
     -moz-animation: statusanimation 180s ease infinite !important;
     animation: statusanimation 180s ease infinite !important;
   }
+  .rsvp-btn {
+    width: 99%;
+    height: 14vw;
+    line-height: 12vw;
+    font-size: 3vw;
+    margin: 1px;
+  }
+  .next {
+    width: 22vw;
+    margin:-18vw 0 0 25vw;
+    line-height: 12vw;
+    font-size: 3vw;
+  }
+  .change-response {
+    width: 40vw;
+    margin: 1vw 25vw;
+    height: 4vw;
+    font-size: 3vw;
+    line-height: 4vw;
+  }
 }
-
-
 
 @media only screen and (max-width: 1280px) and (min-width: 901px) {
   .col4, .col6 {width:50%;}
@@ -336,6 +393,23 @@ p {
   .currentStatus {
     width: 40vw;
     font-size: 2vw;
+  }
+  .rsvp-btn {
+    width: 99%;
+    height: 8.5vw;
+    line-height: 8.5vw;
+    font-size: 2vw;
+    margin: 1px;
+  }
+  .change-response {
+    width: 30vw;
+    margin: 1vw 7vw;
+  }
+  .next {
+    width: 22vw;
+    margin: 5vw 0 0 -28vw;
+    line-height: 12vw;
+    font-size: 3vw;
   }
 }
 .slide {

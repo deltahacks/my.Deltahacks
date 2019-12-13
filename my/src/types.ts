@@ -99,6 +99,7 @@ export interface Reviews {
 }
 
 export interface StatusModel {
+  hackathon: string;
   accepted: boolean;
   counter: number;
   genderCompleted: boolean;
@@ -142,6 +143,8 @@ export interface StatusModel {
   numImages: number;
   resent: boolean;
   splashMessage: string;
+  busSelected: string;
+  rsvp: {coming: boolean, origin: string};
 }
 
 export interface ApplyState {
@@ -286,6 +289,8 @@ type citites =
   | 'Brampton'
   | 'Markham'
   | 'Milton';
+
+type busCities = '' | 'Western' | 'Waterloo' | 'UofT' | 'UTSC/York';
 
 type shirt_size = '' | 'XS' | 'S' | 'M' | 'L' | 'XL';
 
