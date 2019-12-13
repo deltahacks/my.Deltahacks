@@ -347,7 +347,7 @@ export default Vue.extend({
       numImages: 13,
       resent: false,
       splashMessage: '',
-      busSelected: '',
+      busSelected: 'Not busing',
       rsvp: { coming: false, origin: '' },
     };
   },
