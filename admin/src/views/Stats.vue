@@ -541,14 +541,12 @@ export default Vue.extend({
         let totalSubmitted = 0;
         const ref = await db.collection('DH6').doc('applications').collection('all').get();
         for (let i = 0; i < ref.size; i++) {
-          const object = ref.docs[i];
-          const subset = (({ _document }) => ({ _document }))(object); // Destructure the object
-          if (subset._document.proto.fields._.mapValue.fields.status.stringValue === 'submitted') {
+          if (ref.docs[i].data()._.status === 'submitted') {
             // Extracting Q1 String then counting words
-            totalWordsQ1 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q1.stringValue);
-            totalWordsQ2 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q2.stringValue);
-            totalWordsQ3 += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.q3.stringValue);
-            totalWordsAnythingElse += (this as any).splitWord(subset._document.proto.fields.responses.mapValue.fields.anything_else.stringValue);
+            totalWordsQ1 += (this as any).splitWord(ref.docs[i].data().responses.q1);
+            totalWordsQ2 += (this as any).splitWord(ref.docs[i].data().responses.q2);
+            totalWordsQ3 += (this as any).splitWord(ref.docs[i].data().responses.q3);
+            totalWordsAnythingElse += (this as any).splitWord(ref.docs[i].data().responses.anything_else);
             totalSubmitted += 1;
           }
         }
