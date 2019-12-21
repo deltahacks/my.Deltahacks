@@ -107,6 +107,16 @@
             </v-card>
           </v-card>
         </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color="white lighten-4">
+            <v-card-title primary-title>Average Time to Submit (Hours)</v-card-title>
+            <v-card color="white lighten-4" dark>
+              <v-card-text class="totalapps center">
+                <IOdometer class="iOdometer" :value="avgDaysToSubmit" />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
       </v-layout>
       <v-layout row wrap>
         <h3>Distribution</h3>
@@ -268,6 +278,7 @@ interface StatsData {
   rsvp: number; // Stats - # of RSVP
   applicationCount: number;
   averageWordCount: any;
+  avgDaysToSubmit: number;
 }
 
 export default Vue.extend({
@@ -363,6 +374,7 @@ export default Vue.extend({
       walkins: 0,
       bus_passengers: 0,
       averageWordCount: {},
+      avgDaysToSubmit: 0,
       pickups: {
         'University of Waterloo': 0,
         'University of Toronto': 0,
@@ -438,6 +450,7 @@ export default Vue.extend({
     (this as any).setCheckInData();
     (this as any).countApplications();
     (this as any).countWords();
+    (this as any).avgSubmitTime();
     db
       .collection('DH6')
       .doc('statistics')
@@ -562,6 +575,24 @@ export default Vue.extend({
     },
     splitWord(str) {
       return str.split(' ').length;
+    },
+    async avgSubmitTime() {
+      try {
+        let avgTime = 0;
+        let totalSubmitted = 0;
+        const ref = await db.collection('DH6').doc('applications').collection('all').get();
+        for (let i = 0; i < ref.size; i++) {
+          if (ref.docs[i].data()._.status === 'submitted') {
+            const timeInitiated = new Date(ref.docs[i].data()._.time_initiated.seconds*1000);
+            const timeSubmitted = new Date(ref.docs[i].data()._.time_submitted.seconds*1000);
+            avgTime += (timeSubmitted.getTime() - timeInitiated.getTime()) / (1000 * 3600) // Converts ms to days
+            totalSubmitted += 1;
+          }
+        }
+        (this as any).avgDaysToSubmit = (avgTime / totalSubmitted).toFixed(2);
+      } catch (err) {
+        console.error(err);
+      }
     },
     // async getRSVP() {
     //   return new Promise(async (resolve, reject) => {
