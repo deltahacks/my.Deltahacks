@@ -519,6 +519,7 @@ export default Vue.extend({
         .doc('statistics')
         .onSnapshot((doc) => {
           (this as any).mentors = doc.data()!.mentors;
+          (this as any).rsvp = doc.data()!.rsvp;
         });
       // db.collection('hackathon')
       //   .doc('DH5')
