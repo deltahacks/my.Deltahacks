@@ -445,12 +445,14 @@ export default Vue.extend({
     // ApexChart,
   },
   async beforeMount() {
-    (this as any).statistics = await (this as any).getStatistics();
     // this.setAllData();
+        (this as any).dbref = await (this as any).getDB();
+    console.log((this as any).dbref);
     (this as any).setCheckInData();
     (this as any).countApplications();
     (this as any).countWords();
     (this as any).avgSubmitTime();
+    (this as any).countRSVP();
     db
       .collection('DH6')
       .doc('statistics')
@@ -519,7 +521,6 @@ export default Vue.extend({
         .doc('statistics')
         .onSnapshot((doc) => {
           (this as any).mentors = doc.data()!.mentors;
-          (this as any).rsvp = doc.data()!.rsvp;
         });
       // db.collection('hackathon')
       //   .doc('DH5')
@@ -541,10 +542,23 @@ export default Vue.extend({
       //   });
     },
     countApplications() {
-      db.collection('DH6').doc('applications').collection('all').get()
-        .then((snap) => {
-          (this as any).applicationCount = snap.size;
-        });
+          (this as any).applicationCount = (this as any).dbref.length;
+    },
+    async countRSVP() {
+      try {
+        const ref = (this as any).dbref;
+        for (let i = 0; i < ref.length; i++) {
+          try {
+            if (ref[i]._.RSVP.coming) {
+              (this as any).rsvp += 1;
+            }
+          } catch (error) {
+            continue;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     async countWords() {
       try {
@@ -553,14 +567,14 @@ export default Vue.extend({
         let totalWordsQ3 = 0;
         let totalWordsAnythingElse = 0;
         let totalSubmitted = 0;
-        const ref = await db.collection('DH6').doc('applications').collection('all').get();
-        for (let i = 0; i < ref.size; i++) {
-          if (ref.docs[i].data()._.status === 'submitted') {
+        const ref = (this as any).dbref;
+        for (let i = 0; i < ref.length; i++) {
+          if (ref[i]._.status === 'submitted') {
             // Extracting Q1 String then counting words
-            totalWordsQ1 += (this as any).splitWord(ref.docs[i].data().responses.q1);
-            totalWordsQ2 += (this as any).splitWord(ref.docs[i].data().responses.q2);
-            totalWordsQ3 += (this as any).splitWord(ref.docs[i].data().responses.q3);
-            totalWordsAnythingElse += (this as any).splitWord(ref.docs[i].data().responses.anything_else);
+            totalWordsQ1 += (this as any).splitWord(ref[i].responses.q1);
+            totalWordsQ2 += (this as any).splitWord(ref[i].responses.q2);
+            totalWordsQ3 += (this as any).splitWord(ref[i].responses.q3);
+            totalWordsAnythingElse += (this as any).splitWord(ref[i].responses.anything_else);
             totalSubmitted += 1;
           }
         }
@@ -581,16 +595,16 @@ export default Vue.extend({
       try {
         let avgTime = 0;
         let totalSubmitted = 0;
-        const ref = await db.collection('DH6').doc('applications').collection('all').get();
-        for (let i = 0; i < ref.size; i++) {
-          if (ref.docs[i].data()._.status === 'submitted') {
-            const timeInitiated = new Date(ref.docs[i].data()._.time_initiated.seconds*1000);
-            const timeSubmitted = new Date(ref.docs[i].data()._.time_submitted.seconds*1000);
+        const ref = (this as any).dbref;
+        for (let i = 0; i < ref.length; i++) {
+          if (ref[i]._.status === 'submitted') {
+            const timeInitiated = new Date(ref[i]._.time_initiated.seconds*1000);
+            const timeSubmitted = new Date(ref[i]._.time_submitted.seconds*1000);
             avgTime += (timeSubmitted.getTime() - timeInitiated.getTime()) / (1000 * 3600) // Converts ms to days
             totalSubmitted += 1;
           }
         }
-        (this as any).avgDaysToSubmit = (avgTime / totalSubmitted).toFixed(2);
+        Number((this as any).avgDaysToSubmit = (avgTime / totalSubmitted).toFixed(2));
       } catch (err) {
         console.error(err);
       }
@@ -844,6 +858,11 @@ export default Vue.extend({
           resolve('');
         }
       });
+    },
+    async getDB() {
+      const apps: string[] = [];
+      const ref = await db.collection('DH6').doc('applications').collection('all').get()
+      return ref.docs.map(doc => doc.data());
     },
     processField(field, label) {
       const val = Object.values(field);
