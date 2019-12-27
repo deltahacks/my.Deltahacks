@@ -446,8 +446,7 @@ export default Vue.extend({
   },
   async beforeMount() {
     // this.setAllData();
-        (this as any).dbref = await (this as any).getDB();
-    console.log((this as any).dbref);
+    (this as any).dbref = await (this as any).getDB();
     (this as any).setCheckInData();
     (this as any).countApplications();
     (this as any).countWords();
@@ -542,18 +541,18 @@ export default Vue.extend({
       //   });
     },
     countApplications() {
-          (this as any).applicationCount = (this as any).dbref.length;
+      (this as any).applicationCount = (this as any).dbref.length;
     },
     async countRSVP() {
       try {
         const ref = (this as any).dbref;
         for (let i = 0; i < ref.length; i++) {
           try {
-            if (ref[i]._.RSVP.coming) {
+            if(ref[i]._.RSVP && ref[i]._.RSVP.coming) {
               (this as any).rsvp += 1;
             }
           } catch (error) {
-            continue;
+            console.log(error);
           }
         }
       } catch (error) {
@@ -598,9 +597,9 @@ export default Vue.extend({
         const ref = (this as any).dbref;
         for (let i = 0; i < ref.length; i++) {
           if (ref[i]._.status === 'submitted') {
-            const timeInitiated = new Date(ref[i]._.time_initiated.seconds*1000);
-            const timeSubmitted = new Date(ref[i]._.time_submitted.seconds*1000);
-            avgTime += (timeSubmitted.getTime() - timeInitiated.getTime()) / (1000 * 3600) // Converts ms to days
+            const timeInitiated = new Date(ref[i]._.time_initiated.seconds * 1000);
+            const timeSubmitted = new Date(ref[i]._.time_submitted.seconds * 1000);
+            avgTime += (timeSubmitted.getTime() - timeInitiated.getTime()) / (1000 * 3600); // Converts ms to days
             totalSubmitted += 1;
           }
         }
@@ -861,7 +860,7 @@ export default Vue.extend({
     },
     async getDB() {
       const apps: string[] = [];
-      const ref = await db.collection('DH6').doc('applications').collection('all').get()
+      const ref = await db.collection('DH6').doc('applications').collection('all').get();
       return ref.docs.map(doc => doc.data());
     },
     processField(field, label) {
