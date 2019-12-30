@@ -170,7 +170,7 @@
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
             <basic-bar-chart
-              :title="'Coming From (Accepted)'"
+              :title="'Locations'"
               :categories="comingFrom.categories"
               :data="comingFrom.data"
               :colors="colors" />
@@ -197,7 +197,7 @@
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
             <basic-bar-chart
-              :title="'Bus Passenger Locations'"
+              :title="'RSVP Busses'"
               :categories="busPassengers.categories"
               :data="busPassengers.data"
               :colors="colors" />
