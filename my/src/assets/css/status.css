@@ -310,9 +310,15 @@ a {
   .small {
     font-size: 3vw;
   }
+
+  .apply-btn {
+    display: table;
+  }
   .apply {
     font-size: 8vw;
-    padding-top:4.5vh!important;
+    padding:0px;
+    display: table-cell; 
+    vertical-align: middle;
   }
   .wrap{padding:5px;}
   .box3{height:12vw;}
