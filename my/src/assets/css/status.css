@@ -348,23 +348,31 @@ a {
   }
   .rsvp-btn {
     width: 99%;
-    height: 14vw;
+    padding-bottom: -50px!important;
+    height: 12vw;
     line-height: 12vw;
     font-size: 3vw;
-    margin: 1px;
+    margin: 2px;
+    margin-bottom: 0px;
+    margin-top:0px;
   }
   .next {
     width: 22vw;
-    margin:-18vw 0 0 25vw;
+    margin-top: -50vh;
+    margin-bottom: 100%;
+    margin-left: 25vw;
+    /* margin:-18vw 0 0 25vw; */
+    /* margin-bottom: 100%; */
     line-height: 12vw;
     font-size: 3vw;
   }
   .change-response {
-    width: 40vw;
-    margin: 1vw 25vw;
-    height: 4vw;
+    width: 90vw;
+    margin-left:0vw;
+    margin-bottom: 10vh;
+    height: 9vw;
     font-size: 3vw;
-    line-height: 4vw;
+    line-height:5vh;
   }
 }
 
