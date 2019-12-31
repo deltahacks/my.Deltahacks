@@ -170,7 +170,7 @@
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
             <basic-bar-chart
-              :title="'Coming From (Accepted)'"
+              :title="'Locations'"
               :categories="comingFrom.categories"
               :data="comingFrom.data"
               :colors="colors" />
@@ -191,6 +191,15 @@
               :title="'Average Word Count for Responses'"
               :categories="averageWords.categories"
               :data="averageWords.data"
+              :colors="colors" />
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color="white lighten-4" dark>
+            <basic-bar-chart
+              :title="'RSVP Busses'"
+              :categories="busPassengers.categories"
+              :data="busPassengers.data"
               :colors="colors" />
           </v-card>
         </v-flex>
@@ -376,9 +385,10 @@ export default Vue.extend({
       averageWordCount: {},
       avgDaysToSubmit: 0,
       pickups: {
-        'University of Waterloo': 0,
-        'University of Toronto': 0,
-        'University of Western Ontario': 0,
+        'Scarborough/York': 0,
+        'Waterloo': 0,
+        'Western': 0,
+        'UofT': 0,
       },
       submitted: 0,
       inProgress: 0,
@@ -452,6 +462,7 @@ export default Vue.extend({
     (this as any).countWords();
     (this as any).avgSubmitTime();
     (this as any).countRSVP();
+    (this as any).countBusPassengers();
     db
       .collection('DH6')
       .doc('statistics')
@@ -494,6 +505,9 @@ export default Vue.extend({
     averageWords() {
       return formatChartData(this, ['averageWordCount'], { sort: true });
     },
+    busPassengers() {
+      return formatChartData(this, ['pickups'], { sort: true });
+    }
   },
   // computed: {
   //   total(): number {
@@ -557,6 +571,21 @@ export default Vue.extend({
         }
       } catch (error) {
         console.log(error);
+      }
+    },
+    async countBusPassengers() {
+      const ref = (this as any).dbref;
+      for (let i = 0; i < ref.length; i++) {
+        try {
+          if(ref[i]._.RSVP) {
+            if(ref[i]._.RSVP.origin != "Not busing" && ref[i]._.RSVP.origin != "") {
+              (this as any).bus_passengers += 1;
+              (this as any).pickups[ref[i]._.RSVP.origin] += 1;
+              }
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     async countWords() {
