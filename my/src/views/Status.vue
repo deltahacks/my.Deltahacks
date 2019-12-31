@@ -286,7 +286,7 @@ export default Vue.extend({
       confirmation: false,
       timeout: undefined,
       bus: false,
-      busLocations: busCities.concat(['Not busing']),
+      busLocations: busCities.concat(['Not bussing']),
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
@@ -347,7 +347,7 @@ export default Vue.extend({
       numImages: 13,
       resent: false,
       splashMessage: '',
-      busSelected: 'Not busing',
+      busSelected: 'Not bussing',
       rsvp: { coming: false, origin: '' },
     };
   },
