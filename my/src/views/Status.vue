@@ -40,7 +40,7 @@
             </div>
             <div class="box box9" v-if="step === 6">
               <p class="big">Bus?</p>
-              <p class="small" style="margin-top:-20px">Please select a stop below.</p>
+              <p class="small" style="margin-top:-20px; margin-bottom:9px;">Please select a stop below.</p>
                 <v-select
                   :items="busLocations"
                   v-model="busSelected"
@@ -50,6 +50,7 @@
                   solo
                   append-icon="keyboard_arrow_down"
                   background-color="rgba(255,255,255,0.5)"
+                  style="margin-left:5px;"
                 ></v-select>
                 <div class="col col2">
                   <a @click=" () => { updateRSVP(true, true, busSelected), step = 7 }">
@@ -286,7 +287,7 @@ export default Vue.extend({
       confirmation: false,
       timeout: undefined,
       bus: false,
-      busLocations: busCities.concat(['Not busing']),
+      busLocations: busCities.concat(['Not bussing']),
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
@@ -347,7 +348,7 @@ export default Vue.extend({
       numImages: 13,
       resent: false,
       splashMessage: '',
-      busSelected: 'Not busing',
+      busSelected: 'Not bussing',
       rsvp: { coming: false, origin: '' },
     };
   },

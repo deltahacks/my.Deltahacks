@@ -578,7 +578,7 @@ export default Vue.extend({
       for (let i = 0; i < ref.length; i++) {
         try {
           if(ref[i]._.RSVP) {
-            if(ref[i]._.RSVP.origin != "Not busing" && ref[i]._.RSVP.origin != "") {
+            if(ref[i]._.RSVP.origin != "Not bussing" && ref[i]._.RSVP.origin != "") {
               (this as any).bus_passengers += 1;
               (this as any).pickups[ref[i]._.RSVP.origin] += 1;
               }
