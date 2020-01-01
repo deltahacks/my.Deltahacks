@@ -109,7 +109,9 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color="white lighten-4">
-            <v-card-title primary-title>Average Time to Submit (Hours)</v-card-title>
+            <v-card-title primary-title
+              >Average Time to Submit (Hours)</v-card-title
+            >
             <v-card color="white lighten-4" dark>
               <v-card-text class="totalapps center">
                 <IOdometer class="iOdometer" :value="avgDaysToSubmit" />
@@ -130,32 +132,62 @@
 
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <basic-pie-chart :title="'Universities'" :categories="universities.categories" :data="universities.data" :colors="colors" />
+            <basic-pie-chart
+              :title="'Universities'"
+              :categories="universities.categories"
+              :data="universities.data"
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <basic-bar-chart :title="'Hackathons (Accepted)'" :categories="numHackathons.categories" :data="numHackathons.data" :colors="colors" />
+            <basic-bar-chart
+              :title="'Hackathons (Accepted)'"
+              :categories="numHackathons.categories"
+              :data="numHackathons.data"
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <basic-bar-chart :title="'Majors (Accepted)'" :categories="majors.categories" :data="majors.data" :colors="colors" />
+            <basic-bar-chart
+              :title="'Majors (Accepted)'"
+              :categories="majors.categories"
+              :data="majors.data"
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <basic-bar-chart :title="'School Years (Accepted)'" :categories="schoolYears.categories" :data="schoolYears.data" :colors="colors" />
+            <basic-bar-chart
+              :title="'School Years (Accepted)'"
+              :categories="schoolYears.categories"
+              :data="schoolYears.data"
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <basic-bar-chart :title="'Shirt Sizes (Accepted)'" :categories="shirtSizes.categories" :data="shirtSizes.data" :colors="colors" />
+            <basic-bar-chart
+              :title="'Shirt Sizes (Accepted)'"
+              :categories="shirtSizes.categories"
+              :data="shirtSizes.data"
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
           <v-card color="white lighten-4" dark>
-            <basic-bar-chart :title="'Discovered By (All)'" :categories="discoveredBy.categories" :data="discoveredBy.data" :colors="colors" />
+            <basic-bar-chart
+              :title="'Discovered By (All)'"
+              :categories="discoveredBy.categories"
+              :data="discoveredBy.data"
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -164,7 +196,8 @@
               :title="'Food Restrictions (Accepted)'"
               :categories="dietaryRestrictions.categories"
               :data="dietaryRestrictions.data"
-              :colors="colors" />
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -173,7 +206,8 @@
               :title="'Locations'"
               :categories="comingFrom.categories"
               :data="comingFrom.data"
-              :colors="colors" />
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -182,7 +216,8 @@
               :title="'Workshops (Accepted)'"
               :categories="workshops.categories"
               :data="workshops.data"
-              :colors="colors" />
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -191,7 +226,8 @@
               :title="'Average Word Count for Responses'"
               :categories="averageWords.categories"
               :data="averageWords.data"
-              :colors="colors" />
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md3>
@@ -200,7 +236,8 @@
               :title="'RSVP Busses'"
               :categories="busPassengers.categories"
               :data="busPassengers.data"
-              :colors="colors" />
+              :colors="colors"
+            />
           </v-card>
         </v-flex>
       </v-layout>
@@ -208,14 +245,17 @@
     <v-dialog v-model="loading" persistent width="300">
       <v-card color="primary" dark>
         <v-card-text>
-          {{loadingMessage}}
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          {{ loadingMessage }}
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
   </v-app>
 </template>
-
 
 <script lang="ts">
 import firebase from 'firebase';
@@ -229,7 +269,7 @@ import BarChart from '../components/BarChart';
 import PieChart from '../components/PieChartGen';
 import ApexChart from '@/components/ApexBar.vue';
 
-import { formatChartData } from '../helpers/utils';
+import {formatChartData} from '../helpers/utils';
 
 import BasicBarChart from '@/components/charts/BasicBar.vue';
 import BasicPieChart from '@/components/charts/BasicPie.vue';
@@ -275,7 +315,7 @@ interface StatsData {
   walkins: number; // Stats - # of people walked in
   // eslint-disable-next-line camelcase
   bus_passengers: number; // Stats - # of bus passengers
-  pickups: { [index: string]: number };
+  pickups: {[index: string]: number};
   submitted: number; // Stats - # of submitted applications
   inProgress: number; // Stats - # of in progress applications
   data: Data;
@@ -386,9 +426,9 @@ export default Vue.extend({
       avgDaysToSubmit: 0,
       pickups: {
         'Scarborough/York': 0,
-        'Waterloo': 0,
-        'Western': 0,
-        'UofT': 0,
+        Waterloo: 0,
+        Western: 0,
+        UofT: 0,
       },
       submitted: 0,
       inProgress: 0,
@@ -463,8 +503,7 @@ export default Vue.extend({
     (this as any).avgSubmitTime();
     (this as any).countRSVP();
     (this as any).countBusPassengers();
-    db
-      .collection('DH6')
+    db.collection('DH6')
       .doc('statistics')
       .onSnapshot((doc: DocumentSnapshot) => {
         if (doc.exists) {
@@ -476,38 +515,74 @@ export default Vue.extend({
   },
   computed: {
     numHackathons() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'hackathons']);
+      return formatChartData(this, [
+        'statistics',
+        'applicationStats',
+        'hackathons',
+      ]);
     },
     universities() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'universities'], { sort: true, limit: 10 });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'universities'],
+        {sort: true, limit: 10},
+      );
     },
     majors() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'majors'], { sort: true, limit: 10 });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'majors'],
+        {sort: true, limit: 10},
+      );
     },
     schoolYears() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'school_years'], { sort: true });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'school_years'],
+        {sort: true},
+      );
     },
     shirtSizes() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'shirt_sizes'], { sort: true });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'shirt_sizes'],
+        {sort: true},
+      );
     },
     discoveredBy() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'discovery'], { sort: true });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'discovery'],
+        {sort: true},
+      );
     },
     dietaryRestrictions() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'dietary_restrictions'], { sort: true, limit: 10 });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'dietary_restrictions'],
+        {sort: true, limit: 10},
+      );
     },
     comingFrom() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'travelling_from'], { sort: true });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'travelling_from'],
+        {sort: true},
+      );
     },
     workshops() {
-      return formatChartData(this, ['statistics', 'applicationStats', 'workshops'], { sort: true });
+      return formatChartData(
+        this,
+        ['statistics', 'applicationStats', 'workshops'],
+        {sort: true},
+      );
     },
     averageWords() {
-      return formatChartData(this, ['averageWordCount'], { sort: true });
+      return formatChartData(this, ['averageWordCount'], {sort: true});
     },
     busPassengers() {
-      return formatChartData(this, ['pickups'], { sort: true });
-    }
+      return formatChartData(this, ['pickups'], {sort: true});
+    },
   },
   // computed: {
   //   total(): number {
@@ -532,7 +607,7 @@ export default Vue.extend({
     setCheckInData() {
       db.collection('DH6')
         .doc('statistics')
-        .onSnapshot((doc) => {
+        .onSnapshot(doc => {
           (this as any).mentors = doc.data()!.mentors;
         });
       // db.collection('hackathon')
@@ -562,7 +637,7 @@ export default Vue.extend({
         const ref = (this as any).dbref;
         for (let i = 0; i < ref.length; i++) {
           try {
-            if(ref[i]._.RSVP && ref[i]._.RSVP.coming) {
+            if (ref[i]._.RSVP && ref[i]._.RSVP.coming) {
               (this as any).rsvp += 1;
             }
           } catch (error) {
@@ -577,11 +652,16 @@ export default Vue.extend({
       const ref = (this as any).dbref;
       for (let i = 0; i < ref.length; i++) {
         try {
-          if(ref[i]._.RSVP) {
-            if(ref[i]._.RSVP.origin != "Not bussing" && ref[i]._.RSVP.origin != "") {
+          if (ref[i]._.RSVP) {
+            if (ref[i]._.RSVP.origin && !ref[i]._.RSVP.origin.includes('Not')) {
               (this as any).bus_passengers += 1;
               (this as any).pickups[ref[i]._.RSVP.origin] += 1;
-              }
+              console.log(
+                ref[i].contact.email,
+                ref[i]._.RSVP.origin,
+                ref[i]._.RSVP.origin.includes('Not'),
+              );
+            }
           }
         } catch (error) {
           console.log(error);
@@ -602,7 +682,9 @@ export default Vue.extend({
             totalWordsQ1 += (this as any).splitWord(ref[i].responses.q1);
             totalWordsQ2 += (this as any).splitWord(ref[i].responses.q2);
             totalWordsQ3 += (this as any).splitWord(ref[i].responses.q3);
-            totalWordsAnythingElse += (this as any).splitWord(ref[i].responses.anything_else);
+            totalWordsAnythingElse += (this as any).splitWord(
+              ref[i].responses.anything_else,
+            );
             totalSubmitted += 1;
           }
         }
@@ -626,13 +708,23 @@ export default Vue.extend({
         const ref = (this as any).dbref;
         for (let i = 0; i < ref.length; i++) {
           if (ref[i]._.status === 'submitted') {
-            const timeInitiated = new Date(ref[i]._.time_initiated.seconds * 1000);
-            const timeSubmitted = new Date(ref[i]._.time_submitted.seconds * 1000);
-            avgTime += (timeSubmitted.getTime() - timeInitiated.getTime()) / (1000 * 3600); // Converts ms to days
+            const timeInitiated = new Date(
+              ref[i]._.time_initiated.seconds * 1000,
+            );
+            const timeSubmitted = new Date(
+              ref[i]._.time_submitted.seconds * 1000,
+            );
+            avgTime +=
+              (timeSubmitted.getTime() - timeInitiated.getTime()) /
+              (1000 * 3600); // Converts ms to days
             totalSubmitted += 1;
           }
         }
-        Number((this as any).avgDaysToSubmit = (avgTime / totalSubmitted).toFixed(2));
+        Number(
+          ((this as any).avgDaysToSubmit = (avgTime / totalSubmitted).toFixed(
+            2,
+          )),
+        );
       } catch (err) {
         console.error(err);
       }
@@ -755,7 +847,7 @@ export default Vue.extend({
       // safeAdd(stats, 'gender', app.gender);
     },
     aggregateAccepted(obj, snap) {
-      snap.docs.forEach((doc) => {
+      snap.docs.forEach(doc => {
         const data = doc.data();
         obj[data.email] = true;
       });
@@ -889,7 +981,11 @@ export default Vue.extend({
     },
     async getDB() {
       const apps: string[] = [];
-      const ref = await db.collection('DH6').doc('applications').collection('all').get();
+      const ref = await db
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .get();
       return ref.docs.map(doc => doc.data());
     },
     processField(field, label) {
@@ -909,5 +1005,4 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
