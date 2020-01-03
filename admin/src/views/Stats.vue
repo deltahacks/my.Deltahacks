@@ -240,6 +240,26 @@
             />
           </v-card>
         </v-flex>
+        <v-flex d-flex xs12 sm6 md3>
+          <v-card color="white lighten-4" dark>
+            <basic-bar-chart
+              :title="'RSVP Shirt Sizes'"
+              :categories="RSVPShirts.categories"
+              :data="RSVPShirts.data"
+              :colors="colors"
+            />
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm12 md12>
+          <v-card color="white lighten-4" dark>
+            <basic-bar-chart
+              :title="'RSVP Dietary Restrictions'"
+              :categories="RSVPDiets.categories"
+              :data="RSVPDiets.data"
+              :colors="colors"
+            />
+          </v-card>
+        </v-flex>
       </v-layout>
     </v-container>
     <v-dialog v-model="loading" persistent width="300">
@@ -316,6 +336,8 @@ interface StatsData {
   // eslint-disable-next-line camelcase
   bus_passengers: number; // Stats - # of bus passengers
   pickups: {[index: string]: number};
+  rsvpShirts: {[index: string]: number};
+  rsvpDiets: {[index: string]: number};
   submitted: number; // Stats - # of submitted applications
   inProgress: number; // Stats - # of in progress applications
   data: Data;
@@ -430,6 +452,8 @@ export default Vue.extend({
         Western: 0,
         UofT: 0,
       },
+      rsvpShirts: {'XS': 0,'S': 0, 'M': 0, 'L': 0, 'XL': 0},
+      rsvpDiets: {'None': 0},
       submitted: 0,
       inProgress: 0,
       data: {
@@ -502,7 +526,6 @@ export default Vue.extend({
     (this as any).countWords();
     (this as any).avgSubmitTime();
     (this as any).countRSVP();
-    (this as any).countBusPassengers();
     db.collection('DH6')
       .doc('statistics')
       .onSnapshot((doc: DocumentSnapshot) => {
@@ -583,6 +606,12 @@ export default Vue.extend({
     busPassengers() {
       return formatChartData(this, ['pickups'], {sort: true});
     },
+    RSVPShirts() {
+      return formatChartData(this, ['rsvpShirts'], {sort: true});
+    },
+    RSVPDiets() {
+      return formatChartData(this, ['rsvpDiets'], {sort: true});
+    },
   },
   // computed: {
   //   total(): number {
@@ -639,32 +668,41 @@ export default Vue.extend({
           try {
             if (ref[i]._.RSVP && ref[i]._.RSVP.coming) {
               (this as any).rsvp += 1;
+              (this as any).countBusPassengers(ref[i]);
+              (this as any).countRSVPShirts(ref[i]);
+              (this as any).countRSVPDiets(ref[i]);
             }
           } catch (error) {
             console.log(error);
           }
         }
+
       } catch (error) {
         console.log(error);
       }
     },
-    async countBusPassengers() {
-      const ref = (this as any).dbref;
-      for (let i = 0; i < ref.length; i++) {
-        try {
-          if (ref[i]._.RSVP) {
-            if (ref[i]._.RSVP.origin && !ref[i]._.RSVP.origin.includes('Not')) {
-              (this as any).bus_passengers += 1;
-              (this as any).pickups[ref[i]._.RSVP.origin] += 1;
-              console.log(
-                ref[i].contact.email,
-                ref[i]._.RSVP.origin,
-                ref[i]._.RSVP.origin.includes('Not'),
-              );
-            }
-          }
-        } catch (error) {
-          console.log(error);
+    async countBusPassengers(app) {
+      if (app._.RSVP.origin && !app._.RSVP.origin.includes('Not')) {
+        (this as any).bus_passengers += 1;
+        (this as any).pickups[app._.RSVP.origin] += 1;
+        console.log(
+          app.contact.email,
+          app._.RSVP.origin,
+          app._.RSVP.origin.includes('Not'),
+        );
+      }
+    },
+    async countRSVPShirts(app) {
+      (this as any).rsvpShirts[app.logistics.shirt_size] += 1;
+    },
+    async countRSVPDiets(app) {
+  
+      if (typeof(app.logistics.diet_restrictions) == 'string') {
+        const diet = (app.logistics.diet_restrictions).toString()
+        if ((this as any).rsvpDiets.hasOwnProperty(diet)) {
+          (this as any).rsvpDiets[diet] += 1;
+        } else {
+          (this as any).rsvpDiets[diet] = 1;
         }
       }
     },
