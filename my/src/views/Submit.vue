@@ -13,7 +13,7 @@
             <p class="small">
               Please answer the following questions in order to enroll your project for judging.
               <br />
-              Kindly verify all input fields. Once the form is submitted, it cannot be modified! 
+              Kindly verify all input fields. Once the form is submitted, it cannot be modified!
             </p>
           </div>
           <ValidationProvider
@@ -82,7 +82,6 @@ import deepmerge from 'deepmerge';
 
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
-import Checkbox from '@/components/Checkbox.vue';
 import Dialog from '@/components/Dialog.vue';
 
 import {
@@ -157,7 +156,6 @@ export default Vue.extend({
   components: {
     Card,
     Nav,
-    Checkbox,
     Dialog,
   },
   methods: {
