@@ -60,6 +60,7 @@ export interface AppContents {
     q3?: string;
     q4?: string;
     workshops?: Array<string>;
+    challenges?: Array<string>;
   };
   logistics: {
     discovered_by: discovered_by;
