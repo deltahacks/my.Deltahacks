@@ -11,7 +11,7 @@
           <div class="cardify">
             <p class="big">Submit Project</p>
             <p class="small">
-              Please answer the following questions in order to enroll the project for judging.
+              Please answer the following questions in order to enroll your project for judging.
               <br />
               Kindly verify all input fields. Once the form is submitted, it cannot be modified! 
             </p>
