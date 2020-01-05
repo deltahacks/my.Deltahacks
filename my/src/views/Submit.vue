@@ -39,6 +39,29 @@
               :resume="app.resume"
             />
           </ValidationProvider>
+          <br>
+              <div class="cardify">
+            <p class="big">Project Member Details:</p>
+            <hr>
+          </div>
+                    <Card2
+              v-scroll-reveal
+              class="card"
+              title="Team Member 2"
+              inputType="text"
+              />
+                     <Card2
+              v-scroll-reveal
+              class="card"
+              title="Team Member 3"
+              inputType="text"
+              />
+                     <Card2
+              v-scroll-reveal
+              class="card"
+              title="Team Member 4"
+              inputType="text"
+              />
         </form>
       </ValidationObserver>
       <Dialog
@@ -82,6 +105,7 @@ import deepmerge from 'deepmerge';
 
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
+import Card2 from '@/components/Card2.vue';
 import Dialog from '@/components/Dialog.vue';
 
 import {
@@ -155,6 +179,7 @@ export default Vue.extend({
   },
   components: {
     Card,
+    Card2,
     Nav,
     Dialog,
   },
