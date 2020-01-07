@@ -79,6 +79,36 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md2>
           <v-card color="white lighten-4">
+            <v-card-title primary-title>Judges</v-card-title>
+            <v-card color="white lighten-4" dark>
+              <v-card-text class="totalapps center">
+                <IOdometer class="iOdometer" :value="judges" />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color="white lighten-4">
+            <v-card-title primary-title>Volunteers</v-card-title>
+            <v-card color="white lighten-4" dark>
+              <v-card-text class="totalapps center">
+                <IOdometer class="iOdometer" :value="volunteers" />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color="white lighten-4">
+            <v-card-title primary-title>Executives</v-card-title>
+            <v-card color="white lighten-4" dark>
+              <v-card-text class="totalapps center">
+                <IOdometer class="iOdometer" :value="execs" />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md2>
+          <v-card color="white lighten-4">
             <v-card-title primary-title>Walk Ins</v-card-title>
             <v-card color="white lighten-4" dark>
               <v-card-text class="totalapps center">
@@ -333,6 +363,9 @@ interface StatsData {
   sponsors: number; // Stats - # of sponsors
   checkedIn: number; // Stats - # of people checked in
   walkins: number; // Stats - # of people walked in
+  judges: number;
+  volunteers: number;
+  execs: number;
   // eslint-disable-next-line camelcase
   bus_passengers: number; // Stats - # of bus passengers
   pickups: {[index: string]: number};
@@ -441,7 +474,10 @@ export default Vue.extend({
       applicationCount: 0,
       mentors: 0,
       sponsors: 0,
+      judges: 0,
+      volunteers: 0,
       checkedIn: 0,
+      execs: 0,
       walkins: 0,
       bus_passengers: 0,
       averageWordCount: {},
@@ -635,10 +671,47 @@ export default Vue.extend({
   methods: {
     setCheckInData() {
       db.collection('DH6')
-        .doc('statistics')
-        .onSnapshot(doc => {
-          (this as any).mentors = doc.data()!.mentors;
+        .doc('hackathon')
+        .collection('checked in')
+        .where('type', '==', 'mentor')
+        .onSnapshot(snap => {
+          (this as any).mentors = snap.docs.length;
         });
+      db.collection('DH6')
+        .doc('hackathon')
+        .collection('checked in')
+        .where('type', '==', 'judge')
+        .onSnapshot(snap => {
+          (this as any).judges = snap.docs.length;
+        });
+      db.collection('DH6')
+        .doc('hackathon')
+        .collection('checked in')
+        .where('type', '==', 'volunteer')
+        .onSnapshot(snap => {
+          (this as any).volunteers = snap.docs.length;
+        });
+      db.collection('DH6')
+        .doc('hackathon')
+        .collection('checked in')
+        .where('type', '==', 'attendee')
+        .onSnapshot(snap => {
+          (this as any).checkedIn = snap.docs.length;
+        });
+      db.collection('DH6')
+        .doc('hackathon')
+        .collection('checked in')
+        .where('type', '==', 'sponsor')
+        .onSnapshot(snap => {
+          (this as any).sponsors = snap.docs.length;
+        }); 
+      db.collection('DH6')
+        .doc('hackathon')
+        .collection('checked in')
+        .where('type', '==', 'exec')
+        .onSnapshot(snap => {
+          (this as any).execs = snap.docs.length;
+        });     
       // db.collection('hackathon')
       //   .doc('DH5')
       //   .collection('Checked In')
@@ -685,11 +758,6 @@ export default Vue.extend({
       if (app._.RSVP.origin && !app._.RSVP.origin.includes('Not')) {
         (this as any).bus_passengers += 1;
         (this as any).pickups[app._.RSVP.origin] += 1;
-        console.log(
-          app.contact.email,
-          app._.RSVP.origin,
-          app._.RSVP.origin.includes('Not'),
-        );
       }
     },
     async countRSVPShirts(app) {
