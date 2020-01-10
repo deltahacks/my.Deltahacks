@@ -382,6 +382,27 @@ export const getBlankApplication = (): AppContents => ({
   },
 });
 
+export const getBlankProject = (): any => ({
+  _: {
+    status: 'in progress',
+  },
+  name: {
+    devpost: '',
+    project: ''
+  },
+  profiles: {
+    devpost: ''
+  },
+  responses: {
+    challenges: ''
+  },
+  group: [
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' }
+  ]
+});
+
 export const applicationQuestions: any = [
   {
     label: "What's your first name?",

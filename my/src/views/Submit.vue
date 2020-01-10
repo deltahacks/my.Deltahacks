@@ -1,5 +1,18 @@
 <template>
   <v-app class="sizefix">
+    <div v-if="app._.status !== 'in progress'" class="submitted-face" />
+    <div v-if="app._.status !== 'in progress'" class="submitted-message">
+      Congratulations!
+      <br />Your project has been submitted for consideration.
+      <br />
+      <div style="padding-top: 10px !important;">
+      <a class="goback" href="../status">
+        <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
+      </a><br>
+      <a class="logout" @click.prevent="logout">Logout</a>
+      </div>
+    </div>
+
     <div class="background">
       <Nav class="fit" />
       <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
@@ -35,7 +48,6 @@
               v-model="app[question.model[0]][question.model[1]]"
               :ref="question.label"
               :error="errors[0]"
-              :upload="uploadResume"
               :resume="app.resume"
             />
           </ValidationProvider>
@@ -44,24 +56,16 @@
             <p class="big">Project Member Details:</p>
             <hr>
           </div>
-                    <Card2
+            <Card2
+              v-for="i in 3"
+              :key="i"
+              :requestUpdate="onFormChange"
               v-scroll-reveal
+              v-model="app.group[i - 1]"
               class="card"
-              title="Team Member 2"
+              :title="'Team Member ' + i"
               inputType="text"
-              />
-                     <Card2
-              v-scroll-reveal
-              class="card"
-              title="Team Member 3"
-              inputType="text"
-              />
-                     <Card2
-              v-scroll-reveal
-              class="card"
-              title="Team Member 4"
-              inputType="text"
-              />
+            />
         </form>
       </ValidationObserver>
       <Dialog
@@ -117,7 +121,7 @@ import { oneOf, max } from 'vee-validate/dist/rules';
 
 import { ApplicationModel, AppContents } from '../types';
 import {
-  getBlankApplication,
+  getBlankProject,
   submitQuestions,
   authorizations,
 } from '../data';
@@ -162,7 +166,7 @@ Vue.component('ValidationObserver', ValidationObserver);
 export default Vue.extend({
   data(): ApplicationModel {
     return {
-      app: getBlankApplication(),
+      app: getBlankProject(),
       questions: {},
       authorizations: {},
       updateTimeout: null,
@@ -207,7 +211,6 @@ export default Vue.extend({
         .emailVerified;
       if (submitting && this.app._.status === 'in progress' && verified) {
         this.app._.status = 'submitted';
-        this.app._.time_submitted = new Date();
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
@@ -218,18 +221,22 @@ export default Vue.extend({
       ) {
         this.snack.message = 'Please verify your email before submitting!';
         this.snack.color = 'error';
+        this.snack.visible = true;
+        return;
       }
+
       if (this.app._.status === 'in progress' || submit) {
         this.getDB()
           .collection('DH6')
-          .doc('applications')
-          .collection('all')
+          .doc('hackathon')
+          .collection('projects')
           .doc(this.getUID())
           .set(this.app);
       } else {
         this.snack.message = 'Submission error';
         this.snack.color = 'error';
       }
+
       this.snack.visible = true;
     },
 
@@ -266,7 +273,7 @@ export default Vue.extend({
     // clears all fields in the application
     resetApplication(): void {
       if (this.app._.status === 'in progress') {
-        this.app = getBlankApplication() as AppContents;
+        this.app = getBlankProject() as any;
         this.snack.message = 'Application reset!';
         this.snack.color = 'warning';
       }
@@ -283,29 +290,12 @@ export default Vue.extend({
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
         .collection('DH6')
-        .doc('applications')
-        .collection('all')
+        .doc('hackathon')
+        .collection('projects')
         .doc(this.getUID())
         .get();
     },
 
-    async uploadResume(doc) {
-      if (!doc) return;
-      const { filename, file, id } = doc;
-      const storeRef = firebase.storage().ref();
-      try {
-        const snapshot = await storeRef
-          .child(`hackathon/DH6/users/${this.getUID()}/Resume.pdf`)
-          .put(file);
-        const url = await snapshot.ref.getDownloadURL();
-
-        this.app.resume.filename = filename;
-        this.app.resume.link = url;
-        this.updateAppProgress(false);
-      } catch (err) {
-        console.log('File upload error');
-      }
-    },
     async setName() {
       const profile = await this.getDB()
         .collection('users')

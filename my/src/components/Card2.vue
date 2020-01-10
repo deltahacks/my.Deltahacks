@@ -5,8 +5,8 @@
       <v-text-field
     v-if="inputType == 'text'"
     label="Name"
-    :value="value"
-    @input="onChange($event)"
+    :value="value.name"
+    @input="onChange($event, 'name')"
     :error-messages="error"
     dark
     class="montserratify"
@@ -16,8 +16,8 @@
     <v-text-field
     v-if="inputType == 'text'"
     label="Email"
-    :value="value"
-    @input="onChange($event)"
+    :value="value.email"
+    @input="onChange($event, 'email')"
     :error-messages="error"
     dark
     class="montserratify"
@@ -76,8 +76,8 @@ export default Vue.extend({
     FilePond,
   },
   methods: {
-    onChange(event) {
-      this.$emit('input', event);
+    onChange(event, type) {
+      this.$emit('input', { ...this.value, [type]: event });
       this.requestUpdate();
     },
     textFunction(s) {
