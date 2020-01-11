@@ -675,7 +675,7 @@ export const submitQuestions: any = [
     label: "What's your personal Devpost ID?",
     fieldType: 'text',
     model: ['profiles', 'devpost'],
-    requirements: { link: true },
+    requirements: { required: true, link: true },
   },
   {
     label: "What's your project name?",
@@ -687,7 +687,7 @@ export const submitQuestions: any = [
     label: 'What is your project\'s Devpost link?',
     fieldType: 'text',
     model: ['name', 'devpost'],
-    requirements: { required: true },
+    requirements: { required: true, link: true },
   },
   {
     label: 'What challenges would you like to be judged for?',
