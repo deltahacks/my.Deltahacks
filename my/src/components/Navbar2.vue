@@ -9,7 +9,6 @@
       <h1 id="name" class="heading">
         {{ first }}<span style="font-weight: 300" v-if="(first.length + last.length) < 21" >{{ last }}</span>
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <a id="submit" href="../submit">Submit</a>
       </h1>
     </div>
   </div>

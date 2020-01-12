@@ -77,9 +77,14 @@
                 </a>
               </div>
             </div>
+            <div class="box box9" v-if="step === 8">
+               <template>
+                <p class="medium" style="margin-top:20px;">The Hackathon <br> for Change!</p>
+              </template>
+            </div>
 
             <div class="box box5 status desktop">
-              <div class="currentStatus">
+              <div class="currentStatus" v-if="step < 8">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
@@ -89,8 +94,18 @@
                   </a>
                 </p>
               </div>
-              <a href="/apply" class="apply-btn">
+              <div class="currentStatus" v-if="step === 8">
+                <p class="bigmobile">Deadline</p>
+                <div><span class="deadline">12 P.M</span></div>
+                <p class="bigmobile">
+                  Sunday, January 26th 2020
+                </p>
+              </div>
+              <a href="/apply" class="apply-btn" v-if="step < 8">
                 <div class="apply box5">Apply</div>
+              </a>
+              <a href="/submit" class="apply-btn" v-if="step === 8">
+                <div class="submit apply box5">Submit<br>Project</div>
               </a>
             </div>
           </div>
@@ -200,9 +215,12 @@
                 </a>
               </p>
             </div>
-            <a href="/apply" class="apply-btn">
-              <div class="apply box5">Apply</div>
-            </a>
+             <a href="/apply" class="apply-btn" v-if="step < 8">
+                <div class="apply box5">Apply</div>
+              </a>
+              <a href="/submit" class="apply-btn" v-if="step === 8">
+                <div class="submit apply box5">Submit<br>Project</div>
+              </a>
           </div>
           <div :key="media.icon" v-for="media in social" class="tablet">
             <div class="col col2 social">
@@ -423,6 +441,8 @@ export default Vue.extend({
             if (data!._.decision && data!._.decision.substring(0, 5) === 'round') this.step = 5;
             if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
             if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
+            if (data!._.Attended && data!._.Submitted === false) this.step = 8;
+            if (data!._.Attended && data!._.Submitted) this.step = 9;
           } else {
             // application not started
             this.step = 1;
