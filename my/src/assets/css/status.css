@@ -30,7 +30,13 @@ p {
     font-weight: 200;
     padding: 0% 5% 0 5%;
 }
+
 .goodluck{
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    font: inherit;
+    color: inherit;
+    /* margin: 0; */
     font-size: 3vw;
     font-weight: 600;
     /* padding: 2% 0 0 5%;     */
@@ -403,6 +409,14 @@ a {
     }
     .apply-btn {
         display: table;
+    }
+    .goodluck{
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .glm{
+        margin-top: 0px!important;
+        margin-left: 30px;
     }
     .apply {
         font-size: 8vw;

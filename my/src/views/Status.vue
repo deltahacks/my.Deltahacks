@@ -117,8 +117,8 @@
                   Sunday, January 26th 2020
                 </p>
               </div>
-              <div class="currentStatus" v-if="step === 9">
-                <p class="goodluck bigmobile">Good Luck!</p>
+              <div class="currentStatus glm" v-if="step === 9">
+                <p class="goodluck box5">Good Luck!</p>
               </div>
               <a href="/apply" class="apply-btn" v-if="step < 8">
                 <div class="apply box5">Apply</div>
@@ -244,8 +244,8 @@
                   Sunday, January 26th 2020
                 </p>
               </div>
-              <div class="currentStatus" v-if="step === 9">
-                <p class="goodluck">Good Luck!</p>
+              <div class="currentStatus glm" v-if="step === 9">
+                <p class="goodluck box5">Good Luck!</p>
               </div>
               <a href="/apply" class="apply-btn" v-if="step < 8">
                 <div class="apply box5">Apply</div>
