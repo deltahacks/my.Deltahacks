@@ -330,7 +330,7 @@ export default Vue.extend({
         'Application unsubmitted',
         'In progress',
         'This application is under review.',
-        "Sorry we couldn't offer you a spot.",
+        "Sorry, we couldn't offer you a spot this year.",
         "Congratulations, you've been accepted!",
         "Congratulations, you've been accepted!",
         "Congratulations, you've been accepted!",
