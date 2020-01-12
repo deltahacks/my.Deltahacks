@@ -82,6 +82,22 @@
                 <p class="medium" style="margin-top:20px;">The Hackathon <br> for Change!</p>
               </template>
             </div>
+             <div class="box box9" v-if="step === 9">
+               <template>
+                 <div class="afterSubmit">
+                <div style="float: left;">
+                    <h2>Table Number</h2>
+                    <br>
+                    <span class="afterSubmitRounded">17</span>
+                </div>
+                <div>
+                    <h2>Judging Area</h2>
+                    <br>
+                    <span class="afterSubmitRounded">Thode 2nd Floor</span>
+                </div>
+                </div>
+              </template>
+            </div>
 
             <div class="box box5 status desktop">
               <div class="currentStatus" v-if="step < 8">
@@ -101,12 +117,18 @@
                   Sunday, January 26th 2020
                 </p>
               </div>
+              <div class="currentStatus" v-if="step === 9">
+                <p class="goodluck bigmobile">Good Luck!</p>
+              </div>
               <a href="/apply" class="apply-btn" v-if="step < 8">
                 <div class="apply box5">Apply</div>
               </a>
               <a href="/submit" class="apply-btn" v-if="step === 8">
                 <div class="submit apply box5">Submit<br>Project</div>
               </a>
+              <div class="apply-btn" v-if="step === 9">
+                <div class="submitted box5">You have successfully submitted your project.</div>
+              </div>
             </div>
           </div>
           <!--Column#2-->
@@ -205,21 +227,34 @@
             </div>
           </div>
           <div class="box box5 status tablet">
-            <div class="currentStatus">
-              <h2>My Application Status</h2>
-              <div class="emote">{{ emoticon }}</div>
-              <p class="bigmobile">
-                {{ currentHeader }}
-                <a @click.prevent="resend()" v-if="!isVerified() && !resent">
-                  Resend Email
-                </a>
-              </p>
-            </div>
-             <a href="/apply" class="apply-btn" v-if="step < 8">
+            <div class="currentStatus" v-if="step < 8">
+                <h2>My Application Status</h2>
+                <div class="emote">{{ emoticon }}</div>
+                <p class="bigmobile">
+                  {{ currentHeader }}
+                  <a @click.prevent="resend()" v-if="!isVerified() && !resent">
+                    Resend Email
+                  </a>
+                </p>
+              </div>
+              <div class="currentStatus" v-if="step === 8">
+                <p class="bigmobile">Deadline</p>
+                <div><span class="deadline">12 P.M</span></div>
+                <p class="bigmobile">
+                  Sunday, January 26th 2020
+                </p>
+              </div>
+              <div class="currentStatus" v-if="step === 9">
+                <p class="goodluck">Good Luck!</p>
+              </div>
+              <a href="/apply" class="apply-btn" v-if="step < 8">
                 <div class="apply box5">Apply</div>
               </a>
               <a href="/submit" class="apply-btn" v-if="step === 8">
                 <div class="submit apply box5">Submit<br>Project</div>
+              </a>
+              <a class="apply-btn" v-if="step === 9">
+                <div class="submitted box5">You have successfully submitted your project.</div>
               </a>
           </div>
           <div :key="media.icon" v-for="media in social" class="tablet">
