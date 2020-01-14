@@ -4,7 +4,6 @@
     <div class="submitted-message">
       Applications are now closed!
       <br />
-      <p v-if="app._.status !== 'in progress'"> We’ll let you know as soon as we make a decision. </p>
       <br />
       <div style="padding-top: 10px !important;">
       <a class="goback" href="../status">
