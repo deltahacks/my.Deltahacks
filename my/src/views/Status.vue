@@ -476,8 +476,8 @@ export default Vue.extend({
             if (data!._.decision && data!._.decision.substring(0, 5) === 'round') this.step = 5;
             if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
             if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
-            if (data!._.Attended && data!._.Submitted === false) this.step = 8;
-            if (data!._.Attended && data!._.Submitted) this.step = 9;
+            if (data!._.checkedIn && data!._.projectSubmitted === false) this.step = 8;
+            if (data!._.checkedIn && data!._.projectSubmitted) this.step = 9;
           } else {
             // application not started
             this.step = 1;
