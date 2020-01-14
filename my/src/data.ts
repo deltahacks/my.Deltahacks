@@ -385,6 +385,7 @@ export const getBlankApplication = (): AppContents => ({
 export const getBlankProject = (): any => ({
   _: {
     status: 'in progress',
+    table: "We'll assign you a table shortly"
   },
   name: {
     devpost: '',

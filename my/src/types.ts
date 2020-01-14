@@ -137,6 +137,8 @@ export interface StatusModel {
   custom: boolean;
   name: string;
   step: number;
+  checkedIn: boolean;
+  projectSubmitted: boolean;
   email: string;
   checkbox: boolean;
   timer: number;
