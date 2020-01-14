@@ -479,7 +479,7 @@ export default Vue.extend({
       // Project keys are the submitter's email, so we check if the user submitted a project
       for (let project of projectsSnapshot.docs) {
         if (project.id === email) {
-          // if (project.data()._.status === 'submitted') this.projectSubmitted = true;
+          if (project.data()._.status === 'submitted') this.projectSubmitted = true;
           break;
         }
       }
