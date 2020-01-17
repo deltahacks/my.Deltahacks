@@ -118,6 +118,15 @@ export default Vue.extend({
       this.loader = 'loading';
       if (this.email && this.pass) {
         try {
+          const res = await firebase.functions().httpsCallable('isAdmin')({
+            email: this.email,
+          });
+
+          if (!res.data.admin) {
+            this.feedback = 'User is not an admin!';
+            return;
+          }
+
           await firebase
             .auth()
             .signInWithEmailAndPassword(this.email, this.pass);
