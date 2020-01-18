@@ -36,9 +36,10 @@ p {
     text-decoration: none;
     font: inherit;
     color: inherit;
-    /* margin: 0; */
+    margin-top: 10%!important;
     font-size: 3vw;
     font-weight: 600;
+    padding-left:5% !important;
     /* padding: 2% 0 0 5%;     */
 }
 .medium {
@@ -276,6 +277,7 @@ p {
     padding-top: 2vw;
     text-decoration: none;
     transition: 1s;
+    margin-top: 2%!important;
 }
 .apply:hover {
     color: rgba(255, 255, 255, 0.6);
@@ -413,6 +415,7 @@ a {
     .goodluck{
         display: table-cell;
         vertical-align: middle;
+        margin-left: 5%!important;
     }
     .glm{
         margin-top: 0px!important;
