@@ -348,8 +348,11 @@ p {
     margin-bottom: 10px;
 }
 .afterSubmit{
-    margin-left:10vw;
-    margin-top:20vh;
+    margin-top: 100px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: inline-block;
 }
 
 .tablet {

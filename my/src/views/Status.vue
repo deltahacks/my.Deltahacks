@@ -85,12 +85,12 @@
              <div class="box box9" v-if="step === 9">
                <template>
                  <div class="afterSubmit">
-                <div style="float: left;">
+                <div style="float:left;">
                     <h2>Table Number</h2>
                     <br>
                     <span class="afterSubmitRounded">{{tableNumber}}</span>
                 </div>
-                <div>
+                <div style="float:left; margin-left:50px">
                     <h2>Judging Area</h2>
                     <br>
                     <span class="afterSubmitRounded">Thode 2nd Floor</span>
