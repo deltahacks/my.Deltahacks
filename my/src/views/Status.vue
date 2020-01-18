@@ -495,7 +495,7 @@ export default Vue.extend({
           const inProject = projectData.group.find(person => person.email === email);
           if (inProject) {
             this.projectSubmitted = true;
-
+            this.tableNumber = project.data()._.table;
             break;
           }
         }
