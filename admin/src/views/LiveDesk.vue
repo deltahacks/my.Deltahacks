@@ -185,20 +185,20 @@ export default Vue.extend({
     active: false,
     emptyApp: {
       contact: { email: '', phone: '' },
-      name: {first: '', last: ''},
-      logistics: {shirt_size: null, diet_restrictions: null, traveling_from: ''},
-      academics: {school: ''},
-      emergency: {name: '', phone: ''},
-      personal: {birthday: '', gender: ''},
+      name: { first: '', last: '' },
+      logistics: { shirt_size: null, diet_restrictions: null, traveling_from: '' },
+      academics: { school: '' },
+      emergency: { name: '', phone: '' },
+      personal: { birthday: '', gender: '' },
       type: '',
     },
     application: {
       contact: { email: '', phone: '' },
-      name: {first: '', last: ''},
-      logistics: {shirt_size: null, diet_restrictions: null, traveling_from: ''},
-      academics: {school: ''},
-      emergency: {name: '', phone: ''},
-      personal: {birthday: '', gender: ''},
+      name: { first: '', last: '' },
+      logistics: { shirt_size: null, diet_restrictions: null, traveling_from: '' },
+      academics: { school: '' },
+      emergency: { name: '', phone: '' },
+      personal: { birthday: '', gender: '' },
       type: '',
     },
   }),
@@ -260,14 +260,14 @@ export default Vue.extend({
       }
       const app = this.application;
       // reject if no identifying field is created.
-      if (app.email === '' || app.name === '') {
+      if (app.contact.email === '' || app.name.first === '') {
         this.rejectRegistration();
         return;
       }
       // parse name field
-      const [first, last] = app.name.split(' ');
-      app.name = first;
-      app.lastname = last || '';
+      // const [first, last] = app.name.split(' ');
+      // app.name = first;
+      // app.lastname = last || '';
       // add to respective directory
       db.collection('DH6')
         .doc('hackathon')
@@ -279,7 +279,7 @@ export default Vue.extend({
       this.checkin(this.directoryToName(target));
       // open banner
       this.banner = true;
-      this.bannerMessage = `${this.application.email} has been registered under ${target}!`;
+      this.bannerMessage = `${this.application.contact.email} has been registered under ${target}!`;
       this.confirm = false;
     },
     rejectRegistration() {
@@ -403,9 +403,9 @@ export default Vue.extend({
       );
       const imageOffset = (badge.internal.pageSize.width - 25) / 2;
       badge.addImage(QRImage, 'JPEG', imageOffset, 3, 25, 25);
-      badge.save(`DH5_${this.application.name.first}${this.application.name.last}`);
+      badge.save(`DH6_${this.application.name.first}${this.application.name.last}`);
     },
-    // should insert / generate the back of DH5 badge.
+    // should insert / generate the back of DH6 badge.
     async createTemplate() {
       // eslint-disable-next-line new-cap
       const t = new pdf('l', 'mm', [165, 200]);
@@ -423,7 +423,7 @@ export default Vue.extend({
         .get();
       if (snap.exists) {
         const data = snap.data();
-        centeredText(data!.name, 35);
+        centeredText(this.fullName, 35);
         t.setFontSize(10);
         centeredText(this.application.academics.school, 40);
         t.setFontSize(14);
@@ -449,10 +449,10 @@ export default Vue.extend({
       return 'Attendee';
     },
     validateForm() {
-      const { university } = this.application.academics;
-      const { email } = this.application.contact.email;
+      const { school } = this.application.academics;
+      const { email } = this.application.contact;
       // if (this.name.length < 2) return false;
-      if (university === '' || email === '') return false;
+      if (school === '' || email === '') return false;
       return true;
     },
     formFeedback() {
@@ -486,7 +486,6 @@ export default Vue.extend({
         // }
         const result: any = await this.getUserApplication(email).catch(err => console.error(err));
         if (result.found) {
-          console.log(result.data)
           this.application = result.data;
           this.header = result.data.contact.email;
           this.active = true;
