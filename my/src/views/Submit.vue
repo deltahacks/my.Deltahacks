@@ -215,6 +215,10 @@ export default Vue.extend({
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
+
+        this.app.responses.challenges!.forEach((category) => {
+          (this.app as any)._.categories[category] = [];
+        });
       } else if (
         submitting &&
         this.app._.status === 'in progress' &&

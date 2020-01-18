@@ -278,11 +278,11 @@ const workshops = [
   'Computer Vision with OpenCV',
 ];
 
-const challenges=[
+const challenges = [
   'Best Hack',
   'Arcelor Mittal Dofasco Challenge',
   'MLH: Best Domain Name Registered',
-]
+];
 const roles = [
   'None',
   'Front-end',
@@ -385,23 +385,24 @@ export const getBlankApplication = (): AppContents => ({
 export const getBlankProject = (): any => ({
   _: {
     status: 'in progress',
-    table: "Pending"
+    table: 'Pending',
+    categories: {},
   },
   name: {
     devpost: '',
-    project: ''
+    project: '',
   },
   profiles: {
-    devpost: ''
+    devpost: '',
   },
   responses: {
-    challenges: ''
+    challenges: [],
   },
   group: [
     { name: '', email: '' },
     { name: '', email: '' },
-    { name: '', email: '' }
-  ]
+    { name: '', email: '' },
+  ],
 });
 
 export const applicationQuestions: any = [
