@@ -90,7 +90,7 @@
                     <br>
                     <span class="afterSubmitRounded">{{tableNumber}}</span>
                 </div>
-                <div style="float:left; margin-left:50px">
+                <div style="float:left; margin-left:2vw">
                     <h2>Judging Area</h2>
                     <br>
                     <span class="afterSubmitRounded">Thode 2nd Floor</span>

@@ -486,11 +486,7 @@ a {
         padding-bottom: 10px;
         margin-bottom: 10px; */
     }
-    
-    .afterSubmit{
-        margin-left:20px;
-        margin-top:20px;
-    }
+
     .statusbackground {
         -webkit-animation: statusanimation 180s ease infinite !important;
         -moz-animation: statusanimation 180s ease infinite !important;
