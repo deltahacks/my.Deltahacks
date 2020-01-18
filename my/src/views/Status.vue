@@ -396,7 +396,7 @@ export default Vue.extend({
       step: 0,
       checkedIn: false,
       projectSubmitted: false,
-      tableNumber: "Pending",
+      tableNumber: 'Pending',
       email: '',
       checkbox: false,
       timer: 0,
@@ -470,25 +470,25 @@ export default Vue.extend({
 
       this.checkedIn = checkedInSnapshot.exists;
 
+      this.projectSubmitted = false;
+
+      const x = await db.collection(this.hackathon)
+        .doc('hackathon').collection('projects').doc(email)
+        .onSnapshot((snap) => {
+          if (!snap.exists) return;
+          if (snap.data()!._.status === 'submitted') this.projectSubmitted = true;
+          this.tableNumber = snap.data()!._.table;
+        });
+
       const projectsSnapshot = await db.collection(this.hackathon)
         .doc('hackathon')
         .collection('projects')
         .get();
 
-      this.projectSubmitted = false;
-
-      // Project keys are the submitter's email, so we check if the user submitted a project
-      for (let project of projectsSnapshot.docs) {
-        if (project.id === email) {
-          if (project.data()._.status === 'submitted') this.projectSubmitted = true;
-          this.tableNumber = project.data()._.table;
-          break;
-        }
-      }
 
       // Check if another user has submitted a project on behalf of the current user
       if (!this.projectSubmitted) {
-        for (let project of projectsSnapshot.docs) {
+        for (const project of projectsSnapshot.docs) {
           const projectData = project.data();
           if (!projectData.group || !Array.isArray(projectData.group)) continue;
 
