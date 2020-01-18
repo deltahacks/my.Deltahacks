@@ -3,32 +3,29 @@
     <div class="container">
       <h1 class="question" id="title1">{{ title }}</h1>
       <v-text-field
-    v-if="inputType == 'text'"
-    label="Name"
-    :value="value"
-    @input="onChange($event)"
-    :error-messages="error"
-    dark
-    class="montserratify"
-    color="#000000"
-    width="10vw"
+        v-if="inputType == 'text'"
+        label="Name"
+        :value="value.name"
+        @input="onChange($event, 'name')"
+        :error-messages="error"
+        dark
+        class="montserratify"
+        color="#000000"
+        width="10vw"
       ></v-text-field>
-    <v-text-field
-    v-if="inputType == 'text'"
-    label="Email"
-    :value="value"
-    @input="onChange($event)"
-    :error-messages="error"
-    dark
-    class="montserratify"
-    color="#000000"
-    width="10vw"
+      <ValidationProvider name="email" :rules="'email'" v-slot="{ errors }">
+        <v-text-field
+          v-if="inputType == 'text'"
+          label="Email"
+          :value="value.email"
+          @input="onChange($event, 'email')"
+          :error-messages="errors[0]"
+          dark
+          class="montserratify"
+          color="#000000"
+          width="10vw"
         ></v-text-field>
-      <Checkbox
-            :v-model="general"
-              title="authorization.label"
-              ref="authorization.label"
-            />
+      </ValidationProvider>
     </div>
   </div>
 </template>
@@ -45,12 +42,18 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
+import {
+  ValidationProvider
+} from 'vee-validate/dist/vee-validate.full';
+
 import { months, gradYears, birthYears, days } from '../data';
 
 const FilePond: Component = vueFilePond(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview,
 );
+
+Vue.component('ValidationProvider', ValidationProvider);
 
 export default Vue.extend({
   props: [
@@ -76,8 +79,8 @@ export default Vue.extend({
     FilePond,
   },
   methods: {
-    onChange(event) {
-      this.$emit('input', event);
+    onChange(event, type) {
+      this.$emit('input', { ...this.value, [type]: event });
       this.requestUpdate();
     },
     textFunction(s) {

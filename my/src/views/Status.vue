@@ -394,6 +394,8 @@ export default Vue.extend({
       custom: true,
       name: '',
       step: 0,
+      checkedIn: false,
+      projectSubmitted: false,
       email: '',
       checkbox: false,
       timer: 0,
@@ -457,11 +459,45 @@ export default Vue.extend({
       }
       this.rsvp = (appWithRSVP) ? appWithRSVP._.RSVP : { coming: false, origin: '' };
     },
-    logMe(x) {
-      console.log(x);
-    },
     // Step is state of the page
-    updateStep(email: string) {
+    async updateStep(email: string) {
+      const checkedInSnapshot = await db.collection(this.hackathon)
+        .doc('hackathon')
+        .collection('checked in')
+        .doc(email)
+        .get();
+
+      this.checkedIn = checkedInSnapshot.exists;
+
+      const projectsSnapshot = await db.collection(this.hackathon)
+        .doc('hackathon')
+        .collection('projects')
+        .get();
+
+      this.projectSubmitted = false;
+
+      // Project keys are the submitter's email, so we check if the user submitted a project
+      for (let project of projectsSnapshot.docs) {
+        if (project.id === email) {
+          if (project.data()._.status === 'submitted') this.projectSubmitted = true;
+          break;
+        }
+      }
+
+      // Check if another user has submitted a project on behalf of the current user
+      if (!this.projectSubmitted) {
+        for (let project of projectsSnapshot.docs) {
+          const projectData = project.data();
+          if (!projectData.group || !Array.isArray(projectData.group)) continue;
+
+          const inProject = projectData.group.find(person => person.email === email);
+          if (inProject) {
+            this.projectSubmitted = true;
+            break;
+          }
+        }
+      }
+
       db.collection(this.hackathon)
         .doc('applications')
         .collection('all')
@@ -476,8 +512,8 @@ export default Vue.extend({
             if (data!._.decision && data!._.decision.substring(0, 5) === 'round') this.step = 5;
             if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
             if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
-            if (data!._.checkedIn && data!._.projectSubmitted === false) this.step = 8;
-            if (data!._.checkedIn && data!._.projectSubmitted) this.step = 9;
+            if (this.checkedIn && this.projectSubmitted === false) this.step = 8;
+            if (this.checkedIn && this.projectSubmitted) this.step = 9;
           } else {
             // application not started
             this.step = 1;

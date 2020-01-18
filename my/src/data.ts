@@ -382,6 +382,28 @@ export const getBlankApplication = (): AppContents => ({
   },
 });
 
+export const getBlankProject = (): any => ({
+  _: {
+    status: 'in progress',
+    table: "We'll assign you a table shortly"
+  },
+  name: {
+    devpost: '',
+    project: ''
+  },
+  profiles: {
+    devpost: ''
+  },
+  responses: {
+    challenges: ''
+  },
+  group: [
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' }
+  ]
+});
+
 export const applicationQuestions: any = [
   {
     label: "What's your first name?",
@@ -654,7 +676,7 @@ export const submitQuestions: any = [
     label: "What's your personal Devpost ID?",
     fieldType: 'text',
     model: ['profiles', 'devpost'],
-    requirements: { link: true },
+    requirements: { required: true, link: true },
   },
   {
     label: "What's your project name?",
@@ -666,7 +688,7 @@ export const submitQuestions: any = [
     label: 'What is your project\'s Devpost link?',
     fieldType: 'text',
     model: ['name', 'devpost'],
-    requirements: { required: true },
+    requirements: { required: true, link: true },
   },
   {
     label: 'What challenges would you like to be judged for?',
