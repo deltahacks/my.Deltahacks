@@ -217,7 +217,7 @@ export default Vue.extend({
         submit = true;
 
         this.app.responses.challenges!.forEach((category) => {
-          (this.app as any)._.categories[category] = [];
+          (this.app as any)._.categories[category.toLowerCase()] = [];
         });
       } else if (
         submitting &&
