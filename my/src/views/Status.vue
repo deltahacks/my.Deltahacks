@@ -88,7 +88,7 @@
                 <div style="float: left;">
                     <h2>Table Number</h2>
                     <br>
-                    <span class="afterSubmitRounded">17</span>
+                    <span class="afterSubmitRounded">{{tableNumber}}</span>
                 </div>
                 <div>
                     <h2>Judging Area</h2>
@@ -396,6 +396,7 @@ export default Vue.extend({
       step: 0,
       checkedIn: false,
       projectSubmitted: false,
+      tableNumber: "We'll assign shortly",
       email: '',
       checkbox: false,
       timer: 0,
@@ -480,6 +481,7 @@ export default Vue.extend({
       for (let project of projectsSnapshot.docs) {
         if (project.id === email) {
           if (project.data()._.status === 'submitted') this.projectSubmitted = true;
+          this.tableNumber = project.data()._.table;
           break;
         }
       }
@@ -493,6 +495,7 @@ export default Vue.extend({
           const inProject = projectData.group.find(person => person.email === email);
           if (inProject) {
             this.projectSubmitted = true;
+
             break;
           }
         }
