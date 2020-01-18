@@ -396,7 +396,7 @@ export default Vue.extend({
       step: 0,
       checkedIn: false,
       projectSubmitted: false,
-      tableNumber: "We'll assign shortly",
+      tableNumber: "Pending",
       email: '',
       checkbox: false,
       timer: 0,
