@@ -211,7 +211,6 @@ export default Vue.extend({
       const verified = await (firebase.auth().currentUser as firebase.User)
         .emailVerified;
       if (submitting && this.app._.status === 'in progress' && verified) {
-        this.app._.status = 'submitted';
         this.snack.message = 'Application submitted';
         this.snack.color = 'success';
         submit = true;
@@ -228,6 +227,29 @@ export default Vue.extend({
         this.snack.color = 'error';
         this.snack.visible = true;
         return;
+      }
+
+      // Check if the project devpost has already been submitted
+      if (submit) {
+        const projectsSnapshot = await this.getDB()
+          .collection('DH6')
+          .doc('hackathon')
+          .collection('projects')
+          .get();
+        
+        for (const project of projectsSnapshot.docs) {
+          const projectData = project.data();
+          if (!projectData.name || !projectData.name.devpost || project.id === this.getUID()) continue;
+
+          if (projectData.name.devpost === this.app.name.devpost) {
+            this.snack.message = 'Unable to submit: Another project is registered with this DevPost link.';
+            this.snack.color = 'error';
+            this.snack.visible = true;
+            return;
+          }
+        }
+
+        this.app._.status = 'submitted';
       }
 
       if (this.app._.status === 'in progress' || submit) {
@@ -325,8 +347,9 @@ export default Vue.extend({
     try {
       const app = await this.fetchFromFirebase();
 
-      // If there's items in the blank application not present in the online application, reconcile the two
-      if (app.data()) this.app = deepmerge(this.app, app.data()) as AppContents;
+      // If there's items in the blank application not present in the online application, reconcile the two.
+      // For arrays, replace what's local with what's online
+      if (app.data()) this.app = deepmerge(this.app, app.data(), { arrayMerge: (local, nonlocal) => nonlocal }) as AppContents;
       this.setName();
     } catch (error) {
       // Create popup modal here warning user
