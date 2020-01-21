@@ -87,12 +87,6 @@
                   autocomplete="off"
                   v-model="application.logistics.traveling_from"
                 ></v-text-field>
-                <v-select
-                  name="gender"
-                  label="Gender"
-                  :items="['Male', 'Female', 'Other']"
-                  v-model="application.personal.gender"
-                ></v-select>
                 <v-container fluid fill-height>
                   <v-flex>
                     <v-btn
@@ -144,7 +138,7 @@
         </v-container>
       </v-content>
       <v-btn fab dark large color="green">
-        <h2>{{ !application.shirt_size ? '?' : application.shirt_size }}</h2>
+        <h2>{{ !application.logistics.shirt_size ? '?' : application.logistics.shirt_size }}</h2>
       </v-btn>
       <v-snackbar v-model="banner" top color="green" right :timeout="3000">
         {{bannerMessage}}
