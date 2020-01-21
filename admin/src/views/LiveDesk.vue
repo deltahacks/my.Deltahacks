@@ -15,14 +15,14 @@
                     label="Name *"
                     id="name"
                     autocomplete="off"
-                    v-model="application.name"
+                    v-model="application.name.first"
                   ></v-text-field>
                   <v-text-field
                     :disabled="active"
                     name="email"
                     label="Email *"
                     autocomplete="off"
-                    v-model="application.email"
+                    v-model="application.contact.email"
                   ></v-text-field>
                 </div>
                 <div v-else>
@@ -38,7 +38,7 @@
                 <v-text-field
                   :disabled="active"
                   name="university"
-                  v-model="application.university"
+                  v-model="application.academics.school"
                   autocomplete="off"
                   label="University/Organization *"
                 ></v-text-field>
@@ -48,14 +48,14 @@
                   name="shirt_size"
                   label="Shirt Size"
                   :autocomplete="false"
-                  v-model="application.shirt_size"
+                  v-model="application.logistics.shirt_size"
                 ></v-select>
                 <v-text-field
                   :disabled="active"
                   name="dietary_restriction"
                   label="Dietary Restriction"
                   autocomplete="off"
-                  v-model="application.dietary_restrictions"
+                  v-model="application.logistics.diet_restrictions"
                 ></v-text-field>
                 <v-container fluid fill-height>
                   <v-flex>
@@ -65,7 +65,7 @@
                       mask="phone"
                       label="Phone"
                       autocomplete="off"
-                      v-model="application.phone"
+                      v-model="application.contact.phone"
                     ></v-text-field>
                   </v-flex>
                   <v-flex></v-flex>
@@ -76,7 +76,7 @@
                       name="emergency_phone"
                       label="Emergency Phone"
                       autocomplete="off"
-                      v-model="application.emergency_phone"
+                      v-model="application.emergency.phone"
                     ></v-text-field>
                   </v-flex>
                 </v-container>
@@ -85,13 +85,13 @@
                   name="location"
                   label="Coming From"
                   autocomplete="off"
-                  v-model="application.location"
+                  v-model="application.logistics.traveling_from"
                 ></v-text-field>
                 <v-select
                   name="gender"
                   label="Gender"
-                  :items="['M', 'F', 'Other']"
-                  v-model="application.gender"
+                  :items="['Male', 'Female', 'Other']"
+                  v-model="application.personal.gender"
                 ></v-select>
                 <v-container fluid fill-height>
                   <v-flex>
@@ -116,19 +116,19 @@
                         id="register"
                       >Register</v-btn>
                       <v-list>
-                        <v-list-tile @click="register('Walkins')">
+                        <v-list-tile @click="register('walkins')">
                           <v-list-tile-title>Walk In</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile @click="register('Sponsors')">
+                        <v-list-tile @click="register('sponsors')">
                           <v-list-tile-title>Sponsor</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile @click="register('Mentors')">
+                        <v-list-tile @click="register('mentors')">
                           <v-list-tile-title>Mentor</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile @click="register('Exec')">
+                        <v-list-tile @click="register('exec')">
                           <v-list-tile-title>Exec</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile @click="register('Volunteer')">
+                        <v-list-tile @click="register('volunteers')">
                           <v-list-tile-title>Volunteer</v-list-tile-title>
                         </v-list-tile>
                       </v-list>
@@ -184,43 +184,31 @@ export default Vue.extend({
     header: 'No QR code has been scanned yet.',
     active: false,
     emptyApp: {
-      name: '',
-      lastname: '',
-      email: '',
-      shirt_size: null,
-      dietary_restrictions: null,
-      university: null,
-      phone: '',
-      emergency_phone: '',
-      emergency_name: '',
-      location: '',
-      birthday: '',
-      gender: '',
+      contact: { email: '', phone: '' },
+      name: { first: '', last: '' },
+      logistics: { shirt_size: null, diet_restrictions: null, traveling_from: '' },
+      academics: { school: '' },
+      emergency: { name: '', phone: '' },
+      personal: { birthday: '', gender: '' },
       type: '',
     },
     application: {
-      name: '',
-      lastname: '',
-      email: '',
-      shirt_size: null,
-      dietary_restrictions: null,
-      university: null,
-      phone: '',
-      emergency_phone: '',
-      emergency_name: '',
-      location: '',
-      birthday: '',
-      gender: '',
+      contact: { email: '', phone: '' },
+      name: { first: '', last: '' },
+      logistics: { shirt_size: null, diet_restrictions: null, traveling_from: '' },
+      academics: { school: '' },
+      emergency: { name: '', phone: '' },
+      personal: { birthday: '', gender: '' },
       type: '',
     },
   }),
   computed: {
     safeGender(): string {
-      const { gender } = this.application;
+      const { gender } = this.application.personal;
       return gender !== '' ? gender : 'N/A';
     },
     fullName(): string {
-      return `${this.application.name} ${this.application.lastname}`;
+      return `${this.application.name.first} ${this.application.name.last}`;
     },
   },
   methods: {
@@ -244,9 +232,9 @@ export default Vue.extend({
     async reset() {
       const admin = firebase.auth().currentUser!.email;
       const ref = db
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('FrontDesk')
+        .collection('DH6')
+        .doc('hackathon')
+        .collection('live desk')
         .doc(admin || undefined);
       ref.get().then((snap) => {
         if (snap.exists) {
@@ -272,26 +260,26 @@ export default Vue.extend({
       }
       const app = this.application;
       // reject if no identifying field is created.
-      if (app.email === '' || app.name === '') {
+      if (app.contact.email === '' || app.name.first === '') {
         this.rejectRegistration();
         return;
       }
       // parse name field
-      const [first, last] = app.name.split(' ');
-      app.name = first;
-      app.lastname = last || '';
+      // const [first, last] = app.name.split(' ');
+      // app.name = first;
+      // app.lastname = last || '';
       // add to respective directory
-      db.collection('hackathon')
-        .doc('DH5')
+      db.collection('DH6')
+        .doc('hackathon')
         .collection(target)
-        .doc(app.email)
+        .doc(app.contact.email)
         .set(app);
       // add type and include in general checked in directory)
       console.log(this.directoryToName(target));
       this.checkin(this.directoryToName(target));
       // open banner
       this.banner = true;
-      this.bannerMessage = `${this.application.email} has been registered under ${target}!`;
+      this.bannerMessage = `${this.application.contact.email} has been registered under ${target}!`;
       this.confirm = false;
     },
     rejectRegistration() {
@@ -303,9 +291,9 @@ export default Vue.extend({
         if (email.length === 0) resolve({ found: false, data: {} });
 
         const snap = await db
-          .collection('applications')
-          .doc('DH5')
-          .collection('in progress')
+          .collection('DH6')
+          .doc('applications')
+          .collection('all')
           .doc(email)
           .get();
 
@@ -363,33 +351,21 @@ export default Vue.extend({
         return;
       }
       const app = this.application;
-      const name = `${app.name} ${app.lastname}`;
+      const name = `${app.name.first} ${app.name.last}`;
       app.type = type;
       try {
         await db
-          .collection('hackathon')
-          .doc('DH5')
-          .collection('Checked In')
-          .doc(this.application.email)
+          .collection('DH6')
+          .doc('hackathon')
+          .collection('checked in')
+          .doc(this.application.contact.email)
           .set({
-            checkedIn: true,
             time: new Date(),
             by: this.$store.state.firebase
               .auth()
               .currentUser.email.toLowerCase(),
             type: app.type,
             name,
-            whereabouts: [
-              {
-                initialCheckin: true,
-                building: 'ETB',
-                time: new Date(),
-                by: this.$store.state.firebase
-                  .auth()
-                  .currentUser.email.toLowerCase(),
-                type: 'incoming',
-              },
-            ],
             meals: 0,
           });
 
@@ -403,33 +379,33 @@ export default Vue.extend({
     },
     async updateGender() {
       const ref = db
-        .collection('applications')
-        .doc('DH5')
-        .collection('in progress')
-        .doc(this.application.email);
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .doc(this.application.contact.email);
 
       const snap = await ref.get();
 
       if (snap.exists) {
         const data = snap.data();
-        data!.gender = this.application.gender;
+        data!.gender = this.application.personal.gender;
         ref.set(data);
       } else {
         console.log("Couldn't find user in `in progress`!");
       }
     },
     async openBadge() {
-      if (this.application.email === '') return;
+      if (this.application.contact.email === '') return;
       const { badge, error } = await this.createTemplate();
       if (error) return;
       const QRImage = await QR.toDataURL(
-        `https://admin.deltahacks.com/checkin/${this.application.email}`,
+        `https://admin.deltahacks.com/checkin/${this.application.contact.email}`,
       );
       const imageOffset = (badge.internal.pageSize.width - 25) / 2;
       badge.addImage(QRImage, 'JPEG', imageOffset, 3, 25, 25);
-      badge.save(`DH5_${this.application.name}${this.application.lastname}`);
+      badge.save(`DH6_${this.application.name.first}${this.application.name.last}`);
     },
-    // should insert / generate the back of DH5 badge.
+    // should insert / generate the back of DH6 badge.
     async createTemplate() {
       // eslint-disable-next-line new-cap
       const t = new pdf('l', 'mm', [165, 200]);
@@ -440,21 +416,21 @@ export default Vue.extend({
         t.text(textOffset, y, text);
       };
       const snap = await db
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
-        .doc(this.application.email)
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
+        .doc(this.application.contact.email)
         .get();
       if (snap.exists) {
         const data = snap.data();
-        centeredText(data!.name, 35);
+        centeredText(this.fullName, 35);
         t.setFontSize(10);
-        centeredText(this.application.university, 40);
+        centeredText(this.application.academics.school, 40);
         t.setFontSize(14);
         centeredText(this.typeToTitle(data!.type), 50);
       } else {
         this.error = true;
-        this.errorMessage = `${this.application.email} has not been registered or checked in!`;
+        this.errorMessage = `${this.application.contact.email} has not been registered or checked in!`;
         return {
           error: true,
           badge: undefined,
@@ -473,9 +449,10 @@ export default Vue.extend({
       return 'Attendee';
     },
     validateForm() {
-      const { university, email } = this.application;
+      const { school } = this.application.academics;
+      const { email } = this.application.contact;
       // if (this.name.length < 2) return false;
-      if (university === '' || email === '') return false;
+      if (school === '' || email === '') return false;
       return true;
     },
     formFeedback() {
@@ -486,9 +463,9 @@ export default Vue.extend({
   async beforeMount() {
     const admin = firebase.auth().currentUser!.email;
     const ref = db
-      .collection('hackathon')
-      .doc('DH5')
-      .collection('FrontDesk')
+      .collection('DH6')
+      .doc('hackathon')
+      .collection('live desk')
       .doc(admin || undefined);
     ref.onSnapshot(async (snap) => {
       if (snap.exists) {
@@ -510,7 +487,7 @@ export default Vue.extend({
         const result: any = await this.getUserApplication(email).catch(err => console.error(err));
         if (result.found) {
           this.application = result.data;
-          this.header = result.data.email;
+          this.header = result.data.contact.email;
           this.active = true;
         } else {
           this.application = this.emptyApp;
