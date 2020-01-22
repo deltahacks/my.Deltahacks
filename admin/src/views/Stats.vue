@@ -41,7 +41,7 @@
             <v-card-title primary-title>Checked In</v-card-title>
             <v-card color="white lighten-4" dark>
               <v-card-text class="totalapps center">
-                <IOdometer class="iOdometer" :value="safeCheckIn" />
+                <IOdometer class="iOdometer" :value="checkedIn" />
               </v-card-text>
             </v-card>
           </v-card>
@@ -308,21 +308,21 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
-import IOdometer from 'vue-odometer';
+import firebase from "firebase";
+import IOdometer from "vue-odometer";
 
-import functions from 'firebase/functions';
-import Vue from 'vue';
-import db from '../firebase_init';
-import Navbar from '@/components/Navbar.vue';
-import BarChart from '../components/BarChart';
-import PieChart from '../components/PieChartGen';
-import ApexChart from '@/components/ApexBar.vue';
+import functions from "firebase/functions";
+import Vue from "vue";
+import db from "../firebase_init";
+import Navbar from "@/components/Navbar.vue";
+import BarChart from "../components/BarChart";
+import PieChart from "../components/PieChartGen";
+import ApexChart from "@/components/ApexBar.vue";
 
-import {formatChartData} from '../helpers/utils';
+import {formatChartData} from "../helpers/utils";
 
-import BasicBarChart from '@/components/charts/BasicBar.vue';
-import BasicPieChart from '@/components/charts/BasicPie.vue';
+import BasicBarChart from "@/components/charts/BasicBar.vue";
+import BasicPieChart from "@/components/charts/BasicPie.vue";
 
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
@@ -386,66 +386,66 @@ interface StatsData {
 }
 
 export default Vue.extend({
-  name: 'Stats',
+  name: "Stats",
   data(): StatsData {
     const colorRef = [
-      '#E31836',
-      '#83002C',
-      '#004C9B',
-      '#FDD54F',
-      '#4F2682',
-      '#63a832',
-      '#e0932f',
-      '#FF6633',
-      '#FFB399',
-      '#FF33FF',
-      '#FFFF99',
-      '#00B3E6',
-      '#E6B333',
-      '#3366E6',
-      '#999966',
-      '#99FF99',
-      '#B34D4D',
-      '#80B300',
-      '#809900',
-      '#E6B3B3',
-      '#6680B3',
-      '#66991A',
-      '#FF99E6',
-      '#CCFF1A',
-      '#FF1A66',
-      '#E6331A',
-      '#33FFCC',
-      '#66994D',
-      '#B366CC',
-      '#4D8000',
-      '#B33300',
-      '#CC80CC',
-      '#66664D',
-      '#991AFF',
-      '#E666FF',
-      '#4DB3FF',
-      '#1AB399',
-      '#E666B3',
-      '#33991A',
-      '#CC9999',
-      '#B3B31A',
-      '#00E680',
-      '#4D8066',
-      '#809980',
-      '#E6FF80',
-      '#1AFF33',
-      '#999933',
-      '#FF3380',
-      '#CCCC00',
-      '#66E64D',
-      '#4D80CC',
-      '#9900B3',
-      '#E64D66',
-      '#4DB380',
-      '#FF4D4D',
-      '#99E6E6',
-      '#6666FF',
+      "#E31836",
+      "#83002C",
+      "#004C9B",
+      "#FDD54F",
+      "#4F2682",
+      "#63a832",
+      "#e0932f",
+      "#FF6633",
+      "#FFB399",
+      "#FF33FF",
+      "#FFFF99",
+      "#00B3E6",
+      "#E6B333",
+      "#3366E6",
+      "#999966",
+      "#99FF99",
+      "#B34D4D",
+      "#80B300",
+      "#809900",
+      "#E6B3B3",
+      "#6680B3",
+      "#66991A",
+      "#FF99E6",
+      "#CCFF1A",
+      "#FF1A66",
+      "#E6331A",
+      "#33FFCC",
+      "#66994D",
+      "#B366CC",
+      "#4D8000",
+      "#B33300",
+      "#CC80CC",
+      "#66664D",
+      "#991AFF",
+      "#E666FF",
+      "#4DB3FF",
+      "#1AB399",
+      "#E666B3",
+      "#33991A",
+      "#CC9999",
+      "#B3B31A",
+      "#00E680",
+      "#4D8066",
+      "#809980",
+      "#E6FF80",
+      "#1AFF33",
+      "#999933",
+      "#FF3380",
+      "#CCCC00",
+      "#66E64D",
+      "#4D80CC",
+      "#9900B3",
+      "#E64D66",
+      "#4DB380",
+      "#FF4D4D",
+      "#99E6E6",
+      "#6666FF",
     ];
     return {
       decisions: {
@@ -483,50 +483,50 @@ export default Vue.extend({
       averageWordCount: {},
       avgDaysToSubmit: 0,
       pickups: {
-        'Scarborough/York': 0,
+        "Scarborough/York": 0,
         Waterloo: 0,
         Western: 0,
         UofT: 0,
       },
-      rsvpShirts: {'XS': 0,'S': 0, 'M': 0, 'L': 0, 'XL': 0},
-      rsvpDiets: {'None': 0},
+      rsvpShirts: {XS: 0, S: 0, M: 0, L: 0, XL: 0},
+      rsvpDiets: {None: 0},
       submitted: 0,
       inProgress: 0,
       data: {
-        labels: ['Accepted', 'Rejected', 'Pending'],
+        labels: ["Accepted", "Rejected", "Pending"],
         datasets: [
           {
-            label: 'Applicant Distribution',
+            label: "Applicant Distribution",
             backgroundColor: colorRef,
             data: [20, 30, 60],
           },
         ],
       },
       checkInData: {
-        labels: ['Checked In', 'Not Checked In'],
+        labels: ["Checked In", "Not Checked In"],
         datasets: [
           {
-            label: 'Applicant Distribution',
+            label: "Applicant Distribution",
             backgroundColor: colorRef,
             data: [40, 60],
           },
         ],
       },
       ageData: {
-        labels: ['18', '19', '20', '21', '22', '23+'],
+        labels: ["18", "19", "20", "21", "22", "23+"],
         datasets: [
           {
-            label: 'Age Distribution',
+            label: "Age Distribution",
             backgroundColor: colorRef,
             data: [70, 160, 200, 125, 90, 50],
           },
         ],
       },
       busData: {
-        labels: ['Toronto', 'Waterloo', 'London', 'Montreal', 'None'],
+        labels: ["Toronto", "Waterloo", "London", "Montreal", "None"],
         datasets: [
           {
-            label: 'Number of Students Per Bus',
+            label: "Number of Students Per Bus",
             backgroundColor: colorRef,
             data: [60, 120, 25, 34, 200],
           },
@@ -562,8 +562,8 @@ export default Vue.extend({
     (this as any).countWords();
     (this as any).avgSubmitTime();
     (this as any).countRSVP();
-    db.collection('DH6')
-      .doc('statistics')
+    db.collection("DH6")
+      .doc("statistics")
       .onSnapshot((doc: DocumentSnapshot) => {
         if (doc.exists) {
           (this as any).statistics = doc.data();
@@ -575,78 +575,78 @@ export default Vue.extend({
   computed: {
     numHackathons() {
       return formatChartData(this, [
-        'statistics',
-        'applicationStats',
-        'hackathons',
+        "statistics",
+        "applicationStats",
+        "hackathons",
       ]);
     },
     universities() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'universities'],
+        ["statistics", "applicationStats", "universities"],
         {sort: true, limit: 10},
       );
     },
     majors() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'majors'],
+        ["statistics", "applicationStats", "majors"],
         {sort: true, limit: 10},
       );
     },
     schoolYears() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'school_years'],
+        ["statistics", "applicationStats", "school_years"],
         {sort: true},
       );
     },
     shirtSizes() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'shirt_sizes'],
+        ["statistics", "applicationStats", "shirt_sizes"],
         {sort: true},
       );
     },
     discoveredBy() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'discovery'],
+        ["statistics", "applicationStats", "discovery"],
         {sort: true},
       );
     },
     dietaryRestrictions() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'dietary_restrictions'],
+        ["statistics", "applicationStats", "dietary_restrictions"],
         {sort: true, limit: 10},
       );
     },
     comingFrom() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'travelling_from'],
+        ["statistics", "applicationStats", "travelling_from"],
         {sort: true},
       );
     },
     workshops() {
       return formatChartData(
         this,
-        ['statistics', 'applicationStats', 'workshops'],
+        ["statistics", "applicationStats", "workshops"],
         {sort: true},
       );
     },
     averageWords() {
-      return formatChartData(this, ['averageWordCount'], {sort: true});
+      return formatChartData(this, ["averageWordCount"], {sort: true});
     },
     busPassengers() {
-      return formatChartData(this, ['pickups'], {sort: true});
+      return formatChartData(this, ["pickups"], {sort: true});
     },
     RSVPShirts() {
-      return formatChartData(this, ['rsvpShirts'], {sort: true});
+      return formatChartData(this, ["rsvpShirts"], {sort: true});
     },
     RSVPDiets() {
-      return formatChartData(this, ['rsvpDiets'], {sort: true});
+      return formatChartData(this, ["rsvpDiets"], {sort: true});
     },
   },
   // computed: {
@@ -670,66 +670,60 @@ export default Vue.extend({
   // },
   methods: {
     setCheckInData() {
-      db.collection('DH6')
-        .doc('hackathon')
-        .collection('checked in')
-        .where('type', '==', 'mentor')
+      db.collection("DH6")
+        .doc("hackathon")
+        .collection("checked in")
+        .where("type", "==", "mentor")
         .onSnapshot(snap => {
           (this as any).mentors = snap.docs.length;
         });
-      db.collection('DH6')
-        .doc('hackathon')
-        .collection('checked in')
-        .where('type', '==', 'judge')
+      db.collection("DH6")
+        .doc("hackathon")
+        .collection("checked in")
+        .where("type", "==", "judge")
         .onSnapshot(snap => {
           (this as any).judges = snap.docs.length;
         });
-      db.collection('DH6')
-        .doc('hackathon')
-        .collection('checked in')
-        .where('type', '==', 'volunteer')
+      db.collection("DH6")
+        .doc("hackathon")
+        .collection("checked in")
+        .where("type", "==", "volunteer")
         .onSnapshot(snap => {
           (this as any).volunteers = snap.docs.length;
         });
-      db.collection('DH6')
-        .doc('hackathon')
-        .collection('checked in')
-        .where('type', '==', 'attendee')
+      db.collection("DH6")
+        .doc("hackathon")
+        .collection("checked in")
+        .where("type", "==", "attendee")
         .onSnapshot(snap => {
           (this as any).checkedIn = snap.docs.length;
         });
-      db.collection('DH6')
-        .doc('hackathon')
-        .collection('checked in')
-        .where('type', '==', 'sponsor')
+      db.collection("DH6")
+        .doc("hackathon")
+        .collection("checked in")
+        .where("type", "==", "sponsor")
         .onSnapshot(snap => {
           (this as any).sponsors = snap.docs.length;
-        }); 
-      db.collection('DH6')
-        .doc('hackathon')
-        .collection('checked in')
-        .where('type', '==', 'exec')
+        });
+      db.collection("DH6")
+        .doc("hackathon")
+        .collection("checked in")
+        .where("type", "==", "exec")
         .onSnapshot(snap => {
           (this as any).execs = snap.docs.length;
-        });     
-      // db.collection('hackathon')
-      //   .doc('DH5')
-      //   .collection('Checked In')
-      //   .onSnapshot((snap) => {
-      //     this.checkedIn = snap.docs.length;
-      //   });
-      // db.collection('hackathon')
-      //   .doc('DH5')
-      //   .collection('Sponsors')
-      //   .onSnapshot((snap) => {
-      //     this.sponsors = snap.docs.length;
-      //   });
-      // db.collection('hackathon')
-      //   .doc('DH5')
-      //   .collection('Walkins')
-      //   .onSnapshot((snap) => {
-      //     this.walkins = snap.docs.length;
-      //   });
+        });
+      db.collection("hackathon")
+        .doc("DH5")
+        .collection("Sponsors")
+        .onSnapshot(snap => {
+          this.sponsors = snap.docs.length;
+        });
+      db.collection("hackathon")
+        .doc("DH5")
+        .collection("Walkins")
+        .onSnapshot(snap => {
+          this.walkins = snap.docs.length;
+        });
     },
     countApplications() {
       (this as any).applicationCount = (this as any).dbref.length;
@@ -749,13 +743,12 @@ export default Vue.extend({
             console.log(error);
           }
         }
-
       } catch (error) {
         console.log(error);
       }
     },
     async countBusPassengers(app) {
-      if (app._.RSVP.origin && !app._.RSVP.origin.includes('Not')) {
+      if (app._.RSVP.origin && !app._.RSVP.origin.includes("Not")) {
         (this as any).bus_passengers += 1;
         (this as any).pickups[app._.RSVP.origin] += 1;
       }
@@ -764,9 +757,8 @@ export default Vue.extend({
       (this as any).rsvpShirts[app.logistics.shirt_size] += 1;
     },
     async countRSVPDiets(app) {
-  
-      if (typeof(app.logistics.diet_restrictions) == 'string') {
-        const diet = (app.logistics.diet_restrictions).toString()
+      if (typeof app.logistics.diet_restrictions == "string") {
+        const diet = app.logistics.diet_restrictions.toString();
         if ((this as any).rsvpDiets.hasOwnProperty(diet)) {
           (this as any).rsvpDiets[diet] += 1;
         } else {
@@ -783,7 +775,7 @@ export default Vue.extend({
         let totalSubmitted = 0;
         const ref = (this as any).dbref;
         for (let i = 0; i < ref.length; i++) {
-          if (ref[i]._.status === 'submitted') {
+          if (ref[i]._.status === "submitted") {
             // Extracting Q1 String then counting words
             totalWordsQ1 += (this as any).splitWord(ref[i].responses.q1);
             totalWordsQ2 += (this as any).splitWord(ref[i].responses.q2);
@@ -795,17 +787,17 @@ export default Vue.extend({
           }
         }
         (this as any).averageWordCount = {
-          'Question 1': Math.round(totalWordsQ1 / totalSubmitted),
-          'Question 2': Math.round(totalWordsQ2 / totalSubmitted),
-          'Question 3': Math.round(totalWordsQ3 / totalSubmitted),
-          'Anything Else': Math.round(totalWordsAnythingElse / totalSubmitted),
+          "Question 1": Math.round(totalWordsQ1 / totalSubmitted),
+          "Question 2": Math.round(totalWordsQ2 / totalSubmitted),
+          "Question 3": Math.round(totalWordsQ3 / totalSubmitted),
+          "Anything Else": Math.round(totalWordsAnythingElse / totalSubmitted),
         };
       } catch (err) {
         console.error(err);
       }
     },
     splitWord(str) {
-      return str.split(' ').length;
+      return str.split(" ").length;
     },
     async avgSubmitTime() {
       try {
@@ -813,7 +805,7 @@ export default Vue.extend({
         let totalSubmitted = 0;
         const ref = (this as any).dbref;
         for (let i = 0; i < ref.length; i++) {
-          if (ref[i]._.status === 'submitted') {
+          if (ref[i]._.status === "submitted") {
             const timeInitiated = new Date(
               ref[i]._.time_initiated.seconds * 1000,
             );
@@ -948,8 +940,8 @@ export default Vue.extend({
         if (obj[section][index]) obj[section][index]++;
         else obj[section][index] = 1;
       };
-      safeAdd(stats, 'hackathons_accepted', app.hackathons);
-      safeAdd(stats, 'gender_accepted', app.gender);
+      safeAdd(stats, "hackathons_accepted", app.hackathons);
+      safeAdd(stats, "gender_accepted", app.gender);
       // safeAdd(stats, 'gender', app.gender);
     },
     aggregateAccepted(obj, snap) {
@@ -1075,22 +1067,22 @@ export default Vue.extend({
       };
     },
     getStatistics() {
-      const ref = db.collection('DH6').doc('statistics');
+      const ref = db.collection("DH6").doc("statistics");
       return new Promise(async (resolve, reject) => {
         const snap = await ref.get().catch(err => reject(err));
         if (snap) {
           resolve(snap.data());
         } else {
-          resolve('');
+          resolve("");
         }
       });
     },
     async getDB() {
       const apps: string[] = [];
       const ref = await db
-        .collection('DH6')
-        .doc('applications')
-        .collection('all')
+        .collection("DH6")
+        .doc("applications")
+        .collection("all")
         .get();
       return ref.docs.map(doc => doc.data());
     },
