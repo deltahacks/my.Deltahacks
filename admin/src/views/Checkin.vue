@@ -94,17 +94,36 @@ export default Vue.extend({
     async adjustMeals(adjustment) {
       console.log('Adjusting meal');
       try {
-        await db.collection('DH6')
-          .doc('hackathon')
-          .collection('checked in')
-          .doc(this.$route.params.id.toLowerCase())
-          .update({
-            meals: this.meals += adjustment,
-          });
+        const hackathon = await db.collection('DH6').doc('hackathon').get();
+        if (this.meals < hackathon.data().mealsSoFar || adjustment < 0) {
+          await db.collection('DH6')
+            .doc('hackathon')
+            .collection('checked in')
+            .doc(this.$route.params.id.toLowerCase())
+            .update({
+              meals: this.meals += adjustment,
+            });
 
-        this.feedback = true;
-        this.bannerMessage = 'Successfully Adjusted Meal';
-        console.log('Successfully written');
+          this.feedback = true;
+          this.bannerMessage = 'Successfully Adjusted Meal';
+          console.log('Successfully written');
+        } else {
+          const alert = confirm('🥝 FYI this attendee has already had enough meals, would you like to give them one anyway?');
+          if (alert) {
+            await db.collection('DH6')
+              .doc('hackathon')
+              .collection('checked in')
+              .doc(this.$route.params.id.toLowerCase())
+              .update({
+                meals: this.meals += adjustment,
+              });
+            this.feedback = true;
+            this.bannerMessage = 'Successfully Adjusted Meal';
+            console.log('Successfully written');
+          } else {
+            console.log('Did not give');
+          }
+        }
       } catch (err) {
         console.log(err);
       }
