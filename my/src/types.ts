@@ -60,6 +60,7 @@ export interface AppContents {
     q3?: string;
     q4?: string;
     workshops?: Array<string>;
+    challenges?: Array<string>;
   };
   logistics: {
     discovered_by: discovered_by;
@@ -136,6 +137,9 @@ export interface StatusModel {
   custom: boolean;
   name: string;
   step: number;
+  checkedIn: boolean;
+  projectSubmitted: boolean;
+  tableNumber: string;
   email: string;
   checkbox: boolean;
   timer: number;

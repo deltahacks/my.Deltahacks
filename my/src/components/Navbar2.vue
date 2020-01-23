@@ -8,6 +8,7 @@
       </a>
       <h1 id="name" class="heading">
         {{ first }}<span style="font-weight: 300" v-if="(first.length + last.length) < 21" >{{ last }}</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;
       </h1>
     </div>
   </div>

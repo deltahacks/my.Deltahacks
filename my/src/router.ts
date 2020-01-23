@@ -7,6 +7,7 @@ import 'firebase/firestore';
 import Login from './views/Login.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import Apply from './views/Apply.vue';
+import Submit from './views/Submit.vue';
 import Status from './views/Status.vue';
 import v404 from './views/404.vue';
 import db from './firebase_init';
@@ -36,6 +37,14 @@ const router = new Router({
       path: '/status',
       name: 'Status',
       component: Status,
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: '/submit',
+      name: 'Submit',
+      component: Submit,
       meta: {
         auth: true,
       },

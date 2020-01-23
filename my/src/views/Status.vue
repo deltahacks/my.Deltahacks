@@ -96,9 +96,30 @@
                 </a>
               </div>
             </div>
+            <div class="box box9" v-if="step === 8">
+               <template>
+                <p class="medium" style="margin-top:20px;">The Hackathon <br> for Change!</p>
+              </template>
+            </div>
+             <div class="box box9" v-if="step === 9">
+               <template>
+                 <div class="afterSubmit">
+                <div style="float:left;">
+                    <h2>Table Number</h2>
+                    <br>
+                    <span class="afterSubmitRounded">{{tableNumber}}</span>
+                </div>
+                <div style="float:left; margin-left:2vw">
+                    <h2>Judging Area</h2>
+                    <br>
+                    <span class="afterSubmitRounded">Thode 2nd Floor</span>
+                </div>
+                </div>
+              </template>
+            </div>
 
             <div class="box box5 status desktop">
-              <div class="currentStatus">
+              <div class="currentStatus" v-if="step < 8">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
@@ -108,9 +129,25 @@
                   </a>
                 </p>
               </div>
-              <a href="/apply" class="apply-btn">
+              <div class="currentStatus" v-if="step === 8">
+                <p class="bigmobile">Deadline</p>
+                <div><span class="deadline">12 P.M</span></div>
+                <p class="bigmobile">
+                  Sunday, January 26th 2020
+                </p>
+              </div>
+              <div class="currentStatus glm" v-if="step === 9">
+                <p class="goodluck box5">Good Luck!</p>
+              </div>
+              <a href="/apply" class="apply-btn" v-if="step < 8">
                 <div class="apply box5">Apply</div>
               </a>
+              <a href="/submit" class="apply-btn" v-if="step === 8">
+                <div class="submit apply box5">Submit<br>Project</div>
+              </a>
+              <div class="apply-btn" v-if="step === 9">
+                <div class="submitted box5">You have successfully submitted your project.</div>
+              </div>
             </div>
           </div>
           <!--Column#2-->
@@ -209,19 +246,35 @@
             </div>
           </div>
           <div class="box box5 status tablet">
-            <div class="currentStatus">
-              <h2>My Application Status</h2>
-              <div class="emote">{{ emoticon }}</div>
-              <p class="bigmobile">
-                {{ currentHeader }}
-                <a @click.prevent="resend()" v-if="!isVerified() && !resent">
-                  Resend Email
-                </a>
-              </p>
-            </div>
-            <a href="/apply" class="apply-btn">
-              <div class="apply box5">Apply</div>
-            </a>
+            <div class="currentStatus" v-if="step < 8">
+                <h2>My Application Status</h2>
+                <div class="emote">{{ emoticon }}</div>
+                <p class="bigmobile">
+                  {{ currentHeader }}
+                  <a @click.prevent="resend()" v-if="!isVerified() && !resent">
+                    Resend Email
+                  </a>
+                </p>
+              </div>
+              <div class="currentStatus" v-if="step === 8">
+                <p class="bigmobile">Deadline</p>
+                <div><span class="deadline">12 P.M</span></div>
+                <p class="bigmobile">
+                  Sunday, January 26th 2020
+                </p>
+              </div>
+              <div class="currentStatus glm" v-if="step === 9">
+                <p class="goodluck box5">Good Luck!</p>
+              </div>
+              <a href="/apply" class="apply-btn" v-if="step < 8">
+                <div class="apply box5">Apply</div>
+              </a>
+              <a href="/submit" class="apply-btn" v-if="step === 8">
+                <div class="submit apply box5">Submit<br>Project</div>
+              </a>
+              <a class="apply-btn" v-if="step === 9">
+                <div class="submitted box5">You have successfully submitted your project.</div>
+              </a>
           </div>
           <div :key="media.icon" v-for="media in social" class="tablet">
             <div class="col col2 social">
@@ -360,7 +413,10 @@ export default Vue.extend({
       custom: true,
       name: "",
       step: 0,
-      email: "",
+      checkedIn: false,
+      projectSubmitted: false,
+      tableNumber: 'Pending',
+      email: '',
       checkbox: false,
       timer: 0,
       curImage: 0,
@@ -430,11 +486,47 @@ export default Vue.extend({
         ? appWithRSVP._.RSVP
         : {coming: false, origin: ""};
     },
-    logMe(x) {
-      console.log(x);
-    },
     // Step is state of the page
-    updateStep(email: string) {
+    async updateStep(email: string) {
+      const checkedInSnapshot = await db.collection(this.hackathon)
+        .doc('hackathon')
+        .collection('checked in')
+        .doc(email)
+        .get();
+
+      this.checkedIn = checkedInSnapshot.exists;
+
+      this.projectSubmitted = false;
+
+      const x = await db.collection(this.hackathon)
+        .doc('hackathon').collection('projects').doc(email)
+        .onSnapshot((snap) => {
+          if (!snap.exists) return;
+          if (snap.data()!._.status === 'submitted') this.projectSubmitted = true;
+          this.tableNumber = snap.data()!._.table;
+        });
+
+      const projectsSnapshot = await db.collection(this.hackathon)
+        .doc('hackathon')
+        .collection('projects')
+        .get();
+
+
+      // Check if another user has submitted a project on behalf of the current user
+      if (!this.projectSubmitted) {
+        for (const project of projectsSnapshot.docs) {
+          const projectData = project.data();
+          if (!projectData.group || !Array.isArray(projectData.group)) continue;
+
+          const inProject = projectData.group.find(person => person.email === email);
+          if (inProject) {
+            this.projectSubmitted = true;
+            this.tableNumber = project.data()._.table;
+            break;
+          }
+        }
+      }
+
       db.collection(this.hackathon)
         .doc("applications")
         .collection("all")
@@ -454,11 +546,9 @@ export default Vue.extend({
             )
               this.step = 5;
             if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
-            if (
-              data!._.RSVP &&
-              (data!._.RSVP.origin || data!._.RSVP.coming != null)
-            )
-              this.step = 7;
+            if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
+            if (this.checkedIn && this.projectSubmitted === false) this.step = 8;
+            if (this.checkedIn && this.projectSubmitted) this.step = 9;
           } else {
             // application not started
             this.step = 1;

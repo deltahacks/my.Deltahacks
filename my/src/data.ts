@@ -278,6 +278,11 @@ const workshops = [
   'Computer Vision with OpenCV',
 ];
 
+const challenges = [
+  'Best Hack',
+  'Arcelor Mittal Dofasco Challenge',
+  'MLH: Best Domain Name Registered',
+];
 const roles = [
   'None',
   'Front-end',
@@ -354,6 +359,7 @@ export const getBlankApplication = (): AppContents => ({
     q2: '',
     q3: '',
     workshops: [],
+    challenges: [],
   },
   logistics: {
     discovered_by: '',
@@ -374,6 +380,29 @@ export const getBlankApplication = (): AppContents => ({
     termsAndConditions: false,
     code: false,
   },
+});
+
+export const getBlankProject = (): any => ({
+  _: {
+    status: 'in progress',
+    table: 'Pending',
+    categories: {},
+  },
+  name: {
+    devpost: '',
+    project: '',
+  },
+  profiles: {
+    devpost: '',
+  },
+  responses: {
+    challenges: [],
+  },
+  group: [
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+  ],
 });
 
 export const applicationQuestions: any = [
@@ -640,6 +669,34 @@ export const authorizations: any = [
     MLH Contest Terms and Conditions</a> and the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>.</p>',
     model: ['general', 'code'],
+  },
+];
+
+export const submitQuestions: any = [
+  {
+    label: "What's your personal Devpost ID?",
+    fieldType: 'text',
+    model: ['profiles', 'devpost'],
+    requirements: { required: true, link: true },
+  },
+  {
+    label: "What's your project name?",
+    fieldType: 'text',
+    model: ['name', 'project'],
+    requirements: { required: true },
+  },
+  {
+    label: 'What is your project\'s Devpost link?',
+    fieldType: 'text',
+    model: ['name', 'devpost'],
+    requirements: { required: true, link: true },
+  },
+  {
+    label: 'What challenges would you like to be judged for?',
+    fieldType: 'multi-select',
+    selectData: challenges,
+    icon: 'fa-balance-scale',
+    model: ['responses', 'challenges'],
   },
 ];
 
