@@ -100,6 +100,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable no-restricted-syntax */
 import Vue from 'vue';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -239,9 +240,10 @@ export default Vue.extend({
 
         for (const project of projectsSnapshot.docs) {
           const projectData = project.data();
+          // eslint-disable-next-line no-continue
           if (!projectData.name || !projectData.name.devpost || project.id === this.getUID()) continue;
 
-          if (projectData.name.devpost === this.app.name.devpost) {
+          if (projectData.name.devpost === (this.app.name as any).devpost) {
             this.snack.message = 'Unable to submit: Another project is registered with this DevPost link.';
             this.snack.color = 'error';
             this.snack.visible = true;
