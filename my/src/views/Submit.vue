@@ -236,7 +236,7 @@ export default Vue.extend({
           .doc('hackathon')
           .collection('projects')
           .get();
-        
+
         for (const project of projectsSnapshot.docs) {
           const projectData = project.data();
           if (!projectData.name || !projectData.name.devpost || project.id === this.getUID()) continue;

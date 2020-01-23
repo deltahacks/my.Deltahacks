@@ -320,38 +320,39 @@
 <script lang="ts">
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-shadow */
-import Navbar2 from "@/components/Navbar2.vue";
-import Card from "@/components/Card.vue";
+/* eslint-disable no-restricted-syntax */
+import Navbar2 from '@/components/Navbar2.vue';
+import Card from '@/components/Card.vue';
 
-import Vue from "vue";
-import {auth} from "firebase/app";
-import {validationMixin} from "vuelidate";
-import {required, maxLength, email} from "vuelidate/lib/validators";
-import {mapGetters} from "vuex";
-import db from "../firebase_init";
-import {StatusModel} from "../types";
-import {busCities} from "../data";
+import Vue from 'vue';
+import { auth } from 'firebase/app';
+import { validationMixin } from 'vuelidate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import db from '../firebase_init';
+import { StatusModel } from '../types';
+import { busCities } from '../data';
 
 const allUniversities = [];
 export default Vue.extend({
   mixins: [validationMixin],
-  name: "Status",
+  name: 'Status',
   data(): StatusModel {
     return {
-      hackathon: "DH6",
+      hackathon: 'DH6',
       accepted: false,
       counter: 0,
       genderCompleted: true,
       response: {
         rsvp: false,
         bus: false,
-        location: "",
+        location: '',
         email: auth().currentUser!.email,
       },
       emptyResponse: {
         rsvp: false,
         bus: false,
-        location: "",
+        location: '',
         email: auth().currentUser!.email,
       },
       criticalError: false,
@@ -359,59 +360,59 @@ export default Vue.extend({
       confirmation: false,
       timeout: undefined,
       bus: false,
-      busLocations: busCities.concat(["Not bussing"]),
+      busLocations: busCities.concat(['Not bussing']),
       busWarning: "We're currently gauging interest in buses.",
       feedback: false,
       social: [
         {
-          link: "https://twitter.com/deltahacks",
-          icon: "fab fa-twitter",
+          link: 'https://twitter.com/deltahacks',
+          icon: 'fab fa-twitter',
         },
         {
-          link: "https://www.facebook.com/thedeltahacks/",
-          icon: "fab fa-facebook",
+          link: 'https://www.facebook.com/thedeltahacks/',
+          icon: 'fab fa-facebook',
         },
         {
-          link: "https://www.instagram.com/deltahacks/",
-          icon: "fab fa-instagram",
+          link: 'https://www.instagram.com/deltahacks/',
+          icon: 'fab fa-instagram',
         },
         {
-          link: "https://www.linkedin.com/company/deltahacks/",
-          icon: "fab fa-linkedin",
+          link: 'https://www.linkedin.com/company/deltahacks/',
+          icon: 'fab fa-linkedin',
         },
         {
-          link: "https://www.snapchat.com/add/deltahacks/",
-          icon: "fab fa-snapchat",
+          link: 'https://www.snapchat.com/add/deltahacks/',
+          icon: 'fab fa-snapchat',
         },
       ],
       parent: this,
       picker: null,
-      date: "2000-01-01",
+      date: '2000-01-01',
       university: null,
       allUniversities,
       dropzoneOptions: {
-        url: "https://httpbin.org/post",
+        url: 'https://httpbin.org/post',
         thumbnailWidth: 150,
         maxFilesize: 0.5,
-        headers: {"My-Awesome-Header": "header value"},
+        headers: { 'My-Awesome-Header': 'header value' },
         addRemoveLinks: true,
-        acceptedFiles: "application/pdf",
+        acceptedFiles: 'application/pdf',
       },
       subheaders: [
-        "Applications are now closed.",
-        "Application unsubmitted",
-        "In progress",
-        "This application is under review.",
+        'Applications are now closed.',
+        'Application unsubmitted',
+        'In progress',
+        'This application is under review.',
         "Sorry, we couldn't offer you a spot this year.",
         "Congratulations, you've been accepted!",
         "Congratulations, you've been accepted!",
         "Congratulations, you've been accepted!",
-        "",
+        '',
       ],
-      links: ["Home", "About", "Contact"],
-      story: "",
+      links: ['Home', 'About', 'Contact'],
+      story: '',
       custom: true,
-      name: "",
+      name: '',
       step: 0,
       checkedIn: false,
       projectSubmitted: false,
@@ -422,9 +423,9 @@ export default Vue.extend({
       curImage: 0,
       numImages: 13,
       resent: false,
-      splashMessage: "",
-      busSelected: "Not bussing",
-      rsvp: {coming: false, origin: ""},
+      splashMessage: '',
+      busSelected: 'Not bussing',
+      rsvp: { coming: false, origin: '' },
     };
   },
   components: {
@@ -433,20 +434,20 @@ export default Vue.extend({
   computed: {
     currentHeader(): string {
       if (!auth().currentUser!.emailVerified) {
-        return "Please check your email and activate your account.";
+        return 'Please check your email and activate your account.';
       }
       return this.subheaders[this.step];
     },
     emoticon(): string {
       switch (this.step) {
         case 0:
-          return "🙂";
+          return '🙂';
         case 1:
-          return "😐";
+          return '😐';
         case 4:
-          return "🙁";
+          return '🙁';
         default:
-          return "🙂";
+          return '🙂';
       }
     },
   },
@@ -454,9 +455,9 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection("DH6")
-        .doc("applications")
-        .collection("all")
+        .collection('DH6')
+        .doc('applications')
+        .collection('all')
         .doc(auth().currentUser!.email)
         .get();
     },
@@ -468,23 +469,23 @@ export default Vue.extend({
     async updateRSVP(
       update: boolean,
       coming: boolean = false,
-      origin: string = "",
+      origin: string = '',
     ) {
       const app = await this.fetchFromFirebase();
       const appWithRSVP = app.data();
-      const rsvp = {coming, origin};
+      const rsvp = { coming, origin };
       if (update && app.data()) {
         appWithRSVP._.RSVP = rsvp;
         await db
           .collection(this.hackathon)
-          .doc("applications")
-          .collection("all")
+          .doc('applications')
+          .collection('all')
           .doc(auth().currentUser!.email as string)
           .update(appWithRSVP);
       }
       this.rsvp = appWithRSVP
         ? appWithRSVP._.RSVP
-        : {coming: false, origin: ""};
+        : { coming: false, origin: '' };
     },
     // Step is state of the page
     async updateStep(email: string) {
@@ -516,6 +517,7 @@ export default Vue.extend({
       if (!this.projectSubmitted) {
         for (const project of projectsSnapshot.docs) {
           const projectData = project.data();
+          // eslint-disable-next-line no-continue
           if (!projectData.group || !Array.isArray(projectData.group)) continue;
 
           const inProject = projectData.group.find(person => person.email === email);
@@ -528,23 +530,20 @@ export default Vue.extend({
       }
 
       db.collection(this.hackathon)
-        .doc("applications")
-        .collection("all")
+        .doc('applications')
+        .collection('all')
         .doc(email)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
-            if (data!._.status && data!._.status === "in progress")
-              this.step = 2;
-            if (data!._.status && data!._.status === "submitted") this.step = 3;
+            if (data!._.status && data!._.status === 'in progress') { this.step = 2; }
+            if (data!._.status && data!._.status === 'submitted') this.step = 3;
             // Check if user made it into any round & set to accepted
-            if (data!._.decision && data!._.decision === "rejected")
-              this.step = 4;
+            if (data!._.decision && data!._.decision === 'rejected') { this.step = 4; }
             if (
               data!._.decision &&
-              data!._.decision.substring(0, 5) === "round"
-            )
-              this.step = 5;
+              data!._.decision.substring(0, 5) === 'round'
+            ) { this.step = 5; }
             if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
             if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
             if (this.checkedIn && this.projectSubmitted === false) this.step = 8;
@@ -558,7 +557,7 @@ export default Vue.extend({
     nextImage() {
       // remove showMe class from current image
       let e = document.getElementById(`slideimg${this.curImage}`);
-      this.removeClass(e, "showMe");
+      this.removeClass(e, 'showMe');
       // compute next image
       this.curImage++;
       if (this.curImage > this.numImages - 1) {
@@ -566,12 +565,12 @@ export default Vue.extend({
       }
       // add showMe class to next image
       e = document.getElementById(`slideimg${this.curImage}`);
-      this.addClass(e, "showMe");
+      this.addClass(e, 'showMe');
     },
     // helper method
     addClass(elem, name) {
       let c = elem.className;
-      if (c) c += " ";
+      if (c) c += ' ';
       c += name;
       elem.className = c;
     },
@@ -579,9 +578,9 @@ export default Vue.extend({
     removeClass(elem, name) {
       const c = elem.className;
       elem.className = c
-        .replace(name, "")
-        .replace(/\s+/g, " ")
-        .replace(/^\s+|\s+$/g, " ");
+        .replace(name, '')
+        .replace(/\s+/g, ' ')
+        .replace(/^\s+|\s+$/g, ' ');
     },
     resend() {
       this.resent = true;
@@ -589,15 +588,15 @@ export default Vue.extend({
       console.log(this.isVerified());
       auth()
         .currentUser!.sendEmailVerification()
-        .then(() => console.log("Resent"))
-        .catch(e => console.log("Resend problem"));
+        .then(() => console.log('Resent'))
+        .catch(e => console.log('Resend problem'));
     },
     isVerified: () => auth().currentUser!.emailVerified,
   },
   async beforeMount() {
     const appEmail = auth().currentUser!.email as string;
     this.splashMessage =
-      this.$route.params.firstTime === "yes" ? "Hello." : "Hello, Again.";
+      this.$route.params.firstTime === 'yes' ? 'Hello.' : 'Hello, Again.';
     this.updateStep(appEmail);
   },
   async mounted() {
