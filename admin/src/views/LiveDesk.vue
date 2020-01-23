@@ -296,6 +296,7 @@ export default Vue.extend({
         if (snap.exists) {
           resolve({
             data,
+            id: snap.id,
             found: true,
           });
         } else {
@@ -465,7 +466,8 @@ export default Vue.extend({
         const result: any = await this.getUserApplication(email).catch(err => console.error(err));
         if (result.found) {
           this.application = result.data;
-          this.header = result.data.contact.email;
+          this.header = result.id;
+          console.log(this.header);
           this.active = true;
         } else {
           this.application = this.emptyApp;
