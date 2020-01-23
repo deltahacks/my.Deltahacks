@@ -119,7 +119,7 @@
                         <v-list-tile @click="register('mentors')">
                           <v-list-tile-title>Mentor</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile @click="register('exec')">
+                        <v-list-tile @click="register('execs')">
                           <v-list-tile-title>Exec</v-list-tile-title>
                         </v-list-tile>
                         <v-list-tile @click="register('volunteers')">
@@ -240,11 +240,11 @@ export default Vue.extend({
     },
     directoryToName(dir): string {
       console.log(dir);
-      if (dir === 'Walkins') return 'walk in';
-      if (dir === 'Sponsors') return 'sponsor';
-      if (dir === 'Mentors') return 'mentor';
-      if (dir === 'Volunteer') return 'volunteer';
-      if (dir === 'Exec') return 'executive';
+      if (dir === 'walkins') return 'attendee';
+      if (dir === 'sponsors') return 'sponsor';
+      if (dir === 'mentors') return 'mentor';
+      if (dir === 'volunteers') return 'volunteer';
+      if (dir === 'execs') return 'executive';
       return '';
     },
     register(target) {
@@ -258,6 +258,7 @@ export default Vue.extend({
         this.rejectRegistration();
         return;
       }
+      app.type = target.slice(0,-1);
       // parse name field
       // const [first, last] = app.name.split(' ');
       // app.name = first;
@@ -361,31 +362,14 @@ export default Vue.extend({
             type: app.type,
             name,
             meals: 0,
+            org: this.application.academics.school,
           });
 
         this.bannerMessage = `${this.fullName} has been checked in!`;
         this.banner = true;
         console.log('Successfully written');
-        this.updateGender();
       } catch (err) {
         console.log(err);
-      }
-    },
-    async updateGender() {
-      const ref = db
-        .collection('DH6')
-        .doc('applications')
-        .collection('all')
-        .doc(this.application.contact.email);
-
-      const snap = await ref.get();
-
-      if (snap.exists) {
-        const data = snap.data();
-        data!.gender = this.application.personal.gender;
-        ref.set(data);
-      } else {
-        console.log("Couldn't find user in `in progress`!");
       }
     },
     async openBadge() {
@@ -411,8 +395,8 @@ export default Vue.extend({
       };
       const snap = await db
         .collection('DH6')
-        .doc('applications')
-        .collection('all')
+        .doc('hackathon')
+        .collection('checked in')
         .doc(this.application.contact.email)
         .get();
       if (snap.exists) {
