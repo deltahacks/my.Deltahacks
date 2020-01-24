@@ -398,6 +398,7 @@ export const getBlankProject = (): any => ({
     status: 'in progress',
     table: 'Pending',
     categories: {},
+    notes: {},
   },
   name: {
     devpost: '',
