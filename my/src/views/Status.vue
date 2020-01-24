@@ -325,7 +325,7 @@ import Navbar2 from '@/components/Navbar2.vue';
 import Card from '@/components/Card.vue';
 
 import Vue from 'vue';
-import { auth, functions } from 'firebase/app';
+import firebase from 'firebase';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
@@ -348,13 +348,13 @@ export default Vue.extend({
         rsvp: false,
         bus: false,
         location: '',
-        email: auth().currentUser!.email,
+        email: firebase.auth().currentUser!.email,
       },
       emptyResponse: {
         rsvp: false,
         bus: false,
         location: '',
-        email: auth().currentUser!.email,
+        email: firebase.auth().currentUser!.email,
       },
       criticalError: false,
       hasResponded: false,
@@ -434,7 +434,7 @@ export default Vue.extend({
   },
   computed: {
     currentHeader(): string {
-      if (!auth().currentUser!.emailVerified) {
+      if (!firebase.auth().currentUser!.emailVerified) {
         return 'Please check your email and activate your account.';
       }
       return this.subheaders[this.step];
@@ -459,7 +459,7 @@ export default Vue.extend({
         .collection('DH6')
         .doc('applications')
         .collection('all')
-        .doc(auth().currentUser!.email)
+        .doc(firebase.auth().currentUser!.email)
         .get();
     },
     splashTime() {
@@ -481,7 +481,7 @@ export default Vue.extend({
           .collection(this.hackathon)
           .doc('applications')
           .collection('all')
-          .doc(auth().currentUser!.email as string)
+          .doc(firebase.auth().currentUser!.email as string)
           .update(appWithRSVP);
       }
       this.rsvp = appWithRSVP
@@ -508,10 +508,10 @@ export default Vue.extend({
         });
 
       if (!this.projectSubmitted) {
-        const signupRequest = await functions()
-          .httpsCallable('findTeam')({ email: auth().currentUser!.email });
-        console.log(signupRequest);
-        console.log(signupRequest.data.projectSubmitted);
+        console.log('s');
+        const signupRequest = await firebase.functions()
+          .httpsCallable('findTeam')({ email: firebase.auth().currentUser!.email });
+        console.log(signupRequest.data);
         if (signupRequest.data.projectSubmitted) {
           console.log(signupRequest.data);
           this.projectSubmitted = signupRequest.data.projectSubmitted;
@@ -519,7 +519,9 @@ export default Vue.extend({
         }
       }
       // Check if another user has submitted a project on behalf of the current user
-
+      console.log(this.projectSubmitted);
+      console.log(this.tableNumber);
+      console.log(this.checkedIn);
 
       db.collection(this.hackathon)
         .doc('applications')
@@ -542,7 +544,10 @@ export default Vue.extend({
             if (this.checkedIn && this.projectSubmitted) this.step = 9;
           } else {
             // application not started
+            console.log('s', this.checkedIn, this.projectSubmitted);
             this.step = 1;
+            if (this.checkedIn && this.projectSubmitted === false) this.step = 8;
+            if (this.checkedIn && this.projectSubmitted) this.step = 9;
           }
         });
     },
@@ -578,15 +583,15 @@ export default Vue.extend({
       this.resent = true;
       console.log(this.resent);
       console.log(this.isVerified());
-      auth()
+      firebase.auth()
         .currentUser!.sendEmailVerification()
         .then(() => console.log('Resent'))
         .catch(e => console.log('Resend problem'));
     },
-    isVerified: () => auth().currentUser!.emailVerified,
+    isVerified: () => firebase.auth().currentUser!.emailVerified,
   },
   async beforeMount() {
-    const appEmail = auth().currentUser!.email as string;
+    const appEmail = firebase.auth().currentUser!.email as string;
     this.splashMessage =
       this.$route.params.firstTime === 'yes' ? 'Hello.' : 'Hello, Again.';
     this.updateStep(appEmail);
