@@ -278,11 +278,22 @@ const workshops = [
   'Computer Vision with OpenCV',
 ];
 
-const challenges = [
-  'Best Hack',
-  'Arcelor Mittal Dofasco Challenge',
-  'MLH: Best Domain Name Registered',
-];
+const challenges = ['Centre Challenge',
+  'Hotel Dieu Shaver Health and Rehabilitation',
+  'ITE Challenge',
+  'Kyle Arscott Challenge',
+  'Beasley Neighbourhood Association Challenge',
+  'Best Overall Hack',
+  'Best Education Hack',
+  'Best Finance Hack',
+  'Best Environment Hack',
+  'Best Health Hack',
+  'Best Quality of Life/Productivity Hack',
+  'Innovation Factory Challenge',
+  'TD Challenge',
+  'Arcelormittal Dofasco Challenge',
+  'Materials Challenge',
+  'Algorand Challenge'];
 const roles = [
   'None',
   'Front-end',
