@@ -243,7 +243,10 @@ export default Vue.extend({
           // eslint-disable-next-line no-continue
           if (!projectData.name || !projectData.name.devpost || project.id === this.getUID()) continue;
 
-          if (projectData.name.devpost === (this.app.name as any).devpost) {
+          // Remove any protocols (e.g. http://) so that we check the base URL
+          const projectDevpost = projectData.name.devpost.replace(/(^\w+:|^)\/\//, '');
+          const appDevpost = (this.app.name as any).devpost.replace(/(^\w+:|^)\/\//, '');
+          if (projectDevpost === appDevpost) {
             this.snack.message = 'Unable to submit: Another project is registered with this DevPost link.';
             this.snack.color = 'error';
             this.snack.visible = true;
