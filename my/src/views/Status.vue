@@ -325,13 +325,14 @@ import Navbar2 from '@/components/Navbar2.vue';
 import Card from '@/components/Card.vue';
 
 import Vue from 'vue';
-import { auth } from 'firebase/app';
+import { auth, functions } from 'firebase/app';
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
 import { busCities } from '../data';
+
 
 const allUniversities = [];
 export default Vue.extend({
@@ -496,7 +497,6 @@ export default Vue.extend({
         .get();
 
       this.checkedIn = checkedInSnapshot.exists;
-
       this.projectSubmitted = false;
 
       const x = await db.collection(this.hackathon)
@@ -507,27 +507,19 @@ export default Vue.extend({
           this.tableNumber = snap.data()!._.table;
         });
 
-      const projectsSnapshot = await db.collection(this.hackathon)
-        .doc('hackathon')
-        .collection('projects')
-        .get();
-
-
-      // Check if another user has submitted a project on behalf of the current user
       if (!this.projectSubmitted) {
-        for (const project of projectsSnapshot.docs) {
-          const projectData = project.data();
-          // eslint-disable-next-line no-continue
-          if (!projectData.group || !Array.isArray(projectData.group)) continue;
-
-          const inProject = projectData.group.find(person => person.email === email);
-          if (inProject) {
-            this.projectSubmitted = true;
-            this.tableNumber = project.data()._.table;
-            break;
-          }
+        const signupRequest = await functions()
+          .httpsCallable('findTeam')({ email: auth().currentUser!.email });
+        console.log(signupRequest);
+        console.log(signupRequest.data.projectSubmitted);
+        if (signupRequest.data.projectSubmitted) {
+          console.log(signupRequest.data);
+          this.projectSubmitted = signupRequest.data.projectSubmitted;
+          this.tableNumber = signupRequest.data.tableNumber !== -1 ? signupRequest.data.tableNumber : 'Pending';
         }
       }
+      // Check if another user has submitted a project on behalf of the current user
+
 
       db.collection(this.hackathon)
         .doc('applications')
