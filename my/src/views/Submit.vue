@@ -149,7 +149,10 @@ extend('max', {
   message: 'This field is too long',
 });
 extend('required', {
-  validate: value => !!value,
+  validate: value => {
+    if (Array.isArray(value)) return value.length
+    return !!value
+  },
   message: 'This field is required',
 });
 extend('link', {

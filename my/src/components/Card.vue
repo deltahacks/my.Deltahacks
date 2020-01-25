@@ -90,6 +90,7 @@
           multiple
           :value="value"
           @input="onChange($event)"
+          :error-messages="error"
            dark
            color="#000000"
            class="montserratify"
