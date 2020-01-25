@@ -139,6 +139,7 @@ export interface StatusModel {
   step: number;
   checkedIn: boolean;
   projectSubmitted: boolean;
+  submitAllowed: boolean;
   tableNumber: string;
   email: string;
   checkbox: boolean;

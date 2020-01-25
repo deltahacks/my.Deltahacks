@@ -417,6 +417,7 @@ export default Vue.extend({
       step: 0,
       checkedIn: false,
       projectSubmitted: false,
+      submitAllowed: false,
       tableNumber: 'Pending',
       email: '',
       checkbox: false,
@@ -499,7 +500,11 @@ export default Vue.extend({
       this.checkedIn = checkedInSnapshot.exists;
       this.projectSubmitted = false;
 
-      const x = await db.collection(this.hackathon)
+      const y= await firebase.functions()
+          .httpsCallable('displayProjectSubmission')();        
+       this.submitAllowed=y.data.displayProjectSubmission;
+       
+        const x = await db.collection(this.hackathon)
         .doc('hackathon').collection('projects').doc(email)
         .onSnapshot((snap) => {
           if (!snap.exists) return;
@@ -540,14 +545,14 @@ export default Vue.extend({
             ) { this.step = 5; }
             if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
             if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
-            if (this.checkedIn && this.projectSubmitted === false) this.step = 8;
-            if (this.checkedIn && this.projectSubmitted) this.step = 9;
+            if (this.checkedIn && this.projectSubmitted === false  && this.submitAllowed) this.step = 8;
+            if (this.checkedIn && this.projectSubmitted  && this.submitAllowed) this.step = 9;
           } else {
             // application not started
             console.log('s', this.checkedIn, this.projectSubmitted);
             this.step = 1;
-            if (this.checkedIn && this.projectSubmitted === false) this.step = 8;
-            if (this.checkedIn && this.projectSubmitted) this.step = 9;
+            if (this.checkedIn && this.projectSubmitted === false && this.submitAllowed) this.step = 8;
+            if (this.checkedIn && this.projectSubmitted && this.submitAllowed) this.step = 9;
           }
         });
     },
