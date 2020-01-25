@@ -293,7 +293,14 @@ const challenges = [
   'Arcelormittal Dofasco Challenge',
   'Materials Challenge',
   'Algorand Challenge',
-  'Hypercare Challenge'];
+  'Hypercare Challenge',
+  'Best UiPath Automation Hack',
+  'Best Domain Registered with Domain.com',
+  'Best use of Google Cloud',
+  'Best use of MongoDB Atlas',
+  'Best use of Blockstack',
+  'Most Creative Radar.io Hack',
+];
 const roles = [
   'None',
   'Front-end',
