@@ -278,10 +278,9 @@ const workshops = [
   'Computer Vision with OpenCV',
 ];
 
-const challenges = ['Centre Challenge',
+const challenges = [
   'Hotel Dieu Shaver Health and Rehabilitation',
   'ITE Challenge',
-  'Kyle Arscott Challenge',
   'Beasley Neighbourhood Association Challenge',
   'Best Overall Hack',
   'Best Education Hack',
@@ -293,7 +292,8 @@ const challenges = ['Centre Challenge',
   'TD Challenge',
   'Arcelormittal Dofasco Challenge',
   'Materials Challenge',
-  'Algorand Challenge'];
+  'Algorand Challenge',
+  'Hypercare Challenge'];
 const roles = [
   'None',
   'Front-end',
