@@ -109,6 +109,9 @@ import 'firebase/storage';
 import VueScrollReveal from 'vue-scroll-reveal';
 import deepmerge from 'deepmerge';
 
+import firebaseMaster from 'firebase';
+import functions from 'firebase/functions';
+
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
 import Card2 from '@/components/Card2.vue';
@@ -229,44 +232,32 @@ export default Vue.extend({
         this.snack.visible = true;
         return;
       }
-
-      // Check if the project devpost has already been submitted
-      if (submit) {
-        const projectsSnapshot = await this.getDB()
-          .collection('DH6')
-          .doc('hackathon')
-          .collection('projects')
-          .get();
-
-        for (const project of projectsSnapshot.docs) {
-          const projectData = project.data();
-          // eslint-disable-next-line no-continue
-          if (!projectData.name || !projectData.name.devpost || project.id === this.getUID()) continue;
-
-          if (projectData.name.devpost === (this.app.name as any).devpost) {
-            this.snack.message = 'Unable to submit: Another project is registered with this DevPost link.';
-            this.snack.color = 'error';
-            this.snack.visible = true;
-            return;
-          }
+      try {
+        const submitProjectResponse = await firebaseMaster
+          .functions()
+          .httpsCallable('submitProject')({
+            app: this.app,
+            userId: this.getUID(),
+            submitting: submit
+          });
+  
+        if (submitProjectResponse.data.error) {
+          this.snack.message = submitProjectResponse.data.error;
+          this.snack.color = 'error';
+          this.snack.visible = true;
+          return;
         }
-
-        this.app._.status = 'submitted';
+  
+        if (submitProjectResponse.data.submitted) {
+          // Create scrim
+          this.app._.status = 'submitted';
+        }
+      } catch (err) {
+          this.snack.message = 'An unknown error occured';
+          this.snack.color = 'error';
+          this.snack.visible = true;
+          return;
       }
-
-      if (this.app._.status === 'in progress' || submit) {
-        this.getDB()
-          .collection('DH6')
-          .doc('hackathon')
-          .collection('projects')
-          .doc(this.getUID())
-          .set(this.app);
-      } else {
-        this.snack.message = 'Submission error';
-        this.snack.color = 'error';
-      }
-
-      this.snack.visible = true;
     },
 
     // actually submits application
