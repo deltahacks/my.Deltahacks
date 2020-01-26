@@ -64,7 +64,7 @@
               v-scroll-reveal
               v-model="app.group[i - 1]"
               class="card"
-              :title="'Team Member ' + i"
+              :title="'Team Member ' + (i+1)"
               inputType="text"
             />
         </form>
@@ -149,9 +149,9 @@ extend('max', {
   message: 'This field is too long',
 });
 extend('required', {
-  validate: value => {
-    if (Array.isArray(value)) return value.length
-    return !!value
+  validate: (value) => {
+    if (Array.isArray(value)) return value.length;
+    return !!value;
   },
   message: 'This field is required',
 });
@@ -241,25 +241,24 @@ export default Vue.extend({
           .httpsCallable('submitProject')({
             app: this.app,
             userId: this.getUID(),
-            submitting: submit
+            submitting: submit,
           });
-  
+
         if (submitProjectResponse.data.error) {
           this.snack.message = submitProjectResponse.data.error;
           this.snack.color = 'error';
           this.snack.visible = true;
           return;
         }
-  
+
         if (submitProjectResponse.data.submitted) {
           // Create scrim
           this.app._.status = 'submitted';
         }
       } catch (err) {
-          this.snack.message = 'An unknown error occured';
-          this.snack.color = 'error';
-          this.snack.visible = true;
-          return;
+        this.snack.message = 'An unknown error occured';
+        this.snack.color = 'error';
+        this.snack.visible = true;
       }
     },
 
