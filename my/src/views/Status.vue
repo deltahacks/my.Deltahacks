@@ -131,7 +131,7 @@
               </div>
               <div class="currentStatus" v-if="step === 8">
                 <p class="bigmobile">Deadline</p>
-                <div><span class="deadline">12 P.M</span></div>
+                <div><span class="deadline">12:30 P.M</span></div>
                 <p class="bigmobile">
                   Sunday, January 26th 2020
                 </p>
