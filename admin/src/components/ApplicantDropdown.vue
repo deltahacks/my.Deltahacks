@@ -269,7 +269,7 @@ export default Vue.extend({
     async updateApplicationScore() {
       try {
         const userApplication = await this.$store.state.db
-          .collection('DH6')
+          .collection(this.$store.state.currentHackathon)
           .doc('applications')
           .collection('all')
           .doc(this.applicant.contact.email)
@@ -282,7 +282,7 @@ export default Vue.extend({
         });
         // console.log('decision', decision);
         const uploadScore = await this.$store.state.db
-          .collection('DH6')
+          .collection(this.$store.state.currentHackathon)
           .doc('applications')
           .collection('all')
           .doc(this.applicant.contact.email)
@@ -300,7 +300,7 @@ export default Vue.extend({
     async deleteApplicant(applicant) {
       try {
         const decisionDelete = await this.$store.state.db
-          .collection('DH6')
+          .collection(this.$store.state.currentHackathon)
           .doc('applications')
           .collection('all')
           .doc(applicant)

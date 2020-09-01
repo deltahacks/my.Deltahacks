@@ -65,7 +65,7 @@ export default Vue.extend({
   methods: {
     async checkin() {
       try {
-        await db.collection('DH6')
+        await db.collection(this.$store.state.currentHackathon)
           .doc('hackathon')
           .collection('checked in')
           .doc(this.$route.params.id.toLowerCase())
@@ -85,7 +85,7 @@ export default Vue.extend({
       }
     },
     beam() {
-      db.collection('DH6')
+      db.collection(this.$store.state.currentHackathon)
         .doc('hackathon')
         .collection('live desk')
         .doc(this.$store.state.firebase.auth().currentUser.email.toLowerCase())
@@ -94,9 +94,9 @@ export default Vue.extend({
     async adjustMeals(adjustment) {
       console.log('Adjusting meal');
       try {
-        const hackathon = await db.collection('DH6').doc('hackathon').get();
+        const hackathon = await db.collection(this.$store.state.currentHackathon).doc('hackathon').get();
         if (this.meals < hackathon.data().mealsSoFar || adjustment < 0) {
-          await db.collection('DH6')
+          await db.collection(this.$store.state.currentHackathon)
             .doc('hackathon')
             .collection('checked in')
             .doc(this.$route.params.id.toLowerCase())
@@ -110,7 +110,7 @@ export default Vue.extend({
         } else {
           const alert = confirm('🥝 FYI this attendee has already had enough meals, would you like to give them one anyway?');
           if (alert) {
-            await db.collection('DH6')
+            await db.collection(this.$store.state.currentHackathon)
               .doc('hackathon')
               .collection('checked in')
               .doc(this.$route.params.id.toLowerCase())
@@ -131,7 +131,7 @@ export default Vue.extend({
   },
   async mounted() {
     try {
-      const doc = await db.collection('DH6')
+      const doc = await db.collection(this.$store.state.currentHackathon)
         .doc('hackathon')
         .collection('checked in')
         .doc(this.$route.params.id.toLowerCase())

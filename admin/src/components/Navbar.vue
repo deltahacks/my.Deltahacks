@@ -1,9 +1,9 @@
 <template>
   <v-toolbar class="toolbar">
     <v-menu offset-y>
-      <v-btn class="bold" slot="activator" color="primary" dark>{{ current }}</v-btn>
+      <v-btn class="bold" slot="activator" color="primary" dark>{{ this.$store.state.currentHackathon }}</v-btn>
       <v-list>
-        <v-list-tile v-for="(item, index) in dhs" :key="index" @click="current = item">
+        <v-list-tile v-for="(item, index) in dhs" :key="index" @click="updateCurrentHacakthon(item)">
           <v-list-tile-title class>{{ item }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
@@ -49,10 +49,8 @@ export default Vue.extend({
   components: {},
   data() {
     return {
-      current: 'DH VI',
       c_user: firebase.auth().currentUser,
-      // dhs: ['DH V', 'DH IV', 'DH III', 'DH II'],
-      dhs: ['DH VI'],
+      dhs: ['DH6', 'DH7'],
     };
   },
   methods: {
@@ -63,6 +61,9 @@ export default Vue.extend({
       } catch (err) {
         console.log(err);
       }
+    },
+    updateCurrentHacakthon(selectedHackathon) {
+      this.$store.commit('update_current_hackathon', selectedHackathon);
     },
   },
 });

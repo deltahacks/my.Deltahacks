@@ -33,6 +33,7 @@ export default new Vuex.Store({
   // Vuex state variables appended with vuex in front
   state: {
     currentAdminUserName: null,
+    currentHackathon: 'DH6',
     allAdmins: null,
     vuex_current_user: null,
     vuex_msgs: [],
@@ -75,5 +76,8 @@ export default new Vuex.Store({
     update_DataTable_lastVisible(state, change) {
       state.DataTable.lastVisible = change;
     },
+    update_current_hackathon(state, change) {
+      state.currentHackathon = change;
+    }
   },
 });

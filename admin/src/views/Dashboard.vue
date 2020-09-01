@@ -341,6 +341,7 @@ export default Vue.extend({
     this.$Progress.start();
   },
   async mounted() {
+    console.log(`Dashboard hackathon ${this.$store.state.currentHackathon} data` );
     const nameRes = await db
       .collection('admins')
       // .doc((this as any).$store.state.firebase.auth().currentUser.email)
@@ -394,7 +395,7 @@ export default Vue.extend({
       (this as any).loading = false;
     }
 
-    db.collection('DH6')
+    db.collection(this.$store.state.currentHackathon)
       .doc('statistics')
       .onSnapshot((doc) => {
         if (doc) {
