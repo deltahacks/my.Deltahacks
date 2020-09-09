@@ -90,7 +90,7 @@
         v-model="submitDialogue"
       >
         <v-btn text @click="submitDialogue = false">Cancel</v-btn>
-        <v-btn color="warning" text @click="(submitDialogue = false)">Submit</v-btn>
+        <v-btn color="warning" text @click="(submitDialogue = false), submitApp()">Submit</v-btn>
       </Dialog>
       <v-container class="act-btn-group" text-xs-center>
         <v-layout align-center justify-center row wrap>
@@ -108,6 +108,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import firebaseMaster from 'firebase';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -206,42 +207,36 @@ export default Vue.extend({
     },
     onFormChange() {
       if (this.updateTimeout) clearTimeout(this.updateTimeout);
-      this.updateTimeout = setTimeout(() => {
-        this.snack.message = 'Progress saved!';
-        this.snack.color = 'success';
-        this.updateAppProgress(false);
-      }, 4000);
+      this.updateTimeout = setTimeout(() => this.updateAppProgress(false), 4000);
     },
 
     async updateAppProgress(submitting: boolean) {
-      let submit = false;
-      const verified = await (firebase.auth().currentUser as firebase.User)
-        .emailVerified;
-      if (submitting && this.app._.status === 'in progress' && verified) {
-        this.app._.status = 'submitted';
-        this.app._.time_submitted = new Date();
-        this.snack.message = 'Application submitted';
-        this.snack.color = 'success';
-        submit = true;
-      } else if (
-        submitting &&
-        this.app._.status === 'in progress' &&
-        !verified
-      ) {
-        this.snack.message = 'Please verify your email before submitting!';
+      let updateError;
+
+      try {
+        const updateResponse = await firebaseMaster
+          .functions()
+          .httpsCallable('updateApplication')({
+            app: this.app,
+            isSubmission: submitting,
+          });
+
+        if (updateResponse.data.error) {
+          updateError = updateResponse.data.error;
+        } else {
+          this.snack.message = submitting ? 'Application submitted' : 'Progress saved!';
+          this.snack.color = 'success';
+        }
+      } catch (e) {
+        console.error(e);
+        updateError = 'Submission error';
+      }
+
+      if (updateError) {
+        this.snack.message = updateError;
         this.snack.color = 'error';
       }
-      if (this.app._.status === 'in progress' || submit) {
-        this.getDB()
-          .collection('DH6')
-          .doc('applications')
-          .collection('all')
-          .doc(this.getUID())
-          .set(this.app);
-      } else {
-        this.snack.message = 'Submission error';
-        this.snack.color = 'error';
-      }
+
       this.snack.visible = true;
     },
 
