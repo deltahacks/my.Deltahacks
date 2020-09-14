@@ -33,7 +33,7 @@ export default new Vuex.Store({
   // Vuex state variables appended with vuex in front
   state: {
     currentAdminUserName: null,
-    currentHackathon: 'DH6',
+    currentHackathon: 'DH7',
     allAdmins: null,
     vuex_current_user: null,
     vuex_msgs: [],
