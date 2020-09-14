@@ -555,7 +555,6 @@ export default Vue.extend({
     // ApexChart,
   },
   async beforeMount() {
-    console.log(`Stats hackathon ${this.$store.state.currentHackathon} data` );
     // this.setAllData();
     (this as any).dbref = await (this as any).getDB();
     (this as any).setCheckInData();

@@ -341,7 +341,6 @@ export default Vue.extend({
     this.$Progress.start();
   },
   async mounted() {
-    console.log(`Dashboard hackathon ${this.$store.state.currentHackathon} data` );
     const nameRes = await db
       .collection('admins')
       // .doc((this as any).$store.state.firebase.auth().currentUser.email)

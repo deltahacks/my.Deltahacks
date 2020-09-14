@@ -30,7 +30,6 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    console.log(`CommitChart hackathon ${this.$store.state.currentHackathon} data` );
     // Overwriting base render method with actual data.
     const startFrom = this.setStartDate(); // currently 1 month ago
     const track = this.populateDateLabels(startFrom);
