@@ -370,9 +370,9 @@ export default Vue.extend({
     );
 
     try {
-      const doc = await db
-        .collection('users') // Change to real users later
-        .where('geo.latitude', '<', 1000000)
+      const doc = await db.collection(this.$store.state.currentHackathon)
+        .doc('users')
+        .collection('all')
         .get();
 
       doc.docs.forEach((val) => {
