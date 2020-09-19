@@ -562,7 +562,7 @@ export default Vue.extend({
     (this as any).countWords();
     (this as any).avgSubmitTime();
     (this as any).countRSVP();
-    db.collection("DH6")
+    db.collection(this.$store.state.currentHackathon)
       .doc("statistics")
       .onSnapshot((doc: DocumentSnapshot) => {
         if (doc.exists) {
@@ -670,42 +670,42 @@ export default Vue.extend({
   // },
   methods: {
     setCheckInData() {
-      db.collection("DH6")
+      db.collection(this.$store.state.currentHackathon)
         .doc("hackathon")
         .collection("checked in")
         .where("type", "==", "mentor")
         .onSnapshot(snap => {
           (this as any).mentors = snap.docs.length;
         });
-      db.collection("DH6")
+      db.collection(this.$store.state.currentHackathon)
         .doc("hackathon")
         .collection("checked in")
         .where("type", "==", "judge")
         .onSnapshot(snap => {
           (this as any).judges = snap.docs.length;
         });
-      db.collection("DH6")
+      db.collection(this.$store.state.currentHackathon)
         .doc("hackathon")
         .collection("checked in")
         .where("type", "==", "volunteer")
         .onSnapshot(snap => {
           (this as any).volunteers = snap.docs.length;
         });
-      db.collection("DH6")
+      db.collection(this.$store.state.currentHackathon)
         .doc("hackathon")
         .collection("checked in")
         .where("type", "==", "attendee")
         .onSnapshot(snap => {
           (this as any).checkedIn = snap.docs.length;
         });
-      db.collection("DH6")
+      db.collection(this.$store.state.currentHackathon)
         .doc("hackathon")
         .collection("checked in")
         .where("type", "==", "sponsor")
         .onSnapshot(snap => {
           (this as any).sponsors = snap.docs.length;
         });
-      db.collection("DH6")
+      db.collection(this.$store.state.currentHackathon)
         .doc("hackathon")
         .collection("checked in")
         .where("type", "==", "exec")
@@ -1073,7 +1073,7 @@ export default Vue.extend({
       };
     },
     getStatistics() {
-      const ref = db.collection("DH6").doc("statistics");
+      const ref = db.collection(this.$store.state.currentHackathon).doc("statistics");
       return new Promise(async (resolve, reject) => {
         const snap = await ref.get().catch(err => reject(err));
         if (snap) {
@@ -1086,7 +1086,7 @@ export default Vue.extend({
     async getDB() {
       const apps: string[] = [];
       const ref = await db
-        .collection("DH6")
+        .collection(this.$store.state.currentHackathon)
         .doc("applications")
         .collection("all")
         .get();

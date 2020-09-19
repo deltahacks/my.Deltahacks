@@ -35,7 +35,7 @@ export default Vue.extend({
     const track = this.populateDateLabels(startFrom);
 
     const querySnapshot = await db
-      .collection('DH6')
+      .collection(this.$store.state.currentHackathon)
       .doc('applications')
       .collection('all')
       .orderBy('_.time_initiated.seconds')

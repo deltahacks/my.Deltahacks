@@ -4,12 +4,12 @@ import Router from 'vue-router';
 import Firebase from 'firebase';
 
 import v404 from './views/404.vue';
-import Stats from './views/Stats.vue';
+import StatsWrapper from './wrappers/StatsWrapper.vue';
 import Login from './views/Login.vue';
 import db from './firebase_init';
 import Checkin from './views/Checkin.vue';
 import LiveDesk from './views/LiveDesk.vue';
-import Dashboard from './views/Dashboard.vue';
+import DashboardWrapper from './wrappers/DashboardWrapper.vue';
 import AdminSignup from './views/AdminSignup.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 
@@ -21,7 +21,7 @@ const router = new Router({
     {
       path: '/dashboard',
       name: 'Dashboard',
-      component: Dashboard,
+      component: DashboardWrapper,
       meta: {
         auth: true,
       },
@@ -53,7 +53,7 @@ const router = new Router({
     {
       path: '/stats',
       name: 'Stats',
-      component: Stats,
+      component: StatsWrapper,
       meta: {
         adminAuth: true,
       },

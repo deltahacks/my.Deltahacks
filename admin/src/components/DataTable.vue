@@ -97,7 +97,6 @@ interface State {
   peeps: any;
   current: string;
   items: string[];
-  hackathon: string;
   bucket: string;
   restriction: [string, firestore.WhereFilterOp, string | number];
   buckets: any;
@@ -133,7 +132,6 @@ export default Vue.extend({
         '1/3',
         '2/3',
       ],
-      hackathon: 'DH6',
       bucket: 'pending',
       restriction: ['_.status', '==', 'submitted'],
       buckets: [
@@ -240,7 +238,7 @@ export default Vue.extend({
     },
     async changeScope(customFilter: string[]) {
       const result = await db
-        .collection(this.hackathon)
+        .collection(this.$store.state.currentHackathon)
         .doc('applications')
         .collection('all')
         .orderBy('_.index')
@@ -284,7 +282,7 @@ export default Vue.extend({
     },
     async setNumApplicants() {
       const stats = await
-      db.collection('DH6')
+      db.collection(this.$store.state.currentHackathon)
         .doc('statistics')
         .get();
       this.numApplicants = Math.ceil(stats.data()!.applications / this.rowsPerPage);
