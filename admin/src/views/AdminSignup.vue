@@ -203,7 +203,9 @@ export default Vue.extend({
           this.geo = data.data;
 
           this.$store.state.db
-            .collection('users')
+            .collection('DH7')
+            .doc('users')
+            .collection('all')
             .doc(this.vuex_email)
             .set({
               email: this.vuex_email,

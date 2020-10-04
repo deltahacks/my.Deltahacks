@@ -59,7 +59,9 @@ export default Vue.extend({
     const appEmail = firebase.auth().currentUser!.email as string;
     // const genderStatus = await this.checkGenderInput(appEmail);
     try {
-      db.collection('users')
+      db.collection('DH7')
+        .doc('users')
+        .collection('all')
         .doc(appEmail)
         .onSnapshot((snap) => {
           if (snap.exists) {
