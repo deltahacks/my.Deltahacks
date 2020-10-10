@@ -289,7 +289,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH6')
+        .collection('DH7')
         .doc('applications')
         .collection('all')
         .doc(this.getUID())
@@ -302,7 +302,7 @@ export default Vue.extend({
       const storeRef = firebase.storage().ref();
       try {
         const snapshot = await storeRef
-          .child(`hackathon/DH6/users/${this.getUID()}/Resume.pdf`)
+          .child(`hackathon/DH7/users/${this.getUID()}/Resume.pdf`)
           .put(file);
         const url = await snapshot.ref.getDownloadURL();
 
@@ -315,7 +315,9 @@ export default Vue.extend({
     },
     async setName() {
       const profile = await this.getDB()
-        .collection('users')
+        .collection('DH7')
+        .doc('users')
+        .collection('all')
         .doc(this.getUID())
         .get();
       if (profile.exists) {

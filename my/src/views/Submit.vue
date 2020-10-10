@@ -320,7 +320,9 @@ export default Vue.extend({
 
     async setName() {
       const profile = await this.getDB()
-        .collection('users')
+        .collection('DH7')
+        .doc('users')
+        .collection('all')
         .doc(this.getUID())
         .get();
       if (profile.exists) {
