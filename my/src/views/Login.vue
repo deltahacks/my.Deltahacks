@@ -358,7 +358,7 @@ export default Vue.extend({
       if (this.getForm().checkValidity()) {
         try {
           await this.$store.state.db
-            .collection('DH7')
+            .collection(this.$store.state.currentHackathon)
             .doc('users')
             .collection('all')
             .doc(this.email)
@@ -380,7 +380,7 @@ export default Vue.extend({
           const data = await axios.get(`https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`);
           const geo = data.data;
           await this.$store.state.db
-            .collection('DH7')
+            .collection(this.$store.state.currentHackathon)
             .doc('users')
             .collection('all')
             .doc(this.email)

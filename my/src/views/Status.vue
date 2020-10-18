@@ -340,7 +340,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
-      hackathon: 'DH6',
+      hackathon: this.$store.state.currentHackathon,
       accepted: false,
       counter: 0,
       genderCompleted: true,
@@ -457,7 +457,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH6')
+        .collection(this.$store.state.currentHackathon)
         .doc('applications')
         .collection('all')
         .doc(firebase.auth().currentUser!.email)

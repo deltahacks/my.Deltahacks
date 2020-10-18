@@ -204,6 +204,9 @@ export default Vue.extend({
     fullName(): string {
       return `${this.application.name.first} ${this.application.name.last}`;
     },
+    currentHackathon(): string {
+      return 'DH7'
+    }
   },
   methods: {
     // saveDownLoadLinks() {
@@ -226,7 +229,7 @@ export default Vue.extend({
     async reset() {
       const admin = firebase.auth().currentUser!.email;
       const ref = db
-        .collection('DH7')
+        .collection(this.currentHackathon)
         .doc('hackathon')
         .collection('live desk')
         .doc(admin || undefined);
@@ -264,7 +267,7 @@ export default Vue.extend({
       // app.name = first;
       // app.lastname = last || '';
       // add to respective directory
-      db.collection('DH7')
+      db.collection(this.currentHackathon)
         .doc('hackathon')
         .collection(target)
         .doc(app.contact.email)
@@ -286,7 +289,7 @@ export default Vue.extend({
         if (email.length === 0) resolve({ found: false, data: {} });
 
         const snap = await db
-          .collection('DH7')
+          .collection(this.currentHackathon)
           .doc('applications')
           .collection('all')
           .doc(email)
@@ -351,7 +354,7 @@ export default Vue.extend({
       app.type = type;
       try {
         await db
-          .collection('DH7')
+          .collection(this.currentHackathon)
           .doc('hackathon')
           .collection('checked in')
           .doc(this.application.contact.email)
@@ -382,7 +385,7 @@ export default Vue.extend({
       );
       const imageOffset = (badge.internal.pageSize.width - 25) / 2;
       badge.addImage(QRImage, 'JPEG', imageOffset, 3, 25, 25);
-      badge.save(`DH7_${this.application.name.first}${this.application.name.last}`);
+      badge.save(`${this.currentHackathon}_${this.application.name.first}${this.application.name.last}`);
     },
     // should insert / generate the back of DH7 badge.
     async createTemplate() {
@@ -395,7 +398,7 @@ export default Vue.extend({
         t.text(textOffset, y, text);
       };
       const snap = await db
-        .collection('DH7')
+        .collection(this.currentHackathon)
         .doc('hackathon')
         .collection('checked in')
         .doc(this.application.contact.email)
@@ -442,7 +445,7 @@ export default Vue.extend({
   async beforeMount() {
     const admin = firebase.auth().currentUser!.email;
     const ref = db
-      .collection('DH7')
+      .collection(this.currentHackathon)
       .doc('hackathon')
       .collection('live desk')
       .doc(admin || undefined);
