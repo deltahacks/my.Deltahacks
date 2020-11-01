@@ -716,7 +716,7 @@ export const submitQuestions: any = [
     selectData: challenges,
     icon: 'fa-balance-scale',
     model: ['responses', 'challenges'],
-    requirements: { required: true }
+    requirements: { required: true },
   },
 ];
 
@@ -740,6 +740,6 @@ export const days: number[] = [];
 
 for (let i = 2024; i >= 2019; i--) gradYears.push(i);
 
-for (let i = 2019; i >= 1980; i--) birthYears.push(i);
+for (let i = 2020; i >= 1980; i--) birthYears.push(i);
 
 for (let i = 1; i <= 31; i++) days.push(i);

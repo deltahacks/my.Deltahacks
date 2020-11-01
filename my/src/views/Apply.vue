@@ -1,6 +1,6 @@
 <template>
   <v-app class="sizefix">
-    <div class="submitted-face" />
+    <!--<div class="submitted-face" />
     <div class="submitted-message">
       Applications are now closed!
       <br />
@@ -10,7 +10,7 @@
         <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
       </a><br>
       </div>
-    </div>
+    </div>-->
     <div class="background">
       <Nav class="fit" />
       <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">

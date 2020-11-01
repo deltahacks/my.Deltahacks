@@ -43,7 +43,7 @@ import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 import {
-  ValidationProvider
+  ValidationProvider,
 } from 'vee-validate/dist/vee-validate.full';
 
 import { months, gradYears, birthYears, days } from '../data';
