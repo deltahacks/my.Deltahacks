@@ -116,9 +116,7 @@ export interface StatusModel {
     location: string;
     email: string | null;
   };
-  criticalError: boolean;
-  hasResponded: boolean;
-  confirmation: boolean;
+  snack: SnackBar;
   timeout: any;
   bus: boolean;
   busLocations: string[];
