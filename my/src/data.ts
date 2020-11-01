@@ -716,7 +716,7 @@ export const submitQuestions: any = [
     selectData: challenges,
     icon: 'fa-balance-scale',
     model: ['responses', 'challenges'],
-    requirements: { required: true }
+    requirements: { required: true },
   },
 ];
 

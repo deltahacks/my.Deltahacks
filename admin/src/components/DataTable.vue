@@ -159,7 +159,7 @@ export default Vue.extend({
         { text: 'Name', align: 'left', value: 'name.first' },
         { text: 'Email', value: 'contact.email' },
         { text: 'University', value: 'academic.school' },
-        { text: 'Applied (seconds)', value: 'applied' },
+        { text: 'Applied', value: 'applied' },
         { text: 'Phone', value: 'contact.phone' },
         { text: 'Age', value: 'age' },
         { text: 'Status', value: '_.decision' },
