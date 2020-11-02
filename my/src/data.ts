@@ -495,7 +495,7 @@ export const applicationQuestions: any = [
     label: "What's your birthday?",
     fieldType: 'date',
     model: ['personal', 'birthday'],
-    requirements: { required: true },
+    // requirements: { required: true },
   },
   {
     label: 'Will you be 18 or older on January 25th, 2020?',

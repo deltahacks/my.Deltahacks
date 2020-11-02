@@ -270,7 +270,7 @@ export default Vue.extend({
       } catch (e) {
         return 1;
       }
-      return this.calculateAge(bdayDate);
+      return this.calculateAge(new Date(bdayDate));
     },
     dateFromTimestamp(obj) {
       return new firestore.Timestamp(obj.seconds, obj.nanoseconds).toDate();
