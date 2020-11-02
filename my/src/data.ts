@@ -495,7 +495,7 @@ export const applicationQuestions: any = [
     label: "What's your birthday?",
     fieldType: 'date',
     model: ['personal', 'birthday'],
-    // requirements: { required: true },
+    requirements: { required: true },
   },
   {
     label: 'Will you be 18 or older on January 25th, 2020?',
@@ -738,7 +738,7 @@ export const gradYears: number[] = [];
 export const birthYears: number[] = [];
 export const days: number[] = [];
 
-for (let i = 2024; i >= 2019; i--) gradYears.push(i);
+for (let i = 2025; i >= 2021; i--) gradYears.push(i);
 
 for (let i = 2020; i >= 1980; i--) birthYears.push(i);
 
