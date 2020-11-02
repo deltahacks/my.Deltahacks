@@ -37,7 +37,7 @@
           <td class="text-xs-left">{{ props.item.academics.school }}</td>
           <td
             class="text-xs-left"
-          >{{ props.item._.time_submitted.seconds ? dateFromTimestamp(props.item._.time_submitted).toLocaleDateString("en-US"):props.item._.time_submitted.toLocaleDateString("en-US") }}</td>
+          >{{ new Date(props.item._.time_submitted).toLocaleDateString("en-US") }}</td>
           <td class="text-xs-left">{{ props.item.contact.phone }}</td>
           <td class="text-xs-left">{{ getAgeFromDate(props.item.personal.birthday) }}</td>
           <td
@@ -261,19 +261,7 @@ export default Vue.extend({
       Vue.set(this.applications, 0, resultsToUse);
     },
     getAgeFromDate(bday): number {
-      let bdayDate;
-      try {
-        bdayDate = bday;
-        if (bday.seconds) {
-          bdayDate = new firestore.Timestamp(bday.seconds, bday.nanoseconds).toDate();
-        }
-      } catch (e) {
-        return 1;
-      }
-      return this.calculateAge(new Date(bdayDate));
-    },
-    dateFromTimestamp(obj) {
-      return new firestore.Timestamp(obj.seconds, obj.nanoseconds).toDate();
+      return this.calculateAge(new Date(bday));
     },
     calculateAge(birthday: Date): number {
       const ageDifMs = Date.now() - birthday.getTime();
