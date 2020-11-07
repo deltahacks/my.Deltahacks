@@ -288,29 +288,9 @@
             </div>
           </div>
         </div>
-
-        <v-snackbar
-          v-model="feedback"
-          top
-          color="success"
-          right
-          :timeout="3000"
-        >
-          Thanks! We've got your response.
-          <v-btn color="white" flat @click="feedback = false">Close</v-btn>
-        </v-snackbar>
-        <v-snackbar
-          v-model="criticalError"
-          :auto-height="true"
-          top
-          color="error"
-          right
-          :timeout="10000"
-        >
-          Could not establish connection to the server. Consider refreshing or
-          attempting to access the page on mobile. If the issue persists contact
-          us at hello@deltahacks.com.
-          <v-btn color="white" flat @click="criticalError = false">Close</v-btn>
+        <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
+          {{ snack.message }}
+          <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
         </v-snackbar>
       </v-app>
     </transition>
@@ -340,7 +320,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
-      hackathon: 'DH6',
+      hackathon: 'DH7',
       accepted: false,
       counter: 0,
       genderCompleted: true,
@@ -356,9 +336,13 @@ export default Vue.extend({
         location: '',
         email: firebase.auth().currentUser!.email,
       },
-      criticalError: false,
-      hasResponded: false,
-      confirmation: false,
+      snack: {
+        color: 'success',
+        btnColor: 'white',
+        timeout: 3000,
+        visible: false,
+        message: '',
+      },
       timeout: undefined,
       bus: false,
       busLocations: busCities.concat(['Not bussing']),
@@ -457,7 +441,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH6')
+        .collection('DH7')
         .doc('applications')
         .collection('all')
         .doc(firebase.auth().currentUser!.email)
@@ -477,14 +461,33 @@ export default Vue.extend({
       const appWithRSVP = app.data();
       const rsvp = { coming, origin };
       if (update && app.data()) {
+        let updateError;
+
+        try {
+          const updateResponse = await firebase
+            .functions()
+            .httpsCallable('updateRsvp')({
+              rsvp
+            });
+
+          if (updateResponse.data.error) {
+            updateError = updateResponse.data.error;
+          } else {
         appWithRSVP._.RSVP = rsvp;
-        await db
-          .collection(this.hackathon)
-          .doc('applications')
-          .collection('all')
-          .doc(firebase.auth().currentUser!.email as string)
-          .update(appWithRSVP);
+          }
+        } catch (e) {
+          console.error(e);
+          updateError = 'Submission error';
+        }
+
+        if (updateError) {
+          this.snack.message = updateError;
+          this.snack.color = 'error';
+          this.snack.visible = true;
+        }
+
       }
+
       this.rsvp = appWithRSVP
         ? appWithRSVP._.RSVP
         : { coming: false, origin: '' };
@@ -616,16 +619,19 @@ export default Vue.extend({
   text-decoration: none;
   color: inherit;
 }
+
 #footertext {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 1.3em;
   float: left;
 }
+
 .rtitle {
   padding-bottom: 30px !important;
   font-size: 2.5em !important;
 }
+
 .button1 {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -658,5 +664,9 @@ export default Vue.extend({
 
 .no.border {
   border: none;
+}
+
+v-snackbar {
+  background-color: red !important;
 }
 </style>
