@@ -579,7 +579,7 @@ export const applicationQuestions: any = [
   },
   {
     label: 'What kind of hacker are you?',
-    fieldType: 'single-select',
+    fieldType: 'multi-select',
     selectData: roles,
     icon: 'fa-users',
     model: ['general', 'role'],
