@@ -168,12 +168,12 @@ extend('mustBe', {
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 extend('oldEnough', {
-  validate: (birthday, [ minimumAge, targetDate ]) => {
-    const difference = new Date(new Date(targetDate) - new Date(birthday)); // ms since epoch
+  validate: (birthday, [minimumAge, targetDate]) => {
+    const difference = new Date(new Date(targetDate).valueOf() - new Date(birthday).valueOf()); // ms since epoch
     return Math.abs(difference.getUTCFullYear() - 1970) >= minimumAge;
   },
-  message: (birthday, requirements) => `You must be ${requirements[0]} at the time of the event.`
-})
+  message: (birthday, requirements) => `You must be ${requirements[0]} at the time of the event.`,
+});
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);

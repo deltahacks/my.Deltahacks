@@ -90,7 +90,8 @@ export default Vue.extend({
       return '';
     },
     onDate(type: string, value: any) {
-      let year, month;
+      let year;
+      let month;
       let day = this.inputType === 'date' ? this.dates[2].value : 1;
 
       if (type.toLowerCase() === 'year') {
