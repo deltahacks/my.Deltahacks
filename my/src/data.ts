@@ -538,12 +538,11 @@ export const applicationQuestions: any = [
     requirements: { required: true, max: 100 },
   },
   {
-    // XXX 
     label: '\
     You\'ve been transported to a room with only 2 exits: a small window 6m high and a locked door. In the room there are the following items: \
-    <br></br> \
+    <br /><br /> \
     Magic Wand, Cloning Machine, Lighter, Candle, Phone, Chainsaw, Invisibility Cloak, Time Machine, 3D printer, Shoelaces, and a Laptop... \
-    <br></br> \
+    <br /><br /> \
     How would you use <b>three of these items</b> to escape in time for DeltaHacks 7? \
     ',
     fieldType: 'text-area',
