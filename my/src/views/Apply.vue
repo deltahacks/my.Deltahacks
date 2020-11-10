@@ -1,6 +1,6 @@
 <template>
   <v-app class="sizefix">
-    <div class="submitted-face" />
+    <!-- <div class="submitted-face" />
     <div class="submitted-message">
       Applications are now closed!
       <br />
@@ -10,7 +10,7 @@
         <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
       </a><br>
       </div>
-    </div>
+    </div> -->
     <div class="background">
       <Nav class="fit" />
       <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
@@ -32,8 +32,7 @@
               <br />
               <br />Are you a high school student? You're eligible to attend - as long
               as you're 18 or older on the day of the event -
-              <b>January 25, 2020</b>
-              .
+              <b>March 5th, 2021</b>.
             </p>
           </div>
           <ValidationProvider
@@ -168,6 +167,13 @@ extend('mustBe', {
     (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
+extend('oldEnough', {
+  validate: (birthday, [ minimumAge, targetDate ]) => {
+    const difference = new Date(new Date(targetDate) - new Date(birthday)); // ms since epoch
+    return Math.abs(difference.getUTCFullYear() - 1970) >= minimumAge;
+  },
+  message: (birthday, requirements) => `You must be ${requirements[0]} at the time of the event.`
+})
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);

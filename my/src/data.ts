@@ -49,18 +49,25 @@ const relation = [
 ];
 
 const cities = [
-  'Hamilton',
-  'Toronto',
-  'Waterloo',
-  'London',
-  'Montreal',
-  'Ottawa',
-  'Mississauga',
-  'Guelph',
-  'Burlington',
-  'Brampton',
-  'Markham',
-  'Milton',
+  'Hamilton, Ontario, Canada',
+  'Toronto, Ontario, Canada',
+  'Waterloo, Ontario, Canada',
+  'London, Ontario, Canada',
+  'Montreal, Quebec, Canada',
+  'Vancouver, British Columbia, Canada',
+  'Ottawa, Ontario, Canada',
+  'Oakville, Ontario, Canada',
+  'Mississauga, Ontario, Canada',
+  'Guelph, Ontario, Canada',
+  'Burlington, Ontario, Canada',
+  'Brampton, Ontario, Canada',
+  'Markham, Ontario, Canada',
+  'Milton, Ontario, Canada',
+  'Windsor, Ontario, Canada',
+  'Kingston, Ontario, Canada',
+  'Kitchener, Ontario, Canada',
+  'United States',
+  'India',
   'Other',
 ];
 
@@ -255,11 +262,7 @@ const numberOfHackathons = [
   '3',
   '4',
   '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10+',
+  '6+',
 ];
 
 const workshops = [
@@ -301,14 +304,14 @@ const challenges = [
   'Best use of Blockstack',
   'Most Creative Radar.io Hack',
 ];
+
 const roles = [
-  'None',
   'Front-end',
   'Back-end',
   'Design',
   'iOS Development',
   'Android Development',
-  'Hardware Hacking',
+  'Hardware',
   'Machine Learning',
   'Graphics Programming',
   'Data Analysis',
@@ -323,6 +326,8 @@ export const busCities = [
 ];
 
 export const getBlankApplication = (): AppContents => ({
+  // XXX The metadata property ('_') is exclusively managed by our Firebase functions, but we use dummy values here in order to not break anything
+  // TODO: Test the workflow to see if we can remove this
   _: {
     index: -1,
     reviews: {
@@ -365,10 +370,7 @@ export const getBlankApplication = (): AppContents => ({
     id: '',
   },
   profiles: {
-    devpost: '',
-    github: '',
-    linkedin: '',
-    website: '',
+    links: '',
     other: '',
   },
   responses: {
@@ -425,6 +427,7 @@ export const getBlankProject = (): any => ({
 });
 
 export const applicationQuestions: any = [
+  /* Standard */
   {
     label: "What's your first name?",
     fieldType: 'text',
@@ -438,9 +441,10 @@ export const applicationQuestions: any = [
     requirements: { required: true },
   },
   {
-    label: 'What number can we reach you at?',
-    fieldType: 'text',
-    model: ['contact', 'phone'],
+    label: "When's your birthday?",
+    fieldType: 'date',
+    model: ['personal', 'birthday'],
+    requirements: { required: true, oldEnough: [18, new Date('March 5, 2021')] }, // TODO: Implicitly require age > 18 at time of event
   },
   {
     label: 'Where do you study?',
@@ -455,7 +459,7 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'Are you currently enrolled or will be enrolled in a postsecondary program by January 25th, 2020?',
+      'Are you currently enrolled or will be enrolled in a postsecondary program by March 5th, 2021?',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
@@ -489,39 +493,25 @@ export const applicationQuestions: any = [
     label: 'And when do you expect to graduate?',
     fieldType: 'date-grad',
     model: ['academics', 'graduating'],
-    // requirements: { required: true, },
-  },
-  {
-    label: "What's your birthday?",
-    fieldType: 'date',
-    model: ['personal', 'birthday'],
     requirements: { required: true },
   },
   {
-    label: 'Will you be 18 or older on January 25th, 2020?',
-    fieldType: 'radio-select',
-    selectData: ['Yes', 'No'],
-    model: ['academics', 'oldEnough'],
-    requirements: { required: true, mustBe: 'Yes' },
-  },
-  {
-    label: "What's your gender?",
-    fieldType: 'radio-select',
-    selectData: gender,
-    model: ['personal', 'gender'],
-    requirements: {
-      required: true,
-      oneOf: gender,
-    },
-  },
-  {
-    label: 'Which ethnic background do you identify with?',
+    label: 'Where will you be hacking from?',
     fieldType: 'single-select',
-    selectData: race,
-    icon: 'fa-user-circle',
-    model: ['personal', 'race'],
-    requirements: { required: true },
+    selectData: cities,
+    icon: 'fa-laptop',
+    // For legacy purposes, we're leaving this as the 'traveling_from' field, even though DH7 is online
+    model: ['logistics', 'traveling_from'],
+    requirements: { required: true, oneOf: cities },
   },
+  // {
+  //   label: 'Will you be 18 or older on January 25th, 2020?',
+  //   fieldType: 'radio-select',
+  //   selectData: ['Yes', 'No'],
+  //   model: ['academics', 'oldEnough'],
+  //   requirements: { required: true, mustBe: 'Yes' },
+  // },
+  /* Specific questions */
   {
     label: 'How many hackathons have you been to?',
     fieldType: 'single-select',
@@ -532,56 +522,79 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'What does positive change mean to you? How do you see yourself \
-    incorporating positive change into your experience at DeltaHacks?',
+      'DeltaHacks is the annual Hackathon for Change. \
+      If you had the ability to change anything in the world, what would it be and why?',
     fieldType: 'text-area',
-    textLimit: '500',
+    textLimit: '150',
     model: ['responses', 'q1'],
-    requirements: { required: true, max: 500 },
+    requirements: { required: true, max: 150 },
   },
   {
-    label: 'Describe a time you had to teach a new skill to someone.',
+    label: 'Which piece of future technology excites you most and where do you see it going? \
+    (AI, Global Internet, Blockchain, Space Civilization, Virtual Reality, etc.)',
     fieldType: 'text-area',
-    textLimit: '500',
+    textLimit: '100',
     model: ['responses', 'q2'],
-    requirements: { required: true, max: 500 },
+    requirements: { required: true, max: 100 },
   },
   {
-    label:
-      'If you were stranded on a deserted island, with no way to escape, \
-     for a month, what 3 personal items would you want to have?',
+    // XXX 
+    label: '\
+    You\'ve been transported to a room with only 2 exits: a small window 6m high and a locked door. In the room there are the following items: \
+    <br></br> \
+    Magic Wand, Cloning Machine, Lighter, Candle, Phone, Chainsaw, Invisibility Cloak, Time Machine, 3D printer, Shoelaces, and a Laptop... \
+    <br></br> \
+    How would you use <b>three of these items</b> to escape in time for DeltaHacks 7? \
+    ',
     fieldType: 'text-area',
-    textLimit: '750',
+    textLimit: '150',
     model: ['responses', 'q3'],
-    requirements: { required: true, max: 750 },
+    requirements: { required: true, max: 150 },
   },
   {
-    label: "What's your GitHub?",
-    fieldType: 'text',
-    model: ['profiles', 'github'],
-    requirements: { link: true },
-  },
-  {
-    label: "What's your LinkedIn?",
-    fieldType: 'text',
-    model: ['profiles', 'linkedin'],
-    requirements: { link: true },
-  },
-  {
-    label: "What's your Devpost?",
-    fieldType: 'text',
-    model: ['profiles', 'devpost'],
-    requirements: { link: true },
-  },
-  {
-    label:
-      'Is there anything else interesting you would want us to see? (e.g. Personal Website, Codepen, Dribbble, Youtube, etc)',
+    label: 'What are your social media link(s)? (GithHub, LinkedIn, DevPost, personal website, etc.)',
     fieldType: 'text-area',
-    textLimit: '200',
-    model: ['profiles', 'other'],
+    // XXX Unlike previous years, we're coalescing social media links to one text field, but we're keeping the same structure for legacy reasons
+    model: ['profiles', 'links'],
   },
   {
-    label: 'What workshops would you like to see at DeltaHacks VI?',
+    label: 'Is there anything else interesting you want us to know or see? (Clubs you’re involved with, interesting facts, Blog, Youtube, etc)',
+    fieldType: 'text-area',
+    textLimit: 200,
+    model: ['responses', 'anything_else'],
+    requirements: { max: 500 },
+  },
+  {
+    label: 'Upload your resume',
+    fieldType: 'file',
+    model: ['general', 'role'], // TODO: TARAN, FIGURE OUT WHY IS THIS THE MODEL FOR RESUMES??
+  },
+  /* Survey questions */
+  {
+    label: 'Which size t-shirt do you wear?',
+    fieldType: 'single-select',
+    selectData: shirt_size,
+    icon: 'fa-tshirt',
+    model: ['logistics', 'shirt_size'],
+    requirements: { required: true, oneOf: shirt_size },
+  },
+  {
+    label: 'What kind of hacker are you?',
+    fieldType: 'single-select',
+    selectData: roles,
+    icon: 'fa-users',
+    model: ['general', 'role'],
+    requirements: { required: true },
+  },
+  {
+    label: 'Do you already have a team?',
+    fieldType: 'single-select',
+    selectData: ['Yes', 'No'],
+    icon: 'fa-users',
+    model: ['general', 'team'],
+  },
+  {
+    label: 'What type workshops would you like to see at DeltaHacks 7?',
     fieldType: 'multi-select',
     selectData: workshops,
     icon: 'fa-wrench',
@@ -595,34 +608,28 @@ export const applicationQuestions: any = [
     model: ['general', 'coffee'],
   },
   {
-    label: 'Where are you travelling from?',
+    label: 'How did you find out about DeltaHacks 7?',
     fieldType: 'single-select',
-    selectData: cities,
-    icon: 'fa-plane',
-    model: ['logistics', 'traveling_from'],
-    requirements: { required: true, oneOf: cities },
+    selectData: discovered_by,
+    model: ['logistics', 'discovered_by'],
   },
   {
-    label: 'Do you require travel reimbursements?',
+    label: "What's your gender?",
+    fieldType: 'radio-select',
+    selectData: gender,
+    model: ['personal', 'gender'],
+    requirements: { required: true, oneOf: gender, },
+  },
+  {
+    label: 'Which ethnic background do you identify with?',
     fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
-    icon: 'fa-ticket-alt',
-    model: ['logistics', 'reimbursement'],
+    selectData: race,
+    icon: 'fa-user-circle',
+    model: ['personal', 'race'],
+    requirements: { required: true },
   },
   {
-    label: 'Do you have any dietary restrictions?',
-    fieldType: 'combo-box',
-    selectData: food,
-    icon: 'fa-utensils',
-    model: ['logistics', 'diet_restrictions'],
-  },
-  {
-    label: 'Do you require any special accomodations?',
-    fieldType: 'text',
-    model: ['logistics', 'accomodations'],
-  },
-  {
-    label: 'Please put in the name of an emergency contact',
+    label: 'Please put the name of an emergency contact and their relation to you (e.g. John Smith, Father)',
     fieldType: 'text',
     model: ['emergency', 'name'],
     requirements: { required: true },
@@ -633,41 +640,26 @@ export const applicationQuestions: any = [
     model: ['emergency', 'phone'],
     requirements: { required: true },
   },
-  {
-    label: 'Which size shirt do you wear?',
-    fieldType: 'single-select',
-    selectData: shirt_size,
-    icon: 'fa-tshirt',
-    model: ['logistics', 'shirt_size'],
-    requirements: { required: true, oneOf: shirt_size },
-  },
-  {
-    label: 'Do you already have a team?',
-    fieldType: 'single-select',
-    selectData: ['Yes', 'No'],
-    icon: 'fa-users',
-    model: ['general', 'team'],
-  },
-  {
-    label: 'What area do you typically work in?',
-    fieldType: 'single-select',
-    selectData: roles,
-    icon: 'fa-users',
-    model: ['general', 'role'],
-  },
-  {
-    label:
-      'Is there anything else interesting you would want us to know? i.e Something interesting about you (other clubs you\'re involved in, etc).',
-    fieldType: 'text-area',
-    textLimit: 200,
-    model: ['responses', 'anything_else'],
-    requirements: { max: 500 },
-  },
-  {
-    label: 'Please upload your resumé',
-    fieldType: 'file',
-    model: ['general', 'role'],
-  },
+  // XXX Online for 2021, should (hopefully) reactivate these questions for other years
+  // {
+  //   label: 'Do you require travel reimbursements?',
+  //   fieldType: 'single-select',
+  //   selectData: ['Yes', 'No'],
+  //   icon: 'fa-ticket-alt',
+  //   model: ['logistics', 'reimbursement'],
+  // },
+  // {
+  //   label: 'Do you have any dietary restrictions?',
+  //   fieldType: 'combo-box',
+  //   selectData: food,
+  //   icon: 'fa-utensils',
+  //   model: ['logistics', 'diet_restrictions'],
+  // },
+  // {
+  //   label: 'Do you require any special accomodations?',
+  //   fieldType: 'text',
+  //   model: ['logistics', 'accomodations'],
+  // },
 ];
 
 export const authorizations: any = [
@@ -716,7 +708,7 @@ export const submitQuestions: any = [
     selectData: challenges,
     icon: 'fa-balance-scale',
     model: ['responses', 'challenges'],
-    requirements: { required: true }
+    requirements: { required: true },
   },
 ];
 
@@ -738,8 +730,8 @@ export const gradYears: number[] = [];
 export const birthYears: number[] = [];
 export const days: number[] = [];
 
-for (let i = 2024; i >= 2019; i--) gradYears.push(i);
+for (let i = 2025; i >= 2020; i--) gradYears.push(i);
 
-for (let i = 2019; i >= 1980; i--) birthYears.push(i);
+for (let i = 2020; i >= 1980; i--) birthYears.push(i);
 
 for (let i = 1; i <= 31; i++) days.push(i);

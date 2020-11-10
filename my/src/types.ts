@@ -47,10 +47,7 @@ export interface AppContents {
     id?: string;
   };
   profiles: {
-    devpost?: string;
-    github?: string;
-    linkedin?: string;
-    website?: string;
+    links?: string;
     other?: string;
   };
   responses: {
