@@ -1,6 +1,6 @@
 <template>
   <v-app class="sizefix">
-    <div class="submitted-face" />
+    <!--<div class="submitted-face" />
     <div class="submitted-message">
       Applications are now closed!
       <br />
@@ -10,7 +10,7 @@
         <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
       </a><br>
       </div>
-    </div>
+    </div>-->
     <div class="background">
       <Nav class="fit" />
       <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
@@ -289,7 +289,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH7')
+        .collection(this.$store.state.currentHackathon)
         .doc('applications')
         .collection('all')
         .doc(this.getUID())
@@ -315,7 +315,7 @@ export default Vue.extend({
     },
     async setName() {
       const profile = await this.getDB()
-        .collection('DH7')
+        .collection(this.$store.state.currentHackathon)
         .doc('users')
         .collection('all')
         .doc(this.getUID())

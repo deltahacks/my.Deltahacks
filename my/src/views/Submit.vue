@@ -311,7 +311,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH6')
+        .collection(this.$store.state.currentHackathon)
         .doc('hackathon')
         .collection('projects')
         .doc(this.getUID())
@@ -320,7 +320,7 @@ export default Vue.extend({
 
     async setName() {
       const profile = await this.getDB()
-        .collection('DH7')
+        .collection(this.$store.state.currentHackathon)
         .doc('users')
         .collection('all')
         .doc(this.getUID())

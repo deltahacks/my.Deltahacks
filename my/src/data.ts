@@ -330,8 +330,8 @@ export const getBlankApplication = (): AppContents => ({
       scores: [],
     },
     status: 'in progress',
-    time_initiated: new Date(),
-    time_submitted: new Date(),
+    time_initiated: new Date().getTime(),
+    time_submitted: new Date().getTime(),
   },
   name: {
     first: '',
@@ -341,16 +341,16 @@ export const getBlankApplication = (): AppContents => ({
     email: '',
     phone: '',
   },
-  first_submitted: new Date(),
+  first_submitted: new Date().getTime(),
   academics: {
     degree: '',
     major: '',
-    graduating: new Date(),
+    graduating: new Date().getTime(),
     school: '',
     year: '',
   },
   personal: {
-    birthday: new Date(),
+    birthday: new Date().getTime(),
     gender: '',
     race: '',
   },
@@ -716,7 +716,7 @@ export const submitQuestions: any = [
     selectData: challenges,
     icon: 'fa-balance-scale',
     model: ['responses', 'challenges'],
-    requirements: { required: true }
+    requirements: { required: true },
   },
 ];
 
@@ -738,8 +738,8 @@ export const gradYears: number[] = [];
 export const birthYears: number[] = [];
 export const days: number[] = [];
 
-for (let i = 2024; i >= 2019; i--) gradYears.push(i);
+for (let i = 2025; i >= 2021; i--) gradYears.push(i);
 
-for (let i = 2019; i >= 1980; i--) birthYears.push(i);
+for (let i = 2020; i >= 1980; i--) birthYears.push(i);
 
 for (let i = 1; i <= 31; i++) days.push(i);

@@ -182,7 +182,7 @@ export default Vue.extend({
             value,
             months.indexOf(this.dates[1].value),
             day,
-          ),
+          ).getTime(),
         );
       } else if (type.toLowerCase() === 'month') {
         this.$emit(
@@ -191,7 +191,7 @@ export default Vue.extend({
             this.dates[0].value,
             months.indexOf(value),
             day,
-          ),
+          ).getTime(),
         );
       } else {
         this.$emit(
@@ -200,17 +200,14 @@ export default Vue.extend({
             this.dates[0].value,
             months.indexOf(this.dates[1].value),
             value,
-          ),
+          ).getTime(),
         );
       }
       this.requestUpdate();
     },
     updateDates(mounted: boolean) {
       if (this.inputType === 'date' || this.inputType === 'date-grad') {
-        let use = this.value;
-        if (this.value.seconds) {
-          use = new firebase.firestore.Timestamp(this.value.seconds, this.value.nanoseconds).toDate();
-        }
+        const use = this.value;
         try {
           if (this.inputType === 'date') {
             this.dates = [
