@@ -45,7 +45,7 @@
                 </div>
               </a>
             </div>
-            <div class="box box9" v-if="step === 6">
+            <div class="box box9 boxclip" v-if="step === 6">
               <p class="big">Bus?</p>
               <p class="small" style="margin-top:-20px; margin-bottom:9px;">
                 Please select a stop below.
@@ -75,7 +75,7 @@
                 </a>
               </div>
             </div>
-            <div class="box box9" v-if="step === 7">
+            <div class="box box9 boxclip" v-if="step === 7">
               <template v-if="rsvp.coming">
                 <p class="big">Confirmed.</p>
                 <p class="small" style="margin-top:-20px">
@@ -96,7 +96,7 @@
                 </a>
               </div>
             </div>
-            <div class="box box9" v-if="step === 8">
+            <div class="box box9 boxclip" v-if="step === 8">
                <template>
                 <p class="medium" style="margin-top:20px;">The Hackathon <br> for Change!</p>
               </template>
@@ -152,7 +152,7 @@
           </div>
           <!--Column#2-->
           <div class="col col4">
-            <div class="box box11">
+            <div class="box box11 boxclip">
               <img
                 id="slideimg0"
                 class="slide showMe"
@@ -615,6 +615,7 @@ export default Vue.extend({
 });
 </script>
 <style scoped src="../assets/css/status.css">
+
 .regular {
   text-decoration: none;
   color: inherit;

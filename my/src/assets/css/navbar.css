@@ -77,7 +77,6 @@
 }
 
 .rounded-box {
-  border-radius: 40px;
   padding: 20px;
   height: 100px;
   width: 88%;
@@ -111,7 +110,6 @@
 }
 
 #nav-box {
-  border-radius: 40px;
   background: rgba(255, 255, 255, 0.1);
   height: 100px;
   margin: 3vw 50px 0 50px;
