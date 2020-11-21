@@ -600,7 +600,8 @@ iframe {
     margin-top:2vh;
     min-height: 36vh!important;
     max-height: 36vh!important;
-    box-shadow: -8px 0px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 16px 8px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2)!important; */
   }
 
   .login100-form {
