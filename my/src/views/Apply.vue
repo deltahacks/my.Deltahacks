@@ -1,7 +1,7 @@
 <template>
   <v-app class="sizefix">
-    <!-- <div class="submitted-face" />
-    <div class="submitted-message">
+    <div v-if="app._.status === 'submitted'" class="submitted-face" />
+    <div v-if="app._.status === 'submitted'" class="submitted-message">
       Applications are now closed!
       <br />
       <br />
@@ -10,7 +10,7 @@
         <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
       </a><br>
       </div>
-    </div> -->
+    </div>
     <div class="background">
       <Nav class="fit" />
       <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
@@ -220,11 +220,19 @@ export default Vue.extend({
       let updateError;
 
       try {
+        const user = await firebaseMaster.auth().currentUser;
+        if (user) {
+          await user.reload();
+        }
+
+        const emailVerified = user && user.emailVerified;
+
         const updateResponse = await firebaseMaster
           .functions()
           .httpsCallable('updateApplication')({
             app: this.app,
             isSubmission: submitting,
+            emailVerified,
           });
 
         if (updateResponse.data.error) {
