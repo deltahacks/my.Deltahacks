@@ -236,7 +236,7 @@
             <div :key="media.icon" v-for="media in social" class="desktop">
               <div class="col col2 social">
                 <a :href="media.link" target="_blank">
-                  <div class="box box3">
+                  <div class="box box3 socialbox">
                     <button light icon>
                       <v-icon>{{ media.icon }}</v-icon>
                     </button>
@@ -467,13 +467,13 @@ export default Vue.extend({
           const updateResponse = await firebase
             .functions()
             .httpsCallable('updateRsvp')({
-              rsvp
+              rsvp,
             });
 
           if (updateResponse.data.error) {
             updateError = updateResponse.data.error;
           } else {
-        appWithRSVP._.RSVP = rsvp;
+            appWithRSVP._.RSVP = rsvp;
           }
         } catch (e) {
           console.error(e);
@@ -485,7 +485,6 @@ export default Vue.extend({
           this.snack.color = 'error';
           this.snack.visible = true;
         }
-
       }
 
       this.rsvp = appWithRSVP
