@@ -662,7 +662,8 @@ a {
 }
 
 .background {
-    background: linear-gradient(270deg, #1a7fc3, #39bc82);
+    /* background: linear-gradient(270deg, #1a7fc3, #39bc82); */
+    background: linear-gradient(270deg,#7a72e5,#ab5797);
     background-size: 200% 200%;
     -webkit-animation: animated 25s ease infinite;
     -moz-animation: animated 25s ease infinite;
@@ -671,11 +672,16 @@ a {
 
 .statusbackground {
     background: rgb(0,0,0);
-    background: linear-gradient(180deg, rgba(0,0,0,1) 45%, rgba(62,28,52,0.99) 50%);
-    background-size: 800% 800%;
-    -webkit-animation: statusanimation 140s ease infinite;
+    /* background: linear-gradient(180deg,#7a72e5 45%, #ab5797 50%); */
+    background: linear-gradient(270deg,#7a72e5,#ab5797);
+    /* background-size: 800% 800%; */
+    background-size: 200% 200%;
+    -webkit-animation: animated 10s ease infinite;
+    -moz-animation: animated 10s ease infinite;
+    animation: animated 10s ease infinite;
+    /* -webkit-animation: statusanimation 140s ease infinite;
     -moz-animation: statusanimation 140s ease infinite;
-    animation: statusanimation 140s ease infinite;
+    animation: statusanimation 140s ease infinite; */
 }
 
 @-webkit-keyframes statusanimation {

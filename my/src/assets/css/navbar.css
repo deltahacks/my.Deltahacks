@@ -77,9 +77,9 @@
 }
 
 .rounded-box {
-  padding: 20px;
+  /* padding: 5vh; */
   height: 100px;
-  width: 88%;
+  width: 80vw;
   background: linear-gradient(
     90deg,
     #1eb8c9,
@@ -92,6 +92,9 @@
     rgba(255, 255, 255, 0.2) 45px
   );
   box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1);
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
 }
 
 .heading {
@@ -101,12 +104,13 @@
   margin-left: 60px;
   display: inline-block;
   font-size: 2.1vw;
-  
 }
 
 #name {
   float: right;
-  margin-right: 20px;
+  /* padding-left:40%; */
+  margin-left: auto;
+  /* margin-right:-2000px!important; */
 }
 
 #nav-box {
@@ -114,7 +118,9 @@
   height: 100px;
   margin: 3vw 50px 0 50px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
-  display: inline-block;
+  /* display: inline-block; */
+  display: flex;
+  align-items: center;
 }
 
 #logout {
@@ -123,8 +129,9 @@
   color: white;
   font-size: 1.5vw;
   font-weight: 600;
-  margin-top: 35px;
-  margin-right: 3vw;
+  /* margin-top: auto; */
+  margin-left: auto;
+  margin-right: auto;
   transition: 0.5s !important;
 }
 #logout:hover {
