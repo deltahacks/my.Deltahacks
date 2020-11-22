@@ -429,25 +429,25 @@ export const getBlankProject = (): any => ({
 export const applicationQuestions: any = [
   /* Standard */
   {
-    label: "What's your first name?",
+    label: "What's your first name? *",
     fieldType: 'text',
     model: ['name', 'first'],
     requirements: { required: true },
   },
   {
-    label: 'And your last name?',
+    label: 'And your last name? *',
     fieldType: 'text',
     model: ['name', 'last'],
     requirements: { required: true },
   },
   {
-    label: "When's your birthday?",
+    label: "When's your birthday? *",
     fieldType: 'date',
     model: ['personal', 'birthday'],
     requirements: { required: true, oldEnough: [18, new Date('March 5, 2021')] }, // TODO: Implicitly require age > 18 at time of event
   },
   {
-    label: 'Where do you study?',
+    label: 'Where do you study? *',
     fieldType: 'single-select',
     selectData: allUniversities1,
     icon: 'fa-school',
@@ -459,14 +459,14 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'Are you currently enrolled or will be enrolled in a postsecondary program by March 5th, 2021?',
+      'Are you currently enrolled or will be enrolled in a postsecondary program by March 5th, 2021? *',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
     requirements: { required: true, mustBe: 'Yes' },
   },
   {
-    label: 'What degree are you pursuing?',
+    label: 'What degree are you pursuing? *',
     fieldType: 'single-select',
     selectData: degree,
     icon: 'fa-certificate',
@@ -474,7 +474,7 @@ export const applicationQuestions: any = [
     requirements: { required: true, oneOf: degree },
   },
   {
-    label: "What's your major?",
+    label: "What's your major? *",
     fieldType: 'combo-box',
     selectData: majorsList,
     icon: 'fa-pencil-alt',
@@ -482,7 +482,7 @@ export const applicationQuestions: any = [
     requirements: { required: true },
   },
   {
-    label: 'What is your current year of study?',
+    label: 'What is your current year of study? *',
     fieldType: 'single-select',
     selectData: yearOfStudy,
     icon: 'fa-calendar',
@@ -490,13 +490,13 @@ export const applicationQuestions: any = [
     requirements: { required: true, oneOf: yearOfStudy },
   },
   {
-    label: 'And when do you expect to graduate?',
+    label: 'And when do you expect to graduate? *',
     fieldType: 'date-grad',
     model: ['academics', 'graduating'],
     requirements: { required: true },
   },
   {
-    label: 'Where will you be hacking from?',
+    label: 'Where will you be hacking from? *',
     fieldType: 'single-select',
     selectData: cities,
     icon: 'fa-laptop',
@@ -513,7 +513,7 @@ export const applicationQuestions: any = [
   // },
   /* Specific questions */
   {
-    label: 'How many hackathons have you been to?',
+    label: 'How many hackathons have you been to? *',
     fieldType: 'single-select',
     selectData: numberOfHackathons,
     icon: 'fa-list-ol',
@@ -523,19 +523,19 @@ export const applicationQuestions: any = [
   {
     label:
       'DeltaHacks is the annual Hackathon for Change. \
-      If you had the ability to change anything in the world, what would it be and why?',
+      If you had the ability to change anything in the world, what would it be and why? *',
     fieldType: 'text-area',
-    textLimit: '150',
+    textLimit: '800',
     model: ['responses', 'q1'],
-    requirements: { required: true, max: 150 },
+    requirements: { required: true, max: 800 },
   },
   {
     label: 'Which piece of future technology excites you most and where do you see it going? \
-    (AI, Global Internet, Blockchain, Space Civilization, Virtual Reality, etc.)',
+    (AI, Global Internet, Blockchain, Space Civilization, Virtual Reality, etc.) *',
     fieldType: 'text-area',
     textLimit: '100',
     model: ['responses', 'q2'],
-    requirements: { required: true, max: 100 },
+    requirements: { required: true, max: 600 },
   },
   {
     label: '\
@@ -544,11 +544,11 @@ export const applicationQuestions: any = [
     Magic Wand, Cloning Machine, Lighter, Candle, Phone, Chainsaw, Invisibility Cloak, Time Machine, 3D printer, Shoelaces, and a Laptop... \
     <br /><br /> \
     How would you use <b>three of these items</b> to escape in time for DeltaHacks 7? \
-    ',
+    *',
     fieldType: 'text-area',
     textLimit: '150',
     model: ['responses', 'q3'],
-    requirements: { required: true, max: 150 },
+    requirements: { required: true, max: 800 },
   },
   {
     label: 'What are your social media link(s)? (GithHub, LinkedIn, DevPost, personal website, etc.)',
@@ -570,7 +570,7 @@ export const applicationQuestions: any = [
   },
   /* Survey questions */
   {
-    label: 'Which size t-shirt do you wear?',
+    label: 'Which size t-shirt do you wear? *',
     fieldType: 'single-select',
     selectData: shirt_size,
     icon: 'fa-tshirt',
@@ -578,7 +578,7 @@ export const applicationQuestions: any = [
     requirements: { required: true, oneOf: shirt_size },
   },
   {
-    label: 'What kind of hacker are you?',
+    label: 'What kind of hacker are you? *',
     fieldType: 'multi-select',
     selectData: roles,
     icon: 'fa-users',
@@ -613,14 +613,14 @@ export const applicationQuestions: any = [
     model: ['logistics', 'discovered_by'],
   },
   {
-    label: "What's your gender?",
+    label: "What's your gender? *",
     fieldType: 'radio-select',
     selectData: gender,
     model: ['personal', 'gender'],
     requirements: { required: true, oneOf: gender, },
   },
   {
-    label: 'Which ethnic background do you identify with?',
+    label: 'Which ethnic background do you identify with? *',
     fieldType: 'single-select',
     selectData: race,
     icon: 'fa-user-circle',
@@ -628,13 +628,13 @@ export const applicationQuestions: any = [
     requirements: { required: true },
   },
   {
-    label: 'Please put the name of an emergency contact and their relation to you (e.g. John Smith, Father)',
+    label: 'Please put the name of an emergency contact and their relation to you (e.g. John Smith, Father) *',
     fieldType: 'text',
     model: ['emergency', 'name'],
     requirements: { required: true },
   },
   {
-    label: "What is your emergency contact's phone number?",
+    label: "What is your emergency contact's phone number? *",
     fieldType: 'text',
     model: ['emergency', 'phone'],
     requirements: { required: true },

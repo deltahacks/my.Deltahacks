@@ -385,7 +385,7 @@ export default Vue.extend({
       },
       subheaders: [
         'Applications are now closed.',
-        'Application unsubmitted',
+        'Application Not Started',
         'In progress',
         'This application is under review.',
         "Sorry, we couldn't offer you a spot this year.",
@@ -398,7 +398,7 @@ export default Vue.extend({
       story: '',
       custom: true,
       name: '',
-      step: 0,
+      step: 1,
       checkedIn: false,
       projectSubmitted: false,
       submitAllowed: false,
