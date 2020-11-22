@@ -1,8 +1,8 @@
 <template>
   <v-app class="sizefix">
-    <div class="submitted-face" />
-    <div class="submitted-message">
-      Applications are now closed!
+    <div v-if="app._.status === 'submitted'" class="submitted-face" />
+    <div v-if="app._.status === 'submitted'" class="submitted-message">
+      You've already submitted your application! We'll get back to you soon :)
       <br />
       <br />
       <div style="padding-top: 10px !important;">
@@ -32,8 +32,7 @@
               <br />
               <br />Are you a high school student? You're eligible to attend - as long
               as you're 18 or older on the day of the event -
-              <b>January 25, 2020</b>
-              .
+              <b>March 5th, 2021</b>.
             </p>
           </div>
           <ValidationProvider
@@ -168,6 +167,13 @@ extend('mustBe', {
     (mustBeValue.length > 0 ? value === mustBeValue[0] : !!value),
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
+extend('oldEnough', {
+  validate: (birthday, [minimumAge, targetDate]) => {
+    const difference = new Date(new Date(targetDate).valueOf() - new Date(birthday).valueOf()); // ms since epoch
+    return Math.abs(difference.getUTCFullYear() - 1970) >= minimumAge;
+  },
+  message: (birthday, requirements) => `You must be ${requirements[0]} at the time of the event.`,
+});
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
@@ -214,11 +220,19 @@ export default Vue.extend({
       let updateError;
 
       try {
+        const user = await firebaseMaster.auth().currentUser;
+        if (user) {
+          await user.reload();
+        }
+
+        const emailVerified = user && user.emailVerified;
+
         const updateResponse = await firebaseMaster
           .functions()
           .httpsCallable('updateApplication')({
             app: this.app,
             isSubmission: submitting,
+            emailVerified,
           });
 
         if (updateResponse.data.error) {
@@ -289,7 +303,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH7')
+        .collection(this.$store.state.currentHackathon)
         .doc('applications')
         .collection('all')
         .doc(this.getUID())
@@ -315,7 +329,7 @@ export default Vue.extend({
     },
     async setName() {
       const profile = await this.getDB()
-        .collection('DH7')
+        .collection(this.$store.state.currentHackathon)
         .doc('users')
         .collection('all')
         .doc(this.getUID())
@@ -531,7 +545,6 @@ v-snackbar {
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 50px;
   height: 100%;
   width: 49%;
   margin: 50px auto 50px auto;

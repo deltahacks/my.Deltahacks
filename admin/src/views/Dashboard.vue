@@ -81,7 +81,38 @@
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex d-flex xs12 sm6 md3 child-flex>
+        <v-flex v-if="isAuthorizedReviewer">
+          <v-card color="white lighten-4" dark>
+            <v-card color="white lighten-4">
+              <v-card-text primary class="title">Assigned Applications</v-card-text>
+              <v-card-text>
+                <IOdometer class="iOdometer" :value="assignedApplications" />
+              </v-card-text>
+            </v-card>
+            <v-card color="white lighten-4" dark>
+              <v-card-text primary class="title">Unmarked</v-card-text>
+              <v-card-text>
+                <IOdometer class="iOdometer" :value="unmarkedApplications" />
+                <br>
+                <br>
+                {{secretMessage}}
+              </v-card-text>
+            </v-card>
+            <v-card color="white lighten-4" dark>
+              <v-card-text primary class="title">Marked</v-card-text>
+              <v-card-text>
+                <IOdometer class="iOdometer" :value="markedApplications" />
+              </v-card-text>
+            </v-card>
+            <v-card color="white lighten-4" dark>
+              <v-card-text primary class="title">Average Score</v-card-text>
+              <v-card-text>
+                <IOdometer class="iOdometer" :value="averageScore" />
+              </v-card-text>
+            </v-card>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md3 child-flex v-else>
           <v-card color="white lighten-4" dark>
             <custom-angle-radial-chart :title="'Universities'" :categories="universities.categories" :data="universities.data" />
           </v-card>
@@ -149,6 +180,12 @@ interface DashboardData {
   c_user: any;
   colors: string[];
   debugFunctions: any;
+  assignedApplications: number;
+  unmarkedApplications: number;
+  markedApplications: number;
+  averageScore: number;
+  secretMessage: string;
+  isAuthorizedReviewer: boolean;
 }
 
 export default Vue.extend({
@@ -324,6 +361,12 @@ export default Vue.extend({
           },
         },
       ],
+      assignedApplications: 0,
+      unmarkedApplications: 0,
+      markedApplications: 0,
+      averageScore: 0,
+      secretMessage: '',
+      isAuthorizedReviewer: false,
     };
   },
   components: {
@@ -413,6 +456,11 @@ export default Vue.extend({
 
     (this as any).$store.state.currentUserIsAuthorizedReviewer = authRes.data()!.authorizedReviewer;
     console.log('auth res: ', authRes.data());
+
+    if (authRes.data()!.authorizedReviewer == true) {
+      (this as any).isAuthorizedReviewer = true;
+      (this as any).getApplicationStats();
+    }
   },
   computed: {
     universities() {
@@ -536,6 +584,56 @@ export default Vue.extend({
     activateModal(msg = 'Loading...') : void {
       (this as any).loading = true;
       (this as any).loadingMessage = msg;
+    },
+    getApplicationStats() {
+      let totalScore = 0;
+      const user = (this as any).$store.state.firebase.auth().currentUser.email;
+      db.collection(this.$store.state.currentHackathon)
+        .doc('applications')
+        .collection('all')
+        .onSnapshot((snap) => {
+          (this as any).assignedApplications = 0;
+          (this as any).markedApplications = 0;
+          totalScore = 0;
+          snap.forEach((application) => {
+            const reviewArr = application.data()._.reviews.assignedTo; // get the list of reviewers for each application
+            for (let i = 0; i < reviewArr.length; i++) {
+              try {
+              // check if admin is assigned as reviewer in each application
+                if (user === reviewArr[i]) {
+                  (this as any).assignedApplications += 1;
+                  try {
+                    const scoresArr = application.data()._.reviews.scores;
+                    // loop through the list of application scores and check if reviewer has assigned a score
+                    for (let j = 0; j < scoresArr.length; j++) {
+                      if (scoresArr[j].reviewer === user) {
+                        totalScore += application.data()._.reviews.scores[j].score;
+                        (this as any).markedApplications += 1; // admin is assigned to this application so increase marked application count
+                        (this as any).averageScore = totalScore / (this as any).markedApplications; // update average score
+                      }
+                    }
+                  } catch (err) {
+                    console.log(application.id);
+                    console.log('No score assigned for this app');
+                  }
+                  // calculate the unmarked applications
+                  console.log((this as any).markedApplications, (this as any).assignedApplications);
+                  (this as any).unmarkedApplications = (this as any).assignedApplications - (this as any).markedApplications;
+                }
+              } catch (err) {
+                console.log('No reviewers assigned for this app');
+              }
+            }
+          });
+
+          if ((this as any).unmarkedApplications >= 100) {
+            (this as any).secretMessage = "Oof, that's a lot";
+          } else if ((this as any).unmarkedApplications <= (this as any).assignedApplications / 2 && (this as any).unmarkedApplications > 0) {
+            (this as any).secretMessage = 'Nearly there! You got this!';
+          } else if ((this as any).unmarkedApplications == 0) {
+            (this as any).secretMessage = "You're chilling, go watch a movie";
+          }
+        });
     },
   },
 });

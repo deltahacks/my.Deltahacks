@@ -45,7 +45,7 @@
                 </div>
               </a>
             </div>
-            <div class="box box9" v-if="step === 6">
+            <div class="box box9 boxclip" v-if="step === 6">
               <p class="big">Bus?</p>
               <p class="small" style="margin-top:-20px; margin-bottom:9px;">
                 Please select a stop below.
@@ -75,7 +75,7 @@
                 </a>
               </div>
             </div>
-            <div class="box box9" v-if="step === 7">
+            <div class="box box9 boxclip" v-if="step === 7">
               <template v-if="rsvp.coming">
                 <p class="big">Confirmed.</p>
                 <p class="small" style="margin-top:-20px">
@@ -96,7 +96,7 @@
                 </a>
               </div>
             </div>
-            <div class="box box9" v-if="step === 8">
+            <div class="box box9 boxclip" v-if="step === 8">
                <template>
                 <p class="medium" style="margin-top:20px;">The Hackathon <br> for Change!</p>
               </template>
@@ -152,7 +152,7 @@
           </div>
           <!--Column#2-->
           <div class="col col4">
-            <div class="box box11">
+            <div class="box box11 boxclip">
               <img
                 id="slideimg0"
                 class="slide showMe"
@@ -236,7 +236,7 @@
             <div :key="media.icon" v-for="media in social" class="desktop">
               <div class="col col2 social">
                 <a :href="media.link" target="_blank">
-                  <div class="box box3">
+                  <div class="box box3 socialbox">
                     <button light icon>
                       <v-icon>{{ media.icon }}</v-icon>
                     </button>
@@ -320,7 +320,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
-      hackathon: 'DH7',
+      hackathon: this.$store.state.currentHackathon,
       accepted: false,
       counter: 0,
       genderCompleted: true,
@@ -385,7 +385,7 @@ export default Vue.extend({
       },
       subheaders: [
         'Applications are now closed.',
-        'Application unsubmitted',
+        '',
         'In progress',
         'This application is under review.',
         "Sorry, we couldn't offer you a spot this year.",
@@ -398,7 +398,7 @@ export default Vue.extend({
       story: '',
       custom: true,
       name: '',
-      step: 0,
+      step: 1,
       checkedIn: false,
       projectSubmitted: false,
       submitAllowed: false,
@@ -441,7 +441,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH7')
+        .collection(this.$store.state.currentHackathon)
         .doc('applications')
         .collection('all')
         .doc(firebase.auth().currentUser!.email)
@@ -467,13 +467,13 @@ export default Vue.extend({
           const updateResponse = await firebase
             .functions()
             .httpsCallable('updateRsvp')({
-              rsvp
+              rsvp,
             });
 
           if (updateResponse.data.error) {
             updateError = updateResponse.data.error;
           } else {
-        appWithRSVP._.RSVP = rsvp;
+            appWithRSVP._.RSVP = rsvp;
           }
         } catch (e) {
           console.error(e);
@@ -485,7 +485,6 @@ export default Vue.extend({
           this.snack.color = 'error';
           this.snack.visible = true;
         }
-
       }
 
       this.rsvp = appWithRSVP
@@ -615,6 +614,7 @@ export default Vue.extend({
 });
 </script>
 <style scoped src="../assets/css/status.css">
+
 .regular {
   text-decoration: none;
   color: inherit;

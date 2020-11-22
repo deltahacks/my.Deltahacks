@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <h1 class="question" id="title1">{{ title }}</h1>
+      <h1 class="question" v-html="title"></h1>
       <v-text-field
         v-if="inputType == 'text'"
         :value="value"
@@ -35,23 +35,21 @@
         dark
         color="#000000"
       ></v-select>
-      <div
-        v-else-if="inputType == 'date' || inputType == 'date-grad'"
-        class="date-row"
-        color="#000000"
-      >
-        <v-select
-          v-for="(input, i) in dates"
-          :key="i"
-          :items="input.options"
-          @input="onDate(input.label, $event)"
-          :label="input.label"
-          v-model="input.value"
-          :error-messages="error"
-           dark
-           class="montserratify"
-           color="#000000"
-        ></v-select>
+      <div v-else-if="inputType == 'date' || inputType == 'date-grad'">
+        <div class="date-row" color="#000000">
+          <v-select
+            v-for="(input, i) in dates"
+            :key="i"
+            :items="input.options"
+            @input="onDate(input.label, $event)"
+            :label="input.label"
+            v-model="input.value"
+            dark
+            class="montserratify"
+            color="#000000"
+          ></v-select>
+        </div>
+        <div v-if="error" class="error--text">{{ error }}</div>
       </div>
       <div v-else-if="inputType == 'radio-select'" class="radio-row">
         <span v-for="(data, i) in selectData" :key="i" class="radio-item montserratify">
@@ -174,43 +172,33 @@ export default Vue.extend({
       return '';
     },
     onDate(type: string, value: any) {
-      const day = this.inputType === 'date' ? this.dates[2].value : 1;
+      let year;
+      let month;
+      let day = this.inputType === 'date' ? this.dates[2].value : 1;
+
       if (type.toLowerCase() === 'year') {
-        this.$emit(
-          'input',
-          new Date(
-            value,
-            months.indexOf(this.dates[1].value),
-            day,
-          ),
-        );
+        year = value;
+        month = months.indexOf(this.dates[1].value);
       } else if (type.toLowerCase() === 'month') {
-        this.$emit(
-          'input',
-          new Date(
-            this.dates[0].value,
-            months.indexOf(value),
-            day,
-          ),
-        );
+        year = this.dates[0].value;
+        month = months.indexOf(value);
       } else {
-        this.$emit(
-          'input',
-          new Date(
-            this.dates[0].value,
-            months.indexOf(this.dates[1].value),
-            value,
-          ),
-        );
+        year = this.dates[0].value;
+        month = months.indexOf(this.dates[1].value);
+        day = value;
       }
+
+      this.$emit(
+        'input',
+        // When passed into Firebase function, Date objects need to be serialized or else they appear as empty objects
+        new Date(year, month, day).toJSON(),
+      );
+
       this.requestUpdate();
     },
     updateDates(mounted: boolean) {
       if (this.inputType === 'date' || this.inputType === 'date-grad') {
-        let use = this.value;
-        if (this.value.seconds) {
-          use = new firebase.firestore.Timestamp(this.value.seconds, this.value.nanoseconds).toDate();
-        }
+        const use = this.value;
         try {
           if (this.inputType === 'date') {
             this.dates = [
@@ -319,7 +307,6 @@ export default Vue.extend({
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 50px;
   height: 100%;
   width: 50%;
   margin: 50px auto 0px auto;

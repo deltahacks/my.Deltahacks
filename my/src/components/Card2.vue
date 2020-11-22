@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <h1 class="question" id="title1">{{ title }}</h1>
+      <h1 class="question">{{ title }}</h1>
       <v-text-field
         v-if="inputType == 'text'"
         label="Name"
@@ -43,7 +43,7 @@ import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 import {
-  ValidationProvider
+  ValidationProvider,
 } from 'vee-validate/dist/vee-validate.full';
 
 import { months, gradYears, birthYears, days } from '../data';
@@ -90,35 +90,28 @@ export default Vue.extend({
       return '';
     },
     onDate(type: string, value: any) {
-      const day = this.inputType === 'date' ? this.dates[2].value : 1;
+      let year;
+      let month;
+      let day = this.inputType === 'date' ? this.dates[2].value : 1;
+
       if (type.toLowerCase() === 'year') {
-        this.$emit(
-          'input',
-          new Date(
-            value,
-            months.indexOf(this.dates[1].value),
-            day,
-          ),
-        );
+        year = value;
+        month = months.indexOf(this.dates[1].value);
       } else if (type.toLowerCase() === 'month') {
-        this.$emit(
-          'input',
-          new Date(
-            this.dates[0].value,
-            months.indexOf(value),
-            day,
-          ),
-        );
+        year = this.dates[0].value;
+        month = months.indexOf(value);
       } else {
-        this.$emit(
-          'input',
-          new Date(
-            this.dates[0].value,
-            months.indexOf(this.dates[1].value),
-            value,
-          ),
-        );
+        year = this.dates[0].value;
+        month = months.indexOf(this.dates[1].value);
+        day = value;
       }
+
+      this.$emit(
+        'input',
+        // When passed into Firebase function, Date objects need to be serialized or else they appear as empty objects
+        new Date(year, month, day).toJSON(),
+      );
+
       this.requestUpdate();
     },
     updateDates(mounted: boolean) {

@@ -166,7 +166,6 @@ p {
     width: 100%;
     margin-bottom: 1em;
     clear: both;
-    border-radius: 20px;
     background: rgba(255, 255, 255, 0.2);
     background-position: center;
     -webkit-box-sizing: border-box;
@@ -227,6 +226,7 @@ p {
 
 .box9 {
     height: 24vw;
+    clip-path: polygon(0 0, 100% 0, 100% 78%, 92% 100%, 0 100%, 0% 50%);
 }
 
 .box10 {
@@ -247,12 +247,12 @@ p {
 
 .status {
     background: rgba(255, 255, 255, 0.3);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 94% 100%, 0 100%, 0% 50%);
 }
 
 .submit, .apply {
     font-family: 'Montserrat', sans-serif;
     width: 50%;
-    border-radius: 20px;
     background: rgba(255, 255, 255, 0.4);
     box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -268,7 +268,6 @@ p {
 .submitted{
     font-family: 'Montserrat', sans-serif;
     width: 50%;
-    border-radius: 20px;
     /* background: rgba(255, 255, 255, 0.4); */
     /* box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.1); */
     text-align: center;
@@ -584,7 +583,6 @@ a {
 .slide {
     opacity: 0;
     position: absolute;
-    border-radius: 20px;
     height: 100%;
     -webkit-transition: opacity 2s linear;
     -moz-transition: opacity 2s linear;
@@ -663,7 +661,8 @@ a {
 }
 
 .background {
-    background: linear-gradient(270deg, #1a7fc3, #39bc82);
+    /* background: linear-gradient(270deg, #1a7fc3, #39bc82); */
+    background: linear-gradient(270deg,#7a72e5,#ab5797);
     background-size: 200% 200%;
     -webkit-animation: animated 25s ease infinite;
     -moz-animation: animated 25s ease infinite;
@@ -671,11 +670,17 @@ a {
 }
 
 .statusbackground {
-    background: linear-gradient( 269deg, #865aa5, #5062ad, #cd8871, #865aa5, #1a7fc3, #39bc82);
-    background-size: 800% 800%;
-    -webkit-animation: statusanimation 140s ease infinite;
+    background: rgb(0,0,0);
+    /* background: linear-gradient(180deg,#7a72e5 45%, #ab5797 50%); */
+    background: linear-gradient(270deg,#7067e0,#973d82);
+    /* background-size: 800% 800%; */
+    background-size: 200% 200%;
+    -webkit-animation: animated 10s ease infinite;
+    -moz-animation: animated 10s ease infinite;
+    animation: animated 10s ease infinite;
+    /* -webkit-animation: statusanimation 140s ease infinite;
     -moz-animation: statusanimation 140s ease infinite;
-    animation: statusanimation 140s ease infinite;
+    animation: statusanimation 140s ease infinite; */
 }
 
 @-webkit-keyframes statusanimation {
