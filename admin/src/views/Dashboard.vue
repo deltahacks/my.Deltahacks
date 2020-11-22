@@ -365,7 +365,7 @@ export default Vue.extend({
       unmarkedApplications: 0,
       markedApplications: 0,
       averageScore: 0,
-      secretMessage: "",
+      secretMessage: '',
       isAuthorizedReviewer: false,
     };
   },
@@ -586,52 +586,51 @@ export default Vue.extend({
       (this as any).loadingMessage = msg;
     },
     getApplicationStats() {
-      var totalScore = 0;
-      db.collection(this.$store.state.currentHackathon)  
-      .doc('applications')
-      .collection('all')
-      .onSnapshot(snap => {
-        snap.forEach(application => {
-          const reviewArr = application.data()._.reviews.assignedTo; //get the list of reviewers for each application
-          for (var i=0; i<reviewArr.length; i++) {
-            try {
-              //check if admin is assigned as reviewer in each application
-              if ((this as any).$store.state.firebase.auth().currentUser.email == reviewArr[i]) {
-                (this as any).assignedApplications += 1; 
-                try {
-                  const scoresArr = application.data()._.reviews.scores;
-                  //loop through the list of application scores and check if reviewer has assigned a score
-                  for(var j = 0; j<scoresArr.length; j++) {
-                    if(scoresArr[j].reviewer == (this as any).$store.state.firebase.auth().currentUser.email) {
-                      totalScore += application.data()._.reviews.scores[i].score;  
-                      (this as any).markedApplications += 1; //admin is assigned to this application so increase marked application count
-                      (this as any).averageScore = totalScore/(this as any).markedApplications; //update average score
+      let totalScore = 0;
+      const user = (this as any).$store.state.firebase.auth().currentUser.email;
+      db.collection(this.$store.state.currentHackathon)
+        .doc('applications')
+        .collection('all')
+        .onSnapshot((snap) => {
+          snap.forEach((application) => {
+            const reviewArr = application.data()._.reviews.assignedTo; // get the list of reviewers for each application
+            for (let i = 0; i < reviewArr.length; i++) {
+              try {
+              // check if admin is assigned as reviewer in each application
+                if (user === reviewArr[i]) {
+                  (this as any).assignedApplications += 1;
+                  try {
+                    const scoresArr = application.data()._.reviews.scores;
+                    // loop through the list of application scores and check if reviewer has assigned a score
+                    for (let j = 0; j < scoresArr.length; j++) {
+                      if (scoresArr[j].reviewer === user) {
+                        totalScore += application.data()._.reviews.scores[j].score;
+                        (this as any).markedApplications += 1; // admin is assigned to this application so increase marked application count
+                        (this as any).averageScore = totalScore / (this as any).markedApplications; // update average score
+                      }
                     }
+                  } catch (err) {
+                    console.log(application.id);
+                    console.log('No score assigned for this app');
                   }
+                  // calculate the unmarked applications
+                  console.log((this as any).markedApplications, (this as any).assignedApplications);
+                  (this as any).unmarkedApplications = (this as any).assignedApplications - (this as any).markedApplications;
                 }
-                catch(err) {
-                  console.log("No score assigned for this app");
-                }
-                //calculate the unmarked applications
-                (this as any).unmarkedApplications = (this as any).assignedApplications - (this as any).markedApplications;
+              } catch (err) {
+                console.log('No reviewers assigned for this app');
               }
             }
-            catch(err) {
-              console.log("No reviewers assigned for this app");
-            }
+          });
+
+          if ((this as any).unmarkedApplications >= 100) {
+            (this as any).secretMessage = "Oof, that's a lot";
+          } else if ((this as any).unmarkedApplications <= (this as any).assignedApplications / 2 && (this as any).unmarkedApplications > 0) {
+            (this as any).secretMessage = 'Nearly there! You got this!';
+          } else if ((this as any).unmarkedApplications == 0) {
+            (this as any).secretMessage = "You're chilling, go watch a movie";
           }
         });
-        
-        if((this as any).unmarkedApplications >= 100) {
-          (this as any).secretMessage = "Oof, that's a lot";
-        }
-        else if((this as any).unmarkedApplications <= (this as any).assignedApplications/2 && (this as any).unmarkedApplications > 0) {
-          (this as any).secretMessage = "Nearly there! You got this!";
-        }
-        else if((this as any).unmarkedApplications == 0) {
-          (this as any).secretMessage = "You're chilling, go watch a movie";
-        }
-      });
     },
   },
 });
