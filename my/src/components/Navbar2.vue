@@ -1,16 +1,16 @@
 <template>
   <div id="nav-box">
-    <a id="logout" @click.prevent="logout">Log Out</a>
+    
     <div class="rounded-box">
       <a href="https://www.deltahacks.com" target="_blank" id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
-        VI
+        7
       </a>
       <h1 id="name" class="heading">
         {{ first }}<span style="font-weight: 300" v-if="(first.length + last.length) < 21" >{{ last }}</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;
       </h1>
     </div>
+    <a id="logout" @click.prevent="logout">Log Out</a>
   </div>
 </template>
 

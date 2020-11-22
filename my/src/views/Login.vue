@@ -3,19 +3,24 @@
     <div class="container-login100 background">
       <!-- "style="background-image: url('https://wallpapersite.com/images/pages/pic_w/14088.png');" -->
       <div class="wrap-login100">
+        <!-- <div class="shadow-wrap"> -->
         <div class="card">
           <img
-            src="../assets/sidebar.png"
+            src="../assets/sidebar_v2.png"
             draggable="false"
             alt="Sidebar+Logo"
             class="sidebar"
           />
         </div>
-        <form ref="form" class="login100-form validate-form">
+        </div>
+        <!-- </div> -->
+        <div class="login100-form">
+        <form ref="form" class="validate-form">
           <!-- <span class="login100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
         </span>-->
-          <img src="../assets/vi.png" draggable="false" class="back-vi" />
+          <!-- <img src="../assets/vi.png" draggable="false" class="back-vi" /> -->
+          <img src="../assets/7.png" draggable="false" class="back-vi" />
           <div class="bigdiv">
             <template v-if="counter === 0">
               <div class="spanText">
