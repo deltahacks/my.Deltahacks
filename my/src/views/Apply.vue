@@ -2,7 +2,7 @@
   <v-app class="sizefix">
     <div v-if="app._.status === 'submitted'" class="submitted-face" />
     <div v-if="app._.status === 'submitted'" class="submitted-message">
-      Applications are now closed!
+      You've already submitted your application! We'll get back to you soon :)
       <br />
       <br />
       <div style="padding-top: 10px !important;">
@@ -545,7 +545,6 @@ v-snackbar {
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 50px;
   height: 100%;
   width: 49%;
   margin: 50px auto 50px auto;

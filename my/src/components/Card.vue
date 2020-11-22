@@ -307,7 +307,6 @@ export default Vue.extend({
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 50px;
   height: 100%;
   width: 50%;
   margin: 50px auto 0px auto;
