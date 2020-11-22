@@ -198,10 +198,7 @@ export default Vue.extend({
     },
     updateDates(mounted: boolean) {
       if (this.inputType === 'date' || this.inputType === 'date-grad') {
-        let use = this.value;
-        if (this.value.seconds) {
-          use = new firebase.firestore.Timestamp(this.value.seconds, this.value.nanoseconds).toDate();
-        }
+        const use = this.value;
         try {
           if (this.inputType === 'date') {
             this.dates = [

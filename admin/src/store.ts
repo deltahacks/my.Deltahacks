@@ -78,6 +78,6 @@ export default new Vuex.Store({
     },
     update_current_hackathon(state, change) {
       state.currentHackathon = change;
-    }
+    },
   },
 });

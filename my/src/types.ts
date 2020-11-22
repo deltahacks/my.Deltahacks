@@ -23,16 +23,16 @@ export interface AppContents {
     email: string;
     phone: string;
   };
-  first_submitted: firebase.firestore.Timestamp | Date;
+  first_submitted: firebase.firestore.Timestamp | Number;
   academics: {
     degree: degree;
     major: string;
-    graduating: firebase.firestore.Timestamp | Date;
+    graduating: firebase.firestore.Timestamp | Number;
     school: string;
     year: year;
   };
   personal: {
-    birthday: firebase.firestore.Timestamp | Date;
+    birthday: firebase.firestore.Timestamp | Number;
     gender: gender;
     race: race;
   };
@@ -87,8 +87,8 @@ export interface AppPrivate {
     scores: Reviews[];
   };
   status: status;
-  time_initiated: firebase.firestore.Timestamp | Date;
-  time_submitted: firebase.firestore.Timestamp | Date;
+  time_initiated: firebase.firestore.Timestamp | Number;
+  time_submitted: firebase.firestore.Timestamp | Number;
 }
 
 export interface Reviews {

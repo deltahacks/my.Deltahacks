@@ -11,6 +11,7 @@ interface StoreState {
   // TODO(typing) type these as firebase objects
   db: firebase.firestore.Firestore;
   firebase: any;
+  currentHackathon: string;
 }
 
 // export the store
@@ -19,5 +20,6 @@ export default new Vuex.Store({
   state: {
     db,
     firebase,
+    currentHackathon: 'DH7',
   } as StoreState,
 });

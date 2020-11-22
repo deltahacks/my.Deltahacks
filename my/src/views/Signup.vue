@@ -126,7 +126,7 @@ export default Vue.extend({
           // console.log(user.user.uid, 'ID');
           // console.log(this.$store.state.db, 'DB');
           this.$store.state.db
-            .collection('DH7')
+            .collection(this.$store.state.currentHackathon)
             .doc('users')
             .collection('all')
             .doc(this.vuex_email)
@@ -144,7 +144,7 @@ export default Vue.extend({
           // console.log(data.data);
           this.geo = data.data;
           this.$store.state.db
-            .collection('DH7')
+            .collection(this.$store.state.currentHackathon)
             .doc('users')
             .collection('all')
             .doc(this.vuex_email)

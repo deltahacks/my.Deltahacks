@@ -320,7 +320,7 @@ export default Vue.extend({
   name: 'Status',
   data(): StatusModel {
     return {
-      hackathon: 'DH7',
+      hackathon: this.$store.state.currentHackathon,
       accepted: false,
       counter: 0,
       genderCompleted: true,
@@ -441,7 +441,7 @@ export default Vue.extend({
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
-        .collection('DH7')
+        .collection(this.$store.state.currentHackathon)
         .doc('applications')
         .collection('all')
         .doc(firebase.auth().currentUser!.email)
@@ -467,13 +467,13 @@ export default Vue.extend({
           const updateResponse = await firebase
             .functions()
             .httpsCallable('updateRsvp')({
-              rsvp
+              rsvp,
             });
 
           if (updateResponse.data.error) {
             updateError = updateResponse.data.error;
           } else {
-        appWithRSVP._.RSVP = rsvp;
+            appWithRSVP._.RSVP = rsvp;
           }
         } catch (e) {
           console.error(e);
@@ -485,7 +485,6 @@ export default Vue.extend({
           this.snack.color = 'error';
           this.snack.visible = true;
         }
-
       }
 
       this.rsvp = appWithRSVP
