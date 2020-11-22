@@ -592,6 +592,9 @@ export default Vue.extend({
         .doc('applications')
         .collection('all')
         .onSnapshot((snap) => {
+          (this as any).assignedApplications = 0;
+          (this as any).markedApplications = 0;
+          totalScore = 0;
           snap.forEach((application) => {
             const reviewArr = application.data()._.reviews.assignedTo; // get the list of reviewers for each application
             for (let i = 0; i < reviewArr.length; i++) {
