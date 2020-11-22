@@ -105,6 +105,7 @@
   display: inline-block;
   font-size: 2.1vw;
   padding-left: 20px;
+  padding-right:40px;
 }
 
 #name {
@@ -168,9 +169,10 @@ h1 {
   }
   .heading {
     font-size: 25px;
+    padding: 0px;
   }
   #logout {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     font-size: 12px;
   }
 }

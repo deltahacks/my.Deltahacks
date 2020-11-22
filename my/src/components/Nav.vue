@@ -1,19 +1,22 @@
 <template>
   <div id="nav-box">
-    <a class="btnbox1" id="logout" @click.prevent="logout">Log Out</a>
-    <a class="btnbox2" id="logout" href="../status">Status</a>
     <div class="rounded-box extended">
       <a href="https://www.deltahacks.com" target="_blank" id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
-        VI
+        7
       </a>
-      <h1 id="name" class="heading">
+      <!-- <h1 id="name" class="heading">
         {{ first }}<span style="font-weight: 300;" v-if="(first.length + last.length) < 21" >{{ last }}</span>
+      </h1> -->
+         <h1 id="name" class="heading">
+        Anant<span style="font-weight: 300;" v-if="(first.length + last.length) < 21" >Jain</span>
       </h1>
     </div>
-    <a class="btnbox3" href="../status">
+    <!-- <a class="btnbox3" href="../status">
       <i class="fas fa-arrow-left" /> &nbsp; Go Back To Status
-    </a>
+    </a> -->
+        <a class="btnbox1" id="logout" @click.prevent="logout">Log Out</a>
+    <a class="btnbox2" id="logout" href="../status">Status</a>
   </div>
 </template>
 
