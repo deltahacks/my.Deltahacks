@@ -551,7 +551,7 @@ export const applicationQuestions: any = [
     requirements: { required: true, max: 800 },
   },
   {
-    label: 'What are your social media link(s)? (GithHub, LinkedIn, DevPost, personal website, etc.)',
+    label: 'What are your social media link(s)? (GitHub, LinkedIn, DevPost, personal website, etc.)',
     fieldType: 'text-area',
     // XXX Unlike previous years, we're coalescing social media links to one text field, but we're keeping the same structure for legacy reasons
     model: ['profiles', 'links'],
