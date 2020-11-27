@@ -533,7 +533,7 @@ export const applicationQuestions: any = [
     label: 'Which piece of future technology excites you most and where do you see it going? \
     (AI, Global Internet, Blockchain, Space Civilization, Virtual Reality, etc.) *',
     fieldType: 'text-area',
-    textLimit: '100',
+    textLimit: '600',
     model: ['responses', 'q2'],
     requirements: { required: true, max: 600 },
   },
@@ -546,7 +546,7 @@ export const applicationQuestions: any = [
     How would you use <b>three of these items</b> to escape in time for DeltaHacks 7? \
     *',
     fieldType: 'text-area',
-    textLimit: '150',
+    textLimit: '800',
     model: ['responses', 'q3'],
     requirements: { required: true, max: 800 },
   },
@@ -617,7 +617,7 @@ export const applicationQuestions: any = [
     fieldType: 'radio-select',
     selectData: gender,
     model: ['personal', 'gender'],
-    requirements: { required: true, oneOf: gender, },
+    requirements: { required: true, oneOf: gender },
   },
   {
     label: 'Which ethnic background do you identify with? *',
