@@ -175,9 +175,9 @@ export default Vue.extend({
           } else {
             console.log(adminSignupResponse.data.reason);
             if (adminSignupResponse.data.reason === 'Invalid admin secret') {
-              this.feedback = 'Invalid admin secret';
-            } else if (adminSignupResponse.data.reason === 'auth/email-already-in-use') {
-              this.feedback = 'Admin account already in use';
+              this.feedback = 'Invalid Admin Secret, are you an imposter?';
+            } else if (adminSignupResponse.data.reason === 'Admin user already exists') {
+              this.feedback = 'Admin user already exists';
             } else {
               this.feedback = 'Something went wrong, please contact tech team.';
             }
