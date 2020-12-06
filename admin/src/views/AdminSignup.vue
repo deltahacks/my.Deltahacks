@@ -167,12 +167,20 @@ export default Vue.extend({
               name: this.admin_name,
             });
           console.log('RESPONSE: ', adminSignupResponse.data);
-          this.successFeedback = true;
           if (adminSignupResponse.data.createdUser) {
             this.$router.push({
               name: 'Login',
               params: { successFeedback: true },
             } as { name: string; params: any });
+          } else {
+            console.log(adminSignupResponse.data.reason);
+            if (adminSignupResponse.data.reason === 'Invalid admin secret') {
+              this.feedback = 'Invalid admin secret';
+            } else if (adminSignupResponse.data.reason === 'auth/email-already-in-use') {
+              this.feedback = 'Admin account already in use';
+            } else {
+              this.feedback = 'Something went wrong, please contact tech team.';
+            }
           }
         } catch (err) {
           this.feedback = 'There was an error :(';
