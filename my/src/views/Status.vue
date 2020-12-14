@@ -22,7 +22,7 @@
               <p class="big">Welcome.</p>
               <p class="small">
                 Be a part of the hackathon for change. We are looking forward to
-                being able to meet with you in person. Good luck with your
+                being able to meet with you online this year. Good luck with your
                 application!
               </p>
             </div>
