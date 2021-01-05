@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "apexcharts": "^3.10.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "caesar-salad": "^1.0.1",
     "chart.js": "^2.7.2",
     "core-js": "^2.6.5",
