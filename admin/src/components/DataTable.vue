@@ -43,7 +43,7 @@
           <td
             class="text-xs-left"
             id="numRevs"
-            :title="props.item._.reviews.assignedTo.length ? assignmentToName(props.item._.reviews.assignedTo) : 'unassigned'"
+            :title="props.item._.reviews.assignedTo.length ? assignmentToName(props.item._.reviews.assignedTo, props.item._.reviews.average) : 'unassigned'"
           >{{ props.item._.reviews.scores.length }}/3</td>
 
           <td class="text-xs-right">
@@ -208,11 +208,12 @@ export default Vue.extend({
           break;
       }
     },
-    assignmentToName(emails) {
+    assignmentToName(emails, score) {
       let res = '';
       emails.forEach((val) => {
         if (this.$store.state.allAdmins && this.$store.state.allAdmins[val]) { res += `${this.$store.state.allAdmins[val]}, `; }
       });
+      res += `Avg: ${score}`;
       return res;
     },
     bigDiff(prop) {
