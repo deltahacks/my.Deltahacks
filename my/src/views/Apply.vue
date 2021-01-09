@@ -30,9 +30,10 @@
               well thought out answers. You'll get an email when we've made a
               decision.
               <br />
-              <br />Are you a high school student? You're eligible to attend - as long
-              as you're 18 or older on the day of the event -
-              <b>March 5th, 2021</b>.
+              <br />High school students are eligible to attend!
+              <br />
+              <br /> If you're having submission problems, please make sure that your email has been verified.
+                     If problems persist, try using a different browser like Chrome.
             </p>
           </div>
           <ValidationProvider

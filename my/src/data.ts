@@ -444,7 +444,7 @@ export const applicationQuestions: any = [
     label: "When's your birthday? *",
     fieldType: 'date',
     model: ['personal', 'birthday'],
-    requirements: { required: true, oldEnough: [18, new Date('March 5, 2021')] }, // TODO: Implicitly require age > 18 at time of event
+    requirements: { required: true, oldEnough: [14, new Date('March 5, 2021')] }, // TODO: Implicitly require age > 18 at time of event
   },
   {
     label: 'Where do you study? *',
@@ -463,7 +463,7 @@ export const applicationQuestions: any = [
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
-    requirements: { required: true, mustBe: 'Yes' },
+    requirements: { required: true },
   },
   {
     label: 'What degree are you pursuing? *',
