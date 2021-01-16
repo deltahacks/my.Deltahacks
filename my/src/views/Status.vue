@@ -27,8 +27,12 @@
               </p>
             </div>
             <div class="box box9" v-if="step === 5">
-              <p class="big rsvp" style="font-size: 5vw">Will you be coming?</p>
-              <a @click="() => (step = 6)">
+              <p class="big rsvp" style="font-size: 5vw">Will you be attending DH7?</p>
+              <a @click="
+                  () => {
+                    updateRSVP(true, true), (step = 7);
+                  }
+                ">
                 <div class="box box3 rsvp-btn">
                   Yes
                 </div>

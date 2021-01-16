@@ -202,6 +202,7 @@ const majorsList = [
   'Criminal Justice and Public Policy',
   'Ecology',
   'Economics',
+  'Electrical Engineering',
   'Engineering Systems and Computing',
   'English',
   'Environment and Resource Management',
