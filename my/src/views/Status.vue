@@ -18,7 +18,7 @@
         <div class="wrap">
           <!--Column#1-->
           <div class="col col6">
-            <div class="box box9" v-if="step <= 4">
+            <div class="box box9" v-if="step <= 4 || step === 10">
               <p class="big">Welcome.</p>
               <p class="small">
                 Be a part of the hackathon for change. We are looking forward to
@@ -123,7 +123,7 @@
             </div>
 
             <div class="box box5 status desktop">
-              <div class="currentStatus" v-if="step < 8">
+              <div class="currentStatus" v-if="step < 8 || step === 10">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
@@ -143,7 +143,7 @@
               <div class="currentStatus glm" v-if="step === 9">
                 <p class="goodluck box5">Good Luck!</p>
               </div>
-              <a href="/apply" class="apply-btn" v-if="step < 8">
+              <a href="/apply" class="apply-btn" v-if="step < 8 || step === 10">
                 <div class="apply box5">Apply</div>
               </a>
               <a href="/submit" class="apply-btn" v-if="step === 8">
@@ -397,12 +397,14 @@ export default Vue.extend({
         "Congratulations, you've been accepted!",
         "Congratulations, you've been accepted!",
         '',
+        '',
+        'Loading',
       ],
       links: ['Home', 'About', 'Contact'],
       story: '',
       custom: true,
       name: '',
-      step: 1,
+      step: 10,
       checkedIn: false,
       projectSubmitted: false,
       submitAllowed: false,
