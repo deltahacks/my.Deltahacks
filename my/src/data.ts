@@ -30,6 +30,10 @@ const race = [
 ];
 
 const yearOfStudy = [
+  'Grade 9',
+  'Grade 10',
+  'Grade 11',
+  'Grade 12',
   'First Year',
   'Second Year',
   'Third Year',
@@ -73,7 +77,7 @@ const cities = [
 
 const shirt_size = ['XS', 'S', 'M', 'L', 'XL'];
 
-const degree = ['Bachelors', 'Masters', 'PhD', "Associate's", 'Certificate', 'Diploma'];
+const degree = ['Bachelors', 'Masters', 'PhD', "Associate's", 'Certificate', 'Diploma', 'High School Diploma'];
 
 const gender = ['Male', 'Female', 'Other'];
 
