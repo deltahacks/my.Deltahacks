@@ -83,7 +83,9 @@
               <template v-if="rsvp.coming">
                 <p class="big">Confirmed.</p>
                 <p class="small" style="margin-top:-20px">
-                  We hope you're as excited as we are. See you soon!
+                  We're so excited to see you!
+                  Please fill out the swag shipping form ASAP.
+                  Click here: <a href="https://forms.gle/a957kim9PJwJXsHz7" class="swag-url">Form Link</a>
                 </p>
               </template>
               <template v-if="!rsvp.coming">
