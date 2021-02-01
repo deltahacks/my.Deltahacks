@@ -12,6 +12,7 @@ import LiveDesk from './views/LiveDesk.vue';
 import DashboardWrapper from './wrappers/DashboardWrapper.vue';
 import AdminSignup from './views/AdminSignup.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
+import News from './views/News.vue';
 
 Vue.use(Router);
 
@@ -78,6 +79,14 @@ const router = new Router({
       path: '/checkin/:id',
       name: 'Checkin',
       component: Checkin,
+      meta: {
+        adminAuth: true,
+      },
+    },
+    {
+      path: '/test/',
+      name: 'BulletinBoard',
+      component: News,
       meta: {
         adminAuth: true,
       },

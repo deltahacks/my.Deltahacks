@@ -272,3 +272,10 @@ const majorsList = [
 export const majors = majorsList;
 
 export const allUniversities = allUniversities1;
+
+export const allNewsTitles = [
+  'General Hackathon Update',
+  'Project Update',
+  'Event Update',
+  'Sponsor Update',
+];
