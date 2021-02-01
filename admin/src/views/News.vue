@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
 import Vue from 'vue';
 import { allNewsTitles } from '../data';
 import db from '../firebase_init';
@@ -23,7 +22,8 @@ import db from '../firebase_init';
 interface NewsData {
     newUpdateBody: string,
     newUpdateTitle: string,
-    allNewsTitles: any
+    allNewsTitles: any,
+    allNews: any
 }
 
 interface News {
@@ -32,6 +32,7 @@ interface News {
     title: string,
     body: string,
     hidden: boolean
+    id?: number
 }
 
 export default Vue.extend({
@@ -41,6 +42,7 @@ export default Vue.extend({
       newUpdateBody: '',
       newUpdateTitle: '',
       allNewsTitles,
+      allNews: [],
     };
   },
   methods: {
