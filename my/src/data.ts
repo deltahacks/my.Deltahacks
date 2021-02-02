@@ -711,7 +711,7 @@ export const submitQuestions: any = [
     label: 'What is your project\'s demo Youtube video link?',
     fieldType: 'text',
     model: ['profiles', 'youtube'],
-    requirements: { required: true, link: true },
+    requirements: { required: true, link: true, youtubeLink: true },
   },
   {
     label: 'What challenges would you like to be judged for?',

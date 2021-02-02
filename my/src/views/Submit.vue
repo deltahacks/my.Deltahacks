@@ -168,6 +168,13 @@ extend('mustBe', {
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
+extend('youtubeLink', {
+  validate: url => 
+  // eslint-disable-next-line no-useless-escape
+  /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/.test(url),
+  message: 'Invalid Youtube URL'
+});
+
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
