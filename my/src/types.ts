@@ -126,12 +126,14 @@ export interface StatusModel {
   university: any;
   allUniversities: string[];
   dropzoneOptions: any;
-  subheaders: string[];
+  // subheaders: string[];
+  state_data: any;
+  current_state: string;
   links: string[];
   story: string;
   custom: boolean;
   name: string;
-  step: number;
+  // step: number;
   checkedIn: boolean;
   projectSubmitted: boolean;
   submitAllowed: boolean;
