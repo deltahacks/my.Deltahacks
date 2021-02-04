@@ -835,3 +835,8 @@ a {
 {
     opacity: 1;
 }
+
+.swag-url {
+    color: orange;
+    font-weight: 500;
+}

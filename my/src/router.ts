@@ -10,6 +10,7 @@ import Apply from './views/Apply.vue';
 import Closed from './views/Closed.vue';
 import Status from './views/Status.vue';
 import v404 from './views/404.vue';
+import Submit from './views/Submit.vue';
 import db from './firebase_init';
 
 Vue.use(Router);
