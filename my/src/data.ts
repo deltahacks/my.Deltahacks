@@ -420,6 +420,7 @@ export const getBlankProject = (): any => ({
   },
   profiles: {
     devpost: '',
+    youtube: '',
   },
   responses: {
     challenges: [],
@@ -705,6 +706,12 @@ export const submitQuestions: any = [
     fieldType: 'text',
     model: ['name', 'devpost'],
     requirements: { required: true, link: true },
+  },
+  {
+    label: 'What is your project\'s demo Youtube video link?',
+    fieldType: 'text',
+    model: ['profiles', 'youtube'],
+    requirements: { required: true, link: true, youtubeLink: true },
   },
   {
     label: 'What challenges would you like to be judged for?',
