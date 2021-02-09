@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isOpen" max-width="350" content-class="dialog__container">
+  <v-dialog :persistent="persist" v-model="isOpen" max-width="350" content-class="dialog__container">
     <v-card>
       <v-card-title class="headline">{{ title }}</v-card-title>
       <v-card-text>{{ body }}</v-card-text>
@@ -16,7 +16,12 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['open', 'title', 'body', 'value'],
+  props: {
+    title: String, 
+    body: String, 
+    value: Boolean, 
+    persist: {type: Boolean, default: false}
+  },
   computed: {
     isOpen: {
       get() {
@@ -57,6 +62,20 @@ export default Vue.extend({
       background-color: #3ca3b1a8 !important;
     }
   }
-}
 
+  .loadingContainer{
+    padding-bottom: 15%;
+    width: 100%;
+  }
+  .loading {
+    margin: 0 auto;
+    border: 0.4vmax solid #203f38c7;
+    border-top: 0.4vmax solid #57ebff;
+    border-radius: 50%;
+    width: 3vmax;
+    height: 3vmax;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+}
 </style>
