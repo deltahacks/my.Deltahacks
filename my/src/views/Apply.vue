@@ -62,7 +62,7 @@
           <ValidationProvider
             v-for="(authorization, i) in authorizations"
             :key="'authorization_' + i"
-            :rules="{ mustBe: true }"
+            :rules="authorization.requirements"
             :name="authorization.label"
             v-slot="{ errors }"
           >
