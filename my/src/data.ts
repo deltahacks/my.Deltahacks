@@ -401,6 +401,7 @@ export const getBlankApplication = (): AppContents => ({
   },
   general: {
     coffee: '',
+    emails: false,
     team: '',
     termsAndConditions: false,
     code: false,
@@ -673,18 +674,26 @@ export const authorizations: any = [
       '<p>I have read and agree to the \
     <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">\
     MLH Code of Conduct</a>.</p>',
+    requirements: { mustBe: true },
     model: ['general', 'termsAndConditions'],
   },
   {
     label:
-      '<p>I authorize you to share my application/registration information for event administration, ranking, MLH \
-    administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the \
+      '<p>I authorize you to share my application/registration information with Major League Hacking for event \
+    administration, ranking and MLH administration in-line with the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>. \
-    I further agree to the terms both the \
+    I further agree to the terms of both the \
     <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">\
     MLH Contest Terms and Conditions</a> and the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>.</p>',
+    requirements: { mustBe: true },
     model: ['general', 'code'],
+  },
+  {
+    label:
+    '<p>I authorize MLH to send me pre- and post-event informational emails, which contain free credit and opportunities from their partners.</p>',
+    model: ['general', 'emails'],
+    requirements: { required: false },
   },
 ];
 
