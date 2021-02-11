@@ -11,7 +11,7 @@
     "fun-up": "firebase deploy --only functions"
   },
   "dependencies": {
-    "apexcharts": "^3.10.1",
+    "apexcharts": "^3.24.0",
     "axios": "^0.19.0",
     "caesar-salad": "^1.0.1",
     "chart.js": "^2.7.2",
