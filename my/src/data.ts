@@ -286,29 +286,23 @@ const workshops = [
   'Computer Vision with OpenCV',
 ];
 
-const challenges = [
-  'Hotel Dieu Shaver Health and Rehabilitation',
-  'ITE Challenge',
-  'Beasley Neighbourhood Association Challenge',
-  'Best Overall Hack',
-  'Best Education Hack',
-  'Best Finance Hack',
-  'Best Environment Hack',
-  'Best Health Hack',
-  'Best Quality of Life/Productivity Hack',
-  'Innovation Factory Challenge',
-  'TD Challenge',
-  'Arcelormittal Dofasco Challenge',
-  'Materials Challenge',
-  'Algorand Challenge',
-  'Hypercare Challenge',
-  'Best UiPath Automation Hack',
-  'Best Domain Registered with Domain.com',
-  'Best use of Google Cloud',
-  'Best use of MongoDB Atlas',
-  'Best use of Blockstack',
-  'Most Creative Radar.io Hack',
-];
+export async function getCategories() {
+  const res = await firebase
+    .functions()
+    .httpsCallable('getCategories')();
+  const cats = res.data.categories
+  return cats.map(each => {
+    return each
+      .split(" ")
+      .map(word => {
+        return (
+          word.substring(0, 1).toUpperCase() +
+          word.substring(1, word.length).toLowerCase()
+        );
+      })
+      .join(" ");
+    });
+}
 
 const roles = [
   'Front-end',
@@ -697,40 +691,42 @@ export const authorizations: any = [
   },
 ];
 
-export const submitQuestions: any = [
-  {
-    label: "What's your personal Devpost ID?",
-    fieldType: 'text',
-    model: ['profiles', 'devpost'],
-    requirements: { required: true, link: true },
-  },
-  {
-    label: "What's your project name?",
-    fieldType: 'text',
-    model: ['name', 'project'],
-    requirements: { required: true },
-  },
-  {
-    label: 'What is your project\'s Devpost link?',
-    fieldType: 'text',
-    model: ['name', 'devpost'],
-    requirements: { required: true, link: true },
-  },
-  {
-    label: 'What is your project\'s demo Youtube video link?',
-    fieldType: 'text',
-    model: ['profiles', 'youtube'],
-    requirements: { required: true, link: true, youtubeLink: true },
-  },
-  {
-    label: 'What challenges would you like to be judged for?',
-    fieldType: 'multi-select',
-    selectData: challenges,
-    icon: 'fa-balance-scale',
-    model: ['responses', 'challenges'],
-    requirements: { required: true },
-  },
-];
+export async function getSubmitQuestions() {
+  return [
+    {
+      label: "What's your personal Devpost ID?",
+      fieldType: 'text',
+      model: ['profiles', 'devpost'],
+      requirements: { required: true, link: true },
+    },
+    {
+      label: "What's your project name?",
+      fieldType: 'text',
+      model: ['name', 'project'],
+      requirements: { required: true },
+    },
+    {
+      label: 'What is your project\'s Devpost link?',
+      fieldType: 'text',
+      model: ['name', 'devpost'],
+      requirements: { required: true, link: true },
+    },
+    {
+      label: 'What is your project\'s demo Youtube video link?',
+      fieldType: 'text',
+      model: ['profiles', 'youtube'],
+      requirements: { required: true, link: true, youtubeLink: true },
+    },
+    {
+      label: 'What challenges would you like to be judged for?',
+      fieldType: 'multi-select',
+      selectData: await getCategories(),
+      icon: 'fa-balance-scale',
+      model: ['responses', 'challenges'],
+      requirements: { required: true },
+    },
+  ];
+}
 
 export const months: string[] = [
   'January',

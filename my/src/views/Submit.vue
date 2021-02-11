@@ -70,6 +70,24 @@
         </form>
       </ValidationObserver>
       <Dialog
+        title="Loading Questions..."
+        body=""
+        v-model="loadingDialogue"
+        persist="true"
+      >
+      <div class="loadingContainer">
+        <div class="loading"></div>
+      </div>
+      </Dialog>
+      <Dialog
+        title="Uh Oh!"
+        body="Something went wrong on our end. Please refresh the page."
+        v-model="loadingError"
+        persist="true"
+      >
+      <v-btn color="error" text @click="reloadPage()">Reload</v-btn>
+      </Dialog>
+      <Dialog
         title="Reset Submission"
         body="Are you sure you want to reset your Submission? This action can't be undone."
         v-model="resetDialogue"
@@ -124,10 +142,10 @@ import {
 } from 'vee-validate/dist/vee-validate.full';
 import { oneOf, max } from 'vee-validate/dist/rules';
 
-import { ApplicationModel, AppContents } from '../types';
+import { SubmitModel, AppContents } from '../types';
 import {
   getBlankProject,
-  submitQuestions,
+  getSubmitQuestions,
   authorizations,
 } from '../data';
 
@@ -179,7 +197,7 @@ Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 export default Vue.extend({
-  data(): ApplicationModel {
+  data(): SubmitModel {
     return {
       app: getBlankProject(),
       questions: {},
@@ -194,6 +212,8 @@ export default Vue.extend({
       },
       resetDialogue: false,
       submitDialogue: false,
+      loadingDialogue: true,
+      loadingError: false,
     };
   },
   components: {
@@ -203,6 +223,9 @@ export default Vue.extend({
     Dialog,
   },
   methods: {
+    reloadPage() {
+      window.location.reload();
+    },
     async logout() {
       try {
         await firebase.auth().signOut();
@@ -360,9 +383,16 @@ export default Vue.extend({
       console.log('Unable to fetch, trying again...');
     }
   },
-  mounted(): void {
-    this.questions = submitQuestions;
+  async beforeMount() {
     this.authorizations = authorizations;
+    try {
+      this.questions = await getSubmitQuestions();
+    } catch (error) {
+      console.log(error);
+      this.loadingError = true;
+    } finally {
+      this.loadingDialogue = false;
+    }
   },
 });
 </script>
