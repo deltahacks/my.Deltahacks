@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-str */
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 
@@ -290,18 +291,14 @@ export async function getCategories() {
   const res = await firebase
     .functions()
     .httpsCallable('getCategories')();
-  const cats = res.data.categories
-  return cats.map(each => {
-    return each
-      .split(" ")
-      .map(word => {
-        return (
-          word.substring(0, 1).toUpperCase() +
+  const cats = res.data.categories;
+  return cats.map(each => each
+    .split(' ')
+    .map(word => (
+      word.substring(0, 1).toUpperCase() +
           word.substring(1, word.length).toLowerCase()
-        );
-      })
-      .join(" ");
-    });
+    ))
+    .join(' '));
 }
 
 const roles = [
