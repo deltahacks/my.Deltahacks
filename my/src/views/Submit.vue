@@ -187,9 +187,9 @@ extend('mustBe', {
 });
 
 extend('youtubeLink', {
-  validate: url => 
+  validate: url =>
   // eslint-disable-next-line no-useless-escape
-  /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/.test(url),
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/.test(url),
   message: 'Invalid Youtube URL',
 });
 
@@ -495,11 +495,13 @@ export default Vue.extend({
 }
 
 .act-btn__reset {
+  border-radius: 0px;
   background-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 .act-btn__submit {
+  border-radius: 0px;
   background-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
   float: right;
@@ -517,15 +519,7 @@ v-snackbar {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   /* background: linear-gradient(269deg, #6D0169, #D9636D, #405BC4, #1D847C, #7C2ECC, #4179BE); */
-  background: linear-gradient(
-    269deg,
-    #7c1078,
-    #e8727c,
-    #4f6ad3,
-    #2c938b,
-    #8b3ddb,
-    #5088cd
-  );
+  background: linear-gradient(180deg, rgba(0,0,0,1) 45%, rgba(62,28,52,0.99) 50%);
   background-size: 1400% 1400%;
   -webkit-animation: ApplyAnimation 180s ease infinite;
   -moz-animation: ApplyAnimation 180s ease infinite;
@@ -574,7 +568,6 @@ v-snackbar {
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 50px;
   height: 100%;
   width: 49%;
   margin: 50px auto 50px auto;

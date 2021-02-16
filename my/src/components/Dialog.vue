@@ -17,10 +17,10 @@ import Vue from 'vue';
 
 export default Vue.extend({
   props: {
-    title: String, 
-    body: String, 
-    value: Boolean, 
-    persist: {type: Boolean, default: false}
+    title: String,
+    body: String,
+    value: Boolean,
+    persist: { type: Boolean, default: false },
   },
   computed: {
     isOpen: {
