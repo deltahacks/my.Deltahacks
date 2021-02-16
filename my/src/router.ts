@@ -45,7 +45,7 @@ const router = new Router({
     {
       path: '/submit',
       name: 'Submit',
-      component: Closed,
+      component: Submit,
       meta: {
         auth: true,
       },
