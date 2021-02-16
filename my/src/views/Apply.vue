@@ -11,14 +11,23 @@
       </a><br>
       </div>
     </div>
-    <div class="background">
+    <div :class="{backgroundStatic: toggleAnimation, background: !toggleAnimation}">
       <Nav class="fit" />
+        <v-container class="act-btn-group toggle-btn-grp" text-xs-center>
+        <v-layout align-center justify-center row wrap>
+          <v-flex xs12>
+            <v-btn class="act-btn act-btn__reset"   @click="changeAnimation">Toggle Animations</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-container>
+     
       <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
         {{ snack.message }}
         <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
       </v-snackbar>
       <ValidationObserver ref="form">
         <form action>
+           
           <div class="cardify">
             <p class="big">Apply here.</p>
             <p class="small">
@@ -62,7 +71,7 @@
           <ValidationProvider
             v-for="(authorization, i) in authorizations"
             :key="'authorization_' + i"
-            :rules="authorization.requirements"
+            :rules="{ mustBe: true }"
             :name="authorization.label"
             v-slot="{ errors }"
           >
@@ -115,6 +124,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import VueScrollReveal from 'vue-scroll-reveal';
 import deepmerge from 'deepmerge';
+import store from '../store';
 
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
@@ -140,7 +150,8 @@ Vue.use(VueScrollReveal, {
   duration: 1000,
   scale: 1.35,
   distance: '10px',
-  mobile: true,
+  mobile: !store.getters.animateBackground,
+  desktop: !store.getters.animateBackground,
   reset: true,
 });
 
@@ -180,6 +191,7 @@ Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 export default Vue.extend({
+  store,
   data(): ApplicationModel {
     return {
       app: getBlankApplication(),
@@ -193,9 +205,11 @@ export default Vue.extend({
         visible: false,
         message: 'Progress saved!',
       },
+      toggleAnimation: this.$store.getters.animateBackground,
       resetDialogue: false,
       submitDialogue: false,
     };
+    
   },
   components: {
     Card,
@@ -204,6 +218,10 @@ export default Vue.extend({
     Dialog,
   },
   methods: {
+    changeAnimation: function(){
+      this.toggleAnimation = !this.toggleAnimation;
+      this.$store.commit("changeAnimate", this.toggleAnimation)
+    },
     async logout() {
       try {
         await firebase.auth().signOut();
@@ -365,6 +383,7 @@ export default Vue.extend({
   mounted(): void {
     this.questions = applicationQuestions;
     this.authorizations = authorizations;
+
   },
 });
 </script>
@@ -418,6 +437,10 @@ export default Vue.extend({
   width: 50%;
   z-index: 10;
   padding: 20px 0 40px 0;
+}
+
+.toggle-btn-grp{
+  padding-bottom: 0px !important;
 }
 
 @media only screen and (max-width: 960px) {
@@ -480,7 +503,25 @@ export default Vue.extend({
 v-snackbar {
   background-color: red !important;
 }
-
+.backgroundStatic{
+  width: 100% !important;
+  min-width: 100vw;
+  height: 100%;
+  background-size: cover;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /* background: linear-gradient(269deg, #6D0169, #D9636D, #405BC4, #1D847C, #7C2ECC, #4179BE); */
+  background: linear-gradient(
+    269deg,
+    #7c1078,
+    #e8727c,
+    #4f6ad3,
+    #2c938b,
+    #8b3ddb,
+    #5088cd
+  );
+  background-size: 1400% 1400%;
+}
 .background {
   width: 100% !important;
   min-width: 100vw;

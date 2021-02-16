@@ -13,8 +13,9 @@
           />
         </div>
       </v-app>
-      <v-app key="2" v-if="true" class="dashboard statusbackground">
+      <v-app key="2" v-if="true" class="dashboard" :class="{staticBackground: toggleAnimation, statusbackground: !toggleAnimation}">
         <Navbar2 />
+        
         <div class="wrap">
           <!--Column#1-->
           <div class="col col6">
@@ -250,6 +251,13 @@
                 </a>
               </div>
             </div>
+            <v-container class="act-btn-group toggle-btn-grp" text-xs-center>
+                <v-layout align-center justify-center row wrap class="togbtn">
+                  <v-flex xs12>
+                    <v-btn class="act-btn act-btn__reset"   @click="changeAnimation">Toggle Animations</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
           </div>
           <div class="box box5 status tablet">
             <div class="currentStatus" v-if="step < 8">
@@ -294,6 +302,7 @@
             </div>
           </div>
         </div>
+        
         <v-snackbar top right :color="snack.color" v-model="snack.visible" :timeout="snack.timeout">
           {{ snack.message }}
           <v-btn :color="snack.btnColor" flat text @click="snack.visible = false">Close</v-btn>
@@ -318,10 +327,12 @@ import { mapGetters } from 'vuex';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
 import { busCities } from '../data';
+import store from '../store';
 
 
 const allUniversities = [];
 export default Vue.extend({
+  store,
   mixins: [validationMixin],
   name: 'Status',
   data(): StatusModel {
@@ -420,6 +431,7 @@ export default Vue.extend({
       splashMessage: '',
       busSelected: 'Not bussing',
       rsvp: { coming: false, origin: '' },
+      toggleAnimation: this.$store.getters.animateBackground,
     };
   },
   components: {
@@ -447,6 +459,10 @@ export default Vue.extend({
   },
   methods: {
     // Grabs the application from where its store in firebase
+    changeAnimation: function(){
+      this.toggleAnimation = !this.toggleAnimation;
+      this.$store.commit("changeAnimate", this.toggleAnimation)
+    },
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
         .collection(this.$store.state.currentHackathon)
