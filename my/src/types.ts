@@ -11,7 +11,20 @@ export interface ApplicationModel {
   snack: SnackBar;
   resetDialogue: boolean;
   submitDialogue: boolean;
-  toggleAnimation: boolean;
+}
+
+export interface SubmitModel {
+  app: AppContents;
+
+  // this needs to be typed
+  questions: any;
+  authorizations: any;
+  updateTimeout: any;
+  snack: SnackBar;
+  resetDialogue: boolean;
+  submitDialogue: boolean;
+  loadingDialogue: boolean;
+  loadingError: boolean;
 }
 
 export interface AppContents {
@@ -75,6 +88,7 @@ export interface AppContents {
   };
   general: {
     coffee: string;
+    emails: boolean,
     team: string;
     termsAndConditions: boolean;
     code: boolean;
@@ -146,7 +160,6 @@ export interface StatusModel {
   splashMessage: string;
   busSelected: string;
   rsvp: {coming: boolean, origin: string};
-  toggleAnimation: boolean;
 }
 
 export interface ApplyState {

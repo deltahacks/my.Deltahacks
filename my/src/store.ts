@@ -12,7 +12,6 @@ interface StoreState {
   db: firebase.firestore.Firestore;
   firebase: any;
   currentHackathon: string;
-  animationToggle: boolean,
 }
 
 // export the store
@@ -22,19 +21,5 @@ export default new Vuex.Store({
     db,
     firebase,
     currentHackathon: 'DH7',
-    animationToggle: window.localStorage.getItem('animationToggle') === 'true',
   } as StoreState,
-  getters:{
-    animateBackground: state => {
-      return state.animationToggle;
-    }
-  },
-  mutations:{
-    changeAnimate (state, payload){
-      state.animationToggle = payload;
-      localStorage.setItem('animationToggle', payload);
-      location.reload();
-    }
-  }
 });
-sessionStorage.clear();
