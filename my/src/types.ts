@@ -12,6 +12,21 @@ export interface ApplicationModel {
   resetDialogue: boolean;
   submitDialogue: boolean;
   toggleAnimation: boolean;
+
+}
+
+export interface SubmitModel {	
+  app: AppContents;	
+
+  // this needs to be typed	
+  questions: any;	
+  authorizations: any;	
+  updateTimeout: any;	
+  snack: SnackBar;	
+  resetDialogue: boolean;	
+  submitDialogue: boolean;	
+  loadingDialogue: boolean;	
+  loadingError: boolean;
 }
 
 export interface AppContents {
