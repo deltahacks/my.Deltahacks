@@ -421,6 +421,7 @@ export default Vue.extend({
       //   'Loading',
       // ],
       state_data: {
+<<<<<<< HEAD
         'loading': { message: 'Loading Status', emoji: '🕖', groups: ['Standard', 'showAppStatus'] },
         'not started': { message: 'Application Not Started', emoji: '🙂' , groups: ['Standard', 'showAppStatus']},
         'in progress': { message: 'In progress', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
@@ -437,6 +438,20 @@ export default Vue.extend({
         'not coming': { message: 'Not coming to DH7.', emoji: '🙁' , groups: ['RSVPd', 'Not coming', 'Cannot Submit']},
         'rejected': { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁',  groups: ['rejected','Not coming', 'Cannot Submit'] },
         'applications closed': { message: 'Applications are now closed.', emoji: '🙁', groups: ['Standard']},
+=======
+        loading: { message: 'Loading Status', emoji: '🕖', groups: ['Standard'] },
+        'not started': { message: '', emoji: '🙂', groups: ['Standard'] },
+        'in progress': { message: 'In progress', emoji: '🙂', groups: ['Standard'] },
+        submitted: { message: 'Your application is under review.', emoji: '🙂', groups: ['Standard'] },
+        accepted: { message: "Congratulations, you've been accepted!", emoji: '🙂', groups: ['Awaiting RSVP'] },
+        coming: { message: "Congratulations, you're coming to DH7.", emoji: '🙂', groups: ['RSVPd', 'coming'] },
+        'checked in': { message: 'Welcome to DH7.', emoji: '🙂', groups: ['RSVPd', 'At hackathon'] },
+        'project submitted': { message: 'Your project has been submitted.', emoji: '🙂', groups: ['RSVPd', 'At hackathon', 'Project Submitted'] },
+        'submissions closed': { message: 'Submissions are now closed.', emoji: '🙁', groups: ['RSVPd', 'Cannot Submit'] },
+        'not coming': { message: 'Not coming to DH7.', emoji: '🙁', groups: ['RSVPd', 'Not coming', 'Cannot Submit'] },
+        rejected: { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁', groups: ['rejected', 'Not coming', 'Cannot Submit'] },
+        'applications closed': { message: 'Applications are now closed.', emoji: '🙁', groups: ['Standard'] },
+>>>>>>> e30f0b9742dd77ae4899f6bc3b30e6186da95709
       },
       links: ['Home', 'About', 'Contact'],
       story: '',
@@ -499,12 +514,21 @@ export default Vue.extend({
     },
   },
   methods: {
+<<<<<<< HEAD
     // currentStateNum(): number {
     //   return this.state_data[this.current_state].number;
     // },
     currentGroupIncludes(input_group:string): boolean {
       var groupList = this.state_data[this.current_state].groups
       return(groupList.includes(input_group));
+=======
+    currentStateNum(): number {
+      return this.state_data[this.current_state].number;
+    },
+    currentGroupIncludes(inputGroup:string): boolean {
+      const groupList = this.state_data[this.current_state].groups;
+      return (groupList.includes(inputGroup));
+>>>>>>> e30f0b9742dd77ae4899f6bc3b30e6186da95709
     },
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
