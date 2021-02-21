@@ -26,6 +26,24 @@
                 application!
               </p>
             </div>
+            <div class="box box9" v-if="currentGroupIncludes('rejected')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                Thank you for applying. We hope to see you next year.
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('Awaiting Registration')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                Registration is now open. Your unique discord registration code is {{this.code}}.
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('Registered')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                Thank you for registering. We are looking forward to seeing you at the hackathon.
+              </p>
+            </div>
             <div class="box box9" v-if="currentGroupIncludes('Awaiting RSVP')">
               <p class="big rsvp" style="font-size: 5vw">Will you be attending DH7?</p>
               <a @click="
@@ -104,7 +122,7 @@
             </div>
             <div class="box box9 boxclip" v-if="currentGroupIncludes('At hackathon')">
                <template>
-                <p class="medium" style="margin-top:20px;">The Hackathon <br> for Change!</p>
+                <p style="font-size:550%;margin-left:40px;margin-top:20px;font-weight:600">Submission Deadline:<br> Sunday, March 7th, 2021 @ 12:30 P.M.</p>
               </template>
             </div>
              <div class="box box9" v-if="currentGroupIncludes('Project Submitted')">
@@ -135,14 +153,14 @@
                   </a>
                 </p>
               </div>
-              <div class="currentStatus" v-if="currentGroupIncludes('At hackathon')">
+              <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
                 <p class="bigmobile">Deadline</p>
-                <div><span class="deadline">12:30 P.M</span></div>
+                <div><span class="deadline">12:30 P.M.</span></div>
                 <p class="bigmobile">
-                  Sunday, January 26th 2020
+                  Sunday, March 7th, 2021
                 </p>
               </div>
-              <div class="currentStatus glm" v-if="currentGroupIncludes('At hackathon')">
+              <div class="currentStatus glm" v-if="currentGroupIncludes('Project Submitted')">
                 <p class="goodluck box5">Good Luck!</p>
               </div>
               <a href="/apply" class="apply-btn" v-if="currentGroupIncludes('Standard')">
@@ -252,7 +270,7 @@
             </div>
           </div>
           <div class="box box5 status tablet">
-            <div class="currentStatus" v-if="currentStateNum() < 8">
+            <div class="currentStatus" v-if="currentGroupIncludes('showAppStatus')">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
@@ -262,23 +280,23 @@
                   </a>
                 </p>
               </div>
-              <div class="currentStatus" v-if="currentStateNum() === 8">
+              <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
                 <p class="bigmobile">Deadline</p>
-                <div><span class="deadline">12 P.M</span></div>
+                <div><span class="deadline">12:30 P.M.</span></div>
                 <p class="bigmobile">
-                  Sunday, January 26th 2020
+                  Sunday, March 7th, 2021
                 </p>
               </div>
-              <div class="currentStatus glm" v-if="currentStateNum() === 9">
+              <div class="currentStatus glm" v-if="currentGroupIncludes('Project Submitted')">
                 <p class="goodluck box5">Good Luck!</p>
               </div>
-              <a href="/apply" class="apply-btn" v-if="currentStateNum() < 8">
+              <a href="/apply" class="apply-btn" v-if="currentGroupIncludes('Standard')">
                 <div class="apply box5">Apply</div>
               </a>
-              <a href="/submit" class="apply-btn" v-if="currentStateNum() === 8">
+              <a href="/submit" class="apply-btn" v-if="currentGroupIncludes('At hackathon')">
                 <div class="submit apply box5">Submit<br>Project</div>
               </a>
-              <a class="apply-btn" v-if="currentStateNum() === 9">
+              <a class="apply-btn" v-if="currentGroupIncludes('Project Submitted')">
                 <div class="submitted box5">You have successfully submitted your project.</div>
               </a>
           </div>
@@ -403,15 +421,19 @@ export default Vue.extend({
       //   'Loading',
       // ],
       state_data: {
-        'loading': { message: 'Loading Status', emoji: '🕖', groups: ['Standard'] },
-        'not started': { message: '', emoji: '🙂' , groups: ['Standard']},
-        'in progress': { message: 'In progress', emoji: '🙂', groups: ['Standard'] },
-        'submitted': { message: 'Your application is under review.', emoji: '🙂', groups: ['Standard'] },
-        'accepted': { message: "Congratulations, you've been accepted!", emoji: '🙂', groups: ['Awaiting RSVP']},
-        'coming': { message: "Congratulations, you're coming to DH7.", emoji: '🙂', groups: ['RSVPd', 'coming'] },
-        'checked in': { message: 'Welcome to DH7.', emoji: '🙂' , groups: ['RSVPd', 'At hackathon']},
-        'project submitted': { message: 'Your project has been submitted.', emoji: '🙂' , groups: ['RSVPd','At hackathon', 'Project Submitted']},
-        'submissions closed': { message: 'Submissions are now closed.', emoji: '🙁' , groups: ['RSVPd', 'Cannot Submit']},
+        'loading': { message: 'Loading Status', emoji: '🕖', groups: ['Standard', 'showAppStatus'] },
+        'not started': { message: 'Application Not Started', emoji: '🙂' , groups: ['Standard', 'showAppStatus']},
+        'in progress': { message: 'In progress', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
+        'submitted': { message: 'Your application is under review.', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
+        'accepted': { message: "Congratulations, you've been accepted!", emoji: '🙂', groups: ['Awaiting RSVP', 'showAppStatus']},
+        'coming': { message: "Congratulations, you're coming to DH7.", emoji: '🙂', groups: ['RSVPd', 'coming', 'showAppStatus'] },
+        'checked in': { message: 'Welcome to DH7.', emoji: '🙂' , groups: ['At hackathon']},
+        'open registration': {message: 'Registration is now open', emoji: '🙂', groups: ['Awaiting Registration','coming']},
+        'waiting': {message: 'Checked In', emoji: '🙂', groups: ['Registered','coming', 'showDeadline']},
+        'submitting': {message: 'Good Luck', emoji: '🙂', groups: ['At hackathon']},
+        'project submitted': { message: 'Your project has been submitted.', emoji: '🙂' , groups: ['At hackathon', 'Project Submitted']},
+        'submissions closed': { message: 'Submissions are now closed.', emoji: '🙁' , groups: ['Cannot Submit']},
+        'group assigned': {message: 'Please wait for marking to begin', emoji: '🙁' , groups: ['At hackathon', 'Project Submitted']},
         'not coming': { message: 'Not coming to DH7.', emoji: '🙁' , groups: ['RSVPd', 'Not coming', 'Cannot Submit']},
         'rejected': { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁',  groups: ['rejected','Not coming', 'Cannot Submit'] },
         'applications closed': { message: 'Applications are now closed.', emoji: '🙁', groups: ['Standard']},
@@ -424,9 +446,12 @@ export default Vue.extend({
       current_state: 'loading',
       checkedIn: false,
       projectSubmitted: false,
+      hackathonStarted: false,
+      registrationStarted: false,
       submitAllowed: false,
       tableNumber: 'Pending',
       email: '',
+      code: '',
       checkbox: false,
       timer: 0,
       curImage: 0,
@@ -474,9 +499,9 @@ export default Vue.extend({
     },
   },
   methods: {
-    currentStateNum(): number {
-      return this.state_data[this.current_state].number;
-    },
+    // currentStateNum(): number {
+    //   return this.state_data[this.current_state].number;
+    // },
     currentGroupIncludes(input_group:string): boolean {
       var groupList = this.state_data[this.current_state].groups
       return(groupList.includes(input_group));
@@ -533,7 +558,7 @@ export default Vue.extend({
       this.rsvp = appWithRSVP
         ? appWithRSVP._.RSVP
         : { coming: false, origin: '' };
-    },
+    },    
     // Step is state of the page
     async updateStep(email: string) {
       const checkedInSnapshot = await db.collection(this.hackathon)
@@ -542,12 +567,32 @@ export default Vue.extend({
         .doc(email)
         .get();
 
+      const personalCode = await firebase
+        .functions()
+        .httpsCallable('getPersonalCode')({
+        email,
+      });
+
+      this.code = personalCode.data.code;
+      
+      console.log(personalCode.data);
+
       this.checkedIn = checkedInSnapshot.exists;
       this.projectSubmitted = false;
 
       const y = await firebase.functions()
-        .httpsCallable('displayProjectSubmission')();
+        .httpsCallable('getHackathonStatuses')();
       this.submitAllowed = y.data.displayProjectSubmission;
+      this.hackathonStarted = y.data.hackathonStarted;
+      this.registrationStarted = y.data.registrationStarted;
+
+      // const z = await firebase.functions()
+      //   .httpsCallable('isHackathonStarted')();
+      // this.hackathonStarted = z.data.hackathonStarted;
+
+      // const f = await firebase.functions()
+      //   .httpsCallable('isRegistrationStarted')();
+      // this.registrationStarted = f.data.registrationStarted;
 
       const x = await db.collection(this.hackathon)
         .doc('hackathon').collection('projects').doc(email)
@@ -615,18 +660,30 @@ export default Vue.extend({
                 this.current_state = 'not coming';
               }
             }
+            if (this.registrationStarted && data!._.RSVP.coming) {
+              this.current_state = 'open registration';
+            }
+            if (this.checkedIn && !this.hackathonStarted) {
+              this.current_state = 'waiting';
+            }
+            if (this.checkedIn && this.hackathonStarted) {
+            this.current_state = 'checked in';
+            if (this.submitAllowed) {
+              this.current_state = 'submitting';
+            }
+            if (this.projectSubmitted) {
+              this.current_state = 'project submitted';
+              if (this.tableNumber != 'Pending') {
+                this.current_state = 'group assigned';
+              }
+            }
+            if (!this.projectSubmitted && !this.submitAllowed) {
+              this.current_state = 'submissions closed';
+            }
+          }
           } else {
             console.log('s', this.checkedIn, this.projectSubmitted);
             this.current_state = 'not started';
-          }
-          if (this.checkedIn) {
-            this.current_state = 'checked in';
-            if (this.projectSubmitted) {
-              this.current_state = 'project submitted';
-            }
-            if (!this.projectSubmitted && this.submitAllowed) {
-              this.current_state = 'submissions closed';
-            }
           }
         });
     },
