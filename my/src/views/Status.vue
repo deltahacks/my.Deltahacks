@@ -38,6 +38,12 @@
                 Registration is now open. Your unique discord registration code is {{this.code}}.
               </p>
             </div>
+            <div class="box box9" v-if="currentGroupIncludes('missed submission deadline')">
+              <p class="big">Sadge.</p>
+              <p class="small">
+                Submissions have now closed.
+              </p>
+            </div>
             <div class="box box9" v-if="currentGroupIncludes('Registered')">
               <p class="big">Welcome.</p>
               <p class="small">
@@ -120,7 +126,7 @@
                 </a>
               </div>
             </div>
-            <div class="box box9 boxclip" v-if="currentGroupIncludes('At hackathon')">
+            <div class="box box9 boxclip" v-if="currentGroupIncludes('not submitted')">
                <template>
                 <p style="font-size:550%;margin-left:40px;margin-top:20px;font-weight:600">Submission Deadline:<br> Sunday, March 7th, 2021 @ 12:30 P.M.</p>
               </template>
@@ -129,14 +135,14 @@
                <template>
                  <div class="afterSubmit">
                 <div style="float:left;">
-                    <h2>Table Number</h2>
+                    <h2>Group Number</h2>
                     <br>
-                    <span class="afterSubmitRounded">{{tableNumber}}</span>
+                    <span class="afterSubmitRounded">{{groupNumber}}</span>
                 </div>
                 <div style="float:left; margin-left:2vw">
                     <h2>Judging Area</h2>
                     <br>
-                    <span class="afterSubmitRounded">Thode 2nd Floor</span>
+                    <span class="afterSubmitRounded">{{ groupNumber == "Pending" ? "DeltaHacks 7 Server" : "Group " + groupNumber + " Channel"}}</span>
                 </div>
                 </div>
               </template>
@@ -421,21 +427,21 @@ export default Vue.extend({
       //   'Loading',
       // ],
       state_data: {
-        loading: { message: 'Loading Status', emoji: '🕖', groups: ['Standard', 'showAppStatus'] },
+        'loading': { message: 'Loading Status', emoji: '🕖', groups: ['Standard', 'showAppStatus'] },
         'not started': { message: 'Application Not Started', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
         'in progress': { message: 'In progress', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
-        submitted: { message: 'Your application is under review.', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
-        accepted: { message: "Congratulations, you've been accepted!", emoji: '🙂', groups: ['Awaiting RSVP', 'showAppStatus'] },
-        coming: { message: "Congratulations, you're coming to DH7.", emoji: '🙂', groups: ['RSVPd', 'coming', 'showAppStatus'] },
+        'submitted': { message: 'Your application is under review.', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
+        'accepted': { message: "Congratulations, you've been accepted!", emoji: '🙂', groups: ['Awaiting RSVP', 'showAppStatus'] },
+        'coming': { message: "Congratulations, you're coming to DH7.", emoji: '🙂', groups: ['RSVPd', 'coming', 'showAppStatus'] },
         'checked in': { message: 'Welcome to DH7.', emoji: '🙂', groups: ['At hackathon'] },
         'open registration': { message: 'Registration is now open', emoji: '🙂', groups: ['Awaiting Registration', 'coming'] },
-        waiting: { message: 'Checked In', emoji: '🙂', groups: ['Registered', 'coming', 'showDeadline'] },
-        submitting: { message: 'Good Luck', emoji: '🙂', groups: ['At hackathon'] },
+        'waiting': { message: 'Checked In', emoji: '🙂', groups: ['Registered', 'coming', 'showDeadline'] },
+        'submitting': { message: 'Good Luck', emoji: '🙂', groups: ['At hackathon', 'not submitted'] },
         'project submitted': { message: 'Your project has been submitted.', emoji: '🙂', groups: ['At hackathon', 'Project Submitted'] },
-        'submissions closed': { message: 'Submissions are now closed.', emoji: '🙁', groups: ['Cannot Submit'] },
-        'group assigned': { message: 'Please wait for marking to begin', emoji: '🙁', groups: ['At hackathon', 'Project Submitted'] },
+        'submissions closed': { message: 'Submissions are now closed.', emoji: '🙁', groups: ['Cannot Submit', 'missed submission deadline'] },
+        'group assigned': { message: 'Please wait for marking to begin', emoji: '🙂', groups: ['At hackathon', 'Project Submitted'] },
         'not coming': { message: 'Not coming to DH7.', emoji: '🙁', groups: ['RSVPd', 'Not coming', 'Cannot Submit'] },
-        rejected: { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁', groups: ['rejected', 'Not coming', 'Cannot Submit'] },
+        'rejected': { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁', groups: ['rejected', 'Not coming', 'Cannot Submit'] },
         'applications closed': { message: 'Applications are now closed.', emoji: '🙁', groups: ['Standard'] },
       },
       links: ['Home', 'About', 'Contact'],
@@ -449,7 +455,7 @@ export default Vue.extend({
       hackathonStarted: false,
       registrationStarted: false,
       submitAllowed: false,
-      tableNumber: 'Pending',
+      groupNumber: 'Pending',
       email: '',
       code: '',
       checkbox: false,
@@ -599,7 +605,7 @@ export default Vue.extend({
         .onSnapshot((snap) => {
           if (!snap.exists) return;
           if (snap.data()!._.status === 'submitted') this.projectSubmitted = true;
-          this.tableNumber = snap.data()!._.table;
+          this.groupNumber = snap.data()!._.table;
         });
 
       if (!this.projectSubmitted) {
@@ -610,12 +616,12 @@ export default Vue.extend({
         if (signupRequest.data.projectSubmitted) {
           console.log(signupRequest.data);
           this.projectSubmitted = signupRequest.data.projectSubmitted;
-          this.tableNumber = signupRequest.data.tableNumber !== -1 ? signupRequest.data.tableNumber : 'Pending';
+          this.groupNumber = signupRequest.data.groupNumber !== -1 ? signupRequest.data.groupNumber : 'Pending';
         }
       }
       // Check if another user has submitted a project on behalf of the current user
       console.log(this.projectSubmitted);
-      console.log(this.tableNumber);
+      console.log(this.groupNumber);
       console.log(this.checkedIn);
 
       db.collection(this.hackathon)
@@ -673,7 +679,7 @@ export default Vue.extend({
               }
               if (this.projectSubmitted) {
                 this.current_state = 'project submitted';
-                if (this.tableNumber !== 'Pending') {
+                if (this.groupNumber !== 'Pending') {
                   this.current_state = 'group assigned';
                 }
               }
