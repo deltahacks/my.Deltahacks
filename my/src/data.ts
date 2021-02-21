@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-str */
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 
@@ -286,29 +287,19 @@ const workshops = [
   'Computer Vision with OpenCV',
 ];
 
-const challenges = [
-  'Hotel Dieu Shaver Health and Rehabilitation',
-  'ITE Challenge',
-  'Beasley Neighbourhood Association Challenge',
-  'Best Overall Hack',
-  'Best Education Hack',
-  'Best Finance Hack',
-  'Best Environment Hack',
-  'Best Health Hack',
-  'Best Quality of Life/Productivity Hack',
-  'Innovation Factory Challenge',
-  'TD Challenge',
-  'Arcelormittal Dofasco Challenge',
-  'Materials Challenge',
-  'Algorand Challenge',
-  'Hypercare Challenge',
-  'Best UiPath Automation Hack',
-  'Best Domain Registered with Domain.com',
-  'Best use of Google Cloud',
-  'Best use of MongoDB Atlas',
-  'Best use of Blockstack',
-  'Most Creative Radar.io Hack',
-];
+export async function getCategories() {
+  const res = await firebase
+    .functions()
+    .httpsCallable('getCategories')();
+  const cats = res.data.categories;
+  return cats.map(each => each
+    .split(' ')
+    .map(word => (
+      word.substring(0, 1).toUpperCase() +
+          word.substring(1, word.length).toLowerCase()
+    ))
+    .join(' '));
+}
 
 const roles = [
   'Front-end',
@@ -401,6 +392,7 @@ export const getBlankApplication = (): AppContents => ({
   },
   general: {
     coffee: '',
+    emails: false,
     team: '',
     termsAndConditions: false,
     code: false,
@@ -420,6 +412,7 @@ export const getBlankProject = (): any => ({
   },
   profiles: {
     devpost: '',
+    youtube: '',
   },
   responses: {
     challenges: [],
@@ -672,49 +665,65 @@ export const authorizations: any = [
       '<p>I have read and agree to the \
     <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">\
     MLH Code of Conduct</a>.</p>',
+    requirements: { mustBe: true },
     model: ['general', 'termsAndConditions'],
   },
   {
     label:
-      '<p>I authorize you to share my application/registration information for event administration, ranking, MLH \
-    administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the \
+      '<p>I authorize you to share my application/registration information with Major League Hacking for event \
+    administration, ranking and MLH administration in-line with the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>. \
-    I further agree to the terms both the \
+    I further agree to the terms of both the \
     <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">\
     MLH Contest Terms and Conditions</a> and the \
     <a href="https://mlh.io/privacy" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">MLH Privacy Policy</a>.</p>',
+    requirements: { mustBe: true },
     model: ['general', 'code'],
+  },
+  {
+    label:
+    '<p>I authorize MLH to send me pre- and post-event informational emails, which contain free credit and opportunities from their partners.</p>',
+    model: ['general', 'emails'],
+    requirements: { required: false },
   },
 ];
 
-export const submitQuestions: any = [
-  {
-    label: "What's your personal Devpost ID?",
-    fieldType: 'text',
-    model: ['profiles', 'devpost'],
-    requirements: { required: true, link: true },
-  },
-  {
-    label: "What's your project name?",
-    fieldType: 'text',
-    model: ['name', 'project'],
-    requirements: { required: true },
-  },
-  {
-    label: 'What is your project\'s Devpost link?',
-    fieldType: 'text',
-    model: ['name', 'devpost'],
-    requirements: { required: true, link: true },
-  },
-  {
-    label: 'What challenges would you like to be judged for?',
-    fieldType: 'multi-select',
-    selectData: challenges,
-    icon: 'fa-balance-scale',
-    model: ['responses', 'challenges'],
-    requirements: { required: true },
-  },
-];
+export async function getSubmitQuestions() {
+  return [
+    {
+      label: "What's your personal Devpost ID?",
+      fieldType: 'text',
+      model: ['profiles', 'devpost'],
+      requirements: { required: true, link: true },
+    },
+    {
+      label: "What's your project name?",
+      fieldType: 'text',
+      model: ['name', 'project'],
+      requirements: { required: true },
+    },
+    {
+      label: 'What is your project\'s Devpost link?',
+      fieldType: 'text',
+      model: ['name', 'devpost'],
+      requirements: { required: true, link: true },
+    },
+    {
+      label: 'What is your project\'s demo Youtube video link?',
+      fieldType: 'text',
+      model: ['profiles', 'youtube'],
+      requirements: { required: true, link: true, youtubeLink: true },
+    },
+    {
+      label: 'What challenges would you like to be judged for?',
+      fieldType: 'multi-select',
+      selectData: await getCategories(),
+      icon: 'fa-balance-scale',
+      model: ['responses', 'challenges'],
+      requirements: { required: true },
+    },
+  ];
+}
 
 export const months: string[] = [
   'January',

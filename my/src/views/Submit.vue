@@ -70,6 +70,24 @@
         </form>
       </ValidationObserver>
       <Dialog
+        title="Loading Questions..."
+        body=""
+        v-model="loadingDialogue"
+        persist="true"
+      >
+      <div class="loadingContainer">
+        <div class="loading"></div>
+      </div>
+      </Dialog>
+      <Dialog
+        title="Uh Oh!"
+        body="Something went wrong on our end. Please refresh the page."
+        v-model="loadingError"
+        persist="true"
+      >
+      <v-btn color="error" text @click="reloadPage()">Reload</v-btn>
+      </Dialog>
+      <Dialog
         title="Reset Submission"
         body="Are you sure you want to reset your Submission? This action can't be undone."
         v-model="resetDialogue"
@@ -124,10 +142,10 @@ import {
 } from 'vee-validate/dist/vee-validate.full';
 import { oneOf, max } from 'vee-validate/dist/rules';
 
-import { ApplicationModel, AppContents } from '../types';
+import { SubmitModel, AppContents } from '../types';
 import {
   getBlankProject,
-  submitQuestions,
+  getSubmitQuestions,
   authorizations,
 } from '../data';
 
@@ -168,11 +186,18 @@ extend('mustBe', {
   message: 'Sorry, we\'re unable to accept applications without a "Yes" here!',
 });
 
+extend('youtubeLink', {
+  validate: url =>
+  // eslint-disable-next-line no-useless-escape
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/.test(url),
+  message: 'Invalid Youtube URL',
+});
+
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 export default Vue.extend({
-  data(): ApplicationModel {
+  data(): SubmitModel {
     return {
       app: getBlankProject(),
       questions: {},
@@ -187,6 +212,8 @@ export default Vue.extend({
       },
       resetDialogue: false,
       submitDialogue: false,
+      loadingDialogue: true,
+      loadingError: false,
     };
   },
   components: {
@@ -196,6 +223,9 @@ export default Vue.extend({
     Dialog,
   },
   methods: {
+    reloadPage() {
+      window.location.reload();
+    },
     async logout() {
       try {
         await firebase.auth().signOut();
@@ -353,9 +383,16 @@ export default Vue.extend({
       console.log('Unable to fetch, trying again...');
     }
   },
-  mounted(): void {
-    this.questions = submitQuestions;
+  async beforeMount() {
     this.authorizations = authorizations;
+    try {
+      this.questions = await getSubmitQuestions();
+    } catch (error) {
+      console.log(error);
+      this.loadingError = true;
+    } finally {
+      this.loadingDialogue = false;
+    }
   },
 });
 </script>
@@ -458,11 +495,13 @@ export default Vue.extend({
 }
 
 .act-btn__reset {
+  border-radius: 0px;
   background-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 .act-btn__submit {
+  border-radius: 0px;
   background-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
   float: right;
@@ -480,15 +519,7 @@ v-snackbar {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   /* background: linear-gradient(269deg, #6D0169, #D9636D, #405BC4, #1D847C, #7C2ECC, #4179BE); */
-  background: linear-gradient(
-    269deg,
-    #7c1078,
-    #e8727c,
-    #4f6ad3,
-    #2c938b,
-    #8b3ddb,
-    #5088cd
-  );
+  background: linear-gradient(180deg, rgba(0,0,0,1) 45%, rgba(62,28,52,0.99) 50%);
   background-size: 1400% 1400%;
   -webkit-animation: ApplyAnimation 180s ease infinite;
   -moz-animation: ApplyAnimation 180s ease infinite;
@@ -537,7 +568,6 @@ v-snackbar {
   padding: 50px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 50px;
   height: 100%;
   width: 49%;
   margin: 50px auto 50px auto;
