@@ -38,10 +38,16 @@
                 Registration is now open. Your unique discord registration code is {{this.code}}.
               </p>
             </div>
+            <div class="box box9" v-if="currentGroupIncludes('submission not open')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                The hackathon has now started. Good Luck!
+              </p>
+            </div>
             <div class="box box9" v-if="currentGroupIncludes('missed submission deadline')">
               <p class="big">Sadge.</p>
               <p class="small">
-                Submissions have now closed.
+                Submissions are now closed. We would love to see you again next year!
               </p>
             </div>
             <div class="box box9" v-if="currentGroupIncludes('Registered')">
@@ -107,9 +113,7 @@
               <template v-if="rsvp.coming">
                 <p class="big">Confirmed.</p>
                 <p class="small" style="margin-top:-20px">
-                  We're so excited to see you!
-                  Please fill out the swag shipping form ASAP.
-                  Click here: <a href="https://forms.gle/a957kim9PJwJXsHz7" class="swag-url">Form Link</a>
+                  We're so excited to see you on March 5th!
                 </p>
               </template>
               <template v-if="!rsvp.coming">
@@ -128,7 +132,18 @@
             </div>
             <div class="box box9 boxclip" v-if="currentGroupIncludes('not submitted')">
                <template>
-                <p style="font-size:550%;margin-left:40px;margin-top:20px;font-weight:600">Submission Deadline:<br> Sunday, March 7th, 2021 @ 12:30 P.M.</p>
+                 <div class="afterSubmit">
+                 <div style="float:left;">
+                    <h2>Submission Date</h2>
+                    <br>
+                    <span class="afterSubmitRounded">Sunday, March 7th, 2021</span>
+                </div>
+                <div style="float:left; margin-left:2vw">
+                    <h2>Submission Time</h2>
+                    <br>
+                    <span class="afterSubmitRounded">12:30 P.M.</span>
+                </div>
+                </div>
               </template>
             </div>
              <div class="box box9" v-if="currentGroupIncludes('Project Submitted')">
@@ -159,8 +174,15 @@
                   </a>
                 </p>
               </div>
+              <div class="currentStatus" v-if="currentGroupIncludes('showStartTime')">
+                <p class="bigmobile">Start Time</p>
+                <div><span class="deadline">5:00 P.M.</span></div>
+                <p class="bigmobile">
+                  Friday, March 5th, 2021
+                </p>
+              </div>
               <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
-                <p class="bigmobile">Deadline</p>
+                <p class="bigmobile">Submission Deadline</p>
                 <div><span class="deadline">12:30 P.M.</span></div>
                 <p class="bigmobile">
                   Sunday, March 7th, 2021
@@ -172,12 +194,12 @@
               <a href="/apply" class="apply-btn" v-if="currentGroupIncludes('Standard')">
                 <div class="apply box5">Apply</div>
               </a>
-              <a href="/submit" class="apply-btn" v-if="currentGroupIncludes('At hackathon')">
+              <a href="/submit" class="apply-btn" v-if="currentGroupIncludes('not submitted')">
                 <div class="submit apply box5">Submit<br>Project</div>
               </a>
-              <div class="apply-btn" v-if="currentGroupIncludes('Project Submitted')">
+              <!-- <div class="apply-btn" v-if="currentGroupIncludes('Project Submitted')">
                 <div class="submitted box5">You have successfully submitted your project.</div>
-              </div>
+              </div> -->
             </div>
           </div>
           <!--Column#2-->
@@ -276,7 +298,7 @@
             </div>
           </div>
           <div class="box box5 status tablet">
-            <div class="currentStatus" v-if="currentGroupIncludes('showAppStatus')">
+            <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
@@ -286,8 +308,15 @@
                   </a>
                 </p>
               </div>
+              <div class="currentStatus" v-if="currentGroupIncludes('showStartTime')">
+                <p class="bigmobile">Start Time</p>
+                <div><span class="deadline">5:00 P.M.</span></div>
+                <p class="bigmobile">
+                  Friday, March 5th, 2021
+                </p>
+              </div>
               <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
-                <p class="bigmobile">Deadline</p>
+                <p class="bigmobile">Submission Deadline</p>
                 <div><span class="deadline">12:30 P.M.</span></div>
                 <p class="bigmobile">
                   Sunday, March 7th, 2021
@@ -299,12 +328,12 @@
               <a href="/apply" class="apply-btn" v-if="currentGroupIncludes('Standard')">
                 <div class="apply box5">Apply</div>
               </a>
-              <a href="/submit" class="apply-btn" v-if="currentGroupIncludes('At hackathon')">
+              <a href="/submit" class="apply-btn" v-if="currentGroupIncludes('not submitted')">
                 <div class="submit apply box5">Submit<br>Project</div>
               </a>
-              <a class="apply-btn" v-if="currentGroupIncludes('Project Submitted')">
+              <!-- <a class="apply-btn" v-if="currentGroupIncludes('Project Submitted')">
                 <div class="submitted box5">You have successfully submitted your project.</div>
-              </a>
+              </a> -->
           </div>
           <div :key="media.icon" v-for="media in social" class="tablet">
             <div class="col col2 social">
@@ -427,22 +456,22 @@ export default Vue.extend({
       //   'Loading',
       // ],
       state_data: {
-        loading: { message: 'Loading Status', emoji: '🕖', groups: ['Standard', 'showAppStatus'] },
-        'not started': { message: 'Application Not Started', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
-        'in progress': { message: 'In progress', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
-        submitted: { message: 'Your application is under review.', emoji: '🙂', groups: ['Standard', 'showAppStatus'] },
-        accepted: { message: "Congratulations, you've been accepted!", emoji: '🙂', groups: ['Awaiting RSVP', 'showAppStatus'] },
-        coming: { message: "Congratulations, you're coming to DH7.", emoji: '🙂', groups: ['RSVPd', 'coming', 'showAppStatus'] },
-        'checked in': { message: 'Welcome to DH7.', emoji: '🙂', groups: ['At hackathon'] },
-        'open registration': { message: 'Registration is now open', emoji: '🙂', groups: ['Awaiting Registration', 'coming'] },
-        waiting: { message: 'Checked In', emoji: '🙂', groups: ['Registered', 'coming', 'showDeadline'] },
-        submitting: { message: 'Good Luck', emoji: '🙂', groups: ['At hackathon', 'not submitted'] },
-        'project submitted': { message: 'Your project has been submitted.', emoji: '🙂', groups: ['At hackathon', 'Project Submitted'] },
-        'submissions closed': { message: 'Submissions are now closed.', emoji: '🙁', groups: ['Cannot Submit', 'missed submission deadline'] },
-        'group assigned': { message: 'Please wait for marking to begin', emoji: '🙂', groups: ['At hackathon', 'Project Submitted'] },
-        'not coming': { message: 'Not coming to DH7.', emoji: '🙁', groups: ['RSVPd', 'Not coming', 'Cannot Submit'] },
+        loading: { message: 'Loading Status.', emoji: '🕖', groups: ['Standard'] },
+        'not started': { message: 'Application Not Started.', emoji: '🤔', groups: ['Standard'] },
+        'in progress': { message: 'In progress.', emoji: '🙂', groups: ['Standard'] },
+        submitted: { message: 'Your application is under review.', emoji: '😊', groups: ['Standard'] },
+        accepted: { message: "Congratulations, you've been accepted!", emoji: '🥳', groups: ['Awaiting RSVP'] },
+        coming: { message: "Congratulations, you're coming to DH7.", emoji: '🎉', groups: ['RSVPd', 'coming'] },
+        'open registration': { message: 'Registration is now open.', emoji: '🔓', groups: ['Awaiting Registration', 'coming'] },
+        waiting: { message: 'Registration Complete.', emoji: '⏳', groups: ['Registered', 'coming', 'showStartTime'] },
+        'checked in': { message: 'Welcome to DH7.', emoji: '✅', groups: ['At hackathon', 'showDeadline', 'submission not open'] },
+        submitting: { message: 'Good Luck!', emoji: '💻', groups: ['At hackathon', 'not submitted'] },
+        'project submitted': { message: 'Your project has been submitted.', emoji: '🔥', groups: ['At hackathon', 'Project Submitted'] },
+        'group assigned': { message: 'Please join your designated voice channel.', emoji: '💯', groups: ['At hackathon', 'Project Submitted'] },
+        'submissions closed': { message: 'Submissions are now closed.', emoji: '😢', groups: ['Cannot Submit', 'missed submission deadline'] },
+        'not coming': { message: 'Not coming to DH7.', emoji: '😭', groups: ['RSVPd', 'Not coming', 'Cannot Submit'] },
         rejected: { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁', groups: ['rejected', 'Not coming', 'Cannot Submit'] },
-        'applications closed': { message: 'Applications are now closed.', emoji: '🙁', groups: ['Standard'] },
+        'applications closed': { message: 'Applications are now closed.', emoji: '🔒', groups: ['Standard'] },
       },
       links: ['Home', 'About', 'Contact'],
       story: '',
@@ -455,6 +484,7 @@ export default Vue.extend({
       hackathonStarted: false,
       registrationStarted: false,
       submitAllowed: false,
+      submissionDeadlinePassed: false,
       groupNumber: 'Pending',
       email: '',
       code: '',
@@ -591,6 +621,7 @@ export default Vue.extend({
       this.submitAllowed = y.data.displayProjectSubmission;
       this.hackathonStarted = y.data.hackathonStarted;
       this.registrationStarted = y.data.registrationStarted;
+      this.submissionDeadlinePassed = y.data.submissionDeadlinePassed;
 
       // const z = await firebase.functions()
       //   .httpsCallable('isHackathonStarted')();
@@ -683,7 +714,7 @@ export default Vue.extend({
                   this.current_state = 'group assigned';
                 }
               }
-              if (!this.projectSubmitted && !this.submitAllowed) {
+              if (!this.projectSubmitted && this.submissionDeadlinePassed) {
                 this.current_state = 'submissions closed';
               }
             }

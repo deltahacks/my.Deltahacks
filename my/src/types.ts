@@ -154,6 +154,7 @@ export interface StatusModel {
   hackathonStarted: boolean;
   registrationStarted: boolean;
   submitAllowed: boolean;
+  submissionDeadlinePassed: boolean;
   groupNumber: string;
   email: string;
   code: string;
