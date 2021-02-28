@@ -1,7 +1,0 @@
-VUE_APP_API_KEY=AIzaSyAKQsEOLPriuukaC-IjPiugqYegP1eIQeY
-VUE_APP_AUTH_DOMAIN=mydeltahacks.firebaseapp.com
-VUE_APP_DB_URL=https://mydeltahacks.firebaseio.com
-VUE_APP_PROJECT_ID=mydeltahacks
-VUE_APP_STORAGE_BUCKET=mydeltahacks.appspot.com
-VUE_APP_MESSAGING_SENDER_ID=1070948588779
-VUE_APP_GMAPS='AIzaSyBoD6WiX1j_EZXQkJz4jSam_VIyvL-WTMc'
