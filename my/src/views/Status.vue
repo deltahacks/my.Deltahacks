@@ -176,7 +176,7 @@
               </div>
               <div class="currentStatus" v-if="currentGroupIncludes('showStartTime')">
                 <p class="bigmobile">Start Time</p>
-                <div><span class="deadline">5:00 P.M.</span></div>
+                <div><span class="deadline">8:00 P.M.</span></div>
                 <p class="bigmobile">
                   Friday, March 5th, 2021
                 </p>
@@ -310,7 +310,7 @@
               </div>
               <div class="currentStatus" v-if="currentGroupIncludes('showStartTime')">
                 <p class="bigmobile">Start Time</p>
-                <div><span class="deadline">5:00 P.M.</span></div>
+                <div><span class="deadline">8:00 P.M.</span></div>
                 <p class="bigmobile">
                   Friday, March 5th, 2021
                 </p>
