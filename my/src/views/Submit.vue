@@ -73,7 +73,7 @@
         title="Loading Questions..."
         body=""
         v-model="loadingDialogue"
-        persist="true"
+        :persist="true"
       >
       <div class="loadingContainer">
         <div class="loading"></div>
@@ -83,7 +83,7 @@
         title="Uh Oh!"
         body="Something went wrong on our end. Please refresh the page."
         v-model="loadingError"
-        persist="true"
+        :persist="true"
       >
       <v-btn color="error" text @click="reloadPage()">Reload</v-btn>
       </Dialog>
@@ -191,6 +191,11 @@ extend('youtubeLink', {
   // eslint-disable-next-line no-useless-escape
     /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/.test(url),
   message: 'Invalid Youtube URL',
+});
+
+extend('maxSelect', {
+  validate: selected => selected.length <= 3,
+  message: 'More than 3 categories selected!',
 });
 
 Vue.component('ValidationProvider', ValidationProvider);
