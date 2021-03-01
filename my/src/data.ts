@@ -290,15 +290,8 @@ const workshops = [
 export async function getCategories() {
   const res = await firebase
     .functions()
-    .httpsCallable('getCategories')();
-  const cats = res.data.categories;
-  return cats.map(each => each
-    .split(' ')
-    .map(word => (
-      word.substring(0, 1).toUpperCase() +
-          word.substring(1, word.length).toLowerCase()
-    ))
-    .join(' '));
+    .httpsCallable('getCategoriesMap')();
+  return res.data.categories;
 }
 
 const roles = [
@@ -709,18 +702,18 @@ export async function getSubmitQuestions() {
       requirements: { required: true, link: true },
     },
     {
-      label: 'What is your project\'s demo Youtube video link?',
+      label: 'What is your project\'s demo Youtube video link? (optional)',
       fieldType: 'text',
       model: ['profiles', 'youtube'],
       requirements: { required: true, link: true, youtubeLink: true },
     },
     {
-      label: 'What challenges would you like to be judged for?',
+      label: 'What challenges would you like to be judged for? (max: 3)',
       fieldType: 'multi-select',
       selectData: await getCategories(),
       icon: 'fa-balance-scale',
       model: ['responses', 'challenges'],
-      requirements: { required: true },
+      requirements: { required: true, maxSelect: true },
     },
   ];
 }

@@ -18,7 +18,7 @@
         <div class="wrap">
           <!--Column#1-->
           <div class="col col6">
-            <div class="box box9" v-if="step <= 4 || step === 10">
+            <div class="box box9" v-if="currentGroupIncludes('Standard')">
               <p class="big">Welcome.</p>
               <p class="small">
                 Be a part of the hackathon for change. We are looking forward to
@@ -26,11 +26,47 @@
                 application!
               </p>
             </div>
-            <div class="box box9" v-if="step === 5">
+            <div class="box box9" v-if="currentGroupIncludes('rejected')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                Thank you for applying. We hope to see you next year.
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('Awaiting Registration')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                Registration is now open. Your unique discord registration code is {{this.code}}.
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('submission not open')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                The hackathon has now started. Good Luck!
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('missed submission deadline')">
+              <p class="big">Sadge.</p>
+              <p class="small">
+                Submissions are now closed. We would love to see you again next year!
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('Registered')">
+              <p class="big">Welcome.</p>
+              <p class="small">
+                Thank you for registering. We are looking forward to seeing you at the hackathon.
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('No RSVP')">
+              <p class="big">RSVP Closed.</p>
+              <p class="small">
+                The RSVP period is now over. We would love to see you next year!
+              </p>
+            </div>
+            <div class="box box9" v-if="currentGroupIncludes('Awaiting RSVP')">
               <p class="big rsvp" style="font-size: 5vw">Will you be attending DH7?</p>
               <a @click="
                   () => {
-                    updateRSVP(true, true), (step = 7);
+                    updateRSVP(true, true), (current_state = 'coming');
                   }
                 ">
                 <div class="box box3 rsvp-btn">
@@ -40,7 +76,7 @@
               <a
                 @click="
                   () => {
-                    updateRSVP(true, false), (step = 7);
+                    updateRSVP(true, false), (current_state = 'not coming');
                   }
                 "
               >
@@ -49,7 +85,7 @@
                 </div>
               </a>
             </div>
-            <div class="box box9 boxclip" v-if="step === 6">
+            <!-- <div class="box box9 boxclip" v-if="currentStateNum() === 6">
               <p class="big">Bus?</p>
               <p class="small" style="margin-top:-20px; margin-bottom:9px;">
                 Please select a stop below.
@@ -69,7 +105,7 @@
                 <a
                   @click="
                     () => {
-                      updateRSVP(true, true, busSelected), (step = 7);
+                      updateRSVP(true, true, busSelected), (current_state = 'update rsvp');
                     }
                   "
                 >
@@ -78,8 +114,8 @@
                   </div>
                 </a>
               </div>
-            </div>
-            <div class="box box9 boxclip" v-if="step === 7">
+            </div> -->
+            <div class="box box9 boxclip" v-if="currentGroupIncludes('RSVPd')">
               <template v-if="rsvp.coming">
                 <p class="big">Confirmed.</p>
                 <p class="small" style="margin-top:-20px">
@@ -93,37 +129,48 @@
                 </p>
               </template>
               <div class="col col4">
-                <a @click="() => (step = 5)">
-                  <div class="box box2 change-response">
+                <a @click="() => (current_state = 'accepted')">
+                  <div class="box box2 change-response" v-if="!this.rsvpClosed">
                     Change Response
                   </div>
                 </a>
               </div>
             </div>
-            <div class="box box9 boxclip" v-if="step === 8">
+            <div class="box box9 boxclip" v-if="currentGroupIncludes('not submitted')">
                <template>
-                <p class="medium" style="margin-top:20px;">The Hackathon <br> for Change!</p>
+                 <div class="afterSubmit">
+                 <div style="float:left;">
+                    <h2>Submission Date</h2>
+                    <br>
+                    <span class="afterSubmitRounded">Sunday, March 7th, 2021</span>
+                </div>
+                <div style="float:left; margin-left:2vw">
+                    <h2>Submission Time</h2>
+                    <br>
+                    <span class="afterSubmitRounded">12:30 P.M.</span>
+                </div>
+                </div>
               </template>
             </div>
-             <div class="box box9" v-if="step === 9">
+             <div class="box box9" v-if="currentGroupIncludes('Project Submitted')">
                <template>
                  <div class="afterSubmit">
                 <div style="float:left;">
-                    <h2>Table Number</h2>
+                    <h2>Group Number</h2>
                     <br>
-                    <span class="afterSubmitRounded">{{tableNumber}}</span>
+                    <span class="afterSubmitRounded">{{groupNumber}}</span>
                 </div>
                 <div style="float:left; margin-left:2vw">
                     <h2>Judging Area</h2>
                     <br>
-                    <span class="afterSubmitRounded">Thode 2nd Floor</span>
+                    <span class="afterSubmitRounded">{{ groupNumber == "Pending" ? "DeltaHacks 7 Server" : "Group " + groupNumber + " Channel"}}</span>
                 </div>
                 </div>
               </template>
             </div>
 
             <div class="box box5 status desktop">
-              <div class="currentStatus" v-if="step < 8 || step === 10">
+              <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
@@ -133,25 +180,32 @@
                   </a>
                 </p>
               </div>
-              <div class="currentStatus" v-if="step === 8">
-                <p class="bigmobile">Deadline</p>
-                <div><span class="deadline">12:30 P.M</span></div>
+              <div class="currentStatus" v-if="currentGroupIncludes('showStartTime')">
+                <p class="bigmobile">Start Time</p>
+                <div><span class="deadline">8:00 P.M.</span></div>
                 <p class="bigmobile">
-                  Sunday, January 26th 2020
+                  Friday, March 5th, 2021
                 </p>
               </div>
-              <div class="currentStatus glm" v-if="step === 9">
+              <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
+                <p class="bigmobile">Submission Deadline</p>
+                <div><span class="deadline">12:30 P.M.</span></div>
+                <p class="bigmobile">
+                  Sunday, March 7th, 2021
+                </p>
+              </div>
+              <div class="currentStatus glm" v-if="currentGroupIncludes('Project Submitted')">
                 <p class="goodluck box5">Good Luck!</p>
               </div>
-              <a href="/apply" class="apply-btn" v-if="step < 8 || step === 10">
+              <a href="/apply" class="apply-btn" v-if="currentGroupIncludes('Standard')">
                 <div class="apply box5">Apply</div>
               </a>
-              <a href="/submit" class="apply-btn" v-if="step === 8">
+              <a href="/submit" class="apply-btn" v-if="currentGroupIncludes('not submitted')">
                 <div class="submit apply box5">Submit<br>Project</div>
               </a>
-              <div class="apply-btn" v-if="step === 9">
+              <!-- <div class="apply-btn" v-if="currentGroupIncludes('Project Submitted')">
                 <div class="submitted box5">You have successfully submitted your project.</div>
-              </div>
+              </div> -->
             </div>
           </div>
           <!--Column#2-->
@@ -250,7 +304,7 @@
             </div>
           </div>
           <div class="box box5 status tablet">
-            <div class="currentStatus" v-if="step < 8">
+            <div class="currentStatus">
                 <h2>My Application Status</h2>
                 <div class="emote">{{ emoticon }}</div>
                 <p class="bigmobile">
@@ -260,25 +314,32 @@
                   </a>
                 </p>
               </div>
-              <div class="currentStatus" v-if="step === 8">
-                <p class="bigmobile">Deadline</p>
-                <div><span class="deadline">12 P.M</span></div>
+              <div class="currentStatus" v-if="currentGroupIncludes('showStartTime')">
+                <p class="bigmobile">Start Time</p>
+                <div><span class="deadline">8:00 P.M.</span></div>
                 <p class="bigmobile">
-                  Sunday, January 26th 2020
+                  Friday, March 5th, 2021
                 </p>
               </div>
-              <div class="currentStatus glm" v-if="step === 9">
+              <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
+                <p class="bigmobile">Submission Deadline</p>
+                <div><span class="deadline">12:30 P.M.</span></div>
+                <p class="bigmobile">
+                  Sunday, March 7th, 2021
+                </p>
+              </div>
+              <div class="currentStatus glm" v-if="currentGroupIncludes('Project Submitted')">
                 <p class="goodluck box5">Good Luck!</p>
               </div>
-              <a href="/apply" class="apply-btn" v-if="step < 8">
+              <a href="/apply" class="apply-btn" v-if="currentGroupIncludes('Standard')">
                 <div class="apply box5">Apply</div>
               </a>
-              <a href="/submit" class="apply-btn" v-if="step === 8">
+              <a href="/submit" class="apply-btn" v-if="currentGroupIncludes('not submitted')">
                 <div class="submit apply box5">Submit<br>Project</div>
               </a>
-              <a class="apply-btn" v-if="step === 9">
+              <!-- <a class="apply-btn" v-if="currentGroupIncludes('Project Submitted')">
                 <div class="submitted box5">You have successfully submitted your project.</div>
-              </a>
+              </a> -->
           </div>
           <div :key="media.icon" v-for="media in social" class="tablet">
             <div class="col col2 social">
@@ -316,7 +377,6 @@ import { mapGetters } from 'vuex';
 import db from '../firebase_init';
 import { StatusModel } from '../types';
 import { busCities } from '../data';
-
 
 const allUniversities = [];
 export default Vue.extend({
@@ -387,29 +447,54 @@ export default Vue.extend({
         addRemoveLinks: true,
         acceptedFiles: 'application/pdf',
       },
-      subheaders: [
-        'Applications are now closed.',
-        '',
-        'In progress',
-        'This application is under review.',
-        "Sorry, we couldn't offer you a spot this year.",
-        "Congratulations, you've been accepted!",
-        "Congratulations, you've been accepted!",
-        "Congratulations, you've been accepted!",
-        '',
-        '',
-        'Loading',
-      ],
+      // subheaders: [
+      //   'Applications are now closed.',
+      //   '',
+      //   'In progress',
+      //   'This application is under review.',
+      //   "Sorry, we couldn't offer you a spot this year.",
+      //   "Congratulations, you've been accepted!",
+      //   "Congratulations, you've been accepted!",
+      //   "Congratulations, you've been accepted!",
+      //   '',
+      //   '',
+      //   'Loading',
+      // ],
+      state_data: {
+        loading: { message: 'Loading Status.', emoji: '🕖', groups: ['Standard'] },
+        'not started': { message: 'Application Not Started.', emoji: '🤔', groups: ['Standard'] },
+        'in progress': { message: 'In progress.', emoji: '🙂', groups: ['Standard'] },
+        submitted: { message: 'Your application is under review.', emoji: '😊', groups: ['Standard'] },
+        accepted: { message: "Congratulations, you've been accepted!", emoji: '🥳', groups: ['Awaiting RSVP'] },
+        coming: { message: "Congratulations, you're coming to DH7.", emoji: '🎉', groups: ['RSVPd', 'coming'] },
+        'open registration': { message: 'Registration is now open.', emoji: '🔓', groups: ['Awaiting Registration', 'coming'] },
+        'closed rsvp': { message: 'Registration has now closed.', emoji: '🔒', groups: ['No RSVP'] },
+        waiting: { message: 'Registration Complete.', emoji: '⏳', groups: ['Registered', 'coming', 'showStartTime'] },
+        'checked in': { message: 'Welcome to DH7.', emoji: '✅', groups: ['At hackathon', 'showDeadline', 'submission not open'] },
+        submitting: { message: 'Good Luck!', emoji: '💻', groups: ['At hackathon', 'not submitted'] },
+        'project submitted': { message: 'Your project has been submitted.', emoji: '🔥', groups: ['At hackathon', 'Project Submitted'] },
+        'group assigned': { message: 'Please join your designated voice channel.', emoji: '💯', groups: ['At hackathon', 'Project Submitted'] },
+        'submissions closed': { message: 'Submissions are now closed.', emoji: '😢', groups: ['Cannot Submit', 'missed submission deadline'] },
+        'not coming': { message: 'Not coming to DH7.', emoji: '😭', groups: ['RSVPd', 'Not coming', 'Cannot Submit'] },
+        rejected: { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁', groups: ['rejected', 'Not coming', 'Cannot Submit'] },
+        'applications closed': { message: 'Applications are now closed.', emoji: '🔒', groups: ['Standard'] },
+      },
       links: ['Home', 'About', 'Contact'],
       story: '',
       custom: true,
       name: '',
-      step: 10,
+      // step: 10,
+      current_state: 'loading',
       checkedIn: false,
       projectSubmitted: false,
+      hackathonStarted: false,
+      registrationStarted: false,
       submitAllowed: false,
-      tableNumber: 'Pending',
+      submissionDeadlinePassed: false,
+      rsvpClosed: true, //being set here, should probably change this to be pulled from somewhere else tho
+      groupNumber: 'Pending',
       email: '',
+      code: '',
       checkbox: false,
       timer: 0,
       curImage: 0,
@@ -424,26 +509,46 @@ export default Vue.extend({
     Navbar2,
   },
   computed: {
+    // currentHeader(): string {
+    //   if (!firebase.auth().currentUser!.emailVerified) {
+    //     return 'Please check your email and activate your account.';
+    //   }
+    //   return this.subheaders[this.step];
+    // },
+    // emoticon(): string {
+    //   switch (this.step) {
+    //     case 0:
+    //       return '🙂';
+    //     case 1:
+    //       return '😐';
+    //     case 4:
+    //       return '🙁';
+    //     default:
+    //       return '🙂';
+    //   }
+    // },
     currentHeader(): string {
       if (!firebase.auth().currentUser!.emailVerified) {
         return 'Please check your email and activate your account.';
       }
-      return this.subheaders[this.step];
+      return this.state_data[this.current_state].message;
     },
     emoticon(): string {
-      switch (this.step) {
-        case 0:
-          return '🙂';
-        case 1:
-          return '😐';
-        case 4:
-          return '🙁';
-        default:
-          return '🙂';
+      if (this.current_state in this.state_data) {
+        return this.state_data[this.current_state].emoji;
       }
+
+      return '🙂';
     },
   },
   methods: {
+    // currentStateNum(): number {
+    //   return this.state_data[this.current_state].number;
+    // },
+    currentGroupIncludes(inputGroup:string): boolean {
+      const groupList = this.state_data[this.current_state].groups;
+      return (groupList.includes(inputGroup));
+    },
     // Grabs the application from where its store in firebase
     fetchFromFirebase(): Promise<any> {
       return this.$store.state.db
@@ -505,19 +610,40 @@ export default Vue.extend({
         .doc(email)
         .get();
 
+      const personalCode = await firebase
+        .functions()
+        .httpsCallable('getPersonalCode')({
+          email,
+        });
+
+      this.code = personalCode.data.code;
+
+      console.log(personalCode.data);
+
       this.checkedIn = checkedInSnapshot.exists;
       this.projectSubmitted = false;
 
       const y = await firebase.functions()
-        .httpsCallable('displayProjectSubmission')();
+        .httpsCallable('getHackathonStatuses')();
       this.submitAllowed = y.data.displayProjectSubmission;
+      this.hackathonStarted = y.data.hackathonStarted;
+      this.registrationStarted = y.data.registrationStarted;
+      this.submissionDeadlinePassed = y.data.submissionDeadlinePassed;
+
+      // const z = await firebase.functions()
+      //   .httpsCallable('isHackathonStarted')();
+      // this.hackathonStarted = z.data.hackathonStarted;
+
+      // const f = await firebase.functions()
+      //   .httpsCallable('isRegistrationStarted')();
+      // this.registrationStarted = f.data.registrationStarted;
 
       const x = await db.collection(this.hackathon)
         .doc('hackathon').collection('projects').doc(email)
         .onSnapshot((snap) => {
           if (!snap.exists) return;
           if (snap.data()!._.status === 'submitted') this.projectSubmitted = true;
-          this.tableNumber = snap.data()!._.table;
+          this.groupNumber = snap.data()!._.table;
         });
 
       if (!this.projectSubmitted) {
@@ -528,12 +654,12 @@ export default Vue.extend({
         if (signupRequest.data.projectSubmitted) {
           console.log(signupRequest.data);
           this.projectSubmitted = signupRequest.data.projectSubmitted;
-          this.tableNumber = signupRequest.data.tableNumber !== -1 ? signupRequest.data.tableNumber : 'Pending';
+          this.groupNumber = signupRequest.data.tableNumber !== -1 ? signupRequest.data.tableNumber : 'Pending';
         }
       }
       // Check if another user has submitted a project on behalf of the current user
       console.log(this.projectSubmitted);
-      console.log(this.tableNumber);
+      console.log(this.groupNumber);
       console.log(this.checkedIn);
 
       db.collection(this.hackathon)
@@ -543,24 +669,68 @@ export default Vue.extend({
         .onSnapshot((snap) => {
           if (snap.exists) {
             const data = snap.data();
-            if (data!._.status && data!._.status === 'in progress') { this.step = 2; }
-            if (data!._.status && data!._.status === 'submitted') this.step = 3;
-            // Check if user made it into any round & set to accepted
-            if (data!._.decision && data!._.decision === 'rejected') { this.step = 4; }
-            if (
-              data!._.decision &&
-              data!._.decision.substring(0, 5) === 'round'
-            ) { this.step = 5; }
-            if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
-            if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
-            if (this.checkedIn && this.projectSubmitted === false && this.submitAllowed) this.step = 8;
-            if (this.checkedIn && this.projectSubmitted && this.submitAllowed) this.step = 9;
+            //   if (data!._.status && data!._.status === 'in progress') { this.step = 2; }
+            //   if (data!._.status && data!._.status === 'submitted') this.step = 3;
+            //   // Check if user made it into any round & set to accepted
+            //   if (data!._.decision && data!._.decision === 'rejected') { this.step = 4; }
+            //   if (
+            //     data!._.decision &&
+            //     data!._.decision.substring(0, 5) === 'round'
+            //   ) { this.step = 5; }
+            //   if (data!._.RSVP && data!._.RSVP.coming) this.step = 6;
+            //   if (data!._.RSVP && (data!._.RSVP.origin || data!._.RSVP.coming != null)) this.step = 7;
+            //   if (this.checkedIn && this.projectSubmitted === false && this.submitAllowed) this.step = 8;
+            //   if (this.checkedIn && this.projectSubmitted && this.submitAllowed) this.step = 9;
+            // } else {
+            //   // application not started
+            //   console.log('s', this.checkedIn, this.projectSubmitted);
+            //   this.step = 1;
+            //   if (this.checkedIn && this.projectSubmitted === false && this.submitAllowed) this.step = 8;
+            //   if (this.checkedIn && this.projectSubmitted && this.submitAllowed) this.step = 9;
+            if (data!._.status) {
+              if (data!._.status === 'in progress' || data!._.status === 'submitted') {
+                this.current_state = data!._.status;
+              }
+            }
+            if (data!._.decision) {
+              if (data!._.decision === 'rejected') { this.current_state = 'rejected'; }
+              if (data!._.decision.substring(0, 5) === 'round') { this.current_state = 'accepted'; }
+            }
+            if (data!._.RSVP.coming != null) {
+              if (data!._.RSVP.coming) {
+                this.current_state = 'coming';
+              }
+              if (!(data!._.RSVP.coming)) {
+                this.current_state = 'not coming';
+              }
+            }
+            if ((data!._.RSVP.coming == null || !data!._.RSVP.coming) && this.rsvpClosed) {
+              this.current_state = 'closed rsvp';
+            }
+            if (this.registrationStarted && data!._.RSVP.coming) {
+              this.current_state = 'open registration';
+            }
+            if (this.checkedIn && !this.hackathonStarted) {
+              this.current_state = 'waiting';
+            }
+            if (this.checkedIn && this.hackathonStarted) {
+              this.current_state = 'checked in';
+              if (this.submitAllowed) {
+                this.current_state = 'submitting';
+              }
+              if (this.projectSubmitted) {
+                this.current_state = 'project submitted';
+                if (this.groupNumber !== 'Pending') {
+                  this.current_state = 'group assigned';
+                }
+              }
+              if (!this.projectSubmitted && this.submissionDeadlinePassed) {
+                this.current_state = 'submissions closed';
+              }
+            }
           } else {
-            // application not started
             console.log('s', this.checkedIn, this.projectSubmitted);
-            this.step = 1;
-            if (this.checkedIn && this.projectSubmitted === false && this.submitAllowed) this.step = 8;
-            if (this.checkedIn && this.projectSubmitted && this.submitAllowed) this.step = 9;
+            this.current_state = 'not started';
           }
         });
     },

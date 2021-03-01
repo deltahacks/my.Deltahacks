@@ -40,6 +40,7 @@ p {
     font-size: 3vw;
     font-weight: 600;
     padding-left:5% !important;
+    margin-right: 25%;
     /* padding: 2% 0 0 5%;     */
 }
 .medium {
@@ -468,6 +469,9 @@ a {
         margin-top: 10px !important;
         font-size: 12px !important;
     }
+    .deadline {
+        font-size: 1.5em;
+    }
     .currentStatus {
         width: 30vw;
         font-size: 1.5vw;
@@ -476,7 +480,7 @@ a {
         left: 30%;
     }
     .afterSubmitRounded{
-        font-size:1em ; 
+        font-size: 0.5em ; 
         background: rgba(255, 255, 255, 0.2);
         /* border-radius: 50px; 
         padding-left:30px;
@@ -554,8 +558,21 @@ a {
         font-size: 2.5vw;
     }
     .apply {
-        font-size: 8vw;
-        padding-top: 4.5vh!important;
+        font-size: 4vw;
+        padding-top: 2vh!important;
+    }
+    .deadline {
+        font-size: 1.5em;
+    }
+    .afterSubmitRounded{
+        font-size:1em ; 
+        background: rgba(255, 255, 255, 0.2);
+        /* border-radius: 50px; 
+        padding-left:30px;
+        padding-right:30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 10px; */
     }
     .currentStatus {
         width: 40vw;
