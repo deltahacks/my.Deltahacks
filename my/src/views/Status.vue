@@ -56,6 +56,12 @@
                 Thank you for registering. We are looking forward to seeing you at the hackathon.
               </p>
             </div>
+            <div class="box box9" v-if="currentGroupIncludes('No RSVP')">
+              <p class="big">RSVP Closed.</p>
+              <p class="small">
+                The RSVP period is now over. We would love to see you next year!
+              </p>
+            </div>
             <div class="box box9" v-if="currentGroupIncludes('Awaiting RSVP')">
               <p class="big rsvp" style="font-size: 5vw">Will you be attending DH7?</p>
               <a @click="
@@ -124,7 +130,7 @@
               </template>
               <div class="col col4">
                 <a @click="() => (current_state = 'accepted')">
-                  <div class="box box2 change-response">
+                  <div class="box box2 change-response" v-if="!this.rsvpClosed">
                     Change Response
                   </div>
                 </a>
@@ -372,7 +378,6 @@ import db from '../firebase_init';
 import { StatusModel } from '../types';
 import { busCities } from '../data';
 
-
 const allUniversities = [];
 export default Vue.extend({
   mixins: [validationMixin],
@@ -463,6 +468,7 @@ export default Vue.extend({
         accepted: { message: "Congratulations, you've been accepted!", emoji: '🥳', groups: ['Awaiting RSVP'] },
         coming: { message: "Congratulations, you're coming to DH7.", emoji: '🎉', groups: ['RSVPd', 'coming'] },
         'open registration': { message: 'Registration is now open.', emoji: '🔓', groups: ['Awaiting Registration', 'coming'] },
+        'closed rsvp': { message: 'Registration has now closed.', emoji: '🔒', groups: ['No RSVP'] },
         waiting: { message: 'Registration Complete.', emoji: '⏳', groups: ['Registered', 'coming', 'showStartTime'] },
         'checked in': { message: 'Welcome to DH7.', emoji: '✅', groups: ['At hackathon', 'showDeadline', 'submission not open'] },
         submitting: { message: 'Good Luck!', emoji: '💻', groups: ['At hackathon', 'not submitted'] },
@@ -485,6 +491,7 @@ export default Vue.extend({
       registrationStarted: false,
       submitAllowed: false,
       submissionDeadlinePassed: false,
+      rsvpClosed: true, //being set here, should probably change this to be pulled from somewhere else tho
       groupNumber: 'Pending',
       email: '',
       code: '',
@@ -696,6 +703,9 @@ export default Vue.extend({
               if (!(data!._.RSVP.coming)) {
                 this.current_state = 'not coming';
               }
+            }
+            if ((data!._.RSVP.coming == null || !data!._.RSVP.coming) && this.rsvpClosed) {
+              this.current_state = 'closed rsvp';
             }
             if (this.registrationStarted && data!._.RSVP.coming) {
               this.current_state = 'open registration';

@@ -155,6 +155,7 @@ export interface StatusModel {
   registrationStarted: boolean;
   submitAllowed: boolean;
   submissionDeadlinePassed: boolean;
+  rsvpClosed: boolean;
   groupNumber: string;
   email: string;
   code: string;
