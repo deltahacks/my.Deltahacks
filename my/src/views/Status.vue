@@ -491,7 +491,7 @@ export default Vue.extend({
       registrationStarted: false,
       submitAllowed: false,
       submissionDeadlinePassed: false,
-      rsvpClosed: true, //being set here, should probably change this to be pulled from somewhere else tho
+      rsvpClosed: true, // being set here, should probably change this to be pulled from somewhere else tho
       groupNumber: 'Pending',
       email: '',
       code: '',
@@ -693,7 +693,7 @@ export default Vue.extend({
               }
             }
             if (data!._.decision) {
-              if (data!._.decision === 'rejected') { this.current_state = 'rejected'; }
+              if (data!._.decision === 'rejected') { this.current_state = 'rejected'; return; }
               if (data!._.decision.substring(0, 5) === 'round') { this.current_state = 'accepted'; }
             }
             if (data!._.RSVP.coming != null) {
