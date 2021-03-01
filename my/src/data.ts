@@ -705,7 +705,7 @@ export async function getSubmitQuestions() {
       label: 'What is your project\'s demo Youtube video link? (optional)',
       fieldType: 'text',
       model: ['profiles', 'youtube'],
-      requirements: { required: true, link: true, youtubeLink: true },
+      requirements: { link: true, youtubeLink: true },
     },
     {
       label: 'What challenges would you like to be judged for? (max: 3)',

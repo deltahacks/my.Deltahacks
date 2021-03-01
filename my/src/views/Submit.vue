@@ -211,7 +211,7 @@ export default Vue.extend({
       snack: {
         color: 'success',
         btnColor: 'white',
-        timeout: 3000,
+        timeout: 7000,
         visible: false,
         message: 'Progress saved!',
       },
