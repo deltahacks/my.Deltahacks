@@ -12,6 +12,7 @@ import Status from './views/Status.vue';
 import v404 from './views/404.vue';
 import Submit from './views/Submit.vue';
 import db from './firebase_init';
+import ClosedApplication from './views/ClosedApplication.vue';
 
 Vue.use(Router);
 
@@ -29,7 +30,7 @@ const router = new Router({
     {
       path: '/apply',
       name: 'Apply',
-      component: Apply,
+      component: ClosedApplication,
       meta: {
         auth: true,
       },
