@@ -654,7 +654,7 @@ export default Vue.extend({
         if (signupRequest.data.projectSubmitted) {
           console.log(signupRequest.data);
           this.projectSubmitted = signupRequest.data.projectSubmitted;
-          this.groupNumber = signupRequest.data.groupNumber !== -1 ? signupRequest.data.groupNumber : 'Pending';
+          this.groupNumber = signupRequest.data.tableNumber !== -1 ? signupRequest.data.tableNumber : 'Pending';
         }
       }
       // Check if another user has submitted a project on behalf of the current user
