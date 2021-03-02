@@ -35,7 +35,8 @@
             <div class="box box9" v-if="currentGroupIncludes('Awaiting Registration')">
               <p class="big">Welcome.</p>
               <p class="small">
-                Registration is now open. Your unique discord registration code is {{this.code}}.
+                Registration is now open. Your unique discord check-in code is <span id="code">{{this.code}}</span>.
+                <b>Please do not share this with others!</b> Click <a href="https://discord.gg/QfFSMCmbdQ" id="disc-join">HERE</a> to join the server.
               </p>
             </div>
             <div class="box box9" v-if="currentGroupIncludes('submission not open')">
@@ -57,9 +58,9 @@
               </p>
             </div>
             <div class="box box9" v-if="currentGroupIncludes('No RSVP')">
-              <p class="big">RSVP Closed.</p>
+              <p class="big">Welcome</p>
               <p class="small">
-                The RSVP period is now over. We would love to see you next year!
+                The registration period is now over. RSVPs and applications are no longer being accepted. We would love to see you next year!
               </p>
             </div>
             <div class="box box9" v-if="currentGroupIncludes('Awaiting RSVP')">
