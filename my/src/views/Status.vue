@@ -36,7 +36,7 @@
               <p class="big">Welcome.</p>
               <p class="small">
                 Registration is now open. Your unique discord check-in code is <span id="code">{{this.code}}</span>.
-                <b>Please do not share this with others!</b> Click <a href="https://discord.gg/QfFSMCmbdQ" id="disc-join">HERE</a> to join the server.
+                <b>Please do not share this with others!</b> Click <a href="https://discord.gg/6HvMQAnMgb" id="disc-join">HERE</a> to join the server.
               </p>
             </div>
             <div class="box box9" v-if="currentGroupIncludes('submission not open')">

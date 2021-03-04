@@ -1,6 +1,6 @@
 <template>
   <div id="nav-box">
-    
+
     <div class="rounded-box">
       <a href="https://www.deltahacks.com" target="_blank" id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
