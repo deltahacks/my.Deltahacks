@@ -30,7 +30,7 @@ const router = new Router({
     {
       path: '/apply',
       name: 'Apply',
-      component: ClosedApplication,
+      component: Closed,
       meta: {
         auth: true,
       },
