@@ -13,7 +13,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
     "axios": "^0.18.0",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "debounce": "^1.2.0",
     "deepmerge": "^4.2.1",
     "filepond": "^4.7.2",
