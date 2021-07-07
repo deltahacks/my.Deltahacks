@@ -708,6 +708,13 @@ a {
     -moz-animation: statusanimation 140s ease infinite;
     animation: statusanimation 140s ease infinite; */
 }
+.staticBackground {
+    background: rgb(0,0,0);
+    /* background: linear-gradient(180deg,#7a72e5 45%, #ab5797 50%); */
+    background: linear-gradient(270deg,#7067e0,#973d82);
+    /* background-size: 800% 800%; */
+    background-size: 200% 200%;
+}
 
 @-webkit-keyframes statusanimation {
     0% {
@@ -866,3 +873,36 @@ a {
     color: orange;
     font-weight: 500;
 }
+.act-btn {
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    opacity: 0.99;
+    padding: 10px 23%;
+    color: white;
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+    z-index: 100;
+    width: 97.5%;
+  }
+  
+  .act-btn-group {
+    z-index: 10;
+    float:right !important;
+  }
+  
+  .toggle-btn-grp{
+    padding: 0px !important;
+    float:right !important;
+  }
+  
+  .act-btn__reset {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
+    padding: 0 !important;
+  }
+
+  .togbtn {
+      padding:0 !important;
+  }
