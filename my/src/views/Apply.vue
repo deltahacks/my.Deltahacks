@@ -317,7 +317,7 @@ export default Vue.extend({
       const storeRef = firebase.storage().ref();
       try {
         const snapshot = await storeRef
-          .child(`hackathon/DH7/users/${this.getUID()}/Resume.pdf`)
+          .child(`hackathon/${this.$store.state.currentHackathon}/users/${this.getUID()}/Resume.pdf`)
           .put(file);
         const url = await snapshot.ref.getDownloadURL();
 
