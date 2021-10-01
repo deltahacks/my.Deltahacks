@@ -9,7 +9,7 @@
           <span class="signup100-form-logo">
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
           </span>
-          <span class="welcomeheader">DeltaHacks V Admin Sign Up</span>
+          <span class="welcomeheader">DeltaHacks 8 Admin Sign Up</span>
 
           <div class="wrap-input100 validate-input" data-validate="Enter username">
             <v-text-field
@@ -211,7 +211,7 @@ export default Vue.extend({
           this.geo = data.data;
 
           this.$store.state.db
-            .collection('DH7')
+            .collection('DH8')
             .doc('users')
             .collection('all')
             .doc(this.vuex_email)

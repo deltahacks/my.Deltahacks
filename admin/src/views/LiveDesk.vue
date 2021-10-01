@@ -160,7 +160,7 @@ import Vue from 'vue';
 import db from '../firebase_init';
 import Navbar from '@/components/Navbar.vue';
 
-const currentHackathon = 'DH7';
+const currentHackathon = 'DH8';
 
 export default Vue.extend({
   name: 'LiveDesk',
@@ -386,7 +386,7 @@ export default Vue.extend({
       badge.addImage(QRImage, 'JPEG', imageOffset, 3, 25, 25);
       badge.save(`${currentHackathon}_${this.application.name.first}${this.application.name.last}`);
     },
-    // should insert / generate the back of DH7 badge.
+    // should insert / generate the back of DH8 badge.
     async createTemplate() {
       // eslint-disable-next-line new-cap
       const t = new pdf('l', 'mm', [165, 200]);
