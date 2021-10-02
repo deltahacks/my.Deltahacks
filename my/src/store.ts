@@ -20,6 +20,6 @@ export default new Vuex.Store({
   state: {
     db,
     firebase,
-    currentHackathon: 'DH7',
+    currentHackathon: 'DH8',
   } as StoreState,
 });
