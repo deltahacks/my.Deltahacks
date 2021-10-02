@@ -31,10 +31,6 @@ const race = [
 ];
 
 const yearOfStudy = [
-  'Grade 9',
-  'Grade 10',
-  'Grade 11',
-  'Grade 12',
   'First Year',
   'Second Year',
   'Third Year',
@@ -435,7 +431,7 @@ export const applicationQuestions: any = [
     label: "When's your birthday? *",
     fieldType: 'date',
     model: ['personal', 'birthday'],
-    requirements: { required: true, oldEnough: [14, new Date('March 5, 2021')] }, // TODO: Implicitly require age > 18 at time of event
+    requirements: { required: true, oldEnough: [14, new Date('January 14, 2022')] }, // TODO: Implicitly require age > 18 at time of event
   },
   {
     label: 'Where do you study? *',
@@ -450,7 +446,7 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'Are you currently enrolled or will be enrolled in a postsecondary program by March 5th, 2021? *',
+      'Are you currently enrolled or will be enrolled in a postsecondary program by January 14, 2022? *',
     fieldType: 'single-select',
     selectData: ['Yes', 'No'],
     model: ['academics', 'enrolled'],
@@ -513,33 +509,25 @@ export const applicationQuestions: any = [
   },
   {
     label:
-      'DeltaHacks is the annual Hackathon for Change. \
-      If you had the ability to change anything in the world, what would it be and why? *',
+      'Describe the process of something you have built/created that you are proud of? *',
     fieldType: 'text-area',
-    textLimit: '800',
+    textLimit: '500',
     model: ['responses', 'q1'],
-    requirements: { required: true, max: 800 },
+    requirements: { required: true, max: 500 },
   },
   {
-    label: 'Which piece of future technology excites you most and where do you see it going? \
-    (AI, Global Internet, Blockchain, Space Civilization, Virtual Reality, etc.) *',
+    label: 'If you could reinvent one object in the world, what would it be and how would you change it? *',
     fieldType: 'text-area',
-    textLimit: '600',
+    textLimit: '400',
     model: ['responses', 'q2'],
-    requirements: { required: true, max: 600 },
+    requirements: { required: true, max: 400 },
   },
   {
-    label: '\
-    You\'ve been transported to a room with only 2 exits: a small window 6m high and a locked door. In the room there are the following items: \
-    <br /><br /> \
-    Magic Wand, Cloning Machine, Lighter, Candle, Phone, Chainsaw, Invisibility Cloak, Time Machine, 3D printer, Shoelaces, and a Laptop... \
-    <br /><br /> \
-    How would you use <b>three of these items</b> to escape in time for DeltaHacks 7? \
-    *',
+    label: 'What is one trait you have that you believe makes you a suitable candidate for DeltaHacks8? *',
     fieldType: 'text-area',
-    textLimit: '800',
+    textLimit: '500',
     model: ['responses', 'q3'],
-    requirements: { required: true, max: 800 },
+    requirements: { required: true, max: 500 },
   },
   {
     label: 'What are your social media link(s)? (GitHub, LinkedIn, DevPost, personal website, etc.)',
@@ -584,7 +572,7 @@ export const applicationQuestions: any = [
     model: ['general', 'team'],
   },
   {
-    label: 'What type workshops would you like to see at DeltaHacks 7?',
+    label: 'What type workshops would you like to see at DeltaHacks 8?',
     fieldType: 'multi-select',
     selectData: workshops,
     icon: 'fa-wrench',
@@ -598,7 +586,7 @@ export const applicationQuestions: any = [
     model: ['general', 'coffee'],
   },
   {
-    label: 'How did you find out about DeltaHacks 7?',
+    label: 'How did you find out about DeltaHacks 8?',
     fieldType: 'single-select',
     selectData: discovered_by,
     model: ['logistics', 'discovered_by'],
@@ -675,7 +663,7 @@ export const authorizations: any = [
   },
   {
     label:
-    '<p>I authorize MLH to send me pre- and post-event informational emails, which contain free credit and opportunities from their partners.</p>',
+      '<p>I authorize MLH to send me pre- and post-event informational emails, which contain free credit and opportunities from their partners.</p>',
     model: ['general', 'emails'],
     requirements: { required: false },
   },
