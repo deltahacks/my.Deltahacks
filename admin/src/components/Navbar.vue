@@ -50,7 +50,7 @@ export default Vue.extend({
   data() {
     return {
       c_user: firebase.auth().currentUser,
-      dhs: ['DH6', 'DH7'],
+      dhs: ['DH6', 'DH7','DH8'],
     };
   },
   methods: {

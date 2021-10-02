@@ -56,7 +56,7 @@ export default Vue.extend({
       };
 
       try {
-        await db.collection('DH7').doc('news').collection('all').add(body);
+        await db.collection('DH8').doc('news').collection('all').add(body);
         console.log('Successfully posted update!');
       } catch (e) {
         console.log('Post failed');
