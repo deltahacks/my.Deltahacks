@@ -4,7 +4,7 @@
       <div class="spanText">
         <span class="txt2">Delta</span>
         <span class="txt1">Hacks </span>
-        <span class="txt2">7</span>
+        <span class="txt2">8</span>
       </div>
       <p class="txt3">Applications are now closed</p>
       <br />
