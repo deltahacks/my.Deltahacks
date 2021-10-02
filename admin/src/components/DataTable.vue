@@ -127,6 +127,7 @@ export default Vue.extend({
       items: [
         'All Applicants',
         'Assigned to Me',
+        'Assigned to Me - Not Marked',
         'Accepted Applicants',
         'Rejected Applicants',
         '1/3',
@@ -187,6 +188,14 @@ export default Vue.extend({
             auth().currentUser!.email as string,
           ];
           this.changeScope([]);
+          break;
+        case 'Assigned to Me - Not Marked':
+          this.restriction = [
+            '_.reviews.assignedTo',
+            'array-contains',
+            auth().currentUser!.email as string,
+          ];
+          this.changeScope(['Assigned to Me - Not Marked']);
           break;
         case 'Accepted Applicants':
           this.restriction = ['_.decision', '==', 'accepted'];
@@ -253,6 +262,9 @@ export default Vue.extend({
       if (customFilter.includes('1/3') || customFilter.includes('2/3')) {
         const filter = customFilter.includes('1/3') ? 1 : 2;
         resultsToUse = resultsToUse.filter(each => each._.reviews.scores.length === filter);
+      }
+      else if (customFilter.includes('Assigned to Me - Not Marked')) {
+        resultsToUse = resultsToUse.filter(each => !each._.reviews.scores.map(adminReviews => adminReviews.reviewer).includes(auth().currentUser!.email as string));
       }
       this.numApplicants = Math.ceil(resultsToUse.length / this.rowsPerPage);
       this.pagination.totalItems = this.numApplicants;
