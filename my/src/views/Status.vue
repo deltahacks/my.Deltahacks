@@ -492,7 +492,7 @@ export default Vue.extend({
       registrationStarted: false,
       submitAllowed: false,
       submissionDeadlinePassed: false,
-      rsvpClosed: true, // being set here, should probably change this to be pulled from somewhere else tho
+      rsvpClosed: false, // being set here, should probably change this to be pulled from somewhere else tho
       groupNumber: 'Pending',
       email: '',
       code: '',
