@@ -64,7 +64,7 @@
               </p>
             </div>
             <div class="box box9" v-if="currentGroupIncludes('Awaiting RSVP')">
-              <p class="big rsvp" style="font-size: 5vw">Will you be attending DH7?</p>
+              <p class="big rsvp" style="font-size: 5vw">Will you be attending DH8?</p>
               <a @click="
                   () => {
                     updateRSVP(true, true), (current_state = 'coming');
@@ -164,7 +164,7 @@
                 <div style="float:left; margin-left:2vw">
                     <h2>Judging Area</h2>
                     <br>
-                    <span class="afterSubmitRounded">{{ groupNumber == "Pending" ? "DeltaHacks 7 Server" : "Group " + groupNumber + " Channel"}}</span>
+                    <span class="afterSubmitRounded">{{ groupNumber == "Pending" ? "DeltaHacks 8 Server" : "Group " + groupNumber + " Channel"}}</span>
                 </div>
                 </div>
               </template>
@@ -467,16 +467,16 @@ export default Vue.extend({
         'in progress': { message: 'In progress.', emoji: '🙂', groups: ['Standard'] },
         submitted: { message: 'Your application is under review.', emoji: '😊', groups: ['Standard'] },
         accepted: { message: "Congratulations, you've been accepted!", emoji: '🥳', groups: ['Awaiting RSVP'] },
-        coming: { message: "Congratulations, you're coming to DH7.", emoji: '🎉', groups: ['RSVPd', 'coming'] },
+        coming: { message: "Congratulations, you're coming to DH8.", emoji: '🎉', groups: ['RSVPd', 'coming'] },
         'open registration': { message: 'Registration is now open.', emoji: '🔓', groups: ['Awaiting Registration', 'coming'] },
         'closed rsvp': { message: 'Registration has now closed.', emoji: '🔒', groups: ['No RSVP'] },
         waiting: { message: 'Registration Complete.', emoji: '⏳', groups: ['Registered', 'coming', 'showStartTime'] },
-        'checked in': { message: 'Welcome to DH7.', emoji: '✅', groups: ['At hackathon', 'showDeadline', 'submission not open'] },
+        'checked in': { message: 'Welcome to DH8.', emoji: '✅', groups: ['At hackathon', 'showDeadline', 'submission not open'] },
         submitting: { message: 'Good Luck!', emoji: '💻', groups: ['At hackathon', 'not submitted'] },
         'project submitted': { message: 'Your project has been submitted.', emoji: '🔥', groups: ['At hackathon', 'Project Submitted'] },
         'group assigned': { message: 'Please join your designated voice channel.', emoji: '💯', groups: ['At hackathon', 'Project Submitted'] },
         'submissions closed': { message: 'Submissions are now closed.', emoji: '😢', groups: ['Cannot Submit', 'missed submission deadline'] },
-        'not coming': { message: 'Not coming to DH7.', emoji: '😭', groups: ['RSVPd', 'Not coming', 'Cannot Submit'] },
+        'not coming': { message: 'Not coming to DH8.', emoji: '😭', groups: ['RSVPd', 'Not coming', 'Cannot Submit'] },
         rejected: { message: "Sorry, we couldn't offer you a spot this year.", emoji: '🙁', groups: ['rejected', 'Not coming', 'Cannot Submit'] },
         'applications closed': { message: 'Applications are now closed.', emoji: '🔒', groups: ['Standard'] },
       },
