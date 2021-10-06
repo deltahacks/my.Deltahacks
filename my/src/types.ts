@@ -92,6 +92,7 @@ export interface AppContents {
     team: string;
     termsAndConditions: boolean;
     code: boolean;
+    share_resume: string;
   };
 }
 
