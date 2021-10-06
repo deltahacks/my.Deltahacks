@@ -132,15 +132,15 @@
                 <v-card>
                   <v-card-title
                     class="questionTitle"
-                  >DeltaHacks is the annual Hackathon for Change. If you had the ability to change anything in the world, what would it be and why? *</v-card-title>
+                  >Describe the process of something you have built/created that you are proud of?</v-card-title>
                   <v-card-text>{{ applicant.responses.q1 }}</v-card-text>
                   <v-card-title
                     class="questionTitle"
-                  >Which piece of future technology excites you most and where do you see it going? *</v-card-title>
+                  >If you could reinvent one object in the world, what would it be and how would you change it ?</v-card-title>
                   <v-card-text>{{ applicant.responses.q2 }}</v-card-text>
                   <v-card-title
                     class="questionTitle"
-                  >You've been transported to a room with only 2 exits: a small window 6m high and a locked door ... How would you use three of these items to escape in time for DeltaHacks 7? *</v-card-title>
+                  >What is one trait you have that you believe makes you a suitable candidate for DeltaHacks 8?</v-card-title>
                   <v-card-text>{{ applicant.responses.q3 }}</v-card-text>
                   <v-card-title class="questionTitle">Anything you'd like us to see?</v-card-title>
                   <v-card-text>{{ applicant.profiles.other }}</v-card-text>
