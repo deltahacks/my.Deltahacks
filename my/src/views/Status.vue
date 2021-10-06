@@ -491,7 +491,7 @@ export default Vue.extend({
       registrationStarted: false,
       submitAllowed: false,
       submissionDeadlinePassed: false,
-      rsvpClosed: true, //being set here, should probably change this to be pulled from somewhere else tho
+      rsvpClosed: false,
       groupNumber: 'Pending',
       email: '',
       code: '',
@@ -629,6 +629,7 @@ export default Vue.extend({
       this.hackathonStarted = y.data.hackathonStarted;
       this.registrationStarted = y.data.registrationStarted;
       this.submissionDeadlinePassed = y.data.submissionDeadlinePassed;
+      this.rsvpClosed = y.data.rsvpClosed;
 
       // const z = await firebase.functions()
       //   .httpsCallable('isHackathonStarted')();
