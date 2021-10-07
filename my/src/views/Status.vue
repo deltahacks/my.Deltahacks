@@ -120,7 +120,7 @@
               <template v-if="rsvp.coming">
                 <p class="big">Confirmed.</p>
                 <p class="small" style="margin-top:-20px">
-                  We're so excited to see you on March 5th!
+                  We're so excited to see you on January 14th!
                 </p>
               </template>
               <template v-if="!rsvp.coming">
@@ -143,7 +143,7 @@
                  <div style="float:left;">
                     <h2>Submission Date</h2>
                     <br>
-                    <span class="afterSubmitRounded">Sunday, March 7th, 2021</span>
+                    <span class="afterSubmitRounded">Sunday, January 16th, 2021</span>
                 </div>
                 <div style="float:left; margin-left:2vw">
                     <h2>Submission Time</h2>
@@ -185,14 +185,14 @@
                 <p class="bigmobile">Start Time</p>
                 <div><span class="deadline">8:00 P.M.</span></div>
                 <p class="bigmobile">
-                  Friday, March 5th, 2021
+                  Friday, January 14th, 2021
                 </p>
               </div>
               <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
                 <p class="bigmobile">Submission Deadline</p>
                 <div><span class="deadline">12:30 P.M.</span></div>
                 <p class="bigmobile">
-                  Sunday, March 7th, 2021
+                  Sunday, January 16th, 2021
                 </p>
               </div>
               <div class="currentStatus glm" v-if="currentGroupIncludes('Project Submitted')">
@@ -319,14 +319,14 @@
                 <p class="bigmobile">Start Time</p>
                 <div><span class="deadline">8:00 P.M.</span></div>
                 <p class="bigmobile">
-                  Friday, March 5th, 2021
+                  Friday, January 14th, 2021
                 </p>
               </div>
               <div class="currentStatus" v-if="currentGroupIncludes('showDeadline')">
                 <p class="bigmobile">Submission Deadline</p>
                 <div><span class="deadline">12:30 P.M.</span></div>
                 <p class="bigmobile">
-                  Sunday, March 7th, 2021
+                  Sunday, January 16th, 2021
                 </p>
               </div>
               <div class="currentStatus glm" v-if="currentGroupIncludes('Project Submitted')">
