@@ -610,7 +610,7 @@ export const applicationQuestions: any = [
     label: 'Please put the name of an emergency contact and their relation to you (e.g. John Smith, Father) *',
     fieldType: 'text',
     model: ['emergency', 'name'],
-    requirements: { required: true },
+    requirements: { required: true, max: 100 },
   },
   {
     label: "What is your emergency contact's phone number? *",
