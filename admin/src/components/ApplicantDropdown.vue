@@ -134,7 +134,13 @@
                       <h4>Share resume with sponsors:</h4>
                     </v-flex>
                     <v-flex xs12 md6 lg6>
-                      <p>{{ applicant.general.share_resume }}</p>
+                      <p>{{ getResponse('share_resume') }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Coffee Chat:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ getResponse('coffee') }}</p>
                     </v-flex>
                   </v-layout>
                 </v-card>
@@ -268,6 +274,10 @@ export default Vue.extend({
     console.log(this.$store.state.currentUserIsAuthorizedReviewer);
   },
   methods: {
+    getResponse(field) {
+      const response = this.applicant.general[field] ==="" ? "No" : "Yes"
+      return(response)
+    },
     decisionStats() {
       const resstr = {};
       // eslint-disable-next-line no-restricted-syntax
