@@ -56,7 +56,7 @@
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.academics.degree }}</p>
                     </v-flex>
-                    <v-flex xs12 md6 lg6>
+                    <!-- <v-flex xs12 md6 lg6>
                       <h4>Git Repo:</h4>
                     </v-flex>
                     <v-flex xs12 md6 lg6>
@@ -93,6 +93,12 @@
                     </v-flex>
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.logistics.diet_restrictions }}</p>
+                    </v-flex> -->
+                    <v-flex xs12 md6 lg6>
+                      <h4>Links</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.profiles.links }}</p>
                     </v-flex>
                     <v-flex xs12 md6 lg6>
                       <h4>Shirt Size:</h4>
