@@ -31,6 +31,10 @@ const race = [
 ];
 
 const yearOfStudy = [
+  'Grade 9',
+  'Grade 10',
+  'Grade 11',
+  'Grade 12',
   'First Year',
   'Second Year',
   'Third Year',
@@ -385,6 +389,7 @@ export const getBlankApplication = (): AppContents => ({
     team: '',
     termsAndConditions: false,
     code: false,
+    share_resume: '',
   },
 });
 
@@ -572,11 +577,18 @@ export const applicationQuestions: any = [
     model: ['general', 'team'],
   },
   {
-    label: 'What type workshops would you like to see at DeltaHacks 8?',
+    label: 'What type of workshops would you like to see at DeltaHacks 8?',
     fieldType: 'multi-select',
     selectData: workshops,
     icon: 'fa-wrench',
     model: ['responses', 'workshops'],
+  },
+  {
+    label: 'Would you like to share your resume with the sponsors?',
+    fieldType: 'single-select',
+    selectData: ['Yes', 'No'],
+    icon: 'fa-coffee',
+    model: ['general', 'share_resume'],
   },
   {
     label: 'Would you like to be considered for a coffee chat with a sponsor?',
