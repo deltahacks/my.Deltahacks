@@ -528,7 +528,7 @@ export const applicationQuestions: any = [
     requirements: { required: true, max: 400 },
   },
   {
-    label: 'What is one trait you have that you believe makes you a suitable candidate for DeltaHacks8? *',
+    label: 'What is one trait you have that you believe makes you a suitable candidate for DeltaHacks 8? *',
     fieldType: 'text-area',
     textLimit: '500',
     model: ['responses', 'q3'],
