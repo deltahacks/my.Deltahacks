@@ -628,7 +628,7 @@ export const applicationQuestions: any = [
     label: "What is your emergency contact's phone number? *",
     fieldType: 'text',
     model: ['emergency', 'phone'],
-    requirements: { required: true },
+    requirements: { required: true, validPhone: true },
   },
   // XXX Online for 2021, should (hopefully) reactivate these questions for other years
   // {

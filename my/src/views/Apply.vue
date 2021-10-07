@@ -175,6 +175,12 @@ extend('oldEnough', {
   },
   message: (birthday, requirements) => `You must be ${requirements[0]} at the time of the event.`,
 });
+extend('validPhone', {
+  validate: phoneNum =>
+    // eslint-disable-next-line no-useless-escape
+    /^[0-9]\d{2}\s\d{3}\s\d{4}$/.test(phoneNum),
+  message: 'Invalid phone number, please enter phone number in format 123 456 7890',
+});
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
