@@ -124,6 +124,12 @@
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.responses.workshops }}</p>
                     </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Share resume with sponsors:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.general.share_resume }}</p>
+                    </v-flex>
                   </v-layout>
                 </v-card>
               </v-expansion-panel-content>
@@ -142,8 +148,6 @@
                     class="questionTitle"
                   >What is one trait you have that you believe makes you a suitable candidate for DeltaHacks 8?</v-card-title>
                   <v-card-text>{{ applicant.responses.q3 }}</v-card-text>
-                  <v-card-title class="questionTitle">Anything you'd like us to see?</v-card-title>
-                  <v-card-text>{{ applicant.profiles.other }}</v-card-text>
                   <v-card-title class="questionTitle">Anything else you'd like to tell us?</v-card-title>
                   <v-card-text>{{ applicant.responses.anything_else }}</v-card-text>
                 </v-card>
