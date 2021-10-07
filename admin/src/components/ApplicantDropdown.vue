@@ -95,7 +95,7 @@
                       <p>{{ applicant.logistics.diet_restrictions }}</p>
                     </v-flex> -->
                     <v-flex xs12 md6 lg6>
-                      <h4>Links</h4>
+                      <h4>Links:</h4>
                     </v-flex>
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.profiles.links }}</p>
