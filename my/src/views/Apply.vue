@@ -178,8 +178,8 @@ extend('oldEnough', {
 extend('validPhone', {
   validate: phoneNum =>
     // eslint-disable-next-line no-useless-escape
-    /^[0-9]\d{2}\s\d{3}\s\d{4}$/.test(phoneNum),
-  message: 'Invalid phone number, please enter phone number in format 123 456 7890',
+    /^[0-9]\d{9,14}$/.test(phoneNum),
+  message: 'Invalid phone number, Please enter a valid phone number in the form 1234567890 or 01234567890 (no spaces or special characters).',
 });
 
 Vue.component('ValidationProvider', ValidationProvider);
