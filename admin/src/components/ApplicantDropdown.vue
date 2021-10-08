@@ -275,8 +275,9 @@ export default Vue.extend({
   },
   methods: {
     getResponse(field) {
-      const response = this.applicant.general[field] ==="" ? "No" : "Yes"
-      return(response)
+      const response = this.applicant.general[field]
+      const displayedResponse = response ==="" ? "No" : response
+      return(displayedResponse)
     },
     decisionStats() {
       const resstr = {};
