@@ -56,7 +56,7 @@
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.academics.degree }}</p>
                     </v-flex>
-                    <v-flex xs12 md6 lg6>
+                    <!-- <v-flex xs12 md6 lg6>
                       <h4>Git Repo:</h4>
                     </v-flex>
                     <v-flex xs12 md6 lg6>
@@ -93,6 +93,12 @@
                     </v-flex>
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.logistics.diet_restrictions }}</p>
+                    </v-flex> -->
+                    <v-flex xs12 md6 lg6>
+                      <h4>Links:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ applicant.profiles.links }}</p>
                     </v-flex>
                     <v-flex xs12 md6 lg6>
                       <h4>Shirt Size:</h4>
@@ -124,6 +130,18 @@
                     <v-flex xs12 md6 lg6>
                       <p>{{ applicant.responses.workshops }}</p>
                     </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Share resume with sponsors:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ getResponse('share_resume') }}</p>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <h4>Coffee Chat:</h4>
+                    </v-flex>
+                    <v-flex xs12 md6 lg6>
+                      <p>{{ getResponse('coffee') }}</p>
+                    </v-flex>
                   </v-layout>
                 </v-card>
               </v-expansion-panel-content>
@@ -142,8 +160,6 @@
                     class="questionTitle"
                   >What is one trait you have that you believe makes you a suitable candidate for DeltaHacks 8?</v-card-title>
                   <v-card-text>{{ applicant.responses.q3 }}</v-card-text>
-                  <v-card-title class="questionTitle">Anything you'd like us to see?</v-card-title>
-                  <v-card-text>{{ applicant.profiles.other }}</v-card-text>
                   <v-card-title class="questionTitle">Anything else you'd like to tell us?</v-card-title>
                   <v-card-text>{{ applicant.responses.anything_else }}</v-card-text>
                 </v-card>
@@ -258,6 +274,11 @@ export default Vue.extend({
     console.log(this.$store.state.currentUserIsAuthorizedReviewer);
   },
   methods: {
+    getResponse(field) {
+      const response = this.applicant.general[field]
+      const displayedResponse = response ==="" ? "No" : response
+      return(displayedResponse)
+    },
     decisionStats() {
       const resstr = {};
       // eslint-disable-next-line no-restricted-syntax
