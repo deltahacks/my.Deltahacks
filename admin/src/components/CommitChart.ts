@@ -21,7 +21,7 @@ export default Vue.extend({
       const outMap = {};
       const today = new Date();
       const current = startDate;
-      while (current < today) {
+      while (current <= today) {
         outMap[current.toDateString()] = 0;
         current.setDate(current.getDate() + 1);
         // console.log(current);
@@ -38,13 +38,11 @@ export default Vue.extend({
       .collection(this.$store.state.currentHackathon)
       .doc('applications')
       .collection('all')
-      .orderBy('_.time_initiated.seconds')
-      .endAt(startFrom.getTime() / 1000)
       .get();
 
     querySnapshot.forEach((doc) => {
       const item = doc.data();
-      const date = new Date(item._.time_submitted.seconds * 1000);
+      let date = new Date(item._.time_submitted);
       const dateString = date.toDateString();
       if (track[dateString] >= 0) {
         track[dateString] += 1;
