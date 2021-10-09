@@ -44,7 +44,6 @@ export default Vue.extend({
       const item = doc.data();
       let date = new Date(item._.time_submitted);
       const dateString = date.toDateString();
-      console.log(dateString);
       if (track[dateString] >= 0) {
         track[dateString] += 1;
       }
