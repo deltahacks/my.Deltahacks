@@ -630,6 +630,7 @@ export default Vue.extend({
       this.hackathonStarted = y.data.hackathonStarted;
       this.registrationStarted = y.data.registrationStarted;
       this.submissionDeadlinePassed = y.data.submissionDeadlinePassed;
+      this.rsvpClosed = y.data.rsvpClosed;
 
       // const z = await firebase.functions()
       //   .httpsCallable('isHackathonStarted')();
