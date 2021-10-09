@@ -305,6 +305,8 @@ export default Vue.extend({
       if (this.updateTimeout) clearTimeout(this.updateTimeout);
 
       this.updateAppProgress(true);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      window.location.href = 'status';
     },
 
     // clears all fields in the application
