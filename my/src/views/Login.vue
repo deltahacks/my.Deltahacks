@@ -331,7 +331,7 @@ export default Vue.extend({
       const parent = this;
       if (this.email && this.pass) {
         try {
-          await firebase
+          const user = await firebase
             .auth()
             .signInWithEmailAndPassword(this.email, this.pass);
           this.$router.push({ name: 'Status' });
@@ -362,18 +362,6 @@ export default Vue.extend({
     async signup() {
       if (this.getForm().checkValidity()) {
         try {
-          await this.$store.state.db
-            .collection(this.$store.state.currentHackathon)
-            .doc('users')
-            .collection('all')
-            .doc(this.email)
-            .set({
-              first: this.fName,
-              last: this.lName,
-              email: this.email,
-              time: firebase.firestore.Timestamp.fromDate(new Date()),
-              ip: null,
-            });
           const user = await firebase
             .auth()
             .createUserWithEmailAndPassword(
@@ -389,10 +377,14 @@ export default Vue.extend({
             .doc('users')
             .collection('all')
             .doc(this.email)
-            .update({
+            .set({
+              first: this.fName,
+              last: this.lName,
+              email: this.email,
+              time: firebase.firestore.Timestamp.fromDate(new Date()),
+              ip: ipp,
               geo,
               user_id: user.user!.uid,
-              ip: ipp,
             });
           await firebase.auth().currentUser!.sendEmailVerification();
           this.register_screen_alert = 1;
