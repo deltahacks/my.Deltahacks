@@ -331,7 +331,7 @@ export default Vue.extend({
       const parent = this;
       if (this.email && this.pass) {
         try {
-          await firebase
+          const user = await firebase
             .auth()
             .signInWithEmailAndPassword(this.email, this.pass);
           this.$router.push({ name: 'Status' });

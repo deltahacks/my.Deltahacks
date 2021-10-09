@@ -68,8 +68,8 @@ export default Vue.extend({
             this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
             this.last = snap.data()!.first ? snap.data()!.last : '';
           } else {
-            this.first = 'Admin';
-            this.last = '';
+            this.first = 'Welcome';
+            this.last = 'Back';
           }
         });
     } catch (err) {

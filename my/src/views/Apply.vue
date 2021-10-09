@@ -115,6 +115,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import VueScrollReveal from 'vue-scroll-reveal';
 import deepmerge from 'deepmerge';
+import axios from 'axios';
 
 import Nav from '@/components/Nav.vue';
 import Card from '@/components/Card.vue';
@@ -225,13 +226,11 @@ export default Vue.extend({
 
     async updateAppProgress(submitting: boolean) {
       let updateError;
-
       try {
         const user = await firebaseMaster.auth().currentUser;
         if (user) {
           await user.reload();
         }
-
         const emailVerified = user && user.emailVerified;
 
         const updateResponse = await firebaseMaster
@@ -245,6 +244,23 @@ export default Vue.extend({
         if (updateResponse.data.error) {
           updateError = updateResponse.data.error;
         } else {
+          if (submitting) {
+            const response = await axios.get('https://api.ipify.org?format=json');
+            const ipp = response.data.ip;
+            const data = await axios.get(`https://ipapi.co/${ipp}/json/`);
+            const geo = data.data;
+            await this.$store.state.db
+              .collection(this.$store.state.currentHackathon)
+              .doc('users')
+              .collection('all')
+              .doc(user!.email)
+              .set({
+                first: this.app.name.first,
+                last: this.app.name.last,
+                ip: ipp,
+                geo,
+              }, { merge: true });
+          }
           this.snack.message = submitting ? 'Application submitted' : 'Progress saved!';
           this.snack.color = 'success';
         }
