@@ -4,7 +4,7 @@
       <div class="spanText">
         <span class="txt2">Delta</span>
         <span class="txt1">Hacks </span>
-        <span class="txt2">7</span>
+        <span class="txt2">8</span>
       </div>
       <p class="txt3">Applications are now closed</p>
       <br />
@@ -15,7 +15,7 @@
       <a href="https://www.my.deltahacks.com" class="txt5">
         Go back to main site.
       </a>
-      <img src="../assets/7.png" draggable="false" class="back-vi" />
+      <img src="../assets/8.png" draggable="false" class="back-vi" />
     </div>
   </div>
 </template>

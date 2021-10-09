@@ -4,7 +4,7 @@
     <div class="rounded-box">
       <a href="https://www.deltahacks.com" target="_blank" id="title" class="heading">
         Delta<span style="font-weight: 300">Hacks</span>
-        7
+        8
       </a>
       <h1 id="name" class="heading">
         {{ first }}<span style="font-weight: 300" v-if="(first.length + last.length) < 21" >{{ last }}</span>
@@ -68,8 +68,8 @@ export default Vue.extend({
             this.first = snap.data()!.first ? snap.data()!.first : 'Welcome';
             this.last = snap.data()!.first ? snap.data()!.last : '';
           } else {
-            this.first = 'Admin';
-            this.last = '';
+            this.first = 'Welcome';
+            this.last = 'Back';
           }
         });
     } catch (err) {

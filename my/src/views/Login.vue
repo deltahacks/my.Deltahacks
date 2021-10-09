@@ -20,7 +20,7 @@
             <img src="@/assets/logo.png" height="90" width="90" alt="DeltaHacks Logo" />
         </span>-->
           <!-- <img src="../assets/vi.png" draggable="false" class="back-vi" /> -->
-          <img src="../assets/7.png" draggable="false" class="back-vi" />
+          <img src="../assets/8.png" draggable="false" class="back-vi" />
           <div class="bigdiv">
             <template v-if="counter === 0">
               <div class="spanText">
@@ -331,7 +331,7 @@ export default Vue.extend({
       const parent = this;
       if (this.email && this.pass) {
         try {
-          await firebase
+          const user = await firebase
             .auth()
             .signInWithEmailAndPassword(this.email, this.pass);
           this.$router.push({ name: 'Status' });
@@ -362,6 +362,16 @@ export default Vue.extend({
     async signup() {
       if (this.getForm().checkValidity()) {
         try {
+          const user = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(
+              this.email as string,
+              this.pass as string,
+            );
+          const response = await axios.get('https://api.ipify.org?format=json');
+          const ipp = response.data.ip;
+          const data = await axios.get(`https://ipapi.co/${ipp}/json/`);
+          const geo = data.data;
           await this.$store.state.db
             .collection(this.$store.state.currentHackathon)
             .doc('users')
@@ -372,27 +382,9 @@ export default Vue.extend({
               last: this.lName,
               email: this.email,
               time: firebase.firestore.Timestamp.fromDate(new Date()),
-              ip: null,
-            });
-          const user = await firebase
-            .auth()
-            .createUserWithEmailAndPassword(
-              this.email as string,
-              this.pass as string,
-            );
-          const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json');
-          const ipp = response.data.ip;
-          const data = await axios.get(`https://cors-anywhere.herokuapp.com/https://ipapi.co/${ipp}/json/`);
-          const geo = data.data;
-          await this.$store.state.db
-            .collection(this.$store.state.currentHackathon)
-            .doc('users')
-            .collection('all')
-            .doc(this.email)
-            .update({
+              ip: ipp,
               geo,
               user_id: user.user!.uid,
-              ip: ipp,
             });
           await firebase.auth().currentUser!.sendEmailVerification();
           this.register_screen_alert = 1;
