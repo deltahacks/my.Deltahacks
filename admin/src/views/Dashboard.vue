@@ -145,6 +145,7 @@ interface DashboardData {
   apps: string;
   loading: boolean;
   allUniversities: any;
+  selectedUniversity: any;
   applicationStats: any;
   applicationCount: number;
   loadingMessage: string;
