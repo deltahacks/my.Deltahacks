@@ -117,7 +117,7 @@
             <custom-angle-radial-chart :title="'Universities'" :categories="universities.categories" :data="universities.data" />
           </v-card>
         </v-flex>
-        <v-flex d-flex xs12 sm6 md3>
+        <v-flex d-flex xs12 sm6 md3 child-flex>
           <v-card color="white lighten-4" dark>
             <commit-chart />
           </v-card>

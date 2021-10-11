@@ -11,6 +11,7 @@ export default Vue.extend({
     setStartDate() {
       const out = new Date();
       out.setMonth(out.getMonth() - 1);
+      out.setDate(out.getDate() + 15);
       return out;
     },
     /**
