@@ -441,7 +441,7 @@ export default Vue.extend({
   computed: {
     universitiesMap() {
       const res = formatChartData(this, ['applicationStats', 'universities'], { sort: true, limit: 100 });
-      const final = [];
+      const final = [] as  any;
       for (let index = 0; index < res.categories.length; index++) {
         final.push({
           name: res.categories[index],
