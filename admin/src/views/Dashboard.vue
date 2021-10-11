@@ -35,49 +35,23 @@
                 </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex d-flex>
-              <v-layout row wrap>
-                <v-flex d-flex xs12>
-                  <v-card color="white lighten-4" dark>
-                    <div class="tooltip">
-                      <span class="tooltiptext">
-                        Click only if you know what you're doing
-                      </span>
-                      <v-btn class="bold" color="orange" dark>
-                        Fake Firebase
-                      </v-btn>
-                      <v-btn class="bold" color="blue" dark>Send Mail</v-btn>
-                    </div>
-                  </v-card>
-                </v-flex>
-                <v-flex d-flex xs12>
-                  <v-card color="white lighten-4" dark>
-                    <v-menu offset-y>
-                      <v-btn
-                        slot="activator"
-                        color="error"
-                        depressed
-                        large
-                        dark
-                        id="debugger"
-                      >
-                        Debug
-                        <v-icon right dark>cloud_upload</v-icon>
-                      </v-btn>
-                      <v-list>
-                        <v-list-tile
-                          v-for="(func, index) in debugFunctions"
-                          :key="index"
-                        >
-                          <v-list-tile-title>
-                            {{ func.title }}
-                          </v-list-tile-title>
-                        </v-list-tile>
-                      </v-list>
-                    </v-menu>
-                  </v-card>
-                </v-flex>
-              </v-layout>
+                 <v-flex d-flex>
+              <v-card color="white lighten-4" dark>
+                <v-card-title style="background-color:black"> 
+                  <v-select
+                  :items="universitiesMap"
+                  label="Application by university"
+                  item-text="name"
+                  color="blue"
+                  background-color="black"
+                  v-model="selectedUniversity"
+                  return-object
+                ></v-select>
+                </v-card-title>
+                <v-card-text class="totalapps center">
+                  <IOdometer class="iOdometer" :value="selectedUniversity.val" />
+                </v-card-text>
+              </v-card>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -171,6 +145,7 @@ interface DashboardData {
   apps: string;
   loading: boolean;
   allUniversities: any;
+  selectedUniversity: any;
   applicationStats: any;
   applicationCount: number;
   loadingMessage: string;
@@ -196,6 +171,7 @@ export default Vue.extend({
       apps: '245',
       loading: false,
       allUniversities,
+      selectedUniversity: 0,
       applicationStats: {},
       applicationCount: 0,
       loadingMessage: 'Loading...',
@@ -463,6 +439,17 @@ export default Vue.extend({
     }
   },
   computed: {
+    universitiesMap() {
+      const res = formatChartData(this, ['applicationStats', 'universities'], { sort: true, limit: 100 });
+      const final = [] as  any;
+      for (let index = 0; index < res.categories.length; index++) {
+        final.push({
+          name: res.categories[index],
+          val: res.data[index],
+        });
+      }
+      return final;
+    },
     universities() {
       return formatChartData(this, ['applicationStats', 'universities'], { sort: true, limit: 4 });
     },
