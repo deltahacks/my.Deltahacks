@@ -160,7 +160,7 @@
                     <h2>Submission Date</h2>
                     <br />
                     <span class="afterSubmitRounded"
-                      >Sunday, January 16th, 2021</span
+                      >Sunday, January 16th, 2022</span
                     >
                   </div>
                   <div style="float: left; margin-left: 2vw">
@@ -212,7 +212,7 @@
               >
                 <p class="bigmobile">Start Time</p>
                 <div><span class="deadline">8:00 P.M.</span></div>
-                <p class="bigmobile">Friday, January 14th, 2021</p>
+                <p class="bigmobile">Friday, January 14th, 2022</p>
               </div>
               <div
                 class="currentStatus"
@@ -220,7 +220,7 @@
               >
                 <p class="bigmobile">Submission Deadline</p>
                 <div><span class="deadline">12:30 P.M.</span></div>
-                <p class="bigmobile">Sunday, January 16th, 2021</p>
+                <p class="bigmobile">Sunday, January 16th, 2022</p>
               </div>
               <div
                 class="currentStatus glm"
@@ -359,7 +359,7 @@
             >
               <p class="bigmobile">Start Time</p>
               <div><span class="deadline">8:00 P.M.</span></div>
-              <p class="bigmobile">Friday, January 14th, 2021</p>
+              <p class="bigmobile">Friday, January 14th, 2022</p>
             </div>
             <div
               class="currentStatus"
@@ -367,7 +367,7 @@
             >
               <p class="bigmobile">Submission Deadline</p>
               <div><span class="deadline">12:30 P.M.</span></div>
-              <p class="bigmobile">Sunday, January 16th, 2021</p>
+              <p class="bigmobile">Sunday, January 16th, 2022</p>
             </div>
             <div
               class="currentStatus glm"
