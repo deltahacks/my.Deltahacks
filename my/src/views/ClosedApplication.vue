@@ -8,10 +8,6 @@
       </div>
       <p class="txt3">Applications are now closed</p>
       <br />
-      <span class="txt4">
-        Please check back for DeltaHacks 8 applications.
-      </span>
-      <br />
       <a href="https://www.my.deltahacks.com" class="txt5">
         Go back to main site.
       </a>

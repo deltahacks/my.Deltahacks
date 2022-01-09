@@ -21,9 +21,8 @@
             <div class="box box9" v-if="currentGroupIncludes('Standard')">
               <p class="big">Welcome.</p>
               <p class="small">
-                Be a part of the hackathon for change. We are looking forward to
-                being able to meet with you online this year. Good luck with
-                your application!
+                DeltaHacks 8 applications are now closed. We hope to see you
+                next year.
               </p>
             </div>
             <div class="box box9" v-if="currentGroupIncludes('rejected')">
@@ -233,7 +232,7 @@
                 class="apply-btn"
                 v-if="currentGroupIncludes('Standard')"
               >
-                <div class="apply box5">Apply</div>
+                <!-- <div class="apply box5">Apply</div> -->
               </a>
               <a
                 href="/submit"
@@ -531,13 +530,13 @@ export default Vue.extend({
           groups: ["Standard"],
         },
         "not started": {
-          message: "Application Not Started.",
-          emoji: "🤔",
+          message: "Applications are now closed.",
+          emoji: "🔒",
           groups: ["Standard"],
         },
         "in progress": {
-          message: "In progress.",
-          emoji: "🙂",
+          message: "Applications are now closed.",
+          emoji: "🔒",
           groups: ["Standard"],
         },
         submitted: {
