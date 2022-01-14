@@ -211,7 +211,7 @@
               >
                 <p class="bigmobile">Start Time</p>
                 <div><span class="deadline">12:00 A.M.</span></div>
-                <p class="bigmobile">Friday, January 15th, 2022</p>
+                <p class="bigmobile">Saturday, January 15th, 2022</p>
               </div>
               <div
                 class="currentStatus"
