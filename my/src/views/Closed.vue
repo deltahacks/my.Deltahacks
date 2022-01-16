@@ -9,7 +9,7 @@
       <p class="txt3">Submissions are now closed</p>
       <br />
       <span class="txt4">
-        Kindly check Slack for further information.
+        Kindly check Discord for further information.
       </span>
       <br />
       <a href="https://www.my.deltahacks.com" class="txt5">
