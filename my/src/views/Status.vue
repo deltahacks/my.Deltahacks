@@ -165,7 +165,7 @@
                   <div style="float: left; margin-left: 2vw">
                     <h2>Submission Time</h2>
                     <br />
-                    <span class="afterSubmitRounded">12:30 P.M.</span>
+                    <span class="afterSubmitRounded">12:00 P.M.</span>
                   </div>
                 </div>
               </template>
@@ -365,7 +365,7 @@
               v-if="currentGroupIncludes('showDeadline')"
             >
               <p class="bigmobile">Submission Deadline</p>
-              <div><span class="deadline">12:30 P.M.</span></div>
+              <div><span class="deadline">12:00 P.M.</span></div>
               <p class="bigmobile">Sunday, January 16th, 2022</p>
             </div>
             <div
