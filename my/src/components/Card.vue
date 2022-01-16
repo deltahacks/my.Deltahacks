@@ -86,6 +86,7 @@
           :prepend-icon="icon"
           single-line
           multiple
+           chips
           :value="value"
           @input="onChange($event)"
           :error-messages="error"
