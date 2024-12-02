@@ -12,6 +12,7 @@ import Status from './views/Status.vue';
 import v404 from './views/404.vue';
 import Submit from './views/Submit.vue';
 import db from './firebase_init';
+import Disruptions from './views/Disruptions.vue';
 import ClosedApplication from './views/ClosedApplication.vue';
 
 Vue.use(Router);
@@ -22,10 +23,11 @@ const router = new Router({
     {
       path: '/',
       name: 'Login',
-      component: Login,
-      meta: {
-        loginRedir: true,
-      },
+      component: Disruptions,
+      // component: Login,
+      // meta: {
+      //   loginRedir: true,
+      // },
     },
     {
       path: '/apply',
